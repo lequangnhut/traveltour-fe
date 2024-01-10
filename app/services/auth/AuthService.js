@@ -42,31 +42,6 @@ travel_app.service('AuthService', function ($http, $window) {
     };
 
     /**
-     * @message Login with Spring security
-     */
-    this.loginAuthAdmin = function (loginDataAdmin) {
-        return $http({
-            method: 'POST',
-            url: API_AUTH + 'admin/login',
-            data: loginDataAdmin,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-    };
-
-    /**
-     * @message API logout spring security
-     */
-    this.logoutAuthAdmin = function () {
-        return $http({
-            method: 'GET',
-            url: API_AUTH + 'admin/logout'
-        });
-    };
-
-
-    /**
      * @message API find by email
      */
     this.findByEmail = function (email) {

@@ -110,7 +110,7 @@
                             <li class="menu-item has-children"><a href="/tourism-location">Điểm tham quan</a></li>
                             <li class="menu-item has-children"><a href="javascript:void(0)">Xem thêm</a>
                                 <ul class="sub-menu">
-                                    <li><a href="">Cẩm nang du lịch</a></li>
+                                    <li><a href="/travel-guide">Cẩm nang du lịch</a></li>
                                     <li><a href="/introduce">Giới thiệu</a></li>
                                     <li><a href="/contact">Liên hệ</a></li>
                                 </ul>
@@ -130,7 +130,7 @@
                     </div>
                 </div>
                 <!--====== Nav Right Item ======-->
-                <div class="nav-right-item" ng-if="!isAuthenticated">
+                <div class="nav-right-item" ng-if="!isAuthenticated || role !== 'ROLE_CUSTOMER'">
                     <div class="menu-button d-xl-block d-none">
                         <a href="/sign-in" class="main-btn primary-btn">
                             Đăng nhập
@@ -138,7 +138,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="nav-right-item" ng-if="isAuthenticated">
+                <div class="nav-right-item" ng-if="isAuthenticated && role === 'ROLE_CUSTOMER'">
                     <nav class="main-menu">
                         <ul>
                             <li class="menu-item has-children">

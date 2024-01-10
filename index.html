@@ -24,14 +24,14 @@
     <ng-view></ng-view>
     <!--====== End Main ======-->
 
-    <script src="/assets/customers/vendor/jquery-3.6.0.min.js"></script>
-    <script src="/assets/customers/vendor/slick/slick.min.js"></script>
-    <script src="/assets/customers/vendor/jquery-ui/jquery-ui.min.js"></script>
     <div ng-include="'app/component/customers/views/components/footer.html'"></div>
 
     <!--====== Back To Top  ======-->
     <a href="#" class="back-to-top"><i class="far fa-angle-up"></i></a>
 
+    <script src="/assets/customers/vendor/jquery-3.6.0.min.js"></script>
+    <script src="/assets/customers/vendor/slick/slick.min.js"></script>
+    <script src="/assets/customers/vendor/jquery-ui/jquery-ui.min.js"></script>
     <div ng-include="'app/component/customers/views/components/common/script.html'"></div>
 </div>
 
@@ -906,7 +906,9 @@
                                                  src="https://prium.github.io/phoenix/v1.13.0/assets/img/team/72x72/57.webp"
                                                  alt=""/>
                                         </div>
-                                        <h6 class="mt-2 text-black">Xin chào, {{ user.fullName }} !</h6>
+                                        <h6 class="mt-2 text-black" ng-if="role !== 'ROLE_CUSTOMER'">Xin
+                                            chào, {{ user.fullName }} !
+                                        </h6>
                                     </div>
                                     <div class="mb-3 mx-3">
                                         <input class="form-control form-control-sm" id="statusUpdateInput" type="text"
@@ -965,7 +967,7 @@
                                     <hr/>
                                     <div class="px-3">
                                         <a class="btn btn-phoenix-secondary d-flex flex-center w-100"
-                                           ng-click="logoutAdmin()">
+                                           ng-click="logoutAuth()">
                                             <span class="me-2" data-feather="log-out"></span>
                                             Đăng xuất
                                         </a>
@@ -1005,15 +1007,12 @@
     <script src="/assets/admin/assets/vendors/bootstrap/bootstrap.min.js"></script>
     <script src="/assets/admin/assets/vendors/anchorjs/anchor.min.js"></script>
     <script src="/assets/admin/assets/vendors/is/is.min.js"></script>
-    <!--    <script src="/assets/admin/assets/vendors/fontawesome/all.min.js"></script>-->
+    <script src="/assets/admin/assets/vendors/fontawesome/all.min.js"></script>
     <script src="/assets/admin/assets/vendors/lodash/lodash.min.js"></script>
     <script src="/assets/admin/lib/polyfill.io/v3/polyfill.min58be.js?features=window.scroll"></script>
     <script src="/assets/admin/assets/vendors/list.js/list.min.js"></script>
     <script src="/assets/admin/assets/vendors/feather-icons/feather.min.js"></script>
     <script src="/assets/admin/assets/vendors/dayjs/dayjs.min.js"></script>
-    <script src="/assets/admin/assets/vendors/glightbox/glightbox.min.js"></script>
-    <script src="/assets/admin/lib/unpkg.com/picmo@5.7.6/dist/umd/index.js"></script>
-    <script src="/assets/admin/assets/vendors/lottie/lottie.min.js"></script>
     <script src="/assets/admin/assets/js/phoenix.js"></script>
     <script src="/assets/admin/assets/js/crm-analytics.js"></script>
     <script src="/assets/admin/assets/vendors/echarts/echarts.min.js"></script>
@@ -1041,6 +1040,7 @@
 <script src="app/component/customers/controllers/password/ForgotPwController.js"></script>
 <script src="app/component/customers/controllers/home/HomeController.js"></script>
 <script src="app/component/customers/controllers/home/IntroduceController.js"></script>
+<script src="app/component/customers/controllers/home/TravelGuideController.js"></script>
 <script src="app/component/customers/controllers/home/ContactController.js"></script>
 <script src="app/component/customers/controllers/tour/TourController.js"></script>
 <script src="app/component/customers/controllers/tour/TourDetailController.js"></script>
