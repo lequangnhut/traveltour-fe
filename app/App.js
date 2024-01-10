@@ -26,6 +26,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/home/introduce.html',
             controller: 'IntroduceController'
         })
+        .when('/travel-guide', {
+            templateUrl: 'app/component/customers/views/pages/home/travel-guide.html',
+            controller: 'TravelGuideController'
+        })
         .when('/contact', {
             templateUrl: 'app/component/customers/views/pages/home/contact.html',
             controller: 'ContactController'

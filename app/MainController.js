@@ -4,6 +4,10 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
     $scope.isAuthenticated = AuthService.getToken() !== null;
     $scope.user = AuthService.getUser();
 
+    if (AuthService.getUser() !== null) {
+        $scope.role = AuthService.getUser().roles[0].nameRole
+    }
+
     $scope.goHome = function () {
         window.location.href = '/home';
     }
@@ -25,11 +29,5 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
         AuthService.clearAuthData();
         $scope.isAuthenticated = false;
         window.location.href = '/home';
-    };
-
-    $scope.logoutAdmin = function () {
-        AuthService.logoutAuthAdmin().then(function successCallback() {
-            window.location.href = '/admin';
-        });
     };
 });
