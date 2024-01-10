@@ -1,0 +1,180 @@
+<!--Google font-->
+<link href="/assets/customers/css/auth/css2980f.css?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&amp;display=swap"
+      rel="stylesheet">
+<!-- Bootstrap css -->
+<link rel="stylesheet" type="text/css" href="/assets/customers/css/auth/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/assets/customers/css/auth/fontawesome.css">
+<!-- Theme css -->
+<link rel="stylesheet" type="text/css" href="/assets/customers/css/auth/login.css">
+
+<!-- 01 Preloader -->
+<!--<div class="loader-wrapper" id="loader-wrapper">-->
+<!--    <div class="loader"></div>-->
+<!--</div>-->
+<!-- Preloader end-->
+<!-- 02 Main pages -->
+<section class="page-section login-page">
+    <div class="full-width-screen">
+        <div class="container-fluid">
+            <div class="content-detail">
+                <div class="main-info">
+                    <div class="hero-container">
+                        <!-- Signup form -->
+                        <form class="signup-form" ng-submit="registerAccount()" name="registerForm" method="post">
+                            <div class="imgcontainer">
+                                <a href="#" ng-click="goHome()">
+                                    <img src="/assets/customers/images/logo/logo-black.png" class="avatar" alt="logo">
+                                </a>
+                            </div>
+                            <div class="input-control">
+                                <input type="email"
+                                       placeholder="Địa chỉ email"
+                                       name="email"
+                                       ng-model="user.email"
+                                       ng-class="{ 'is-invalid': registerForm.email.$invalid && registerForm.email.$touched, 'is-valid': registerForm.email.$valid && registerForm.email.$touched }"
+                                       ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                                       ng-change="checkDuplicateEmail()"
+                                       required
+                                >
+                                <small class="text-danger"
+                                       ng-show="registerForm.email.$touched && registerForm.email.$error.required">
+                                    Vui lòng nhập địa chỉ email !
+                                </small>
+                                <small class="text-danger"
+                                       ng-show="registerForm.email.$touched && registerForm.email.$error.pattern">
+                                    Địa chỉ email không đúng định dạng !
+                                </small>
+                                <small class="text-danger" ng-show="registerForm.email.$touched && emailError">
+                                    Email đã tồn tại ở một tài khoản khác!
+                                </small>
+
+                                <input type="text"
+                                       placeholder="Họ và tên"
+                                       name="fname"
+                                       ng-model="user.fullName"
+                                       ng-class="{ 'is-invalid': registerForm.fname.$invalid && registerForm.fname.$touched, 'is-valid': registerForm.fname.$valid && registerForm.fname.$touched }"
+                                       ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                       required
+                                >
+                                <small class="text-danger"
+                                       ng-show="registerForm.fname.$touched && registerForm.fname.$error.required">
+                                    Vui lòng nhập họ và tên !
+                                </small>
+                                <small class="text-danger"
+                                       ng-show="registerForm.fname.$touched && registerForm.fname.$error.pattern">
+                                    Họ và tên không đúng định dạng !
+                                </small>
+
+                                <input type="text"
+                                       placeholder="Số điện thoại"
+                                       name="pnumber"
+                                       ng-model="user.phone"
+                                       ng-class="{ 'is-invalid': registerForm.pnumber.$invalid && registerForm.pnumber.$touched, 'is-valid': registerForm.pnumber.$valid && registerForm.pnumber.$touched }"
+                                       ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                                       ng-change="checkDuplicatePhone()"
+                                       maxlength="10"
+                                       required
+                                >
+                                <small class="text-danger"
+                                       ng-show="registerForm.pnumber.$touched && registerForm.pnumber.$error.required">
+                                    Vui lòng nhập số điện thoại !
+                                </small>
+                                <small class="text-danger"
+                                       ng-show="registerForm.pnumber.$touched && registerForm.pnumber.$error.pattern">
+                                    Số điện thoại không đúng định dạng !
+                                </small>
+                                <small class="text-danger" ng-show="registerForm.pnumber.$touched && phoneError">
+                                    Số điện thoại đã tồn tại ở một tài khoản khác !
+                                </small>
+
+                                <input type="password"
+                                       placeholder="Mật khẩu"
+                                       name="psw"
+                                       ng-model="user.password"
+                                       ng-class="{ 'is-invalid': registerForm.psw.$invalid && registerForm.psw.$touched, 'is-valid': registerForm.psw.$valid && registerForm.psw.$touched }"
+                                       ng-minlength="6"
+                                       class="input-checkmark"
+                                       required
+                                >
+                                <small class="text-danger"
+                                       ng-show="registerForm.psw.$touched && registerForm.psw.$error.required">
+                                    Vui lòng nhập mật khẩu !
+                                </small>
+                                <small class="text-danger"
+                                       ng-show="registerForm.psw.$error.minlength && registerForm.psw.$dirty">
+                                    Mật khẩu cần ít nhất 6 ký tự.
+                                </small>
+
+                                <span class="password-field-show">
+                                    <input type="password"
+                                           class="password-field input-checkmark"
+                                           name="cpsw"
+                                           ng-class="{ 'is-invalid': registerForm.cpsw.$invalid && registerForm.cpsw.$touched, 'is-valid': registerForm.cpsw.$valid && registerForm.cpsw.$touched }"
+                                           ng-model="user.cpsw"
+                                           ng-pattern="user.password"
+                                           ng-minlength="6"
+                                           placeholder="Nhập lại mật khẩu"
+                                           required
+                                    >
+                                    <span data-toggle=".password-field"
+                                          class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                    <small class="text-danger"
+                                           ng-show="registerForm.cpsw.$touched && registerForm.cpsw.$error.required">
+                                        Vui lòng xác thực mật khẩu !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="registerForm.cpsw.$touched && registerForm.cpsw.$error.pattern">
+                                        Xác nhận mật khẩu không khớp.
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="registerForm.cpsw.$touched && registerForm.cpsw.$error.minlength">
+                                        Mật khẩu cần ít nhất 6 ký tự.
+                                    </small>
+								</span>
+
+                                <label class="label-container">Tôi đồng ý với
+                                    <a href="#" style="color: #63AB45">
+                                        chính sách bảo mật
+                                    </a>
+                                    <input type="checkbox"
+                                           ng-model="user.agreeTerms"
+                                           ng-click="checkboxClicked = true"
+                                           required
+                                    >
+                                    <span class="checkmark"></span>
+                                </label>
+                                <div class="login-btns">
+                                    <button type="submit"
+                                            ng-disabled="!checkboxClicked || registerForm.$invalid || emailError || phoneError">
+                                        Đăng ký
+                                    </button>
+                                </div>
+                                <div class="division-lines"><p>hoặc đăng ký với</p></div>
+                                <div class="login-with-btns">
+                                    <a href="/oauth2/authorization/google" type="button"
+                                       class="google text-decoration-none">
+                                        <i class="fab fa-google"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" type="button" class="facebook text-decoration-none">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" type="button" class="twitter text-decoration-none">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" type="button" class="linkedin text-decoration-none">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                    <span class="already-acc">Bạn đã có tài khoản?
+                                        <a href="/sign-in" class="login-btn">Đăng nhập</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/assets/customers/js/auth/script.js"></script>
