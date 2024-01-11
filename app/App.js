@@ -15,6 +15,14 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/dashboard/dashboard.html',
             controller: 'DashboardControllerAD'
         })
+        .when('/admin/decentralization-account', {
+            templateUrl: 'app/component/admin/views/pages/decentralization/account-full.html',
+            controller: 'DecentralizationControllerAD'
+        })
+        .when('/admin/decentralization-list', {
+            templateUrl: 'app/component/admin/views/pages/decentralization/decentralization-list.html',
+            controller: 'DecentralizationListControllerAD'
+        })
         /**
          * Customer
          */

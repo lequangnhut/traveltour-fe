@@ -22,7 +22,9 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
 
     $scope.isManagerPage = function () {
         const path = $location.path();
-        return path === '/admin/dashboard';
+        return path === '/admin/dashboard' ||
+            path === '/admin/decentralization-account' ||
+            path === '/admin/decentralization-list';
     };
 
     $scope.logoutAuth = function () {

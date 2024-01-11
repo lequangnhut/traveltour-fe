@@ -23926,8 +23926,8 @@ input::-webkit-contacts-auto-fill-button {
 }
 
 .btn-warning {
-    --phoenix-btn-color: #fff;
-    --phoenix-btn-bg: #e5780b;
+    --phoenix-btn-color: black;
+    --phoenix-btn-bg: #FFD233;
     --phoenix-btn-border-color: transparent;
     --phoenix-btn-hover-color: #fff;
     --phoenix-btn-hover-bg: #d6700a;
