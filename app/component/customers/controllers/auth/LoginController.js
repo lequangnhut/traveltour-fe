@@ -46,4 +46,10 @@ travel_app.controller('LoginController', function ($scope, $location, $timeout, 
             }
         });
     };
+
+    $scope.loginGoogle = function () {
+        AuthService.loginWithGoogle().then(function successCallback() {
+            console.log('cc')
+        });
+    }
 });

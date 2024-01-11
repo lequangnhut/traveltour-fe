@@ -9,11 +9,25 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/admin', {
             templateUrl: 'app/component/admin/views/pages/auth/login.html',
-            controller: 'LoginControllerAD'
+            controller: 'LoginControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (AuthService.getToken()) {
+                        $location.path('/admin/dashboard');
+                    }
+                }
+            }
         })
         .when('/admin/dashboard', {
             templateUrl: 'app/component/admin/views/pages/dashboard/dashboard.html',
-            controller: 'DashboardControllerAD'
+            controller: 'DashboardControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/admin');
+                    }
+                }
+            }
         })
         .when('/admin/decentralization-account', {
             templateUrl: 'app/component/admin/views/pages/decentralization/account-full.html',
@@ -57,6 +71,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/hotel', {
             templateUrl: 'app/component/customers/views/pages/hotel/hotel.html',
             controller: 'HotelController'
+        })
+        .when('/hotel-detail', {
+            templateUrl: 'app/component/customers/views/pages/hotel/hotel-detail.html',
+            controller: 'HotelDetailController'
         })
         .when('/drive-move', {
             templateUrl: 'app/component/customers/views/pages/move/drive-move.html',
