@@ -19,7 +19,7 @@
                                 <div class="single-info-item-two">
                                     <div class="inner-info">
                                         <div class="icon">
-                                            <i class="far fa-map-marker-alt"></i>
+                                            <span class="fas fa-location-arrow"></span>
                                         </div>
                                         <div class="info">
                                             <span class="title">Ví trị hiện tại</span>
@@ -50,7 +50,7 @@
                                 <div class="single-info-item-two">
                                     <div class="inner-info">
                                         <div class="icon">
-                                            <i class="far fa-phone-plus"></i>
+                                            <span class="fas fa-phone-volume"></span>
                                         </div>
                                         <div class="info">
                                             <span class="title">Số điện thoại</span>
@@ -108,7 +108,10 @@
                             <li class="menu-item has-children"><a href="/hotel">Khách sạn</a></li>
                             <li class="menu-item has-children"><a href="/drive-move">Di chuyển</a></li>
                             <li class="menu-item has-children"><a href="/tourism-location">Điểm tham quan</a></li>
-                            <li class="menu-item has-children"><a href="javascript:void(0)">Xem thêm</a>
+                            <li class="menu-item has-children">
+                                <a href="javascript:void(0)">Xem thêm
+                                    <span class="fas fa-angle-down"></span>
+                                </a>
                                 <ul class="sub-menu">
                                     <li><a href="/travel-guide">Cẩm nang du lịch</a></li>
                                     <li><a href="/introduce">Giới thiệu</a></li>
@@ -116,8 +119,9 @@
                                 </ul>
                             </li>
                             <li class="menu-item search-item">
-                                <div class="search-btn" data-bs-toggle="modal" data-bs-target="#search-modal"><i
-                                        class="far fa-search"></i></div>
+                                <div class="search-btn" data-bs-toggle="modal" data-bs-target="#search-modal">
+                                    <span class="fas fa-search"></span>
+                                </div>
                             </li>
                         </ul>
                     </nav>
@@ -134,7 +138,7 @@
                     <div class="menu-button d-xl-block d-none">
                         <a href="/sign-in" class="main-btn primary-btn">
                             Đăng nhập
-                            <i class="fas fa-user"></i>
+                            <span class="fas fa-user-circle"></span>
                         </a>
                     </div>
                 </div>
@@ -143,7 +147,7 @@
                         <ul>
                             <li class="menu-item has-children">
                                 <a href="javascript:void(0)">Xin chào, {{ user.fullName }}
-                                    <span class="dd-trigger"><i class="far fa-angle-down"></i></span>
+                                    <span class="fas fa-angle-down"></span>
                                 </a>
                                 <ul class="sub-menu">
                                     <li><a href="">Thông tin cá nhân</a></li>

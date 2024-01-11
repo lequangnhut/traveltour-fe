@@ -32,4 +32,10 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
         $scope.isAuthenticated = false;
         window.location.href = '/home';
     };
+
+    $scope.logoutAuthAdmin = function () {
+        AuthService.clearAuthData();
+        $scope.isAuthenticated = false;
+        window.location.href = '/admin';
+    };
 });

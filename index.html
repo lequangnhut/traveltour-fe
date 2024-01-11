@@ -27,7 +27,7 @@
     <div ng-include="'app/component/customers/views/components/footer.html'"></div>
 
     <!--====== Back To Top  ======-->
-    <a href="#" class="back-to-top"><i class="far fa-angle-up   "></i></a>
+    <a href="#" class="back-to-top"><span class="fas fa-angle-up"></span></a>
 
     <script src="/assets/customers/vendor/jquery-3.6.0.min.js"></script>
     <script src="/assets/customers/vendor/slick/slick.min.js"></script>
@@ -104,619 +104,604 @@
                         </li>
 
                         <li class="nav-item">
-                            <!-- TOUR-->
-                            <p class="navbar-vertical-label">QUẢN LÝ TOUR</p>
-                            <hr class="navbar-vertical-line"/>
+                            <div ng-if="role === 'ROLE_STAFF'">
+                                <!-- TOUR-->
+                                <p class="navbar-vertical-label">QUẢN LÝ TOUR</p>
+                                <hr class="navbar-vertical-line"/>
 
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link dropdown-indicator label-1" href="#info-tour" role="button"
-                                   data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon">
-                                            <span class="fas fa-caret-right"></span>
-                                        </div>
-                                        <span class="nav-link-icon">
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1" href="#info-tour" role="button"
+                                       data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+                                                <span class="fas fa-caret-right"></span>
+                                            </div>
+                                            <span class="nav-link-icon">
                                     <span data-feather="briefcase"></span>
                                 </span>
-                                        <span class="nav-link-text">Thông tin tour</span>
-                                        <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
-                                              style="font-size: 6px"></span>
-                                    </div>
-                                </a>
-                                <div class="parent-wrapper label-1">
-                                    <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
-                                        id="info-tour">
-
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Danh sách tour</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Thêm tour</span>
-                                                    <span class="badge ms-2 badge badge-phoenix badge-phoenix-info ">Mới</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link dropdown-indicator label-1" href="#info-category-tour" role="button"
-                                   data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon">
-                                            <span class="fas fa-caret-right"></span>
+                                            <span class="nav-link-text">Thông tin tour</span>
+                                            <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
+                                                  style="font-size: 6px"></span>
                                         </div>
-                                        <span class="nav-link-icon">
+                                    </a>
+                                    <div class="parent-wrapper label-1">
+                                        <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
+                                            id="info-tour">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Danh sách tour</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Thêm tour</span>
+                                                        <span class="badge ms-2 badge badge-phoenix badge-phoenix-info ">Mới</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1" href="#info-category-tour"
+                                       role="button"
+                                       data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+                                                <span class="fas fa-caret-right"></span>
+                                            </div>
+                                            <span class="nav-link-icon">
                                     <span data-feather="airplay"></span>
                                 </span>
-                                        <span class="nav-link-text">Thông tin loại tour</span>
-                                        <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
-                                              style="font-size: 6px"></span>
-                                    </div>
-                                </a>
-                                <div class="parent-wrapper label-1">
-                                    <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
-                                        id="info-category-tour">
-
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Danh sách loại tour</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Thêm loại tour</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- label-->
-                            <p class="navbar-vertical-label">DỊCH VỤ THEO TOUR</p>
-                            <hr class="navbar-vertical-line"/>
-
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link dropdown-indicator label-1" href="#info-address" role="button"
-                                   data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon">
-                                            <span class="fas fa-caret-right"></span>
+                                            <span class="nav-link-text">Thông tin loại tour</span>
+                                            <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
+                                                  style="font-size: 6px"></span>
                                         </div>
-                                        <span class="nav-link-icon">
+                                    </a>
+                                    <div class="parent-wrapper label-1">
+                                        <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
+                                            id="info-category-tour">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Danh sách loại tour</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Thêm loại tour</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- label-->
+                                <p class="navbar-vertical-label">DỊCH VỤ THEO TOUR</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1" href="#info-address" role="button"
+                                       data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+                                                <span class="fas fa-caret-right"></span>
+                                            </div>
+                                            <span class="nav-link-icon">
                                     <span data-feather="credit-card"></span>
                                 </span>
-                                        <span class="nav-link-text">Thông tin lưu trú</span>
-                                        <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
-                                              style="font-size: 6px"></span>
-                                    </div>
-                                </a>
-                                <div class="parent-wrapper label-1">
-                                    <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
-                                        id="info-address">
-
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Danh sách lưu trú</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Thêm lưu trú</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link dropdown-indicator label-1" href="#info-car" role="button"
-                                   data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon">
-                                            <span class="fas fa-caret-right"></span>
+                                            <span class="nav-link-text">Thông tin lưu trú</span>
+                                            <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
+                                                  style="font-size: 6px"></span>
                                         </div>
-                                        <span class="nav-link-icon">
+                                    </a>
+                                    <div class="parent-wrapper label-1">
+                                        <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
+                                            id="info-address">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Danh sách lưu trú</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Thêm lưu trú</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1" href="#info-car" role="button"
+                                       data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+                                                <span class="fas fa-caret-right"></span>
+                                            </div>
+                                            <span class="nav-link-icon">
                                     <span data-feather="truck"></span>
                                 </span>
-                                        <span class="nav-link-text">Thông tin phương tiện</span>
-                                        <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
-                                              style="font-size: 6px"></span>
-                                    </div>
-                                </a>
-                                <div class="parent-wrapper label-1">
-                                    <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
-                                        id="info-car">
-
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Danh sách phương tiện</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Thêm phương tiện</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link dropdown-indicator label-1" href="#info-entertainment" role="button"
-                                   data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon">
-                                            <span class="fas fa-caret-right"></span>
+                                            <span class="nav-link-text">Thông tin phương tiện</span>
+                                            <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
+                                                  style="font-size: 6px"></span>
                                         </div>
-                                        <span class="nav-link-icon">
+                                    </a>
+                                    <div class="parent-wrapper label-1">
+                                        <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
+                                            id="info-car">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Danh sách phương tiện</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Thêm phương tiện</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1" href="#info-entertainment"
+                                       role="button"
+                                       data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+                                                <span class="fas fa-caret-right"></span>
+                                            </div>
+                                            <span class="nav-link-icon">
                                     <span data-feather="instagram"></span>
                                 </span>
-                                        <span class="nav-link-text">Thông tin điểm tham quan</span>
-                                        <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
-                                              style="font-size: 6px"></span>
+                                            <span class="nav-link-text">Thông tin điểm tham quan</span>
+                                            <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
+                                                  style="font-size: 6px"></span>
+                                        </div>
+                                    </a>
+                                    <div class="parent-wrapper label-1">
+                                        <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
+                                            id="info-entertainment">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Danh sách điểm tham quan</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Thêm điểm tham quan</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                </a>
-                                <div class="parent-wrapper label-1">
-                                    <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
-                                        id="info-entertainment">
-
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Danh sách điểm tham quan</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Thêm điểm tham quan</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </div>
-                            </div>
 
-                            <!-- label-->
-                            <p class="navbar-vertical-label">XÁC NHẬN BOOKING</p>
-                            <hr class="navbar-vertical-line"/>
+                                <!-- label-->
+                                <p class="navbar-vertical-label">XÁC NHẬN BOOKING</p>
+                                <hr class="navbar-vertical-line"/>
 
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="#">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon"></div>
-                                        <span class="nav-link-icon">
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
                                             <span data-feather="list"></span>
                                         </span>
-                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text-wrapper">
                                             <span class="nav-link-text">Danh sách booking</span>
                                         </span>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <!-- label-->
-                            <p class="navbar-vertical-label">LỊCH TRÌNH DI CHUYỂN</p>
-                            <hr class="navbar-vertical-line"/>
-
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link dropdown-indicator label-1" href="#info-schedule" role="button"
-                                   data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon">
-                                            <span class="fas fa-caret-right"></span>
                                         </div>
-                                        <span class="nav-link-icon">
+                                    </a>
+                                </div>
+
+                                <!-- label-->
+                                <p class="navbar-vertical-label">LỊCH TRÌNH DI CHUYỂN</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1" href="#info-schedule" role="button"
+                                       data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+                                                <span class="fas fa-caret-right"></span>
+                                            </div>
+                                            <span class="nav-link-icon">
                                             <span data-feather="hard-drive"></span>
                                         </span>
-                                        <span class="nav-link-text">Danh sách lịch trình</span>
-                                        <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
-                                              style="font-size: 6px"></span>
+                                            <span class="nav-link-text">Danh sách lịch trình</span>
+                                            <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
+                                                  style="font-size: 6px"></span>
+                                        </div>
+                                    </a>
+                                    <div class="parent-wrapper label-1">
+                                        <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
+                                            id="info-schedule">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Lịch trình chưa đi</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Lịch trình đang đi</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Lịch trình đã đi</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                </a>
-                                <div class="parent-wrapper label-1">
-                                    <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
-                                        id="info-schedule">
-
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Lịch trình chưa đi</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Lịch trình đang đi</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Lịch trình đã đi</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </div>
-                            </div>
 
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="#">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon"></div>
-                                        <span class="nav-link-icon">
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
                                             <span data-feather="compass"></span>
                                         </span>
-                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text-wrapper">
                                             <span class="nav-link-text">Cập nhật lịch trình</span>
                                         </span>
-                                    </div>
-                                </a>
-                            </div>
+                                        </div>
+                                    </a>
+                                </div>
 
-                            <!-- label-->
-                            <p class="navbar-vertical-label">HÓA ĐƠN - THANH TOÁN</p>
-                            <hr class="navbar-vertical-line"/>
+                                <!-- label-->
+                                <p class="navbar-vertical-label">HÓA ĐƠN - THANH TOÁN</p>
+                                <hr class="navbar-vertical-line"/>
 
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="#">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon"></div>
-                                        <span class="nav-link-icon">
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
                                             <span data-feather="package"></span>
                                         </span>
-                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text-wrapper">
                                             <span class="nav-link-text">Danh sách thanh toán</span>
                                         </span>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <!-- label-->
-                            <p class="navbar-vertical-label">QUẢN LÝ KHÁCH HÀNG</p>
-                            <hr class="navbar-vertical-line"/>
-
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link dropdown-indicator label-1" href="#info-customer" role="button"
-                                   data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon">
-                                            <span class="fas fa-caret-right"></span>
                                         </div>
-                                        <span class="nav-link-icon">
+                                    </a>
+                                </div>
+
+                                <!-- label-->
+                                <p class="navbar-vertical-label">QUẢN LÝ KHÁCH HÀNG</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1" href="#info-customer" role="button"
+                                       data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+                                                <span class="fas fa-caret-right"></span>
+                                            </div>
+                                            <span class="nav-link-icon">
                                             <span data-feather="users"></span>
                                         </span>
-                                        <span class="nav-link-text">Thông tin khách hàng</span>
-                                    </div>
-                                </a>
-                                <div class="parent-wrapper label-1">
-                                    <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
-                                        id="info-customer">
+                                            <span class="nav-link-text">Thông tin khách hàng</span>
+                                        </div>
+                                    </a>
+                                    <div class="parent-wrapper label-1">
+                                        <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
+                                            id="info-customer">
 
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Danh sách khách hàng</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Thêm thông tin khách hàng</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Danh sách khách hàng</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Thêm thông tin khách hàng</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- label-->
-                            <p class="navbar-vertical-label">QUẢN LÝ DỊCH VỤ - DNghiep</p>
-                            <hr class="navbar-vertical-line"/>
+                            <div ng-if="role ==='ROLE_AGENT'">
+                                <!-- label-->
+                                <p class="navbar-vertical-label">QUẢN LÝ DỊCH VỤ</p>
+                                <hr class="navbar-vertical-line"/>
 
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link dropdown-indicator label-1" href="#info-service" role="button"
-                                   data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon">
-                                            <span class="fas fa-caret-right"></span>
-                                        </div>
-                                        <span class="nav-link-icon">
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1" href="#info-service" role="button"
+                                       data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+                                                <span class="fas fa-caret-right"></span>
+                                            </div>
+                                            <span class="nav-link-icon">
                                             <span data-feather="check-square"></span>
                                         </span>
-                                        <span class="nav-link-text">Thông tin dịch vụ</span>
-                                    </div>
-                                </a>
-                                <div class="parent-wrapper label-1">
-                                    <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
-                                        id="info-service">
-
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Danh sách dịch vụ</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Thêm thông tin dịch vụ</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- label-->
-                            <p class="navbar-vertical-label">BOOKING DỊCH VỤ - DNghiep</p>
-                            <hr class="navbar-vertical-line"/>
-
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link dropdown-indicator label-1" href="#info-booking-service"
-                                   role="button"
-                                   data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon">
-                                            <span class="fas fa-caret-right"></span>
+                                            <span class="nav-link-text">Thông tin dịch vụ</span>
                                         </div>
-                                        <span class="nav-link-icon">
+                                    </a>
+                                    <div class="parent-wrapper label-1">
+                                        <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
+                                            id="info-service">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Danh sách dịch vụ</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Thêm thông tin dịch vụ</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- label-->
+                                <p class="navbar-vertical-label">BOOKING DỊCH VỤ</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1" href="#info-booking-service"
+                                       role="button"
+                                       data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+                                                <span class="fas fa-caret-right"></span>
+                                            </div>
+                                            <span class="nav-link-icon">
                                             <span data-feather="message-circle"></span>
                                         </span>
-                                        <span class="nav-link-text">Thông tin booking</span>
-                                    </div>
-                                </a>
-                                <div class="parent-wrapper label-1">
-                                    <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
-                                        id="info-booking-service">
+                                            <span class="nav-link-text">Thông tin booking</span>
+                                        </div>
+                                    </a>
+                                    <div class="parent-wrapper label-1">
+                                        <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
+                                            id="info-booking-service">
 
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Danh sách booking</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Thêm thông tin booking</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Danh sách booking</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Thêm thông tin booking</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- label-->
+                                <p class="navbar-vertical-label">THỐNG KÊ</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                            <span data-feather="columns"></span>
+                                        </span>
+                                            <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Doanh thu</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                            <span data-feather="bar-chart-2"></span>
+                                        </span>
+                                            <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Thống kê</span>
+                                        </span>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
 
-                            <!-- label-->
-                            <p class="navbar-vertical-label">THỐNG KÊ - DNghiep</p>
-                            <hr class="navbar-vertical-line"/>
+                            <div ng-if="role === 'ROLE_ADMIN'">
+                                <!-- label-->
+                                <p class="navbar-vertical-label">QUẢN LÝ NHÂN VIÊN</p>
+                                <hr class="navbar-vertical-line"/>
 
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="#">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon"></div>
-                                        <span class="nav-link-icon">
-                                            <span data-feather="columns"></span>
-                                        </span>
-                                        <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Doanh thu</span>
-                                        </span>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="#">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon"></div>
-                                        <span class="nav-link-icon">
-                                            <span data-feather="bar-chart-2"></span>
-                                        </span>
-                                        <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Thống kê</span>
-                                        </span>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <!-- label-->
-                            <p class="navbar-vertical-label">QUẢN LÝ NHÂN VIÊN - Admin</p>
-                            <hr class="navbar-vertical-line"/>
-
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link dropdown-indicator label-1" href="#info-staff" role="button"
-                                   data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon">
-                                            <span class="fas fa-caret-right"></span>
-                                        </div>
-                                        <span class="nav-link-icon">
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1" href="#info-staff" role="button"
+                                       data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+                                                <span class="fas fa-caret-right"></span>
+                                            </div>
+                                            <span class="nav-link-icon">
                                             <span data-feather="users"></span>
                                         </span>
-                                        <span class="nav-link-text">Thông tin nhân viên</span>
-                                    </div>
-                                </a>
-                                <div class="parent-wrapper label-1">
-                                    <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
-                                        id="info-staff">
-
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Danh sách nhân viên</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Thêm nhân viên</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- label-->
-                            <p class="navbar-vertical-label">QUẢN LÝ DOANH NGHIỆP - Admin</p>
-                            <hr class="navbar-vertical-line"/>
-
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link dropdown-indicator label-1" href="#info-agent" role="button"
-                                   data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon">
-                                            <span class="fas fa-caret-right"></span>
+                                            <span class="nav-link-text">Thông tin nhân viên</span>
                                         </div>
-                                        <span class="nav-link-icon">
+                                    </a>
+                                    <div class="parent-wrapper label-1">
+                                        <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
+                                            id="info-staff">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Danh sách nhân viên</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Thêm nhân viên</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- label-->
+                                <p class="navbar-vertical-label">QUẢN LÝ DOANH NGHIỆP</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1" href="#info-agent" role="button"
+                                       data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+                                                <span class="fas fa-caret-right"></span>
+                                            </div>
+                                            <span class="nav-link-icon">
                                             <span data-feather="home"></span>
                                         </span>
-                                        <span class="nav-link-text">Thông tin doanh nghiệp</span>
+                                            <span class="nav-link-text">Thông tin doanh nghiệp</span>
+                                        </div>
+                                    </a>
+                                    <div class="parent-wrapper label-1">
+                                        <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
+                                            id="info-agent">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Danh sách doanh nghiệp</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-text">Thêm doanh nghiệp</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                </a>
-                                <div class="parent-wrapper label-1">
-                                    <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
-                                        id="info-agent">
-
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Danh sách doanh nghiệp</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Thêm doanh nghiệp</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </div>
-                            </div>
 
-                            <!-- label-->
-                            <p class="navbar-vertical-label">QUẢN LÝ DOANH THU - Admin</p>
-                            <hr class="navbar-vertical-line"/>
+                                <!-- label-->
+                                <p class="navbar-vertical-label">QUẢN LÝ DOANH THU</p>
+                                <hr class="navbar-vertical-line"/>
 
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="#">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon"></div>
-                                        <span class="nav-link-icon">
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
                                             <span data-feather="columns"></span>
                                         </span>
-                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text-wrapper">
                                             <span class="nav-link-text">Doanh thu</span>
                                         </span>
-                                    </div>
-                                </a>
-                            </div>
+                                        </div>
+                                    </a>
+                                </div>
 
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="#">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon"></div>
-                                        <span class="nav-link-icon">
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
                                             <span data-feather="bar-chart-2"></span>
                                         </span>
-                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text-wrapper">
                                             <span class="nav-link-text">Thống kê</span>
                                         </span>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <!-- label-->
-                            <p class="navbar-vertical-label">PHÂN QUYỀN NHÂN VIÊN - SPERADMIN</p>
-                            <hr class="navbar-vertical-line"/>
-
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link dropdown-indicator label-1" href="#account-authorization"
-                                   role="button"
-                                   data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon">
-                                            <span class="fas fa-caret-right"></span>
                                         </div>
-                                        <span class="nav-link-icon">
-                                            <span data-feather="home"></span>
-                                        </span>
-                                        <span class="nav-link-text">Phân quyền nhân viên</span>
-                                    </div>
-                                </a>
-                                <div class="parent-wrapper label-1">
-                                    <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
-                                        id="account-authorization">
-
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="/admin/decentralization-account"
-                                               data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Danh sách tài khoản</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="/admin/decentralization-list"
-                                               data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Phân quyền tài khoản</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    </a>
                                 </div>
                             </div>
 
+                            <div ng-if="role === 'ROLE_SUPERADMIN'">
+                                <!-- label-->
+                                <p class="navbar-vertical-label">PHÂN QUYỀN NHÂN VIÊN</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                            <span data-feather="settings"></span>
+                                        </span>
+                                            <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Phân quyền nhân viên</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -992,7 +977,7 @@
                                     <hr/>
                                     <div class="px-3">
                                         <a class="btn btn-phoenix-secondary d-flex flex-center w-100"
-                                           ng-click="logoutAuth()">
+                                           ng-click="logoutAuthAdmin()">
                                             <span class="me-2" data-feather="log-out"></span>
                                             Đăng xuất
                                         </a>
@@ -1058,8 +1043,6 @@
 <!--====== Controller Admin ======-->
 <script src="app/component/admin/controllers/auth/LoginControllerAD.js"></script>
 <script src="app/component/admin/controllers/DashboardControllerAD.js"></script>
-<script src="app/component/admin/controllers/DecentralizationControllerAD.js"></script>
-<script src="app/component/admin/controllers/DecentralizationListControllerAD.js"></script>
 
 <!--====== Controller Customer ======-->
 <script src="app/component/customers/controllers/auth/LoginController.js"></script>
@@ -1073,6 +1056,7 @@
 <script src="app/component/customers/controllers/tour/TourDetailController.js"></script>
 <script src="app/component/customers/controllers/location/LocationController.js"></script>
 <script src="app/component/customers/controllers/hotel/HotelController.js"></script>
+<script src="app/component/customers/controllers/hotel/HotelDetailController.js"></script>
 <script src="app/component/customers/controllers/move/DriveMoveController.js"></script>
 </body>
 </html>
