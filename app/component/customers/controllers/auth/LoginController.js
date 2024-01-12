@@ -7,6 +7,10 @@ travel_app.controller('LoginController', function ($scope, $location, $timeout, 
         password: null,
     }
 
+    function errorCallback() {
+        toastAlert('error', "Máy chủ không tồn tại !");
+    }
+
     /**
      * @message Login with jwt
      */
@@ -36,15 +40,15 @@ travel_app.controller('LoginController', function ($scope, $location, $timeout, 
                                     AuthService.setAuthData(token, user);
                                     window.location.href = '/home';
                                     toastAlert('success', 'Đăng nhập thành công !');
-                                });
+                                }, errorCallback);
                             }
                         }
-                    });
+                    }, errorCallback);
                 } else {
-                    toastAlert('warning', "Sai thông tin đăng nhập !");
+                    toastAlert('error', "Máy chủ không tồn tại !");
                 }
             }
-        });
+        }, errorCallback);
     };
 
     $scope.loginGoogle = function () {

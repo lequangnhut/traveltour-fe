@@ -27,7 +27,28 @@
     <div ng-include="'app/component/customers/views/components/footer.html'"></div>
 
     <!--====== Back To Top  ======-->
-    <a href="#" class="back-to-top"><span class="fas fa-angle-up"></span></a>
+    <div id="back-top">
+        <span class="fas fa-angle-up" id="icon"></span>
+    </div>
+
+    <!--====== Plugin Call ======-->
+    <div class="hotline-phone-ring-wrap">
+        <div class="hotline-phone-ring">
+            <div class="hotline-phone-ring-circle"></div>
+            <div class="hotline-phone-ring-circle-fill"></div>
+            <div class="hotline-phone-ring-img-circle">
+                <a href="tel:0967363343" class="pps-btn-img">
+                    <img src="https://nguyenhung.net/wp-content/uploads/2019/05/icon-call-nh.png" alt="Gọi điện thoại"
+                         width="50">
+                </a>
+            </div>
+        </div>
+        <div class="hotline-bar">
+            <a href="tel:0918619651">
+                <span class="text-hotline">0918.619.651</span>
+            </a>
+        </div>
+    </div>
 
     <script src="/assets/customers/vendor/jquery-3.6.0.min.js"></script>
     <script src="/assets/customers/vendor/slick/slick.min.js"></script>
@@ -1042,7 +1063,7 @@
 
 <!--====== Controller Admin ======-->
 <script src="app/component/admin/controllers/auth/LoginControllerAD.js"></script>
-<script src="app/component/admin/controllers/DashboardControllerAD.js"></script>
+<script src="app/component/admin/controllers/dashboard/DashboardControllerAD.js"></script>
 
 <!--====== Controller Customer ======-->
 <script src="app/component/customers/controllers/auth/LoginController.js"></script>
@@ -1058,7 +1079,7 @@
 <script src="app/component/customers/controllers/hotel/HotelController.js"></script>
 <script src="app/component/customers/controllers/hotel/HotelDetailController.js"></script>
 <script src="app/component/customers/controllers/move/DriveMoveController.js"></script>
-<script src="app/component/customers/controllers/info/InfomationController.js"></script>
+<script src="app/component/customers/controllers/info/InformationController.js"></script>
 <script src="app/component/customers/controllers/info/ChangePasswordController.js"></script>
 </body>
 </html>
