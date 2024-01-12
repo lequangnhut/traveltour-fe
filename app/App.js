@@ -44,6 +44,14 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/home/home.html',
             controller: 'HomeController'
         })
+        .when('/home/infomation', {
+            templateUrl: 'app/component/customers/views/pages/info/infomation.html',
+            controller: 'InfomationController'
+        })
+        .when('/home/infomation/changepassword', {
+            templateUrl: 'app/component/customers/views/pages/info/chage-password.html',
+            controller: 'ChangePassswordController'
+        })
         .when('/introduce', {
             templateUrl: 'app/component/customers/views/pages/home/introduce.html',
             controller: 'IntroduceController'

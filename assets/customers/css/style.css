@@ -6295,3 +6295,110 @@ ul.slick-dots li.slick-active {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+/* Main custome css */
+#infomation-section{
+    margin-top: 100px;
+}
+
+#infomation-section .active{
+    border-left: 2px solid #000000;
+}
+#infomation-section .profile{
+    padding: 10px 0 10px 20px;
+    border-radius: 8px;
+}
+#infomation-section .profile-info{
+    margin-left: 20px;
+}
+
+#infomation-section .line{
+    height:18px;
+    width: 1px;
+    border-radius: 2px;
+    background: #000000;
+    margin: 0 12px 0 12px;
+}
+
+#infomation-section .info-content{
+    margin-left: 60px;
+}
+@media only screen and (max-width: 768px) {
+    #infomation-section .info-content{
+        margin-left: 0px;
+    }
+}
+#infomation-section .change-information{
+    margin-right: 20px;
+}
+#infomation-section .avatar-user{
+    max-width: 70px;
+    max-height: 70px;
+    background-size: cover;
+}
+
+#infomation-section .persional-acccount .item{
+    height: 70px;
+    margin-right: 20px;
+    border-bottom: 1px solid #d0d0d0;
+}
+
+#infomation-section .persional-acccount .item:last-child{
+    border-bottom: none;
+}
+
+#infomation-section .change-password-form{
+    padding-right: 20px;
+}
+#infomation-section .btn-change{
+    padding: 12px 30px;
+    border-radius: 30px;
+}
+
+#infomation-section .btn-close{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 100px;
+}
+
+#infomation-section .modal-header{
+    border: none;
+}
+
+#infomation-section .image-input-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}
+
+#infomation-section .image-input-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#infomation-section .image-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.btn-greend{
+    background-color: #63AB45;
+    color: #FFFFFF
+}
+
+.color-greend{
+    color: #63AB45;
+}
+
+
+

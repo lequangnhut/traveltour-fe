@@ -1,0 +1,95 @@
+<section id="infomation-section">
+    <div class="container mt-5">
+        <div class="">
+            <div class="h2 mb-3">Thông tin tài khoản</div>
+            <div class="row ">
+                <nav id="sidebar" class="col-md-3 col-lg-3 d-md-block sidebar">
+                    <div ng-include="'app/component/customers/views/components/infomation/sidebar.html'"></div>
+                </nav>
+                <!-- Main content -->
+                <main class="col-md-9 ms-sm-auto col-lg-9 px-md-4">
+                    <div class="info-content">
+                        <div class="h6">Hồ sơ</div>
+                        <div class="profile bg-light">
+                            <div class=" d-flex align-items-center justify-content-between">
+                                <div class="box-profile d-flex align-items-center">
+                                    <img src="/assets/customers/images/user/avata-user-default.png" alt="avata-user" class="img-fluid avatar-user">
+                                    <div class="profile-info">
+                                        <div class="name h4">Nguyễn An</div>
+                                        <div class="d-flex align-items-center">
+                                        <span class="label">Giới tính:
+                                            <span class="fw-bold">
+                                                Nam
+                                            </span>
+                                        </span>
+                                            <span class="line"></span>
+                                            <span class="label">Ngày sinh: <span class="fw-bold">(Chưa cập nhật)</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="change-information ">
+                                    <button ng-click="showModalChangeProfile()" class="btn">Thay đổi</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-content mt-5 mb-5">
+                        <div class="h6">Tài khoản và bảo mật</div>
+                        <div class="profile bg-light">
+                            <div class=" d-flex align-items-center justify-content-between">
+                                <div class="persional-acccount w-100">
+                                    <div class="item d-flex align-items-center justify-content-between">
+                                        <div class="box-profile d-flex align-items-center">
+                                            <span>Tài khoản: <span class="fw-bold">0969653264</span></span>
+                                        </div>
+                                        <div class="change">
+                                            <button ng-click="showModalChangePhoneNumber()" class="btn">Thay đổi</button>
+                                        </div>
+                                    </div>
+                                    <div class="item d-flex align-items-center justify-content-between">
+                                        <div class="box-profile d-flex align-items-center">
+                                            <span>ID: <span class="fw-bold">23146347</span></span>
+                                        </div>
+                                        <div class="change">
+                                        </div>
+                                    </div>
+                                    <div class="item d-flex align-items-center justify-content-between">
+                                        <div class="box-profile d-flex align-items-center">
+                                            <span>Email: <span class="fw-bold">Anntpc04830@fpt.edu.vn</span></span>
+                                        </div>
+                                        <div class="change">
+                                            <button ng-click="showModalChangeEmail()" class="btn">Thay đổi</button>
+                                        </div>
+                                    </div>
+                                    <div class="item d-flex align-items-center justify-content-between">
+                                        <div class="box-profile d-flex align-items-center">
+                                            <span>Địa chỉ: <span class="fw-bold">(Chưa cập nhật)</span></span>
+                                        </div>
+                                        <div class="change">
+                                            <button ng-click="showModalChangeAddress()" class="btn">Thay đổi</button>
+                                        </div>
+                                    </div>
+                                    <div class="item d-flex align-items-center justify-content-between">
+                                        <div class="box-profile d-flex align-items-center">
+                                            <span>Mật khẩu: <span class="fw-bold">********</span></span>
+                                        </div>
+                                        <div class="change">
+                                            <a href="/home/infomation/changepassword" class="text-dark btn">Thay đổi</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div ng-include="'app/component/customers/views/components/modal/infomation/change-profile.html'"></div>
+<div ng-include="'app/component/customers/views/components/modal/infomation/change-phonenumber.html'"></div>
+<div ng-include="'app/component/customers/views/components/modal/infomation/change-email.html'"></div>
+<div ng-include="'app/component/customers/views/components/modal/infomation/change-address.html'"></div>
+
+
