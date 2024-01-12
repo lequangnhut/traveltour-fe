@@ -24,7 +24,8 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
         const path = $location.path();
         return path === '/admin/dashboard' ||
             path === '/admin/decentralization-account' ||
-            path === '/admin/decentralization-list';
+            path === '/admin/decentralization-list' ||
+            path === '/admin/register-business/business-information';
     };
 
     $scope.logoutAuth = function () {
@@ -37,5 +38,30 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
         AuthService.clearAuthData();
         $scope.isAuthenticated = false;
         window.location.href = '/admin';
+    };
+
+    /**
+     * Kiểm tra đường dẫn hiện tại
+     * @param viewLocation
+     * @returns {boolean}
+     */
+    $scope.isActive = function(viewLocation) {
+        return viewLocation === $location.path();
+    };
+
+    /**
+     * Ẩn sidebar
+     * @returns {boolean}
+     */
+    $scope.hideSidebar = function() {
+        return $scope.isActive('/admin/register-business/business-information');
+    };
+
+    /**
+     * Bỏ margin khi vào đường dẫn đó
+     * @returns {{display: string}|{}}
+     */
+    $scope.sidebarStyle = function() {
+        return $scope.isActive('/admin/register-business/business-information') ? {'margin': '0'} : {};
     };
 });

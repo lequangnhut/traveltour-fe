@@ -1,0 +1,96 @@
+/*#business-information .item{*/
+/*    position: relative;*/
+/*}*/
+
+/*#business-information .item-1{*/
+
+/*    width: 150px;*/
+/*    height: 93px;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*}*/
+
+/*#business-information .vector{*/
+/*    position: absolute;*/
+/*    width: 21px;*/
+/*    height: 16px;*/
+/*    top: 14px;*/
+/*    left: 12px;*/
+/*}*/
+
+/*#business-information .vector-wrapper{*/
+/*    position: absolute;*/
+/*    width: 50px;*/
+/*    height: 50px;*/
+/*    top: 0;*/
+/*    left: 49px;*/
+/*    background-color: #f3f3f3;*/
+/*    border-radius: 25px;*/
+/*    border: 3px solid;*/
+/*    border-color: #63ab45;*/
+/*}*/
+
+/*#business-information .text-wrapper{*/
+/*    position: absolute;*/
+/*    width: 148px;*/
+/*    height: 34px;*/
+/*    top: 59px;*/
+/*    left: 0;*/
+/*    font-weight: 400;*/
+/*    color: #525b75;*/
+/*    font-size: 16px;*/
+/*    text-align: center;*/
+/*    letter-spacing: 0;*/
+/*    line-height: normal;*/
+/*}*/
+
+#business-information .progress-container {
+    margin: 30px 0 0 0;
+    overflow: auto;
+}
+#business-information .item {
+    width: 150px;
+}
+#business-information .vector{
+    border-radius: 50%;
+    border: 3px solid #63ab45;
+    width: 50px;
+    height: 50px;
+    fill: #63ab45;
+}
+
+#business-information .num{
+    border-radius: 50%;
+    border: 3px solid #63ab45;
+    width: 50px;
+    height: 50px;
+    line-height: 44px;
+    font-size: 18px;
+    font-weight: 600;
+    background: #63ab45;
+    color: #fff;
+    fill: #63ab45;
+}
+
+#business-information .text-wrapper{
+    margin-top: 10px;
+}
+
+#business-information .form{
+    border-radius: 8px;
+    margin-top: 30px;
+    width: 800px;
+    background: #fff;
+    padding: 50px;
+}
+
+.color-greend{
+    color: #63ab45;
+}
+
+#business-information .btn-submit-form{
+    background: #63ab45;
+    padding: 12px 40px;
+    color: #fff;
+    border-radius: 40px;
+}

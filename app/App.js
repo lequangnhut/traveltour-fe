@@ -31,25 +31,15 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/admin/decentralization-account', {
             templateUrl: 'app/component/admin/views/pages/decentralization/account-full.html',
-            controller: 'DecentralizationControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/admin');
-                    }
-                }
-            }
+            controller: 'DecentralizationControllerAD'
         })
         .when('/admin/decentralization-list', {
             templateUrl: 'app/component/admin/views/pages/decentralization/decentralization-list.html',
-            controller: 'DecentralizationListControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/admin');
-                    }
-                }
-            }
+            controller: 'DecentralizationListControllerAD'
+        })
+        .when('/admin/register-business/business-information', {
+            templateUrl: 'app/component/admin/views/pages/register-agent/business-information.html',
+            controller: 'BusinessInformationController'
         })
         /**
          * Customer
@@ -58,27 +48,13 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/home/home.html',
             controller: 'HomeController'
         })
-        .when('/information', {
+        .when('/home/information', {
             templateUrl: 'app/component/customers/views/pages/info/information.html',
-            controller: 'InformationController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/sign-in');
-                    }
-                }
-            }
+            controller: 'InformationController'
         })
-        .when('/information/change-password', {
+        .when('/home/information/change-password', {
             templateUrl: 'app/component/customers/views/pages/info/change-password.html',
-            controller: 'ChangePasswordController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/sign-in');
-                    }
-                }
-            }
+            controller: 'ChangePasswordController'
         })
         .when('/introduce', {
             templateUrl: 'app/component/customers/views/pages/home/introduce.html',
@@ -104,10 +80,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/location/location-tour.html',
             controller: 'LocationController'
         })
-        .when('/tourism-location-detail', {
-            templateUrl: 'app/component/customers/views/pages/location/location-tour-detail.html',
-            controller: 'LocationController'
-        })
         .when('/hotel', {
             templateUrl: 'app/component/customers/views/pages/hotel/hotel.html',
             controller: 'HotelController'
@@ -118,10 +90,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/drive-move', {
             templateUrl: 'app/component/customers/views/pages/move/drive-move.html',
-            controller: 'DriveMoveController'
-        })
-        .when('/drive-move-detail', {
-            templateUrl: 'app/component/customers/views/pages/move/drive-move-detail.html',
             controller: 'DriveMoveController'
         })
         /**

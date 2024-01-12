@@ -1984,7 +1984,7 @@ jQuery(function($) {
         var width = dokan.store_banner_dimension.width,
             height = (dokan.store_banner_dimension.height / dokan.store_banner_dimension.width) * $('#dokan-content').width();
 
-        $('.profile-infomation-img.dummy-image').css({
+        $('.profile-information-img.dummy-image').css({
             height: height
         });
     }
