@@ -73,11 +73,6 @@
     background-color: #F9F9F7;
 }
 
-@font-face {
-    font-family: Montserrat;
-    src: url(../fonts/Montserrat-Medium.ttf);
-}
-
 h1 {
     font-size: 85px;
     font-weight: 700;
@@ -228,7 +223,7 @@ body {
     font-style: normal;
     font-weight: 300;
     color: #484848;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Prompt", sans-serif;
     font-size: 16px;
     line-height: 29.6px;
     overflow-x: hidden;
@@ -924,6 +919,7 @@ button {
 
 .header-navigation .main-menu ul > li > a span.dd-trigger {
     margin-left: 5px;
+    display: none;
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1600px) {
@@ -6291,65 +6287,71 @@ ul.slick-dots li.slick-active {
 /*# sourceMappingURL=style.css.map */
 
 /* Main custome css */
-#information-section{
+#information-section {
     margin-top: 100px;
 }
 
-#information-section .active{
+#information-section .active {
     border-left: 2px solid #000000;
 }
-#information-section .profile{
+
+#information-section .profile {
     padding: 10px 0 10px 20px;
     border-radius: 8px;
 }
-#information-section .profile-info{
+
+#information-section .profile-info {
     margin-left: 20px;
 }
 
-#information-section .line{
-    height:18px;
+#information-section .line {
+    height: 18px;
     width: 1px;
     border-radius: 2px;
     background: #000000;
     margin: 0 12px 0 12px;
 }
 
-#information-section .info-content{
+#information-section .info-content {
     margin-left: 60px;
 }
+
 @media only screen and (max-width: 768px) {
-    #information-section .info-content{
+    #information-section .info-content {
         margin-left: 0px;
     }
 }
-#information-section .change-information{
+
+#information-section .change-information {
     margin-right: 20px;
 }
-#information-section .avatar-user{
+
+#information-section .avatar-user {
     max-width: 70px;
     max-height: 70px;
     background-size: cover;
 }
 
-#information-section .persional-acccount .item{
+#information-section .persional-acccount .item {
     height: 70px;
     margin-right: 20px;
     border-bottom: 1px solid #d0d0d0;
 }
 
-#information-section .persional-acccount .item:last-child{
+#information-section .persional-acccount .item:last-child {
     border-bottom: none;
 }
 
-#information-section .change-password-form{
+#information-section .change-password-form {
     padding-right: 20px;
 }
-#information-section .btn-change{
+
+#information-section .btn-change {
     padding: 12px 30px;
     border-radius: 30px;
 }
 
-#information-section .btn-close{
+#information-section .btn-close {
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -6385,12 +6387,12 @@ ul.slick-dots li.slick-active {
     cursor: pointer;
 }
 
-.btn-greend{
+.btn-greend {
     background-color: #63AB45;
     color: #FFFFFF
 }
 
-.color-greend{
+.color-greend {
     color: #63AB45;
 }
 
