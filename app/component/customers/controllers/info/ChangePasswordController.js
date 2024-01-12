@@ -1,1 +1,2 @@
-travel_app.controller('ChangePassswordController', function($scope) {})
+travel_app.controller('ChangePasswordController', function ($scope) {
+});

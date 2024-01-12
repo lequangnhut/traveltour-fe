@@ -1,6 +1,4 @@
-
-travel_app.controller("InfomationController", function ($scope) {
-
+travel_app.controller("InformationController", function ($scope) {
     $scope.selectedImageSrc = null;
 
     /**
@@ -82,5 +80,4 @@ travel_app.controller("InfomationController", function ($scope) {
     $scope.closeModalChangeAddress = function () {
         $('#change-address').modal('hide');
     };
-
 })

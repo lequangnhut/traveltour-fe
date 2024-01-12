@@ -30,8 +30,9 @@ travel_app.service('AuthService', function ($http, $window) {
     this.loginWithGoogle = function () {
         return $http({
             method: 'GET',
-            url: 'http://localhost:8080/oauth2/authorization/google'
-        })
+            url: 'http://localhost:8080/oauth2/authorization/google',
+            withCredentials: true
+        });
     };
 
     /**
