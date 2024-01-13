@@ -96,7 +96,7 @@
         }
     </script>
 
-    <main class="main" id="top" >
+    <main class="main" id="top">
         <nav class="navbar navbar-vertical navbar-expand-lg" ng-hide="hideSidebar()">
             <script>
                 var navbarStyle = window.config.config.phoenixNavbarStyle;
@@ -774,7 +774,8 @@
                     </a>
                 </div>
 
-                <div class="search-box navbar-top-search-box d-none d-lg-block" style="width:25rem;">
+                <div class="search-box navbar-top-search-box d-none d-lg-block" style="width:25rem;"
+                     ng-hide="hideSidebar()">
                     <form class="position-relative" data-bs-toggle="search" data-bs-display="static"><input
                             class="form-control search-input fuzzy-search rounded-pill form-control-sm" type="search"
                             placeholder="Search..." aria-label="Search"/>
@@ -1079,6 +1080,9 @@
 <!--====== Controller Admin ======-->
 <script src="app/component/admin/controllers/auth/LoginControllerAD.js"></script>
 <script src="app/component/admin/controllers/dashboard/DashboardControllerAD.js"></script>
+<script src="app/component/admin/controllers/decentralization/DecentralizationControllerAD.js"></script>
+<script src="app/component/admin/controllers/decentralization/DecentralizationListControllerAD.js"></script>
+<script src="app/component/admin/controllers/register-agent/BusinessInformationController.js"></script>
 
 <!--====== Controller Customer ======-->
 <script src="app/component/customers/controllers/auth/LoginController.js"></script>

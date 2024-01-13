@@ -45,7 +45,7 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
      * @param viewLocation
      * @returns {boolean}
      */
-    $scope.isActive = function(viewLocation) {
+    $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
     };
 
@@ -53,7 +53,7 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
      * Ẩn sidebar
      * @returns {boolean}
      */
-    $scope.hideSidebar = function() {
+    $scope.hideSidebar = function () {
         return $scope.isActive('/admin/register-business/business-information');
     };
 
@@ -61,7 +61,7 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
      * Bỏ margin khi vào đường dẫn đó
      * @returns {{display: string}|{}}
      */
-    $scope.sidebarStyle = function() {
+    $scope.sidebarStyle = function () {
         return $scope.isActive('/admin/register-business/business-information') ? {'margin': '0'} : {};
     };
 });

@@ -9,47 +9,19 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/admin', {
             templateUrl: 'app/component/admin/views/pages/auth/login.html',
-            controller: 'LoginControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (AuthService.getToken()) {
-                        $location.path('/admin/dashboard');
-                    }
-                }
-            }
+            controller: 'LoginControllerAD'
         })
         .when('/admin/dashboard', {
             templateUrl: 'app/component/admin/views/pages/dashboard/dashboard.html',
-            controller: 'DashboardControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/admin');
-                    }
-                }
-            }
+            controller: 'DashboardControllerAD'
         })
         .when('/admin/decentralization-account', {
             templateUrl: 'app/component/admin/views/pages/decentralization/account-full.html',
-            controller: 'DecentralizationControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/admin');
-                    }
-                }
-            }
+            controller: 'DecentralizationControllerAD'
         })
         .when('/admin/decentralization-list', {
             templateUrl: 'app/component/admin/views/pages/decentralization/decentralization-list.html',
-            controller: 'DecentralizationListControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/admin');
-                    }
-                }
-            }
+            controller: 'DecentralizationListControllerAD'
         })
         .when('/admin/register-business/business-information', {
             templateUrl: 'app/component/admin/views/pages/register-agent/business-information.html',
