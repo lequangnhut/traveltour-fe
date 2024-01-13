@@ -12,6 +12,10 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
         window.location.href = '/home';
     }
 
+    /**
+     * Kiểm tra nếu là Auth page thì xử lý giao diện
+     * @returns {boolean}
+     */
     $scope.isAuthPage = function () {
         const path = $location.path();
         return path === '/sign-in' ||
@@ -20,12 +24,19 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
             path === '/admin';
     };
 
+    /**
+     * Kiểm tra nếu là isManagerPage thì xử lý giao diện
+     * @returns {boolean}
+     */
     $scope.isManagerPage = function () {
         const path = $location.path();
         return path === '/admin/dashboard' ||
             path === '/admin/decentralization-account' ||
             path === '/admin/decentralization-list' ||
-            path === '/admin/register-business/business-information';
+            // agent hotel
+            path === '/admin/register-business/business-information' ||
+            // agent trans
+            path === '/admin/register-trans';
     };
 
     $scope.logoutAuth = function () {
@@ -54,7 +65,9 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
      * @returns {boolean}
      */
     $scope.hideSidebar = function () {
-        return $scope.isActive('/admin/register-business/business-information');
+        const path = $location.path();
+        return path === '/admin/register-business/business-information' ||
+            path === '/admin/register-trans';
     };
 
     /**
@@ -62,6 +75,13 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
      * @returns {{display: string}|{}}
      */
     $scope.sidebarStyle = function () {
-        return $scope.isActive('/admin/register-business/business-information') ? {'margin': '0'} : {};
+        const path = $location.path();
+        const isActivePath = $scope.isActive(
+            '/admin/register-business/business-information' ||
+            '/admin/register-trans'
+        );
+        return (path === '/admin/register-business/business-information' ||
+            path === '/admin/register-trans') ||
+        isActivePath ? {'margin': '0'} : {};
     };
 });

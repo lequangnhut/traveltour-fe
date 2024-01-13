@@ -23,9 +23,19 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/decentralization/decentralization-list.html',
             controller: 'DecentralizationListControllerAD'
         })
+        /**
+         * Agent Hotel
+         */
         .when('/admin/register-business/business-information', {
             templateUrl: 'app/component/admin/views/pages/register-agent/business-information.html',
             controller: 'BusinessInformationController'
+        })
+        /**
+         * Agent Trans
+         */
+        .when('/admin/register-trans', {
+            templateUrl: 'app/component/agent/trans/views/pages/register-trans.html',
+            controller: 'RegisterTransControllerAG'
         })
         /**
          * Customer
