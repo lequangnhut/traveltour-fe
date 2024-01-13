@@ -1,0 +1,372 @@
+<form ng-submit="submitDataRegisterTrans()" name="register_trans" method="post">
+    <section id="business-information" ng-show="!showNextForm">
+        <div class="container-fluid">
+            <div class="logo text-center">
+                <div class="d-flex align-items-center justify-content-center">
+                    <img src="/assets/admin/assets/img/icons/logo.png" alt="logo" width="40"/>
+                    <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">TravelTour</p>
+                </div>
+                <div class="content-text mt-3">
+                    <div class="h4">Đăng kí thông tin đối tác TravelTour</div>
+                </div>
+                <div class="progress-register">
+                    <!-- Tiến dộ -->
+                    <div class="progress-container">
+                        <div class="container">
+                            <div class="d-flex justify-content-center">
+                                <div class="item">
+                                    <div class="item-1">
+                                        <div class="vector-wrapper">
+                                            <div class="vector-wrapper">
+                                                <span class="num">1</span>
+                                            </div>
+                                        </div>
+                                        <div class="text-wrapper">Tạo doanh nghiệp</div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="item-1">
+                                        <div class="vector-wrapper">
+                                            <span class="num">2</span>
+                                        </div>
+                                        <div class="text-wrapper">Thông tin phương tiện</div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="item-1">
+                                        <div class="vector-wrapper">
+                                            <span class="num">3</span>
+                                        </div>
+                                        <div class="text-wrapper">Xác nhận thông tin</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main d-flex justify-content-center theme-wizard">
+                <div class="form card">
+                    <div class="row g-3">
+                        <div class="h3 color-greend fw-medium">TẠO DOANH NGHIỆP</div>
+                        <div class="col-12">
+                            <label for="inputNameBusiness" class="form-label">Tên doanh nghiệp</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="inputNameBusiness"
+                                   placeholder="Công ty du lịch TravelTour"
+                                   name="name"
+                                   ng-model="agent.name"
+                                   ng-class="{ 'is-invalid': register_trans.name.$invalid && register_trans.name.$touched, 'is-valid': register_trans.name.$valid && register_trans.name.$touched }"
+                                   ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_trans.name.$touched && register_trans.name.$error.required">
+                                Vui lòng nhập tên doanh nghiệp !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="register_trans.name.$touched && register_trans.name.$error.pattern">
+                                Tên doanh nghiệp không đúng định dạng !
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputFullname" class="form-label">Tên người đại diện</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="inputFullname"
+                                   placeholder="Nguyễn Văn A"
+                                   name="fname"
+                                   ng-model="agent.fname"
+                                   ng-class="{ 'is-invalid': register_trans.fname.$invalid && register_trans.fname.$touched, 'is-valid': register_trans.fname.$valid && register_trans.fname.$touched }"
+                                   ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_trans.fname.$touched && register_trans.fname.$error.required">
+                                Vui lòng nhập tên người đại diện !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="register_trans.fname.$touched && register_trans.fname.$error.pattern">
+                                Tên người đại diện không đúng định dạng !
+                            </small>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="form-label">Mã số thuế</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="inputEmail4"
+                                   placeholder="1423142144"
+                                   name="mst"
+                                   ng-model="agent.mst"
+                                   ng-class="{ 'is-invalid': register_trans.mst.$invalid && register_trans.mst.$touched, 'is-valid': register_trans.mst.$valid && register_trans.mst.$touched }"
+                                   ng-pattern="/^\d{10,13}$/"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_trans.mst.$touched && register_trans.mst.$error.required">
+                                Vui lòng nhập mã số thuế !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="register_trans.mst.$touched && register_trans.mst.$error.pattern">
+                                Mã số thuế không đúng định dạng !
+                            </small>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputPassword4" class="form-label"> Số điện thoại</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="inputPassword4"
+                                   placeholder="0969653264"
+                                   name="phone"
+                                   ng-model="agent.phone"
+                                   ng-class="{ 'is-invalid': register_trans.phone.$invalid && register_trans.phone.$touched, 'is-valid': register_trans.phone.$valid && register_trans.phone.$touched }"
+                                   ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_trans.phone.$touched && register_trans.phone.$error.required">
+                                Vui lòng nhập số điện thoại !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="register_trans.phone.$touched && register_trans.phone.$error.pattern">
+                                Số điện thoại không đúng định dạng !
+                            </small>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Tỉnh</label>
+                            <select class="form-select"
+                                    ng-class="{ 'is-invalid': register_trans.province.$invalid && register_trans.province.$touched, 'is-valid': register_trans.province.$valid && register_trans.province.$touched }"
+                                    name="province"
+                                    ng-model="agent.province"
+                                    required
+                            >
+                                <option selected>Choose...</option>
+                                <option>...</option>
+                            </select>
+                            <small class="text-danger" ng-show="register_trans.province.$error.required">
+                                Vui lòng chọn tỉnh/thành phố.
+                            </small>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Huyện</label>
+                            <select class="form-select"
+                                    ng-class="{ 'is-invalid': register_trans.districts.$invalid && register_trans.districts.$touched, 'is-valid': register_trans.districts.$valid && register_trans.districts.$touched }"
+                                    name="districts"
+                                    ng-model="agent.districts"
+                                    required
+                            >
+                                <option selected>Choose...</option>
+                                <option>...</option>
+                            </select>
+                            <small class="text-danger" ng-show="register_trans.districts.$error.required">
+                                Vui lòng chọn quận/huyện.
+                            </small>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Xã</label>
+                            <select class="form-select"
+                                    ng-class="{ 'is-invalid': register_trans.ward.$invalid && register_trans.ward.$touched, 'is-valid': register_trans.ward.$valid && register_trans.ward.$touched }"
+                                    name="ward"
+                                    ng-model="agent.ward"
+                                    required
+                            >
+                                <option selected>Choose...</option>
+                                <option>...</option>
+                            </select>
+                            <small class="text-danger" ng-show="register_trans.ward.$error.required">
+                                Vui lòng chọn phường/xã.
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Địa chỉ</label>
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="1234 Main St"
+                                   name="address"
+                                   ng-model="agent.address"
+                                   ng-class="{ 'is-invalid': register_trans.address.$invalid && register_trans.address.$touched, 'is-valid': register_trans.address.$valid && register_trans.address.$touched }"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_trans.address.$touched && register_trans.address.$error.required">
+                                Vui lòng nhập địa chỉ doanh nghiệp !
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Giấy phép đăng ký kinh doanh</label>
+                            <input class="form-control"
+                                   type="file"
+                                   ng-model="agent.business_license"
+                            >
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-5">
+                            <button type="button" class="btn btn-submit-form"
+                                    ng-disabled="register_trans.$invalid"
+                                    ng-click="goToNextSection()">
+                                Tiếp tục...
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="business-information" ng-show="showNextForm && !showThirdForm">
+        <div class="container-fluid">
+            <div class="logo text-center">
+                <div class="d-flex align-items-center justify-content-center">
+                    <img src="/assets/admin/assets/img/icons/logo.png" alt="logo" width="40"/>
+                    <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">TravelTour</p>
+                </div>
+                <div class="content-text mt-3">
+                    <div class="h4">Đăng kí thông tin đối tác TravelTour</div>
+                </div>
+                <div class="progress-register">
+                    <!-- Tiến dộ -->
+                    <div class="progress-container">
+                        <div class="container">
+                            <div class="d-flex justify-content-center">
+                                <div class="item">
+                                    <div class="item-1">
+                                        <div class="vector-wrapper">
+                                            <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                                 id="tick">
+                                                <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
+                                            </svg>
+                                        </div>
+                                        <div class="text-wrapper">Tạo doanh nghiệp</div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="item-1">
+                                        <div class="vector-wrapper">
+                                            <span class="num">2</span>
+                                        </div>
+                                        <div class="text-wrapper">Thông tin phương tiện</div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="item-1">
+                                        <div class="vector-wrapper">
+                                            <span class="num">3</span>
+                                        </div>
+                                        <div class="text-wrapper">Xác nhận thông tin</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main d-flex justify-content-center theme-wizard">
+                <div class="form card">
+                    <div class="row g-3">
+                        <div class="h3 color-greend fw-medium">THÔNG TIN THƯƠNG HIỆU</div>
+                        <div class="col-12">
+                            <label class="form-label">Tên thương hiệu</label>
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Công ty xe khách Phương Trang"
+                                   ng-model="agent.name_agent"
+                            >
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Hình ảnh chứng minh</label>
+                            <input class="form-control"
+                                   type="file"
+                                   ng-model="agent.business_images"
+                            >
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-5">
+                            <a role="button" class="btn btn-submit-form mx-3" ng-click="goPreviousSectionOne()">
+                                Quay về
+                            </a>
+                            <a role="button" class="btn btn-submit-form" ng-click="goToThirdSection()">
+                                Tiếp tục...
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="business-information" ng-show="showThirdForm">
+        <div class="container-fluid">
+            <div class="logo text-center">
+                <div class="d-flex align-items-center justify-content-center">
+                    <img src="/assets/admin/assets/img/icons/logo.png" alt="logo" width="40"/>
+                    <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">TravelTour</p>
+                </div>
+                <div class="content-text mt-3">
+                    <div class="h4">Đăng kí thông tin đối tác TravelTour</div>
+                </div>
+                <div class="progress-register">
+                    <!-- Tiến dộ -->
+                    <div class="progress-container">
+                        <div class="container">
+                            <div class="d-flex justify-content-center">
+                                <div class="item">
+                                    <div class="item-1">
+                                        <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             id="tick">
+                                            <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
+                                        </svg>
+                                        <div class="text-wrapper">Tạo doanh nghiệp</div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="item-1">
+                                        <div class="vector-wrapper">
+                                            <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                                 id="tick">
+                                                <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
+                                            </svg>
+                                        </div>
+                                        <div class="text-wrapper">Thông tin phương tiện</div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="item-1">
+                                        <div class="vector-wrapper">
+                                            <span class="num">3</span>
+                                        </div>
+                                        <div class="text-wrapper">Xác nhận thông tin</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main d-flex justify-content-center theme-wizard">
+                <div class="form card">
+                    <div class="h3 color-greend fw-medium mb-3">XÁC NHẬN ĐĂNG KÝ PHƯƠNG TIỆN TRÊN TRAVEL TOUR</div>
+                    <div class="col-12">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" ng-model="checkboxChecked" name="" id="">
+                            Tôi cam kết cung cấp thông tin đầy đủ, chính xác và minh bạch khi đăng ký bán phòng trên
+                            trang
+                            web du lịch. Chúng tôi hiểu rằng sự minh bạch và tin cậy là yếu tố quan trọng để tạo ra một
+                            môi
+                            trường kinh doanh tích cực và lâu dài.
+                        </label>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-5">
+                        <a role="button" class="btn btn-submit-form mx-3" ng-click="goPreviousSectionTwo()">
+                            Quay về
+                        </a>
+                        <button type="submit" class="btn btn-submit-form" ng-disabled="!checkboxChecked">
+                            Hoàn thành...
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
