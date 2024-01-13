@@ -1,7 +1,11 @@
-travel_app.controller('RegisterTransControllerAG', function ($scope) {
+travel_app.controller('RegisterTransControllerAG', function ($scope, $http) {
     $scope.showNextForm = false;
     $scope.showThirdForm = false;
     $scope.checkboxChecked = false;
+
+    $scope.provinces = [];
+    $scope.districts = [];
+    $scope.wards = [];
 
     $scope.agent = {
         name: null,
@@ -36,6 +40,44 @@ travel_app.controller('RegisterTransControllerAG', function ($scope) {
 
     $scope.goPreviousSectionTwo = function () {
         $scope.showThirdForm = false;
+    };
+
+    /**
+     * API lấy dữ liệu tỉnh thành và fill dữ liệu lên select
+     */
+    $http.get('/lib/address/data.json').then(function (response) {
+        $scope.provinces = response.data;
+    });
+
+    $scope.onProvinceChange = function () {
+        $scope.districts = $scope.provinces.find(p => p.Id === $scope.agent.province).Districts;
+        $scope.agent.districts = null;
+        $scope.agent.ward = null;
+    };
+
+    $scope.onDistrictChange = function () {
+        $scope.wards = $scope.districts.find(d => d.Id === $scope.agent.districts).Wards;
+        $scope.agent.ward = null;
+    };
+
+    /**
+     * Upload hình ảnh và lưu vào biến business_images
+     * @param file
+     */
+    $scope.uploadBusinessImage = function (file) {
+        if (file && !file.$error) {
+            $scope.agent.business_images = file;
+        }
+    };
+
+    /**
+     * Upload hình ảnh và lưu vào biến business_license
+     * @param file
+     */
+    $scope.uploadBusinessLicense = function (file) {
+        if (file && !file.$error) {
+            $scope.agent.business_license = file;
+        }
     };
 
     /**

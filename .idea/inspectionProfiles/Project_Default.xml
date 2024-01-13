@@ -4,12 +4,14 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="5">
+          <list size="7">
             <item index="0" class="java.lang.String" itemvalue="ng-app" />
             <item index="1" class="java.lang.String" itemvalue="src" />
             <item index="2" class="java.lang.String" itemvalue="style" />
             <item index="3" class="java.lang.String" itemvalue="aria-labelledby" />
             <item index="4" class="java.lang.String" itemvalue="_echarts_instance_" />
+            <item index="5" class="java.lang.String" itemvalue="ngf-select" />
+            <item index="6" class="java.lang.String" itemvalue="ngf-max-size" />
           </list>
         </value>
       </option>

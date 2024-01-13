@@ -1,4 +1,4 @@
-let travel_app = angular.module('travel_app', ['ngRoute']);
+let travel_app = angular.module('travel_app', ['ngRoute', 'ngFileUpload']);
 
 let BASE_API = 'http://localhost:8080/api/v1/'
 
@@ -31,11 +31,15 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'BusinessInformationController'
         })
         /**
-         * Agent Trans
+         * Agent Transport
          */
-        .when('/admin/register-trans', {
+        .when('/admin/register-transport', {
             templateUrl: 'app/component/agent/trans/views/pages/register-trans.html',
             controller: 'RegisterTransControllerAG'
+        })
+        .when('/admin/transport-list', {
+            templateUrl: 'app/component/agent/trans/views/pages/transport-list.html',
+            controller: ''
         })
         /**
          * Customer
