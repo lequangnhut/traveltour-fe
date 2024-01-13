@@ -602,6 +602,56 @@
                                 </div>
                             </div>
 
+                            <!-- <div ng-if="role ==='ROLE_AGENT_TRANS'">-->
+                            <!-- label-->
+                            <p class="navbar-vertical-label">QUẢN LÝ PHƯƠNG TIỆN</p>
+                            <hr class="navbar-vertical-line"/>
+
+                            <!-- label-->
+                            <div class="nav-item-wrapper">
+                                <a class="nav-link label-1" href="/admin/transport-list">
+                                    <div class="d-flex align-items-center">
+                                        <div class="dropdown-indicator-icon"></div>
+                                        <span class="nav-link-icon">
+                                            <span data-feather="inbox"></span>
+                                        </span>
+                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Danh sách phương tiện</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- label-->
+                            <div class="nav-item-wrapper">
+                                <a class="nav-link label-1" href="#">
+                                    <div class="d-flex align-items-center">
+                                        <div class="dropdown-indicator-icon"></div>
+                                        <span class="nav-link-icon">
+                                            <span data-feather="navigation"></span>
+                                        </span>
+                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Danh sách booking</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- label-->
+                            <div class="nav-item-wrapper">
+                                <a class="nav-link label-1" href="#">
+                                    <div class="d-flex align-items-center">
+                                        <div class="dropdown-indicator-icon"></div>
+                                        <span class="nav-link-icon">
+                                            <span data-feather="map"></span>
+                                        </span>
+                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Danh sách chuyến đi</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+
                             <div ng-if="role === 'ROLE_ADMIN'">
                                 <!-- label-->
                                 <p class="navbar-vertical-label">QUẢN LÝ NHÂN VIÊN</p>
@@ -1064,11 +1114,13 @@
     <script src="/assets/admin/assets/js/crm-analytics.js"></script>
     <script src="/assets/admin/assets/vendors/echarts/echarts.min.js"></script>
     <script src="/assets/admin/assets/vendors/dropzone/dropzone.min.js"></script>
+    <script src="/lib/angularjs/axios.min.js"></script>
 </div>
 
 <!--====== Angular js ======-->
 <script src="/node_modules/angular/angular.js"></script>
-<script src="lib/angular-route.min.js"></script>
+<script src="/lib/angular-route.min.js"></script>
+<script src="/node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
 
 <!--====== Application ======-->
 <script src="app/App.js"></script>

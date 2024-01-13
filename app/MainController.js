@@ -36,7 +36,8 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
             // agent hotel
             path === '/admin/register-business/business-information' ||
             // agent trans
-            path === '/admin/register-trans';
+            path === '/admin/register-transport' ||
+            path === '/admin/transport-list';
     };
 
     $scope.logoutAuth = function () {
@@ -67,7 +68,7 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
     $scope.hideSidebar = function () {
         const path = $location.path();
         return path === '/admin/register-business/business-information' ||
-            path === '/admin/register-trans';
+            path === '/admin/register-transport';
     };
 
     /**
@@ -78,10 +79,10 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
         const path = $location.path();
         const isActivePath = $scope.isActive(
             '/admin/register-business/business-information' ||
-            '/admin/register-trans'
+            '/admin/register-transport'
         );
         return (path === '/admin/register-business/business-information' ||
-            path === '/admin/register-trans') ||
+            path === '/admin/register-transport') ||
         isActivePath ? {'margin': '0'} : {};
     };
 });

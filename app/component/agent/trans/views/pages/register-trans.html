@@ -134,47 +134,55 @@
                             </small>
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Tỉnh</label>
+                            <label class="form-label">Tỉnh/Thành phố</label>
                             <select class="form-select"
-                                    ng-class="{ 'is-invalid': register_trans.province.$invalid && register_trans.province.$touched, 'is-valid': register_trans.province.$valid && register_trans.province.$touched }"
                                     name="province"
+                                    ng-class="{ 'is-invalid': register_trans.province.$invalid && register_trans.province.$touched, 'is-valid': register_trans.province.$valid && register_trans.province.$touched }"
+                                    ng-options="city.Id as city.Name for city in provinces"
+                                    ng-change="onProvinceChange()"
                                     ng-model="agent.province"
                                     required
                             >
-                                <option selected>Choose...</option>
-                                <option>...</option>
+                                <option value="" disabled selected>Chọn Tỉnh/Thành phố</option>
                             </select>
-                            <small class="text-danger" ng-show="register_trans.province.$error.required">
+                            <small class="text-danger"
+                                   ng-show="register_trans.province.$touched && register_trans.province.$error.required">
                                 Vui lòng chọn tỉnh/thành phố.
                             </small>
                         </div>
+
                         <div class="col-md-4">
-                            <label class="form-label">Huyện</label>
+                            <label class="form-label">Quận/Huyện</label>
                             <select class="form-select"
-                                    ng-class="{ 'is-invalid': register_trans.districts.$invalid && register_trans.districts.$touched, 'is-valid': register_trans.districts.$valid && register_trans.districts.$touched }"
                                     name="districts"
+                                    ng-class="{ 'is-invalid': register_trans.districts.$invalid && register_trans.districts.$touched, 'is-valid': register_trans.districts.$valid && register_trans.districts.$touched }"
+                                    ng-options="district.Id as district.Name for district in districts"
+                                    ng-disabled="!agent.province"
+                                    ng-change="onDistrictChange()"
                                     ng-model="agent.districts"
                                     required
                             >
-                                <option selected>Choose...</option>
-                                <option>...</option>
+                                <option value="" disabled selected>Chọn Quận/Huyện</option>
                             </select>
-                            <small class="text-danger" ng-show="register_trans.districts.$error.required">
+                            <small class="text-danger"
+                                   ng-show="register_trans.districts.$touched && register_trans.districts.$error.required">
                                 Vui lòng chọn quận/huyện.
                             </small>
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Xã</label>
+                            <label class="form-label">Phường/Xã</label>
                             <select class="form-select"
-                                    ng-class="{ 'is-invalid': register_trans.ward.$invalid && register_trans.ward.$touched, 'is-valid': register_trans.ward.$valid && register_trans.ward.$touched }"
                                     name="ward"
+                                    ng-class="{ 'is-invalid': register_trans.ward.$invalid && register_trans.ward.$touched, 'is-valid': register_trans.ward.$valid && register_trans.ward.$touched }"
+                                    ng-options="ward.Id as ward.Name for ward in wards"
+                                    ng-disabled="!agent.districts"
                                     ng-model="agent.ward"
                                     required
                             >
-                                <option selected>Choose...</option>
-                                <option>...</option>
+                                <option value="" disabled selected>Chọn Phường/Xã</option>
                             </select>
-                            <small class="text-danger" ng-show="register_trans.ward.$error.required">
+                            <small class="text-danger"
+                                   ng-show="register_trans.ward.$touched && register_trans.ward.$error.required">
                                 Vui lòng chọn phường/xã.
                             </small>
                         </div>
@@ -198,6 +206,8 @@
                             <input class="form-control"
                                    type="file"
                                    ng-model="agent.business_license"
+                                   ngf-max-size="10MB"
+                                   ngf-select="uploadBusinessLicense($file)"
                             >
                         </div>
 
@@ -278,6 +288,8 @@
                             <input class="form-control"
                                    type="file"
                                    ng-model="agent.business_images"
+                                   ngf-max-size="10MB"
+                                   ngf-select="uploadBusinessImage($file)"
                             >
                         </div>
 
