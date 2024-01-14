@@ -6387,6 +6387,11 @@ ul.slick-dots li.slick-active {
     cursor: pointer;
 }
 
+#information-section .btn-prev{
+    background: #6c7781;
+    margin-right: 20px;
+}
+
 .btn-greend {
     background-color: #63AB45;
     color: #FFFFFF
@@ -6620,4 +6625,74 @@ ul.slick-dots li.slick-active {
     .hotline-bar {
         display: none;
     }
+}
+
+.register-hotel .change-information {
+    margin-right: 20px;
+}
+
+.register-hotel .avatar-user {
+    max-width: 70px;
+    max-height: 70px;
+    background-size: cover;
+}
+
+.register-hotel .persional-acccount .item {
+    height: 70px;
+    margin-right: 20px;
+    border-bottom: 1px solid #d0d0d0;
+}
+
+.register-hotel .persional-acccount .item:last-child {
+    border-bottom: none;
+}
+
+.register-hotel .change-password-form {
+    padding-right: 20px;
+}
+
+.register-hotel .btn-change {
+    padding: 12px 30px;
+    border-radius: 30px;
+}
+
+.register-hotel .btn-close {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 100px;
+}
+
+.register-hotel .modal-header{
+    border: none;
+}
+
+.register-hotel .image-input-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}
+
+.register-hotel .image-input-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.register-hotel .image-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.register-hotel .btn-prev{
+    background: #6c7781;
+    margin-right: 20px;
 }

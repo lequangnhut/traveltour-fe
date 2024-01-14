@@ -34,7 +34,11 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
             path === '/admin/decentralization-account' ||
             path === '/admin/decentralization-list' ||
             // agent hotel
-            path === '/admin/register-business/business-information' ||
+            path === '/admin/register-hotel' ||
+            path === '/admin/register-hotel' ||
+            path === '/admin/amenities/hotel-amenities-list' ||
+            path === '/admin/amenities/hotel-amenities-list/new' ||
+            path === '/admin/amenities/hotel-amenities-list/edit' ||
             // agent trans
             path === '/admin/register-transport' ||
             path === '/admin/transport-list' ||
@@ -52,7 +56,10 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
             path === '/admin/agency-edit' ||
             path === '/admin/agency-list' ||
             path === '/admin/revenue' ||
-            path === '/admin/statistical' ;
+            path === '/admin/statistical' ||
+            path === '/admin/transport-list' ||
+            // register success
+            path === '/admin/register-hotel-success';
     };
 
     $scope.logoutAuth = function () {
@@ -82,8 +89,9 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
      */
     $scope.hideSidebar = function () {
         const path = $location.path();
-        return path === '/admin/register-business/business-information' ||
-            path === '/admin/register-transport';
+        return path === '/admin/register-hotel' ||
+            path === '/admin/register-transport' ||
+            path === '/admin/register-hotel-success';
     };
 
     /**
@@ -93,11 +101,13 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
     $scope.sidebarStyle = function () {
         const path = $location.path();
         const isActivePath = $scope.isActive(
-            '/admin/register-business/business-information' ||
-            '/admin/register-transport'
+            '/admin/register-hotel' ||
+            '/admin/register-transport' ||
+            '/admin/register-hotel-success'
         );
-        return (path === '/admin/register-business/business-information' ||
-            path === '/admin/register-transport') ||
+        return (path === '/admin/register-hotel' ||
+            path === '/admin/register-transport' ||
+            path === '/admin/register-hotel-success') ||
         isActivePath ? {'margin': '0'} : {};
     };
 });
