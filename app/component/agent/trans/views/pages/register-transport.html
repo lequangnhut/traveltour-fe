@@ -176,6 +176,7 @@
                                     ng-class="{ 'is-invalid': register_trans.ward.$invalid && register_trans.ward.$touched, 'is-valid': register_trans.ward.$valid && register_trans.ward.$touched }"
                                     ng-options="ward.Id as ward.Name for ward in wards"
                                     ng-disabled="!agent.districts"
+                                    ng-change="onWardChange()"
                                     ng-model="agent.ward"
                                     required
                             >
@@ -205,17 +206,22 @@
                             <label class="form-label">Giấy phép đăng ký kinh doanh</label>
                             <input class="form-control"
                                    type="file"
+                                   name="business_license"
                                    ng-model="agent.business_license"
                                    ngf-max-size="10MB"
+                                   ng-class="{ 'is-invalid': register_trans.business_license.$invalid && register_trans.business_license.$touched, 'is-valid': register_trans.business_license.$valid && register_trans.business_license.$touched }"
                                    ngf-select="uploadBusinessLicense($file)"
+                                   required
                             >
+                            <small class="text-danger"
+                                   ng-show="register_trans.business_license.$touched && register_trans.business_license.$error.required">
+                                Vui lòng tải lên giấy phép đăng ký kinh doanh !
+                            </small>
                         </div>
 
                         <div class="d-flex justify-content-end mt-5">
-                            <button type="button" class="btn btn-submit-form"
-                                    ng-disabled="register_trans.$invalid"
-                                    ng-click="goToNextSection()">
-                                Tiếp tục...
+                            <button type="button" class="btn btn-submit-form" ng-click="goToNextSection()">
+                                Tiếp tục
                             </button>
                         </div>
                     </div>
@@ -280,26 +286,48 @@
                             <input type="text"
                                    class="form-control"
                                    placeholder="Công ty xe khách Phương Trang"
+                                   name="name_agent"
+                                   ng-class="{ 'is-invalid': register_trans.name_agent.$invalid && register_trans.name_agent.$touched, 'is-valid': register_trans.name_agent.$valid && register_trans.name_agent.$touched }"
                                    ng-model="agent.name_agent"
+                                   ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                   required
                             >
+                            <small class="text-danger"
+                                   ng-show="register_trans.name_agent.$touched && register_trans.name_agent.$error.required">
+                                Vui lòng nhập tên thương hiệu !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="register_trans.name_agent.$touched && register_trans.name_agent.$error.pattern">
+                                Tên thương hiệu không đúng định dạng !
+                            </small>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Hình ảnh chứng minh</label>
                             <input class="form-control"
                                    type="file"
+                                   name="business_images"
                                    ng-model="agent.business_images"
                                    ngf-max-size="10MB"
+                                   ng-class="{ 'is-invalid': register_trans.business_images.$invalid && register_trans.business_images.$touched, 'is-valid': register_trans.business_images.$valid && register_trans.business_images.$touched }"
                                    ngf-select="uploadBusinessImage($file)"
+                                   required
                             >
+                            <small class="text-danger"
+                                   ng-show="register_trans.business_images.$touched && register_trans.business_images.$error.required">
+                                Vui lòng tải lên giấy phép đăng ký kinh doanh !
+                            </small>
                         </div>
 
                         <div class="d-flex justify-content-end mt-5">
                             <a role="button" class="btn btn-submit-form mx-3" ng-click="goPreviousSectionOne()">
                                 Quay về
                             </a>
-                            <a role="button" class="btn btn-submit-form" ng-click="goToThirdSection()">
-                                Tiếp tục...
-                            </a>
+                            <button type="button" class="btn btn-submit-form"
+                                    ng-click="goToThirdSection()"
+                                    ng-disabled="register_trans.$invalid"
+                            >
+                                Tiếp tục
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -373,8 +401,9 @@
                         <a role="button" class="btn btn-submit-form mx-3" ng-click="goPreviousSectionTwo()">
                             Quay về
                         </a>
-                        <button type="submit" class="btn btn-submit-form" ng-disabled="!checkboxChecked">
-                            Hoàn thành...
+                        <button type="submit" class="btn btn-submit-form"
+                                ng-disabled="!checkboxChecked">
+                            Xác nhận
                         </button>
                     </div>
                 </div>

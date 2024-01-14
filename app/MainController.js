@@ -17,55 +17,33 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
      * @returns {boolean}
      */
     $scope.isAuthPage = function () {
-        const path = $location.path();
-        return path === '/sign-in' ||
-            path === '/sign-up' ||
-            path === '/forgot-password' ||
-            path === '/admin';
+        const authPaths = [
+            '/sign-in',
+            '/sign-up',
+            '/forgot-password',
+            '/login-admin'
+        ];
+        return authPaths.includes($location.path());
     };
 
     /**
      * Kiểm tra nếu là isManagerPage thì xử lý giao diện
      * @returns {boolean}
      */
-    $scope.isManagerPage = function () {
+    $scope.isBusinessPage = function () {
         const path = $location.path();
-        return path === '/admin/dashboard' ||
-            path === '/admin/decentralization-account' ||
-            path === '/admin/decentralization-list' ||
-            // agent hotel
-            path === '/admin/register-hotel' ||
-            path === '/admin/register-hotel' ||
-            path === '/admin/amenities/hotel-amenities-list' ||
-            path === '/admin/amenities/hotel-amenities-list/new' ||
-            path === '/admin/amenities/hotel-amenities-list/edit' ||
-            // agent trans
-            path === '/admin/register-transport' ||
-            path === '/admin/transport-list' ||
-            // agent visits
-            path === '/admin/register-visit' ||
-            path === '/admin/visit-list' ||
-            // admin template
-            path === '/admin/hotel-type' ||
-            path === '/admin/location-type' ||
-            path === '/admin/tour-type' ||
-            path === '/admin/transportation-type' ||
-            path === '/admin/hotel-utility' ||
-            path === '/admin/room-utility' ||
-            path === '/admin/staff-add' ||
-            path === '/admin/staff-edit' ||
-            path === '/admin/staff-list' ||
-            path === '/admin/agency-add' ||
-            path === '/admin/agency-edit' ||
-            path === '/admin/agency-list' ||
-            path === '/admin/revenue' ||
-            path === '/admin/statistical' ||
-            path === '/admin/transport-list' ||
-            // register success
-            path === '/admin/register-hotel-success' ||
-            path === '/admin/register-visits-success' ||
-            path === '/admin/register-transport-success';
+        return path.startsWith('/business');
     };
+
+    $scope.isAdminPage = function () {
+        const path = $location.path();
+        return path.startsWith('/admin');
+    };
+
+    $scope.isManagerPage = function () {
+        return $scope.isAdminPage() || $scope.isBusinessPage();
+    };
+
 
     $scope.logoutAuth = function () {
         AuthService.clearAuthData();
@@ -81,11 +59,11 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
 
     /**
      * Kiểm tra đường dẫn hiện tại
-     * @param viewLocation
+     * @param viewLocations
      * @returns {boolean}
      */
-    $scope.isActive = function (viewLocation) {
-        return viewLocation === $location.path();
+    $scope.isActive = function (viewLocations) {
+        return viewLocations.includes($location.path());
     };
 
     /**
@@ -93,13 +71,15 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
      * @returns {boolean}
      */
     $scope.hideSidebar = function () {
-        const path = $location.path();
-        return path === '/admin/register-hotel' ||
-            path === '/admin/register-transport' ||
-            path === '/admin/register-transport-success' ||
-            path === '/admin/register-hotel-success'||
-            path === '/admin/register-visit'||
-            path === '/admin/register-visits-success';
+        const hiddenPaths = [
+            '/business/register-hotel',
+            '/business/register-hotel-success',
+            '/business/register-transports',
+            '/business/register-transport-success',
+            '/business/register-visit',
+            '/business/register-visits-success'
+        ];
+        return $scope.isActive(hiddenPaths);
     };
 
     /**
@@ -107,21 +87,14 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
      * @returns {{display: string}|{}}
      */
     $scope.sidebarStyle = function () {
-        const path = $location.path();
-        const isActivePath = $scope.isActive(
-            '/admin/register-hotel' ||
-            '/admin/register-transport' ||
-            '/admin/register-transport-success' ||
-            '/admin/register-hotel-success' ||
-            '/admin/register-visit'||
-            '/admin/register-visits-success'
-        );
-        return (path === '/admin/register-hotel' ||
-            path === '/admin/register-transport' ||
-            path === '/admin/register-transport-success' ||
-            path === '/admin/register-hotel-success'||
-            path === '/admin/register-visit') ||
-            path === '/admin/register-visits-success' ||
-        isActivePath ? {'margin': '0'} : {};
+        const marginPaths = [
+            '/business/register-hotel',
+            '/business/register-hotel-success',
+            '/business/register-transports',
+            '/business/register-transport-success',
+            '/business/register-visit',
+            '/business/register-visits-success'
+        ];
+        return $scope.isActive(marginPaths) ? {'margin': '0'} : {};
     };
 });

@@ -7,7 +7,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Admin
          */
-        .when('/admin', {
+        .when('/login-admin', {
             templateUrl: 'app/component/admin/views/pages/auth/login.html',
             controller: 'LoginControllerAD'
         })
@@ -26,23 +26,27 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Agent Hotel
          */
-        .when('/admin/register-hotel', {
+        .when('/business/register-business', {
+            templateUrl: 'app/component/admin/views/pages/register-agent/business-information.html',
+            controller: 'BusinessInformationController'
+        })
+        .when('/business/register-hotel', {
             templateUrl: 'app/component/agent/hotel/views/pages/register/register-hotel.html',
             controller: 'RegisterHotelControllerAG'
         })
-        .when('/admin/register-hotel-success', {
+        .when('/business/register-hotel-success', {
             templateUrl: 'app/component/agent/hotel/views/pages/register/register-success.html',
             controller: ''
         })
-        .when('/admin/amenities/hotel-amenities-list', {
-        templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-list.html',
-        controller: 'HotelAmenitiesListController'
+        .when('/business/amenities/hotel-amenities-list', {
+            templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-list.html',
+            controller: 'HotelAmenitiesListController'
         })
-        .when('/admin/amenities/hotel-amenities-list/new', {
+        .when('/business/amenities/hotel-amenities-list/new', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-add.html',
             controller: 'HotelAmenitiesAddController'
         })
-        .when('/admin/amenities/hotel-amenities-list/edit', {
+        .when('/business/amenities/hotel-amenities-list/edit', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-edit.html',
             controller: 'HotelAmenitiesAddController'
         })
@@ -50,12 +54,44 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Agent Transport
          */
-        .when('/admin/register-transport', {
-            templateUrl: 'app/component/agent/trans/views/pages/register-trans.html',
+        .when('/business/register-transports', {
+            templateUrl: 'app/component/agent/trans/views/pages/register-transport.html',
             controller: 'RegisterTransControllerAG'
         })
-        .when('/admin/transport-list', {
-            templateUrl: 'app/component/agent/trans/views/pages/transport-list.html',
+        .when('/business/transports-list', {
+            templateUrl: 'app/component/agent/trans/views/pages/transports/transport-list.html',
+            controller: ''
+        })
+        .when('/business/transports-create', {
+            templateUrl: 'app/component/agent/trans/views/pages/transports/transport-create.html',
+            controller: ''
+        })
+        .when('/business/transports-update', {
+            templateUrl: 'app/component/agent/trans/views/pages/transports/transport-update.html',
+            controller: ''
+        })
+        .when('/business/bookings-list', {
+            templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-list.html',
+            controller: ''
+        })
+        .when('/business/bookings-create', {
+            templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-create.html',
+            controller: ''
+        })
+        .when('/business/bookings-update', {
+            templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-update.html',
+            controller: ''
+        })
+        .when('/business/trips-list', {
+            templateUrl: 'app/component/agent/trans/views/pages/trips/trip-list.html',
+            controller: ''
+        })
+        .when('/business/trips-create', {
+            templateUrl: 'app/component/agent/trans/views/pages/trips/trip-create.html',
+            controller: ''
+        })
+        .when('/business/trips-update', {
+            templateUrl: 'app/component/agent/trans/views/pages/trips/trip-update.html',
             controller: ''
         })
         .when('/admin/register-transport-success', {
@@ -65,15 +101,15 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Agent Visit
          */
-        .when('/admin/register-visit', {
+        .when('/business/register-visit', {
             templateUrl: 'app/component/agent/visits/views/pages/register-visits.html',
             controller: 'RegisterVisitsControllerAG'
         })
-        .when('/admin/visit-list', {
+        .when('/business/visit-list', {
             templateUrl: 'app/component/agent/visits/views/pages/visit-list.html',
             controller: ''
         })
-        .when('/admin/register-visits-success', {
+        .when('/business/register-visits-success', {
             templateUrl: 'app/component/agent/visits/views/pages/register-visits-success.html',
             controller: ''
         })
