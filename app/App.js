@@ -61,21 +61,21 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/register-transport.html',
             controller: 'RegisterTransControllerAG'
         })
-        .when('/business/transports-list', {
+        .when('/business/transport/transports-list', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-list.html',
             controller: ''
         })
-        .when('/business/transports-create', {
+        .when('/business/transport/transports-list/transports-create', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-create.html',
             controller: ''
         })
-        .when('/business/transports-update', {
+        .when('/business/transport/transports-list/transports-update', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-update.html',
             controller: ''
         })
-        .when('/business/bookings-list', {
+        .when('/business/booking/bookings-list', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-list.html',
-            controller: ''
+            controller: 'BookingControllerAG'
         })
         .when('/business/bookings-create', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-create.html',
@@ -85,7 +85,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-update.html',
             controller: ''
         })
-        .when('/business/trips-list', {
+        .when('/business/trip/trips-list', {
             templateUrl: 'app/component/agent/trans/views/pages/trips/trip-list.html',
             controller: ''
         })

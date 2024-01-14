@@ -11,12 +11,97 @@
     <title>TravelTour</title>
 
     <link rel="shortcut icon" href="/assets/customers/images/favicon.ico" type="image/png">
+
+    <div ng-if="!isManagerPage()">
+        <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&amp;display=swap"
+              rel="stylesheet">
+        <link rel="stylesheet" href="/assets/customers/fonts/flaticon/flaticon_gowilds.css">
+        <link rel="stylesheet" href="/assets/customers/fonts/fontawesome/css/all.min.css">
+        <link rel="stylesheet" href="/assets/customers/vendor/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/assets/customers/vendor/magnific-popup/dist/magnific-popup.css">
+        <link rel="stylesheet" href="/assets/customers/vendor/slick/slick.css">
+        <link rel="stylesheet" href="/assets/customers/vendor/jquery-ui/jquery-ui.min.css">
+        <link rel="stylesheet" href="/assets/customers/vendor/nice-select/css/nice-select.css">
+        <link rel="stylesheet" href="/assets/customers/vendor/animate.css">
+        <link rel="stylesheet" href="/assets/customers/css/default.css">
+        <link rel="stylesheet" href="/assets/customers/css/style.css">
+
+        <script src="/assets/customers/vendor/jquery-3.6.0.min.js"></script>
+        <script src="/assets/customers/vendor/slick/slick.min.js"></script>
+        <script src="/assets/customers/vendor/jquery-ui/jquery-ui.min.js"></script>
+        <script src="/assets/customers/vendor/sweetalert/sweetalert2@11.js"></script>
+        <script src="/assets/customers/vendor/popper/popper.min.js"></script>
+        <script src="/assets/customers/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/assets/customers/vendor/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+        <script src="/assets/customers/vendor/jquery.counterup.min.js"></script>
+        <script src="/assets/customers/vendor/jquery.waypoints.js"></script>
+        <script src="/assets/customers/vendor/nice-select/js/jquery.nice-select.min.js"></script>
+        <script src="/assets/customers/vendor/wow.min.js"></script>
+        <script src="/assets/customers/js/notification/SwalAlert.js"></script>
+        <script src="/assets/customers/js/theme.js"></script>
+    </div>
+
+    <div ng-if="isManagerPage()">
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/admin/assets/img/favicons/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/admin/assets/img/favicons/favicon-32x32.png">
+        <link rel="shortcut icon" type="image/x-icon" href="/assets/admin/assets/img/favicons/favicon.ico">
+        <link rel="manifest" href="https://prium.github.io/phoenix/v1.13.0/assets/img/favicons/manifest.json">
+        <script src="/assets/admin/assets/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+        <script src="/assets/admin/assets/vendors/simplebar/simplebar.min.js"></script>
+        <script src="/assets/admin/assets/js/config.js"></script>
+
+        <!--Stylesheets-->
+        <link href="/assets/admin/assets/vendors/dropzone/dropzone.min.css" rel="stylesheet">
+        <link href="/assets/admin/assets/vendors/flatpickr/flatpickr.min.css" rel="stylesheet">
+        <link href="/assets/admin/assets/vendors/glightbox/glightbox.min.css" rel="stylesheet">
+        <link rel="preconnect" href="/assets/admin/lib/fonts.googleapis.com/index.html">
+        <link rel="preconnect" href="/assets/admin/lib/fonts.gstatic.com/index.html" crossorigin="">
+        <link href="/assets/admin/lib/fonts.googleapis.com/css275fb.css?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+              rel="stylesheet">
+        <link href="/assets/admin/assets/vendors/simplebar/simplebar.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/assets/admin/lib/v4.0.8/css/line.css">
+        <link href="/assets/admin/assets/css/theme-rtl.min.css" type="text/css" rel="stylesheet" id="style-rtl">
+        <link href="/assets/admin/assets/css/theme.min.css" type="text/css" rel="stylesheet" id="style-default">
+        <link href="/assets/admin/assets/css/user-rtl.min.css" type="text/css" rel="stylesheet" id="user-style-rtl">
+        <link href="/assets/admin/assets/css/user.min.css" type="text/css" rel="stylesheet" id="user-style-default">
+        <link href="/assets/admin/assets/css/register-business.css" type="text/css" rel="stylesheet">
+        <link href="/assets/admin/assets/css/theme-table.css" type="text/css" rel="stylesheet">
+        <script>
+            var phoenixIsRTL = window.config.config.phoenixIsRTL;
+            if (phoenixIsRTL) {
+                var linkDefault = document.getElementById('style-default');
+                var userLinkDefault = document.getElementById('user-style-default');
+                linkDefault.setAttribute('disabled', true);
+                userLinkDefault.setAttribute('disabled', true);
+                document.querySelector('html').setAttribute('dir', 'rtl');
+            } else {
+                var linkRTL = document.getElementById('style-rtl');
+                var userLinkRTL = document.getElementById('user-style-rtl');
+                linkRTL.setAttribute('disabled', true);
+                userLinkRTL.setAttribute('disabled', true);
+            }
+        </script>
+
+        <script src="/assets/admin/assets/vendors/popper/popper.min.js"></script>
+        <script src="/assets/admin/assets/vendors/bootstrap/bootstrap.min.js"></script>
+        <script src="/assets/admin/assets/vendors/anchorjs/anchor.min.js"></script>
+        <script src="/assets/admin/assets/vendors/is/is.min.js"></script>
+        <script src="/assets/admin/assets/vendors/fontawesome/all.min.js"></script>
+        <script src="/assets/admin/assets/vendors/lodash/lodash.min.js"></script>
+        <script src="/assets/admin/lib/polyfill.io/v3/polyfill.min58be.js?features=window.scroll"></script>
+        <script src="/assets/admin/assets/vendors/list.js/list.min.js"></script>
+        <script src="/assets/admin/assets/vendors/feather-icons/feather.min.js"></script>
+        <script src="/assets/admin/assets/vendors/dayjs/dayjs.min.js"></script>
+        <script src="/assets/admin/assets/js/phoenix.js"></script>
+        <script src="/assets/admin/assets/js/crm-analytics.js"></script>
+        <script src="/assets/admin/assets/vendors/echarts/echarts.min.js"></script>
+        <script src="/assets/admin/assets/vendors/dropzone/dropzone.min.js"></script>
+        <script src="/lib/angularjs/axios.min.js"></script>
+    </div>
 </head>
 <body ng-controller="MainController">
 
-<div ng-hide="isManagerPage()">
-    <div ng-include="'app/component/customers/views/components/common/link.html'"></div>
-
+<div ng-if="!isManagerPage()">
     <div ng-include="'app/component/customers/views/components/loader-search.html'"></div>
     <div ng-include="'app/component/customers/views/components/header.html'"></div>
 
@@ -49,54 +134,9 @@
             </a>
         </div>
     </div>
-
-    <script src="/assets/customers/vendor/jquery-3.6.0.min.js"></script>
-    <script src="/assets/customers/vendor/slick/slick.min.js"></script>
-    <script src="/assets/customers/vendor/jquery-ui/jquery-ui.min.js"></script>
-    <div ng-include="'app/component/customers/views/components/common/script.html'"></div>
 </div>
 
 <div ng-if="isManagerPage()">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/admin/assets/img/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/admin/assets/img/favicons/favicon-32x32.png">
-    <link rel="shortcut icon" type="image/x-icon" href="/assets/admin/assets/img/favicons/favicon.ico">
-    <link rel="manifest" href="https://prium.github.io/phoenix/v1.13.0/assets/img/favicons/manifest.json">
-    <script src="/assets/admin/assets/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="/assets/admin/assets/vendors/simplebar/simplebar.min.js"></script>
-    <script src="/assets/admin/assets/js/config.js"></script>
-
-    <!--Stylesheets-->
-    <link href="/assets/admin/assets/vendors/dropzone/dropzone.min.css" rel="stylesheet">
-    <link href="/assets/admin/assets/vendors/flatpickr/flatpickr.min.css" rel="stylesheet">
-    <link href="/assets/admin/assets/vendors/glightbox/glightbox.min.css" rel="stylesheet">
-    <link rel="preconnect" href="/assets/admin/lib/fonts.googleapis.com/index.html">
-    <link rel="preconnect" href="/assets/admin/lib/fonts.gstatic.com/index.html" crossorigin="">
-    <link href="/assets/admin/lib/fonts.googleapis.com/css275fb.css?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
-          rel="stylesheet">
-    <link href="/assets/admin/assets/vendors/simplebar/simplebar.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/admin/lib/v4.0.8/css/line.css">
-    <link href="/assets/admin/assets/css/theme-rtl.min.css" type="text/css" rel="stylesheet" id="style-rtl">
-    <link href="/assets/admin/assets/css/theme.min.css" type="text/css" rel="stylesheet" id="style-default">
-    <link href="/assets/admin/assets/css/user-rtl.min.css" type="text/css" rel="stylesheet" id="user-style-rtl">
-    <link href="/assets/admin/assets/css/user.min.css" type="text/css" rel="stylesheet" id="user-style-default">
-    <link href="/assets/admin/assets/css/register-business.css" type="text/css" rel="stylesheet">
-    <link href="/assets/admin/assets/css/theme-table.css" type="text/css" rel="stylesheet">
-    <script>
-        var phoenixIsRTL = window.config.config.phoenixIsRTL;
-        if (phoenixIsRTL) {
-            var linkDefault = document.getElementById('style-default');
-            var userLinkDefault = document.getElementById('user-style-default');
-            linkDefault.setAttribute('disabled', true);
-            userLinkDefault.setAttribute('disabled', true);
-            document.querySelector('html').setAttribute('dir', 'rtl');
-        } else {
-            var linkRTL = document.getElementById('style-rtl');
-            var userLinkRTL = document.getElementById('user-style-rtl');
-            linkRTL.setAttribute('disabled', true);
-            userLinkRTL.setAttribute('disabled', true);
-        }
-    </script>
-
     <main class="main" id="top">
         <nav class="navbar navbar-vertical navbar-expand-lg" ng-hide="hideSidebar()">
             <script>
@@ -496,7 +536,8 @@
                                             id="info-service">
 
                                             <li class="nav-item">
-                                                <a class="nav-link" href="/admin/amenities/hotel-amenities-list" data-bs-toggle="" aria-expanded="false">
+                                                <a class="nav-link" href="/admin/amenities/hotel-amenities-list"
+                                                   data-bs-toggle="" aria-expanded="false">
                                                     <div class="d-flex align-items-center">
                                                         <span class="nav-link-text">Tiện ích khách sạn</span>
                                                     </div>
@@ -610,7 +651,7 @@
 
                             <!-- label-->
                             <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="/business/transports-list">
+                                <a class="nav-link label-1" href="/business/transport/transports-list">
                                     <div class="d-flex align-items-center">
                                         <div class="dropdown-indicator-icon"></div>
                                         <span class="nav-link-icon">
@@ -625,7 +666,7 @@
 
                             <!-- label-->
                             <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="/business/bookings-list">
+                                <a class="nav-link label-1" href="/business/booking/bookings-list">
                                     <div class="d-flex align-items-center">
                                         <div class="dropdown-indicator-icon"></div>
                                         <span class="nav-link-icon">
@@ -640,7 +681,7 @@
 
                             <!-- label-->
                             <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="/business/trips-list">
+                                <a class="nav-link label-1" href="/business/trip/trips-list">
                                     <div class="d-flex align-items-center">
                                         <div class="dropdown-indicator-icon"></div>
                                         <span class="nav-link-icon">
@@ -1161,22 +1202,6 @@
             </footer>
         </div>
     </main>
-
-    <script src="/assets/admin/assets/vendors/popper/popper.min.js"></script>
-    <script src="/assets/admin/assets/vendors/bootstrap/bootstrap.min.js"></script>
-    <script src="/assets/admin/assets/vendors/anchorjs/anchor.min.js"></script>
-    <script src="/assets/admin/assets/vendors/is/is.min.js"></script>
-    <script src="/assets/admin/assets/vendors/fontawesome/all.min.js"></script>
-    <script src="/assets/admin/assets/vendors/lodash/lodash.min.js"></script>
-    <script src="/assets/admin/lib/polyfill.io/v3/polyfill.min58be.js?features=window.scroll"></script>
-    <script src="/assets/admin/assets/vendors/list.js/list.min.js"></script>
-    <script src="/assets/admin/assets/vendors/feather-icons/feather.min.js"></script>
-    <script src="/assets/admin/assets/vendors/dayjs/dayjs.min.js"></script>
-    <script src="/assets/admin/assets/js/phoenix.js"></script>
-    <script src="/assets/admin/assets/js/crm-analytics.js"></script>
-    <script src="/assets/admin/assets/vendors/echarts/echarts.min.js"></script>
-    <script src="/assets/admin/assets/vendors/dropzone/dropzone.min.js"></script>
-    <script src="/lib/angularjs/axios.min.js"></script>
 </div>
 
 <!--====== Angular js ======-->
@@ -1210,10 +1235,15 @@
 
 <script src="app/component/admin/controllers/register-agent/AccommodationInformation.js"></script>
 
-<!--====== Controller Agent ======-->
+<!--====== Controller Agent Transport ======-->
 <script src="app/component/agent/trans/controllers/RegisterTransControllerAG.js"></script>
+<script src="app/component/agent/trans/controllers/bookings/BookingControllerAG.js"></script>
+
+<!--====== Controller Agent Hotel ======-->
 <script src="app/component/agent/hotel/controllers/register/RegisterHotelControllerAG.js"></script>
 <script src="app/component/agent/hotel/controllers/service/amenities/HotelAmenitiesListController.js"></script>
+
+<!--====== Controller Agent Visit ======-->
 <script src="app/component/agent/visits/controllers/RegisterVisitsControllerAG.js"></script>
 
 <!--====== Controller Customer ======-->

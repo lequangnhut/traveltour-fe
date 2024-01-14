@@ -44,14 +44,28 @@
 /*    line-height: normal;*/
 /*}*/
 
+body::-webkit-scrollbar {
+    display: none;
+}
+
+body::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #000000;
+}
+
 #business-information .progress-container {
     margin: 30px 0 0 0;
     overflow: auto;
 }
+
 #business-information .item {
     width: 150px;
 }
-#business-information .vector{
+
+#business-information .vector {
     border-radius: 50%;
     border: 3px solid #63ab45;
     width: 50px;
@@ -59,7 +73,7 @@
     fill: #63ab45;
 }
 
-#business-information .num{
+#business-information .num {
     border-radius: 50%;
     border: 3px solid #63ab45;
     width: 50px;
@@ -72,22 +86,22 @@
     fill: #63ab45;
 }
 
-#business-information .text-wrapper{
+#business-information .text-wrapper {
     margin-top: 10px;
 }
 
-#business-information .form{
+#business-information .form {
     border-radius: 8px;
     margin-top: 30px;
     width: 800px;
     padding: 50px;
 }
 
-.color-greend{
+.color-greend {
     color: #63ab45;
 }
 
-#business-information .btn-submit-form{
+#business-information .btn-submit-form {
     background: #63ab45;
     padding: 12px 40px;
     color: #fff;
