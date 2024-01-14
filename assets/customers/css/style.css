@@ -700,7 +700,7 @@ button {
 .nice-select:after {
     position: absolute;
     right: 0;
-    content: "";
+    /*content: "";*/
     font-family: "Montserrat", sans-serif;
     font-weight: 400;
 }

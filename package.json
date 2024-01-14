@@ -17,6 +17,7 @@
     "angularjs": "^0.0.1",
     "ng-file-upload": "^12.2.13",
     "ngx-auth": "^6.0.0",
+    "sass": "^1.69.7",
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {

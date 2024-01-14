@@ -24,6 +24,33 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'DecentralizationListControllerAD'
         })
         /**
+         * tour
+         */
+        .when('/admin/basic-tour-list', {
+            templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-list.html',
+            controller: 'BasicTourListControllerAD'
+        })
+        .when('/admin/basic-tour-add', {
+            templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-add.html',
+            controller: 'BasicTourAddControllerAD'
+        })
+        .when('/admin/basic-tour-edit', {
+            templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-edit.html',
+            controller: 'BasicTourEditControllerAD'
+        })
+        .when('/admin/detail-tour-list', {
+            templateUrl: 'app/component/admin/views/pages/tour-management/detail-tour/detail-tour-list.html',
+            controller: 'DetailTourListControllerAD'
+        })
+        .when('/admin/detail-tour-add', {
+            templateUrl: 'app/component/admin/views/pages/tour-management/detail-tour/detail-tour-add.html',
+            controller: 'DetailTourAddControllerAD'
+        })
+        .when('/admin/detail-tour-edit', {
+            templateUrl: 'app/component/admin/views/pages/tour-management/detail-tour/detail-tour-edit.html',
+            controller: 'DetailTourEditControllerAD'
+        })
+        /**
          * Agent Hotel
          */
         .when('/business/register-business', {
@@ -38,19 +65,19 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/hotel/views/pages/register/register-success.html',
             controller: ''
         })
-        .when('/business/amenities/hotel-amenities-list', {
+        .when('/business/tour-management/hotel-tour-management-list', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-list.html',
             controller: 'HotelAmenitiesListController'
         })
-        .when('/business/amenities/hotel-amenities-list/new', {
+        .when('/business/tour-management/hotel-tour-management-list/new', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-add.html',
             controller: 'HotelAmenitiesAddController'
         })
-        .when('/business/amenities/hotel-amenities-list/edit', {
+        .when('/business/tour-management/hotel-tour-management-list/edit', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-edit.html',
             controller: 'HotelAmenitiesAddController'
         })
-        .when('/admin/amenities/booking-list', {
+        .when('/admin/tour-management/booking-list', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/booking/booking-list.html',
             controller: 'HotelAmenitiesListController'
         })
@@ -157,15 +184,15 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'StaffControllerAD'
         })
         .when('/admin/agency-add', {
-            templateUrl: 'app/component/admin/views/pages/agencyAD/agency-add.html',
+            templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/agency-add.html',
             controller: 'AgencyControllerAD'
         })
         .when('/admin/agency-edit', {
-            templateUrl: 'app/component/admin/views/pages/agencyAD/agency-edit.html',
+            templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/agency-edit.html',
             controller: 'AgencyControllerAD'
         })
         .when('/admin/agency-list', {
-            templateUrl: 'app/component/admin/views/pages/agencyAD/agency-list.html',
+            templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/agency-list.html',
             controller: 'AgencyControllerAD'
         })
         .when('/admin/revenue', {
