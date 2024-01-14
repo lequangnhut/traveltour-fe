@@ -21,7 +21,7 @@ travel_app.controller("InformationController", function ($scope) {
      * @param event
      * @param elementId
      */
-    $scope.selectedImageSrc = '/assets/customers/images/user/avata-user-default.png';
+        $scope.selectedImageSrc = '/assets/customers/images/user/avata-user-default.png';
     $scope.displaySelectedImage = function () {
         const fileInput = document.getElementById('avata');
 
