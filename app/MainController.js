@@ -37,7 +37,22 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
             path === '/admin/register-business/business-information' ||
             // agent trans
             path === '/admin/register-transport' ||
-            path === '/admin/transport-list';
+            path === '/admin/transport-list' ||
+            // admin template
+            path === '/admin/hotel-type' ||
+            path === '/admin/location-type' ||
+            path === '/admin/tour-type' ||
+            path === '/admin/transportation-type' ||
+            path === '/admin/hotel-utility' ||
+            path === '/admin/room-utility' ||
+            path === '/admin/staff-add' ||
+            path === '/admin/staff-edit' ||
+            path === '/admin/staff-list' ||
+            path === '/admin/agency-add' ||
+            path === '/admin/agency-edit' ||
+            path === '/admin/agency-list' ||
+            path === '/admin/revenue' ||
+            path === '/admin/statistical' ;
     };
 
     $scope.logoutAuth = function () {
