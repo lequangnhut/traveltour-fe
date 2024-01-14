@@ -42,6 +42,9 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
             // agent trans
             path === '/admin/register-transport' ||
             path === '/admin/transport-list' ||
+            // agent visits
+            path === '/admin/register-visit' ||
+            path === '/admin/visit-list' ||
             // admin template
             path === '/admin/hotel-type' ||
             path === '/admin/location-type' ||
@@ -59,7 +62,9 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
             path === '/admin/statistical' ||
             path === '/admin/transport-list' ||
             // register success
-            path === '/admin/register-hotel-success';
+            path === '/admin/register-hotel-success' ||
+            path === '/admin/register-visits-success' ||
+            path === '/admin/register-transport-success';
     };
 
     $scope.logoutAuth = function () {
@@ -91,7 +96,10 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
         const path = $location.path();
         return path === '/admin/register-hotel' ||
             path === '/admin/register-transport' ||
-            path === '/admin/register-hotel-success';
+            path === '/admin/register-transport-success' ||
+            path === '/admin/register-hotel-success'||
+            path === '/admin/register-visit'||
+            path === '/admin/register-visits-success';
     };
 
     /**
@@ -103,11 +111,17 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
         const isActivePath = $scope.isActive(
             '/admin/register-hotel' ||
             '/admin/register-transport' ||
-            '/admin/register-hotel-success'
+            '/admin/register-transport-success' ||
+            '/admin/register-hotel-success' ||
+            '/admin/register-visit'||
+            '/admin/register-visits-success'
         );
         return (path === '/admin/register-hotel' ||
             path === '/admin/register-transport' ||
-            path === '/admin/register-hotel-success') ||
+            path === '/admin/register-transport-success' ||
+            path === '/admin/register-hotel-success'||
+            path === '/admin/register-visit') ||
+            path === '/admin/register-visits-success' ||
         isActivePath ? {'margin': '0'} : {};
     };
 });
