@@ -5,16 +5,22 @@
 
 .header-control .color-greend{
     color: #63ab45;
+    transition: 0.2s linear;
+}
+
+.header-control .btn-greend:hover{
+    background: #4c872e;
 }
 
 .header-control .btn-greend {
-    padding: 16px 50px;
+    padding: 14px 30px;
     border-radius: 40px;
     background: #63ab45;
     color: #fff;
-    font-size: 16px;
+    font-size: 14px;
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
+    transition: 0.2s linear;
 }
 .header-control {
     font-family: "Montserrat", sans-serif;
@@ -29,11 +35,16 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+.table-components .card-header {
+    vertical-align: middle;
+}
+
 .table-components .card {
     border-radius: 12px !important;
 }
 
-.table-customer {
+.table-components {
+    border-radius: 12px;
     text-align: center;
     box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
     font-family: 'Montserrat', sans-serif;
@@ -132,6 +143,9 @@
     border-radius: 50%;
     margin-right: 10px;
 }
+.table-customer .fa-sort{
+    font-size: 12px;
+}
 
 .table-customer table .text-status-normal {
     color: #007bff
@@ -155,4 +169,16 @@
     padding: 50px;
     border-radius: 12px;
     box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+}
+
+@media only screen and (max-width: 1200px) {
+    .header-control{
+        text-align: center;
+    }
+    .header-control .header-control-center{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

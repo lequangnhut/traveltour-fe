@@ -50,7 +50,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-edit.html',
             controller: 'HotelAmenitiesAddController'
         })
-
+        .when('/admin/amenities/booking-list', {
+            templateUrl: 'app/component/agent/hotel/views/pages/service/booking/booking-list.html',
+            controller: 'HotelAmenitiesListController'
+        })
         /**
          * Agent Transport
          */
