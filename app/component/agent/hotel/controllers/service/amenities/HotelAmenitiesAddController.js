@@ -1,3 +1,3 @@
-travel_app.controller('HotelAmenitiesAddController', function($scope) {
+travel_app.controller('HotelAmenitiesAddController', function ($scope) {
 
 })

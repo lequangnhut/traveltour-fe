@@ -12,9 +12,9 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http) {
         fname: null,
         mst: null,
         phone: null,
-        province: null,
-        districts: null,
-        ward: null,
+        provinceName: null,
+        districtName: null,
+        wardName: null,
         address: null,
         business_license: null,
         name_agent: null,
@@ -50,14 +50,32 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http) {
     });
 
     $scope.onProvinceChange = function () {
-        $scope.districts = $scope.provinces.find(p => p.Id === $scope.agent.province).Districts;
+        var selectedProvince = $scope.provinces.find(p => p.Id === $scope.agent.province);
+        if (selectedProvince) {
+            $scope.agent.provinceName = selectedProvince.Name;
+        }
+
+        $scope.districts = selectedProvince ? selectedProvince.Districts : [];
         $scope.agent.districts = null;
         $scope.agent.ward = null;
     };
 
     $scope.onDistrictChange = function () {
-        $scope.wards = $scope.districts.find(d => d.Id === $scope.agent.districts).Wards;
+        var selectedDistrict = $scope.districts.find(d => d.Id === $scope.agent.districts);
+        if (selectedDistrict) {
+            $scope.agent.districtName = selectedDistrict.Name;
+        }
+
+        $scope.wards = selectedDistrict ? selectedDistrict.Wards : [];
         $scope.agent.ward = null;
+        $scope.agent.wardName = null;
+    };
+
+    $scope.onWardChange = function () {
+        var selectedWard = $scope.wards.find(w => w.Id === $scope.agent.ward);
+        if (selectedWard) {
+            $scope.agent.wardName = selectedWard.Name;
+        }
     };
 
     /**
@@ -85,5 +103,19 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http) {
      */
     $scope.submitDataRegisterTrans = function () {
         console.log($scope.agent)
+        // var formData = new FormData();
+        // formData.append("demoDTO", new Blob([JSON.stringify($scope.agent)], {type: "application/json"}));
+        // formData.append("business_license", $scope.agent.business_license);
+        // formData.append("business_images", $scope.agent.business_images);
+        //
+        // $http({
+        //     method: 'POST',
+        //     url: 'http://localhost:8080/api/v1/demo/demo-upload-file',
+        //     headers: {'Content-Type': undefined},
+        //     data: formData,
+        //     transformRequest: angular.identity
+        // }).then(function successCallback(response) {
+        //     console.log(response.data);
+        // });
     };
 });

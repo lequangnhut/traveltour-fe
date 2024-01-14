@@ -1,0 +1,99 @@
+<h4 class="fw-bold text-success mb-3">DANH SÁCH CÁC PHƯƠNG TIỆN</h4>
+
+<div class="mb-6 mt-5">
+    <div class="mb-4">
+        <div class="d-flex flex-wrap gap-3">
+            <!--search-->
+            <div class="search-box">
+                <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+                    <input class="form-control search-input search" type="search" placeholder="Tìm kiếm"
+                           aria-label="Search">
+                    <svg class="svg-inline--fa fa-magnifying-glass search-box-icon" aria-hidden="true" focusable="false"
+                         data-prefix="fas" data-icon="magnifying-glass" role="img" xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 512 512" data-fa-i2svg="">
+                        <path fill="currentColor"
+                              d="M500.3 443.7l-119.7-119.7c27.22-40.41 40.65-90.9 33.46-144.7C401.8 87.79 326.8 13.32 235.2 1.723C99.01-15.51-15.51 99.01 1.724 235.2c11.6 91.64 86.08 166.7 177.6 178.9c53.8 7.189 104.3-6.236 144.7-33.46l119.7 119.7c15.62 15.62 40.95 15.62 56.57 0C515.9 484.7 515.9 459.3 500.3 443.7zM79.1 208c0-70.58 57.42-128 128-128s128 57.42 128 128c0 70.58-57.42 128-128 128S79.1 278.6 79.1 208z"></path>
+                    </svg>
+                </form>
+            </div>
+
+            <!--export-->
+            <div class="ms-xxl-auto">
+                <button class="btn btn-success me-1 ms-1">
+                    <span class="fa-solid far fa-file-excel"></span>
+                    Xuất Excel
+                </button>
+
+                <!--thêm tài khoản mới-->
+                <a href="/business/bookings-create" role="button" class="btn btn-primary me-1 ms-1">
+                    <i class="fa-solid fa-plus"></i>
+                    Thêm mới
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th class="text-center fw-bold">#</th>
+        <th class="text-center fw-bold">ID</th>
+        <th class="text-center fw-bold">Biển số xe</th>
+        <th class="text-center fw-bold">Loại phương tiện</th>
+        <th class="text-center fw-bold">Số chổ ngồi</th>
+        <th class="text-center fw-bold">Ngày tạo</th>
+        <th class="text-center fw-bold">Trạng thái</th>
+        <th class="text-center fw-bold">Thao tác</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="text-center">1</td>
+        <td class="text-center">Mark</td>
+        <td class="text-center">Otto</td>
+        <td class="text-center">&#64;mdo</td>
+        <td class="text-center">&#64;mdo</td>
+        <td class="text-center">&#64;mdo</td>
+        <td class="text-center">&#64;mdo</td>
+        <td class="text-center">
+            <a href="/business/bookings-update" class="me-2 mb-1">
+                <span class="fas fa-edit text-warning fs-1" title="Cập nhật"></span>
+            </a>
+            <a href="#" class="ms-2 mb-1">
+                <span class="fas fa-trash-alt text-danger fs-1" title="Xóa"></span>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!--PHÂN TRANG-->
+<div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
+    <div class="col-auto d-flex">
+        <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900" data-list-info="data-list-info">
+            1 đến 10 <span class="text-600"> của </span> 12
+        </p>
+    </div>
+    <div class="col-auto d-flex">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                <li class="page-item">
+                    <a class="page-link" href="#">
+                        <i class="fa-solid fa-angle-left"></i>
+                    </a>
+                </li>
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
