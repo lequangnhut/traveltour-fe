@@ -42,6 +42,65 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: ''
         })
         /**
+         * Admin Template
+         */
+        .when('/admin/hotel-type', {
+            templateUrl: 'app/component/admin/views/pages/typesAD/hotel-type.html',
+            controller: 'HotelTypeControllerAD'
+        })
+        .when('/admin/location-type', {
+            templateUrl: 'app/component/admin/views/pages/typesAD/location-type.html',
+            controller: 'LocationTypeControllerAD'
+        })
+        .when('/admin/tour-type', {
+            templateUrl: 'app/component/admin/views/pages/typesAD/tour-type.html',
+            controller: 'TourTypeControllerAD'
+        })
+        .when('/admin/transportation-type', {
+            templateUrl: 'app/component/admin/views/pages/typesAD/transportation-type.html',
+            controller: 'TransTypeControllerAD'
+        })
+        .when('/admin/hotel-utility', {
+            templateUrl: 'app/component/admin/views/pages/typesAD/hotel-utility.html',
+            controller: 'HotelUtilityControllerAD'
+        })
+        .when('/admin/room-utility', {
+            templateUrl: 'app/component/admin/views/pages/typesAD/room-utility.html',
+            controller: 'RoomUtilityControllerAD'
+        })
+        .when('/admin/staff-add', {
+            templateUrl: 'app/component/admin/views/pages/staffAD/staff-add.html',
+            controller: 'StaffControllerAD'
+        })
+        .when('/admin/staff-edit', {
+            templateUrl: 'app/component/admin/views/pages/staffAD/staff-edit.html',
+            controller: 'StaffControllerAD'
+        })
+        .when('/admin/staff-list', {
+            templateUrl: 'app/component/admin/views/pages/staffAD/staff-list.html',
+            controller: 'StaffControllerAD'
+        })
+        .when('/admin/agency-add', {
+            templateUrl: 'app/component/admin/views/pages/agencyAD/agency-add.html',
+            controller: 'AgencyControllerAD'
+        })
+        .when('/admin/agency-edit', {
+            templateUrl: 'app/component/admin/views/pages/agencyAD/agency-edit.html',
+            controller: 'AgencyControllerAD'
+        })
+        .when('/admin/agency-list', {
+            templateUrl: 'app/component/admin/views/pages/agencyAD/agency-list.html',
+            controller: 'AgencyControllerAD'
+        })
+        .when('/admin/revenue', {
+            templateUrl: 'app/component/admin/views/pages/reportAD/revenue.html',
+            controller: 'RevenueControllerAD'
+        })
+        .when('/admin/statistical', {
+            templateUrl: 'app/component/admin/views/pages/reportAD/statistical.html',
+            controller: 'StatisticalControllerAD'
+        })
+        /**
          * Customer
          */
         .when('/home', {

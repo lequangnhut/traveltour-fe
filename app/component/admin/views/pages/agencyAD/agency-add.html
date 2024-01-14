@@ -1,0 +1,348 @@
+<!--<h3 class="mb-4" style="font-weight: 600;color: #63ab45;border-bottom: 1px solid #9fa6bc73;line-height: 60px;">THÊM THÔNG TIN DOANH NGHIỆP</h3>-->
+
+<!--<form class="row g-3 was-validated">-->
+<!--    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+<!--        <label for="agency-name" class="form-label" style="padding-left: 0;font-size: medium;padding-bottom: 10px;">TÊN DOANH NGHIỆP</label>-->
+<!--        <input type="text" class="form-control is-invalid" id="agency-name" placeholder="Nhập tên doanh nghiệp" required>-->
+<!--        <div class="invalid-feedback">-->
+<!--            Vui lòng nhập họ và tên!-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+<!--        <label for="fullname" class="form-label" style="padding-left: 0;font-size: medium;padding-bottom: 10px;">NGƯỜI ĐẠI DIỆN</label>-->
+<!--        <input type="text" class="form-control is-valid" id="fullname" placeholder="Nhập họ và tên" required>-->
+<!--        <div class="valid-feedback">-->
+<!--            phải như vậy!-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+<!--        <label for="taxid" class="form-label" style="padding-left: 0;font-size: medium;padding-bottom: 10px;">MÃ SỐ THUẾ</label>-->
+<!--        <input type="text" class="form-control is-valid" id="taxid" placeholder="Nhập mã số thuế" required>-->
+<!--        <div class="valid-feedback">-->
+<!--            Looks good!-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+<!--        <label for="phone" class="form-label" style="padding-left: 0;font-size: medium;padding-bottom: 10px;">SỐ ĐIỆN THOẠI</label>-->
+<!--        <input type="text" class="form-control is-valid" id="phone" placeholder="Nhập mật khẩu" required>-->
+<!--        <div class="valid-feedback">-->
+<!--            Looks good!-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+<!--        <label for="website" class="form-label" style="padding-left: 0;font-size: medium;padding-bottom: 10px;">WEBSITE</label>-->
+<!--        <input type="text" class="form-control is-valid" id="website" placeholder="Nhập địa chỉ website" required>-->
+<!--        <div class="valid-feedback">-->
+<!--            Looks good!-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+<!--        <label for="address" class="form-label" style="padding-left: 0;font-size: medium;padding-bottom: 10px;">ĐỊA CHỈ</label>-->
+<!--        <input type="text" class="form-control is-valid" id="address" placeholder="Nhập địa chỉ" required>-->
+<!--        <div class="valid-feedback">-->
+<!--            Looks good!-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+<!--        <label for="province" class="form-label" style="padding-left: 0;font-size: medium;padding-bottom: 10px;">TỈNH/THÀNH</label>-->
+<!--        <select class="form-select is-invalid" id="province" required>-->
+<!--            <option selected disabled value="">Choose...</option>-->
+<!--            <option>...</option>-->
+<!--        </select>-->
+<!--        <div class="invalid-feedback">-->
+<!--            Vui lòng chọn tỉnh/thành-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+<!--        <label for="district" class="form-label" style="padding-left: 0;font-size: medium;padding-bottom: 10px;">QUẬN/HUYỆN</label>-->
+<!--        <select class="form-select is-invalid" id="district" required>-->
+<!--            <option selected disabled value="">Choose...</option>-->
+<!--            <option>...</option>-->
+<!--        </select>-->
+<!--        <div class="invalid-feedback">-->
+<!--            Vui lòng chọn quận/huyện-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+<!--        <label for="ward" class="form-label" style="padding-left: 0;font-size: medium;padding-bottom: 10px;">PHƯỜNG/XÃ</label>-->
+<!--        <select class="form-select is-invalid" id="ward" required>-->
+<!--            <option selected disabled value="">Choose...</option>-->
+<!--            <option>...</option>-->
+<!--        </select>-->
+<!--        <div class="invalid-feedback">-->
+<!--            Vui lòng chọn phường/xã-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+<!--        <label for="status" class="form-label" style="padding-left: 0;font-size: medium;padding-bottom: 10px;">TRẠNG THÁI</label>-->
+<!--        <select class="form-select is-invalid" id="status" required>-->
+<!--            <option selected disabled value="">Choose...</option>-->
+<!--            <option>...</option>-->
+<!--        </select>-->
+<!--        <div id="validationServer04Feedback" class="invalid-feedback">-->
+<!--            Vui lòng chọn-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</form>-->
+
+<!--<div class="mb-6 mt-5">-->
+<!--    <div class="mb-4">-->
+<!--        <div class="d-flex flex-wrap gap-3">-->
+<!--            &lt;!&ndash;export&ndash;&gt;-->
+<!--            <div class="ms-xxl-auto">-->
+<!--                &lt;!&ndash;thêm tài khoản mới&ndash;&gt;-->
+<!--                <button class="btn btn-success me-1 ms-1">-->
+<!--                    <i class="fa-solid fa-plus"></i>-->
+<!--                    <span class="d-none d-sm-inline">Thêm doanh nghiệp</span>-->
+<!--                </button>-->
+<!--                <button class="btn btn-secondary me-1 ms-1">-->
+<!--                    <i class="fa-solid fa-arrows-rotate"></i>-->
+<!--                    <span class="d-none d-sm-inline">Làm mới</span>-->
+<!--                </button>-->
+<!--                <a class="btn btn-warning me-1 ms-1" href="/admin/agency-list">-->
+<!--                    <i class="fa-solid fa-left-long"></i>-->
+<!--                    <span class="d-none d-sm-inline">Trở về</span>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<main class="main" id="top">
+    <div class="content" style="padding-top: 0">
+        <form class="mb-9"  ng-submit="submitAdminAgencyAdd()" method="POST" role="form" name="agencyform">
+            <div class="row justify-content-between align-items-end g-3 mb-5">
+                <div class="col-8 col-sm-auto col-xl-12">
+                    <h2 class="mb-0">Thêm doanh nghiệp mới</h2>
+                </div>
+                <div class="col-8 col-sm-auto col-xl-8 align-items-end">
+                    <div class="d-flex justify-content-end">
+                        <a class="btn btn-warning me-1 ms-1" href="/admin/agency-list">
+                            <i class="fa-solid fa-left-long"></i>
+                            <span class="d-none d-sm-inline">Trở về</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-5">
+                <div class="col-xl-8">
+                    <div class="row gx-3 gy-4">
+                        <h4 class="fs-1 mb-0">Thông tin chung</h4>
+                        <div class="col-sm-6 col-md-12">
+                            <div class="form-floating">
+                                <input type="text"
+                                       class="form-control"
+                                       id="inputNameBusiness"
+                                       placeholder="Công ty du lịch TravelTour"
+                                       name="agencyname"
+                                       ng-model="agent.agencyname"
+                                       ng-class="{ 'is-invalid': agencyform.agencyname.$invalid && agencyform.agencyname.$touched, 'is-valid': agencyform.agencyname.$valid && agencyform.agencyname.$touched }"
+                                       ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                       required
+                                >
+                                <label for="inputNameBusiness">Tên doanh nghiệp</label>
+                                <small class="text-danger"
+                                       ng-show="agencyform.agencyname.$touched && agencyform.agencyname.$error.required">
+                                    Vui lòng nhập tên doanh nghiệp !
+                                </small>
+                                <small class="text-danger"
+                                       ng-show="agencyform.agencyname.$touched && agencyform.agencyname.$error.pattern">
+                                    Tên doanh nghiệp không đúng định dạng !
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 gy-6">
+                            <div class="form-floating">
+                                <input class="form-control" id="mentor"
+                                       type="text" placeholder="ORGANIZERS"
+                                       name="mentor"
+                                       ng-model="agent.mentor"
+                                       ng-class="{ 'is-invalid': agencyform.mentor.$invalid && agencyform.mentor.$touched, 'is-valid': agencyform.mentor.$valid && agencyform.mentor.$touched }"
+                                       ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                       required/>
+                                <label for="mentor">Người đại diện</label>
+                                <small class="text-danger"
+                                       ng-show="agencyform.mentor.$touched && agencyform.mentor.$error.required">
+                                    Vui lòng nhập tên người đại diện !
+                                </small>
+                                <small class="text-danger"
+                                       ng-show="agencyform.mentor.$touched && agencyform.mentor.$error.pattern">
+                                    Họ tên không đúng định dạng !
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 gy-6">
+                            <div class="form-floating">
+                                <input class="form-control" id="taxid"
+                                       type="text" placeholder="SPONSORS"
+                                       name="taxid"
+                                       ng-model="agent.taxid"
+                                       ng-class="{ 'is-invalid': agencyform.taxid.$invalid && agencyform.taxid.$touched, 'is-valid': agencyform.taxid.$valid && agencyform.taxid.$touched }"
+                                       ng-pattern="/^\d{10}(\d{3})?$/"
+                                       required/>
+                                <label for="taxid">Mã số thuế</label>
+                                <small class="text-danger"
+                                       ng-show="agencyform.taxid.$touched && agencyform.taxid.$error.required">
+                                    Vui lòng nhập mã số thuế !
+                                </small>
+                                <small class="text-danger"
+                                       ng-show="agencyform.taxid.$touched && agencyform.taxid.$error.pattern">
+                                    Mã số thuế gồm 10 hoặc 13 số !
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 gy-6">
+                            <div class="form-floating">
+                                <input class="form-control" id="phoneNumber"
+                                       type="text" placeholder="ORGANIZERS"
+                                       name="phoneNumber"
+                                       ng-pattern="/^\d{10}(\d{1})?$/"
+                                       ng-model="agent.phoneNumber"
+                                       ng-class="{ 'is-invalid': agencyform.phoneNumber.$invalid && agencyform.phoneNumber.$touched, 'is-valid': agencyform.phoneNumber.$valid && agencyform.phoneNumber.$touched }"
+                                       required/>
+                                <label for="phoneNumber">Số điện thoại</label>
+                                <small class="text-danger"
+                                       ng-show="agencyform.phoneNumber.$touched && agencyform.phoneNumber.$error.required">
+                                    Vui lòng nhập số điện thoại !
+                                </small>
+                                <small class="text-danger"
+                                       ng-show="agencyform.phoneNumber.$touched && agencyform.phoneNumber.$error.pattern">
+                                    Số điện thoại bao gồm 10 hoặc 11 số !
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 gy-6">
+                            <div class="form-floating">
+                                <input class="form-control" id="website"
+                                       type="text" placeholder="ORGANIZERS"
+                                       name="website"
+                                       ng-pattern="/^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/"
+                                       ng-model="agent.website"
+                                       ng-class="{ 'is-invalid': agencyform.website.$invalid && agencyform.website.$touched, 'is-valid': agencyform.website.$valid && agencyform.website.$touched }"
+                                       required/>
+                                <label for="phoneNumber">Địa chỉ website</label>
+                                <small class="text-danger"
+                                       ng-show="agencyform.website.$touched && agencyform.website.$error.required">
+                                    Vui lòng nhập địa chỉ website !
+                                </small>
+                                <small class="text-danger"
+                                       ng-show="agencyform.website.$touched && agencyform.website.$error.pattern">
+                                    Website có dạng như example.abc, example.ab.cd!
+                                </small>
+                            </div>
+                        </div>
+                        <h4 class="fs-1 mt-7">Giấy phép kinh doanh (.jpg/.png/.jpeg)</h4>
+                        <div class="col-sm-12 gy-6">
+                            <div class="form-floating">
+                                <input class="form-control" id="file" type="file"
+                                       style="height: 10px;padding-top: 8px;padding-bottom: 24px;"
+                                       ng-model="agent.business_license"
+                                       ngf-max-size="10MB"
+                                       ngf-select="uploadBusinessLicense($file)"/>
+                            </div>
+                        </div>
+                        <h4 class="fs-1 mt-7">Địa chỉ liên hệ</h4>
+                        <div class="col-sm-4">
+                            <div class="form-floating">
+                                <select class="form-select" id="province"
+                                        style=" padding-bottom: 2px; padding-top: 20px;" name="province"
+                                        ng-class="{ 'is-invalid': agencyform.province.$invalid && agencyform.province.$touched, 'is-valid': agencyform.province.$valid && agencyform.province.$touched }"
+                                        ng-options="city.Id as city.Name for city in provinces"
+                                        ng-change="onProvinceChange()"
+                                        ng-model="agent.province"
+                                        required>
+                                    <option value="" disabled selected>Chọn Tỉnh/Thành phố</option>
+                                </select>
+                                <label for="province">Tỉnh/Thành</label></div>
+                            <small class="text-danger"
+                                   ng-show="agencyform.province.$touched && agencyform.province.$error.required">
+                                Vui lòng chọn tỉnh/thành phố.
+                            </small>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-floating">
+                                <select class="form-select" id="district"
+                                        style=" padding-bottom: 2px; padding-top: 20px;" name="districts"
+                                        ng-class="{ 'is-invalid': agencyform.districts.$invalid && agencyform.districts.$touched, 'is-valid': agencyform.districts.$valid && agencyform.districts.$touched }"
+                                        ng-options="district.Id as district.Name for district in districts"
+                                        ng-disabled="!agent.province"
+                                        ng-change="onDistrictChange()"
+                                        ng-model="agent.districts"
+                                        required>
+                                    <option value="" disabled selected>Chọn Quận/Huyện</option>
+                                </select>
+                                <label for="district">Quận/Huyện</label></div>
+                            <small class="text-danger"
+                                   ng-show="agencyform.districts.$touched && agencyform.districts.$error.required">
+                                Vui lòng chọn quận/huyện.
+                            </small>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-floating">
+                                <select class="form-select" id="ward" style=" padding-bottom: 2px; padding-top: 20px;"
+                                        name="ward"
+                                        ng-class="{ 'is-invalid': agencyform.ward.$invalid && agencyform.ward.$touched, 'is-valid': agencyform.ward.$valid && agencyform.ward.$touched }"
+                                        ng-options="ward.Id as ward.Name for ward in wards"
+                                        ng-disabled="!agent.districts"
+                                        ng-model="agent.ward"
+                                        required>
+                                    <option value="" disabled selected>Chọn Phường/Xã</option>
+                                </select>
+                                <label for="ward">Phường/xã</label>
+                                <small class="text-danger"
+                                       ng-show="agencyform.ward.$touched && agencyform.ward.$error.required">
+                                    Vui lòng chọn phường/xã.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 gy-6">
+                            <div class="form-floating">
+                                <input class="form-control" id="address"
+                                       type="text" placeholder="SPONSORS"
+                                       name="address"
+                                       ng-model="agent.address"
+                                       ng-class="{ 'is-invalid': agencyform.address.$invalid && agencyform.address.$touched, 'is-valid': agencyform.address.$valid && agencyform.address.$touched }"
+                                       required>
+                                <label for="address">Địa chỉ</label>
+                                <small class="text-danger"
+                                       ng-show="agencyform.address.$touched && agencyform.address.$error.required">
+                                    Vui lòng nhập địa chỉ doanh nghiệp !
+                                </small>
+                            </div>
+                        </div>
+                        <h4 class="fs-1 mt-7">Trạng thái</h4>
+                        <div class="col-sm-12">
+                            <div class="form-floating">
+                                <select class="form-select" id="agencystatus" style=" padding-bottom: 2px; padding-top: 20px;"
+                                        name="agencystatus"
+                                        ng-model="agent.agencystatus"
+                                        ng-class="{ 'is-invalid': agencyform.agencystatus.$invalid && agencyform.agencystatus.$touched, 'is-valid': agencyform.agencystatus.$valid && agencyform.agencystatus.$touched }"
+                                        required>
+                                    <option value="0" selected="selected"> Đang hoạt động</option>
+                                    <option value="1">Ngừng hoạt động</option>
+                                </select>
+                                <label for="agencystatus">Trạng thái hoạt động</label>
+                                <small class="text-danger"
+                                       ng-show="agencyform.agencystatus.$touched && agencyform.agencystatus.$error.required">
+                                    Vui lòng chọn trạng thái
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-12 d-flex justify-content-end mt-6">
+                            <div class="ms-xxl-auto">
+                                <button class="btn btn-success me-1 ms-1" ng-disabled="agencyform.$invalid" type="submit">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span class="d-none d-sm-inline">Thêm</span>
+                                </button>
+                                <a class="btn btn-secondary me-1 ms-1">
+                                    <i class="fa-solid fa-arrows-rotate"></i>
+                                    <span class="d-none d-sm-inline">Làm mới</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>

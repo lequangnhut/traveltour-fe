@@ -96,7 +96,7 @@
         }
     </script>
 
-    <main class="main" id="top">
+    <main class="main" id="top" >
         <nav class="navbar navbar-vertical navbar-expand-lg" ng-hide="hideSidebar()">
             <script>
                 var navbarStyle = window.config.config.phoenixNavbarStyle;
@@ -653,114 +653,175 @@
                             </div>
 
                             <div ng-if="role === 'ROLE_ADMIN'">
-                                <!-- label-->
+                                <!-- QUẢN LÝ NHÂN VIÊN - Header -->
                                 <p class="navbar-vertical-label">QUẢN LÝ NHÂN VIÊN</p>
                                 <hr class="navbar-vertical-line"/>
 
-                                <!-- label-->
+                                <!-- QUẢN LÝ NHÂN VIÊN - List-->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1" href="#info-staff" role="button"
-                                       data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       href="/admin/staff-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon">
-                                                <span class="fas fa-caret-right"></span>
+
                                             </div>
-                                            <span class="nav-link-icon">
                                             <span data-feather="users"></span>
-                                        </span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Thông tin nhân viên</span>
+                                        </span>
                                         </div>
                                     </a>
-                                    <div class="parent-wrapper label-1">
-                                        <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
-                                            id="info-staff">
-
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="nav-link-text">Danh sách nhân viên</span>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="nav-link-text">Thêm nhân viên</span>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
                                 </div>
 
-                                <!-- label-->
+                                <!-- QUẢN LÝ DOANG NGHIỆP - Header -->
                                 <p class="navbar-vertical-label">QUẢN LÝ DOANH NGHIỆP</p>
                                 <hr class="navbar-vertical-line"/>
 
-                                <!-- label-->
+                                <!-- QUẢN LÝ DOANG NGHIỆP - List-->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1" href="#info-agent" role="button"
-                                       data-bs-toggle="collapse" aria-expanded="false" aria-controls="ql-tour">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       href="/admin/agency-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon">
-                                                <span class="fas fa-caret-right"></span>
+
                                             </div>
-                                            <span class="nav-link-icon">
-                                            <span data-feather="home"></span>
-                                        </span>
+                                            <span data-feather="file-text"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Thông tin doanh nghiệp</span>
+                                        </span>
                                         </div>
                                     </a>
-                                    <div class="parent-wrapper label-1">
-                                        <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
-                                            id="info-agent">
+                                </div>
 
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="nav-link-text">Danh sách doanh nghiệp</span>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="nav-link-text">Thêm doanh nghiệp</span>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                <!-- QUẢN LÝ LOẠI DỊCH VỤ-->
+                                <p class="navbar-vertical-label">QUẢN LÝ LOẠI DỊCH VỤ</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- Thể loại tour-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       href="/admin/tour-type">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+
+                                            </div>
+                                            <span data-feather="globe"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thể loại tour</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- Thể loại lưu trú -->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       href="/admin/hotel-type">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+
+                                            </div>
+                                            <span data-feather="home"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thể loại lưu trú</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- Thể loại địa điểm -->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       href="/admin/location-type">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+
+                                            </div>
+                                            <span data-feather="map"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thể loại địa điểm</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- Thể loại phương tiện -->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       href="/admin/transportation-type">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+
+                                            </div>
+                                            <span data-feather="target"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thể loại phương tiện</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- Thể loại tiện ích lưu trú -->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       href="/admin/hotel-utility">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+
+                                            </div>
+                                            <span data-feather="grid"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thể loại tiện ích lưu trú</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Thể loại tiện ích phòng -->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       href="/admin/room-utility">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon">
+
+                                            </div>
+                                            <span data-feather="grid"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thể loại tiện ích phòng</span>
+                                        </span>
+                                        </div>
+                                    </a>
                                 </div>
 
                                 <!-- label-->
-                                <p class="navbar-vertical-label">QUẢN LÝ DOANH THU</p>
+                                <p class="navbar-vertical-label">BÁO CÁO - THỐNG KÊ</p>
                                 <hr class="navbar-vertical-line"/>
 
-                                <!-- label-->
+                                <!-- Thể loại tiện ích lưu trú -->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link label-1" href="#">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       href="/admin/revenue">
                                         <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span class="nav-link-icon">
-                                            <span data-feather="columns"></span>
-                                        </span>
-                                            <span class="nav-link-text-wrapper">
+                                            <div class="dropdown-indicator-icon">
+
+                                            </div>
+                                            <span data-feather="trello"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Doanh thu</span>
                                         </span>
                                         </div>
                                     </a>
                                 </div>
 
-                                <!-- label-->
+                                <!-- Thể loại tiện ích lưu trú -->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link label-1" href="#">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       href="/admin/statistical">
                                         <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span class="nav-link-icon">
-                                            <span data-feather="bar-chart-2"></span>
-                                        </span>
-                                            <span class="nav-link-text-wrapper">
+                                            <div class="dropdown-indicator-icon">
+
+                                            </div>
+                                            <span data-feather="sliders"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Thống kê</span>
                                         </span>
                                         </div>
@@ -1135,6 +1196,17 @@
 <script src="app/component/admin/controllers/decentralization/DecentralizationControllerAD.js"></script>
 <script src="app/component/admin/controllers/decentralization/DecentralizationListControllerAD.js"></script>
 <script src="app/component/admin/controllers/register-agent/BusinessInformationController.js"></script>
+<script src="app/component/admin/controllers/typesAD/HotelTypeControllerAD.js"></script>
+<script src="app/component/admin/controllers/typesAD/LocationTypeControllerAD.js"></script>
+<script src="app/component/admin/controllers/typesAD/TourTypeControllerAD.js"></script>
+<script src="app/component/admin/controllers/typesAD/TransTypeControllerAD.js"></script>
+<script src="app/component/admin/controllers/typesAD/HotelUtilityControllerAD.js"></script>
+<script src="app/component/admin/controllers/typesAD/RoomUtilityControllerAD.js"></script>
+<script src="app/component/admin/controllers/staffAD/StaffControllerAD.js"></script>
+<script src="app/component/admin/controllers/agencyAD/AgencyControllerAD.js"></script>
+<script src="app/component/admin/controllers/reportAD/RevenueControllerAD.js"></script>
+<script src="app/component/admin/controllers/reportAD/StatisticalControllerAD.js"></script>
+
 
 <!--====== Controller Agent ======-->
 <script src="app/component/agent/trans/controllers/RegisterTransControllerAG.js"></script>
