@@ -54,7 +54,7 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
     $scope.logoutAuthAdmin = function () {
         AuthService.clearAuthData();
         $scope.isAuthenticated = false;
-        window.location.href = '/admin';
+        window.location.href = '/login-admin';
     };
 
     /**
