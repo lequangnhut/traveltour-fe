@@ -58,6 +58,26 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/transport-list.html',
             controller: ''
         })
+        .when('/admin/register-transport-success', {
+            templateUrl: 'app/component/agent/trans/views/pages/register-trans-success.html',
+            controller: ''
+        })
+        /**
+         * Agent Visit
+         */
+        .when('/admin/register-visit', {
+            templateUrl: 'app/component/agent/visits/views/pages/register-visits.html',
+            controller: 'RegisterVisitsControllerAG'
+        })
+        .when('/admin/visit-list', {
+            templateUrl: 'app/component/agent/visits/views/pages/visit-list.html',
+            controller: ''
+        })
+        .when('/admin/register-visits-success', {
+            templateUrl: 'app/component/agent/visits/views/pages/register-visits-success.html',
+            controller: ''
+        })
+
         /**
          * Admin Template
          */
