@@ -1,0 +1,158 @@
+@font-face {
+    font-family: Montserrat;
+    src: url(../font/Montserrat-Medium.ttf);
+}
+
+.header-control .color-greend{
+    color: #63ab45;
+}
+
+.header-control .btn-greend {
+    padding: 16px 50px;
+    border-radius: 40px;
+    background: #63ab45;
+    color: #fff;
+    font-size: 16px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+}
+.header-control {
+    font-family: "Montserrat", sans-serif;
+}
+.header-control h1 {
+    font-family: "Montserrat", sans-serif;
+}
+.card-customer {
+    border-radius: 12px !important;
+    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+    margin-bottom: 50px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.table-components .card {
+    border-radius: 12px !important;
+}
+
+.table-customer {
+    text-align: center;
+    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.table-customer thead {
+    height: 50px;
+}
+
+.table-customer thead tr th {
+    font-weight: 600;
+}
+
+.table-customer .form-check-input {
+    margin-left: 12px;
+}
+
+.table-customer .form-check-input:checked {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: #ffffff;
+}
+
+.table-customer .checkbox-all{
+    margin-left: 0
+
+}
+
+.table-customer table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-customer td {
+    padding: 16px;
+}
+
+.table-customer tr{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-customer td:first-child {
+    padding: 16px;
+    margin-left: 29px;
+}
+
+.table-customer table .status-success {
+    background-color: #28a745;
+    padding: 4px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+
+.table-customer table .text-status-success {
+    color: #28a745;
+}
+
+.table-customer table .status-warning {
+    background-color: #ffc107;
+    padding: 4px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.table-customer table .text-status-warning {
+    color: #ffc107;
+}
+
+.table-customer table .status-error {
+    background-color: #dc3545;
+    padding: 4px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.table-customer table .text-status-error {
+    color: #dc3545;
+}
+
+.table-customer table .status-info {
+    background-color: #17a2b8;
+    padding: 4px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.table-customer table .text-status-info {
+    color: #17a2b8;
+}
+
+.table-customer table .status-normal {
+    background-color: #007bff;
+    padding: 4px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.table-customer table .text-status-normal {
+    color: #007bff
+}
+
+.form-input-custom {
+    font-family: "Montserrat", sans-serif;
+}
+
+.form-input-custom .btn-submit {
+    padding: 16px 50px;
+    border-radius: 40px;
+    background: #63ab45;
+    color: #fff;
+    font-size: 16px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+}
+
+.card-custom{
+    padding: 50px;
+    border-radius: 12px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+}

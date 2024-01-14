@@ -26,10 +26,27 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Agent Hotel
          */
-        .when('/admin/register-business/business-information', {
-            templateUrl: 'app/component/admin/views/pages/register-agent/business-information.html',
-            controller: 'BusinessInformationController'
+        .when('/admin/register-hotel', {
+            templateUrl: 'app/component/agent/hotel/views/pages/register/register-hotel.html',
+            controller: 'RegisterHotelControllerAG'
         })
+        .when('/admin/register-hotel-success', {
+            templateUrl: 'app/component/agent/hotel/views/pages/register/register-success.html',
+            controller: ''
+        })
+        .when('/admin/amenities/hotel-amenities-list', {
+        templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-list.html',
+        controller: 'HotelAmenitiesListController'
+        })
+        .when('/admin/amenities/hotel-amenities-list/new', {
+            templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-add.html',
+            controller: 'HotelAmenitiesAddController'
+        })
+        .when('/admin/amenities/hotel-amenities-list/edit', {
+            templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-edit.html',
+            controller: 'HotelAmenitiesAddController'
+        })
+
         /**
          * Agent Transport
          */

@@ -600,7 +600,7 @@ jQuery(function($) {
 
             $( 'body' ).on( 'submit', 'form.dokan-product-edit-form', this.inputValidate );
 
-            // For new desing in product page
+            // For new desing in product pages
             $( '.dokan-product-listing' ).on( 'click', 'a.dokan-add-new-product', this.addProductPopup );
 
             this.loadSelect2();

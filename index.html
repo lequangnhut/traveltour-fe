@@ -80,6 +80,7 @@
     <link href="/assets/admin/assets/css/user-rtl.min.css" type="text/css" rel="stylesheet" id="user-style-rtl">
     <link href="/assets/admin/assets/css/user.min.css" type="text/css" rel="stylesheet" id="user-style-default">
     <link href="/assets/admin/assets/css/register-business.css" type="text/css" rel="stylesheet">
+    <link href="/assets/admin/assets/css/theme-table.css" type="text/css" rel="stylesheet">
     <script>
         var phoenixIsRTL = window.config.config.phoenixIsRTL;
         if (phoenixIsRTL) {
@@ -96,7 +97,7 @@
         }
     </script>
 
-    <main class="main" id="top" >
+    <main class="main" id="top">
         <nav class="navbar navbar-vertical navbar-expand-lg" ng-hide="hideSidebar()">
             <script>
                 var navbarStyle = window.config.config.phoenixNavbarStyle;
@@ -495,7 +496,7 @@
                                             id="info-service">
 
                                             <li class="nav-item">
-                                                <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                                <a class="nav-link" href="/admin/amenities/hotel-amenities-list" data-bs-toggle="" aria-expanded="false">
                                                     <div class="d-flex align-items-center">
                                                         <span class="nav-link-text">Tiện ích khách sạn</span>
                                                     </div>
@@ -1207,9 +1208,12 @@
 <script src="app/component/admin/controllers/reportAD/RevenueControllerAD.js"></script>
 <script src="app/component/admin/controllers/reportAD/StatisticalControllerAD.js"></script>
 
+<script src="app/component/admin/controllers/register-agent/AccommodationInformation.js"></script>
 
 <!--====== Controller Agent ======-->
 <script src="app/component/agent/trans/controllers/RegisterTransControllerAG.js"></script>
+<script src="app/component/agent/hotel/controllers/register/RegisterHotelControllerAG.js"></script>
+<script src="app/component/agent/hotel/controllers/service/amenities/HotelAmenitiesListController.js"></script>
 
 <!--====== Controller Customer ======-->
 <script src="app/component/customers/controllers/auth/LoginController.js"></script>

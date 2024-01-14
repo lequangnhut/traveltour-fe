@@ -1,5 +1,5 @@
 
-// For single page shipping calculation scripts;
+// For single pages shipping calculation scripts;
 (function($){
 
     $(document).ready(function(){
