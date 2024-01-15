@@ -1,5 +1,6 @@
-travel_app.controller('MainController', function ($scope, $location, $anchorScroll, AuthService) {
+travel_app.controller('MainController', function ($scope, $location, $window, $anchorScroll, AuthService) {
     $anchorScroll();
+    $scope.activeNavItem = localStorage.getItem('activeNavItem') || null;
 
     $scope.isAuthenticated = AuthService.getToken() !== null;
     $scope.user = AuthService.getUser();
@@ -7,6 +8,15 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
     if (AuthService.getUser() !== null) {
         $scope.role = AuthService.getUser().roles[0].nameRole
     }
+
+    $scope.setActiveNavItem = function (navItem) {
+        $scope.activeNavItem = navItem;
+        localStorage.setItem('activeNavItem', navItem);
+    };
+
+    $window.addEventListener('beforeunload', function () {
+        localStorage.setItem('activeNavItem', $scope.activeNavItem);
+    });
 
     $scope.goHome = function () {
         window.location.href = '/home';
@@ -44,7 +54,6 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
         return $scope.isAdminPage() || $scope.isBusinessPage();
     };
 
-
     $scope.logoutAuth = function () {
         AuthService.clearAuthData();
         $scope.isAuthenticated = false;
@@ -54,7 +63,8 @@ travel_app.controller('MainController', function ($scope, $location, $anchorScro
     $scope.logoutAuthAdmin = function () {
         AuthService.clearAuthData();
         $scope.isAuthenticated = false;
-        window.location.href = '/login-admin';
+        localStorage.removeItem('activeNavItem');
+        $location.path('/login-admin');
     };
 
     /**

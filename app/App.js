@@ -160,45 +160,44 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/register-transport.html',
             controller: 'RegisterTransControllerAG'
         })
-        .when('/business/transports-list', {
+        .when('/business/register-transport-success', {
+            templateUrl: 'app/component/agent/trans/views/pages/register-trans-success.html'
+        })
+        .when('/business/transport/transports-list', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-list.html',
-            controller: ''
+            controller: 'TransportControllerAG'
         })
-        .when('/business/transports-create', {
+        .when('/business/transport/transports-list/transports-create', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-create.html',
-            controller: ''
+            controller: 'TransportControllerAG'
         })
-        .when('/business/transports-update', {
+        .when('/business/transport/transports-list/transports-update', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-update.html',
-            controller: ''
+            controller: 'TransportControllerAG'
         })
-        .when('/business/bookings-list', {
+        .when('/business/booking/bookings-list', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-list.html',
-            controller: ''
+            controller: 'BookingControllerAG'
         })
-        .when('/business/bookings-create', {
+        .when('/business/booking/bookings-list/bookings-create', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-create.html',
-            controller: ''
+            controller: 'BookingControllerAG'
         })
-        .when('/business/bookings-update', {
+        .when('/business/booking/bookings-list/bookings-update', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-update.html',
-            controller: ''
+            controller: 'BookingControllerAG'
         })
-        .when('/business/trips-list', {
+        .when('/business/trip/trips-list', {
             templateUrl: 'app/component/agent/trans/views/pages/trips/trip-list.html',
-            controller: ''
+            controller: 'TripControllerAG'
         })
-        .when('/business/trips-create', {
+        .when('/business/trip/trips-list/trips-create', {
             templateUrl: 'app/component/agent/trans/views/pages/trips/trip-create.html',
-            controller: ''
+            controller: 'TripControllerAG'
         })
-        .when('/business/trips-update', {
+        .when('/business/trip/trips-list/trips-update', {
             templateUrl: 'app/component/agent/trans/views/pages/trips/trip-update.html',
-            controller: ''
-        })
-        .when('/admin/register-transport-success', {
-            templateUrl: 'app/component/agent/trans/views/pages/register-trans-success.html',
-            controller: ''
+            controller: 'TripControllerAG'
         })
         /**
          * Agent Visit

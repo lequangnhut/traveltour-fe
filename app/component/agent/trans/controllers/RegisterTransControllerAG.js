@@ -1,4 +1,4 @@
-travel_app.controller('RegisterTransControllerAG', function ($scope, $http) {
+travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $location) {
     $scope.showNextForm = false;
     $scope.showThirdForm = false;
     $scope.checkboxChecked = false;
@@ -117,5 +117,6 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http) {
         // }).then(function successCallback(response) {
         //     console.log(response.data);
         // });
+        $location.path('/business/register-transport-success');
     };
 });

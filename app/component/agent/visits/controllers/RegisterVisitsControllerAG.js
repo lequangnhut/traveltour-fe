@@ -21,7 +21,7 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http) {
         name_agent: null,
         timeOpen: null,
         timeClose: null,
-        agency_status:null,
+        agency_status: null,
         freeTicket: null,
         website: null,
         adultTicket: null,
