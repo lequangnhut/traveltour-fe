@@ -1,160 +1,172 @@
-<h2 class="mb-3">THỂ LOẠI PHƯƠNG TIỆN</h2>
 
+<!--<button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#scrollingLong2" fdprocessedid="z862if">Launch Scrolling long content modal</button>-->
+<!--<div class="modal fade" id="scrollingLong2" tabindex="-1" aria-labelledby="scrollingLongModalLabel2" aria-hidden="true" style="display: none;">-->
+<!--    <div class="modal-dialog modal-dialog-scrollable">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="scrollingLongModalLabel2">Modal title</h5><button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><svg class="svg-inline&#45;&#45;fa fa-xmark fs&#45;&#45;1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"></path></svg>&lt;!&ndash; <span class="fas fa-times fs&#45;&#45;1"></span> Font Awesome fontawesome.com &ndash;&gt;</button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <p class="text-700 lh-lg mb-0">Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>-->
+<!--            </div>-->
+<!--            <div class="modal-footer"><button class="btn btn-primary" type="button">Okay</button><button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Cancel</button></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
-<form class="row g-3" ng-submit="submitAdminType()"
-      method="POST" role="form" name="typeform">
-    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        <label for="typename" class="form-label" style="padding-left: 0;font-size: medium;padding-bottom: 10px;">TÊN LOẠI PHƯƠNG TIỆN</label>
-        <input type="text" class="form-control" id="typename"
-               placeholder="Nhập tên loại phương tiện"
-               name="typename"
-               ng-model="type.typename"
-               ng-class="{ 'is-invalid': typeform.typename.$invalid && typeform.typename.$touched, 'is-valid': typeform.typename.$valid && typeform.typename.$touched }"
-               required>
-        <small class="text-danger"
-               ng-show="typeform.typename.$touched && typeform.typename.$error.required">
-            Vui lòng nhập tên loại phương tiện !
-        </small>
-    </div>
-
-    <div class="mb-6 mt-5">
-        <div class="mb-4">
-            <div class="d-flex flex-wrap gap-3">
-                <!--search-->
-                <div class="search-box">
-                    <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
-                        <input class="form-control search-input search" type="search" placeholder="Tìm kiếm"
-                               aria-label="Search">
-                        <svg class="svg-inline--fa fa-magnifying-glass search-box-icon" aria-hidden="true" focusable="false"
-                             data-prefix="fas" data-icon="magnifying-glass" role="img" xmlns="http://www.w3.org/2000/svg"
-                             viewBox="0 0 512 512" data-fa-i2svg="">
-                            <path fill="currentColor"
-                                  d="M500.3 443.7l-119.7-119.7c27.22-40.41 40.65-90.9 33.46-144.7C401.8 87.79 326.8 13.32 235.2 1.723C99.01-15.51-15.51 99.01 1.724 235.2c11.6 91.64 86.08 166.7 177.6 178.9c53.8 7.189 104.3-6.236 144.7-33.46l119.7 119.7c15.62 15.62 40.95 15.62 56.57 0C515.9 484.7 515.9 459.3 500.3 443.7zM79.1 208c0-70.58 57.42-128 128-128s128 57.42 128 128c0 70.58-57.42 128-128 128S79.1 278.6 79.1 208z"></path>
-                        </svg><!-- <span class="fas fa-search search-box-icon"></span> Font Awesome fontawesome.com -->
-                    </form>
-                </div>
-
-                <!--export-->
-                <div class="ms-xxl-auto">
-                    <button class="btn btn-link text-900 me-4 px-0">
-                        <i class="fa-solid fa-file-export me-1"></i>
-                        Xuất file
-                    </button>
-
-                    <!--thêm tài khoản mới-->
-                    <button class="btn btn-success me-1 ms-1">
-                        <i class="fa-solid fa-plus"></i>
-                        <span class="d-none d-sm-inline">Thêm</span>
-                    </button>
-                    <button class="btn btn-primary me-1 ms-1">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                        <span class="d-none d-sm-inline">Cập nhật</span>
-                    </button>
-                    <button class="btn btn-secondary me-1 ms-1">
-                        <i class="fa-solid fa-arrows-rotate"></i>
-                        <span class="d-none d-sm-inline">Làm mới</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
-<main class="main" id="top">
-    <div class="content" style="padding-top: 0">
-        <div class="mb-9">
-            <div id="products" data-list='{"valueNames":["customer","email","total-orders","total-spent","city","last-seen","last-order"],"page":10,"pagination":true}'>
-                <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
-                    <div class="table-responsive scrollbar-overlay mx-n1 px-1">
-                        <table class="table table-sm fs--1 mb-0">
-                            <thead>
-                            <tr>
-                                <th class="sort text-center align-middle" scope="col" style="width:10%;">STT</th>
-                                <th class="sort text-center align-middle" scope="col" style="width:20%;">ID</th>
-                                <th class="sort text-center align-middle" scope="col" style="width:50%;">LOẠI PHƯƠNG TIỆN</th>
-                                <th class="sort text-center align-middle" scope="col" style="width:20%;min-width: 150px;">HOẠT ĐỘNG</th>
-                            </tr>
-                            </thead>
-                            <tbody class="list" id="customers-table-body">
-                            <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center">1</td>
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center text-1000">89</td>
-                                <td class="customer align-middle white-space-nowrap pe-5">
-                                    <p class="mb-0 ms-3 text-1100">Khách sạn 5 sao</p>
-                                </td>
-                                <td class="last-seen align-middle white-space-nowrap text-700 text-center">
-                                    <a class="btn btn-warning me-1 mb-1" href=""><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a class="btn btn-danger me-1 mb-1" href=""><i class="fa-solid fa-trash-can"></i></a>
-                                </td>
-                            </tr>
-                            <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center">1</td>
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center text-1000">89</td>
-                                <td class="customer align-middle white-space-nowrap pe-5">
-                                    <p class="mb-0 ms-3 text-1100">Khách sạn 5 sao</p>
-                                </td>
-                                <td class="last-seen align-middle white-space-nowrap text-700 text-center">
-                                    <a class="btn btn-warning me-1 mb-1" href=""><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a class="btn btn-danger me-1 mb-1" href=""><i class="fa-solid fa-trash-can"></i></a>
-                                </td>
-                            </tr>
-                            <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center">1</td>
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center text-1000">89</td>
-                                <td class="customer align-middle white-space-nowrap pe-5">
-                                    <p class="mb-0 ms-3 text-1100">Khách sạn 5 sao</p>
-                                </td>
-                                <td class="last-seen align-middle white-space-nowrap text-700 text-center">
-                                    <a class="btn btn-warning me-1 mb-1" href=""><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a class="btn btn-danger me-1 mb-1" href=""><i class="fa-solid fa-trash-can"></i></a>
-                                </td>
-                            </tr>
-                            <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center">1</td>
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center text-1000">89</td>
-                                <td class="customer align-middle white-space-nowrap pe-5">
-                                    <p class="mb-0 ms-3 text-1100">Khách sạn 5 sao</p>
-                                </td>
-                                <td class="last-seen align-middle white-space-nowrap text-700 text-center">
-                                    <a class="btn btn-warning me-1 mb-1" href=""><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a class="btn btn-danger me-1 mb-1" href=""><i class="fa-solid fa-trash-can"></i></a>
-                                </td>
-                            </tr>
-                            <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center">1</td>
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center text-1000">89</td>
-                                <td class="customer align-middle white-space-nowrap pe-5">
-                                    <p class="mb-0 ms-3 text-1100">Khách sạn 5 sao</p>
-                                </td>
-                                <td class="last-seen align-middle white-space-nowrap text-700 text-center">
-                                    <a class="btn btn-warning me-1 mb-1" href=""><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a class="btn btn-danger me-1 mb-1" href=""><i class="fa-solid fa-trash-can"></i></a>
-                                </td>
-                            </tr>
-                            <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center">1</td>
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center text-1000">89</td>
-                                <td class="customer align-middle white-space-nowrap pe-5">
-                                    <p class="mb-0 ms-3 text-1100">Khách sạn 5 sao</p>
-                                </td>
-                                <td class="last-seen align-middle white-space-nowrap text-700 text-center">
-                                    <a class="btn btn-warning me-1 mb-1" href=""><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a class="btn btn-danger me-1 mb-1" href=""><i class="fa-solid fa-trash-can"></i></a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
-                        <div class="col-auto d-flex">
-                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900" data-list-info="data-list-info"></p><a class="fw-semi-bold" href="#!" data-list-view="*">View all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a class="fw-semi-bold d-none" href="#!" data-list-view="less">View Less<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
-                        </div>
-                        <div class="col-auto d-flex"><button class="page-link" data-list-pagination="prev"><span class="fas fa-chevron-left"></span></button>
-                            <ul class="mb-0 pagination"></ul><button class="page-link pe-0" data-list-pagination="next"><span class="fas fa-chevron-right"></span></button>
-                        </div>
+<div class="container">
+    <div class="container-fluid">
+        <div class="header-control mb-4">
+            <div class="header-control-center">
+                <div class="d-flex justify-content-between align-items-center row ">
+                    <div class="col-xl-6 mt-3">
+                        <h3 class="color-greend fw-medium">DANH SÁCH LOẠI PHƯƠNG TIỆN</h3>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="">
+            <div class="card card-customer">
+                <div class="row" style="margin: 20px 16px 0 16px">
+                    <div class="col-xl-4">
+                        Bạn muốn tìm kiếm gì ?
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><button class="bg-light"><i
+                                    class="fa-solid fa-magnifying-glass bg-light"></i></button></span>
+                            <input type="text" class="form-control" placeholder="Tìm kiếm" aria-label="Username"
+                                   aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="col-xl-3 mb-3">
+                        Lọc
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Tất cả</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-3 mb-3">
+                        Trạng thái
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Thành công</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-2 d-flex align-items-center justify-content-end mb-3 h-100"
+                         style="margin: 16px 0 0 0">
+                        <button class="btn btn-primary">Tìm kiếm</button>
+                    </div>
+                </div>
+                <form class="row g-3" ng-submit="submitAdminType()"
+                      method="POST" role="form" name="typeform" style="margin: 0 16px 20px 16px">
+                    <div class="col-12 mt-0">
+                        Nhập tên loại phương tiện
+                        <input type="text" class="form-control" id="typename"
+                               placeholder="Nhập tên loại phương tiện"
+                               name="typename"
+                               ng-model="type.typename"
+                               ng-class="{ 'is-invalid': typeform.typename.$invalid && typeform.typename.$touched, 'is-valid': typeform.typename.$valid && typeform.typename.$touched }"
+                               required>
+                        <small class="text-danger"
+                               ng-show="typeform.typename.$touched && typeform.typename.$error.required">
+                            Vui lòng nhập loại phương tiện !
+                        </small>
+                    </div>
+                    <div class="col-12 d-flex justify-content-end mt-4 mb-2">
+                        <button type="submit" class="btn btn-submit-type me-2" ng-disabled="staffform.$invalid"
+                                style="background: #63ab45;color: #fff; font-size: 16px;font-family: &quot;Montserrat&quot;, sans-serif;font-weight: 500;">
+                            <i class="fa-solid fa-plus d-sm-none"></i>
+                            <span class="d-none d-sm-inline">Thêm</span>
+                        </button>
+                        <a type="button" class="btn btn-submit-type me-2" ng-disabled="staffform.$invalid"
+                           style="background: #e4bd23;color: #fff; font-size: 16px;font-family: &quot;Montserrat&quot;, sans-serif;font-weight: 500;">
+                            <i class="fa-solid fa-pen-to-square d-sm-none"></i>
+                            <span class="d-none d-sm-inline">Cập nhật</span>
+                        </a>
+                        <a type="button" class="btn btn-submit-type" ng-disabled="staffform.$invalid"
+                           style="background: #e3562c;color: #fff; font-size: 16px;font-family: &quot;Montserrat&quot;, sans-serif;font-weight: 500;">
+                            <i class="fa-solid fa-arrows-rotate d-sm-none"></i>
+                            <span class="d-none d-sm-inline">Làm mới</span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+            <div class="card card-customer">
+
+            </div>
+        </div>
+
+
+        <div class="table-components table-responsive mb-5">
+            <div class="card table-responsive table-customer">
+                <div class="card-header ">
+                    <div class="row">
+                        <div class="h4 col-lg-5 d-flex align-items-center h-100">
+                            <div class="d-flex align-items-center">
+                                <span class="h4">Danh sách loại phương tiện</span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end align-items-baseline col-lg-2">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Tất cả hàng</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                            </select>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
+                            <nav aria-label="Page navigation example float-end">
+                                <ul class="pagination justify-content-center align-items-center">
+                                    <li class="page-item bg-light">
+                                        <a class="page-link"><i class="fa-solid fa-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#"><i class="fa-solid fa-angle-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-responsive text-center">
+                    <thead>
+                    <tr class="bg-light">
+                        <th><span><input class="form-check-input checkbox-all" type="checkbox" value="" id=""></span>
+                        </th>
+                        <th scope="col"># <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">ID <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Loại phương tiện <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
+                        <td>1</td>
+                        <td>N0001</td>
+                        <td>Xe tăng</td>
+                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                            <a class="btn" style="background: #ffc107; margin-right: 10px" href=""><i
+                                    class="fa-solid fa-pen-to-square text-white"></i></a>
+                            <a class="btn" style="background: #dc3545"><i
+                                    class="fa-solid fa-trash  text-white"></i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-end">
+                        5 trong tổng số 15
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</main>
+</div>

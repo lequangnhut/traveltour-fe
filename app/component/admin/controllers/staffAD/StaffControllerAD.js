@@ -47,11 +47,11 @@ travel_app.controller('StaffControllerAD', function ($scope) {
     /**
      * Submit gửi dữ liệu cho api
      */
-    $scope.submitAdminStaffEdit = function () {
+    $scope.submitAdminStaffUpdate = function () {
         console.log($scope.user)
     };
 
-    $scope.submitAdminStaffAdd = function () {
+    $scope.submitAdminStaffCreate = function () {
         console.log($scope.user)
     };
 });

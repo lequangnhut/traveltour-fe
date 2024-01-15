@@ -65,19 +65,19 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/hotel/views/pages/register/register-success.html',
             controller: ''
         })
-        .when('/business/tour-management/hotel-tour-management-list', {
+        .when('/business/amenities/hotel-amenities-list', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-list.html',
             controller: 'HotelAmenitiesListController'
         })
-        .when('/business/tour-management/hotel-tour-management-list/new', {
+        .when('/business/amenities/hotel-amenities-list/new', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-add.html',
             controller: 'HotelAmenitiesAddController'
         })
-        .when('/business/tour-management/hotel-tour-management-list/edit', {
+        .when('/business/amenities/hotel-amenities-list/edit', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-edit.html',
             controller: 'HotelAmenitiesAddController'
         })
-        .when('/admin/tour-management/booking-list', {
+        .when('/admin/amenities/booking-list', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/booking/booking-list.html',
             controller: 'HotelAmenitiesListController'
         })
@@ -88,21 +88,21 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/register-transport.html',
             controller: 'RegisterTransControllerAG'
         })
-        .when('/business/transport/transports-list', {
+        .when('/business/transports-list', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-list.html',
             controller: ''
         })
-        .when('/business/transport/transports-list/transports-create', {
+        .when('/business/transports-create', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-create.html',
             controller: ''
         })
-        .when('/business/transport/transports-list/transports-update', {
+        .when('/business/transports-update', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-update.html',
             controller: ''
         })
-        .when('/business/booking/bookings-list', {
+        .when('/business/bookings-list', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-list.html',
-            controller: 'BookingControllerAG'
+            controller: ''
         })
         .when('/business/bookings-create', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-create.html',
@@ -112,7 +112,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-update.html',
             controller: ''
         })
-        .when('/business/trip/trips-list', {
+        .when('/business/trips-list', {
             templateUrl: 'app/component/agent/trans/views/pages/trips/trip-list.html',
             controller: ''
         })
@@ -171,28 +171,28 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/typesAD/room-utility.html',
             controller: 'RoomUtilityControllerAD'
         })
-        .when('/admin/staff-add', {
-            templateUrl: 'app/component/admin/views/pages/staffAD/staff-add.html',
+        .when('/admin/staff-create', {
+            templateUrl: 'app/component/admin/views/pages/staffAD/staff-create.html',
             controller: 'StaffControllerAD'
         })
-        .when('/admin/staff-edit', {
-            templateUrl: 'app/component/admin/views/pages/staffAD/staff-edit.html',
+        .when('/admin/staff-update', {
+            templateUrl: 'app/component/admin/views/pages/staffAD/staff-update.html',
             controller: 'StaffControllerAD'
         })
         .when('/admin/staff-list', {
             templateUrl: 'app/component/admin/views/pages/staffAD/staff-list.html',
             controller: 'StaffControllerAD'
         })
-        .when('/admin/agency-add', {
-            templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/agency-add.html',
+        .when('/admin/agency-create', {
+            templateUrl: 'app/component/admin/views/pages/agencyAD/agency-create.html',
             controller: 'AgencyControllerAD'
         })
-        .when('/admin/agency-edit', {
-            templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/agency-edit.html',
+        .when('/admin/agency-update', {
+            templateUrl: 'app/component/admin/views/pages/agencyAD/agency-update.html',
             controller: 'AgencyControllerAD'
         })
         .when('/admin/agency-list', {
-            templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/agency-list.html',
+            templateUrl: 'app/component/admin/views/pages/agencyAD/agency-list.html',
             controller: 'AgencyControllerAD'
         })
         .when('/admin/revenue', {

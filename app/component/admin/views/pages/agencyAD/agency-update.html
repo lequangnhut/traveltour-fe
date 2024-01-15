@@ -1,0 +1,220 @@
+<section>
+    <div class="container">
+        <div class="container-fluid">
+            <div class="header-control mb-4">
+                <div class="">
+                    <div class="d-flex align-items-center row">
+                        <div class="col-lg-6">
+                            <h1 class="color-greend fw-medium">Cập nhật doanh nghiệp</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-custom" >
+                <form class="row g-3 form-input-custom" ng-submit="submitAdminAgencyEdit()" method="POST"
+                      role="form" name="agencyform">
+                    <div class="col-12">
+                        <label for="agencyname" class="form-label">Tên doanh nghiệp</label>
+                        <input type="text"
+                               class="form-control"
+                               id="agencyname"
+                               placeholder="Công ty du lịch TravelTour"
+                               name="agencyname"
+                               ng-model="agent.agencyname"
+                               ng-class="{ 'is-invalid': agencyform.agencyname.$invalid && agencyform.agencyname.$touched, 'is-valid': agencyform.agencyname.$valid && agencyform.agencyname.$touched }"
+                               ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="agencyform.agencyname.$touched && agencyform.agencyname.$error.required">
+                            Vui lòng nhập tên doanh nghiệp !
+                        </small>
+                        <small class="text-danger"
+                               ng-show="agencyform.agencyname.$touched && agencyform.agencyname.$error.pattern">
+                            Tên doanh nghiệp không đúng định dạng !
+                        </small>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="mentor" class="form-label">Người đại diện</label>
+                        <input class="form-control" id="mentor"
+                               type="text" placeholder="Nguyen Le Ly"
+                               name="mentor"
+                               ng-model="agent.mentor"
+                               ng-class="{ 'is-invalid': agencyform.mentor.$invalid && agencyform.mentor.$touched, 'is-valid': agencyform.mentor.$valid && agencyform.mentor.$touched }"
+                               ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                               required/>
+                        <small class="text-danger"
+                               ng-show="agencyform.mentor.$touched && agencyform.mentor.$error.required">
+                            Vui lòng nhập tên người đại diện !
+                        </small>
+                        <small class="text-danger"
+                               ng-show="agencyform.mentor.$touched && agencyform.mentor.$error.pattern">
+                            Họ tên không đúng định dạng !
+                        </small>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="phoneNumber" class="form-label">Mã số thuế</label>
+                        <input class="form-control" id="taxid"
+                               type="text" placeholder="123456789526"
+                               name="taxid"
+                               ng-model="agent.taxid"
+                               ng-class="{ 'is-invalid': agencyform.taxid.$invalid && agencyform.taxid.$touched, 'is-valid': agencyform.taxid.$valid && agencyform.taxid.$touched }"
+                               ng-pattern="/^\d{10}(\d{3})?$/"
+                               required/>
+                        <small class="text-danger"
+                               ng-show="agencyform.taxid.$touched && agencyform.taxid.$error.required">
+                            Vui lòng nhập mã số thuế !
+                        </small>
+                        <small class="text-danger"
+                               ng-show="agencyform.taxid.$touched && agencyform.taxid.$error.pattern">
+                            Mã số thuế gồm 10 hoặc 13 số !
+                        </small>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="phoneNumber" class="form-label">Số điện thoại</label>
+                        <input class="form-control" id="phoneNumber"
+                               type="text" placeholder="0942050505"
+                               name="phoneNumber"
+                               ng-pattern="/^\d{10}(\d{1})?$/"
+                               ng-model="agent.phoneNumber"
+                               ng-class="{ 'is-invalid': agencyform.phoneNumber.$invalid && agencyform.phoneNumber.$touched, 'is-valid': agencyform.phoneNumber.$valid && agencyform.phoneNumber.$touched }"
+                               required/>
+                        <small class="text-danger"
+                               ng-show="agencyform.phoneNumber.$touched && agencyform.phoneNumber.$error.required">
+                            Vui lòng nhập số điện thoại !
+                        </small>
+                        <small class="text-danger"
+                               ng-show="agencyform.phoneNumber.$touched && agencyform.phoneNumber.$error.pattern">
+                            Số điện thoại bao gồm 10 hoặc 11 số !
+                        </small>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="website" class="form-label">Địa chỉ website</label>
+                        <input class="form-control" id="website"
+                               type="text" placeholder="abc.vn"
+                               name="website"
+                               ng-pattern="/^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/"
+                               ng-model="agent.website"
+                               ng-class="{ 'is-invalid': agencyform.website.$invalid && agencyform.website.$touched, 'is-valid': agencyform.website.$valid && agencyform.website.$touched }"
+                               required/>
+                        <small class="text-danger"
+                               ng-show="agencyform.website.$touched && agencyform.website.$error.required">
+                            Vui lòng nhập địa chỉ website !
+                        </small>
+                        <small class="text-danger"
+                               ng-show="agencyform.website.$touched && agencyform.website.$error.pattern">
+                            Website có dạng như example.abc, example.ab.cd !
+                        </small>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="business_license" class="form-label">Giấy phép kinh doanh (.jpg/.png/.jpeg)</label>
+                        <input class="form-control" type="file" id="business_license"
+                               name="business_license"
+                               ng-model="agent.business_license"
+                               ngf-max-size="10MB"
+                               ng-class="{ 'is-invalid': agencyform.business_license.$invalid && agencyform.business_license.$touched, 'is-valid': agencyform.business_license.$valid && agencyform.business_license.$touched }"
+                               ngf-select="uploadBusinessLicense($file)"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="agencyform.business_license.$touched && agencyform.business_license.$error.required">
+                            Vui lòng tải lên ảnh giấy phép kinh doanh !
+                        </small>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Tỉnh/Thành</label>
+                        <select class="form-select"
+                                name="province"
+                                ng-class="{ 'is-invalid': agencyform.province.$invalid && agencyform.province.$touched, 'is-valid': agencyform.province.$valid && agencyform.province.$touched }"
+                                ng-options="city.Id as city.Name for city in provinces"
+                                ng-change="onProvinceChange()"
+                                ng-model="agent.province"
+                                required
+                        >
+                            <option value="" disabled selected>Chọn Tỉnh/Thành phố</option>
+                        </select>
+                        <small class="text-danger"
+                               ng-show="agencyform.province.$touched && agencyform.province.$error.required">
+                            Vui lòng chọn tỉnh/thành phố.
+                        </small>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Quận/Huyện</label>
+                        <select class="form-select"
+                                name="districts"
+                                ng-class="{ 'is-invalid': agencyform.districts.$invalid && agencyform.districts.$touched, 'is-valid': agencyform.districts.$valid && agencyform.districts.$touched }"
+                                ng-options="district.Id as district.Name for district in districts"
+                                ng-disabled="!agent.province"
+                                ng-change="onDistrictChange()"
+                                ng-model="agent.districts"
+                                required
+                        >
+                            <option value="" disabled selected>Chọn Quận/Huyện</option>
+                        </select>
+                        <small class="text-danger"
+                               ng-show="agencyform.districts.$touched && agencyform.districts.$error.required">
+                            Vui lòng chọn quận/huyện.
+                        </small>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Phường/Xã</label>
+                        <select class="form-select"
+                                name="ward"
+                                ng-class="{ 'is-invalid': agencyform.ward.$invalid && agencyform.ward.$touched, 'is-valid': agencyform.ward.$valid && agencyform.ward.$touched }"
+                                ng-options="ward.Id as ward.Name for ward in wards"
+                                ng-disabled="!agent.districts"
+                                ng-change="onWardChange()"
+                                ng-model="agent.ward"
+                                required
+                        >
+                            <option value="" disabled selected>Chọn Phường/Xã</option>
+                        </select>
+                        <small class="text-danger"
+                               ng-show="agencyform.ward.$touched && agencyform.ward.$error.required">
+                            Vui lòng chọn phường/xã.
+                        </small>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="address" class="form-label">Địa chỉ</label>
+                        <input class="form-control" id="address"
+                               type="text"
+                               placeholder="12 Nguyễn Trãi"
+                               name="address"
+                               ng-model="agent.address"
+                               ng-class="{ 'is-invalid': agencyform.address.$invalid && agencyform.address.$touched, 'is-valid': agencyform.address.$valid && agencyform.address.$touched }"
+                               required/>
+                        <small class="text-danger"
+                               ng-show="agencyform.address.$touched && agencyform.address.$error.required">
+                            Vui lòng nhập địa chỉ !
+                        </small>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="agencystatus" class="form-label">Trạng thái</label>
+                        <select id="agencystatus" class="form-select"
+                                name="agencystatus"
+                                ng-model="agent.agencystatus"
+                                ng-class="{ 'is-invalid': agencyform.agencystatus.$invalid && agencyform.agencystatus.$touched, 'is-valid': agencyform.agencystatus.$valid && agencyform.agencystatus.$touched }"
+                                required>
+                            <option value="0" selected="selected"> Đang hoạt động</option>
+                            <option value="1">Ngừng hoạt động</option>
+                        </select>
+                        <small class="text-danger"
+                               ng-show="agencyform.agencystatus.$touched && agencyform.agencystatus.$error.required">
+                            Vui lòng chọn trạng thái !
+                        </small>
+                    </div>
+                    <div class="col-12 d-flex justify-content-end mt-5">
+                        <button class="btn" style="margin-right: 20px">
+                            <a class="btn" href="/admin/staff-list">Trở về</a>
+                        </button>
+                        <button type="submit" class="btn btn-submit" ng-disabled="agencyform.$invalid">Cập nhật</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
