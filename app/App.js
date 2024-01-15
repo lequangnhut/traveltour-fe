@@ -28,28 +28,71 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/admin/basic-tour-list', {
             templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-list.html',
-            controller: 'BasicTourListControllerAD'
+            controller: 'BasicTourControllerAD'
         })
-        .when('/admin/basic-tour-add', {
-            templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-add.html',
-            controller: 'BasicTourAddControllerAD'
+        .when('/admin/basic-tour-create', {
+            templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-create.html',
+            controller: 'BasicTourControllerAD'
         })
-        .when('/admin/basic-tour-edit', {
-            templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-edit.html',
-            controller: 'BasicTourEditControllerAD'
+        .when('/admin/basic-tour-update', {
+            templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-update.html',
+            controller: 'BasicTourControllerAD'
         })
         .when('/admin/detail-tour-list', {
             templateUrl: 'app/component/admin/views/pages/tour-management/detail-tour/detail-tour-list.html',
-            controller: 'DetailTourListControllerAD'
+            controller: 'DetailTourControllerAD'
         })
-        .when('/admin/detail-tour-add', {
-            templateUrl: 'app/component/admin/views/pages/tour-management/detail-tour/detail-tour-add.html',
-            controller: 'DetailTourAddControllerAD'
+        .when('/admin/detail-tour-create', {
+            templateUrl: 'app/component/admin/views/pages/tour-management/detail-tour/detail-tour-create.html',
+            controller: 'DetailTourControllerAD'
         })
-        .when('/admin/detail-tour-edit', {
-            templateUrl: 'app/component/admin/views/pages/tour-management/detail-tour/detail-tour-edit.html',
-            controller: 'DetailTourEditControllerAD'
+        .when('/admin/detail-tour-update', {
+            templateUrl: 'app/component/admin/views/pages/tour-management/detail-tour/detail-tour-update.html',
+            controller: 'DetailTourControllerAD'
         })
+        /**
+         * partner services
+         */
+        //vehicle
+        .when('/admin/vehicle-list', {
+            templateUrl: 'app/component/admin/views/pages/partner-service/vehicle/vehicle-list.html',
+            controller: 'VehicleControllerAD'
+        })
+        .when('/admin/vehicle-create', {
+            templateUrl: 'app/component/admin/views/pages/partner-service/vehicle/vehicle-create.html',
+            controller: 'VehicleControllerAD'
+        })
+        .when('/admin/vehicle-update', {
+            templateUrl: 'app/component/admin/views/pages/partner-service/vehicle/vehicle-update.html',
+            controller: 'VehicleControllerAD'
+        })
+        //stay
+        .when('/admin/stay-list', {
+            templateUrl: 'app/component/admin/views/pages/partner-service/stay/stay-list.html',
+            controller: 'StayControllerAD'
+        })
+        .when('/admin/stay-create', {
+            templateUrl: 'app/component/admin/views/pages/partner-service/stay/stay-create.html',
+            controller: 'StayControllerAD'
+        })
+        .when('/admin/stay-update', {
+            templateUrl: 'app/component/admin/views/pages/partner-service/stay/stay-update.html',
+            controller: 'StayControllerAD'
+        })
+        //sightseeing
+        .when('/admin/sightseeing-list', {
+            templateUrl: 'app/component/admin/views/pages/partner-service/sightseeing/sightseeing-list.html',
+            controller: 'SightseeingControllerAD'
+        })
+        .when('/admin/sightseeing-create', {
+            templateUrl: 'app/component/admin/views/pages/partner-service/sightseeing/sightseeing-create.html',
+            controller: 'SightseeingControllerAD'
+        })
+        .when('/admin/sightseeing-update', {
+            templateUrl: 'app/component/admin/views/pages/partner-service/sightseeing/sightseeing-update.html',
+            controller: 'SightseeingControllerAD'
+        })
+
         /**
          * Agent Hotel
          */

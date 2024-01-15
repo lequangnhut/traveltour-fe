@@ -1,0 +1,153 @@
+<section>
+    <div class="container">
+        <div class="container-fluid">
+            <div class="header-control mb-4">
+                <div class="">
+                    <div class="d-flex align-items-center row">
+                        <div class="col-lg-6">
+                            <h3 class="color-greend fw-bold text-uppercase">Sửa tour chi tiết</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-custom">
+                <form class="row g-3 form-input-custom" name="tourDetailForm" ng-submit="submitTourDetail()" novalidate>
+                    <div class="col-12">
+                        <label for="tourNameSelect" class="form-label">Tên tour</label>
+                        <select id="tourNameSelect" class="form-select"
+                                name="tourNameSelect"
+                                ng-model="tourDetail.tourName"
+                                ng-class="{ 'is-invalid': tourDetailForm.tourNameSelect.$touched && tourDetailForm.tourNameSelect.$error.required,
+                                            'is-valid': tourDetailForm.tourNameSelect.$touched && tourDetailForm.tourNameSelect.$valid}"
+                                required>
+                            <option value="" disabled selected>Choose...</option>
+                            <option>...</option>
+                        </select>
+                        <small class="text-danger"
+                               ng-show="tourDetailForm.tourNameSelect.$touched && tourDetailForm.tourNameSelect.$error.required">
+                            Vui lòng chọn tên tour!
+                        </small>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="tourGuideSelect" class="form-label">Hướng dẫn viên</label>
+                        <select id="tourGuideSelect" class="form-select"
+                                name="tourGuideSelect"
+                                ng-model="tourDetail.tourGuide"
+                                ng-class="{ 'is-invalid': tourDetailForm.tourGuideSelect.$touched && tourDetailForm.tourGuideSelect.$error.required,
+                                            'is-valid': tourDetailForm.tourGuideSelect.$touched && tourDetailForm.tourGuideSelect.$valid}"
+                                required>
+                            <option value="" disabled selected>Choose...</option>
+                            <option>...</option>
+                        </select>
+                        <small class="text-danger"
+                               ng-show="tourDetailForm.tourGuideSelect.$touched && tourDetailForm.tourGuideSelect.$error.required">
+                            Vui lòng chọn hướng dẫn viên!
+                        </small>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="numberOfGuests" class="form-label">Số khách</label>
+                        <input type="number" class="form-control" id="numberOfGuests" placeholder="Nhập số khách"
+                               name="numberOfGuests"
+                               ng-model="tourDetail.numberOfGuests"
+                               ng-class="{ 'is-invalid': tourDetailForm.numberOfGuests.$touched && (!tourDetailForm.numberOfGuests.$valid || !isNumberOfGuestsValid()),
+                                            'is-valid': tourDetailForm.numberOfGuests.$touched && (tourDetailForm.numberOfGuests.$valid || isNumberOfGuestsValid())}"
+                               required>
+                        <small class="text-danger"
+                               ng-show="tourDetailForm.numberOfGuests.$touched && tourDetailForm.numberOfGuests.$error.required">
+                            Số khách không được bỏ trống!
+                        </small>
+                        <small class="text-danger"
+                               ng-show="tourDetailForm.numberOfGuests.$touched && !isNumberOfGuestsValid()">
+                            Số lượng khách phải lớn hơn 0!
+                        </small>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="startDate" class="form-label">Ngày đi</label>
+                        <input type="date" class="form-control" id="startDate"
+                               name="startDate"
+                               ng-model="tourDetail.startDate"
+                               ng-class="{ 'is-invalid': tourDetailForm.startDate.$touched && (!tourDetailForm.startDate.$valid || !isStartDateValid()),
+                                            'is-valid': tourDetailForm.startDate.$touched &&q (tourDetailForm.startDate.$valid || isStartDateValid())}"
+                               required>
+                        <small class="text-danger"
+                               ng-show="tourDetailForm.startDate.$touched && !tourDetailForm.startDate.$valid">
+                            Vui lòng nhập ngày đi hợp lệ!
+                        </small>
+                        <small class="text-danger"
+                               ng-show="tourDetailForm.startDate.$touched && !isStartDateValid()">
+                            Ngày đi không thể sau ngày về!
+                        </small>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="endDate" class="form-label">Ngày về</label>
+                        <input type="date" class="form-control" id="endDate"
+                               name="endDate"
+                               ng-model="tourDetail.endDate"
+                               ng-class="{ 'is-invalid': tourDetailForm.endDate.$touched && (!tourDetailForm.endDate.$valid || !isEndDateValid()),
+                                            'is-valid': tourDetailForm.endDate.$touched && (tourDetailForm.endDate.$valid || isEndDateValid()) }"
+                               required>
+                        <small class="text-danger"
+                               ng-show="tourDetailForm.endDate.$touched && !tourDetailForm.endDate.$valid">
+                            Vui lòng chọn ngày về!
+                        </small>
+                        <small class="text-danger"
+                               ng-show="tourDetailForm.endDate.$touched && !isEndDateValid()">
+                            Ngày về phải lớn hơn hoặc bằng ngày đi!
+                        </small>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="price" class="form-label">Giá</label>
+                        <input type="number" class="form-control" id="price"
+                               name="price"
+                               ng-model="tourDetail.price"
+                               ng-class="{ 'is-invalid': tourDetailForm.price.$touched && (!tourDetailForm.price.$valid || !isPriceValid()),
+                                            'is-valid': tourDetailForm.price.$touched && (tourDetailForm.price.$valid || isPriceValid())}"
+                               required>
+                        <small class="text-danger"
+                               ng-show="tourDetailForm.price.$touched && tourDetailForm.price.$error.required">
+                            Giá không được bỏ trống!
+                        </small>
+                        <small class="text-danger"
+                               ng-show="tourDetailForm.price.$touched && !isPriceValid()">
+                            Giá phải lớn hơn 0!
+                        </small>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="tourStatus" class="form-label">Trạng thái</label>
+                        <select id="tourStatus" class="form-select" ng-model="tourDetail.tourStatus"
+                                name="tourStatus"
+                                ng-class="{ 'is-invalid': tourDetailForm.tourStatus.$touched && tourDetailForm.tourStatus.$error.required }"
+                                required>
+                            <option value="" disabled selected>Choose...</option>
+                        </select>
+                        <small class="text-danger"
+                               ng-show="tourDetailForm.tourStatus.$touched && tourDetailForm.tourStatus.$error.required">
+                            Vui lòng chọn trạng thái!
+                        </small>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="note" class="form-label">Ghi chú</label>
+                        <input class="form-control" type="text" id="note" ng-model="tourDetail.note">
+                    </div>
+
+                    <div class="col-12 d-flex justify-content-end mt-5">
+                        <button class="btn" style="margin-right: 20px"><a class="btn" href="/admin/detail-tour-list">Trở
+                            về</a></button>
+                        <button type="submit" class="btn btn-submit"
+                                ng-disabled="tourDetailForm.$invalid || !isStartDateValid() || !isNumberOfGuestsValid()">
+                            Cập nhật
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
