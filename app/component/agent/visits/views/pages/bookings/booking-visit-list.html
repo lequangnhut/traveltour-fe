@@ -1,21 +1,23 @@
 <div class="container">
     <div class="container-fluid">
-
         <div class="header-control mb-4">
             <div class="header-control-center">
                 <div class="d-flex justify-content-between align-items-center row ">
                     <div class="col-xl-6 mt-3">
-                        <h3 class="color-greend fw-medium">DANH SÁCH LOẠI PHÒNG</h3>
+                        <h3 class="color-greend fw-bold">DANH SÁCH BOOKING ĐỊA ĐIỂM</h3>
                     </div>
                     <div class="col-xl-6 d-flex align-items-center justify-content-end header-control-center mt-3">
                         <div class="row ">
                             <div class="col-sm-3 d-flex align-items-center">
-                                <button class="btn d-flex "><i class="fa-solid fa-file-export"></i> <span>Xuất</span></button>
+                                <button class="btn d-flex ">
+                                    <i class="fa-solid fa-file-export"></i>
+                                    <span>Xuất</span>
+                                </button>
                             </div>
                             <div class="col-sm-9">
-                                <a href="/admin/amenities/hotel-amenities-list/new" class="btn btn-greend"><i
-                                        class="fa-solid fa-plus" style="margin-right: 10px"></i> Tạo phòng
-                                    mới
+                                <a href="/business/booking-visit/booking-list/booking-create" class="btn btn-greend">
+                                    <i class="fa-solid fa-plus" style="margin-right: 10px"></i>
+                                    Booking Địa Điểm
                                 </a>
                             </div>
                         </div>
@@ -30,8 +32,11 @@
                     <div class="col-xl-4">
                         Bạn muốn tìm kiếm gì ?
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"><button class="bg-light"><i
-                                    class="fa-solid fa-magnifying-glass bg-light"></i></button></span>
+                            <span class="input-group-text" id="basic-addon1">
+                                <a href="#" class="bg-light">
+                                    <i class="fa-solid fa-magnifying-glass bg-light"></i>
+                                </a>
+                            </span>
                             <input type="text" class="form-control" placeholder="Tìm kiếm" aria-label="Username"
                                    aria-describedby="basic-addon1">
                         </div>
@@ -55,10 +60,22 @@
                         </select>
                     </div>
                     <div class="col-xl-2 d-flex align-items-center justify-content-end mb-3 h-100"
-                         style="margin: 16px 0 0 0">
+                         style="margin: 20px 0 0 0">
                         <button class="btn btn-primary">Tìm kiếm</button>
                     </div>
+                    <label class="fw-bold me-2 mb-3">Mã Tour</label>
+                    <div class="d-flex justify-content-end align-items-baseline col-lg-2">
+
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Tất cả hàng</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                        </select>
+                    </div>
+
                 </div>
+
             </div>
         </div>
 
@@ -104,12 +121,12 @@
                         </th>
                         <th scope="col"># <i class="fa-solid fa-sort"></i></th>
                         <th scope="col">ID <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Loại phòng <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Số lượng <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Số người lớn <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Số trẻ em <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Loại giường <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Giá phòng <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Mã địa điểm <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Họ tên <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Số điện thoại <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Số vé <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Tổng tiền <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Ngày đặt <i class="fa-solid fa-sort"></i></th>
                         <th scope="col">Trạng thái <i class="fa-solid fa-sort"></i></th>
                         <th scope="col">Thao tác</th>
                     </tr>
@@ -126,15 +143,23 @@
                         <td>Giường đôi</td>
                         <td>300.000</td>
                         <td>
-                            <div class="d-flex align-items-center justify-content-center" >
+                            <div class="d-flex align-items-center justify-content-center">
                                 <span class="status-success"></span> <span class="text-status-success">Đang book</span>
                             </div>
                         </td>
                         <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                            <button class="btn" style="background: #ffc107; margin-right: 10px"><i
-                                    class="fa-solid fa-pen-to-square text-white"></i></button>
-                            <button class="btn" style="background: #dc3545"><i
-                                    class="fa-solid fa-trash  text-white"></i></button>
+                            <button data-bs-toggle="modal" data-bs-target="#info-booking"
+                                    type="button" class="btn" style="background: #5cafaf; margin-right: 5px">
+                                <i class="fa-solid fa-info text-white"></i>
+                            </button>
+                            <a href="/business/booking-visit/booking-list/booking-update"
+                               role="button" class="btn" style="background: #ffc107; margin-right: 5px">
+                                <i class="fa-solid fa-pen-to-square text-white"></i>
+                            </a>
+                            <a href="business/transport/transports-list/transports-update"
+                               role="button" class="btn" style="background: #dc3545">
+                                <i class="fa-solid fa-trash  text-white"></i>
+                            </a>
                         </td>
                     </tr>
                     <tr>
@@ -153,77 +178,18 @@
                             </div>
                         </td>
                         <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                            <button class="btn" style="background: #ffc107; margin-right: 10px"><i
-                                    class="fa-solid fa-pen-to-square text-white"></i></button>
-                            <button class="btn" style="background: #dc3545"><i
-                                    class="fa-solid fa-trash  text-white"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
-                        <td>3</td>
-                        <td>P0001</td>
-                        <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>1</td>
-                        <td>Giường đôi</td>
-                        <td>300.000</td>
-                        <td>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <span class="status-error"></span> <span class="text-status-error">Đang book</span>
-                            </div>
-                        </td>
-                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                            <button class="btn" style="background: #ffc107; margin-right: 10px"><i
-                                    class="fa-solid fa-pen-to-square text-white"></i></button>
-                            <button class="btn" style="background: #dc3545"><i
-                                    class="fa-solid fa-trash  text-white"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center"><span><span><input class="form-check-input" type="checkbox" value=""
-                                                                   id=""></span></span></td>
-                        <td>4</td>
-                        <td>P0001</td>
-                        <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>1</td>
-                        <td>Giường đôi</td>
-                        <td>300.000</td>
-                        <td>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <span class="status-info"></span> <span class="text-info">Thông báo</span>
-                            </div>
-                        </td>
-                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                            <button class="btn" style="background: #ffc107; margin-right: 10px"><i
-                                    class="fa-solid fa-pen-to-square text-white"></i></button>
-                            <button class="btn" style="background: #dc3545"><i
-                                    class="fa-solid fa-trash  text-white"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
-                        <td>5</td>
-                        <td>P0001</td>
-                        <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>1</td>
-                        <td>Giường đôi</td>
-                        <td>300.000</td>
-                        <td>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <span class="status-normal"></span><span class="text-status-normal">Đang book</span>
-                            </div>
-                        </td>
-                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                            <button class="btn" style="background: #ffc107; margin-right: 10px"><i
-                                    class="fa-solid fa-pen-to-square text-white"></i></button>
-                            <button class="btn" style="background: #dc3545"><i
-                                    class="fa-solid fa-trash  text-white"></i></button>
+                            <a href="business/transport/transports-list/transports-update"
+                               role="button" class="btn" style="background: #5cafaf; margin-right: 5px">
+                                <i class="fa-solid fa-info text-white"></i>
+                            </a>
+                            <a href="business/transport/transports-list/transports-update"
+                               role="button" class="btn" style="background: #ffc107; margin-right: 5px">
+                                <i class="fa-solid fa-pen-to-square text-white"></i>
+                            </a>
+                            <a href="business/transport/transports-list/transports-update"
+                               role="button" class="btn" style="background: #dc3545">
+                                <i class="fa-solid fa-trash  text-white"></i>
+                            </a>
                         </td>
                     </tr>
                     </tbody>
@@ -238,3 +204,21 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="info-booking" tabindex="-1" aria-labelledby="modalInfoBooking" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalInfoBooking">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
