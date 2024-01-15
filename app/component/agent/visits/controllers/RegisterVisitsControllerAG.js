@@ -7,6 +7,7 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http) {
     $scope.districts = [];
     $scope.wards = [];
 
+
     $scope.agent = {
         name: null,
         fname: null,
@@ -18,12 +19,25 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http) {
         address: null,
         business_license: null,
         name_agent: null,
+        timeOpen: null,
+        timeClose: null,
+        agency_status:null,
+        freeTicket: null,
+        website: null,
+        adultTicket: null,
+        childTicket: null,
+        locationType: null,
+        time_open_agent: null,
+        time_close_agent: null,
         business_images: null
+
     }
+
 
     $scope.validateCheckbox = function () {
         return $scope.checkboxChecked;
     };
+
 
     $scope.goToNextSection = function () {
         $scope.showNextForm = true;
@@ -33,14 +47,25 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http) {
         $scope.showThirdForm = true;
     };
 
+    $scope.goToFourthSection = function () {
+        $scope.showFourthForm = true;
+    };
+
     $scope.goPreviousSectionOne = function () {
         $scope.showNextForm = false;
         $scope.showThirdForm = false;
+        $scope.showFourthForm = false;
     };
 
     $scope.goPreviousSectionTwo = function () {
         $scope.showThirdForm = false;
+        $scope.showFourthForm = false;
     };
+
+    $scope.goPreviousSectionThree = function () {
+        $scope.showFourthForm = false;
+    };
+
 
     /**
      * API lấy dữ liệu tỉnh thành và fill dữ liệu lên select
@@ -59,6 +84,7 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http) {
         $scope.wards = $scope.districts.find(d => d.Id === $scope.agent.districts).Wards;
         $scope.agent.ward = null;
     };
+
 
     /**
      * Upload hình ảnh và lưu vào biến business_images
@@ -86,4 +112,9 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http) {
     $scope.submitDataRegisterVisits = function () {
         console.log($scope.agent)
     };
+
+    $scope.submitDataCreateVisits = function () {
+        console.log($scope.agent)
+    };
+
 });

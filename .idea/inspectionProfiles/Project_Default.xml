@@ -4,7 +4,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="7">
+          <list size="8">
             <item index="0" class="java.lang.String" itemvalue="ng-app" />
             <item index="1" class="java.lang.String" itemvalue="src" />
             <item index="2" class="java.lang.String" itemvalue="style" />
@@ -12,6 +12,7 @@
             <item index="4" class="java.lang.String" itemvalue="_echarts_instance_" />
             <item index="5" class="java.lang.String" itemvalue="ngf-select" />
             <item index="6" class="java.lang.String" itemvalue="ngf-max-size" />
+            <item index="7" class="java.lang.String" itemvalue="forclass" />
           </list>
         </value>
       </option>
@@ -32,27 +33,6 @@
         </value>
       </option>
       <option name="myCustomValuesEnabled" value="true" />
-    </inspection_tool>
-    <inspection_tool class="VulnerableLibrariesLocal" enabled="true" level="WARNING" enabled_by_default="true">
-      <option name="isIgnoringEnabled" value="true" />
-      <option name="ignoredModules">
-        <list>
-          <option value="TravelTourFrontEnd" />
-          <option value="TravelTourFrontEnd" />
-        </list>
-      </option>
-      <option name="ignoredPackages">
-        <list>
-          <option value="null:angular:1.8.3" />
-          <option value="null:lite-server:2.6.1" />
-        </list>
-      </option>
-      <option name="ignoredReasons">
-        <list>
-          <option value="Not exploitable" />
-          <option value="Not exploitable" />
-        </list>
-      </option>
     </inspection_tool>
   </profile>
 </component>
