@@ -1,135 +1,232 @@
-<main class="main" id="top">
-    <div class="content" style="padding-top: 0">
-        <div class="mb-9">
-            <div class="row g-2 mb-4">
-                <div class="col-auto">
-                    <h2 class="mb-0">DANH SÁCH NHÂN VIÊN</h2>
-                </div>
-            </div>
-            <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#"><span>All </span><span class="text-700 fw-semi-bold">(68817)</span></a></li>
-                <li class="nav-item"><a class="nav-link" href="#"><span>New </span><span class="text-700 fw-semi-bold">(6)</span></a></li>
-                <li class="nav-item"><a class="nav-link" href="#"><span>Abandoned checkouts </span><span class="text-700 fw-semi-bold">(17)</span></a></li>
-                <li class="nav-item"><a class="nav-link" href="#"><span>Locals </span><span class="text-700 fw-semi-bold">(6,810)</span></a></li>
-                <li class="nav-item"><a class="nav-link" href="#"><span>Email subscribers </span><span class="text-700 fw-semi-bold">(8)</span></a></li>
-                <li class="nav-item"><a class="nav-link" href="#"><span>Top reviews </span><span class="text-700 fw-semi-bold">(2)</span></a></li>
-            </ul>
-            <div id="products" data-list='{"valueNames":["customer","email","total-orders","total-spent","city","last-seen","last-order"],"page":10,"pagination":true}'>
-                <div class="mb-4">
-                    <div class="row g-3">
-                        <div class="col-auto">
-                            <div class="search-box">
-                                <form class="position-relative" data-bs-toggle="search" data-bs-display="static"><input class="form-control search-input search" type="search" placeholder="Search customers" aria-label="Search" />
-                                    <span class="fas fa-search search-box-icon"></span>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col-auto scrollbar overflow-hidden-y flex-grow-1 d-none d-sm-inline">
-                            <div class="btn-group position-static" role="group">
-                                <div class="btn-group position-static text-nowrap"><button class="btn btn-phoenix-secondary px-7 flex-shrink-0" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"> Giới tính<span class="fas fa-angle-down ms-2"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Nam</a></li>
-                                        <li><a class="dropdown-item" href="#">Nữ</a></li>
-                                    </ul>
-                                </div>
-                                <div class="btn-group position-static text-nowrap d-none d-sm-inline">
-                                    <button class="btn btn-sm btn-phoenix-secondary px-7 flex-shrink-0" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"> Trạng thái<span class="fas fa-angle-down ms-2"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Đang hoạt động</a></li>
-                                        <li><a class="dropdown-item" href="#">Ngừng hoạt động</a></li>
-                                        <li></li>
-                                    </ul>
-                                </div><button class="btn btn-phoenix-secondary px-7 flex-shrink-0">More filters</button>
-                            </div>
-                        </div>
-                        <div class="col-auto"><button class="btn btn-link text-900 me-4 px-0">
-                            <span class="fa-solid fa-file-export fs--1 me-2"></span>Export</button>
-                            <a class="btn btn-primary" href="/admin/staff-add"><span class="fas fa-plus me-2 d-none d-sm-inline"></span>Thêm nhân viên
-                            </a>
-                        </div>
+<div class="container">
+    <div class="container-fluid">
+
+        <div class="header-control mb-4">
+            <div class="header-control-center">
+                <div class="d-flex justify-content-between align-items-center row ">
+                    <div class="col-xl-6 mt-3">
+                        <h3 class="color-greend fw-medium">DANH SÁCH NHÂN VIÊN</h3>
                     </div>
-                </div>
-                <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
-                    <div class="table-responsive scrollbar-overlay mx-n1 px-1">
-                        <table class="table table-sm fs--1 mb-0">
-                            <thead>
-                            <tr>
-                                <th class="sort text-center align-middle" scope="col" style="width:2%;">STT</th>
-                                <th class="sort text-center align-middle" scope="col" style="width:10%;">ID</th>
-                                <th class="sort text-center align-middle" scope="col" style="width:23%;">HỌ TÊN</th>
-                                <th class="sort text-center align-middle" scope="col" style="width:10%">NG.SINH</th>
-                                <th class="sort text-center align-middle" scope="col" style="width:10%">EMAIL</th>
-                                <th class="sort text-center align-middle" scope="col" style="width:5%;">G.TÍNH</th>
-                                <th class="sort text-center align-middle" scope="col" style="width:15%;">T.THÁI</th>
-                                <th class="sort text-center align-middle" scope="col" style="width:15%;">NG.TẠO</th>
-                                <th class="sort text-center align-middle" scope="col" style="width:10%;min-width: 150px;">HOẠT ĐỘNG</th>
-                            </tr>
-                            </thead>
-                            <tbody class="list" id="customers-table-body">
-                            <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center">1</td>
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center text-1000">89</td>
-                                <td class="customer align-middle white-space-nowrap"><a class="d-flex align-items-center text-1100" href="">
-                                    <div class="avatar avatar-m"><img class="rounded-circle" src="https://prium.github.io/phoenix/v1.13.0/assets/img/team/32.webp" alt="" /></div>
-                                    <p class="mb-0 ms-3 text-1100 fw-bold">Carry Anna</p>
-                                </a></td>
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center text-1000">09/12/20029</td>
-                                <td class="email align-middle white-space-nowrap pe-5"><a class="fw-semi-bold" href="mailto:annac34@gmail.com">annac34@gmail.com</a></td>
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center text-1000">Nữ</td>
-                                <td class="total-spent align-middle white-space-nowrap fw-bold text-center text-1100">Hoạt động</td>
-                                <td class="city align-middle white-space-nowrap text-center text-1000">12/02/2024</td>
-                                <td class="last-seen align-middle white-space-nowrap text-700 text-center">
-                                    <a class="btn btn-warning me-1 mb-1" href="/admin/staff-edit"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a class="btn btn-danger me-1 mb-1"><i class="fa-solid fa-trash-can"></i></a>
-                                </td>
-                            </tr>
-                            <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center">1</td>
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center text-1000">89</td>
-                                <td class="customer align-middle white-space-nowrap pe-5"><a class="d-flex align-items-center text-1100" href="">
-                                    <div class="avatar avatar-m"><img class="rounded-circle" src="https://prium.github.io/phoenix/v1.13.0/assets/img/team/32.webp" alt="" /></div>
-                                    <p class="mb-0 ms-3 text-1100 fw-bold">Carry Anna</p>
-                                </a></td>
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center text-1000">09/12/20029</td>
-                                <td class="email align-middle white-space-nowrap pe-5"><a class="fw-semi-bold" href="mailto:annac34@gmail.com">annac34@gmail.com</a></td>
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center text-1000">Nữ</td>
-                                <td class="total-spent align-middle white-space-nowrap fw-bold text-center text-1100">Hoạt động</td>
-                                <td class="city align-middle white-space-nowrap text-center text-1000">12/02/2024</td>
-                                <td class="last-seen align-middle white-space-nowrap text-700 text-center">
-                                    <a class="btn btn-warning me-1 mb-1" href="/admin/staff-edit"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a class="btn btn-danger me-1 mb-1"><i class="fa-solid fa-trash-can"></i></a>
-                                </td>
-                            </tr>
-                            <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center">1</td>
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center text-1000">89</td>
-                                <td class="customer align-middle white-space-nowrap pe-5"><a class="d-flex align-items-center text-1100" href="">
-                                    <div class="avatar avatar-m"><img class="rounded-circle" src="https://prium.github.io/phoenix/v1.13.0/assets/img/team/32.webp" alt="" /></div>
-                                    <p class="mb-0 ms-3 text-1100 fw-bold">Carry Anna</p>
-                                </a></td>
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center text-1000">09/12/20029</td>
-                                <td class="email align-middle white-space-nowrap pe-5"><a class="fw-semi-bold" href="mailto:annac34@gmail.com">annac34@gmail.com</a></td>
-                                <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-center text-1000">Nữ</td>
-                                <td class="total-spent align-middle white-space-nowrap fw-bold text-center text-1100">Hoạt động</td>
-                                <td class="city align-middle white-space-nowrap text-center text-1000">12/02/2024</td>
-                                <td class="last-seen align-middle white-space-nowrap text-700 text-center">
-                                    <a class="btn btn-warning me-1 mb-1" href="/admin/staff-edit"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a class="btn btn-danger me-1 mb-1"><i class="fa-solid fa-trash-can"></i></a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
-                        <div class="col-auto d-flex">
-                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900" data-list-info="data-list-info"></p><a class="fw-semi-bold" href="#!" data-list-view="*">View all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a class="fw-semi-bold d-none" href="#!" data-list-view="less">View Less<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
-                        </div>
-                        <div class="col-auto d-flex"><button class="page-link" data-list-pagination="prev"><span class="fas fa-chevron-left"></span></button>
-                            <ul class="mb-0 pagination"></ul><button class="page-link pe-0" data-list-pagination="next"><span class="fas fa-chevron-right"></span></button>
+                    <div class="col-xl-6 d-flex align-items-center justify-content-end header-control-center mt-3">
+                        <div class="row ">
+                            <div class="col-sm-3 d-flex align-items-center">
+                                <button class="btn d-flex "><i class="fa-solid fa-file-export"></i> <span>Xuất</span></button>
+                            </div>
+                            <div class="col-sm-9" style="text-align:right">
+                                <a href="/admin/staff-create" class="btn btn-greend"><i
+                                        class="fa-solid fa-plus" style="margin-right: 10px"></i> Tạo nhân viên mới
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="">
+            <div class="card card-customer">
+                <div class="row" style="margin: 20px 16px 20px 16px">
+                    <div class="col-xl-4">
+                        Bạn muốn tìm kiếm gì ?
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><button class="bg-light"><i
+                                    class="fa-solid fa-magnifying-glass bg-light"></i></button></span>
+                            <input type="text" class="form-control" placeholder="Tìm kiếm" aria-label="Username"
+                                   aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="col-xl-3 mb-3">
+                        Lọc
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Tất cả</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-3 mb-3">
+                        Trạng thái
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Thành công</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-2 d-flex align-items-center justify-content-end mb-3 h-100"
+                         style="margin: 16px 0 0 0">
+                        <button class="btn btn-primary">Tìm kiếm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="table-components table-responsive mb-5">
+            <div class="card table-responsive table-customer">
+                <div class="card-header ">
+                    <div class="row">
+                        <div class="h4 col-lg-5 d-flex align-items-center h-100">
+                            <div class="d-flex align-items-center">
+                                <span class="h4">Danh sách nhân viên</span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end align-items-baseline col-lg-2">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Tất cả hàng</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                            </select>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
+                            <nav aria-label="Page navigation example float-end">
+                                <ul class="pagination justify-content-center align-items-center">
+                                    <li class="page-item bg-light">
+                                        <a class="page-link"><i class="fa-solid fa-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#"><i class="fa-solid fa-angle-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-responsive text-center">
+                    <thead>
+                    <tr class="bg-light">
+                        <th><span><input class="form-check-input checkbox-all" type="checkbox" value="" id=""></span>
+                        </th>
+                        <th scope="col"># <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">ID <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Họ tên <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Ngày sinh <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Email <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Giới tính <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Ngày tạo <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Trạng thái <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
+                        <td>1</td>
+                        <td>N0001</td>
+                        <td>Nguyễn Ngọc Hoàng Vy</td>
+                        <td>01/01/2002</td>
+                        <td>hoangvy@gmail.com</td>
+                        <td>Nữ</td>
+                        <td>20/12/2022</td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <span class="status-warning"></span> <span class="text-status-warning">Đang hoạt động</span>
+                            </div>
+                        </td>
+                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                            <a class="btn" style="background: #ffc107; margin-right: 10px" href="/admin/staff-update"><i
+                                    class="fa-solid fa-pen-to-square text-white"></i></a>
+                            <a class="btn" style="background: #dc3545"><i
+                                    class="fa-solid fa-trash  text-white"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
+                        <td>1</td>
+                        <td>N0001</td>
+                        <td>Nguyễn Ngọc Hoàng Vy</td>
+                        <td>01/01/2002</td>
+                        <td>hoangvy@gmail.com</td>
+                        <td>Nữ</td>
+                        <td>20/12/2022</td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <span class="status-warning"></span> <span class="text-status-warning">Đang hoạt động</span>
+                            </div>
+                        </td>
+                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                            <a class="btn" style="background: #ffc107; margin-right: 10px" href="/admin/staff-update"><i
+                                    class="fa-solid fa-pen-to-square text-white"></i></a>
+                            <a class="btn" style="background: #dc3545"><i
+                                    class="fa-solid fa-trash  text-white"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
+                        <td>1</td>
+                        <td>N0001</td>
+                        <td>Nguyễn Ngọc Hoàng Vy</td>
+                        <td>01/01/2002</td>
+                        <td>hoangvy@gmail.com</td>
+                        <td>Nữ</td>
+                        <td>20/12/2022</td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <span class="status-warning"></span> <span class="text-status-warning">Đang hoạt động</span>
+                            </div>
+                        </td>
+                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                            <a class="btn" style="background: #ffc107; margin-right: 10px" href="/admin/staff-update"><i
+                                    class="fa-solid fa-pen-to-square text-white"></i></a>
+                            <a class="btn" style="background: #dc3545"><i
+                                    class="fa-solid fa-trash  text-white"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
+                        <td>1</td>
+                        <td>N0001</td>
+                        <td>Nguyễn Ngọc Hoàng Vy</td>
+                        <td>01/01/2002</td>
+                        <td>hoangvy@gmail.com</td>
+                        <td>Nữ</td>
+                        <td>20/12/2022</td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <span class="status-warning"></span> <span class="text-status-warning">Đang hoạt động</span>
+                            </div>
+                        </td>
+                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                            <a class="btn" style="background: #ffc107; margin-right: 10px" href="/admin/staff-update"><i
+                                    class="fa-solid fa-pen-to-square text-white"></i></a>
+                            <a class="btn" style="background: #dc3545"><i
+                                    class="fa-solid fa-trash  text-white"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
+                        <td>1</td>
+                        <td>N0001</td>
+                        <td>Nguyễn Ngọc Hoàng Vy</td>
+                        <td>01/01/2002</td>
+                        <td>hoangvy@gmail.com</td>
+                        <td>Nữ</td>
+                        <td>20/12/2022</td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <span class="status-warning"></span> <span class="text-status-warning">Đang hoạt động</span>
+                            </div>
+                        </td>
+                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                            <a class="btn" style="background: #ffc107; margin-right: 10px" href="/admin/staff-update"><i
+                                    class="fa-solid fa-pen-to-square text-white"></i></a>
+                            <a class="btn" style="background: #dc3545"><i
+                                    class="fa-solid fa-trash  text-white"></i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-end">
+                        5 trong tổng số 15
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</main>
+</div>
+
