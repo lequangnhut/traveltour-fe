@@ -1,0 +1,119 @@
+<section>
+    <div class="container">
+        <div class="container-fluid">
+            <div class="header-control mb-4">
+                <div class="">
+                    <div class="d-flex align-items-center row">
+                        <div class="col-lg-6">
+                            <h3 class="color-greend fw-bold text-uppercase">Thêm hóa đơn</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-custom">
+                <form class="row g-3 form-input-custom" name="billForm" ng-submit="submitBill()" novalidate>
+                    <!-- Tên tour -->
+                    <div class="col-12">
+                        <label for="tourName" class="form-label">Tên tour</label>
+                        <select id="tourName" class="form-select"
+                                name="tourName"
+                                ng-model="bill.tourName"
+                                ng-class="{ 'is-invalid': billForm.tourName.$touched && billForm.tourName.$error.required,
+                                            'is-valid': billForm.tourName.$touched && billForm.tourName.$valid}"
+                                required>
+                            <option value="" disabled selected>Choose...</option>
+                            <option>...</option>
+                        </select>
+                        <small class="text-danger"
+                               ng-show="billForm.tourName.$touched && billForm.tourName.$error.required">
+                            Vui lòng chọn tên tour!
+                        </small>
+                    </div>
+
+                    <!-- Tên khách sạn -->
+                    <div class="col-md-6">
+                        <label for="hotelName" class="form-label">Tên khách sạn</label>
+                        <select id="hotelName" class="form-select"
+                                name="hotelName"
+                                ng-model="bill.hotelName"
+                                ng-class="{ 'is-invalid': billForm.hotelName.$touched && billForm.hotelName.$error.required,
+                                            'is-valid': billForm.hotelName.$touched && billForm.hotelName.$valid}"
+                                required>
+                            <option value="" disabled selected>Choose...</option>
+                            <option>...</option>
+                            q
+                        </select>
+                        <small class="text-danger"
+                               ng-show="billForm.hotelName.$touched && billForm.hotelName.$error.required">
+                            Vui lòng chọn tên khách sạn!
+                        </small>
+                    </div>
+                    <!-- Địa chỉ -->
+                    <div class="col-md-6">
+                        <label for="address" class="form-label">Địa chỉ</label>
+                        <input type="text" class="form-control" id="address" placeholder="Nhập tên địa chỉ"
+                               name="address"
+                               ng-model="bill.address"
+                               ng-class="{ 'is-invalid': billForm.address.$touched && billForm.address.$error.required,
+                                            'is-valid': billForm.address.$touched && billForm.address.$valid}"
+                               required>
+                        <small class="text-danger"
+                               ng-show="billForm.address.$touched && billForm.address.$error.required">
+                            Địa chỉ không được bỏ trống!
+                        </small>
+                    </div>
+
+                    <!-- Số điện thoại -->
+                    <div class="col-md-6">
+                        <label for="phoneNumber" class="form-label">Số điện thoại</label>
+                        <input class="form-control" id="phoneNumber"
+                               type="text" placeholder="0942050505"
+                               name="phoneNumber"
+                               ng-pattern="/^\d{10}(\d{1})?$/"
+                               ng-model="bill.phoneNumber"
+                               ng-class="{ 'is-invalid': billForm.phoneNumber.$invalid && billForm.phoneNumber.$touched,
+                                            'is-valid': billForm.phoneNumber.$valid && billForm.phoneNumber.$touched }"
+                               required/>
+                        <small class="text-danger"
+                               ng-show="billForm.phoneNumber.$touched && billForm.phoneNumber.$error.required">
+                            Vui lòng nhập số điện thoại !
+                        </small>
+                        <small class="text-danger"
+                               ng-show="billForm.phoneNumber.$touched && billForm.phoneNumber.$error.pattern">
+                            Số điện thoại bao gồm 10 hoặc 11 số !
+                        </small>
+                    </div>
+
+                    <!-- Trạng thái lưu trú -->
+                    <div class="col-md-6">
+                        <label for="stayStatus" class="form-label">Trạng thái</label>
+                        <select id="stayStatus" class="form-select"
+                                name="stayStatus"
+                                ng-model="bill.stayStatus"
+                                ng-class="{ 'is-invalid': billForm.stayStatus.$touched && billForm.stayStatus.$error.required,
+                                                'is-valid': billForm.stayStatus.$touched && billForm.stayStatus.$valid  }"
+                                required>
+                            <option value="" disabled selected>Choose...</option>
+                            <option>...</option>
+                        </select>
+                        <small class="text-danger"
+                               ng-show="billForm.stayStatus.$touched && billForm.stayStatus.$error.required">
+                            Vui lòng chọn trạng thái!
+                        </small>
+                    </div>
+
+                    <!-- Nút Submit -->
+                    <div class="col-12 d-flex justify-content-end mt-5">
+                        <button class="btn" style="margin-right: 20px"><a class="btn" href="/admin/bill-list">Trở
+                            về</a></button>
+                        <button type="submit" class="btn btn-submit"
+                                ng-disabled="billForm.$invalid">
+                            Thêm hóa đơn
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
