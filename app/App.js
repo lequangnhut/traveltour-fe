@@ -92,6 +92,35 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/partner-service/sightseeing/sightseeing-update.html',
             controller: 'SightseeingControllerAD'
         })
+        /**
+         * schedule management
+         */
+        .when('/admin/tours-are-going-list', {
+            templateUrl: 'app/component/admin/views/pages/schedule-management/tours-are-going/tours-are-going-list.html',
+            controller: 'ToursAreGoingControllerAD'
+        })
+        .when('/admin/travel-schedule-list', {
+            templateUrl: 'app/component/admin/views/pages/schedule-management/travel-schedule/travel-schedule-list.html',
+            controller: 'TravelScheduleControllerAD'
+        })
+        //bill
+        .when('/admin/bill-list', {
+            templateUrl: 'app/component/admin/views/pages/bill/bill-list.html',
+            controller: 'BillControllerAD'
+        })
+        .when('/admin/bill-create', {
+            templateUrl: 'app/component/admin/views/pages/bill/bill-create.html',
+            controller: 'BillControllerAD'
+        })
+        .when('/admin/bill-update', {
+            templateUrl: 'app/component/admin/views/pages/bill/bill-update.html',
+            controller: 'BillControllerAD'
+        })
+        //booking
+        .when('/admin/booking-list', {
+            templateUrl: 'app/component/admin/views/pages/booking/booking-list.html',
+            controller: 'BookingControllerAD'
+        })
 
         /**
          * Agent Hotel
