@@ -12,13 +12,23 @@
         </div>
 
         <div class="card card-custom">
-            <form class="row g-3 form-input-custom" name="form_booking" role="form">
+            <form class="row g-3 form-input-custom" ng-submit="createBookingForm()" name="form_booking" role="form">
                 <div class="col-8">
                     <label for="inputState" class="form-label">MÃ CHUYẾN ĐI</label>
-                    <select id="inputState" class="form-select">
-                        <option disabled selected>Vui lòng chọn mã chuyến đi</option>
-                        <option>...</option>
+                    <select id="inputState"
+                            class="form-select"
+                            name="trip_code"
+                            ng-class="{ 'is-invalid': form_booking.trip_code.$invalid && form_booking.trip_code.$touched, 'is-valid': form_booking.trip_code.$valid && form_booking.trip_code.$touched }"
+                            ng-model="agent.trip_code"
+                            required
+                    >
+                        <option value="" disabled selected>Chọn mã chuyến đi</option>
+                        <option>Demo</option>
                     </select>
+                    <small class="text-danger"
+                           ng-show="form_booking.trip_code.$touched && form_booking.trip_code.$error.required">
+                        Vui lòng chọn mã chuyến đi !
+                    </small>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">SỐ VÉ</label>
@@ -136,32 +146,56 @@
                            ng-show="form_booking.price.$touched && form_booking.price.$error.required">
                         Vui lòng nhập tổng tiền !
                     </small>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">NGÀY / GIỜ MUA</label>
+                    <input type="datetime-local"
+                           class="form-control"
+                           placeholder="1"
+                           name="purchase_date"
+                           ng-model="agent.purchase_date"
+                           ng-class="{ 'is-invalid': form_booking.purchase_date.$invalid && form_booking.purchase_date.$touched, 'is-valid': form_booking.purchase_date.$valid && form_booking.purchase_date.$touched }"
+                           required
+                    >
                     <small class="text-danger"
-                           ng-show="form_booking.price.$touched && form_booking.price.$error.pattern">
-                        Tổng tiền không đúng định dạng !
+                           ng-show="form_booking.purchase_date.$touched && form_booking.purchase_date.$error.required">
+                        Vui lòng nhập ngày / giờ mua !
                     </small>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">NGÀY MUA</label>
-                    <input type="datetime-local" class="form-control" placeholder="1">
-                </div>
-                <div class="col-md-4">
                     <label class="form-label">TRẠNG THÁI</label>
-                    <select class="form-select">
-                        <option selected>Choose...</option>
-                        <option>...</option>
+                    <select class="form-select"
+                            name="active"
+                            ng-class="{ 'is-invalid': form_booking.active.$invalid && form_booking.active.$touched, 'is-valid': form_booking.active.$valid && form_booking.active.$touched }"
+                            ng-model="agent.active"
+                            required
+                    >
+                        <option value="" disabled selected>Chọn trạng thái</option>
+                        <option>Hoạt động</option>
+                        <option>Ngưng hoạt động</option>
                     </select>
+                    <small class="text-danger"
+                           ng-show="form_booking.active.$touched && form_booking.active.$error.required">
+                        Vui lòng chọn trạng thái !
+                    </small>
                 </div>
                 <div class="col-md-12">
                     <label class="form-label">GHI CHÚ</label>
-                    <textarea name="" class="form-control" cols="30" rows="3"></textarea>
+                    <textarea class="form-control"
+                              cols="30" rows="3"
+                              placeholder="Nội dung..."
+                              ng-model="agent.noted"
+                    >
+                    </textarea>
                 </div>
 
                 <div class="col-12 d-flex justify-content-end mt-5">
-                    <button class="btn" style="margin-right: 20px">
+                    <button type="button" class="btn" style="margin-right: 20px">
                         <a class="btn" href="/business/booking/bookings-list">Trở về</a>
                     </button>
-                    <button type="submit" class="btn btn-submit">Thêm mới</button>
+                    <button type="submit" ng-disabled="form_booking.$invalid" class="btn btn-submit fw-bold">
+                        Thêm mới
+                    </button>
                 </div>
             </form>
         </div>

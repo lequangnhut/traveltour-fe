@@ -12,71 +12,185 @@
         </div>
 
         <div class="card card-custom">
-            <form class="row g-3 form-input-custom">
+            <form class="row g-3 form-input-custom" ng-submit="createTrip()" name="form_trips">
                 <div class="col-6">
                     <label class="form-label">MÃ PHƯƠNG TIỆN</label>
-                    <select class="form-select">
-                        <option selected>Choose...</option>
-                        <option>...</option>
+                    <select class="form-select"
+                            name="id_trans"
+                            ng-class="{ 'is-invalid': form_trips.id_trans.$invalid && form_trips.id_trans.$touched, 'is-valid': form_trips.id_trans.$valid && form_trips.id_trans.$touched }"
+                            ng-model="agent.id_trans"
+                            required
+                    >
+                        <option value="" disabled selected>Chọn mã phương tiện</option>
+                        <option>Demo</option>
                     </select>
+                    <small class="text-danger"
+                           ng-show="form_trips.id_trans.$touched && form_trips.id_trans.$error.required">
+                        Vui lòng chọn mã phương tiện !
+                    </small>
                 </div>
                 <div class="col-6">
                     <label class="form-label">LOẠI PHƯƠNG TIỆN</label>
-                    <select class="form-select">
-                        <option selected>Choose...</option>
-                        <option>...</option>
+                    <select class="form-select"
+                            name="transportation"
+                            ng-class="{ 'is-invalid': form_trips.transportation.$invalid && form_trips.transportation.$touched, 'is-valid': form_trips.transportation.$valid && form_trips.transportation.$touched }"
+                            ng-model="agent.transportation"
+                            required
+                    >
+                        <option value="" disabled selected>Chọn loại phương tiện</option>
+                        <option>Demo</option>
                     </select>
+                    <small class="text-danger"
+                           ng-show="form_trips.transportation.$touched && form_trips.transportation.$error.required">
+                        Vui lòng chọn loại phương tiện !
+                    </small>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">NGÀY / GIỜ ĐI</label>
-                    <input type="datetime-local" class="form-control" placeholder="2">
+                    <input type="datetime-local"
+                           class="form-control"
+                           name="date_trip_start"
+                           ng-class="{ 'is-invalid': form_trips.date_trip_start.$invalid && form_trips.date_trip_start.$touched, 'is-valid': form_trips.date_trip_start.$valid && form_trips.date_trip_start.$touched }"
+                           ng-model="agent.date_trip_start"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="form_trips.date_trip_start.$touched && form_trips.date_trip_start.$error.required">
+                        Vui lòng chọn ngày / giờ đi !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="!form_trips.date_trip_start.$error.required && form_trips.date_trip_start.$error.futureDate">
+                        Ngày / giờ đi phải là ngày / giờ tương lai!
+                    </small>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">NGÀY / GIỜ VỀ</label>
-                    <input type="datetime-local" class="form-control" placeholder="2">
+                    <input type="datetime-local"
+                           class="form-control"
+                           name="date_trip_end"
+                           ng-class="{ 'is-invalid': form_trips.date_trip_end.$invalid && form_trips.date_trip_end.$touched, 'is-valid': form_trips.date_trip_end.$valid && form_trips.date_trip_end.$touched }"
+                           ng-model="agent.date_trip_end"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="form_trips.date_trip_end.$touched && form_trips.date_trip_end.$error.required">
+                        Vui lòng chọn ngày / giờ về !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="!form_trips.date_trip_end.$error.required && form_trips.date_trip_end.$error.dateRange">
+                        Ngày / giờ về phải trước ngày / giờ đi!
+                    </small>
                 </div>
                 <div class="col-6">
                     <label class="form-label">LOẠI VÉ</label>
-                    <select class="form-select">
-                        <option selected>Choose...</option>
-                        <option>...</option>
+                    <select class="form-select"
+                            name="ticket_type"
+                            ng-class="{ 'is-invalid': form_trips.ticket_type.$invalid && form_trips.ticket_type.$touched, 'is-valid': form_trips.ticket_type.$valid && form_trips.ticket_type.$touched }"
+                            ng-model="agent.ticket_type"
+                            required
+                    >
+                        <option value="" disabled selected>Chọn loại vé</option>
+                        <option>Demo</option>
                     </select>
+                    <small class="text-danger"
+                           ng-show="form_trips.ticket_type.$touched && form_trips.ticket_type.$error.required">
+                        Vui lòng chọn loại vé !
+                    </small>
                 </div>
                 <div class="col-6">
                     <label class="form-label">ĐIỂM ĐI</label>
-                    <select class="form-select">
-                        <option selected>Choose...</option>
-                        <option>...</option>
+                    <select class="form-select"
+                            name="departure_provinces"
+                            ng-class="{ 'is-invalid': form_trips.departure_provinces.$invalid && form_trips.departure_provinces.$touched, 'is-valid': form_trips.departure_provinces.$valid && form_trips.departure_provinces.$touched }"
+                            ng-options="city.Name for city in provinces"
+                            ng-model="agent.departure_provinces"
+                            required
+                    >
+                        <option value="" disabled selected>Chọn điểm đi</option>
                     </select>
+                    <small class="text-danger"
+                           ng-show="form_trips.departure_provinces.$touched && form_trips.departure_provinces.$error.required">
+                        Vui lòng chọn điểm đi !
+                    </small>
                 </div>
                 <div class="col-6">
                     <label class="form-label">ĐIỂM ĐẾN</label>
-                    <select class="form-select">
-                        <option selected>Choose...</option>
-                        <option>...</option>
+                    <select class="form-select"
+                            name="destination_provinces"
+                            ng-class="{ 'is-invalid': form_trips.destination_provinces.$invalid && form_trips.destination_provinces.$touched, 'is-valid': form_trips.destination_provinces.$valid && form_trips.destination_provinces.$touched }"
+                            ng-options="city.Name for city in provinces"
+                            ng-model="agent.destination_provinces"
+                            required
+                    >
+                        <option value="" disabled selected>Chọn điểm đến</option>
                     </select>
+                    <small class="text-danger"
+                           ng-show="form_trips.destination_provinces.$touched && form_trips.destination_provinces.$error.required">
+                        Vui lòng chọn điểm đến !
+                    </small>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">ĐƠN GIÁ</label>
-                    <input type="text" class="form-control" placeholder="2">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="100.000 đ"
+                           vn-currency-input
+                           name="price"
+                           ng-model="agent.price"
+                           ng-model-options="{ updateOn: 'blur' }"
+                           ng-class="{ 'is-invalid': form_trips.price.$invalid && form_trips.price.$touched, 'is-valid': form_trips.price.$valid && form_trips.price.$touched }"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="form_trips.price.$touched && form_trips.price.$error.required">
+                        Vui lòng nhập tổng tiền !
+                    </small>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">SỐ CHỔ ĐÃ ĐẶT</label>
-                    <input type="text" class="form-control" placeholder="2">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="29 chổ"
+                           name="seat_number"
+                           ng-model="agent.seat_number"
+                           ng-class="{ 'is-invalid': form_trips.seat_number.$invalid && form_trips.seat_number.$touched, 'is-valid': form_trips.seat_number.$valid && form_trips.seat_number.$touched }"
+                           ng-pattern="/^[0-9]*$/"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="form_trips.seat_number.$touched && form_trips.seat_number.$error.required">
+                        Vui lòng nhập số chổ ngồi !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="form_trips.seat_number.$touched && form_trips.seat_number.$error.pattern">
+                        Số chổ ngồi không đúng định dạng !
+                    </small>
                 </div>
                 <div class="col-12">
                     <label class="form-label">TRẠNG THÁI</label>
-                    <select class="form-select">
-                        <option selected>Choose...</option>
-                        <option>...</option>
+                    <select class="form-select"
+                            name="active"
+                            ng-class="{ 'is-invalid': form_trips.active.$invalid && form_trips.active.$touched, 'is-valid': form_trips.active.$valid && form_trips.active.$touched }"
+                            ng-model="agent.active"
+                            required
+                    >
+                        <option value="" disabled selected>Chọn trạng thái</option>
+                        <option value="true">Hoạt động</option>
+                        <option value="false">Ngưng hoạt động</option>
                     </select>
+                    <small class="text-danger"
+                           ng-show="form_trips.active.$touched && form_trips.active.$error.required">
+                        Vui lòng chọn trạng thái !
+                    </small>
                 </div>
 
                 <div class="col-12 d-flex justify-content-end mt-5">
-                    <button class="btn" style="margin-right: 20px">
+                    <button type="button" class="btn" style="margin-right: 20px">
                         <a class="btn" href="/business/trip/trips-list">Trở về</a>
                     </button>
-                    <button type="submit" class="btn btn-submit">Cập nhật</button>
+                    <button type="submit" class="btn btn-submit fw-bold" ng-disabled="form_trips.$invalid">
+                        Thêm mới
+                    </button>
                 </div>
             </form>
         </div>
