@@ -363,17 +363,17 @@
                         <div class="col-md-4">
                             <label class="form-label">Tỉnh/Thành phố</label>
                             <select class="form-select"
-                                    name="province"
-                                    ng-class="{ 'is-invalid': register_visits.province.$invalid && register_visits.province.$touched, 'is-valid': register_visits.province.$valid && register_visits.province.$touched }"
-                                    ng-options="city.Id as city.Name for city in provinces"
-                                    ng-change="onProvinceChange()"
-                                    ng-model="agent.province"
+                                    name="provinceVisit"
+                                    ng-class="{ 'is-invalid': register_visits.provinceVisit.$invalid && register_visits.provinceVisit.$touched, 'is-valid': register_visits.provinceVisit.$valid && register_visits.provinceVisit.$touched }"
+                                    ng-options="city.Id as city.Name for city in provinceVisits"
+                                    ng-change="onProvinceVisitChange()"
+                                    ng-model="agent.provinceVisit"
                                     required
                             >
                                 <option value="" disabled selected>Chọn Tỉnh/Thành phố</option>
                             </select>
                             <small class="text-danger"
-                                   ng-show="register_visits.province.$touched && register_visits.province.$error.required">
+                                   ng-show="register_visits.provincevisit.$touched && register_visits.provincevisit.$error.required">
                                 Vui lòng chọn tỉnh/thành phố.
                             </small>
                         </div>
@@ -381,18 +381,18 @@
                         <div class="col-md-4">
                             <label class="form-label">Quận/Huyện</label>
                             <select class="form-select"
-                                    name="districts"
-                                    ng-class="{ 'is-invalid': register_visits.districts.$invalid && register_visits.districts.$touched, 'is-valid': register_visits.districts.$valid && register_visits.districts.$touched }"
-                                    ng-options="district.Id as district.Name for district in districts"
-                                    ng-disabled="!agent.province"
-                                    ng-change="onDistrictChange()"
-                                    ng-model="agent.districts"
+                                    name="districtVisit"
+                                    ng-class="{ 'is-invalid': register_visits.districtVisit.$invalid && register_visits.districtVisit.$touched, 'is-valid': register_visits.districtVisit.$valid && register_visits.districtVisit.$touched }"
+                                    ng-options="district.Id as district.Name for district in districtVisits"
+                                    ng-disabled="!agent.provinceVisit"
+                                    ng-change="onDistrictVisitChange()"
+                                    ng-model="agent.districtVisit"
                                     required
                             >
                                 <option value="" disabled selected>Chọn Quận/Huyện</option>
                             </select>
                             <small class="text-danger"
-                                   ng-show="register_visits.districts.$touched && register_visits.districts.$error.required">
+                                   ng-show="register_visits.districtVisit.$touched && register_visits.districtVisit.$error.required">
                                 Vui lòng chọn quận/huyện.
                             </small>
                         </div>
@@ -400,18 +400,18 @@
                         <div class="col-md-4">
                             <label class="form-label">Phường/Xã</label>
                             <select class="form-select"
-                                    name="ward"
-                                    ng-class="{ 'is-invalid': register_visits.ward.$invalid && register_visits.ward.$touched, 'is-valid': register_visits.ward.$valid && register_visits.ward.$touched }"
+                                    name="wardVisit"
+                                    ng-class="{ 'is-invalid': register_visits.wardVisit.$invalid && register_visits.wardVisit.$touched, 'is-valid': register_visits.wardVisit.$valid && register_visits.wardVisit.$touched }"
                                     ng-options="ward.Id as ward.Name for ward in wards"
-                                    ng-disabled="!agent.districts"
+                                    ng-disabled="!agent.districtVisit"
                                     ng-change="onWardChange()"
-                                    ng-model="agent.ward"
+                                    ng-model="agent.wardVisit"
                                     required
                             >
                                 <option value="" disabled selected>Chọn Phường/Xã</option>
                             </select>
                             <small class="text-danger"
-                                   ng-show="register_visits.ward.$touched && register_visits.ward.$error.required">
+                                   ng-show="register_visits.wardVisit.$touched && register_visits.wardVisit.$error.required">
                                 Vui lòng chọn phường/xã.
                             </small>
                         </div>
@@ -421,13 +421,13 @@
                             <input type="text"
                                    class="form-control"
                                    placeholder="1234 Main St"
-                                   name="address"
-                                   ng-model="agent.address"
-                                   ng-class="{ 'is-invalid': register_visits.address.$invalid && register_visits.address.$touched, 'is-valid': register_visits.address.$valid && register_visits.address.$touched }"
+                                   name="addressVisit"
+                                   ng-model="agent.addressVisit"
+                                   ng-class="{ 'is-invalid': register_visits.addressVisit.$invalid && register_visits.addressVisit.$touched, 'is-valid': register_visits.addressVisit.$valid && register_visits.addressVisit.$touched }"
                                    required
                             >
                             <small class="text-danger"
-                                   ng-show="register_visits.address.$touched && register_visits.address.$error.required">
+                                   ng-show="register_visits.addressVisit.$touched && register_visits.addressVisit.$error.required">
                                 Vui lòng nhập địa chỉ !
                             </small>
                         </div>
@@ -560,22 +560,15 @@
 
                         <div class="col-12 mb-3">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox"  value="">
-                                <label class="form-check-label" for="free_ticket">Miễn phí vé</label>
-                            </div>
-                            <div class="input-group mt-3">
-                                <input type="text"
-                                       class="form-control"
-                                       id="free_ticket"
-                                       placeholder="0"
-                                >
+                                    <input class="form-check-input" type="checkbox">
+                                    <label class="form-label">Miễn phí vé</label>
                             </div>
                         </div>
 
                         <div class="col-12 mb-3 ">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox"  value="">
-                                <label class="form-check-label" for="free_ticket">Vé người lớn</label>
+                                <label class="form-label">Vé người lớn</label>
                             </div>
 
                             <div class="input-group mt-3">
@@ -604,7 +597,7 @@
                         <div class="col-12 mb-3 ">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox"  value="">
-                                <label class="form-check-label" for="free_ticket">Vé trẻ em</label>
+                                <label class="form-label" >Vé trẻ em</label>
                             </div>
 
                             <div class="input-group mt-3">

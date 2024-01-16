@@ -1,1 +1,251 @@
-<h4 class="fw-bold text-success mb-3">THÊM BOOKING ĐỊA ĐIỂM</h4>
+<div class="container mt-4 mb-5">
+    <div class="container-fluid">
+        <div class="header-control mb-4">
+            <div class="">
+                <div class="d-flex align-items-center row">
+                    <div class="col-lg-6">
+                        <h3 class="color-greend fw-bold">THÊM ĐỊA ĐIỂM MỚI</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-custom">
+            <form class="row g-3 form-input-custom" ng-submit="submitDataCreateVisits()" name="create_visits"  method="post">
+                <div class="col-12">
+                    <label for="inputNameLocation" class="form-label">TÊN KHÁCH HÀNG</label>
+                    <input type="text"
+                           class="form-control"
+                           id="inputNameLocation"
+                           placeholder="Nguyễn "
+                           name="name"
+                           ng-model="agent.name"
+                           ng-class="{ 'is-invalid': create_visits.name.$invalid && create_visits.name.$touched, 'is-valid': create_visits.name.$valid && create_visits.name.$touched }"
+                           ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="create_visits.name.$touched && create_visits.name.$error.required">
+                        Vui lòng nhập tên địa điểm !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="create_visits.name.$touched && create_visits.name.$error.pattern">
+                        Tên địa điểm không đúng định dạng !
+                    </small>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="locationType" class="form-label">Loại địa điểm</label>
+                    <select id="locationType" class="form-select"
+                            name="locationType"
+                            ng-model="agent.locationType"
+                            ng-class="{ 'is-invalid': create_visits.locationType.$invalid && create_visits.locationType.$touched, 'is-valid': create_visits.locationType.$valid && create_visits.locationType.$touched }"
+                            required>
+                        <option value="0" selected="selected">Di tích lịch sử</option>
+                        <option value="1">Khu du lịch sính thái</option>
+                    </select>
+                    <small class="text-danger"
+                           ng-show="create_visits.locationType.$touched && create_visits.locationType.$error.required">
+                        Vui lòng chọn trạng thái !
+                    </small>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="inputVisitPhone" class="form-label">SỐ ĐIỆN THOẠI</label>
+                    <input type="text"
+                           class="form-control"
+                           id="inputVisitPhone"
+                           placeholder="0969653264"
+                           name="phone"
+                           ng-model="agent.phone"
+                           ng-class="{ 'is-invalid': create_visits.phone.$invalid && create_visits.phone.$touched, 'is-valid': create_visits.phone.$valid && create_visits.phone.$touched }"
+                           ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="create_visits.phone.$touched && create_visits.phone.$error.required">
+                        Vui lòng nhập số điện thoại !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="create_visits.phone.$touched && create_visits.phone.$error.pattern">
+                        Số điện thoại không đúng định dạng !
+                    </small>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Địa chỉ</label>
+                    <input type="text"
+                           class="form-control"
+                           placeholder="1234 Main St"
+                           name="address"
+                           ng-model="agent.address"
+                           ng-class="{ 'is-invalid': create_visits.address.$invalid && create_visits.address.$touched, 'is-valid': create_visits.address.$valid && create_visits.address.$touched }"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="create_visits.address.$touched && create_visits.address.$error.required">
+                        Vui lòng nhập địa chỉ !
+                    </small>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Tỉnh/Thành phố</label>
+                    <select class="form-select"
+                            name="province"
+                            ng-class="{ 'is-invalid': create_visits.province.$invalid && create_visits.province.$touched, 'is-valid': create_visits.province.$valid && create_visits.province.$touched }"
+                            ng-options="city.Id as city.Name for city in provinces"
+                            ng-change="onProvinceChange()"
+                            ng-model="agent.province"
+                            required
+                    >
+                        <option value="" disabled selected>Chọn Tỉnh/Thành phố</option>
+                    </select>
+                    <small class="text-danger"
+                           ng-show="create_visits.province.$touched && create_visits.province.$error.required">
+                        Vui lòng chọn tỉnh/thành phố.
+                    </small>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Quận/Huyện</label>
+                    <select class="form-select"
+                            name="districts"
+                            ng-class="{ 'is-invalid': create_visits.districts.$invalid && create_visits.districts.$touched, 'is-valid': create_visits.districts.$valid && create_visits.districts.$touched }"
+                            ng-options="district.Id as district.Name for district in districts"
+                            ng-disabled="!agent.province"
+                            ng-change="onDistrictChange()"
+                            ng-model="agent.districts"
+                            required
+                    >
+                        <option value="" disabled selected>Chọn Quận/Huyện</option>
+                    </select>
+                    <small class="text-danger"
+                           ng-show="create_visits.districts.$touched && create_visits.districts.$error.required">
+                        Vui lòng chọn quận/huyện.
+                    </small>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Phường/Xã</label>
+                    <select class="form-select"
+                            name="ward"
+                            ng-class="{ 'is-invalid': create_visits.ward.$invalid && create_visits.ward.$touched, 'is-valid': create_visits.ward.$valid && create_visits.ward.$touched }"
+                            ng-options="ward.Id as ward.Name for ward in wards"
+                            ng-disabled="!agent.districts"
+                            ng-change="onWardChange()"
+                            ng-model="agent.ward"
+                            required
+                    >
+                        <option value="" disabled selected>Chọn Phường/Xã</option>
+                    </select>
+                    <small class="text-danger"
+                           ng-show="create_visits.ward.$touched && create_visits.ward.$error.required">
+                        Vui lòng chọn phường/xã.
+                    </small>
+                </div>
+
+
+                <div class="col-12 mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"  value="">
+                        <label class="form-label" >Miễn phí vé</label>
+                    </div>
+
+                </div>
+
+                <div class="col-12 mb-3 ">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"  value="">
+                        <label class="form-label" for="free_ticket">Vé người lớn</label>
+                    </div>
+
+                    <div class="input-group mt-3">
+                        <input type="text"
+                               class="form-control"
+                               id="adult_ticket"
+                               placeholder="300,000"
+                               name="adultTicket"
+                               ng-model="agent.adultTicket"
+                               ng-class="{ 'is-invalid': create_visits.adultTicket.$invalid && create_visits.adultTicket.$touched, 'is-valid': create_visits.adultTicket.$valid && create_visits.adultTicket.$touched }"
+                               ng-pattern="/^(\d{1,3}(,\d{3})*(,\d{1,3})*(,\d{3})*|\d+(,\d{1,3})*)$/"
+                               required
+                        >
+                    </div>
+                    <small class="text-danger"
+                           ng-show="create_visits.adultTicket.$touched && create_visits.adultTicket.$error.required">
+                        Vui lòng nhập giá !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="create_visits.phone.$touched && create_visits.adultTicket.$error.pattern">
+                        Giá không đúng định dạng !
+                    </small>
+
+                </div>
+
+                <div class="col-12 mb-3 ">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"  value="">
+                        <label class="form-label" for="free_ticket">Vé trẻ em</label>
+                    </div>
+
+                    <div class="input-group mt-3">
+                        <input type="text"
+                               class="form-control"
+                               id="child_ticket"
+                               placeholder="150,000"
+                               name="childTicket"
+                               ng-model="agent.childTicket"
+                               ng-class="{ 'is-invalid': create_visits.childTicket.$invalid && create_visits.childTicket.$touched, 'is-valid': create_visits.childTicket.$valid && create_visits.childTicket.$touched }"
+                               ng-pattern="/^(\d{1,3}(,\d{3})*(,\d{1,3})*(,\d{3})*|\d+(,\d{1,3})*)$/"
+                               required
+                        >
+                    </div>
+                    <small class="text-danger"
+                           ng-show="create_visits.childTicket.$touched && create_visits.childTicket.$error.required">
+                        Vui lòng nhập giá !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="create_visits.childTicket.$touched && create_visits.childTicket.$error.pattern">
+                        Giá không đúng định dạng !
+                    </small>
+
+                </div>
+
+                <div class="col-6">
+                    <label class="form-label">Thời gian mở cửa</label>
+                    <input type="time"
+                           class="form-control"
+                           name="time_open_agent"
+                           ng-class="{ 'is-invalid': create_visits.time_open_agent.$invalid && create_visits.time_open_agent.$touched, 'is-valid': create_visits.time_open_agent.$valid && create_visits.time_open_agent.$touched }"
+                           ng-model="agent.time_open_agent"
+                           required>
+                    <small class="text-danger"
+                           ng-show="create_visits.time_open_agent.$touched && create_visits.time_open_agent.$error.required">
+                        Vui lòng nhập thời gian!
+                    </small>
+                </div>
+
+                <div class="col-6">
+                    <label class="form-label">Thời gian đóng cửa</label>
+                    <input type="time"
+                           class="form-control"
+                           name="time_close_agent"
+                           ng-class="{ 'is-invalid': create_visits.time_close_agent.$invalid && create_visits.time_close_agent.$touched, 'is-valid': create_visits.time_close_agent.$valid && create_visits.time_close_agent.$touched }"
+                           ng-model="agent.time_close_agent"
+                           required>
+                    <small class="text-danger"
+                           ng-show="create_visits.time_close_agent.$touched && create_visits.time_close_agent.$error.required">
+                        Vui lòng nhập thời gian!
+                    </small>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end mt-5">
+                    <button class="btn" style="margin-right: 20px">
+                        <a class="btn" href="/business/visit-list">Trở về</a>
+                    </button>
+                    <button type="submit" class="btn btn-submit">Thêm địa điểm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
