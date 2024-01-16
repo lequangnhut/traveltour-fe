@@ -12,7 +12,7 @@
             </div>
 
             <div class="card card-custom" >
-                <form class="row g-3 form-input-custom" ng-submit="submitAdminStaffUpdate()"
+                <form class="row g-3 form-input-custom" ng-submit="submitAdminStaffCreate()"
                       method="POST" role="form" name="staffform">
                     <div class="col-12">
                         <div class="form-floating">
@@ -165,7 +165,7 @@
                     </div>
                     <div class="col-12 d-flex justify-content-end mt-5">
                         <button class="btn" style="margin-right: 20px">
-                            <a class="btn" href="/admin/staff-list">Trở về</a>
+                            <a class="btn" href="/admin/staff/staff-list">Trở về</a>
                         </button>
                         <button type="submit" class="btn btn-submit" ng-disabled="staffform.$invalid">Thêm nhân viên</button>
                     </div>
