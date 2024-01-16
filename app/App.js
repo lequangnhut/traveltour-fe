@@ -15,13 +15,21 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/dashboard/dashboard.html',
             controller: 'DashboardControllerAD'
         })
-        .when('/admin/decentralization-account', {
-            templateUrl: 'app/component/admin/views/pages/decentralization/account-full.html',
-            controller: 'DecentralizationControllerAD'
+        .when('/admin/account-management', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/account/account-list.html',
+            controller: 'AccountControllerAD'
         })
-        .when('/admin/decentralization-list', {
-            templateUrl: 'app/component/admin/views/pages/decentralization/decentralization-list.html',
-            controller: 'DecentralizationListControllerAD'
+        .when('/admin/account-management/account-create', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/account/account-create.html',
+            controller: 'AccountControllerAD'
+        })
+        .when('/admin/account-management/account-update', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/account/account-update.html',
+            controller: 'AccountControllerAD'
+        })
+        .when('/admin/decentralized-management', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/decentralization/decentralization-list.html',
+            controller: 'DecentralizationControllerAD'
         })
         /**
          * tour

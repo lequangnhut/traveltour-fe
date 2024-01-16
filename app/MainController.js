@@ -1,4 +1,4 @@
-travel_app.controller('MainController', function ($scope, $location, $window, $anchorScroll, AuthService) {
+travel_app.controller('MainController', function ($scope, $location, $window, $anchorScroll, AuthService, NotificationService) {
     $anchorScroll();
     $scope.activeNavItem = localStorage.getItem('activeNavItem') || null;
 
@@ -9,6 +9,24 @@ travel_app.controller('MainController', function ($scope, $location, $window, $a
         $scope.role = AuthService.getUser().roles[0].nameRole
     }
 
+    /**
+     * Gọi trong localStored ra để hiển thị thông báo
+     */
+    $scope.init = function () {
+        const notification = NotificationService.getNotification();
+
+        if (notification) {
+            toastAlert(notification.type, notification.message);
+            NotificationService.clearNotification();
+        }
+    };
+
+    $scope.init();
+
+    /**
+     * Set active thẻ nav link bên admin
+     * @param navItem
+     */
     $scope.setActiveNavItem = function (navItem) {
         $scope.activeNavItem = navItem;
         localStorage.setItem('activeNavItem', navItem);
