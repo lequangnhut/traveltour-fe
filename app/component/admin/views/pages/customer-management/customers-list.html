@@ -5,7 +5,7 @@
             <div class="header-control-center">
                 <div class="d-flex justify-content-between align-items-center row ">
                     <div class="col-xl-6 mt-3">
-                        <h3 class="color-greend fw-bold text-uppercase">Danh sách tham quan theo tour</h3>
+                        <h3 class="color-greend fw-medium">DANH SÁCH KHÁCH HÀNG</h3>
                     </div>
                     <div class="col-xl-6 d-flex align-items-center justify-content-end header-control-center mt-3">
                         <div class="row ">
@@ -13,9 +13,9 @@
                                 <button class="btn d-flex "><i class="fa-solid fa-file-export"></i> <span>Xuất</span>
                                 </button>
                             </div>
-                            <div class="col-sm-9">
-                                <a href="/admin/sightseeing-create" class="btn btn-greend"><i
-                                        class="fa-solid fa-plus" style="margin-right: 10px"></i> Tạo địa chỉ mới
+                            <div class="col-sm-9" style="text-align:right">
+                                <a href="/admin/customer-create" class="btn btn-greend"><i
+                                        class="fa-solid fa-plus" style="margin-right: 10px"></i> Tạo khách hàng mới
                                 </a>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                     <div class="row">
                         <div class="h4 col-lg-5 d-flex align-items-center h-100">
                             <div class="d-flex align-items-center">
-                                <span class="h4">Danh sách tour chi tiết</span>
+                                <span class="h4">Danh sách khách hàng</span>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end align-items-baseline col-lg-2">
@@ -104,11 +104,12 @@
                         </th>
                         <th scope="col"># <i class="fa-solid fa-sort"></i></th>
                         <th scope="col">ID <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Tên tour <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Tên điểm tham quan <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Địa chỉ <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Họ tên <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Email <i class="fa-solid fa-sort"></i></th>
                         <th scope="col">Số điện thoại <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Trang thái <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Ngày sinh <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Giới tính <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Trạng thái <i class="fa-solid fa-sort"></i></th>
                         <th scope="col">Thao tác</th>
                     </tr>
                     </thead>
@@ -116,19 +117,21 @@
                     <tr>
                         <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
                         <td>1</td>
-                        <td>P0001</td>
-                        <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>300.000</td>
+                        <td>N0001</td>
+                        <td>Nguyễn Ngọc Hoàng Vy</td>
+                        <td>01/01/2002</td>
+                        <td>hoangvy@gmail.com</td>
+                        <td>Nữ</td>
+                        <td>20/12/2022</td>
                         <td>
                             <div class="d-flex align-items-center justify-content-center">
-                                <span class="status-success"></span> <span class="text-status-success">Đang book</span>
+                                <span class="status-warning"></span> <span
+                                    class="text-status-warning">Đang hoạt động</span>
                             </div>
                         </td>
-                        <td class="d-flex align-items-center justify-content-center">
-                            <a class="btn" href="/admin/sightseeing-update"
-                               style="background: #ffc107; margin-right: 10px"><i
+                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                            <a class="btn" style="background: #ffc107; margin-right: 10px"
+                               href="/admin/customer-update"><i
                                     class="fa-solid fa-pen-to-square text-white"></i></a>
                             <a class="btn" style="background: #dc3545"><i
                                     class="fa-solid fa-trash  text-white"></i></a>
@@ -136,20 +139,22 @@
                     </tr>
                     <tr>
                         <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
-                        <td>2</td>
-                        <td>P0001</td>
-                        <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>300.000</td>
+                        <td>1</td>
+                        <td>N0001</td>
+                        <td>Nguyễn Ngọc Hoàng Vy</td>
+                        <td>01/01/2002</td>
+                        <td>hoangvy@gmail.com</td>
+                        <td>Nữ</td>
+                        <td>20/12/2022</td>
                         <td>
                             <div class="d-flex align-items-center justify-content-center">
-                                <span class="status-warning"></span> <span class="text-status-warning">Cảnh báo</span>
+                                <span class="status-warning"></span> <span
+                                    class="text-status-warning">Đang hoạt động</span>
                             </div>
                         </td>
-                        <td class="d-flex align-items-center justify-content-center">
-                            <a class="btn" href="/admin/sightseeing-update"
-                               style="background: #ffc107; margin-right: 10px"><i
+                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                            <a class="btn" style="background: #ffc107; margin-right: 10px"
+                               href="/admin/customer-update"><i
                                     class="fa-solid fa-pen-to-square text-white"></i></a>
                             <a class="btn" style="background: #dc3545"><i
                                     class="fa-solid fa-trash  text-white"></i></a>
@@ -157,42 +162,22 @@
                     </tr>
                     <tr>
                         <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
-                        <td>3</td>
-                        <td>P0001</td>
-                        <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>300.000</td>
+                        <td>1</td>
+                        <td>N0001</td>
+                        <td>Nguyễn Ngọc Hoàng Vy</td>
+                        <td>01/01/2002</td>
+                        <td>hoangvy@gmail.com</td>
+                        <td>Nữ</td>
+                        <td>20/12/2022</td>
                         <td>
                             <div class="d-flex align-items-center justify-content-center">
-                                <span class="status-error"></span> <span class="text-status-error">Đang book</span>
+                                <span class="status-warning"></span> <span
+                                    class="text-status-warning">Đang hoạt động</span>
                             </div>
                         </td>
-                        <td class="d-flex align-items-center justify-content-center">
-                            <a class="btn" href="/admin/sightseeing-update"
-                               style="background: #ffc107; margin-right: 10px"><i
-                                    class="fa-solid fa-pen-to-square text-white"></i></a>
-                            <a class="btn" style="background: #dc3545"><i
-                                    class="fa-solid fa-trash  text-white"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center"><span><span><input class="form-check-input" type="checkbox" value=""
-                                                                   id=""></span></span></td>
-                        <td>4</td>
-                        <td>P0001</td>
-                        <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>300.000</td>
-                        <td>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <span class="status-info"></span> <span class="text-info">Thông báo</span>
-                            </div>
-                        </td>
-                        <td class="d-flex align-items-center justify-content-center">
-                            <a class="btn" href="/admin/sightseeing-update"
-                               style="background: #ffc107; margin-right: 10px"><i
+                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                            <a class="btn" style="background: #ffc107; margin-right: 10px"
+                               href="/admin/customer-update"><i
                                     class="fa-solid fa-pen-to-square text-white"></i></a>
                             <a class="btn" style="background: #dc3545"><i
                                     class="fa-solid fa-trash  text-white"></i></a>
@@ -200,20 +185,45 @@
                     </tr>
                     <tr>
                         <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
-                        <td>5</td>
-                        <td>P0001</td>
-                        <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>300.000</td>
+                        <td>1</td>
+                        <td>N0001</td>
+                        <td>Nguyễn Ngọc Hoàng Vy</td>
+                        <td>01/01/2002</td>
+                        <td>hoangvy@gmail.com</td>
+                        <td>Nữ</td>
+                        <td>20/12/2022</td>
                         <td>
                             <div class="d-flex align-items-center justify-content-center">
-                                <span class="status-normal"></span><span class="text-status-normal">Đang book</span>
+                                <span class="status-warning"></span> <span
+                                    class="text-status-warning">Đang hoạt động</span>
                             </div>
                         </td>
-                        <td class="d-flex align-items-center justify-content-center">
-                            <a class="btn" href="/admin/sightseeing -update"
-                               style="background: #ffc107; margin-right: 10px"><i
+                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                            <a class="btn" style="background: #ffc107; margin-right: 10px"
+                               href="/admin/customer-update"><i
+                                    class="fa-solid fa-pen-to-square text-white"></i></a>
+                            <a class="btn" style="background: #dc3545"><i
+                                    class="fa-solid fa-trash  text-white"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
+                        <td>1</td>
+                        <td>N0001</td>
+                        <td>Nguyễn Ngọc Hoàng Vy</td>
+                        <td>01/01/2002</td>
+                        <td>hoangvy@gmail.com</td>
+                        <td>Nữ</td>
+                        <td>20/12/2022</td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <span class="status-warning"></span> <span
+                                    class="text-status-warning">Đang hoạt động</span>
+                            </div>
+                        </td>
+                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                            <a class="btn" style="background: #ffc107; margin-right: 10px"
+                               href="/admin/customer-update"><i
                                     class="fa-solid fa-pen-to-square text-white"></i></a>
                             <a class="btn" style="background: #dc3545"><i
                                     class="fa-solid fa-trash  text-white"></i></a>
