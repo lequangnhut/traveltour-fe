@@ -152,7 +152,11 @@
                     <ul class="navbar-nav flex-column" id="navbarVerticalNav">
                         <li class="nav-item">
                             <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="/admin/dashboard">
+                                <a class="nav-link label-1"
+                                   ng-class="{ 'active': activeNavItem === 'dashboard'}"
+                                   ng-click="setActiveNavItem('dashboard')"
+                                   href="/admin/dashboard"
+                                >
                                     <div class="d-flex align-items-center">
                                         <div class="dropdown-indicator-icon"></div>
                                         <span class="nav-link-icon">
@@ -650,7 +654,11 @@
 
                             <!-- label-->
                             <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="/business/transport/transports-list">
+                                <a class="nav-link label-1"
+                                   ng-click="setActiveNavItem('transports-list')"
+                                   ng-class="{ 'active': activeNavItem === 'transports-list'}"
+                                   href="/business/transport/transports-list"
+                                >
                                     <div class="d-flex align-items-center">
                                         <div class="dropdown-indicator-icon"></div>
                                         <span class="nav-link-icon">
@@ -665,22 +673,11 @@
 
                             <!-- label-->
                             <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="/business/booking/bookings-list">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon"></div>
-                                        <span class="nav-link-icon">
-                                            <span data-feather="navigation"></span>
-                                        </span>
-                                        <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Danh sách booking</span>
-                                        </span>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="/business/trip/trips-list">
+                                <a class="nav-link label-1"
+                                   ng-click="setActiveNavItem('trips-list')"
+                                   ng-class="{ 'active': activeNavItem === 'trips-list'}"
+                                   href="/business/trip/trips-list"
+                                >
                                     <div class="d-flex align-items-center">
                                         <div class="dropdown-indicator-icon"></div>
                                         <span class="nav-link-icon">
@@ -688,6 +685,25 @@
                                         </span>
                                         <span class="nav-link-text-wrapper">
                                             <span class="nav-link-text">Danh sách chuyến đi</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- label-->
+                            <div class="nav-item-wrapper">
+                                <a class="nav-link label-1"
+                                   ng-click="setActiveNavItem('bookings-list')"
+                                   ng-class="{ 'active': activeNavItem === 'bookings-list'}"
+                                   href="/business/booking/bookings-list"
+                                >
+                                    <div class="d-flex align-items-center">
+                                        <div class="dropdown-indicator-icon"></div>
+                                        <span class="nav-link-icon">
+                                            <span data-feather="navigation"></span>
+                                        </span>
+                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Danh sách booking</span>
                                         </span>
                                     </div>
                                 </a>
@@ -1212,6 +1228,12 @@
 <script src="app/App.js"></script>
 <script src="app/MainController.js"></script>
 
+<!--====== Directive ======-->
+<script src="app/filters/VnCurrency.js"></script>
+
+<!--====== Directive ======-->
+<script src="app/directives/VnCurrencyInput.js"></script>
+
 <!--====== Service ======-->
 <script src="app/services/auth/AuthService.js"></script>
 
@@ -1251,6 +1273,8 @@
 <!--====== Controller Agent Transport ======-->
 <script src="app/component/agent/trans/controllers/RegisterTransControllerAG.js"></script>
 <script src="app/component/agent/trans/controllers/bookings/BookingControllerAG.js"></script>
+<script src="app/component/agent/trans/controllers/transports/TransportControllerAG.js"></script>
+<script src="app/component/agent/trans/controllers/trips/TripControllerAG.js"></script>
 
 <!--====== Controller Agent Hotel ======-->
 <script src="app/component/agent/hotel/controllers/register/RegisterHotelControllerAG.js"></script>
