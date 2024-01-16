@@ -161,13 +161,14 @@
 }
 
 .form-input-custom .btn-submit {
-    padding: 16px 50px;
+    padding: 12px 30px;
     border-radius: 40px;
     background: #63ab45;
     color: #fff;
     font-size: 16px;
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
+    height: 50px;
 }
 
 .card-custom{

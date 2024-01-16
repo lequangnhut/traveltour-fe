@@ -16,7 +16,7 @@
                             <div class="container">
                                 <div class="d-flex justify-content-center">
                                     <div class="item">
-                                        <div class="item-1">
+                                        <div class="item-1 ">
                                             <div class="vector-wrapper">
                                                 <span class="num">1</span>
                                             </div>
@@ -28,7 +28,7 @@
                                             <div class="vector-wrapper">
                                                 <span class="num">2</span>
                                             </div>
-                                            <div class="text-wrapper">Thông tin lưu trú</div>
+                                            <div class="text-wrapper">Thông tin khách sạn</div>
                                         </div>
                                     </div>
                                     <div class="item">
@@ -36,29 +36,13 @@
                                             <div class="vector-wrapper">
                                                 <span class="num">3</span>
                                             </div>
-                                            <div class="text-wrapper">Tiện ích nơi lưu trú</div>
+                                            <div class="text-wrapper">Thông tin phòng</div>
                                         </div>
                                     </div>
                                     <div class="item">
                                         <div class="item-1">
                                             <div class="vector-wrapper">
                                                 <span class="num">4</span>
-                                            </div>
-                                            <div class="text-wrapper">Thông tin loại  phòng</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <span class="num">5</span>
-                                            </div>
-                                            <div class="text-wrapper">Tiện ích loại phòng</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <span class="num">6</span>
                                             </div>
                                             <div class="text-wrapper">Xác nhận thông tin</div>
                                         </div>
@@ -72,62 +56,198 @@
                     <div class="form card">
                         <div class="row g-3">
                             <div class="h3 color-greend fw-medium">TẠO DOANH NGHIỆP</div>
+                            <!-- Tên doanh nghiệp -->
                             <div class="col-12">
-                                <label for="inputNameBusiness" class="form-label">Tên doanh nghiệp</label>
-                                <input type="text" class="form-control" id="inputNameBusiness"
-                                       placeholder="Tập đoàn traveltour">
+                                <label for="inputBusinessName" class="form-label">Tên doanh nghiệp</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="inputBusinessName"
+                                       placeholder="Tập đoàn traveltour"
+                                       name="businessName"
+                                       ng-model="business.businessName"
+                                       ng-class="{ 'is-invalid': register_hotel.businessName.$invalid && register_hotel.businessName.$touched, 'is-valid': register_hotel.businessName.$valid && register_hotel.businessName.$touched }"
+                                       required
+                                >
+                                <small class="text-danger"
+                                       ng-show="register_hotel.businessName.$touched && register_hotel.businessName.$error.required">
+                                    Vui lòng nhập tên doanh nghiệp!
+                                </small>
                             </div>
+
+                            <!-- Tên người đại diện -->
                             <div class="col-12">
-                                <label for="inputNameBusiness" class="form-label">Tên người đại diện</label>
-                                <input type="text" class="form-control" id="inputNameBusiness"
-                                       placeholder="Nguyễn An">
+                                <label for="inputRepresentative" class="form-label">Tên người đại diện</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="inputRepresentative"
+                                       placeholder="Nguyễn An"
+                                       name="representative"
+                                       ng-model="business.representative"
+                                       ng-class="{ 'is-invalid': register_hotel.representative.$invalid && register_hotel.representative.$touched, 'is-valid': register_hotel.representative.$valid && register_hotel.representative.$touched }"
+                                       required
+                                >
+                                <small class="text-danger"
+                                       ng-show="register_hotel.representative.$touched && register_hotel.representative.$error.required">
+                                    Vui lòng nhập tên người đại diện!
+                                </small>
                             </div>
+
+                            <!-- Mã số thuế -->
                             <div class="col-md-6">
-                                <label for="inputEmail4" class="form-label">Mã số thuế</label>
-                                <input type="text" class="form-control" id="inputEmail4" placeholder="1234971274">
+                                <label for="inputTaxCode" class="form-label">Mã số thuế</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="inputTaxCode"
+                                       placeholder="1234971274"
+                                       name="taxCode"
+                                       ng-model="business.taxCode"
+                                       ng-class="{ 'is-invalid': register_hotel.taxCode.$invalid && register_hotel.taxCode.$touched, 'is-valid': register_hotel.taxCode.$valid && register_hotel.taxCode.$touched }"
+                                       required
+                                >
+                                <small class="text-danger"
+                                       ng-show="register_hotel.taxCode.$touched && register_hotel.taxCode.$error.required">
+                                    Vui lòng nhập mã số thuế!
+                                </small>
                             </div>
+
+                            <!-- Số điện thoại -->
                             <div class="col-md-6">
-                                <label for="inputPassword4" class="form-label">Số điện thoại</label>
-                                <input type="text" class="form-control" id="inputPassword4" placeholder="0969653264">
+                                <label for="inputPhone" class="form-label">Số điện thoại</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="inputPhone"
+                                       placeholder="0969653264"
+                                       name="businessPhone"
+                                       ng-model="business.businessPhone"
+                                       ng-class="{ 'is-invalid': register_hotel.businessPhone.$invalid && register_hotel.businessPhone.$touched, 'is-valid': register_hotel.businessPhone.$valid && register_hotel.businessPhone.$touched }"
+                                       required
+                                >
+                                <small class="text-danger"
+                                       ng-show="register_hotel.businessPhone.$touched && register_hotel.businessPhone.$error.required">
+                                    Vui lòng nhập số điện thoại!
+                                </small>
                             </div>
+
+                            <!-- Website -->
                             <div class="col-12">
-                                <label for="inputNameBusiness" class="form-label">Website</label>
-                                <input type="text" class="form-control" id="inputNameBusiness"
-                                       placeholder="www://traveltour.vn">
+                                <label for="inputBusinessWebsite" class="form-label">Website</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="inputBusinessWebsite"
+                                       placeholder="www://traveltour.vn"
+                                       name="website"
+                                       ng-model="business.website"
+                                       ng-class="{ 'is-invalid': register_hotel.website.$invalid && register_hotel.website.$touched, 'is-valid': register_hotel.website.$valid && register_hotel.website.$touched }"
+                                       required
+                                >
+                                <small class="text-danger"
+                                       ng-show="register_hotel.website.$touched && register_hotel.website.$error.required">
+                                    Vui lòng nhập website!
+                                </small>
                             </div>
+
+                            <!-- Thành phố -->
                             <div class="col-md-4">
-                                <label for="inputState" class="form-label">Thành phố</label>
-                                <select id="inputState" class="form-select">
+                                <label for="inputCity" class="form-label">Thành phố</label>
+                                <select id="inputCity"
+                                        class="form-select"
+                                        name="cityBusiness"
+                                        ng-model="business.cityBusiness"
+                                        ng-class="{ 'is-invalid': register_hotel.cityBusiness.$invalid && register_hotel.cityBusiness.$touched, 'is-valid': register_hotel.cityBusiness.$valid && register_hotel.cityBusiness.$touched }"
+                                        required
+                                >
                                     <option selected>Choose...</option>
-                                    <option>...</option>
+                                    <!-- Thêm các tùy chọn thành phố -->
                                 </select>
+                                <small class="text-danger"
+                                       ng-show="register_hotel.cityBusiness.$touched && register_hotel.cityBusiness.$error.required">
+                                    Vui lòng chọn thành phố!
+                                </small>
                             </div>
+
+                            <!-- Quận/Huyện -->
                             <div class="col-md-4">
-                                <label for="inputState" class="form-label">Quận/Huyện</label>
-                                <select id="inputState" class="form-select">
+                                <label for="inputDistrict" class="form-label">Quận/Huyện</label>
+                                <select id="inputDistrict"
+                                        class="form-select"
+                                        name="districtBusiness"
+                                        ng-model="business.districtBusiness"
+                                        ng-class="{ 'is-invalid': register_hotel.districtBusiness.$invalid && register_hotel.districtBusiness.$touched, 'is-valid': register_hotel.districtBusiness.$valid && register_hotel.districtBusiness.$touched }"
+                                        required
+                                >
                                     <option selected>Choose...</option>
-                                    <option>...</option>
+                                    <!-- Thêm các tùy chọn quận/huyện -->
                                 </select>
+                                <small class="text-danger"
+                                       ng-show="register_hotel.districtBusiness.$touched && register_hotel.districtBusiness.$error.required">
+                                    Vui lòng chọn quận/huyện!
+                                </small>
                             </div>
+
+                            <!-- Phường/Xã -->
                             <div class="col-md-4">
-                                <label for="inputState" class="form-label">Phường/Xã</label>
-                                <select id="inputState" class="form-select">
+                                <label for="inputWard" class="form-label">Phường/Xã</label>
+                                <select id="inputWard"
+                                        class="form-select"
+                                        name="wardBusiness"
+                                        ng-model="business.wardBusiness"
+                                        ng-class="{ 'is-invalid': register_hotel.wardBusiness.$invalid && register_hotel.wardBusiness.$touched, 'is-valid': register_hotel.wardBusiness.$valid && register_hotel.wardBusiness.$touched }"
+                                        required
+                                >
                                     <option selected>Choose...</option>
-                                    <option>...</option>
+                                    <!-- Thêm các tùy chọn phường/xã -->
                                 </select>
+                                <small class="text-danger"
+                                       ng-show="register_hotel.wardBusiness.$touched && register_hotel.wardBusiness.$error.required">
+                                    Vui lòng chọn phường/xã!
+                                </small>
                             </div>
+
+                            <!-- Địa chỉ -->
                             <div class="col-12">
-                                <label for="inputAddress" class="form-label">Địa chỉ</label>
-                                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                                <label for="inputBusinessAddress" class="form-label">Địa chỉ</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="inputBusinessAddress"
+                                       placeholder="1234 Main St"
+                                       name="businessAddress"
+                                       ng-model="business.businessAddress"
+                                       ng-class="{ 'is-invalid': register_hotel.businessAddress.$invalid && register_hotel.businessAddress.$touched, 'is-valid': register_hotel.businessAddress.$valid && register_hotel.businessAddress.$touched }"
+                                       required
+                                >
+                                <small class="text-danger"
+                                       ng-show="register_hotel.businessAddress.$touched && register_hotel.businessAddress.$error.required">
+                                    Vui lòng nhập địa chỉ!
+                                </small>
                             </div>
-                            <div class="col-12">
-                                <div class="mb-3">
-                                    <label for="formFile" class="form-label">Chứng minh giấy tờ</label>
-                                    <input class="form-control" type="file" id="formFile">
-                                </div>
+
+                            <!-- Chứng minh giấy tờ -->
+                            <!-- Hình ảnh -->
+                            <div class="mb-3">
+                                <label for="formFile" class="form-label">Chứng minh giấy tờ</label>
+                                <input class="form-control"
+                                       type="file"
+                                       id="formFile"
+                                       name="identityCard"
+                                       accept="image/*"
+                                       ng-model="business.identityCard"
+                                       ngf-select="validateImageFiles()"
+                                       ng-class="{ 'is-invalid': register_hotel.identityCard.$invalid && register_hotel.identityCard.$touched, 'is-valid': register_hotel.identityCard.$valid && register_hotel.identityCard.$touched }"
+                                       multiple
+                                       required
+                                >
+                                <small class="text-danger"
+                                       ng-show="register_hotel.imageFiles.$touched && register_hotel.imageFiles.$error.required">
+                                    Vui lòng chọn ít nhất một ảnh!
+                                </small>
+                                <small class="text-danger"
+                                       ng-show="register_hotel.imageFiles.$error.maxImages">
+                                    Số lượng ảnh tối đa là 10!
+                                </small>
                             </div>
                             <div class="d-flex justify-content-end mt-5">
-                                <button type="submit" class="btn btn-submit-form" ng-click="nextStep()">Tiếp tục <i
+                                <button type="submit" class="btn btn-submit-form"
+                                        ng-click="nextStep()">Tiếp tục<i
                                         class="fa-solid fa-arrow-right"></i></button>
                             </div>
                         </div>
@@ -154,7 +274,7 @@
                             <div class="container">
                                 <div class="d-flex justify-content-center">
                                     <div class="item">
-                                        <div class="item-1">
+                                        <div class="item-1 ">
                                             <div class="vector-wrapper">
                                                 <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
                                                      id="tick">
@@ -169,7 +289,7 @@
                                             <div class="vector-wrapper">
                                                 <span class="num">2</span>
                                             </div>
-                                            <div class="text-wrapper">Thông tin lưu trú</div>
+                                            <div class="text-wrapper">Thông tin khách sạn</div>
                                         </div>
                                     </div>
                                     <div class="item">
@@ -177,29 +297,13 @@
                                             <div class="vector-wrapper">
                                                 <span class="num">3</span>
                                             </div>
-                                            <div class="text-wrapper">Tiện ích nơi lưu trú</div>
+                                            <div class="text-wrapper">Thông tin phòng</div>
                                         </div>
                                     </div>
                                     <div class="item">
                                         <div class="item-1">
                                             <div class="vector-wrapper">
                                                 <span class="num">4</span>
-                                            </div>
-                                            <div class="text-wrapper">Thông tin loại  phòng</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <span class="num">5</span>
-                                            </div>
-                                            <div class="text-wrapper">Tiện ích loại phòng</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <span class="num">6</span>
                                             </div>
                                             <div class="text-wrapper">Xác nhận thông tin</div>
                                         </div>
@@ -209,88 +313,253 @@
                         </div>
                     </div>
                 </div>
-                <div class="main d-flex justify-content-center theme-wizard">
-                    <div class="form card">
-                        <div class="row g-3">
-                            <div class="h3 color-greend fw-medium">THÔNG TIN LƯU TRÚ</div>
-                            <div class="col-12">
-                                <label for="inputNameBusiness" class="form-label">Tên địa điểm lưu trú</label>
-                                <input type="text" class="form-control" id="inputNameBusiness"
-                                       placeholder="Hotel Traveltour">
-                            </div>
-                            <div class="col-12">
-                                <label for="inputState" class="form-label">Loại khách sạn</label>
-                                <select id="inputState" class="form-select">
-                                    <option selected>Choose...</option>
-                                    <option>...</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputEmail4" class="form-label">Website</label>
-                                <input type="text" class="form-control" id="inputEmail4"
-                                       placeholder="www://traveltour.vn">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputPassword4" class="form-label"> Số điện thoại</label>
-                                <input type="text" class="form-control" id="inputPassword4" placeholder="0969653264">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="inputState" class="form-label">Thành phố</label>
-                                <select id="inputState" class="form-select">
-                                    <option selected>Choose...</option>
-                                    <option>...</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="inputState" class="form-label">Quận/Huyện</label>
-                                <select id="inputState" class="form-select">
-                                    <option selected>Choose...</option>
-                                    <option>...</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="inputState" class="form-label">Phường/Xã</label>
-                                <select id="inputState" class="form-select">
-                                    <option selected>Choose...</option>
-                                    <option>...</option>
-                                </select>
-                            </div>
-                            <div class="col-12">
-                                <label for="inputAddress" class="form-label">Địa chỉ</label>
-                                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputEmail4" class="form-label">Số tầng</label>
-                                <input type="text" class="form-control" id="inputEmail4" placeholder="5">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputPassword4" class="form-label">Phòng</label>
-                                <input type="text" class="form-control" id="inputPassword4" placeholder="30">
-                            </div>
+            </div>
+            <div class="main d-flex justify-content-center theme-wizard">
+                <div class="form card">
+                    <div class="row g-3">
+                        <div class="h3 color-greend fw-medium">THÔNG TIN KHÁCH SẠN</div>
+                        <!-- Tên doanh nghiệp -->
+                        <div class="col-12">
+                            <label for="inputHotelName" class="form-label">Tên khách sạn</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="inputHotelName"
+                                   placeholder="Tập đoàn traveltour"
+                                   name="hotelName"
+                                   ng-model="business.hotelName"
+                                   ng-class="{ 'is-invalid': register_hotel.hotelName.$invalid && register_hotel.hotelName.$touched, 'is-valid': register_hotel.hotelName.$valid && register_hotel.hotelName.$touched }"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_hotel.hotelName.$touched && register_hotel.hotelName.$error.required">
+                                Vui lòng nhập tên khách sạn!
+                            </small>
+                        </div>
 
-                            <div class="col-12">
-                                <label for="formFile" class="form-label">Mô tả</label>
-                                <input class="form-control" type="text" id="formFile">
-                            </div>
-                            <div class="col-12">
-                                <div class="mb-3">
-                                    <label for="formFile" class="form-label">Tải hình ảnh lên</label>
-                                    <input class="form-control" type="file" id="formFile">
+                        <!-- Loại khách sạn -->
+                        <div class="col-12">
+                            <label for="inputWard" class="form-label">Loại khách sạn</label>
+                            <select id="inputWard"
+                                    class="form-select"
+                                    name="hotelType"
+                                    ng-model="business.hotelType"
+                                    ng-class="{ 'is-invalid': register_hotel.hotelType.$invalid && register_hotel.hotelType.$touched, 'is-valid': register_hotel.hotelType.$valid && register_hotel.hotelType.$touched }"
+                                    required
+                            >
+                                <option selected>Choose...</option>
+                                <!-- Thêm các tùy chọn phường/xã -->
+                            </select>
+                            <small class="text-danger"
+                                   ng-show="register_hotel.hotelType.$touched && register_hotel.hotelType.$error.required">
+                                Vui lòng chọn phường/xã!
+                            </small>
+                        </div>
+
+                        <!-- Website -->
+                        <div class="col-md-6">
+                            <label for="inputTaxCode" class="form-label">Website</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="inputTaxCode"
+                                   placeholder="www://traveltour.vn"
+                                   name="websiteHotel"
+                                   ng-model="business.websiteHotel"
+                                   ng-class="{ 'is-invalid': register_hotel.websiteHotel.$invalid && register_hotel.websiteHotel.$touched, 'is-valid': register_hotel.websiteHotel.$valid && register_hotel.websiteHotel.$touched }"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_hotel.websiteHotel.$touched && register_hotel.websiteHotel.$error.required">
+                                Vui lòng nhập website!
+                            </small>
+                        </div>
+
+                        <!-- Số điện thoại -->
+                        <div class="col-md-6">
+                            <label for="inputhotelPhone" class="form-label">Số điện thoại</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="inputhotelPhone"
+                                   placeholder="0969653264"
+                                   name="hotelPhone"
+                                   ng-model="business.hotelPhone"
+                                   ng-class="{ 'is-invalid': register_hotel.hotelPhone.$invalid && register_hotel.hotelPhone.$touched, 'is-valid': register_hotel.hotelPhone.$valid && register_hotel.hotelPhone.$touched }"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_hotel.hotelPhone.$touched && register_hotel.hotelPhone.$error.required">
+                                Vui lòng nhập số điện thoại!
+                            </small>
+                        </div>
+
+                        <!-- Thành phố -->
+                        <div class="col-md-4">
+                            <label for="inputcityHotel" class="form-label">Thành phố</label>
+                            <select id="inputcityHotel"
+                                    class="form-select"
+                                    name="cityHotel"
+                                    ng-model="business.cityHotel"
+                                    ng-class="{ 'is-invalid': register_hotel.cityHotel.$invalid && register_hotel.cityHotel.$touched, 'is-valid': register_hotel.cityHotel.$valid && register_hotel.cityHotel.$touched }"
+                                    required
+                            >
+                                <option selected>Choose...</option>
+                                <!-- Thêm các tùy chọn thành phố -->
+                            </select>
+                            <small class="text-danger"
+                                   ng-show="register_hotel.cityHotel.$touched && register_hotel.cityHotel.$error.required">
+                                Vui lòng chọn thành phố!
+                            </small>
+                        </div>
+
+                        <!-- Quận/Huyện -->
+                        <div class="col-md-4">
+                            <label for="inputdistrictHotel" class="form-label">Quận/Huyện</label>
+                            <select id="inputdistrictHotel"
+                                    class="form-select"
+                                    name="districtHotel"
+                                    ng-model="business.districtHotel"
+                                    ng-class="{ 'is-invalid': register_hotel.districtHotel.$invalid && register_hotel.districtHotel.$touched, 'is-valid': register_hotel.districtHotel.$valid && register_hotel.districtHotel.$touched }"
+                                    required
+                            >
+                                <option selected>Choose...</option>
+                                <!-- Thêm các tùy chọn quận/huyện -->
+                            </select>
+                            <small class="text-danger"
+                                   ng-show="register_hotel.districtHotel.$touched && register_hotel.districtHotel.$error.required">
+                                Vui lòng chọn quận/huyện!
+                            </small>
+                        </div>
+
+                        <!-- Phường/Xã -->
+                        <div class="col-md-4">
+                            <label for="inputWard" class="form-label">Phường/Xã</label>
+                            <select id="inputWard"
+                                    class="form-select"
+                                    name="wardHotel"
+                                    ng-model="business.wardHotel"
+                                    ng-class="{ 'is-invalid': register_hotel.wardHotel.$invalid && register_hotel.wardHotel.$touched, 'is-valid': register_hotel.wardHotel.$valid && register_hotel.wardHotel.$touched }"
+                                    required
+                            >
+                                <option selected>Choose...</option>
+                                <!-- Thêm các tùy chọn phường/xã -->
+                            </select>
+                            <small class="text-danger"
+                                   ng-show="register_hotel.wardHotel.$touched && register_hotel.wardHotel.$error.required">
+                                Vui lòng chọn phường/xã!
+                            </small>
+                        </div>
+
+                        <!-- Số tầng -->
+                        <div class="col-md-6">
+                            <label for="inputTaxCode" class="form-label">Số tầng</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="inputTaxCode"
+                                   placeholder="www://traveltour.vn"
+                                   name="floors"
+                                   ng-model="business.floors"
+                                   ng-class="{ 'is-invalid': register_hotel.floors.$invalid && register_hotel.floors.$touched, 'is-valid': register_hotel.floors.$valid && register_hotel.floors.$touched }"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_hotel.floors.$touched && register_hotel.floors.$error.required">
+                                Vui lòng nhập số tầng!
+                            </small>
+                        </div>
+
+                        <!-- Số phòng -->
+                        <div class="col-md-6">
+                            <label for="inputRoomHotel" class="form-label">Số phòng</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="inputRoomHotel"
+                                   placeholder="0969653264"
+                                   name="room"
+                                   ng-model="business.room"
+                                   ng-class="{ 'is-invalid': register_hotel.room.$invalid && register_hotel.room.$touched, 'is-valid': register_hotel.room.$valid && register_hotel.room.$touched }"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_hotel.room.$touched && register_hotel.room.$error.required">
+                                Vui lòng nhập số phòng!
+                            </small>
+                        </div>
+                        <!-- Địa chỉ -->
+                        <div class="col-12">
+                            <label for="inputBusinessAddress" class="form-label">Địa chỉ</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="inputBusinessAddress"
+                                   placeholder="1234 Main St"
+                                   name="hotelAddress"
+                                   ng-model="business.hotelAddress"
+                                   ng-class="{ 'is-invalid': register_hotel.hotelAddress.$invalid && register_hotel.hotelAddress.$touched, 'is-valid': register_hotel.hotelAddress.$valid && register_hotel.hotelAddress.$touched }"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_hotel.hotelAddress.$touched && register_hotel.hotelAddress.$error.required">
+                                Vui lòng nhập địa chỉ!
+                            </small>
+                        </div>
+
+                        <!-- Hình ảnh -->
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Hình ảnh</label>
+                            <input class="form-control"
+                                   type="file"
+                                   id="formFile"
+                                   name="imageFiles"
+                                   accept="image/*"
+                                   ng-model="room.imageFiles"
+                                   ngf-select="validateImageFiles()"
+                                   multiple
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_hotel.imageFiles.$touched && register_hotel.imageFiles.$error.required">
+                                Vui lòng chọn ít nhất một ảnh!
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="register_hotel.imageFiles.$error.maxImages">
+                                Số lượng ảnh tối đa là 10!
+                            </small>
+                        </div>
+
+                        <!-- Tiện ích phòng khách sạn -->
+                        <div class="row mb-3 mt-3">
+                            <label for="formFile" class="form-label mb-3">Tiện ích khách sạn</label>
+
+                            <div class="col-sm-4 col-xl-4" ng-repeat="checkbox in checkboxes">
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           id="{{checkbox.id}}"
+                                           ng-model="checkbox.checked"
+                                           ng-change="updateCheckboxCount()"
+                                    >
+                                    <label class="form-check-label" for="{{checkbox.id}}">
+                                        {{checkbox.label}}
+                                    </label>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-end mt-5">
-                                <button type="submit" class="btn btn-submit-form btn-prev"
-                                        style="background: #5c636a; margin-right: 20px" ng-click="prevStep()"><i
-                                        class="fa-solid fa-arrow-left"></i> Trở về
-                                </button>
-                                <button type="submit" class="btn btn-submit-form" ng-click="nextStep()">Tiếp tục <i
-                                        class="fa-solid fa-arrow-right"></i></button>
-                            </div>
+
+                            <small class="text-danger" ng-show="checkboxCount === 0">
+                                Vui lòng chọn ít nhất một tiện ích!
+                            </small>
+                        </div>
+                        <div class="d-flex justify-content-end mt-5">
+                            <button type="submit" class="btn btn-submit-form btn-prev"
+                                    style="background: #5c636a; margin-right: 20px" ng-click="prevStep()"><i
+                                    class="fa-solid fa-arrow-left"></i> Trở về
+                            </button>
+                            <button type="submit" class="btn btn-submit-form"
+                                    ng-click="nextStep()">Tiếp tục <i
+                                    class="fa-solid fa-arrow-right"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+    </div>
+    </section>
     </div>
 
     <div ng-show="currentStep === 3">
@@ -304,13 +573,14 @@
                     <div class="content-text mt-3">
                         <div class="h4">Đăng kí thông tin đối tác khách sạn của TravelTour</div>
                     </div>
+                    <!-- Tiến dộ -->
                     <div class="progress-register">
                         <!-- Tiến dộ -->
                         <div class="progress-container">
                             <div class="container">
                                 <div class="d-flex justify-content-center">
                                     <div class="item">
-                                        <div class="item-1">
+                                        <div class="item-1 ">
                                             <div class="vector-wrapper">
                                                 <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
                                                      id="tick">
@@ -328,7 +598,7 @@
                                                     <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
                                                 </svg>
                                             </div>
-                                            <div class="text-wrapper">Thông tin lưu trú</div>
+                                            <div class="text-wrapper">Thông tin khách sạn</div>
                                         </div>
                                     </div>
                                     <div class="item">
@@ -336,248 +606,13 @@
                                             <div class="vector-wrapper">
                                                 <span class="num">3</span>
                                             </div>
-                                            <div class="text-wrapper">Tiện ích nơi lưu trú</div>
+                                            <div class="text-wrapper">Thông tin phòng</div>
                                         </div>
                                     </div>
                                     <div class="item">
                                         <div class="item-1">
                                             <div class="vector-wrapper">
                                                 <span class="num">4</span>
-                                            </div>
-                                            <div class="text-wrapper">Thông tin loại  phòng</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <span class="num">5</span>
-                                            </div>
-                                            <div class="text-wrapper">Tiện ích loại phòng</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <span class="num">6</span>
-                                            </div>
-                                            <div class="text-wrapper">Xác nhận thông tin</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="main d-flex justify-content-center theme-wizard">
-                    <div class="form card">
-                        <div class="g-3">
-                            <div class="h3 color-greend fw-medium">TIỆN ÍCH NƠI LƯU TRÚ</div>
-                            <div class="row mb-3 mt-3 ">
-                                <div class="col-sm-4 col-xl-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                        <label class="form-check-label" for="gridCheck1">
-                                            Example checkbox
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-xl-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                        <label class="form-check-label" for="gridCheck1">
-                                            Example checkbox
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-xl-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                        <label class="form-check-label" for="gridCheck1">
-                                            Example checkbox
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-xl-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                        <label class="form-check-label" for="gridCheck1">
-                                            Example checkbox
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-xl-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                        <label class="form-check-label" for="gridCheck1">
-                                            Example checkbox
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-xl-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                        <label class="form-check-label" for="gridCheck1">
-                                            Example checkbox
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-xl-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                        <label class="form-check-label" for="gridCheck1">
-                                            Example checkbox
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-xl-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                        <label class="form-check-label" for="gridCheck1">
-                                            Example checkbox
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-xl-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                        <label class="form-check-label" for="gridCheck1">
-                                            Example checkbox
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-xl-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                        <label class="form-check-label" for="gridCheck1">
-                                            Example checkbox
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-xl-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                        <label class="form-check-label" for="gridCheck1">
-                                            Example checkbox
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-xl-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                        <label class="form-check-label" for="gridCheck1">
-                                            Example checkbox
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-xl-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                        <label class="form-check-label" for="gridCheck1">
-                                            Example checkbox
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-xl-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                        <label class="form-check-label" for="gridCheck1">
-                                            Example checkbox
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-xl-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                        <label class="form-check-label" for="gridCheck1">
-                                            Example checkbox
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-end mt-5">
-                                <button type="submit" class="btn btn-submit-form btn-prev"
-                                        style="background: #5c636a; margin-right: 20px" ng-click="prevStep()"><i
-                                        class="fa-solid fa-arrow-left"></i> Trở về
-                                </button>
-                                <button type="submit" class="btn btn-submit-form" ng-click="nextStep()">Tiếp tục <i
-                                        class="fa-solid fa-arrow-right"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <div ng-show="currentStep === 4">
-        <section id="business-information">
-            <div class="container-fluid">
-                <div class="logo text-center">
-                    <div class="d-flex align-items-center justify-content-center mb-4">
-                        <img src="/assets/admin/assets/img/icons/logo.png" alt="logo" width="60"/>
-                        <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder fs-4">TravelTour</p>
-                    </div>
-                    <div class="content-text mt-3">
-                        <div class="h4">Đăng kí thông tin đối tác khách sạn của TravelTour</div>
-                    </div>
-                    <div class="progress-register">
-                        <!-- Tiến dộ -->
-                        <div class="progress-container">
-                            <div class="container">
-                                <div class="d-flex justify-content-center">
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                     id="tick">
-                                                    <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="text-wrapper">Tạo doanh nghiệp</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                     id="tick">
-                                                    <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="text-wrapper">Thông tin lưu trú</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                     id="tick">
-                                                    <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="text-wrapper">Tiện ích nơi lưu trú</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <span class="num">4</span>
-                                            </div>
-                                            <div class="text-wrapper">Thông tin loại  phòng</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <span class="num">5</span>
-                                            </div>
-                                            <div class="text-wrapper">Tiện ích loại phòng</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <span class="num">6</span>
                                             </div>
                                             <div class="text-wrapper">Xác nhận thông tin</div>
                                         </div>
@@ -630,7 +665,28 @@
                                 <label for="formFile" class="form-label">Hình ảnh</label>
                                 <input class="form-control" type="file" id="formFile">
                             </div>
+                            <!-- Tiện ích phòng khách sạn -->
+                            <div class="row mb-3 mt-3">
+                                <label for="formFile" class="form-label mb-3">Tiện ích phòng khách sạn</label>
 
+                                <div class="col-sm-4 col-xl-4" ng-repeat="checkbox in checkboxes">
+                                    <div class="form-check">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               id="{{checkbox.id}}"
+                                               ng-model="checkbox.checked"
+                                               ng-change="updateCheckboxCount()"
+                                        >
+                                        <label class="form-check-label" for="{{checkbox.id}}">
+                                            {{checkbox.label}}
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <small class="text-danger" ng-show="checkboxCount === 0">
+                                    Vui lòng chọn ít nhất một tiện ích!
+                                </small>
+                            </div>
                             <div class="d-flex justify-content-end mt-5">
                                 <button type="submit" class="btn btn-submit-form btn-prev"
                                         style="background: #5c636a; margin-right: 20px" ng-click="prevStep()"><i
@@ -646,7 +702,7 @@
         </section>
     </div>
 
-    <div ng-show="currentStep === 5">
+    <div ng-show="currentStep === 4">
         <section id="business-information">
             <div class="container-fluid">
                 <div class="logo text-center">
@@ -663,7 +719,7 @@
                             <div class="container">
                                 <div class="d-flex justify-content-center">
                                     <div class="item">
-                                        <div class="item-1">
+                                        <div class="item-1 ">
                                             <div class="vector-wrapper">
                                                 <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
                                                      id="tick">
@@ -681,7 +737,7 @@
                                                     <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
                                                 </svg>
                                             </div>
-                                            <div class="text-wrapper">Thông tin lưu trú</div>
+                                            <div class="text-wrapper">Thông tin khách sạn</div>
                                         </div>
                                     </div>
                                     <div class="item">
@@ -692,183 +748,13 @@
                                                     <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
                                                 </svg>
                                             </div>
-                                            <div class="text-wrapper">Tiện ích nơi lưu trú</div>
+                                            <div class="text-wrapper">Thông tin phòng</div>
                                         </div>
                                     </div>
                                     <div class="item">
                                         <div class="item-1">
                                             <div class="vector-wrapper">
-                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                     id="tick">
-                                                    <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="text-wrapper">Thông tin loại  phòng</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <span class="num">5</span>
-                                            </div>
-                                            <div class="text-wrapper">Tiện ích loại phòng</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <span class="num">6</span>
-                                            </div>
-                                            <div class="text-wrapper">Xác nhận thông tin</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="main d-flex justify-content-center theme-wizard">
-                    <div class="form card">
-                        <div class="row g-3">
-                            <div class="h3 color-greend fw-medium">TIỆN ÍCH LOẠI PHÒNG</div>
-                            <div class="col-12 mb-3">
-                                <label for="inputPassword4" class="form-label">Tiện ích</label>
-                                <div class="input-group ">
-                                    <div class="input-group-text">
-                                        <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
-                                    </div>
-                                    <select id="inputState" class="form-select">
-                                        <option selected>Choose...</option>
-                                        <option>...</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12 mb-3">
-                                <label for="inputPassword4" class="form-label">Tiện ích</label>
-                                <div class="input-group ">
-                                    <div class="input-group-text">
-                                        <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
-                                    </div>
-                                    <select id="inputState" class="form-select">
-                                        <option selected>Choose...</option>
-                                        <option>...</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12 mb-3">
-                                <label for="inputPassword4" class="form-label">Tiện ích</label>
-                                <div class="input-group ">
-                                    <div class="input-group-text">
-                                        <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
-                                    </div>
-                                    <select id="inputState" class="form-select">
-                                        <option selected>Choose...</option>
-                                        <option>...</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12 mb-3">
-                                <label for="inputPassword4" class="form-label">Tiện ích</label>
-                                <div class="input-group ">
-                                    <div class="input-group-text">
-                                        <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
-                                    </div>
-                                    <select id="inputState" class="form-select">
-                                        <option selected>Choose...</option>
-                                        <option>...</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-end mt-5">
-                                <button type="submit" class="btn btn-submit-form btn-prev"
-                                        style="background: #5c636a; margin-right: 20px" ng-click="prevStep()"><i
-                                        class="fa-solid fa-arrow-left"></i> Trở về
-                                </button>
-                                <button type="submit" class="btn btn-submit-form" ng-click="nextStep()">Tiếp tục <i
-                                        class="fa-solid fa-arrow-right"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <div ng-show="currentStep === 6">
-        <section id="business-information">
-            <div class="container-fluid">
-                <div class="logo text-center">
-                    <div class="d-flex align-items-center justify-content-center mb-4">
-                        <img src="/assets/admin/assets/img/icons/logo.png" alt="logo" width="60"/>
-                        <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder fs-4">TravelTour</p>
-                    </div>
-                    <div class="content-text mt-3">
-                        <div class="h4">Đăng kí thông tin đối tác khách sạn của TravelTour</div>
-                    </div>
-                    <div class="progress-register">
-                        <!-- Tiến dộ -->
-                        <div class="progress-container">
-                            <div class="container">
-                                <div class="d-flex justify-content-center">
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                     id="tick">
-                                                    <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="text-wrapper">Tạo doanh nghiệp</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                     id="tick">
-                                                    <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="text-wrapper">Thông tin lưu trú</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                     id="tick">
-                                                    <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="text-wrapper">Tiện ích nơi lưu trú</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                     id="tick">
-                                                    <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="text-wrapper">Thông tin loại  phòng</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                     id="tick">
-                                                    <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="text-wrapper">Tiện ích loại phòng</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <span class="num">6</span>
+                                                <span class="num">4</span>
                                             </div>
                                             <div class="text-wrapper">Xác nhận thông tin</div>
                                         </div>
@@ -884,9 +770,11 @@
                             <div class="col-12">
                                 <label class="form-check-label">
                                     <input type="checkbox" class="form-check-input" name="" id="">
-                                    Tôi cam kết cung cấp thông tin đầy đủ, chính xác và minh bạch khi đăng ký bán phòng trên
+                                    Tôi cam kết cung cấp thông tin đầy đủ, chính xác và minh bạch khi đăng ký bán phòng
+                                    trên
                                     trang
-                                    web du lịch. Chúng tôi hiểu rằng sự minh bạch và tin cậy là yếu tố quan trọng để tạo ra một
+                                    web du lịch. Chúng tôi hiểu rằng sự minh bạch và tin cậy là yếu tố quan trọng để tạo
+                                    ra một
                                     môi
                                     trường kinh doanh tích cực và lâu dài.
                                 </label>

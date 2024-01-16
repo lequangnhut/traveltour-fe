@@ -1,25 +1,10 @@
-travel_app.controller("RegisterHotelControllerAG", function($scope) {
-    $scope.currentStep = 1;
-
-    $scope.nextStep = function() {
-        if ($scope.currentStep < 4) {
-            $scope.currentStep++;
-        }
-    };
-
-    $scope.prevStep = function() {
-        if ($scope.currentStep <= 4) {
-            $scope.currentStep--;
-        }
-    };
-
+travel_app.controller('BookingListControllerAG', function($scope) {
     $scope.room = {
         roomType: null,
         bedType: null,
         imageFiles: null,
     }
 
-    $scope.business = {};
 
     $scope.validateImageFiles = function() {
         var maxImages = 10;

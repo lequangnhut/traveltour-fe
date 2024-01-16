@@ -1,25 +1,9 @@
-travel_app.controller("RegisterHotelControllerAG", function($scope) {
-    $scope.currentStep = 1;
-
-    $scope.nextStep = function() {
-        if ($scope.currentStep < 4) {
-            $scope.currentStep++;
-        }
-    };
-
-    $scope.prevStep = function() {
-        if ($scope.currentStep <= 4) {
-            $scope.currentStep--;
-        }
-    };
-
+travel_app.controller('HotelAmenitiesAddControllerAG', function ($scope) {
     $scope.room = {
         roomType: null,
         bedType: null,
         imageFiles: null,
     }
-
-    $scope.business = {};
 
     $scope.validateImageFiles = function() {
         var maxImages = 10;
@@ -54,4 +38,5 @@ travel_app.controller("RegisterHotelControllerAG", function($scope) {
             $scope.agent.business_images = file;
         }
     };
+
 })

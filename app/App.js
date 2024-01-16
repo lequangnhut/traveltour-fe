@@ -144,6 +144,14 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'BookingControllerAD'
         })
 
+        /**
+         * Agent
+         */
+        .when('/business/register-agent', {
+            templateUrl: 'app/component/agent/hotel/views/pages/register/select-type.html',
+            controller: ''
+        })
+
         //customers-management
         .when('/admin/customer-list', {
             templateUrl: 'app/component/admin/views/pages/customer-management/customers-list.html',
@@ -161,6 +169,14 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Agent Hotel
          */
+        .when('/business/hotel', {
+            templateUrl: 'app/component/agent/hotel/views/pages/dashboard/dashboard.html',
+            controller: ''
+        })
+        .when('/business/hotel/dashboard', {
+            templateUrl: 'app/component/agent/hotel/views/pages/dashboard/dashboard.html',
+            controller: 'BusinessInformationController'
+        })
         .when('/business/register-business', {
             templateUrl: 'app/component/admin/views/pages/register-agent/business-information.html',
             controller: 'BusinessInformationController'
@@ -173,21 +189,53 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/hotel/views/pages/register/register-success.html',
             controller: ''
         })
-        .when('/business/amenities/hotel-amenities-list', {
+        .when('/business/hotel/hotel-information-list', {
+            templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-list.html',
+            controller: ''
+        })
+        .when('/business/hotel/hotel-information-list/create', {
+            templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-add.html',
+            controller: ''
+        })
+        .when('/business/hotel/hotel-information-list/update', {
+            templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-edit.html',
+            controller: ''
+        })
+        .when('/business/hotel/hotel-amenities-list', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-list.html',
-            controller: 'HotelAmenitiesListController'
+            controller: 'HotelAmenitiesListControllerAG'
         })
-        .when('/business/amenities/hotel-amenities-list/new', {
+        .when('/business/hotel/hotel-amenities-list/create', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-add.html',
-            controller: 'HotelAmenitiesAddController'
+            controller: 'HotelAmenitiesAddControllerAG'
         })
-        .when('/business/amenities/hotel-amenities-list/edit', {
+        .when('/business/hotel/hotel-amenities-list/update', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-edit.html',
-            controller: 'HotelAmenitiesAddController'
+            controller: ''
         })
-        .when('/admin/amenities/booking-list', {
-            templateUrl: 'app/component/agent/hotel/views/pages/service/booking/booking-list.html',
-            controller: 'HotelAmenitiesListController'
+        .when('/business/hotel/booking-list', {
+            templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-list.html',
+            controller: 'HotelAmenitiesListControllerAG'
+        })
+        .when('/business/hotel/booking-list/create', {
+            templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-add.html',
+            controller: 'HotelAmenitiesListControllerAG'
+        })
+        .when('/business/hotel/booking-list/update', {
+            templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-edit.html',
+            controller: 'HotelAmenitiesListControllerAG'
+        })
+        .when('/business/hotel/accommodation-location-information/update', {
+            templateUrl: 'app/component/agent/hotel/views/pages/hotel/accommodation-location-information-edit.html',
+            controller: 'AccommodationLocationInformationEditController'
+        })
+        .when('/business/hotel/room-type-information-update', {
+            templateUrl: 'app/component/agent/hotel/views/pages/hotel/room-type-information-edit.html',
+            controller: 'AccommodationLocationInformationEditController'
+        })
+        .when('/business/hotel/room-amenities-update', {
+            templateUrl: 'app/component/agent/hotel/views/pages/hotel/room-amenities.html',
+            controller: 'AccommodationLocationInformationEditController'
         })
         /**
          * Agent Transport
@@ -234,6 +282,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/business/trip/trips-list/trips-update', {
             templateUrl: 'app/component/agent/trans/views/pages/trips/trip-update.html',
             controller: 'TripControllerAG'
+        })
+        .when('/business/register-transport-success', {
+            templateUrl: 'app/component/agent/trans/views/pages/register-trans-success.html',
+            controller: ''
         })
         /**
          * Agent Visit

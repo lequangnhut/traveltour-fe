@@ -1,30 +1,13 @@
-travel_app.controller("RegisterHotelControllerAG", function($scope) {
-    $scope.currentStep = 1;
-
-    $scope.nextStep = function() {
-        if ($scope.currentStep < 4) {
-            $scope.currentStep++;
-        }
-    };
-
-    $scope.prevStep = function() {
-        if ($scope.currentStep <= 4) {
-            $scope.currentStep--;
-        }
-    };
-
-    $scope.room = {
+travel_app.controller('BookingEditController', function($scope) {
+    $scope.booking = {
         roomType: null,
-        bedType: null,
         imageFiles: null,
     }
-
-    $scope.business = {};
 
     $scope.validateImageFiles = function() {
         var maxImages = 10;
 
-        if ($scope.room.imageFiles && $scope.room.imageFiles.length > maxImages) {
+        if ($scope.booking.imageFiles && $scope.booking.imageFiles.length > maxImages) {
             $scope.register_hotel.imageFiles.$setValidity('maxImages', false);
         } else {
             $scope.register_hotel.imageFiles.$setValidity('maxImages', true);
