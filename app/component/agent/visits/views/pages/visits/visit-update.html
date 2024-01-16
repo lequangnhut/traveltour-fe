@@ -4,15 +4,36 @@
             <div class="">
                 <div class="d-flex align-items-center row">
                     <div class="col-lg-6">
-                        <h3 class="color-greend fw-bold">CẬP NHẬT ĐỊA ĐIỂM</h3>
+                        <h3 class="color-greend fw-bold">CẬP NHẬT ĐỊA ĐIỂM </h3>
                     </div>
                 </div>
-                <div class="mt-3">Công ty: <span>Làng du lịch sinh thái Mỹ Khánh</span></div>
             </div>
         </div>
 
         <div class="card card-custom">
-            <form class="row g-3 form-input-custom" name="update_visits">
+            <form class="row g-3 form-input-custom" ng-submit="submitDataUpdateVisits()" name="update_visits"  method="post">
+                <div class="col-12">
+                    <label for="inputNameLocation" class="form-label">TÊN ĐỊA ĐIỂM</label>
+                    <input type="text"
+                           class="form-control"
+                           id="inputNameLocation"
+                           placeholder="Vườn Mận"
+                           name="name"
+                           ng-model="agent.name"
+                           ng-class="{ 'is-invalid': update_visits.name.$invalid && update_visits.name.$touched, 'is-valid': update_visits.name.$valid && update_visits.name.$touched }"
+                           ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="update_visits.name.$touched && update_visits.name.$error.required">
+                        Vui lòng nhập tên địa điểm !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="update_visits.name.$touched && update_visits.name.$error.pattern">
+                        Tên địa điểm không đúng định dạng !
+                    </small>
+                </div>
+
                 <div class="col-md-6">
                     <label for="locationType" class="form-label">Loại địa điểm</label>
                     <select id="locationType" class="form-select"
@@ -70,17 +91,17 @@
                 <div class="col-md-4">
                     <label class="form-label">Tỉnh/Thành phố</label>
                     <select class="form-select"
-                            name="province"
-                            ng-class="{ 'is-invalid': update_visits.province.$invalid && update_visits.province.$touched, 'is-valid': update_visits.province.$valid && update_visits.province.$touched }"
+                            name="provinceName"
+                            ng-class="{ 'is-invalid': update_visits.provinceName.$invalid && update_visits.provinceName.$touched, 'is-valid': update_visits.provinceName.$valid && update_visits.provinceName.$touched }"
                             ng-options="city.Id as city.Name for city in provinces"
                             ng-change="onProvinceChange()"
-                            ng-model="agent.province"
+                            ng-model="agent.provinceName"
                             required
                     >
                         <option value="" disabled selected>Chọn Tỉnh/Thành phố</option>
                     </select>
                     <small class="text-danger"
-                           ng-show="update_visits.province.$touched && update_visits.province.$error.required">
+                           ng-show="update_visits.provinceName.$touched && update_visits.provinceName.$error.required">
                         Vui lòng chọn tỉnh/thành phố.
                     </small>
                 </div>
@@ -88,18 +109,18 @@
                 <div class="col-md-4">
                     <label class="form-label">Quận/Huyện</label>
                     <select class="form-select"
-                            name="districts"
-                            ng-class="{ 'is-invalid': update_visits.districts.$invalid && update_visits.districts.$touched, 'is-valid': update_visits.districts.$valid && update_visits.districts.$touched }"
+                            name="districtName"
+                            ng-class="{ 'is-invalid': update_visits.districtName.$invalid && update_visits.districtName.$touched, 'is-valid': update_visits.districtName.$valid && update_visits.districtName.$touched }"
                             ng-options="district.Id as district.Name for district in districts"
-                            ng-disabled="!agent.province"
+                            ng-disabled="!agent.provinceName"
                             ng-change="onDistrictChange()"
-                            ng-model="agent.districts"
+                            ng-model="agent.districtName"
                             required
                     >
                         <option value="" disabled selected>Chọn Quận/Huyện</option>
                     </select>
                     <small class="text-danger"
-                           ng-show="update_visits.districts.$touched && update_visits.districts.$error.required">
+                           ng-show="update_visits.districtName.$touched && update_visits.districtName.$error.required">
                         Vui lòng chọn quận/huyện.
                     </small>
                 </div>
@@ -107,41 +128,35 @@
                 <div class="col-md-4">
                     <label class="form-label">Phường/Xã</label>
                     <select class="form-select"
-                            name="ward"
-                            ng-class="{ 'is-invalid': update_visits.ward.$invalid && update_visits.ward.$touched, 'is-valid': update_visits.ward.$valid && update_visits.ward.$touched }"
+                            name="wardName"
+                            ng-class="{ 'is-invalid': update_visits.wardName.$invalid && update_visits.wardName.$touched, 'is-valid': update_visits.wardName.$valid && update_visits.wardName.$touched }"
                             ng-options="ward.Id as ward.Name for ward in wards"
-                            ng-disabled="!agent.districts"
+                            ng-disabled="!agent.districtName"
                             ng-change="onWardChange()"
-                            ng-model="agent.ward"
+                            ng-model="agent.wardName"
                             required
                     >
                         <option value="" disabled selected>Chọn Phường/Xã</option>
                     </select>
                     <small class="text-danger"
-                           ng-show="update_visits.ward.$touched && update_visits.ward.$error.required">
+                           ng-show="update_visits.wardName.$touched && update_visits.wardName.$error.required">
                         Vui lòng chọn phường/xã.
+
                     </small>
                 </div>
 
 
                 <div class="col-12 mb-3">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox"  value="">
-                        <label class="form-label" for="free_ticket">Miễn phí vé</label>
-                    </div>
-                    <div class="input-group mt-3">
-                        <input type="text"
-                               class="form-control"
-                               id="free_ticket"
-                               placeholder="0"
-                        >
+                        <input class="form-check-input" type="checkbox"  >
+                        <label class="form-label">Miễn phí vé</label>
                     </div>
                 </div>
 
                 <div class="col-12 mb-3 ">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox"  value="">
-                        <label class="form-label" for="free_ticket">Vé người lớn</label>
+                        <label class="form-label" >Vé người lớn</label>
                     </div>
 
                     <div class="input-group mt-3">
@@ -170,7 +185,7 @@
                 <div class="col-12 mb-3 ">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox"  value="">
-                        <label class="form-label" for="free_ticket">Vé trẻ em</label>
+                        <label class="form-label">Vé trẻ em</label>
                     </div>
 
                     <div class="input-group mt-3">
@@ -223,6 +238,22 @@
                         Vui lòng nhập thời gian!
                     </small>
                 </div>
+                <div class="col-12">
+                    <label class="form-label">Hình ảnh chứng minh</label>
+                    <input class="form-control"
+                           type="file"
+                           name="business_images"
+                           ng-model="agent.business_images"
+                           ngf-max-size="10MB"
+                           ng-class="{ 'is-invalid': update_visits.business_images.$invalid && update_visits.business_images.$touched, 'is-valid': update_visits.business_images.$valid && update_visits.business_images.$touched }"
+                           ngf-select="uploadBusinessImage($file)"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="update_visits.business_images.$touched && update_visits.business_images.$error.required">
+                        Vui lòng tải lên hình ảnh của doanh nghiệp !
+                    </small>
+                </div>
                 <div class="col-md-12">
                     <label for="visitStatus" class="form-label">Trạng thái</label>
                     <select id="visitStatus" class="form-select"
@@ -238,11 +269,12 @@
                         Vui lòng chọn trạng thái !
                     </small>
                 </div>
+
                 <div class="col-12 d-flex justify-content-end mt-5">
                     <button class="btn" style="margin-right: 20px">
-                        <a class="btn" href="/business/visit-list">Trở về</a>
+                        <a class="btn" href="/business/visit/visit-list">Trở về</a>
                     </button>
-                    <button type="submit" class="btn btn-submit">Cập nhật địa điểm</button>
+                    <button type="submit" class="btn btn-submit">Thêm địa điểm</button>
                 </div>
             </form>
         </div>
