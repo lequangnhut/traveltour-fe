@@ -5,7 +5,7 @@
             <div class="header-control-center">
                 <div class="d-flex justify-content-between align-items-center row ">
                     <div class="col-xl-6 mt-3">
-                        <h3 class="color-greend fw-bold text-uppercase">Danh sách phương tiện</h3>
+                        <h3 class="color-greend fw-bold text-uppercase">Danh sách khách hàng đi tour</h3>
                     </div>
                     <div class="col-xl-6 d-flex align-items-center justify-content-end header-control-center mt-3">
                         <div class="row ">
@@ -14,9 +14,8 @@
                                 </button>
                             </div>
                             <div class="col-sm-9">
-                                <a href="/admin/vehicle-create" class="btn btn-greend"><i
-                                        class="fa-solid fa-plus" style="margin-right: 10px"></i> Tạo phương tiện
-                                    mới
+                                <a href="/admin/tour-customer-list/tour-customer-create" class="btn btn-greend"><i
+                                        class="fa-solid fa-plus" style="margin-right: 10px"></i> Tạo khách hàng mới
                                 </a>
                             </div>
                         </div>
@@ -70,7 +69,7 @@
                     <div class="row">
                         <div class="h4 col-lg-5 d-flex align-items-center h-100">
                             <div class="d-flex align-items-center">
-                                <span class="h4">Danh sách tour chi tiết</span>
+                                <span class="h4">Danh sách khách hàng đi tour</span>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end align-items-baseline col-lg-2">
@@ -101,27 +100,23 @@
                 <table class="table table-responsive text-center">
                     <thead>
                     <tr class="bg-light">
-                        <th><span><input class="form-check-input checkbox-all" type="checkbox" value="" id=""></span>
+                        <th><span><input class="form-check-input checkbox-all" type="checkbox" value=""></span>
                         </th>
                         <th scope="col"># <i class="fa-solid fa-sort"></i></th>
                         <th scope="col">ID <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Tên tour <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Số phương tiện <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Tên phương tiện <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Tên khách hàng <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Ngày sinh <i class="fa-solid fa-sort"></i></th>
                         <th scope="col">Số điện thoại <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Số chỗ ngồi <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Trạng thái <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Ghi chú <i class="fa-solid fa-sort"></i></th>
                         <th scope="col">Thao tác</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
+                        <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
                         <td>1</td>
                         <td>P0001</td>
                         <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>2</td>
                         <td>2</td>
                         <td>300.000</td>
                         <td>
@@ -130,7 +125,7 @@
                             </div>
                         </td>
                         <td class="d-flex align-items-center justify-content-center">
-                            <a class="btn" href="/admin/vehicle-update"
+                            <a class="btn" href="/admin/tour-customer-list/tour-customer-update"
                                style="background: #ffc107; margin-right: 10px"><i
                                     class="fa-solid fa-pen-to-square text-white"></i></a>
                             <a class="btn" style="background: #dc3545"><i
@@ -138,12 +133,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
+                        <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
                         <td>2</td>
                         <td>P0001</td>
                         <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>2</td>
                         <td>2</td>
                         <td>300.000</td>
                         <td>
@@ -152,20 +145,18 @@
                             </div>
                         </td>
                         <td class="d-flex align-items-center justify-content-center">
-                            <a class="btn" href="/admin/vehicle-update"
+                            <a class="btn" href="/admin/tour-customer-list/tour-customer-update"
                                style="background: #ffc107; margin-right: 10px"><i
                                     class="fa-solid fa-pen-to-square text-white"></i></a>
-                            <a class="btn" style="background:   #dc3545"><i
+                            <a class="btn" style="background: #dc3545"><i
                                     class="fa-solid fa-trash  text-white"></i></a>
                         </td>
                     </tr>
                     <tr>
-                        <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
+                        <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
                         <td>3</td>
                         <td>P0001</td>
                         <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>2</td>
                         <td>2</td>
                         <td>300.000</td>
                         <td>
@@ -174,7 +165,7 @@
                             </div>
                         </td>
                         <td class="d-flex align-items-center justify-content-center">
-                            <a class="btn" href="/admin/vehicle-update"
+                            <a class="btn" href="/admin/tour-customer-list/tour-customer-update"
                                style="background: #ffc107; margin-right: 10px"><i
                                     class="fa-solid fa-pen-to-square text-white"></i></a>
                             <a class="btn" style="background: #dc3545"><i
@@ -188,8 +179,6 @@
                         <td>P0001</td>
                         <td>Phòng studio</td>
                         <td>2</td>
-                        <td>2</td>
-                        <td>2</td>
                         <td>300.000</td>
                         <td>
                             <div class="d-flex align-items-center justify-content-center">
@@ -197,7 +186,7 @@
                             </div>
                         </td>
                         <td class="d-flex align-items-center justify-content-center">
-                            <a class="btn" href="/admin/vehicle-update"
+                            <a class="btn" href="/admin/tour-customer-list/tour-customer-update"
                                style="background: #ffc107; margin-right: 10px"><i
                                     class="fa-solid fa-pen-to-square text-white"></i></a>
                             <a class="btn" style="background: #dc3545"><i
@@ -205,12 +194,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
+                        <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
                         <td>5</td>
                         <td>P0001</td>
                         <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>2</td>
                         <td>2</td>
                         <td>300.000</td>
                         <td>
@@ -219,7 +206,7 @@
                             </div>
                         </td>
                         <td class="d-flex align-items-center justify-content-center">
-                            <a class="btn" href="/admin/vehicle-update"
+                            <a class="btn" href="/admin/tour-customer-list/tour-customer-update"
                                style="background: #ffc107; margin-right: 10px"><i
                                     class="fa-solid fa-pen-to-square text-white"></i></a>
                             <a class="btn" style="background: #dc3545"><i

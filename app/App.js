@@ -38,11 +38,11 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-list.html',
             controller: 'BasicTourControllerAD'
         })
-        .when('/admin/basic-tour-create', {
+        .when('/admin/basic-tour-list/basic-tour-create', {
             templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-create.html',
             controller: 'BasicTourControllerAD'
         })
-        .when('/admin/basic-tour-update', {
+        .when('/admin/basic-tour-list/basic-tour-update', {
             templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-update.html',
             controller: 'BasicTourControllerAD'
         })
@@ -50,11 +50,11 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/tour-management/detail-tour/detail-tour-list.html',
             controller: 'DetailTourControllerAD'
         })
-        .when('/admin/detail-tour-create', {
+        .when('/admin/detail-tour-list/detail-tour-create', {
             templateUrl: 'app/component/admin/views/pages/tour-management/detail-tour/detail-tour-create.html',
             controller: 'DetailTourControllerAD'
         })
-        .when('/admin/detail-tour-update', {
+        .when('/admin/detail-tour-list/detail-tour-update', {
             templateUrl: 'app/component/admin/views/pages/tour-management/detail-tour/detail-tour-update.html',
             controller: 'DetailTourControllerAD'
         })
@@ -66,11 +66,11 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/partner-service/vehicle/vehicle-list.html',
             controller: 'VehicleControllerAD'
         })
-        .when('/admin/vehicle-create', {
+        .when('/admin/vehicle-list/vehicle-create', {
             templateUrl: 'app/component/admin/views/pages/partner-service/vehicle/vehicle-create.html',
             controller: 'VehicleControllerAD'
         })
-        .when('/admin/vehicle-update', {
+        .when('/admin/vehicle-list/vehicle-update', {
             templateUrl: 'app/component/admin/views/pages/partner-service/vehicle/vehicle-update.html',
             controller: 'VehicleControllerAD'
         })
@@ -79,11 +79,11 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/partner-service/stay/stay-list.html',
             controller: 'StayControllerAD'
         })
-        .when('/admin/stay-create', {
+        .when('/admin/stay-list/stay-create', {
             templateUrl: 'app/component/admin/views/pages/partner-service/stay/stay-create.html',
             controller: 'StayControllerAD'
         })
-        .when('/admin/stay-update', {
+        .when('/admin/stay-list/stay-update', {
             templateUrl: 'app/component/admin/views/pages/partner-service/stay/stay-update.html',
             controller: 'StayControllerAD'
         })
@@ -92,11 +92,11 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/partner-service/sightseeing/sightseeing-list.html',
             controller: 'SightseeingControllerAD'
         })
-        .when('/admin/sightseeing-create', {
+        .when('/admin/sightseeing-list/sightseeing-create', {
             templateUrl: 'app/component/admin/views/pages/partner-service/sightseeing/sightseeing-create.html',
             controller: 'SightseeingControllerAD'
         })
-        .when('/admin/sightseeing-update', {
+        .when('/admin/sightseeing-list/sightseeing-update', {
             templateUrl: 'app/component/admin/views/pages/partner-service/sightseeing/sightseeing-update.html',
             controller: 'SightseeingControllerAD'
         })
@@ -111,16 +111,30 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/schedule-management/travel-schedule/travel-schedule-list.html',
             controller: 'TravelScheduleControllerAD'
         })
+        //tour-customers
+        .when('/admin/tour-customer-list', {
+            templateUrl: 'app/component/admin/views/pages/schedule-management/tour-customers/tour-customers-list.html',
+            controller: 'TourCustomersControllerAD'
+        })
+        .when('/admin/tour-customer-list/tour-customer-create', {
+            templateUrl: 'app/component/admin/views/pages/schedule-management/tour-customers/tour-customers-create.html',
+            controller: 'TourCustomersControllerAD'
+        })
+        .when('/admin/tour-customer-list/tour-customer-update', {
+            templateUrl: 'app/component/admin/views/pages/schedule-management/tour-customers/tour-customers-update.html',
+            controller: 'TourCustomersControllerAD'
+        })
+        //----------------------------------------------------------------
         //bill
         .when('/admin/bill-list', {
             templateUrl: 'app/component/admin/views/pages/bill/bill-list.html',
             controller: 'BillControllerAD'
         })
-        .when('/admin/bill-create', {
+        .when('/admin/bill-list/bill-create', {
             templateUrl: 'app/component/admin/views/pages/bill/bill-create.html',
             controller: 'BillControllerAD'
         })
-        .when('/admin/bill-update', {
+        .when('/admin/bill-list/bill-update', {
             templateUrl: 'app/component/admin/views/pages/bill/bill-update.html',
             controller: 'BillControllerAD'
         })
@@ -128,6 +142,20 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/admin/booking-list', {
             templateUrl: 'app/component/admin/views/pages/booking/booking-list.html',
             controller: 'BookingControllerAD'
+        })
+
+        //customers-management
+        .when('/admin/customer-list', {
+            templateUrl: 'app/component/admin/views/pages/customer-management/customers-list.html',
+            controller: 'CustomerControllerAD'
+        })
+        .when('/admin/customer-list/customer-create', {
+            templateUrl: 'app/component/admin/views/pages/customer-management/customers-create.html',
+            controller: 'CustomerControllerAD'
+        })
+        .when('/admin/customer-list/customer-update', {
+            templateUrl: 'app/component/admin/views/pages/customer-management/customers-update.html',
+            controller: 'CustomerControllerAD'
         })
 
         /**

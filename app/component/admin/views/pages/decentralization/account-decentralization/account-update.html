@@ -1,0 +1,120 @@
+<section>
+    <div class="container">
+        <div class="container-fluid">
+            <div class="header-control mb-4">
+                <div class="">
+                    <div class="d-flex align-items-center row">
+                        <div class="col-lg-6">
+                            <h3 class="color-greend fw-medium text-uppercase">Câp nhật tài khoản</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-custom">
+                <form class="row g-3 form-input-custom" ng-submit="submitAccount()"
+                      method="POST" role="form" name="accountForm">
+                    <div class="col-12">
+                        <label for="fullName" class="form-label">Họ và tên</label>
+                        <input class="form-control" id="fullName" type="text"
+                               placeholder="Nguyen Van A"
+                               name="fullName"
+                               ng-model="account.fullName"
+                               ng-class="{ 'is-invalid': accountForm.fullName.$invalid && accountForm.fullName.$touched, 'is-valid': accountForm.fullName.$valid && accountForm.fullName.$touched }"
+                               ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                               required/>
+                        <small class="text-danger"
+                               ng-show="accountForm.fullName.$touched && accountForm.fullName.$error.required">
+                            Vui lòng nhập họ và tên !
+                        </small>
+                        <small class="text-danger"
+                               ng-show="accountForm.fullName.$touched && accountForm.fullName.$error.pattern">
+                            Họ và tên không đúng định dạng !
+                        </small>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="phoneNumber" class="form-label">Số điện thoại</label>
+                        <input class="form-control" id="phoneNumber" type="text"
+                               placeholder="0942xxxxxx"
+                               name="phoneNumber"
+                               ng-pattern="/^\d{10}(\d{1})?$/"
+                               ng-model="account.phoneNumber"
+                               ng-class="{ 'is-invalid': accountForm.phoneNumber.$invalid && accountForm.phoneNumber.$touched, 'is-valid': accountForm.phoneNumber.$valid && accountForm.phoneNumber.$touched }"
+                               required/>
+                        <small class="text-danger"
+                               ng-show="accountForm.phoneNumber.$touched && accountForm.phoneNumber.$error.required">
+                            Vui lòng nhập số điện thoại !
+                        </small>
+                        <small class="text-danger"
+                               ng-show="accountForm.phoneNumber.$touched && accountForm.phoneNumber.$error.pattern">
+                            Số điện thoại bao gồm 10 hoặc 11 số !
+                        </small>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input class="form-control" id="email" type="email"
+                               placeholder="abv@cabc.xyz"
+                               name="email"
+                               ng-pattern="/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/"
+                               ng-model="account.email"
+                               ng-class="{ 'is-invalid': accountForm.email.$invalid && accountForm.email.$touched, 'is-valid': accountForm.email.$valid && accountForm.email.$touched }"
+                               required/>
+                        <small class="text-danger"
+                               ng-show="accountForm.email.$touched && accountForm.email.$error.required">
+                            Vui lòng nhập email !
+                        </small>
+                        <small class="text-danger"
+                               ng-show="accountForm.email.$touched && accountForm.email.$error.pattern">
+                            Email không hợp lệ !
+                        </small>
+                    </div>
+
+                    <div class="col-6">
+                        <label for="role" class="form-label">Vai trò</label>
+                        <select class="form-select" id="role"
+                                style=" padding-bottom: 2px; padding-top: 20px;"
+                                name="role"
+                                ng-model="account.role"
+                                ng-class="{ 'is-invalid': accountForm.role.$invalid && accountForm.role.$touched,
+                                            'is-valid': accountForm.role.$valid && accountForm.role.$touched }"
+                                required>
+                            <option value="0">User</option>
+                            <option value="1">Admin</option>
+                        </select>
+                        <small class="text-danger"
+                               ng-show="accountForm.role.$touched && accountForm.role.$error.required">
+                            Vui lòng chọn vai trò !
+                        </small>
+                    </div>
+
+                    <div class="col-6">
+                        <label for="gender" class="form-label">Giới tính</label>
+                        <select class="form-select" id="gender"
+                                style=" padding-bottom: 2px; padding-top: 20px;"
+                                name="gender"
+                                ng-model="account.gender"
+                                ng-class="{ 'is-invalid': accountForm.gender.$invalid && accountForm.gender.$touched, 'is-valid': accountForm.gender.$valid && accountForm.gender.$touched }"
+                                required>
+                            <option value="0">Nam</option>
+                            <option value="1">Nữ</option>
+                        </select>
+                        <small class="text-danger"
+                               ng-show="accountForm.gender.$touched && accountForm.gender.$error.required">
+                            Vui lòng chọn giới tính !
+                        </small>
+                    </div>
+
+                    <div class="col-12 d-flex justify-content-end mt-5">
+                        <button class="btn" style="margin-right: 20px">
+                            <a class="btn" href="/admin/account-decentralization-list">Trở về</a>
+                        </button>
+                        <button type="submit" class="btn btn-submit" ng-disabled="accountForm.$invalid">Cập nhật
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
