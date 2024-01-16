@@ -7,6 +7,9 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http) {
     $scope.districts = [];
     $scope.wards = [];
 
+    $scope.provinceVisits = [];
+    $scope.districtVisits = [];
+    $scope.wardVisits = [];
 
     $scope.agent = {
         name: null,
@@ -29,8 +32,11 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http) {
         locationType: null,
         time_open_agent: null,
         time_close_agent: null,
-        business_images: null
-
+        business_images: null,
+        provinceVisit: null,
+        districtVisit: null,
+        wardVisit: null,
+        addressVisit: null
     }
 
 
@@ -72,8 +78,12 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http) {
      */
     $http.get('/lib/address/data.json').then(function (response) {
         $scope.provinces = response.data;
+        $scope.provinceVisits = response.data;
     });
 
+    /**
+     * lấy thông tin cho thông tin doanh nghiệp
+     * */
     $scope.onProvinceChange = function () {
         $scope.districts = $scope.provinces.find(p => p.Id === $scope.agent.province).Districts;
         $scope.agent.districts = null;
@@ -85,6 +95,18 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http) {
         $scope.agent.ward = null;
     };
 
+    /**
+       * lấy thông tin cho thông tin địa điểm
+     * */
+    $scope.onProvinceVisitChange = function () {
+        $scope.districtVisits = $scope.provinceVisits.find(p => p.Id === $scope.agent.provinceVisit).Districts;
+        $scope.agent.districtVisit = null;
+        $scope.agent.wardVisit = null;
+    };
+    $scope.onDistrictVisitChange = function () {
+        $scope.wardVisits = $scope.districtVisits.find(d => d.Id === $scope.agent.districtVisit).Wards;
+        $scope.agent.wardVisit = null;
+    };
 
     /**
      * Upload hình ảnh và lưu vào biến business_images
@@ -113,8 +135,5 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http) {
         console.log($scope.agent)
     };
 
-    $scope.submitDataCreateVisits = function () {
-        console.log($scope.agent)
-    };
 
 });

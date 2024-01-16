@@ -254,15 +254,15 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/business/visit/visit-list', {
             templateUrl: 'app/component/agent/visits/views/pages/visits/visit-list.html',
-            controller: ''
+            controller: 'VisitControllerAG'
         })
         .when('/business/visit/visit-list/visit-create', {
             templateUrl: 'app/component/agent/visits/views/pages/visits/visit-create.html',
-            controller: ''
+            controller: 'VisitControllerAG'
         })
         .when('/business/visit/visit-list/visit-update', {
             templateUrl: 'app/component/agent/visits/views/pages/visits/visit-update.html',
-            controller: ''
+            controller: 'VisitControllerAG'
         })
         .when('/business/booking-visit/booking-list', {
             templateUrl: 'app/component/agent/visits/views/pages/bookings/booking-visit-list.html',
