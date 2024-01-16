@@ -1,4 +1,4 @@
-travel_app.controller('LoginControllerAD', function ($scope, $location, AuthService) {
+travel_app.controller('LoginControllerAD', function ($scope, $location, AuthService, NotificationService) {
 
     $scope.user = {
         email: null,
@@ -32,8 +32,10 @@ travel_app.controller('LoginControllerAD', function ($scope, $location, AuthServ
                                     let user = response.data;
 
                                     AuthService.setAuthData(token, user);
+                                    localStorage.setItem('activeNavItem', 'dashboard');
+
                                     window.location.href = '/admin/dashboard';
-                                    toastAlert('success', 'Đăng nhập thành công !');
+                                    NotificationService.setNotification('success', 'Đăng nhập thành công !');
                                 });
                             }
                         }

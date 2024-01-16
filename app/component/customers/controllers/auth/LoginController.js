@@ -1,4 +1,4 @@
-travel_app.controller('LoginController', function ($scope, $location, $timeout, AuthService) {
+travel_app.controller('LoginController', function ($scope, $location, $timeout, AuthService, NotificationService) {
 
     $scope.rememberMe = false;
 
@@ -38,14 +38,15 @@ travel_app.controller('LoginController', function ($scope, $location, $timeout, 
                                     let user = response.data;
 
                                     AuthService.setAuthData(token, user);
+
                                     window.location.href = '/home';
-                                    toastAlert('success', 'Đăng nhập thành công !');
+                                    NotificationService.setNotification('success', 'Đăng nhập thành công !');
                                 }, errorCallback);
                             }
                         }
                     }, errorCallback);
                 } else {
-                    toastAlert('error', "Máy chủ không tồn tại !");
+                    toastAlert('warning', "Sai thông tin đăng nhập !");
                 }
             }
         }, errorCallback);

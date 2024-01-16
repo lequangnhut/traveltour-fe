@@ -6387,7 +6387,7 @@ ul.slick-dots li.slick-active {
     cursor: pointer;
 }
 
-#information-section .btn-prev{
+#information-section .btn-prev {
     background: #6c7781;
     margin-right: 20px;
 }
@@ -6663,7 +6663,7 @@ ul.slick-dots li.slick-active {
     margin: 100px;
 }
 
-.register-hotel .modal-header{
+.register-hotel .modal-header {
     border: none;
 }
 
@@ -6692,7 +6692,7 @@ ul.slick-dots li.slick-active {
     cursor: pointer;
 }
 
-.register-hotel .btn-prev{
+.register-hotel .btn-prev {
     background: #6c7781;
     margin-right: 20px;
 }
