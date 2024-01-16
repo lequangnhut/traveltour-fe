@@ -4,7 +4,7 @@
             <div class="header-control-center">
                 <div class="d-flex justify-content-between align-items-center row ">
                     <div class="col-xl-6 mt-3">
-                        <h3 class="color-greend fw-bold">DANH SÁCH TÀI KHOẢN NHÂN VIÊN</h3>
+                        <h3 class="color-greend fw-bold">DANH SÁCH PHÂN QUYỀN ĐỐI TÁC</h3>
                     </div>
                     <div class="col-xl-6 d-flex align-items-center justify-content-end header-control-center mt-3">
                         <div class="row ">
@@ -13,12 +13,6 @@
                                     <i class="fa-solid fa-file-export"></i>
                                     <span>Xuất</span>
                                 </button>
-                            </div>
-                            <div class="col-sm-9">
-                                <a href="/admin/account-management/account-create" class="btn btn-greend">
-                                    <i class="fa-solid fa-plus" style="margin-right: 10px"></i>
-                                    Thêm tài khoản
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -74,7 +68,7 @@
                     <div class="row">
                         <div class="h4 col-lg-5 d-flex align-items-center h-100">
                             <div class="d-flex align-items-center">
-                                <span class="h4">Danh sách tài khoản</span>
+                                <span class="h4">Phân quyền tài khoản</span>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end align-items-baseline col-lg-2">
@@ -109,46 +103,72 @@
                         </th>
                         <th scope="col"># <i class="fa-solid fa-sort"></i></th>
                         <th scope="col">Email <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Họ tên <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Họ và tên <i class="fa-solid fa-sort"></i></th>
                         <th scope="col">Số điện thoại <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Ngày tạo <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Vai trò <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Vai trò <i class="fa-solid fa-sort"></i></th>
+                        <th scope="col">Vai trò <i class="fa-solid fa-sort"></i></th>
                         <th scope="col">Trạng thái <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Thao tác</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="account in listAccountStaff">
+                    <tr ng-repeat="agent in userRoleAgent">
                         <td>
                             <span>
                                 <input class="form-check-input" type="checkbox" value="" id="">
                             </span>
                         </td>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ account.email }}</td>
-                        <td>{{ account.fullName }}</td>
-                        <td>{{ account.phone }}</td>
-                        <td>{{ account.dateCreated | vietnameseDateTime }}</td>
-                        <td ng-if="account.isActive == true">
+                        <td>{{ agent.email }}</td>
+                        <td>{{ agent.fullName }}</td>
+                        <td>{{ agent.phone }}</td>
+                        <td>
+                            <div class="mb-3">
+                                <label class="form-check-label" for="{{ agent.id }} + _AGENT_HOTEL">
+                                    <input id="{{ agent.id }} + _AGENT_HOTEL"
+                                           type="checkbox"
+                                           ng-checked="userHasRole('ROLE_AGENT_HOTEL', agent)"
+                                           ng-click="changeRole('ROLE_AGENT_HOTEL', agent.id)"
+                                           class="form-check-input">
+                                    Khách sạn
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="mb-3">
+                                <label class="form-check-label" for="{{ agent.id }} + _AGENT_TRANSPORT">
+                                    <input id="{{ agent.id }} + _AGENT_TRANSPORT"
+                                           type="checkbox"
+                                           ng-checked="userHasRole('ROLE_AGENT_TRANSPORT', agent)"
+                                           ng-click="changeRole('ROLE_AGENT_TRANSPORT', agent.id)"
+                                           class="form-check-input">
+                                    Phương tiện
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="mb-3">
+                                <label class="form-check-label" for="{{ agent.id }} + _AGENT_PLACE">
+                                    <input id="{{ agent.id }} + _AGENT_PLACE"
+                                           type="checkbox"
+                                           ng-checked="userHasRole('ROLE_AGENT_PLACE', agent)"
+                                           ng-click="changeRole('ROLE_AGENT_PLACE', agent.id)"
+                                           class="form-check-input">
+                                    Tham quan
+                                </label>
+                            </div>
+                        </td>
+                        <td ng-if="agent.isActive == true">
                             <div class="d-flex align-items-center justify-content-center">
                                 <span class="status-success"></span>
                                 <span class="text-status-success">Đang hoạt động</span>
                             </div>
                         </td>
-                        <td ng-if="account.isActive == false">
+                        <td ng-if="agent.isActive == false">
                             <div class="d-flex align-items-center justify-content-center">
                                 <span class="status-error"></span>
                                 <span class="text-status-error">Ngưng hoạt động</span>
                             </div>
-                        </td>
-                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                            <a href="/admin/account-management/account-update"
-                               role="button" class="btn" style="background: #ffc107; margin-right: 5px">
-                                <i class="fa-solid fa-pen-to-square text-white"></i>
-                            </a>
-                            <a href="#"
-                               role="button" class="btn" style="background: #dc3545">
-                                <i class="fa-solid fa-trash  text-white"></i>
-                            </a>
                         </td>
                     </tr>
                     </tbody>

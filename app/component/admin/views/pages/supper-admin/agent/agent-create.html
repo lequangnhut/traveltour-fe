@@ -4,7 +4,7 @@
             <div class="">
                 <div class="d-flex align-items-center row">
                     <div class="col-lg-6">
-                        <h3 class="color-greend fw-bold">CẬP NHẬT TÀI KHOẢN NHÂN VIÊN</h3>
+                        <h3 class="color-greend fw-bold">THÊM TÀI KHOẢN ĐỐI TÁC</h3>
                     </div>
                 </div>
             </div>
@@ -30,6 +30,51 @@
                     <small class="text-danger"
                            ng-show="form_account.email.$touched && form_account.email.$error.pattern">
                         Địa chỉ email không đúng định dạng !
+                    </small>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">MẬT KHẨU</label>
+                    <input type="password"
+                           class="form-control"
+                           placeholder="*********"
+                           name="password"
+                           ng-model="admin.password"
+                           ng-class="{ 'is-invalid': form_account.password.$invalid && form_account.password.$touched, 'is-valid': form_account.password.$valid && form_account.password.$touched }"
+                           ng-minlength="6"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="form_account.password.$touched && form_account.password.$error.required">
+                        Vui lòng nhập mật khẩu !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="form_account.password.$error.minlength && form_account.password.$dirty">
+                        Mật khẩu cần ít nhất 6 ký tự.
+                    </small>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">NHẬP LẠI MẬT KHẨU</label>
+                    <input type="password"
+                           class="form-control"
+                           placeholder="*********"
+                           name="cpsw"
+                           ng-model="admin.cpsw"
+                           ng-class="{ 'is-invalid': form_account.cpsw.$invalid && form_account.cpsw.$touched, 'is-valid': form_account.cpsw.$valid && form_account.cpsw.$touched }"
+                           ng-pattern="admin.password"
+                           ng-minlength="6"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="form_account.cpsw.$touched && form_account.cpsw.$error.required">
+                        Vui lòng nhập lại mật khẩu !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="form_account.cpsw.$error.minlength && form_account.cpsw.$dirty">
+                        Mật khẩu cần ít nhất 6 ký tự.
+                    </small>
+                    <small class="text-danger"
+                           ng-show="form_account.cpsw.$touched && form_account.cpsw.$error.pattern">
+                        Xác nhận mật khẩu không khớp.
                     </small>
                 </div>
                 <div class="col-md-12">
@@ -95,7 +140,7 @@
                         <a class="btn" href="/admin/account-management">Trở về</a>
                     </button>
                     <button type="submit" ng-disabled="form_account.$invalid" class="btn btn-submit fw-bold">
-                        Cập nhật
+                        Thêm mới
                     </button>
                 </div>
             </form>
