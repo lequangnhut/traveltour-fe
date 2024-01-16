@@ -105,7 +105,8 @@ travel_app.controller('MainController', function ($scope, $location, $window, $a
             '/business/register-transports',
             '/business/register-transport-success',
             '/business/register-visit',
-            '/business/register-visits-success'
+            '/business/register-visits-success',
+            '/business/register-agent'
         ];
         return $scope.isActive(hiddenPaths);
     };
@@ -121,7 +122,8 @@ travel_app.controller('MainController', function ($scope, $location, $window, $a
             '/business/register-transports',
             '/business/register-transport-success',
             '/business/register-visit',
-            '/business/register-visits-success'
+            '/business/register-visits-success',
+            '/business/register-agent'
         ];
         return $scope.isActive(marginPaths) ? {'margin': '0'} : {};
     };

@@ -5,7 +5,7 @@
                 <div class="">
                     <div class="d-flex align-items-center row">
                         <div class="col-lg-6">
-                            <h1 class="color-greend fw-medium">Thêm loại phòng</h1>
+                            <h3 class="color-greend fw-bold text-uppercase">Sửa loại phòng</h3>
                         </div>
                     </div>
                     <div class="mt-3">Tên khách sạn: <span>Khách sạn Traveltour</span></div>
@@ -15,8 +15,9 @@
             <div class="card card-custom" >
                 <form class="row g-3 form-input-custom">
                     <div class="col-12">
-                        <label for="inputEmail4" class="form-label">Tên loại phòng</label>
-                        <input type="email" class="form-control" id="inputEmail4" placeholder="Phòng Studio">
+                        <label for="inputNameBusiness" class="form-label">Tên loại phòng</label>
+                        <input type="text" class="form-control" id="inputNameBusiness"
+                               placeholder="Phòng luxury">
                     </div>
                     <div class="col-12">
                         <label for="inputState" class="form-label">Loại giường</label>
@@ -26,16 +27,18 @@
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label for="inputPassword4" class="form-label">Số người lớn</label>
-                        <input type="text" class="form-control" id="inputPassword4" placeholder="2">
+                        <label for="inputEmail4" class="form-label">Số người lớn</label>
+                        <input type="number" class="form-control" id="inputEmail4"
+                               placeholder="1">
                     </div>
                     <div class="col-md-6">
                         <label for="inputPassword4" class="form-label">Số trẻ em</label>
-                        <input type="text" class="form-control" id="inputPassword4" placeholder="1">
+                        <input type="number" class="form-control" id="inputPassword4" placeholder="1">
                     </div>
                     <div class="col-md-6">
-                        <label for="inputPassword4" class="form-label">Số lượng phòng</label>
-                        <input type="text" class="form-control" id="inputPassword4" placeholder="20">
+                        <label for="inputEmail4" class="form-label">Số lượng phòng</label>
+                        <input type="number" class="form-control" id="inputEmail4"
+                               placeholder="1">
                     </div>
                     <div class="col-md-6">
                         <label for="inputPassword4" class="form-label">Giá phòng</label>
@@ -43,15 +46,16 @@
                     </div>
                     <div class="col-12">
                         <label for="inputAddress" class="form-label">Mô tả</label>
-                        <input type="text" class="form-control" id="inputAddress" placeholder="Phòng rất sang trọng hiện đại">
+                        <input type="text" class="form-control" id="inputAddress" placeholder="">
                     </div>
-                    <div class="mb-3">
+
+                    <div class="col-12">
                         <label for="formFile" class="form-label">Hình ảnh</label>
                         <input class="form-control" type="file" id="formFile">
                     </div>
                     <div class="col-12 d-flex justify-content-end mt-5">
                         <button class="btn" style="margin-right: 20px"><a class="btn" href="/admin/amenities/hotel-amenities-list">Trở về</a></button>
-                        <button type="submit" class="btn btn-submit">Thêm loại phòng</button>
+                        <button type="submit" class="btn btn-submit">Cập nhật booking</button>
                     </div>
                 </form>
             </div>
