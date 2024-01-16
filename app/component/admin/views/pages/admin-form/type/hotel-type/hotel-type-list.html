@@ -22,6 +22,18 @@
                     <div class="col-xl-6 mt-3">
                         <h3 class="color-greend fw-medium">DANH SÁCH LOẠI LƯU TRÚ</h3>
                     </div>
+                    <div class="col-xl-6 d-flex align-items-center justify-content-end header-control-center mt-3">
+                        <div class="row ">
+                            <div class="col-sm-3 d-flex align-items-center">
+                                <button class="btn d-flex "><i class="fa-solid fa-file-export"></i> <span>Xuất</span></button>
+                            </div>
+                            <div class="col-sm-9" style="text-align:right">
+                                <a href="/admin/type/hotel-type-list/hotel-type-create" class="btn btn-greend"><i
+                                        class="fa-solid fa-plus" style="margin-right: 10px"></i> Thêm loại lưu trú
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,39 +73,6 @@
                         <button class="btn btn-primary">Tìm kiếm</button>
                     </div>
                 </div>
-                <form class="row g-3" ng-submit="submitAdminType()"
-                      method="POST" role="form" name="typeform" style="margin: 0 16px 20px 16px">
-                    <div class="col-12 mt-0">
-                        Nhập tên loại lưu trú
-                        <input type="text" class="form-control" id="typename"
-                               placeholder="Nhập tên loại lưu trú"
-                               name="typename"
-                               ng-model="type.typename"
-                               ng-class="{ 'is-invalid': typeform.typename.$invalid && typeform.typename.$touched, 'is-valid': typeform.typename.$valid && typeform.typename.$touched }"
-                               required>
-                        <small class="text-danger"
-                               ng-show="typeform.typename.$touched && typeform.typename.$error.required">
-                            Vui lòng nhập loại lưu trú !
-                        </small>
-                    </div>
-                    <div class="col-12 d-flex justify-content-end mt-4 mb-2">
-                        <button type="submit" class="btn btn-submit-type me-2" ng-disabled="staffform.$invalid"
-                                style="background: #63ab45;color: #fff; font-size: 16px;font-family: &quot;Montserrat&quot;, sans-serif;font-weight: 500;">
-                            <i class="fa-solid fa-plus d-sm-none"></i>
-                            <span class="d-none d-sm-inline">Thêm</span>
-                        </button>
-                        <a type="button" class="btn btn-submit-type me-2" ng-disabled="staffform.$invalid"
-                           style="background: #e4bd23;color: #fff; font-size: 16px;font-family: &quot;Montserrat&quot;, sans-serif;font-weight: 500;">
-                            <i class="fa-solid fa-pen-to-square d-sm-none"></i>
-                            <span class="d-none d-sm-inline">Cập nhật</span>
-                        </a>
-                        <a type="button" class="btn btn-submit-type" ng-disabled="staffform.$invalid"
-                           style="background: #e3562c;color: #fff; font-size: 16px;font-family: &quot;Montserrat&quot;, sans-serif;font-weight: 500;">
-                            <i class="fa-solid fa-arrows-rotate d-sm-none"></i>
-                            <span class="d-none d-sm-inline">Làm mới</span>
-                        </a>
-                    </div>
-                </form>
             </div>
             <div class="card card-customer">
 
@@ -153,8 +132,9 @@
                         <td>N0001</td>
                         <td>Homestay</td>
                         <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                            <a class="btn" style="background: #ffc107; margin-right: 10px" href=""><i
-                                    class="fa-solid fa-pen-to-square text-white"></i></a>
+                            <a class="btn" style="background: #ffc107; margin-right: 10px"
+                               href="/admin/type/hotel-type-list/hotel-type-update">
+                                <i class="fa-solid fa-pen-to-square text-white"></i></a>
                             <a class="btn" style="background: #dc3545"><i
                                     class="fa-solid fa-trash  text-white"></i></a>
                         </td>

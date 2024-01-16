@@ -302,7 +302,7 @@
                                     <a class="nav-link dropdown-indicator label-1"
                                        ng-class="{ 'active': activeNavItem === 'tour-list'}"
                                        ng-click="setActiveNavItem('tour-list')"
-                                       href="/admin/type/tour-type">
+                                       href="/admin/type/tour-type-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span data-feather="globe"></span>
@@ -318,7 +318,7 @@
                                     <a class="nav-link dropdown-indicator label-1"
                                        ng-class="{ 'active': activeNavItem === 'hotel-type'}"
                                        ng-click="setActiveNavItem('hotel-type')"
-                                       href="/admin/type/hotel-type">
+                                       href="/admin/type/hotel-type-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span data-feather="home"></span>
@@ -334,7 +334,7 @@
                                     <a class="nav-link dropdown-indicator label-1"
                                        ng-class="{ 'active': activeNavItem === 'location-type'}"
                                        ng-click="setActiveNavItem('location-type')"
-                                       href="/admin/type/location-type">
+                                       href="/admin/type/location-type-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span data-feather="map"></span>
@@ -350,7 +350,7 @@
                                     <a class="nav-link dropdown-indicator label-1"
                                        ng-class="{ 'active': activeNavItem === 'transportation-type'}"
                                        ng-click="setActiveNavItem('transportation-type')"
-                                       href="/admin/type/transportation-type">
+                                       href="/admin/type/transportation-type-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span data-feather="target"></span>
@@ -366,7 +366,7 @@
                                     <a class="nav-link dropdown-indicator label-1"
                                        ng-class="{ 'active': activeNavItem === 'hotel-utility'}"
                                        ng-click="setActiveNavItem('hotel-utility')"
-                                       href="/admin/type/hotel-utility">
+                                       href="/admin/type/hotel-utility-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span data-feather="grid"></span>
@@ -381,12 +381,27 @@
                                     <a class="nav-link dropdown-indicator label-1"
                                        ng-class="{ 'active': activeNavItem === 'room-utility'}"
                                        ng-click="setActiveNavItem('room-utility')"
-                                       href="/admin/type/room-utility">
+                                       href="/admin/type/room-utility-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="grid"></span>
+                                            <span data-feather="server"></span>
                                             <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Thể loại tiện ích phòng</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Thể loại tiện ích giường -->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'bed-type'}"
+                                       ng-click="setActiveNavItem('bed-type')"
+                                       href="/admin/type/bed-type-list">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span data-feather="slack"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thể loại giường</span>
                                         </span>
                                         </div>
                                     </a>
@@ -1345,6 +1360,7 @@
 <script src="app/services/supperadmin/AccountServiceAD.js"></script>
 
 <!--====== Admin Service ======-->
+<script src="app/services/admin/TourTypeService.js"></script>
 
 <!--====== Staff Service ======-->
 
@@ -1363,6 +1379,7 @@
 <script src="app/component/admin/controllers/admin-form/typesAD/LocationTypeControllerAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/typesAD/TourTypeControllerAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/typesAD/TransTypeControllerAD.js"></script>
+<script src="app/component/admin/controllers/admin-form/typesAD/BedTypeControllerAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/typesAD/HotelUtilityControllerAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/typesAD/RoomUtilityControllerAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/staffAD/StaffControllerAD.js"></script>

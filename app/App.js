@@ -339,60 +339,120 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Admin Template
          */
-        .when('/admin/type/hotel-type', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/typesAD/hotel-type.html',
+        .when('/admin/type/hotel-type-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-type/hotel-type-list.html',
             controller: 'HotelTypeControllerAD'
         })
-        .when('/admin/type/location-type', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/typesAD/location-type.html',
+        .when('/admin/type/hotel-type-list/hotel-type-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-type/hotel-type-create.html',
+            controller: 'HotelTypeControllerAD'
+        })
+        .when('/admin/type/hotel-type-list/hotel-type-update', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-type/hotel-type-update.html',
+            controller: 'HotelTypeControllerAD'
+        })
+        .when('/admin/type/location-type-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/location-type/location-type-list.html',
             controller: 'LocationTypeControllerAD'
         })
-        .when('/admin/type/tour-type', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/typesAD/tour-type.html',
+        .when('/admin/type/location-type-list/location-type-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/location-type/location-type-create.html',
+            controller: 'LocationTypeControllerAD'
+        })
+        .when('/admin/type/location-type-list/location-type-update', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/location-type/location-type-update.html',
+            controller: 'LocationTypeControllerAD'
+        })
+        .when('/admin/type/tour-type-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/tour-type/tour-type-list.html',
             controller: 'TourTypeControllerAD'
         })
-        .when('/admin/type/transportation-type', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/typesAD/transportation-type.html',
+        .when('/admin/type/tour-type-list/tour-type-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/tour-type/tour-type-create.html',
+            controller: 'TourTypeControllerAD'
+        })
+        .when('/admin/type/tour-type-list/tour-type-update', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/tour-type/tour-type-update.html',
+            controller: 'TourTypeControllerAD'
+        })
+        .when('/admin/type/transportation-type-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-type/transportation-type-list.html',
             controller: 'TransTypeControllerAD'
         })
-        .when('/admin/type/hotel-utility', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/typesAD/hotel-utility.html',
+        .when('/admin/type/transportation-type-list/transportation-type-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-type/transportation-type-create.html',
+            controller: 'TransTypeControllerAD'
+        })
+        .when('/admin/type/transportation-type-list/transportation-type-update', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-type/transportation-type-update.html',
+            controller: 'TransTypeControllerAD'
+        })
+        .when('/admin/type/hotel-utility-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-list.html',
             controller: 'HotelUtilityControllerAD'
         })
-        .when('/admin/type/room-utility', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/typesAD/room-utility.html',
+        .when('/admin/type/hotel-utility-list/hotel-utility-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-create.html',
+            controller: 'HotelUtilityControllerAD'
+        })
+        .when('/admin/type/hotel-utility-list/hotel-utility-update', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-update.html',
+            controller: 'HotelUtilityControllerAD'
+        })
+        .when('/admin/type/room-utility-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/room-utility/room-utility-list.html',
             controller: 'RoomUtilityControllerAD'
         })
+        .when('/admin/type/room-utility-list/room-utility-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/room-utility/room-utility-create.html',
+            controller: 'RoomUtilityControllerAD'
+        })
+        .when('/admin/type/room-utility-list/room-utility-update', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/room-utility/room-utility-update.html',
+            controller: 'RoomUtilityControllerAD'
+        })
+        .when('/admin/type/bed-type-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/bed-type/bed-type-list.html',
+            controller: 'BedTypeControllerAD'
+        })
+        .when('/admin/type/bed-type-list/bed-type-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/bed-type/bed-type-create.html',
+            controller: 'BedTypeControllerAD'
+        })
+        .when('/admin/type/bed-type-list/bed-type-update', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/bed-type/bed-type-update.html',
+            controller: 'BedTypeControllerAD'
+        })
         .when('/admin/staff/staff-list', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/staffAD/staff-list.html',
+            templateUrl: 'app/component/admin/views/pages/admin-form/staff/staff-list.html',
             controller: 'StaffControllerAD'
         })
         .when('/admin/staff/staff-list/staff-create', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/staffAD/staff-create.html',
+            templateUrl: 'app/component/admin/views/pages/admin-form/staff/staff-create.html',
             controller: 'StaffControllerAD'
         })
         .when('/admin/staff/staff-list/staff-update', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/staffAD/staff-update.html',
+            templateUrl: 'app/component/admin/views/pages/admin-form/staff/staff-update.html',
             controller: 'StaffControllerAD'
         })
         .when('/admin/agency/agency-list', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/agencyAD/agency-list.html',
+            templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-list.html',
             controller: 'AgencyControllerAD'
         })
         .when('/admin/agency/agency-list/agency-create', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/agencyAD/agency-create.html',
+            templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-create.html',
             controller: 'AgencyControllerAD'
         })
         .when('/admin/agency/agency-list/agency-update', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/agencyAD/agency-update.html',
+            templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-update.html',
             controller: 'AgencyControllerAD'
         })
         .when('/admin/report/revenue', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/reportAD/revenue.html',
+            templateUrl: 'app/component/admin/views/pages/admin-form/report/revenue.html',
             controller: 'RevenueControllerAD'
         })
         .when('/admin/report/statistical', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/reportAD/statistical.html',
+            templateUrl: 'app/component/admin/views/pages/admin-form/report/statistical.html',
             controller: 'StatisticalControllerAD'
         })
 
