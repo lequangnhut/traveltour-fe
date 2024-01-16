@@ -23,6 +23,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/decentralization/account-decentralization-list.html',
             controller: 'DecentralizationListControllerAD'
         })
+
         .when('/admin/account-decentralization-list', {
             templateUrl: 'app/component/admin/views/pages/decentralization/account-decentralization/account-list.html',
             controller: 'AccountDecentralizationControllerAD'
@@ -39,6 +40,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * tour
          */
+        //basic
         .when('/admin/basic-tour-list', {
             templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-list.html',
             controller: 'BasicTourControllerAD'
@@ -51,6 +53,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-update.html',
             controller: 'BasicTourControllerAD'
         })
+        //detail
         .when('/admin/detail-tour-list', {
             templateUrl: 'app/component/admin/views/pages/tour-management/detail-tour/detail-tour-list.html',
             controller: 'DetailTourControllerAD'
