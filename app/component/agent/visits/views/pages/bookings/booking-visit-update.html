@@ -1,1 +1,277 @@
-<h4 class="fw-bold text-success mb-3">CẬP NHẬT PHƯƠNG TIỆN</h4>
+<div class="container mt-4 mb-5">
+    <div class="container-fluid">
+        <div class="header-control mb-4">
+            <div class="">
+                <div class="d-flex align-items-center row">
+                    <div class="col-lg-6">
+                        <h3 class="color-greend fw-bold">CẬP NHẬT BOOKING MỚI</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-custom">
+            <form class="row g-3 form-input-custom" ng-submit="submitDataCreateBookingVisits()"
+                  name="create_bookinhg_visits" method="post">
+
+                <div class="col-12">
+                    <label for="locationName" class="form-label">Tên địa điểm</label>
+                    <input type="text"
+                           class="form-control"
+                           id="locationName" disabled>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="inputNameLocation" class="form-label">TÊN KHÁCH HÀNG</label>
+                    <input type="text"
+                           class="form-control"
+                           id="inputNameLocation"
+                           placeholder="Nguyễn "
+                           name="name"
+                           ng-model="agent.name"
+                           ng-class="{ 'is-invalid': create_bookinhg_visits.name.$invalid && create_bookinhg_visits.name.$touched, 'is-valid': create_bookinhg_visits.name.$valid && create_bookinhg_visits.name.$touched }"
+                           ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="create_bookinhg_visits.name.$touched && create_bookinhg_visits.name.$error.required">
+                        Vui lòng nhập tên khách hàng !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="create_bookinhg_visits.name.$touched && create_bookinhg_visits.name.$error.pattern">
+                        Tên khách hàng không đúng định dạng !
+                    </small>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="inputVisitPhone" class="form-label">SỐ ĐIỆN THOẠI</label>
+                    <input type="text"
+                           class="form-control"
+                           id="inputVisitPhone"
+                           placeholder="0969653264"
+                           name="phone"
+                           ng-model="agent.phone"
+                           ng-class="{ 'is-invalid': create_bookinhg_visits.phone.$invalid && create_bookinhg_visits.phone.$touched, 'is-valid': create_bookinhg_visits.phone.$valid && create_bookinhg_visits.phone.$touched }"
+                           ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="create_bookinhg_visits.phone.$touched && create_bookinhg_visits.phone.$error.required">
+                        Vui lòng nhập số điện thoại !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="create_bookinhg_visits.phone.$touched && create_bookinhg_visits.phone.$error.pattern">
+                        Số điện thoại không đúng định dạng !
+                    </small>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="Citizen" class="form-label">CCCD</label>
+                    <input type="text"
+                           class="form-control"
+                           id="Citizen"
+                           placeholder="096754322321"
+                           name="citizen"
+                           ng-model="agent.citizen"
+                           ng-class="{ 'is-invalid': create_bookinhg_visits.citizen.$invalid && create_bookinhg_visits.citizen.$touched, 'is-valid': create_bookinhg_visits.citizen.$valid && create_bookinhg_visits.citizen.$touched }"
+                           ng-pattern="/^([0-9]{12})$/"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="create_bookinhg_visits.citizen.$touched && create_bookinhg_visits.citizen.$error.required">
+                        Vui lòng nhập căn cước công dân !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="create_bookinhg_visits.citizen.$touched && create_bookinhg_visits.citizen.$error.pattern">
+                        Căn cước công dân không đúng định dạng !
+                    </small>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="inputemail" class="form-label">Email</label>
+                    <input type="text"
+                           class="form-control"
+                           id="inputemail"
+                           placeholder="thht@gmail.com"
+                           name="email"
+                           ng-model="agent.email"
+                           ng-class="{ 'is-invalid': create_bookinhg_visits.email.$invalid && create_bookinhg_visits.email.$touched, 'is-valid': create_bookinhg_visits.email.$valid && create_bookinhg_visits.email.$touched }"
+                           ng-pattern="^[^@\s]+@[^@\s]+\.[a-zA-Z]{2,}$"
+
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="create_bookinhg_visits.email.$touched && create_bookinhg_visits.email.$error.required">
+                        Vui lòng nhập số email !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="create_bookinhg_visits.email.$touched && create_bookinhg_visits.email.$error.pattern">
+                        Email không đúng định dạng !
+                    </small>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox">
+                        <label class="form-label">Miễn phí vé</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="">
+                        <label class="form-label">Vé người lớn</label>
+                    </div>
+
+                    <div class="input-group mt-3">
+                        <input type="text"
+                               class="form-control"
+                               id="adult_ticket"
+                               placeholder="300,000"
+                               name="adultTicket"
+                               ng-model="agent.adultTicket"
+                               ng-class="{ 'is-invalid': create_bookinhg_visits.adultTicket.$invalid && create_bookinhg_visits.adultTicket.$touched, 'is-valid': create_bookinhg_visits.adultTicket.$valid && create_bookinhg_visits.adultTicket.$touched }"
+                               ng-pattern="/^(\d{1,3}(,\d{3})*(,\d{1,3})*(,\d{3})*|\d+(,\d{1,3})*)$/"
+                               required
+                        >
+                    </div>
+                    <small class="text-danger"
+                           ng-show="create_bookinhg_visits.adultTicket.$touched && create_bookinhg_visits.adultTicket.$error.required">
+                        Vui lòng nhập giá !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="create_bookinhg_visits.adultTicket.$touched && create_bookinhg_visits.adultTicket.$error.pattern">
+                        Giá không đúng định dạng !
+                    </small>
+
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Số lượng</label>
+                    <div class="input-group mt-3">
+                        <input type="number"
+                               class="form-control"
+                               id=munber_adult_ticket"
+                               placeholder="30"
+                               name="munberAdultTicket"
+                               ng-model="agent.munberAdultTicket"
+                               ng-class="{ 'is-invalid': create_bookinhg_visits.munberAdultTicket.$invalid && create_bookinhg_visits.munberAdultTicket.$touched, 'is-valid': create_bookinhg_visits.munberAdultTicket.$valid && create_bookinhg_visits.munberAdultTicket.$touched }"
+                               ng-pattern="/^([0-9]{1,3})$/"
+                               required
+                        >
+                    </div>
+                    <small class="text-danger"
+                           ng-show="create_bookinhg_visits.munberAdultTicket.$touched && create_bookinhg_visits.munberAdultTicket.$error.required">
+                        Vui lòng nhập số lượng !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="create_bookinhg_visits.munberAdultTicket.$touched && create_bookinhg_visits.munberAdultTicket.$error.pattern">
+                        Số lượng không đúng định dạng !
+                    </small>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="">
+                        <label class="form-label">Vé trẻ em</label>
+                    </div>
+
+                    <div class="input-group mt-3">
+                        <input type="text"
+                               class="form-control"
+                               id="child_ticket"
+                               placeholder="150,000"
+                               name="childTicket"
+                               ng-model="agent.childTicket"
+                               ng-class="{ 'is-invalid': create_bookinhg_visits.childTicket.$invalid && create_bookinhg_visits.childTicket.$touched, 'is-valid': create_bookinhg_visits.childTicket.$valid && create_bookinhg_visits.childTicket.$touched }"
+                               ng-pattern="/^(\d{1,3}(,\d{3})*(,\d{1,3})*(,\d{3})*|\d+(,\d{1,3})*)$/"
+                               required
+                        >
+                    </div>
+                    <small class="text-danger"
+                           ng-show="create_bookinhg_visits.childTicket.$touched && create_bookinhg_visits.childTicket.$error.required">
+                        Vui lòng nhập giá !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="create_bookinhg_visits.childTicket.$touched && create_bookinhg_visits.childTicket.$error.pattern">
+                        Giá không đúng định dạng !
+                    </small>
+
+                </div>
+
+
+                <div class="col-md-6 ">
+                    <label class="form-label">Số lượng</label>
+                    <div for="munberChildTicket" class="input-group mt-3">
+                        <input type="number"
+                               class="form-control"
+                               id=munberChildTicket"
+                               placeholder="30"
+                               name="munberChildTicket"
+                               ng-model="agent.munberChildTicket"
+                               ng-class="{ 'is-invalid': create_bookinhg_visits.munberChildTicket.$invalid && create_bookinhg_visits.munberChildTicket.$touched, 'is-valid': create_bookinhg_visits.munberChildTicket.$valid && create_bookinhg_visits.munberChildTicket.$touched }"
+                               ng-pattern="/^([0-9]{1,3})$/"
+                               required
+                        >
+                    </div>
+                    <small class="text-danger"
+                           ng-show="create_bookinhg_visits.munberChildTicket.$touched && create_bookinhg_visits.munberChildTicket.$error.required">
+                        Vui lòng nhập số lượng !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="create_bookinhg_visits.munberChildTicket.$touched && create_bookinhg_visits.munberChildTicket.$error.pattern">
+                        Số lượng không đúng định dạng !
+                    </small>
+
+                </div>
+
+                <div class="col-md-6">
+                    <label for="inputTotalPay" class="form-label">Tổng tiền</label>
+                    <input type="text"
+                           class="form-control"
+                           id="inputTotalPay"
+                           placeholder="120.000"
+                    >
+                </div>
+
+                <div class="col-6">
+                    <label class="form-label">Ngày Cập Nhật</label>
+                    <input type="date"
+                           class="form-control"
+                    >
+                </div>
+
+                <div class="col-md-12">
+                    <label for="visitStatus" class="form-label">Trạng thái</label>
+                    <select id="visitStatus" class="form-select"
+                            name="agency_status"
+                            ng-model="agent.agency_status"
+                            ng-class="{ 'is-invalid': update_visits.agency_status.$invalid && update_visits.agency_status.$touched, 'is-valid': update_visits.agency_status.$valid && update_visits.agency_status.$touched }"
+                            required>
+                        <option value="0" selected="selected"> Đang hoạt động</option>
+                        <option value="1">Ngừng hoạt động</option>
+                    </select>
+                    <small class="text-danger"
+                           ng-show="update_visits.agency_status.$touched && update_visits.agency_status.$error.required">
+                        Vui lòng chọn trạng thái !
+                    </small>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="inputNoteBooking" class="form-label">Ghi chú</label>
+                    <div class="input-group">
+                        <textarea class="form-control" id="inputNoteBooking" aria-label="With textarea"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end mt-5">
+                    <button class="btn" style="margin-right: 20px">
+                        <a class="btn" href="/business/booking-visit/booking-list">Trở về</a>
+                    </button>
+                    <button type="submit" class="btn btn-submit">Cập Nhật</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

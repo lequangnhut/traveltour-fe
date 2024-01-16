@@ -19,7 +19,12 @@ travel_app.controller('VisitControllerAG', function ($scope, $http){
         time_close_agent: null,
         business_images: null,
         locationTypeUpdate:null,
-        agency_status: null
+        agency_status: null,
+        locationName: null,
+        citizen: null,
+        email: null,
+        munberAdultTicket: null,
+        munberChildTicket: null
     }
 
 
@@ -81,6 +86,10 @@ travel_app.controller('VisitControllerAG', function ($scope, $http){
     $scope.submitDataUpdateVisits = function () {
         console.log($scope.agent)
     };
+    $scope.submitDataCreateBookingVisits = function () {
+        console.log($scope.agent)
+    };
+
 
 
 });
