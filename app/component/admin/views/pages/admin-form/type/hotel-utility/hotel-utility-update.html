@@ -1,0 +1,44 @@
+
+
+<section>
+    <div class="container">
+        <div class="container-fluid">
+            <div class="header-control mb-4">
+                <div class="">
+                    <div class="d-flex align-items-center row">
+                        <div class="col-lg-6">
+                            <h1 class="color-greend fw-medium">Cập nhật tiện ích lưu trú</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-custom" style="padding:20px">
+                <form class="row g-3 form-input-custom" ng-submit="submitAdminType()"
+                      method="POST" role="form" name="typeform">
+                    <div class="col-12">
+                        <label for="fullname" class="form-label">Nhập tên loại tiện ích lưu trú</label>
+                        <input class="form-control" id="fullname" type="text"
+                               placeholder="Nhập tên loại tiện ích lưu trú"
+                               name="typename"
+                               ng-model="type.typename"
+                               ng-class="{ 'is-invalid': typeform.typename.$invalid && typeform.typename.$touched, 'is-valid': typeform.typename.$valid && typeform.typename.$touched }"
+                               required/>
+                        <small class="text-danger"
+                               ng-show="typeform.typename.$touched && typeform.typename.$error.required">
+                            Vui lòng nhập loại tiện ích lưu trú !
+                        </small>
+                    </div>
+                    <div class="col-12 d-flex justify-content-end mt-5">
+                        <button class="btn" style="margin-right: 20px">
+                            <a class="btn" href="/admin/type/hotel-utility-list">Trở về</a>
+                        </button>
+                        <button type="submit" class="btn btn-submit" ng-disabled="typeform.$invalid">Cập nhật</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
