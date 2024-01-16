@@ -15,32 +15,25 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/dashboard/dashboard.html',
             controller: 'DashboardControllerAD'
         })
-
-        /**
-         * decentralization-account
-         */
-        .when('/admin/decentralization-list', {
-            templateUrl: 'app/component/admin/views/pages/decentralization/account-decentralization-list.html',
-            controller: 'DecentralizationListControllerAD'
+        .when('/admin/account-management', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/account/account-list.html',
+            controller: 'AccountControllerAD'
         })
-
-        .when('/admin/account-decentralization-list', {
-            templateUrl: 'app/component/admin/views/pages/decentralization/account-decentralization/account-list.html',
-            controller: 'AccountDecentralizationControllerAD'
+        .when('/admin/account-management/account-create', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/account/account-create.html',
+            controller: 'AccountControllerAD'
         })
-        .when('/admin/account-decentralization-list/decentralization-account-create', {
-            templateUrl: 'app/component/admin/views/pages/decentralization/account-decentralization/account-create.html',
-            controller: 'AccountDecentralizationControllerAD'
+        .when('/admin/account-management/account-update', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/account/account-update.html',
+            controller: 'AccountControllerAD'
         })
-        .when('/admin/account-decentralization-list/decentralization-account-update', {
-            templateUrl: 'app/component/admin/views/pages/decentralization/account-decentralization/account-update.html',
-            controller: 'AccountDecentralizationControllerAD'
+        .when('/admin/decentralized-management', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/decentralization/decentralization-list.html',
+            controller: 'DecentralizationControllerAD'
         })
-
         /**
          * tour
          */
-        //basic
         .when('/admin/basic-tour-list', {
             templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-list.html',
             controller: 'BasicTourControllerAD'
@@ -53,7 +46,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-update.html',
             controller: 'BasicTourControllerAD'
         })
-        //detail
         .when('/admin/detail-tour-list', {
             templateUrl: 'app/component/admin/views/pages/tour-management/detail-tour/detail-tour-list.html',
             controller: 'DetailTourControllerAD'
@@ -83,7 +75,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'VehicleControllerAD'
         })
         //stay
-            .when('/admin/stay-list', {
+        .when('/admin/stay-list', {
             templateUrl: 'app/component/admin/views/pages/partner-service/stay/stay-list.html',
             controller: 'StayControllerAD'
         })
