@@ -239,60 +239,60 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Admin Template
          */
-        .when('/admin/hotel-type', {
-            templateUrl: 'app/component/admin/views/pages/typesAD/hotel-type.html',
+        .when('/admin/type/hotel-type', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/typesAD/hotel-type.html',
             controller: 'HotelTypeControllerAD'
         })
-        .when('/admin/location-type', {
-            templateUrl: 'app/component/admin/views/pages/typesAD/location-type.html',
+        .when('/admin/type/location-type', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/typesAD/location-type.html',
             controller: 'LocationTypeControllerAD'
         })
-        .when('/admin/tour-type', {
-            templateUrl: 'app/component/admin/views/pages/typesAD/tour-type.html',
+        .when('/admin/type/tour-type', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/typesAD/tour-type.html',
             controller: 'TourTypeControllerAD'
         })
-        .when('/admin/transportation-type', {
-            templateUrl: 'app/component/admin/views/pages/typesAD/transportation-type.html',
+        .when('/admin/type/transportation-type', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/typesAD/transportation-type.html',
             controller: 'TransTypeControllerAD'
         })
-        .when('/admin/hotel-type/admin/hotel-type', {
-            templateUrl: 'app/component/admin/views/pages/typesAD/hotel-utility.html',
+        .when('/admin/type/hotel-utility', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/typesAD/hotel-utility.html',
             controller: 'HotelUtilityControllerAD'
         })
-        .when('/admin/room-utility', {
-            templateUrl: 'app/component/admin/views/pages/typesAD/room-utility.html',
+        .when('/admin/type/room-utility', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/typesAD/room-utility.html',
             controller: 'RoomUtilityControllerAD'
         })
-        .when('/admin/staff-create', {
-            templateUrl: 'app/component/admin/views/pages/staffAD/staff-create.html',
+        .when('/admin/staff/staff-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/staffAD/staff-list.html',
             controller: 'StaffControllerAD'
         })
-        .when('/admin/staff-update', {
-            templateUrl: 'app/component/admin/views/pages/staffAD/staff-update.html',
+        .when('/admin/staff/staff-list/staff-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/staffAD/staff-create.html',
             controller: 'StaffControllerAD'
         })
-        .when('/admin/staff-list', {
-            templateUrl: 'app/component/admin/views/pages/staffAD/staff-list.html',
+        .when('/admin/staff/staff-list/staff-update', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/staffAD/staff-update.html',
             controller: 'StaffControllerAD'
         })
-        .when('/admin/agency-create', {
-            templateUrl: 'app/component/admin/views/pages/agencyAD/agency-create.html',
+        .when('/admin/agency/agency-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/agencyAD/agency-list.html',
             controller: 'AgencyControllerAD'
         })
-        .when('/admin/agency-update', {
-            templateUrl: 'app/component/admin/views/pages/agencyAD/agency-update.html',
+        .when('/admin/agency/agency-list/agency-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/agencyAD/agency-create.html',
             controller: 'AgencyControllerAD'
         })
-        .when('/admin/agency-list', {
-            templateUrl: 'app/component/admin/views/pages/agencyAD/agency-list.html',
+        .when('/admin/agency/agency-list/agency-update', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/agencyAD/agency-update.html',
             controller: 'AgencyControllerAD'
         })
-        .when('/admin/revenue', {
-            templateUrl: 'app/component/admin/views/pages/reportAD/revenue.html',
+        .when('/admin/report/revenue', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/reportAD/revenue.html',
             controller: 'RevenueControllerAD'
         })
-        .when('/admin/statistical', {
-            templateUrl: 'app/component/admin/views/pages/reportAD/statistical.html',
+        .when('/admin/report/statistical', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/reportAD/statistical.html',
             controller: 'StatisticalControllerAD'
         })
         /**
@@ -305,24 +305,24 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/information', {
             templateUrl: 'app/component/customers/views/pages/info/information.html',
             controller: 'InformationController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/home');
-                    }
-                }
-            }
+            // resolve: {
+            //     "check": function ($location, AuthService) {
+            //         if (!AuthService.getToken()) {
+            //             $location.path('/home');
+            //         }
+            //     }
+            // }
         })
         .when('/information/change-password', {
             templateUrl: 'app/component/customers/views/pages/info/change-password.html',
             controller: 'ChangePasswordController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/home');
-                    }
-                }
-            }
+            // resolve: {
+            //     "check": function ($location, AuthService) {
+            //         if (!AuthService.getToken()) {
+            //             $location.path('/home');
+            //         }
+            //     }
+            // }
         })
         .when('/booking', {
             templateUrl: 'app/component/customers/views/pages/booking/booking.html',
