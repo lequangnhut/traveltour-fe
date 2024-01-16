@@ -5,7 +5,7 @@ let BASE_API = 'http://localhost:8080/api/v1/'
 travel_app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         /**
-         * Admin
+         * Super Admin
          */
         .when('/login-admin', {
             templateUrl: 'app/component/admin/views/pages/auth/login.html',
@@ -27,120 +27,133 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/supper-admin/account/account-update.html',
             controller: 'AccountControllerAD'
         })
-        .when('/admin/decentralized-management', {
-            templateUrl: 'app/component/admin/views/pages/supper-admin/decentralization/decentralization-list.html',
+        .when('/admin/agent-management', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/agent/agent-list.html',
+            controller: 'AccountControllerAD'
+        })
+        .when('/admin/agent-management/agent-create', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/agent/agent-create.html',
+            controller: 'AccountControllerAD'
+        })
+        .when('/admin/agent-management/agent-update', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/agent/agent-update.html',
+            controller: 'AccountControllerAD'
+        })
+        .when('/admin/decentralized-agent-management', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/decentralization/decentralization-agent.html',
             controller: 'DecentralizationControllerAD'
         })
+        .when('/admin/decentralized-staff-management', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/decentralization/decentralization-staff.html',
+            controller: 'DecentralizationControllerAD'
+        })
+
         /**
-         * tour
+         * Admin Tour
          */
         .when('/admin/basic-tour-list', {
-            templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-list.html',
+            templateUrl: 'app/component/admin/views/pages/staff/tour-management/basic-tour/basic-tour-list.html',
             controller: 'BasicTourControllerAD'
         })
         .when('/admin/basic-tour-list/basic-tour-create', {
-            templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-create.html',
+            templateUrl: 'app/component/admin/views/pages/staff/tour-management/basic-tour/basic-tour-create.html',
             controller: 'BasicTourControllerAD'
         })
         .when('/admin/basic-tour-list/basic-tour-update', {
-            templateUrl: 'app/component/admin/views/pages/tour-management/basic-tour/basic-tour-update.html',
+            templateUrl: 'app/component/admin/views/pages/staff/tour-management/basic-tour/basic-tour-update.html',
             controller: 'BasicTourControllerAD'
         })
         .when('/admin/detail-tour-list', {
-            templateUrl: 'app/component/admin/views/pages/tour-management/detail-tour/detail-tour-list.html',
+            templateUrl: 'app/component/admin/views/pages/staff/tour-management/detail-tour/detail-tour-list.html',
             controller: 'DetailTourControllerAD'
         })
         .when('/admin/detail-tour-list/detail-tour-create', {
-            templateUrl: 'app/component/admin/views/pages/tour-management/detail-tour/detail-tour-create.html',
+            templateUrl: 'app/component/admin/views/pages/staff/tour-management/detail-tour/detail-tour-create.html',
             controller: 'DetailTourControllerAD'
         })
         .when('/admin/detail-tour-list/detail-tour-update', {
-            templateUrl: 'app/component/admin/views/pages/tour-management/detail-tour/detail-tour-update.html',
+            templateUrl: 'app/component/admin/views/pages/staff/tour-management/detail-tour/detail-tour-update.html',
             controller: 'DetailTourControllerAD'
         })
+
         /**
-         * partner services
+         * Admin Partner Services
          */
-        //vehicle
         .when('/admin/vehicle-list', {
-            templateUrl: 'app/component/admin/views/pages/partner-service/vehicle/vehicle-list.html',
+            templateUrl: 'app/component/admin/views/pages/staff/partner-service/vehicle/vehicle-list.html',
             controller: 'VehicleControllerAD'
         })
         .when('/admin/vehicle-list/vehicle-create', {
-            templateUrl: 'app/component/admin/views/pages/partner-service/vehicle/vehicle-create.html',
+            templateUrl: 'app/component/admin/views/pages/staff/partner-service/vehicle/vehicle-create.html',
             controller: 'VehicleControllerAD'
         })
         .when('/admin/vehicle-list/vehicle-update', {
-            templateUrl: 'app/component/admin/views/pages/partner-service/vehicle/vehicle-update.html',
+            templateUrl: 'app/component/admin/views/pages/staff/partner-service/vehicle/vehicle-update.html',
             controller: 'VehicleControllerAD'
         })
-        //stay
         .when('/admin/stay-list', {
-            templateUrl: 'app/component/admin/views/pages/partner-service/stay/stay-list.html',
+            templateUrl: 'app/component/admin/views/pages/staff/partner-service/stay/stay-list.html',
             controller: 'StayControllerAD'
         })
         .when('/admin/stay-list/stay-create', {
-            templateUrl: 'app/component/admin/views/pages/partner-service/stay/stay-create.html',
+            templateUrl: 'app/component/admin/views/pages/staff/partner-service/stay/stay-create.html',
             controller: 'StayControllerAD'
         })
         .when('/admin/stay-list/stay-update', {
-            templateUrl: 'app/component/admin/views/pages/partner-service/stay/stay-update.html',
+            templateUrl: 'app/component/admin/views/pages/staff/partner-service/stay/stay-update.html',
             controller: 'StayControllerAD'
         })
-        //sightseeing
         .when('/admin/sightseeing-list', {
-            templateUrl: 'app/component/admin/views/pages/partner-service/sightseeing/sightseeing-list.html',
+            templateUrl: 'app/component/admin/views/pages/staff/partner-service/sightseeing/sightseeing-list.html',
             controller: 'SightseeingControllerAD'
         })
         .when('/admin/sightseeing-list/sightseeing-create', {
-            templateUrl: 'app/component/admin/views/pages/partner-service/sightseeing/sightseeing-create.html',
+            templateUrl: 'app/component/admin/views/pages/staff/partner-service/sightseeing/sightseeing-create.html',
             controller: 'SightseeingControllerAD'
         })
         .when('/admin/sightseeing-list/sightseeing-update', {
-            templateUrl: 'app/component/admin/views/pages/partner-service/sightseeing/sightseeing-update.html',
+            templateUrl: 'app/component/admin/views/pages/staff/partner-service/sightseeing/sightseeing-update.html',
             controller: 'SightseeingControllerAD'
         })
+
         /**
-         * schedule management
+         * Admin Schedule Management
          */
         .when('/admin/tours-are-going-list', {
-            templateUrl: 'app/component/admin/views/pages/schedule-management/tours-are-going/tours-are-going-list.html',
+            templateUrl: 'app/component/admin/views/pages/staff/schedule-management/tours-are-going/tours-are-going-list.html',
             controller: 'ToursAreGoingControllerAD'
         })
         .when('/admin/travel-schedule-list', {
-            templateUrl: 'app/component/admin/views/pages/schedule-management/travel-schedule/travel-schedule-list.html',
+            templateUrl: 'app/component/admin/views/pages/staff/schedule-management/travel-schedule/travel-schedule-list.html',
             controller: 'TravelScheduleControllerAD'
         })
         //tour-customers
         .when('/admin/tour-customer-list', {
-            templateUrl: 'app/component/admin/views/pages/schedule-management/tour-customers/tour-customers-list.html',
+            templateUrl: 'app/component/admin/views/pages/staff/schedule-management/tour-customers/tour-customers-list.html',
             controller: 'TourCustomersControllerAD'
         })
         .when('/admin/tour-customer-list/tour-customer-create', {
-            templateUrl: 'app/component/admin/views/pages/schedule-management/tour-customers/tour-customers-create.html',
+            templateUrl: 'app/component/admin/views/pages/staff/schedule-management/tour-customers/tour-customers-create.html',
             controller: 'TourCustomersControllerAD'
         })
         .when('/admin/tour-customer-list/tour-customer-update', {
-            templateUrl: 'app/component/admin/views/pages/schedule-management/tour-customers/tour-customers-update.html',
+            templateUrl: 'app/component/admin/views/pages/staff/schedule-management/tour-customers/tour-customers-update.html',
             controller: 'TourCustomersControllerAD'
         })
-        //----------------------------------------------------------------
-        //bill
         .when('/admin/bill-list', {
-            templateUrl: 'app/component/admin/views/pages/bill/bill-list.html',
+            templateUrl: 'app/component/admin/views/pages/staff/bill/bill-list.html',
             controller: 'BillControllerAD'
         })
         .when('/admin/bill-list/bill-create', {
-            templateUrl: 'app/component/admin/views/pages/bill/bill-create.html',
+            templateUrl: 'app/component/admin/views/pages/staff/bill/bill-create.html',
             controller: 'BillControllerAD'
         })
         .when('/admin/bill-list/bill-update', {
-            templateUrl: 'app/component/admin/views/pages/bill/bill-update.html',
+            templateUrl: 'app/component/admin/views/pages/staff/bill/bill-update.html',
             controller: 'BillControllerAD'
         })
-        //booking
         .when('/admin/booking-list', {
-            templateUrl: 'app/component/admin/views/pages/booking/booking-list.html',
+            templateUrl: 'app/component/admin/views/pages/staff/booking/booking-list.html',
             controller: 'BookingControllerAD'
         })
 
@@ -151,18 +164,16 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/hotel/views/pages/register/select-type.html',
             controller: ''
         })
-
-        //customers-management
         .when('/admin/customer-list', {
-            templateUrl: 'app/component/admin/views/pages/customer-management/customers-list.html',
+            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-list.html',
             controller: 'CustomerControllerAD'
         })
         .when('/admin/customer-list/customer-create', {
-            templateUrl: 'app/component/admin/views/pages/customer-management/customers-create.html',
+            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-create.html',
             controller: 'CustomerControllerAD'
         })
         .when('/admin/customer-list/customer-update', {
-            templateUrl: 'app/component/admin/views/pages/customer-management/customers-update.html',
+            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-update.html',
             controller: 'CustomerControllerAD'
         })
 
@@ -237,6 +248,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/room-amenities.html',
             controller: 'AccommodationLocationInformationEditController'
         })
+
         /**
          * Agent Transport
          */
@@ -287,6 +299,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/register-trans-success.html',
             controller: ''
         })
+
         /**
          * Agent Visit
          */
@@ -322,7 +335,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/visits/views/pages/bookings/booking-visit-update.html',
             controller: ''
         })
-
 
         /**
          * Admin Template
@@ -383,6 +395,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/admin-form/reportAD/statistical.html',
             controller: 'StatisticalControllerAD'
         })
+
         /**
          * Customer
          */
@@ -393,24 +406,24 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/information', {
             templateUrl: 'app/component/customers/views/pages/info/information.html',
             controller: 'InformationController',
-            // resolve: {
-            //     "check": function ($location, AuthService) {
-            //         if (!AuthService.getToken()) {
-            //             $location.path('/home');
-            //         }
-            //     }
-            // }
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/home');
+                    }
+                }
+            }
         })
         .when('/information/change-password', {
             templateUrl: 'app/component/customers/views/pages/info/change-password.html',
             controller: 'ChangePasswordController',
-            // resolve: {
-            //     "check": function ($location, AuthService) {
-            //         if (!AuthService.getToken()) {
-            //             $location.path('/home');
-            //         }
-            //     }
-            // }
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/home');
+                    }
+                }
+            }
         })
         .when('/booking', {
             templateUrl: 'app/component/customers/views/pages/booking/booking.html',
@@ -460,6 +473,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/move/drive-move-detail.html',
             controller: 'DriveMoveController'
         })
+
         /**
          * Authentication
          */

@@ -82,7 +82,7 @@ travel_app.controller('MainController', function ($scope, $location, $window, $a
         AuthService.clearAuthData();
         $scope.isAuthenticated = false;
         localStorage.removeItem('activeNavItem');
-        $location.path('/login-admin');
+        window.location.href = '/login-admin';
     };
 
     /**
