@@ -1,42 +1,49 @@
 travel_app.controller('DecentralizationControllerAD', function ($scope, DecentralizationServiceAD) {
     // Lưu trữ trạng thái ban đầu của các quyền
     $scope.originalRoles = {};
-
     $scope.selectedRoles = [];
+
+    $scope.currentPage = 0;
 
     function errorCallback() {
         toastAlert('error', "Máy chủ không tồn tại !");
     }
 
     /**
-     * Service tìm tất cả tài khoản của nhân viên
+     * Service tìm tất cả tài khoản của nhân viên và đối tác
      */
-    DecentralizationServiceAD.findAllDecentralizationStaff().then(function successCallback(response) {
-        if (response.status === 200) {
-            $scope.userRoleStaff = response.data;
+    $scope.init = function () {
+        DecentralizationServiceAD.findAllDecentralizationStaff($scope.currentPage).then(function successCallback(response) {
+            if (response.status === 200) {
+                $scope.userRoleStaff = response.data.content;
+                $scope.totalPages = response.data.totalPages;
 
-            response.data.forEach(function (userRoleStaff) {
-                $scope.originalRoles[userRoleStaff.id] = userRoleStaff.roles.map(function (role) {
-                    return role.nameRole;
+                response.data.forEach(function (userRoleStaff) {
+                    $scope.originalRoles[userRoleStaff.id] = userRoleStaff.roles.map(function (role) {
+                        return role.nameRole;
+                    });
                 });
-            });
-        }
-    }, errorCallback);
+            }
+        }, errorCallback);
 
-    /**
-     * Service tìm tất cả tài khoản của đối tác
-     */
-    DecentralizationServiceAD.findAllDecentralizationAgent().then(function successCallback(response) {
-        if (response.status === 200) {
-            $scope.userRoleAgent = response.data;
+        DecentralizationServiceAD.findAllDecentralizationAgent($scope.currentPage).then(function successCallback(response) {
+            if (response.status === 200) {
+                $scope.userRoleAgent = response.data.content;
+                $scope.totalPages = response.data.totalPages;
 
-            response.data.forEach(function (userRoleAgent) {
-                $scope.originalRoles[userRoleAgent.id] = userRoleAgent.roles.map(function (role) {
-                    return role.nameRole;
+                response.data.forEach(function (userRoleAgent) {
+                    $scope.originalRoles[userRoleAgent.id] = userRoleAgent.roles.map(function (role) {
+                        return role.nameRole;
+                    });
                 });
-            });
-        }
-    }, errorCallback);
+            }
+        }, errorCallback);
+    }
+
+    $scope.loadPage = function (page) {
+        $scope.currentPage = page;
+        $scope.init();
+    };
 
     $scope.userHasRole = function (role, userStaff) {
         return userStaff.roles && userStaff.roles.some(function (r) {
@@ -69,4 +76,6 @@ travel_app.controller('DecentralizationControllerAD', function ($scope, Decentra
             toastAlert('success', 'Cập nhật quyền thành công !');
         }, errorCallback);
     };
+
+    $scope.init();
 });

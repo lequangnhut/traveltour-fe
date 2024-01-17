@@ -37,8 +37,11 @@
                                     <i class="fa-solid fa-magnifying-glass bg-light"></i>
                                 </a>
                             </span>
-                            <input type="text" class="form-control" placeholder="Tìm kiếm" aria-label="Username"
-                                   aria-describedby="basic-addon1">
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Tìm kiếm"
+                                   ng-model="searchText"
+                            >
                         </div>
                     </div>
                     <div class="col-xl-3 mb-3">
@@ -51,7 +54,7 @@
                         </select>
                     </div>
                     <div class="col-xl-3 mb-3">
-                        Trạng thái
+                        Trạng thái hoạt động
                         <select class="form-select" aria-label="Default select example">
                             <option selected>Thành công</option>
                             <option value="1">One</option>
@@ -88,14 +91,22 @@
                         <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
                             <nav aria-label="Page navigation example float-end">
                                 <ul class="pagination justify-content-center align-items-center">
-                                    <li class="page-item bg-light rounded-2">
-                                        <a class="page-link"><i class="fa-solid fa-chevron-left"></i></a>
+                                    <li class="page-item" ng-class="{ 'disabled': currentPage  === 0 }">
+                                        <a href="#" class="page-link" ng-click="loadPage(currentPage - 1)">
+                                            <i class="fa-solid fa-chevron-left"></i>
+                                        </a>
                                     </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#"><i class="fa-solid fa-angle-right"></i></a>
+                                    <li class="page-item"
+                                        ng-repeat="pageNumber in [].constructor(totalPages) track by $index"
+                                        ng-class="{ 'active': currentPage === $index }">
+                                        <a href="#" class="page-link" ng-click="loadPage($index)">
+                                            {{ $index + 1 }}
+                                        </a>
+                                    </li>
+                                    <li class="page-item" ng-class="{ 'disabled': currentPage === totalPages - 1 }">
+                                        <a href="#" class="page-link" ng-click="loadPage(currentPage + 1)">
+                                            <i class="fa-solid fa-angle-right"></i>
+                                        </a>
                                     </li>
                                 </ul>
                             </nav>
@@ -117,7 +128,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="agent in listAccountAgent">
+                    <tr ng-repeat="agent in listAccountAgent | filter:searchText">
                         <td>
                             <span>
                                 <input class="form-check-input" type="checkbox" value="" id="">

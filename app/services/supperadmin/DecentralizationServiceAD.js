@@ -5,20 +5,20 @@ travel_app.service('DecentralizationServiceAD', function ($http) {
     /**
      * API lấy danh sách quyền nhân viên
      */
-    this.findAllDecentralizationStaff = function () {
+    this.findAllDecentralizationStaff = function (page) {
         return $http({
             method: 'GET',
-            url: API_SUPERADMIN + 'find-role-staff'
+            url: API_SUPERADMIN + 'find-role-staff?page=' + page
         })
     };
 
     /**
      * API lấy danh sách quyền đối tác
      */
-    this.findAllDecentralizationAgent = function () {
+    this.findAllDecentralizationAgent = function (page) {
         return $http({
             method: 'GET',
-            url: API_SUPERADMIN + 'find-role-agent'
+            url: API_SUPERADMIN + 'find-role-agent?page=' + page
         })
     };
 
