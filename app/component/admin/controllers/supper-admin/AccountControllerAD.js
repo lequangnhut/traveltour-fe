@@ -1,6 +1,8 @@
 travel_app.controller('AccountControllerAD', function ($scope, $location, $routeParams, AccountServiceAD, AuthService) {
     $scope.selectedRoles = [];
 
+    $scope.currentPage = 0;
+
     $scope.emailError = false;
     $scope.phoneError = false;
     $scope.cardError = false;
@@ -64,18 +66,20 @@ travel_app.controller('AccountControllerAD', function ($scope, $location, $route
     };
 
     /**
-     * Gọi api show dữ liệu lên bảng
+     * Gọi api show dữ liệu lên bảng của staff và agent
      */
     $scope.init = function () {
-        AccountServiceAD.findAllAccountStaff().then(function successCallback(response) {
+        AccountServiceAD.findAllAccountStaff($scope.currentPage).then(function successCallback(response) {
             if (response.status === 200) {
-                $scope.listAccountStaff = response.data;
+                $scope.listAccountStaff = response.data.content;
+                $scope.totalPages = response.data.totalPages;
             }
         }, errorCallback);
 
-        AccountServiceAD.findAllAccountAgent().then(function successCallback(response) {
+        AccountServiceAD.findAllAccountAgent($scope.currentPage).then(function successCallback(response) {
             if (response.status === 200) {
-                $scope.listAccountAgent = response.data;
+                $scope.listAccountAgent = response.data.content;
+                $scope.totalPages = response.data.totalPages;
             }
         }, errorCallback);
 
@@ -87,6 +91,11 @@ travel_app.controller('AccountControllerAD', function ($scope, $location, $route
             }, errorCallback);
         }
     }
+
+    $scope.loadPage = function (page) {
+        $scope.currentPage = page;
+        $scope.init();
+    };
 
     /**
      * Gọi api tạo mới account

@@ -4,20 +4,20 @@ travel_app.service('AccountServiceAD', function ($http) {
     /**
      * API lấy tất cả danh sách tài khoản staff
      */
-    this.findAllAccountStaff = function () {
+    this.findAllAccountStaff = function (page) {
         return $http({
             method: 'GET',
-            url: API_ACCOUNT + 'find-all-account-staff'
+            url: API_ACCOUNT + 'find-all-account-staff?page=' + page
         })
     };
 
     /**
      * API lấy tất cả danh sách tài khoản agent
      */
-    this.findAllAccountAgent = function () {
+    this.findAllAccountAgent = function (page) {
         return $http({
             method: 'GET',
-            url: API_ACCOUNT + 'find-all-account-agent'
+            url: API_ACCOUNT + 'find-all-account-agent?page=' + page
         })
     };
 
