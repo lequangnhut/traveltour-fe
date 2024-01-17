@@ -141,11 +141,11 @@
                             </div>
                         </td>
                         <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                            <a href="/admin/agent-management/agent-update"
+                            <a href="/admin/agent-management/agent-update/{{ agent.id }}"
                                role="button" class="btn" style="background: #ffc107; margin-right: 5px">
                                 <i class="fa-solid fa-pen-to-square text-white"></i>
                             </a>
-                            <a href="#"
+                            <a href="#" ng-click="deleteAccount(agent.id, agent.fullName, 'agent')"
                                role="button" class="btn" style="background: #dc3545">
                                 <i class="fa-solid fa-trash  text-white"></i>
                             </a>

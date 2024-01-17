@@ -3,6 +3,7 @@ travel_app.controller('AccountControllerAD', function ($scope, $location, $route
 
     $scope.emailError = false;
     $scope.phoneError = false;
+    $scope.cardError = false;
 
     $scope.admin = {
         email: null,
@@ -37,6 +38,15 @@ travel_app.controller('AccountControllerAD', function ($scope, $location, $route
     $scope.checkDuplicatePhone = function () {
         AuthService.checkExistPhone($scope.admin.phone).then(function successCallback(response) {
             $scope.phoneError = response.data.exists;
+        });
+    };
+
+    /**
+     * @message Check duplicate card
+     */
+    $scope.checkDuplicateCard = function () {
+        AuthService.checkExistCard($scope.admin.citizenCard).then(function successCallback(response) {
+            $scope.cardError = response.data.exists;
         });
     };
 
@@ -81,20 +91,21 @@ travel_app.controller('AccountControllerAD', function ($scope, $location, $route
     /**
      * Gọi api tạo mới account
      */
-    $scope.createAccountStaff = function () {
+    $scope.createAccount = function (url) {
         let dataAccount = {
-            accountDto: $scope.admin, roles: $scope.selectedRoles
+            accountDto: $scope.admin,
+            roles: $scope.selectedRoles
         }
         AccountServiceAD.create(dataAccount).then(function successCallback() {
             toastAlert('success', 'Thêm mới thành công !');
-            $location.path('/admin/account-management');
+            $location.path('/admin/' + url + '-management');
         }, errorCallback);
     }
 
     /**
-     * Gọi api cập nhật account
+     * Gọi api cập nhật account staff
      */
-    function confirmUpdate() {
+    function confirmUpdateStaff() {
         AccountServiceAD.update($scope.admin).then(function successCallback() {
             toastAlert('success', 'Cập nhật thành công !');
             $location.path('/admin/account-management');
@@ -102,22 +113,36 @@ travel_app.controller('AccountControllerAD', function ($scope, $location, $route
     }
 
     $scope.updateAccountStaff = function () {
-        confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdate);
+        confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdateStaff);
+    }
+
+    /**
+     * Gọi api cập nhật account agent
+     */
+    function confirmUpdateAgent() {
+        AccountServiceAD.update($scope.admin).then(function successCallback() {
+            toastAlert('success', 'Cập nhật thành công !');
+            $location.path('/admin/agent-management');
+        }, errorCallback);
+    }
+
+    $scope.updateAccountAgent = function () {
+        confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdateAgent);
     }
 
     /**
      * Gọi api delete account
      */
-    $scope.deleteAccountStaff = function (userId, fullName) {
-        function confirmDelete() {
+    $scope.deleteAccount = function (userId, fullName, url) {
+        function confirmDeleteStaff() {
             AccountServiceAD.delete(userId).then(function successCallback() {
                 toastAlert('success', 'Xóa tài khoản thành công !');
-                $location.path('/admin/account-management');
+                $location.path('/admin/' + url + '-management');
                 $scope.init();
             }, errorCallback);
         }
 
-        confirmAlert('Bạn có chắc chắn muốn xóa nhân viên ' + fullName + ' không ?', confirmDelete);
+        confirmAlert('Bạn có chắc chắn muốn xóa nhân viên ' + fullName + ' không ?', confirmDeleteStaff);
     }
 
     $scope.init();

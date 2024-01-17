@@ -86,6 +86,17 @@ travel_app.service('AuthService', function ($http, $window) {
     }
 
     /**
+     * @message API check duplicate phone
+     */
+    this.checkExistCard = function (card) {
+        return $http({
+            method: 'GET',
+            url: API_AUTH + 'check-duplicate-card/' + card,
+            param: 'cardId' + card
+        })
+    }
+
+    /**
      * @message Get and Set Data in local stored
      */
     this.setAuthData = function (token, user) {

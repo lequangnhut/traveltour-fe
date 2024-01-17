@@ -35,7 +35,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/supper-admin/agent/agent-create.html',
             controller: 'AccountControllerAD'
         })
-        .when('/admin/agent-management/agent-update', {
+        .when('/admin/agent-management/agent-update/:id', {
             templateUrl: 'app/component/admin/views/pages/supper-admin/agent/agent-update.html',
             controller: 'AccountControllerAD'
         })
