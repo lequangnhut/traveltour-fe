@@ -11,7 +11,7 @@
         </div>
 
         <div class="card card-custom">
-            <form class="row g-3 form-input-custom" ng-submit="" name="form_account" role="form">
+            <form class="row g-3 form-input-custom" ng-submit="updateAccountAgent()" name="form_account" role="form">
                 <div class="col-md-12">
                     <label class="form-label">ĐỊA CHỈ EMAIL</label>
                     <input type="text"
@@ -21,6 +21,7 @@
                            ng-model="admin.email"
                            ng-class="{ 'is-invalid': form_account.email.$invalid && form_account.email.$touched, 'is-valid': form_account.email.$valid && form_account.email.$touched }"
                            ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                           disabled
                            required
                     >
                     <small class="text-danger"
@@ -37,18 +38,18 @@
                     <input type="text"
                            class="form-control"
                            placeholder="Nguyễn Văn A"
-                           name="full_name"
-                           ng-model="admin.full_name"
-                           ng-class="{ 'is-invalid': form_account.full_name.$invalid && form_account.full_name.$touched, 'is-valid': form_account.full_name.$valid && form_account.full_name.$touched }"
+                           name="fullName"
+                           ng-model="admin.fullName"
+                           ng-class="{ 'is-invalid': form_account.fullName.$invalid && form_account.fullName.$touched, 'is-valid': form_account.fullName.$valid && form_account.fullName.$touched }"
                            ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
                            required
                     >
                     <small class="text-danger"
-                           ng-show="form_account.full_name.$touched && form_account.full_name.$error.required">
+                           ng-show="form_account.fullName.$touched && form_account.fullName.$error.required">
                         Vui lòng nhập họ và tên !
                     </small>
                     <small class="text-danger"
-                           ng-show="form_account.full_name.$touched && form_account.full_name.$error.pattern">
+                           ng-show="form_account.fullName.$touched && form_account.fullName.$error.pattern">
                         Họ và tên không đúng định dạng !
                     </small>
                 </div>
@@ -59,8 +60,9 @@
                            placeholder="0969653264"
                            name="phone"
                            ng-model="admin.phone"
-                           ng-class="{ 'is-invalid': form_account.phone.$invalid && form_account.phone.$touched, 'is-valid': form_account.phone.$valid && form_account.phone.$touched }"
+                           ng-class="{ 'is-invalid': form_account.phone.$invalid && form_account.phone.$touched, 'is-valid': form_account.phone.$valid && form_account.phone.$touched && !phoneError }"
                            ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                           ng-change="checkDuplicatePhone()"
                            required
                     >
                     <small class="text-danger"
@@ -71,30 +73,80 @@
                            ng-show="form_account.phone.$touched && form_account.phone.$error.pattern">
                         Số điện thoại không đúng định dạng !
                     </small>
+                    <small class="text-danger" ng-show="form_account.phone.$touched && phoneError">
+                        Số điện thoại đã tồn tại ở một tài khoản khác !
+                    </small>
                 </div>
                 <div class="col-md-12">
-                    <label class="form-label">TRẠNG THÁI</label>
+                    <label class="form-label">ĐỊA CHỈ</label>
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Việt Nam"
+                           name="address"
+                           ng-model="admin.address"
+                           ng-class="{ 'is-invalid': form_account.address.$invalid && form_account.address.$touched, 'is-valid': form_account.address.$valid && form_account.address.$touched }"
+                           ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="form_account.address.$touched && form_account.address.$error.required">
+                        Vui lòng nhập địa chỉ !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="form_account.address.$touched && form_account.address.$error.pattern">
+                        Địa chỉ không đúng định dạng !
+                    </small>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">CMND / CCCD</label>
+                    <input type="text"
+                           class="form-control"
+                           placeholder="089388928928"
+                           name="citizenCard"
+                           ng-model="admin.citizenCard"
+                           ng-class="{ 'is-invalid': form_account.citizenCard.$invalid && form_account.citizenCard.$touched, 'is-valid': form_account.citizenCard.$valid && form_account.citizenCard.$touched && !cardError }"
+                           ng-pattern="/^[0-9]{9,12}$/"
+                           ng-change="checkDuplicateCard()"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="form_account.citizenCard.$touched && form_account.citizenCard.$error.required">
+                        Vui lòng nhập CMND / CCCD !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="form_account.citizenCard.$touched && form_account.citizenCard.$error.pattern">
+                        CMND / CCCD không đúng định dạng !
+                    </small>
+                    <small class="text-danger" ng-show="form_account.citizenCard.$touched && cardError">
+                        CMND / CCCD đã tồn tại ở một tài khoản khác !
+                    </small>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">TRẠNG THÁI HOẠT ĐỘNG</label>
                     <select class="form-select"
-                            name="active"
-                            ng-class="{ 'is-invalid': form_account.active.$invalid && form_account.active.$touched, 'is-valid': form_account.active.$valid && form_account.active.$touched }"
-                            ng-model="admin.active"
+                            name="isActive"
+                            ng-class="{ 'is-invalid': form_account.isActive.$invalid && form_account.isActive.$touched, 'is-valid': form_account.isActive.$valid && form_account.isActive.$touched }"
+                            ng-model="admin.isActive"
                             required
                     >
                         <option value="" disabled selected>Chọn trạng thái</option>
-                        <option>Hoạt động</option>
-                        <option>Ngưng hoạt động</option>
+                        <option value="true" ng-selected="admin.isActive === true">Đang hoạt động</option>
+                        <option value="false" ng-selected="admin.isActive === false">Ngưng hoạt động</option>
                     </select>
                     <small class="text-danger"
-                           ng-show="form_account.active.$touched && form_account.active.$error.required">
+                           ng-show="form_account.isActive.$touched && form_account.isActive.$error.required">
                         Vui lòng chọn trạng thái !
                     </small>
                 </div>
 
                 <div class="col-12 d-flex justify-content-end mt-5">
                     <button type="button" class="btn" style="margin-right: 20px">
-                        <a class="btn" href="/admin/account-management">Trở về</a>
+                        <a class="btn" href="/admin/agent-management">Trở về</a>
                     </button>
-                    <button type="submit" ng-disabled="form_account.$invalid" class="btn btn-submit fw-bold">
+                    <button type="submit"
+                            ng-disabled="form_account.$invalid || emailError || phoneError || cardError"
+                            class="btn btn-submit fw-bold"
+                    >
                         Cập nhật
                     </button>
                 </div>

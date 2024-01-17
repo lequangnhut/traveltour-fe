@@ -21,6 +21,7 @@
                            ng-model="admin.email"
                            ng-class="{ 'is-invalid': form_account.email.$invalid && form_account.email.$touched, 'is-valid': form_account.email.$valid && form_account.email.$touched }"
                            ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                           disabled
                            required
                     >
                     <small class="text-danger"
@@ -99,8 +100,9 @@
                            placeholder="089388928928"
                            name="citizenCard"
                            ng-model="admin.citizenCard"
-                           ng-class="{ 'is-invalid': form_account.citizenCard.$invalid && form_account.citizenCard.$touched, 'is-valid': form_account.citizenCard.$valid && form_account.citizenCard.$touched }"
+                           ng-class="{ 'is-invalid': form_account.citizenCard.$invalid && form_account.citizenCard.$touched, 'is-valid': form_account.citizenCard.$valid && form_account.citizenCard.$touched && !cardError }"
                            ng-pattern="/^[0-9]{9,12}$/"
+                           ng-change="checkDuplicateCard()"
                            required
                     >
                     <small class="text-danger"
@@ -111,9 +113,12 @@
                            ng-show="form_account.citizenCard.$touched && form_account.citizenCard.$error.pattern">
                         CMND / CCCD không đúng định dạng !
                     </small>
+                    <small class="text-danger" ng-show="form_account.citizenCard.$touched && cardError">
+                        CMND / CCCD đã tồn tại ở một tài khoản khác !
+                    </small>
                 </div>
                 <div class="col-md-12">
-                    <label class="form-label">TRẠNG THÁI</label>
+                    <label class="form-label">TRẠNG THÁI HOẠT ĐỘNG</label>
                     <select class="form-select"
                             name="isActive"
                             ng-class="{ 'is-invalid': form_account.isActive.$invalid && form_account.isActive.$touched, 'is-valid': form_account.isActive.$valid && form_account.isActive.$touched }"
@@ -134,7 +139,10 @@
                     <button type="button" class="btn" style="margin-right: 20px">
                         <a class="btn" href="/admin/account-management">Trở về</a>
                     </button>
-                    <button type="submit" ng-disabled="form_account.$invalid" class="btn btn-submit fw-bold">
+                    <button type="submit"
+                            ng-disabled="form_account.$invalid || emailError || phoneError || cardError"
+                            class="btn btn-submit fw-bold"
+                    >
                         Cập nhật
                     </button>
                 </div>

@@ -5,10 +5,6 @@ travel_app.controller('MainController', function ($scope, $location, $window, $a
     $scope.isAuthenticated = AuthService.getToken() !== null;
     $scope.user = AuthService.getUser();
 
-    if (AuthService.getUser() !== null) {
-        $scope.role = AuthService.getUser().roles[0].nameRole
-    }
-
     /**
      * Gọi trong localStored ra để hiển thị thông báo
      */
@@ -20,6 +16,17 @@ travel_app.controller('MainController', function ($scope, $location, $window, $a
             toastAlert(notification.type, notification.message);
             NotificationService.clearNotification();
         }
+
+        /**
+         * Set role gọi ra slide bar
+         */
+        if (AuthService.getUser() !== null) {
+            $scope.roles = AuthService.getUser().roles.map(role => role.nameRole);
+        }
+
+        $scope.hasRole = function (roleToCheck) {
+            return $scope.roles.includes(roleToCheck);
+        };
     };
 
     $scope.init();
