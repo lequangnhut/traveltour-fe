@@ -23,7 +23,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/supper-admin/account/account-create.html',
             controller: 'AccountControllerAD'
         })
-        .when('/admin/account-management/account-update', {
+        .when('/admin/account-management/account-update/:id', {
             templateUrl: 'app/component/admin/views/pages/supper-admin/account/account-update.html',
             controller: 'AccountControllerAD'
         })

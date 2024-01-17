@@ -13,6 +13,7 @@ travel_app.controller('MainController', function ($scope, $location, $window, $a
      * Gọi trong localStored ra để hiển thị thông báo
      */
     $scope.init = function () {
+        $scope.year = new Date().getFullYear();
         const notification = NotificationService.getNotification();
 
         if (notification) {

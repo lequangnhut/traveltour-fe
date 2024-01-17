@@ -11,7 +11,7 @@
         </div>
 
         <div class="card card-custom">
-            <form class="row g-3 form-input-custom" ng-submit="" name="form_account" role="form">
+            <form class="row g-3 form-input-custom" ng-submit="createAccountStaff()" name="form_account" role="form">
                 <div class="col-md-12">
                     <label class="form-label">ĐỊA CHỈ EMAIL</label>
                     <input type="text"
@@ -19,8 +19,9 @@
                            placeholder="exam@gmail.com"
                            name="email"
                            ng-model="admin.email"
-                           ng-class="{ 'is-invalid': form_account.email.$invalid && form_account.email.$touched, 'is-valid': form_account.email.$valid && form_account.email.$touched }"
+                           ng-class="{ 'is-invalid': form_account.email.$invalid && form_account.email.$touched, 'is-valid': form_account.email.$valid && form_account.email.$touched && !emailError }"
                            ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                           ng-change="checkDuplicateEmail()"
                            required
                     >
                     <small class="text-danger"
@@ -30,6 +31,9 @@
                     <small class="text-danger"
                            ng-show="form_account.email.$touched && form_account.email.$error.pattern">
                         Địa chỉ email không đúng định dạng !
+                    </small>
+                    <small class="text-danger" ng-show="form_account.email.$touched && emailError">
+                        Email đã tồn tại ở một tài khoản khác!
                     </small>
                 </div>
                 <div class="col-md-12">
@@ -82,18 +86,18 @@
                     <input type="text"
                            class="form-control"
                            placeholder="Nguyễn Văn A"
-                           name="full_name"
-                           ng-model="admin.full_name"
-                           ng-class="{ 'is-invalid': form_account.full_name.$invalid && form_account.full_name.$touched, 'is-valid': form_account.full_name.$valid && form_account.full_name.$touched }"
+                           name="fullName"
+                           ng-model="admin.fullName"
+                           ng-class="{ 'is-invalid': form_account.fullName.$invalid && form_account.fullName.$touched, 'is-valid': form_account.fullName.$valid && form_account.fullName.$touched }"
                            ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
                            required
                     >
                     <small class="text-danger"
-                           ng-show="form_account.full_name.$touched && form_account.full_name.$error.required">
+                           ng-show="form_account.fullName.$touched && form_account.fullName.$error.required">
                         Vui lòng nhập họ và tên !
                     </small>
                     <small class="text-danger"
-                           ng-show="form_account.full_name.$touched && form_account.full_name.$error.pattern">
+                           ng-show="form_account.fullName.$touched && form_account.fullName.$error.pattern">
                         Họ và tên không đúng định dạng !
                     </small>
                 </div>
@@ -104,8 +108,9 @@
                            placeholder="0969653264"
                            name="phone"
                            ng-model="admin.phone"
-                           ng-class="{ 'is-invalid': form_account.phone.$invalid && form_account.phone.$touched, 'is-valid': form_account.phone.$valid && form_account.phone.$touched }"
+                           ng-class="{ 'is-invalid': form_account.phone.$invalid && form_account.phone.$touched, 'is-valid': form_account.phone.$valid && form_account.phone.$touched && !phoneError }"
                            ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                           ng-change="checkDuplicatePhone()"
                            required
                     >
                     <small class="text-danger"
@@ -116,30 +121,68 @@
                            ng-show="form_account.phone.$touched && form_account.phone.$error.pattern">
                         Số điện thoại không đúng định dạng !
                     </small>
+                    <small class="text-danger" ng-show="form_account.phone.$touched && phoneError">
+                        Số điện thoại đã tồn tại ở một tài khoản khác !
+                    </small>
                 </div>
                 <div class="col-md-12">
                     <label class="form-label">TRẠNG THÁI</label>
                     <select class="form-select"
-                            name="active"
-                            ng-class="{ 'is-invalid': form_account.active.$invalid && form_account.active.$touched, 'is-valid': form_account.active.$valid && form_account.active.$touched }"
-                            ng-model="admin.active"
+                            name="isActive"
+                            ng-class="{ 'is-invalid': form_account.isActive.$invalid && form_account.isActive.$touched, 'is-valid': form_account.isActive.$valid && form_account.isActive.$touched }"
+                            ng-model="admin.isActive"
                             required
                     >
                         <option value="" disabled selected>Chọn trạng thái</option>
-                        <option>Hoạt động</option>
-                        <option>Ngưng hoạt động</option>
+                        <option value="true">Hoạt động</option>
+                        <option value="false">Ngưng hoạt động</option>
                     </select>
                     <small class="text-danger"
-                           ng-show="form_account.active.$touched && form_account.active.$error.required">
+                           ng-show="form_account.isActive.$touched && form_account.isActive.$error.required">
                         Vui lòng chọn trạng thái !
                     </small>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">PHÂN QUYỀN</label>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-check-label">
+                                <input type="checkbox"
+                                       ng-click="toggleRole('ROLE_ADMIN')"
+                                       class="form-check-input"
+                                >
+                                Quản trị
+                            </label>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-check-label">
+                                <input type="checkbox"
+                                       ng-click="toggleRole('ROLE_STAFF')"
+                                       class="form-check-input"
+                                >
+                                Nhân viên
+                            </label>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-check-label">
+                                <input type="checkbox"
+                                       ng-click="toggleRole('ROLE_GUIDE')"
+                                       class="form-check-input"
+                                >
+                                Hướng dẫn viên
+                            </label>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-12 d-flex justify-content-end mt-5">
                     <button type="button" class="btn" style="margin-right: 20px">
                         <a class="btn" href="/admin/account-management">Trở về</a>
                     </button>
-                    <button type="submit" ng-disabled="form_account.$invalid" class="btn btn-submit fw-bold">
+                    <button type="submit"
+                            ng-disabled="form_account.$invalid || emailError || phoneError"
+                            class="btn btn-submit fw-bold"
+                    >
                         Thêm mới
                     </button>
                 </div>
