@@ -160,7 +160,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Agent
          */
-        .when('/business/register-agent', {
+        .when('/business', {
             templateUrl: 'app/component/agent/hotel/views/pages/register/select-type.html',
             controller: ''
         })
@@ -183,10 +183,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/business/hotel', {
             templateUrl: 'app/component/agent/hotel/views/pages/dashboard/dashboard.html',
             controller: ''
-        })
-        .when('/business/hotel/dashboard', {
-            templateUrl: 'app/component/agent/hotel/views/pages/dashboard/dashboard.html',
-            controller: 'BusinessInformationController'
         })
         .when('/business/register-business', {
             templateUrl: 'app/component/admin/views/pages/register-agent/business-information.html',
