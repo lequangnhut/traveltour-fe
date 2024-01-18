@@ -1,11 +1,8 @@
-travel_app.controller('BasicTourControllerAD', function ($scope, $location, $routeParams, ToursServiceAD) {
+travel_app.controller('BasicTourControllerAD', function ($scope, $location, $routeParams, $timeout, ToursServiceAD, ToursTypeServiceAD) {
 
     $scope.tourBasicList = []; // Biến để lưu danh sách tours
     $scope.currentPage = 0; // Trang hiện tại
     $scope.pageSize = 5; // Số lượng tours trên mỗi trang
-    $scope.totalPages = 0; // Tổng số trang
-    $scope.sortBy = 'id'; // Sắp xếp theo trường nào
-    $scope.sortDir = 'asc'; // Hướng sắp xếp
 
 
     // Đối tượng tourBasic mới cho form tour
@@ -15,6 +12,10 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
         tourStatus: null,
         tourImage: null
     };
+
+    let searchTimeout;
+
+    $scope.tourTypeNames = {};
 
     function errorCallback(error) {
         console.log(error)
@@ -37,6 +38,16 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
     $scope.submitTour = function () {
         console.log($scope.tourBasic);
     };
+
+    $scope.loadTourTypeName = function (tourId) {
+        if (!$scope.tourTypeNames[tourId]) {
+            ToursTypeServiceAD.findTourTypeById(tourId)
+                .then(function (response) {
+                    $scope.tourTypeNames[tourId] = response.data.tourTypeName;
+                }, errorCallback);
+        }
+    };
+
 
     $scope.setPage = function (page) {
         if (page >= 0 && page < $scope.totalPages) {
@@ -83,9 +94,14 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
     $scope.getTourBasicList = function () {
         ToursServiceAD.findAllTours($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
             .then(function (response) {
+                console.log(response); // Kiểm tra dữ liệu trả về
                 $scope.tourBasicList = response.data.content;
                 $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
                 $scope.totalElements = response.data.totalElements; // Tổng số phần tử
+
+                response.data.content.forEach(tour => {
+                    $scope.loadTourTypeName(tour.tourTypeId);
+                });
             }, errorCallback);
     };
 
@@ -94,6 +110,19 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
         $scope.sortBy = column;
         $scope.sortDir = ($scope.sortDir === 'asc') ? 'desc' : 'asc';
         $scope.getTourBasicList();
+    };
+
+    $scope.searchTours = function () {
+        if (searchTimeout) $timeout.cancel(searchTimeout);
+
+        searchTimeout = $timeout(function () {
+            ToursServiceAD.findAllTours($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
+                .then(function (response) {
+                    $scope.tourBasicList = response.data.content;
+                    $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
+                    $scope.totalElements = response.data.totalElements;
+                }, errorCallback);
+        }, 500); // 500ms debounce
     };
 
 
