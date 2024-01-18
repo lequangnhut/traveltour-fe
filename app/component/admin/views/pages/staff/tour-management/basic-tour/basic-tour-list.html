@@ -31,10 +31,9 @@
                     <div class="col-xl-4">
                         Bạn muốn tìm kiếm gì ?
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"><i
-                                    class="fa-solid fa-magnifying-glass bg-light"></i></span>
-                            <input type="text" class="form-control" placeholder="Tìm kiếm" aria-label="Username"
-                                   aria-describedby="basic-addon1">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass bg-light"></i></span>
+                            <input type="text" class="form-control" placeholder="Tìm kiếm" ng-model="searchTerm" ng-change="searchTours()"
+                                   aria-label="Username" aria-describedby="basic-addon1">
                         </div>
                     </div>
                     <div class="col-xl-3 mb-3">
@@ -140,10 +139,18 @@
                         <td>{{$index + 1}}</td>
                         <td>{{tour.id}}</td>
                         <td>{{tour.tourName}}</td>
-                        <td>{{tour.tourTypeId}}</td>
+                        <td>{{tourTypeNames[tour.tourTypeId] || 'Đang tải...'}}</td>
                         <td>{{tour.dateCreated | date:'dd-MM-yyyy'}}</td>
-                        <td>{{tour.isActive}}</td>
-                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <span ng-class="{'status-success': tour.isActive, 'status-danger': !tour.isActive}"></span>
+                                <span ng-class="{'text-status-success': tour.isActive, 'text-status-danger': !tour.isActive}">
+                                    {{tour.isActive ? 'Đang hoạt động' : 'Ngưng hoạt động'}}
+                                </span>
+                            </div>
+
+                        </td>
+                        <td class="d-flex align-items-center justify-content-center w-100" style="padding-right: 10px">
                             <a href="business/hotel/booking-list/create"
                                style="color: #ffc107; margin-right: 20px">
                                 <i class="fa-solid fa-pen-to-square"></i>

@@ -4,24 +4,22 @@ travel_app.service('ToursServiceAD', function ($http, $q) {
     /**
      * API lấy tất cả danh sách tour
      */
-    this.findAllTours = function (page, size, sortBy, sortDir) {
+    this.findAllTours = function (page, size, sortBy, sortDir, searchTerm) {
         const deferred = $q.defer();
         $http({
             method: 'GET',
-                url: API_TOUR + 'find-all-tours',
+            url: API_TOUR + 'find-all-tours',
             params: {
                 page: page || 0,
-                size: size || 10,
+                size: size || 5,
                 sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc'
+                sortDir: sortDir || 'asc',
+                searchTerm: searchTerm || ''
             }
-        }).then(function (response) {
-            deferred.resolve(response);
-        }, function (error) {
-            deferred.reject(error);
-        });
+        }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
     };
+
 
     /**
      * API tìm tour theo id
