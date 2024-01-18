@@ -18,7 +18,7 @@ travel_app.controller('DecentralizationControllerAD', function ($scope, Decentra
                 $scope.userRoleStaff = response.data.content;
                 $scope.totalPages = response.data.totalPages;
 
-                response.data.forEach(function (userRoleStaff) {
+                $scope.userRoleStaff.forEach(function (userRoleStaff) {
                     $scope.originalRoles[userRoleStaff.id] = userRoleStaff.roles.map(function (role) {
                         return role.nameRole;
                     });
@@ -31,7 +31,7 @@ travel_app.controller('DecentralizationControllerAD', function ($scope, Decentra
                 $scope.userRoleAgent = response.data.content;
                 $scope.totalPages = response.data.totalPages;
 
-                response.data.forEach(function (userRoleAgent) {
+                $scope.userRoleAgent.forEach(function (userRoleAgent) {
                     $scope.originalRoles[userRoleAgent.id] = userRoleAgent.roles.map(function (role) {
                         return role.nameRole;
                     });

@@ -1,4 +1,4 @@
-travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $location) {
+travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $location, AgenciesServiceAG, TransportServiceAG, AuthService) {
     $scope.showNextForm = false;
     $scope.showThirdForm = false;
     $scope.checkboxChecked = false;
@@ -7,18 +7,26 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $loc
     $scope.districts = [];
     $scope.wards = [];
 
+    $scope.phoneError = null;
+
     $scope.agent = {
-        name: null,
-        fname: null,
-        mst: null,
+        nameAgency: null,
+        representativeName: null,
+        taxId: null,
+        urlWebsite: null,
         phone: null,
         provinceName: null,
         districtName: null,
         wardName: null,
         address: null,
-        business_license: null,
-        name_agent: null,
-        business_images: null
+        imgDocument: null,
+        transportationBrandName: null,
+        transportationBrandImg: null
+    }
+
+    function errorCallback(error) {
+        console.log(error)
+        toastAlert('error', "Máy chủ không tồn tại !");
     }
 
     $scope.validateCheckbox = function () {
@@ -47,7 +55,7 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $loc
      */
     $http.get('/lib/address/data.json').then(function (response) {
         $scope.provinces = response.data;
-    });
+    }, errorCallback);
 
     $scope.onProvinceChange = function () {
         var selectedProvince = $scope.provinces.find(p => p.Id === $scope.agent.province);
@@ -79,22 +87,41 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $loc
     };
 
     /**
-     * Upload hình ảnh và lưu vào biến business_images
+     * @message Check duplicate phone
+     */
+    $scope.checkDuplicatePhone = function () {
+        AuthService.checkExistPhone($scope.agent.phone).then(function successCallback(response) {
+            $scope.phoneError = response.data.exists;
+        }, errorCallback);
+    };
+
+    $scope.init = function () {
+        let user = $scope.user;
+
+        if (user !== undefined && user !== null && user !== "") {
+            AgenciesServiceAG.findByUserId(user.id).then(function successCallback(response) {
+                $scope.agent = response.data;
+            }, errorCallback);
+        }
+    }
+
+    /**
+     * Upload hình ảnh và lưu vào biến transportationBrandImg
      * @param file
      */
-    $scope.uploadBusinessImage = function (file) {
+    $scope.uploadTransportBrandImg = function (file) {
         if (file && !file.$error) {
-            $scope.agent.business_images = file;
+            $scope.agent.transportationBrandImg = file;
         }
     };
 
     /**
-     * Upload hình ảnh và lưu vào biến business_license
+     * Upload hình ảnh và lưu vào biến imgDocument
      * @param file
      */
-    $scope.uploadBusinessLicense = function (file) {
+    $scope.uploadImgDocument = function (file) {
         if (file && !file.$error) {
-            $scope.agent.business_license = file;
+            $scope.agent.imgDocument = file;
         }
     };
 
@@ -102,21 +129,15 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $loc
      * Submit gửi dữ liệu cho api
      */
     $scope.submitDataRegisterTrans = function () {
-        console.log($scope.agent)
-        // var formData = new FormData();
-        // formData.append("demoDTO", new Blob([JSON.stringify($scope.agent)], {type: "application/json"}));
-        // formData.append("business_license", $scope.agent.business_license);
-        // formData.append("business_images", $scope.agent.business_images);
-        //
-        // $http({
-        //     method: 'POST',
-        //     url: 'http://localhost:8080/api/v1/demo/demo-upload-file',
-        //     headers: {'Content-Type': undefined},
-        //     data: formData,
-        //     transformRequest: angular.identity
-        // }).then(function successCallback(response) {
-        //     console.log(response.data);
-        // });
-        $location.path('/business/register-transport-success');
+        const dataTrans = new FormData();
+        dataTrans.append("transportDto", new Blob([JSON.stringify($scope.agent)], {type: "application/json"}));
+        dataTrans.append("transportationBrandImg", $scope.agent.transportationBrandImg);
+        dataTrans.append("imgDocument", $scope.agent.imgDocument);
+
+        TransportServiceAG.registerTransport(dataTrans).then(function successCallback() {
+            $location.path('/business/register-transport-success');
+        }, errorCallback);
     };
+
+    $scope.init();
 });

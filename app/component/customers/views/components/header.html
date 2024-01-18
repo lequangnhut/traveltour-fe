@@ -134,7 +134,7 @@
                     </div>
                 </div>
                 <!--====== Nav Right Item ======-->
-                <div class="nav-right-item" ng-if="!isAuthenticated || role !== 'ROLE_CUSTOMER'">
+                <div class="nav-right-item" ng-if="!isAuthenticated || !hasRole('ROLE_CUSTOMER')">
                     <div class="menu-button d-xl-block d-none">
                         <a href="/sign-in" class="main-btn primary-btn">
                             Đăng nhập
@@ -147,7 +147,7 @@
                         <span></span>
                     </div>
                 </div>
-                <div class="nav-right-item" ng-if="isAuthenticated && role === 'ROLE_CUSTOMER'">
+                <div class="nav-right-item" ng-if="isAuthenticated && hasRole('ROLE_CUSTOMER')">
                     <nav class="main-menu">
                         <ul>
                             <li class="menu-item has-children">

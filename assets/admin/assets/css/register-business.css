@@ -11,6 +11,125 @@ body::-webkit-scrollbar-thumb {
     background-color: #000000;
 }
 
+/*====== Start Preloader css ======*/
+.skill-wrapper, .footer-newsletter-widget .footer-content form .form_control, .sidebar-widget-area .booking-form-widget .sidebar-booking-form .bk-item .nice-select, .sidebar-widget-area .booking-form-widget .sidebar-booking-form .bk-item input, .sidebar-widget-area .sidebar-widget, .single-blog-post-four .entry-content .main-btn.filled-btn:hover svg, .gw-testimonial-item-two, .destination-details-wrapper .destination-info .features-list li span, .single-place-item-three .place-content .meta .icon-btn, .single-place-item-three:hover, .single-place-item .place-content .info, .booking-form .nice-select:focus, .booking-form .form_control:focus, .booking-form-wrapper, .activity-nav-tab, .single-service-item-four .content .icon-btn, .single-service-item-four:hover, .single-service-item-three .content .meta span.rate, .single-service-item-three:hover, .single-service-item .content .icon-btn, .single-service-item, .video-popup, .single-event-item, .single-activity-item .content .meta, .single-counter-item-two .icon, .single-counter-item, .single-team-item, .fancy-icon-box-three .icon, .fancy-icon-box-two, .fancy-icon-box .icon, .single-features-list .icon-inner .icon, .single-features-item-three .content, .single-features-item .img-holder .content, .about-two_content-box .card-list .card-item, .hero-search-form, .hero-wrapper-three .hero-arrows .slick-arrow:hover, .navigation-white.header-navigation .navbar-toggler span, .header-four .header-navigation.sticky, .header-navigation.breakpoint-on .nav-menu, .header-navigation .main-menu ul > li .sub-menu, .preloader, .main-btn.filled-btn:hover svg, .main-btn i, .white-bg {
+    background-color: #fff;
+}
+
+.hero-slider-two .slick-arrow, .hero-slider-one .slick-arrow, .footer-top .social-box ul.social-link li a, .product-details-wrapper .product-info ul.social-link li a, .single-place-item-three .place-content .meta .icon-btn, .single-gallery-item .gallery-img .icon-btn, .single-gallery-item .gallery-img .hover-overlay, .single-service-item-four .content .icon-btn, .single-service-item .content .icon-btn, .video-popup, .gowilds-pagination li a, .single-skill-circle .inner-circle, .single-info-item-two .icon, .single-info-item .icon, .single-cta-item .content .icon-btn, .single-counter-item-two .icon, .single-counter-item .icon, .fancy-icon-box-three .icon, .fancy-icon-box-two .icon, .fancy-icon-box .icon, .single-features-list .icon-inner .icon, .single-features-item .img-holder .text .icon-btn, .hero-wrapper-three .hero-arrows .slick-arrow, .header-navigation.breakpoint-on .nav-menu .main-menu ul li .dd-trigger, .preloader, .main-btn svg {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.preloader {
+    bottom: 0;
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100vw;
+    z-index: 99999;
+}
+
+.preloader .loader {
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+}
+
+.preloader .pre-box {
+    width: 50px;
+    height: 50px;
+    background: #63AB45;
+    -webkit-animation: loaderAnimate 0.5s linear infinite;
+    animation: loaderAnimate 0.5s linear infinite;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 3px;
+}
+
+.preloader .pre-shadow {
+    width: 50px;
+    height: 5px;
+    background: #000;
+    opacity: 0.1;
+    position: absolute;
+    top: 59px;
+    left: 0;
+    border-radius: 50%;
+    -webkit-animation: loaderShadow 0.5s linear infinite;
+    animation: loaderShadow 0.5s linear infinite;
+}
+
+@-webkit-keyframes loaderAnimate {
+    17% {
+        border-bottom-right-radius: 3px;
+    }
+    25% {
+        -webkit-transform: translateY(9px) rotate(22.5deg);
+        transform: translateY(9px) rotate(22.5deg);
+    }
+    50% {
+        -webkit-transform: translateY(18px) scale(1, 0.9) rotate(45deg);
+        transform: translateY(18px) scale(1, 0.9) rotate(45deg);
+        border-bottom-right-radius: 40px;
+    }
+    75% {
+        -webkit-transform: translateY(9px) rotate(67.5deg);
+        transform: translateY(9px) rotate(67.5deg);
+    }
+    100% {
+        -webkit-transform: translateY(0) rotate(90deg);
+        transform: translateY(0) rotate(90deg);
+    }
+}
+
+@keyframes loaderAnimate {
+    17% {
+        border-bottom-right-radius: 3px;
+    }
+    25% {
+        -webkit-transform: translateY(9px) rotate(22.5deg);
+        transform: translateY(9px) rotate(22.5deg);
+    }
+    50% {
+        -webkit-transform: translateY(18px) scale(1, 0.9) rotate(45deg);
+        transform: translateY(18px) scale(1, 0.9) rotate(45deg);
+        border-bottom-right-radius: 40px;
+    }
+    75% {
+        -webkit-transform: translateY(9px) rotate(67.5deg);
+        transform: translateY(9px) rotate(67.5deg);
+    }
+    100% {
+        -webkit-transform: translateY(0) rotate(90deg);
+        transform: translateY(0) rotate(90deg);
+    }
+}
+
+@-webkit-keyframes loaderShadow {
+    50% {
+        -webkit-transform: scale(1.2, 1);
+        transform: scale(1.2, 1);
+    }
+}
+
+@keyframes loaderShadow {
+    50% {
+        -webkit-transform: scale(1.2, 1);
+        transform: scale(1.2, 1);
+    }
+}
+
 #business-information .progress-container {
     margin: 30px 0 0 0;
     overflow: auto;
@@ -31,6 +150,7 @@ body::-webkit-scrollbar-thumb {
 #business-information .vector-wrapper {
     text-align: center;
 }
+
 #business-information .num {
     display: inline-block;
     text-align: center;
@@ -82,7 +202,8 @@ body::-webkit-scrollbar-thumb {
     margin: 10px;
     transition: all 0.2s linear;
 }
-#business-information .box>a {
+
+#business-information .box > a {
     text-decoration: none;
 }
 
