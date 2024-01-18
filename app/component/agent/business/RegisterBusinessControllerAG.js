@@ -100,11 +100,9 @@ travel_app.controller('RegisterBusinessControllerAG', function ($scope, $http, $
         dataAgencies.append("agenciesDto", new Blob([JSON.stringify($scope.agent)], {type: "application/json"}));
         dataAgencies.append("imgDocument", $scope.agent.imgDocument);
 
-        AgenciesServiceAG.registerBusiness(dataAgencies).then(
-            function successCallback() {
-                $location.path('/business/register-business-success');
-            }, errorCallback
-        ).finally(function () {
+        AgenciesServiceAG.registerBusiness(dataAgencies).then(function successCallback() {
+            $location.path('/business/register-business-success');
+        }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
     }

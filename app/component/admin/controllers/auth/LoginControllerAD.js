@@ -1,5 +1,4 @@
 travel_app.controller('LoginControllerAD', function ($scope, $location, AuthService, AgenciesServiceAG, NotificationService) {
-
     $scope.user = {
         email: null,
         password: null,
@@ -33,6 +32,8 @@ travel_app.controller('LoginControllerAD', function ($scope, $location, AuthServ
                                 toastAlert('warning', 'Không đủ quyền truy cập !');
                             } else if (['ROLE_AGENT_TRANSPORT', 'ROLE_AGENT_HOTEL', 'ROLE_AGENT_PLACE'].includes(role[i])) {
                                 AuthService.findByEmail(email).then(function successCallback(response) {
+                                    $scope.isLoading = true;
+
                                     let token = data.token;
                                     let user = response.data;
 
@@ -58,7 +59,9 @@ travel_app.controller('LoginControllerAD', function ($scope, $location, AuthServ
                                         } else {
                                             centerAlert('Thông báo !', 'Doanh nghiệp đã ngừng hoạt động !', 'warning');
                                         }
-                                    }, errorCallback);
+                                    }, errorCallback).finally(function () {
+                                        $scope.isLoading = false;
+                                    });
                                 }, errorCallback);
                             } else {
                                 AuthService.findByEmail(email).then(function successCallback(response) {
@@ -69,7 +72,9 @@ travel_app.controller('LoginControllerAD', function ($scope, $location, AuthServ
 
                                     window.location.href = '/admin/dashboard';
                                     NotificationService.setNotification('success', 'Đăng nhập thành công !');
-                                }, errorCallback);
+                                }, errorCallback).finally(function () {
+                                    $scope.isLoading = false;
+                                });
                             }
                         }
                     }, errorCallback);
