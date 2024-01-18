@@ -31,7 +31,7 @@ travel_app.controller('LoginControllerAD', function ($scope, $location, AuthServ
                         for (let i = 0; i < role.length; i++) {
                             if (role[i] === 'ROLE_CUSTOMER') {
                                 toastAlert('warning', 'Không đủ quyền truy cập !');
-                            } else if (role[i] === 'ROLE_AGENT_TRANSPORT' || role[i] === 'ROLE_AGENT_HOTEL' || role[i] === 'ROLE_AGENT_PLACE') {
+                            } else if (['ROLE_AGENT_TRANSPORT', 'ROLE_AGENT_HOTEL', 'ROLE_AGENT_PLACE'].includes(role[i])) {
                                 AuthService.findByEmail(email).then(function successCallback(response) {
                                     let token = data.token;
                                     let user = response.data;
@@ -39,16 +39,22 @@ travel_app.controller('LoginControllerAD', function ($scope, $location, AuthServ
                                     AgenciesServiceAG.findByUserId(user.id).then(function successCallback(response) {
                                         let agencies = response.data;
 
-                                        if (agencies.isActive && agencies.isAccepted === 0) {
+                                        const redirectMap = {
+                                            0: '/business/register-business',
+                                            1: '/business/register-business-success',
+                                            2: '/business/select-type',
+                                            3: '/business/register-business'
+                                        };
+
+                                        if (agencies.isActive) {
                                             AuthService.setAuthData(token, user);
 
-                                            window.location.href = '/business/register-transports';
-                                            NotificationService.setNotification('success', 'Đăng nhập thành công !');
-                                        } else if (agencies.isActive && agencies.isAccepted === 1) {
-                                            AuthService.setAuthData(token, user);
-
-                                            window.location.href = '/business';
-                                            NotificationService.setNotification('success', 'Đăng nhập thành công !');
+                                            if (redirectMap.hasOwnProperty(agencies.isAccepted)) {
+                                                window.location.href = redirectMap[agencies.isAccepted];
+                                                NotificationService.setNotification('success', 'Đăng nhập thành công !');
+                                            } else {
+                                                centerAlert('Thông báo !', 'Trạng thái chưa xác định !', 'warning');
+                                            }
                                         } else {
                                             centerAlert('Thông báo !', 'Doanh nghiệp đã ngừng hoạt động !', 'warning');
                                         }

@@ -10,6 +10,7 @@ travel_app.controller('SelectTypeControllerAG', function ($scope, AgenciesServic
         if (user !== undefined && user !== null && user !== "") {
             AgenciesServiceAG.findByUserId(user.id).then(function successCallback(response) {
                 $scope.agencies = response.data;
+                console.log($scope.agencies)
             }, errorCallback);
         }
     }

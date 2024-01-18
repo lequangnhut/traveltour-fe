@@ -1,4 +1,4 @@
-travel_app.controller('MainController', function ($scope, $location, $window, $anchorScroll, AuthService, NotificationService) {
+travel_app.controller('MainController', function ($scope, $rootScope, $location, $window, $anchorScroll, AuthService, NotificationService) {
     $anchorScroll();
     $scope.activeNavItem = localStorage.getItem('activeNavItem') || null;
 
@@ -109,12 +109,11 @@ travel_app.controller('MainController', function ($scope, $location, $window, $a
     $scope.hideSidebar = function () {
         const hiddenPaths = [
             '/business/register-hotel',
-            '/business/register-hotel-success',
             '/business/register-transports',
-            '/business/register-transport-success',
             '/business/register-visit',
-            '/business/register-visits-success',
-            '/business'
+            '/business/register-business',
+            '/business/register-business-success',
+            '/business/select-type'
         ];
         return $scope.isActive(hiddenPaths);
     };
@@ -126,13 +125,18 @@ travel_app.controller('MainController', function ($scope, $location, $window, $a
     $scope.sidebarStyle = function () {
         const marginPaths = [
             '/business/register-hotel',
-            '/business/register-hotel-success',
             '/business/register-transports',
-            '/business/register-transport-success',
             '/business/register-visit',
-            '/business/register-visits-success',
-            '/business'
+            '/business/register-business',
+            '/business/register-business-success',
+            '/business/select-type'
         ];
         return $scope.isActive(marginPaths) ? {'margin': '0'} : {};
     };
+
+    $rootScope.$on('$routeChangeSuccess', function () {
+        setTimeout(function () {
+            $('.preloader').fadeOut(500);
+        }, 500);
+    });
 });
