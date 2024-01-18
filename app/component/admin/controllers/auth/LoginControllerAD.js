@@ -1,8 +1,13 @@
-travel_app.controller('LoginControllerAD', function ($scope, $location, AuthService, NotificationService) {
+travel_app.controller('LoginControllerAD', function ($scope, $location, AuthService, AgenciesServiceAG, NotificationService) {
 
     $scope.user = {
         email: null,
         password: null,
+    }
+
+    function errorCallback(error) {
+        console.log(error)
+        toastAlert('error', "Máy chủ không tồn tại !");
     }
 
     /**
@@ -31,30 +36,41 @@ travel_app.controller('LoginControllerAD', function ($scope, $location, AuthServ
                                     let token = data.token;
                                     let user = response.data;
 
-                                    AuthService.setAuthData(token, user);
-                                    localStorage.setItem('activeNavItem', 'dashboard');
+                                    AgenciesServiceAG.findByUserId(user.id).then(function successCallback(response) {
+                                        let agencies = response.data;
 
-                                    window.location.href = '/business';
-                                    NotificationService.setNotification('success', 'Đăng nhập thành công !');
-                                });
+                                        if (agencies.isActive && agencies.isAccepted === 0) {
+                                            AuthService.setAuthData(token, user);
+
+                                            window.location.href = '/business/register-transports';
+                                            NotificationService.setNotification('success', 'Đăng nhập thành công !');
+                                        } else if (agencies.isActive && agencies.isAccepted === 1) {
+                                            AuthService.setAuthData(token, user);
+
+                                            window.location.href = '/business';
+                                            NotificationService.setNotification('success', 'Đăng nhập thành công !');
+                                        } else {
+                                            centerAlert('Thông báo !', 'Doanh nghiệp đã ngừng hoạt động !', 'warning');
+                                        }
+                                    }, errorCallback);
+                                }, errorCallback);
                             } else {
                                 AuthService.findByEmail(email).then(function successCallback(response) {
                                     let token = data.token;
                                     let user = response.data;
 
                                     AuthService.setAuthData(token, user);
-                                    localStorage.setItem('activeNavItem', 'dashboard');
 
                                     window.location.href = '/admin/dashboard';
                                     NotificationService.setNotification('success', 'Đăng nhập thành công !');
-                                });
+                                }, errorCallback);
                             }
                         }
-                    });
+                    }, errorCallback);
                 } else {
                     toastAlert('warning', "Sai thông tin đăng nhập !");
                 }
             }
-        });
+        }, errorCallback);
     };
 });

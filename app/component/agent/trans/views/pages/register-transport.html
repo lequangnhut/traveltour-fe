@@ -55,39 +55,58 @@
                                    class="form-control"
                                    id="inputNameBusiness"
                                    placeholder="Công ty du lịch TravelTour"
-                                   name="name"
-                                   ng-model="agent.name"
-                                   ng-class="{ 'is-invalid': register_trans.name.$invalid && register_trans.name.$touched, 'is-valid': register_trans.name.$valid && register_trans.name.$touched }"
+                                   name="nameAgency"
+                                   ng-model="agent.nameAgency"
+                                   ng-class="{ 'is-invalid': register_trans.nameAgency.$invalid && register_trans.nameAgency.$touched, 'is-valid': register_trans.nameAgency.$valid && register_trans.nameAgency.$touched }"
                                    ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
                                    required
                             >
                             <small class="text-danger"
-                                   ng-show="register_trans.name.$touched && register_trans.name.$error.required">
+                                   ng-show="register_trans.nameAgency.$touched && register_trans.nameAgency.$error.required">
                                 Vui lòng nhập tên doanh nghiệp !
                             </small>
                             <small class="text-danger"
-                                   ng-show="register_trans.name.$touched && register_trans.name.$error.pattern">
+                                   ng-show="register_trans.nameAgency.$touched && register_trans.nameAgency.$error.pattern">
                                 Tên doanh nghiệp không đúng định dạng !
                             </small>
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
                             <label for="inputFullname" class="form-label">Tên người đại diện</label>
                             <input type="text"
                                    class="form-control"
                                    id="inputFullname"
                                    placeholder="Nguyễn Văn A"
-                                   name="fname"
-                                   ng-model="agent.fname"
-                                   ng-class="{ 'is-invalid': register_trans.fname.$invalid && register_trans.fname.$touched, 'is-valid': register_trans.fname.$valid && register_trans.fname.$touched }"
+                                   name="representativeName"
+                                   ng-model="agent.representativeName"
+                                   ng-class="{ 'is-invalid': register_trans.representativeName.$invalid && register_trans.representativeName.$touched, 'is-valid': register_trans.representativeName.$valid && register_trans.representativeName.$touched }"
                                    ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
                                    required
                             >
                             <small class="text-danger"
-                                   ng-show="register_trans.fname.$touched && register_trans.fname.$error.required">
+                                   ng-show="register_trans.representativeName.$touched && register_trans.representativeName.$error.required">
                                 Vui lòng nhập tên người đại diện !
                             </small>
                             <small class="text-danger"
-                                   ng-show="register_trans.fname.$touched && register_trans.fname.$error.pattern">
+                                   ng-show="register_trans.representativeName.$touched && register_trans.representativeName.$error.pattern">
+                                Tên người đại diện không đúng định dạng !
+                            </small>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">URL Website</label>
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="https://excample.com.vn"
+                                   name="urlWebsite"
+                                   ng-model="agent.urlWebsite"
+                                   ng-class="{ 'is-invalid': register_trans.urlWebsite.$invalid && register_trans.urlWebsite.$touched, 'is-valid': register_trans.urlWebsite.$valid && register_trans.urlWebsite.$touched }"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_trans.urlWebsite.$touched && register_trans.urlWebsite.$error.required">
+                                Vui lòng nhập website !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="register_trans.urlWebsite.$touched && register_trans.urlWebsite.$error.pattern">
                                 Tên người đại diện không đúng định dạng !
                             </small>
                         </div>
@@ -97,18 +116,18 @@
                                    class="form-control"
                                    id="inputEmail4"
                                    placeholder="1423142144"
-                                   name="mst"
-                                   ng-model="agent.mst"
-                                   ng-class="{ 'is-invalid': register_trans.mst.$invalid && register_trans.mst.$touched, 'is-valid': register_trans.mst.$valid && register_trans.mst.$touched }"
+                                   name="taxId"
+                                   ng-model="agent.taxId"
+                                   ng-class="{ 'is-invalid': register_trans.taxId.$invalid && register_trans.taxId.$touched, 'is-valid': register_trans.taxId.$valid && register_trans.taxId.$touched }"
                                    ng-pattern="/^\d{10,13}$/"
                                    required
                             >
                             <small class="text-danger"
-                                   ng-show="register_trans.mst.$touched && register_trans.mst.$error.required">
+                                   ng-show="register_trans.taxId.$touched && register_trans.taxId.$error.required">
                                 Vui lòng nhập mã số thuế !
                             </small>
                             <small class="text-danger"
-                                   ng-show="register_trans.mst.$touched && register_trans.mst.$error.pattern">
+                                   ng-show="register_trans.taxId.$touched && register_trans.taxId.$error.pattern">
                                 Mã số thuế không đúng định dạng !
                             </small>
                         </div>
@@ -120,8 +139,9 @@
                                    placeholder="0969653264"
                                    name="phone"
                                    ng-model="agent.phone"
-                                   ng-class="{ 'is-invalid': register_trans.phone.$invalid && register_trans.phone.$touched, 'is-valid': register_trans.phone.$valid && register_trans.phone.$touched }"
+                                   ng-class="{ 'is-invalid': register_trans.phone.$invalid && register_trans.phone.$touched, 'is-valid': register_trans.phone.$valid && register_trans.phone.$touched && !phoneError }"
                                    ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                                   ng-change="checkDuplicatePhone()"
                                    required
                             >
                             <small class="text-danger"
@@ -131,6 +151,9 @@
                             <small class="text-danger"
                                    ng-show="register_trans.phone.$touched && register_trans.phone.$error.pattern">
                                 Số điện thoại không đúng định dạng !
+                            </small>
+                            <small class="text-danger" ng-show="register_trans.phone.$touched && phoneError">
+                                Số điện thoại đã tồn tại ở một tài khoản khác !
                             </small>
                         </div>
                         <div class="col-md-4">
@@ -208,15 +231,15 @@
                             <label class="form-label">Giấy phép đăng ký kinh doanh</label>
                             <input class="form-control"
                                    type="file"
-                                   name="business_license"
-                                   ng-model="agent.business_license"
+                                   name="imgDocument"
+                                   ng-model="agent.imgDocument"
                                    ngf-max-size="10MB"
-                                   ng-class="{ 'is-invalid': register_trans.business_license.$invalid && register_trans.business_license.$touched, 'is-valid': register_trans.business_license.$valid && register_trans.business_license.$touched }"
+                                   ng-class="{ 'is-invalid': register_trans.imgDocument.$invalid && register_trans.imgDocument.$touched, 'is-valid': register_trans.imgDocument.$valid && register_trans.imgDocument.$touched }"
                                    ngf-select="uploadBusinessLicense($file)"
                                    required
                             >
                             <small class="text-danger"
-                                   ng-show="register_trans.business_license.$touched && register_trans.business_license.$error.required">
+                                   ng-show="register_trans.imgDocument.$touched && register_trans.imgDocument.$error.required">
                                 Vui lòng tải lên giấy phép đăng ký kinh doanh !
                             </small>
                         </div>
@@ -288,18 +311,18 @@
                             <input type="text"
                                    class="form-control"
                                    placeholder="Công ty xe khách Phương Trang"
-                                   name="name_agent"
-                                   ng-class="{ 'is-invalid': register_trans.name_agent.$invalid && register_trans.name_agent.$touched, 'is-valid': register_trans.name_agent.$valid && register_trans.name_agent.$touched }"
-                                   ng-model="agent.name_agent"
+                                   name="transportationBrandName"
+                                   ng-class="{ 'is-invalid': register_trans.transportationBrandName.$invalid && register_trans.transportationBrandName.$touched, 'is-valid': register_trans.transportationBrandName.$valid && register_trans.transportationBrandName.$touched }"
+                                   ng-model="agent.transportationBrandName"
                                    ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
                                    required
                             >
                             <small class="text-danger"
-                                   ng-show="register_trans.name_agent.$touched && register_trans.name_agent.$error.required">
+                                   ng-show="register_trans.transportationBrandName.$touched && register_trans.transportationBrandName.$error.required">
                                 Vui lòng nhập tên thương hiệu !
                             </small>
                             <small class="text-danger"
-                                   ng-show="register_trans.name_agent.$touched && register_trans.name_agent.$error.pattern">
+                                   ng-show="register_trans.transportationBrandName.$touched && register_trans.transportationBrandName.$error.pattern">
                                 Tên thương hiệu không đúng định dạng !
                             </small>
                         </div>
@@ -307,15 +330,15 @@
                             <label class="form-label">Hình ảnh chứng minh</label>
                             <input class="form-control"
                                    type="file"
-                                   name="business_images"
-                                   ng-model="agent.business_images"
+                                   name="transportationBrandImg"
+                                   ng-model="agent.transportationBrandImg"
                                    ngf-max-size="10MB"
-                                   ng-class="{ 'is-invalid': register_trans.business_images.$invalid && register_trans.business_images.$touched, 'is-valid': register_trans.business_images.$valid && register_trans.business_images.$touched }"
+                                   ng-class="{ 'is-invalid': register_trans.transportationBrandImg.$invalid && register_trans.transportationBrandImg.$touched, 'is-valid': register_trans.transportationBrandImg.$valid && register_trans.transportationBrandImg.$touched }"
                                    ngf-select="uploadBusinessImage($file)"
                                    required
                             >
                             <small class="text-danger"
-                                   ng-show="register_trans.business_images.$touched && register_trans.business_images.$error.required">
+                                   ng-show="register_trans.transportationBrandImg.$touched && register_trans.transportationBrandImg.$error.required">
                                 Vui lòng tải lên giấy phép đăng ký kinh doanh !
                             </small>
                         </div>
@@ -326,7 +349,7 @@
                             </a>
                             <button type="button" class="btn btn-submit-form"
                                     ng-click="goToThirdSection()"
-                                    ng-disabled="register_trans.$invalid"
+                                    ng-disabled="register_trans.$invalid || phoneError"
                             >
                                 Tiếp tục
                             </button>
@@ -404,7 +427,7 @@
                             Quay về
                         </a>
                         <button type="submit" class="btn btn-submit-form"
-                                ng-disabled="!checkboxChecked">
+                                ng-disabled="!checkboxChecked || phoneError">
                             Xác nhận
                         </button>
                     </div>
