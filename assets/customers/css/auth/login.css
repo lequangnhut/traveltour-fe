@@ -15,55 +15,6 @@ h6 {
     font-family: "Montserrat", sans-serif;
 }
 
-.loader-wrapper {
-    height: 100vh;
-    width: 100vw;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    background-color: #ffffff;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    position: fixed;
-    z-index: 9;
-    top: 0;
-}
-
-.loader {
-    border: 16px solid #111;
-    border-radius: 50%;
-    border-top: 16px double #63AB45;
-    border-bottom: 16px double #63AB45;
-    width: 50px;
-    height: 50px;
-    -webkit-animation: spin 0.5s linear infinite; /* Safari */
-    animation: spin 0.5s linear infinite;
-}
-
-@-webkit-keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-    }
-}
-
-@keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-
 /*==============
   [01] Page css
 =================*/

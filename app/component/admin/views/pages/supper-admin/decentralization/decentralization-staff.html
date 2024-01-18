@@ -106,8 +106,6 @@
                 <table class="table table-responsive text-center">
                     <thead>
                     <tr class="bg-light">
-                        <th><span><input class="form-check-input checkbox-all" type="checkbox" value=""></span>
-                        </th>
                         <th scope="col"># <i class="fa-solid fa-sort"></i></th>
                         <th scope="col">Email <i class="fa-solid fa-sort"></i></th>
                         <th scope="col">Họ và tên <i class="fa-solid fa-sort"></i></th>
@@ -120,11 +118,6 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="staff in userRoleStaff | filter:searchText">
-                        <td>
-                            <span>
-                                <input class="form-check-input" type="checkbox" value="" id="">
-                            </span>
-                        </td>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ staff.email }}</td>
                         <td>{{ staff.fullName }}</td>

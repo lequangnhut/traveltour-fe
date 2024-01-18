@@ -160,21 +160,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Agent
          */
-        .when('/business', {
-            templateUrl: 'app/component/agent/hotel/views/pages/register/select-type.html',
+        .when('/business/register-business', {
+            templateUrl: 'app/component/agent/business/register-business.html',
+            controller: 'RegisterBusinessControllerAG'
+        })
+        .when('/business/register-business-success', {
+            templateUrl: 'app/component/agent/business/register-business-success.html',
             controller: ''
         })
-        .when('/admin/customer-list', {
-            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-list.html',
-            controller: 'CustomerControllerAD'
-        })
-        .when('/admin/customer-list/customer-create', {
-            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-create.html',
-            controller: 'CustomerControllerAD'
-        })
-        .when('/admin/customer-list/customer-update', {
-            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-update.html',
-            controller: 'CustomerControllerAD'
+        .when('/business/select-type', {
+            templateUrl: 'app/component/agent/business/select-type.html',
+            controller: 'SelectTypeControllerAG'
         })
 
         /**
@@ -182,19 +178,11 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/business/hotel', {
             templateUrl: 'app/component/agent/hotel/views/pages/dashboard/dashboard.html',
-            controller: ''
-        })
-        .when('/business/register-business', {
-            templateUrl: 'app/component/admin/views/pages/register-agent/business-information.html',
-            controller: 'BusinessInformationController'
+            controller: 'SelectTypeControllerAG'
         })
         .when('/business/register-hotel', {
             templateUrl: 'app/component/agent/hotel/views/pages/register/register-hotel.html',
             controller: 'RegisterHotelControllerAG'
-        })
-        .when('/business/register-hotel-success', {
-            templateUrl: 'app/component/agent/hotel/views/pages/register/register-success.html',
-            controller: ''
         })
         .when('/business/hotel/hotel-information-list', {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-list.html',
@@ -252,9 +240,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/register-transport.html',
             controller: 'RegisterTransControllerAG'
         })
-        .when('/business/register-transport-success', {
-            templateUrl: 'app/component/agent/trans/views/pages/register-trans-success.html'
-        })
         .when('/business/transport/transports-list', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-list.html',
             controller: 'TransportControllerAG'
@@ -291,10 +276,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/trips/trip-update.html',
             controller: 'TripControllerAG'
         })
-        .when('/business/register-transport-success', {
-            templateUrl: 'app/component/agent/trans/views/pages/register-trans-success.html',
-            controller: ''
-        })
 
         /**
          * Agent Visit
@@ -302,10 +283,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/business/register-visit', {
             templateUrl: 'app/component/agent/visits/views/pages/register-visits.html',
             controller: 'RegisterVisitsControllerAG'
-        })
-        .when('/business/register-visits-success', {
-            templateUrl: 'app/component/agent/visits/views/pages/register-visits-success.html',
-            controller: ''
         })
         .when('/business/visit/visit-list', {
             templateUrl: 'app/component/agent/visits/views/pages/visits/visit-list.html',
@@ -319,7 +296,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/visits/views/pages/visits/visit-update.html',
             controller: 'VisitControllerAG'
         })
-        .when('/business/booking-visit/booking-list', {
+        .when('/business/booking-visit/booking-info', {
             templateUrl: 'app/component/agent/visits/views/pages/bookings/booking-visit-list.html',
             controller: ''
         })
@@ -335,6 +312,18 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Admin Template
          */
+        .when('/admin/customer-list', {
+            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-list.html',
+            controller: 'CustomerControllerAD'
+        })
+        .when('/admin/customer-list/customer-create', {
+            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-create.html',
+            controller: 'CustomerControllerAD'
+        })
+        .when('/admin/customer-list/customer-update', {
+            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-update.html',
+            controller: 'CustomerControllerAD'
+        })
         .when('/admin/type/hotel-type-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-type/hotel-type-list.html',
             controller: 'HotelTypeControllerAD'
