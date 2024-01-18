@@ -1,5 +1,5 @@
 travel_app.service('AccountServiceAD', function ($http) {
-    let API_ACCOUNT = BASE_API + 'superadmin/account/';
+        let API_ACCOUNT = BASE_API + 'superadmin/account/';
 
     /**
      * API lấy tất cả danh sách tài khoản staff
