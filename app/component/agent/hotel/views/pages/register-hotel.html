@@ -18,265 +18,8 @@
                                     <div class="item">
                                         <div class="item-1 ">
                                             <div class="vector-wrapper">
-                                                <span class="num">1</span>
-                                            </div>
-                                            <div class="text-wrapper">Tạo doanh nghiệp</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <span class="num">2</span>
-                                            </div>
-                                            <div class="text-wrapper">Thông tin khách sạn</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <span class="num">3</span>
-                                            </div>
-                                            <div class="text-wrapper">Thông tin phòng</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-1">
-                                            <div class="vector-wrapper">
-                                                <span class="num">4</span>
-                                            </div>
-                                            <div class="text-wrapper">Xác nhận thông tin</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="main d-flex justify-content-center theme-wizard">
-                    <div class="form card">
-                        <div class="row g-3">
-                            <div class="h3 color-greend fw-medium">TẠO DOANH NGHIỆP</div>
-                            <!-- Tên doanh nghiệp -->
-                            <div class="col-12">
-                                <label for="inputBusinessName" class="form-label">Tên doanh nghiệp</label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="inputBusinessName"
-                                       placeholder="Tập đoàn traveltour"
-                                       name="businessName"
-                                       ng-model="business.businessName"
-                                       ng-class="{ 'is-invalid': register_hotel.businessName.$invalid && register_hotel.businessName.$touched, 'is-valid': register_hotel.businessName.$valid && register_hotel.businessName.$touched }"
-                                       required
-                                >
-                                <small class="text-danger"
-                                       ng-show="register_hotel.businessName.$touched && register_hotel.businessName.$error.required">
-                                    Vui lòng nhập tên doanh nghiệp!
-                                </small>
-                            </div>
-
-                            <!-- Tên người đại diện -->
-                            <div class="col-12">
-                                <label for="inputRepresentative" class="form-label">Tên người đại diện</label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="inputRepresentative"
-                                       placeholder="Nguyễn An"
-                                       name="representative"
-                                       ng-model="business.representative"
-                                       ng-class="{ 'is-invalid': register_hotel.representative.$invalid && register_hotel.representative.$touched, 'is-valid': register_hotel.representative.$valid && register_hotel.representative.$touched }"
-                                       required
-                                >
-                                <small class="text-danger"
-                                       ng-show="register_hotel.representative.$touched && register_hotel.representative.$error.required">
-                                    Vui lòng nhập tên người đại diện!
-                                </small>
-                            </div>
-
-                            <!-- Mã số thuế -->
-                            <div class="col-md-6">
-                                <label for="inputTaxCode" class="form-label">Mã số thuế</label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="inputTaxCode"
-                                       placeholder="1234971274"
-                                       name="taxCode"
-                                       ng-model="business.taxCode"
-                                       ng-class="{ 'is-invalid': register_hotel.taxCode.$invalid && register_hotel.taxCode.$touched, 'is-valid': register_hotel.taxCode.$valid && register_hotel.taxCode.$touched }"
-                                       required
-                                >
-                                <small class="text-danger"
-                                       ng-show="register_hotel.taxCode.$touched && register_hotel.taxCode.$error.required">
-                                    Vui lòng nhập mã số thuế!
-                                </small>
-                            </div>
-
-                            <!-- Số điện thoại -->
-                            <div class="col-md-6">
-                                <label for="inputPhone" class="form-label">Số điện thoại</label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="inputPhone"
-                                       placeholder="0969653264"
-                                       name="businessPhone"
-                                       ng-model="business.businessPhone"
-                                       ng-class="{ 'is-invalid': register_hotel.businessPhone.$invalid && register_hotel.businessPhone.$touched, 'is-valid': register_hotel.businessPhone.$valid && register_hotel.businessPhone.$touched }"
-                                       required
-                                >
-                                <small class="text-danger"
-                                       ng-show="register_hotel.businessPhone.$touched && register_hotel.businessPhone.$error.required">
-                                    Vui lòng nhập số điện thoại!
-                                </small>
-                            </div>
-
-                            <!-- Website -->
-                            <div class="col-12">
-                                <label for="inputBusinessWebsite" class="form-label">Website</label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="inputBusinessWebsite"
-                                       placeholder="www://traveltour.vn"
-                                       name="website"
-                                       ng-model="business.website"
-                                       ng-class="{ 'is-invalid': register_hotel.website.$invalid && register_hotel.website.$touched, 'is-valid': register_hotel.website.$valid && register_hotel.website.$touched }"
-                                       required
-                                >
-                                <small class="text-danger"
-                                       ng-show="register_hotel.website.$touched && register_hotel.website.$error.required">
-                                    Vui lòng nhập website!
-                                </small>
-                            </div>
-
-                            <!-- Thành phố -->
-                            <div class="col-md-4">
-                                <label for="inputCity" class="form-label">Thành phố</label>
-                                <select id="inputCity"
-                                        class="form-select"
-                                        name="cityBusiness"
-                                        ng-model="business.cityBusiness"
-                                        ng-class="{ 'is-invalid': register_hotel.cityBusiness.$invalid && register_hotel.cityBusiness.$touched, 'is-valid': register_hotel.cityBusiness.$valid && register_hotel.cityBusiness.$touched }"
-                                        required
-                                >
-                                    <option selected>Choose...</option>
-                                    <!-- Thêm các tùy chọn thành phố -->
-                                </select>
-                                <small class="text-danger"
-                                       ng-show="register_hotel.cityBusiness.$touched && register_hotel.cityBusiness.$error.required">
-                                    Vui lòng chọn thành phố!
-                                </small>
-                            </div>
-
-                            <!-- Quận/Huyện -->
-                            <div class="col-md-4">
-                                <label for="inputDistrict" class="form-label">Quận/Huyện</label>
-                                <select id="inputDistrict"
-                                        class="form-select"
-                                        name="districtBusiness"
-                                        ng-model="business.districtBusiness"
-                                        ng-class="{ 'is-invalid': register_hotel.districtBusiness.$invalid && register_hotel.districtBusiness.$touched, 'is-valid': register_hotel.districtBusiness.$valid && register_hotel.districtBusiness.$touched }"
-                                        required
-                                >
-                                    <option selected>Choose...</option>
-                                    <!-- Thêm các tùy chọn quận/huyện -->
-                                </select>
-                                <small class="text-danger"
-                                       ng-show="register_hotel.districtBusiness.$touched && register_hotel.districtBusiness.$error.required">
-                                    Vui lòng chọn quận/huyện!
-                                </small>
-                            </div>
-
-                            <!-- Phường/Xã -->
-                            <div class="col-md-4">
-                                <label for="inputWard" class="form-label">Phường/Xã</label>
-                                <select id="inputWard"
-                                        class="form-select"
-                                        name="wardBusiness"
-                                        ng-model="business.wardBusiness"
-                                        ng-class="{ 'is-invalid': register_hotel.wardBusiness.$invalid && register_hotel.wardBusiness.$touched, 'is-valid': register_hotel.wardBusiness.$valid && register_hotel.wardBusiness.$touched }"
-                                        required
-                                >
-                                    <option selected>Choose...</option>
-                                    <!-- Thêm các tùy chọn phường/xã -->
-                                </select>
-                                <small class="text-danger"
-                                       ng-show="register_hotel.wardBusiness.$touched && register_hotel.wardBusiness.$error.required">
-                                    Vui lòng chọn phường/xã!
-                                </small>
-                            </div>
-
-                            <!-- Địa chỉ -->
-                            <div class="col-12">
-                                <label for="inputBusinessAddress" class="form-label">Địa chỉ</label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="inputBusinessAddress"
-                                       placeholder="1234 Main St"
-                                       name="businessAddress"
-                                       ng-model="business.businessAddress"
-                                       ng-class="{ 'is-invalid': register_hotel.businessAddress.$invalid && register_hotel.businessAddress.$touched, 'is-valid': register_hotel.businessAddress.$valid && register_hotel.businessAddress.$touched }"
-                                       required
-                                >
-                                <small class="text-danger"
-                                       ng-show="register_hotel.businessAddress.$touched && register_hotel.businessAddress.$error.required">
-                                    Vui lòng nhập địa chỉ!
-                                </small>
-                            </div>
-
-                            <!-- Chứng minh giấy tờ -->
-                            <!-- Hình ảnh -->
-                            <div class="mb-3">
-                                <label for="formFile" class="form-label">Chứng minh giấy tờ</label>
-                                <input class="form-control"
-                                       type="file"
-                                       id="formFile"
-                                       name="identityCard"
-                                       accept="image/*"
-                                       ng-model="business.identityCard"
-                                       ngf-select="validateImageFiles()"
-                                       ng-class="{ 'is-invalid': register_hotel.identityCard.$invalid && register_hotel.identityCard.$touched, 'is-valid': register_hotel.identityCard.$valid && register_hotel.identityCard.$touched }"
-                                       multiple
-                                       required
-                                >
-                                <small class="text-danger"
-                                       ng-show="register_hotel.imageFiles.$touched && register_hotel.imageFiles.$error.required">
-                                    Vui lòng chọn ít nhất một ảnh!
-                                </small>
-                                <small class="text-danger"
-                                       ng-show="register_hotel.imageFiles.$error.maxImages">
-                                    Số lượng ảnh tối đa là 10!
-                                </small>
-                            </div>
-                            <div class="d-flex justify-content-end mt-5">
-                                <button type="submit" class="btn btn-submit-form"
-                                        ng-click="nextStep()">Tiếp tục<i
-                                        class="fa-solid fa-arrow-right"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <div ng-show="currentStep === 2">
-        <section id="business-information">
-            <div class="container-fluid">
-                <div class="logo text-center">
-                    <div class="d-flex align-items-center justify-content-center mb-4">
-                        <img src="/assets/admin/assets/img/icons/logo.png" alt="logo" width="60"/>
-                        <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder fs-4">TravelTour</p>
-                    </div>
-                    <div class="content-text mt-3">
-                        <div class="h4">Đăng kí thông tin đối tác khách sạn của TravelTour</div>
-                    </div>
-                    <div class="progress-register">
-                        <!-- Tiến dộ -->
-                        <div class="progress-container">
-                            <div class="container">
-                                <div class="d-flex justify-content-center">
-                                    <div class="item">
-                                        <div class="item-1 ">
-                                            <div class="vector-wrapper">
-                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg"
+                                                     viewBox="0 0 512 512"
                                                      id="tick">
                                                     <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
                                                 </svg>
@@ -537,7 +280,7 @@
                                            ng-change="updateCheckboxCount()"
                                     >
                                     <label class="form-check-label" for="{{checkbox.id}}">
-                                        {{checkbox.label}}
+                                        {{ checkbox.label }}
                                     </label>
                                 </div>
                             </div>
@@ -546,23 +289,30 @@
                                 Vui lòng chọn ít nhất một tiện ích!
                             </small>
                         </div>
-                        <div class="d-flex justify-content-end mt-5">
-                            <button type="submit" class="btn btn-submit-form btn-prev"
-                                    style="background: #5c636a; margin-right: 20px" ng-click="prevStep()"><i
-                                    class="fa-solid fa-arrow-left"></i> Trở về
-                            </button>
-                            <button type="submit" class="btn btn-submit-form"
-                                    ng-click="nextStep()">Tiếp tục <i
-                                    class="fa-solid fa-arrow-right"></i></button>
+                        <div class="d-flex justify-content-end">
+                            <div class="d-flex justify-content-end mt-5">
+                                <a role="button"
+                                   href="/business/select-type"
+                                   class="btn btn-submit-form"
+                                   style="background: #5c636a; margin-right: 20px"
+                                >
+                                    <i class="fa-solid fa-arrow-left"></i> Trở về
+                                </a>
+                                <button type="submit"
+                                        class="btn btn-submit-form"
+                                        ng-click="nextStep()"
+                                >
+                                    Tiếp tục <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-    </div>
-    </section>
+        </section>
     </div>
 
-    <div ng-show="currentStep === 3">
+    <div ng-show="currentStep === 2">
         <section id="business-information">
             <div class="container-fluid">
                 <div class="logo text-center">
@@ -582,7 +332,8 @@
                                     <div class="item">
                                         <div class="item-1 ">
                                             <div class="vector-wrapper">
-                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg"
+                                                     viewBox="0 0 512 512"
                                                      id="tick">
                                                     <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
                                                 </svg>
@@ -593,7 +344,8 @@
                                     <div class="item">
                                         <div class="item-1">
                                             <div class="vector-wrapper">
-                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg"
+                                                     viewBox="0 0 512 512"
                                                      id="tick">
                                                     <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
                                                 </svg>
@@ -678,7 +430,7 @@
                                                ng-change="updateCheckboxCount()"
                                         >
                                         <label class="form-check-label" for="{{checkbox.id}}">
-                                            {{checkbox.label}}
+                                            {{ checkbox.label }}
                                         </label>
                                     </div>
                                 </div>
@@ -688,12 +440,19 @@
                                 </small>
                             </div>
                             <div class="d-flex justify-content-end mt-5">
-                                <button type="submit" class="btn btn-submit-form btn-prev"
-                                        style="background: #5c636a; margin-right: 20px" ng-click="prevStep()"><i
-                                        class="fa-solid fa-arrow-left"></i> Trở về
+                                <button type="submit"
+                                        class="btn btn-submit-form btn-prev"
+                                        style="background: #5c636a; margin-right: 20px"
+                                        ng-click="prevStep()"
+                                >
+                                    <i class="fa-solid fa-arrow-left"></i> Trở về
                                 </button>
-                                <button type="submit" class="btn btn-submit-form" ng-click="nextStep()">Tiếp tục <i
-                                        class="fa-solid fa-arrow-right"></i></button>
+                                <button type="submit"
+                                        class="btn btn-submit-form"
+                                        ng-click="nextStep()"
+                                >
+                                    Tiếp tục <i class="fa-solid fa-arrow-right"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -702,7 +461,7 @@
         </section>
     </div>
 
-    <div ng-show="currentStep === 4">
+    <div ng-show="currentStep === 3">
         <section id="business-information">
             <div class="container-fluid">
                 <div class="logo text-center">
@@ -721,7 +480,8 @@
                                     <div class="item">
                                         <div class="item-1 ">
                                             <div class="vector-wrapper">
-                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg"
+                                                     viewBox="0 0 512 512"
                                                      id="tick">
                                                     <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
                                                 </svg>
@@ -732,7 +492,8 @@
                                     <div class="item">
                                         <div class="item-1">
                                             <div class="vector-wrapper">
-                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg"
+                                                     viewBox="0 0 512 512"
                                                      id="tick">
                                                     <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
                                                 </svg>
@@ -743,7 +504,8 @@
                                     <div class="item">
                                         <div class="item-1">
                                             <div class="vector-wrapper">
-                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                                <svg class="vector" xmlns="http://www.w3.org/2000/svg"
+                                                     viewBox="0 0 512 512"
                                                      id="tick">
                                                     <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
                                                 </svg>
@@ -781,12 +543,18 @@
                             </div>
 
                             <div class="d-flex justify-content-end mt-5">
-                                <button type="submit" class="btn btn-submit-form btn-prev"
-                                        style="background: #5c636a; margin-right: 20px" ng-click="prevStep()"><i
-                                        class="fa-solid fa-arrow-left"></i> Trở về
+                                <button type="submit"
+                                        class="btn btn-submit-form btn-prev"
+                                        style="background: #5c636a; margin-right: 20px"
+                                        ng-click="prevStep()"
+                                >
+                                    <i class="fa-solid fa-arrow-left"></i> Trở về
                                 </button>
-                                <button type="submit" class="btn btn-submit-form">Tiếp tục<i
-                                        class="fa-solid fa-arrow-right"></i></button>
+                                <button type="submit"
+                                        class="btn btn-submit-form"
+                                >
+                                    Xác nhận<i class="fa-solid fa-arrow-right"></i>
+                                </button>
                             </div>
                         </div>
                     </div>

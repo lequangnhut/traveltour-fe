@@ -1,49 +1,50 @@
-travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http) {
+travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http, $filter, $location, AuthService, VisitLocationServiceAG, AgenciesServiceAG) {
     $scope.showNextForm = false;
     $scope.showThirdForm = false;
     $scope.checkboxChecked = false;
 
-    $scope.provinces = [];
-    $scope.districts = [];
-    $scope.wards = [];
+    $scope.phoneError = null;
 
-    $scope.provinceVisits = [];
-    $scope.districtVisits = [];
-    $scope.wardVisits = [];
-
-    $scope.agent = {
-        name: null,
-        fname: null,
-        mst: null,
-        phone: null,
+    $scope.address = {
         province: null,
-        districts: null,
-        ward: null,
-        address: null,
-        business_license: null,
-        name_agent: null,
-        timeOpen: null,
-        timeClose: null,
-        agency_status: null,
-        freeTicket: null,
-        website: null,
-        adultTicket: null,
-        childTicket: null,
-        locationType: null,
-        time_open_agent: null,
-        time_close_agent: null,
-        business_images: null,
-        provinceVisit: null,
-        districtVisit: null,
-        wardVisit: null,
-        addressVisit: null
+        district: null,
+        ward: null
     }
 
+    $scope.ticketTypes = {
+        free: null,
+        adult: null,
+        child: null
+    };
+
+    $scope.unitPrice = {
+        adult: null,
+        child: null
+    }
+
+    $scope.agent = {
+        visitLocationName: null,
+        visitLocationImage: null,
+        visitLocationTypeId: null,
+        userId: null,
+        urlWebsite: null,
+        phone: null,
+        province: null,
+        district: null,
+        ward: null,
+        address: null,
+        openingTime: null,
+        closingTime: null
+    }
+
+    function errorCallback(error) {
+        console.log(error)
+        toastAlert('error', "Máy chủ không tồn tại !");
+    }
 
     $scope.validateCheckbox = function () {
         return $scope.checkboxChecked;
     };
-
 
     $scope.goToNextSection = function () {
         $scope.showNextForm = true;
@@ -51,10 +52,6 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http) {
 
     $scope.goToThirdSection = function () {
         $scope.showThirdForm = true;
-    };
-
-    $scope.goToFourthSection = function () {
-        $scope.showFourthForm = true;
     };
 
     $scope.goPreviousSectionOne = function () {
@@ -68,72 +65,125 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http) {
         $scope.showFourthForm = false;
     };
 
-    $scope.goPreviousSectionThree = function () {
-        $scope.showFourthForm = false;
-    };
+    $scope.init = function () {
+        let user = $scope.user;
 
-
-    /**
-     * API lấy dữ liệu tỉnh thành và fill dữ liệu lên select
-     */
-    $http.get('/lib/address/data.json').then(function (response) {
-        $scope.provinces = response.data;
-        $scope.provinceVisits = response.data;
-    });
-
-    /**
-     * lấy thông tin cho thông tin doanh nghiệp
-     * */
-    $scope.onProvinceChange = function () {
-        $scope.districts = $scope.provinces.find(p => p.Id === $scope.agent.province).Districts;
-        $scope.agent.districts = null;
-        $scope.agent.ward = null;
-    };
-
-    $scope.onDistrictChange = function () {
-        $scope.wards = $scope.districts.find(d => d.Id === $scope.agent.districts).Wards;
-        $scope.agent.ward = null;
-    };
-
-    /**
-       * lấy thông tin cho thông tin địa điểm
-     * */
-    $scope.onProvinceVisitChange = function () {
-        $scope.districtVisits = $scope.provinceVisits.find(p => p.Id === $scope.agent.provinceVisit).Districts;
-        $scope.agent.districtVisit = null;
-        $scope.agent.wardVisit = null;
-    };
-    $scope.onDistrictVisitChange = function () {
-        $scope.wardVisits = $scope.districtVisits.find(d => d.Id === $scope.agent.districtVisit).Wards;
-        $scope.agent.wardVisit = null;
-    };
-
-    /**
-     * Upload hình ảnh và lưu vào biến business_images
-     * @param file
-     */
-    $scope.uploadBusinessImage = function (file) {
-        if (file && !file.$error) {
-            $scope.agent.business_images = file;
+        if (user !== undefined && user !== null && user !== "") {
+            AgenciesServiceAG.findByUserId(user.id).then(function successCallback(response) {
+                $scope.agent = response.data;
+            }, errorCallback);
         }
-    };
+        /**
+         * API lấy dữ liệu loại địa điểm
+         */
+        VisitLocationServiceAG.findAllVisitType().then(function successCallback(response) {
+            $scope.visitType = response.data;
+        }, errorCallback);
+
+        /**
+         * API lấy dữ liệu tỉnh thành và fill dữ liệu lên select
+         */
+        $http.get('/lib/address/data.json').then(function (response) {
+            $scope.provinces = response.data;
+        }, errorCallback);
+
+        $scope.onProvinceChange = function () {
+            var selectedProvince = $scope.provinces.find(p => p.Id === $scope.address.province);
+            if (selectedProvince) {
+                $scope.agent.province = selectedProvince.Name;
+            }
+
+            $scope.districts = selectedProvince ? selectedProvince.Districts : [];
+            $scope.agent.district = null;
+            $scope.agent.ward = null;
+        };
+
+        $scope.onDistrictChange = function () {
+            var selectedDistrict = $scope.districts.find(d => d.Id === $scope.address.district);
+            if (selectedDistrict) {
+                $scope.agent.district = selectedDistrict.Name;
+            }
+
+            $scope.wards = selectedDistrict ? selectedDistrict.Wards : [];
+            $scope.agent.ward = null;
+        };
+
+        $scope.onWardChange = function () {
+            var selectedWard = $scope.wards.find(w => w.Id === $scope.address.ward);
+            if (selectedWard) {
+                $scope.agent.ward = selectedWard.Name;
+            }
+        };
+
+        /**
+         * @message Check duplicate phone
+         */
+        $scope.checkDuplicatePhone = function () {
+            AuthService.checkExistPhone($scope.agent.phone).then(function successCallback(response) {
+                $scope.phoneError = response.data.exists;
+            }, errorCallback);
+        };
+    }
 
     /**
-     * Upload hình ảnh và lưu vào biến business_license
+     * Upload hình ảnh và lưu vào biến visitLocationImage
      * @param file
      */
-    $scope.uploadBusinessLicense = function (file) {
+    $scope.uploadVisitLocationImage = function (file) {
         if (file && !file.$error) {
-            $scope.agent.business_license = file;
+            $scope.agent.visitLocationImage = file;
         }
     };
 
     /**
      * Submit gửi dữ liệu cho api
      */
-    $scope.submitDataRegisterVisits = function () {
-        console.log($scope.agent)
+    $scope.unitPrices = [];
+
+    $scope.updatePrices = function (ticketType) {
+        if ($scope.ticketTypes[ticketType]) {
+            $scope.unitPrices[ticketType] = $scope.unitPrice[ticketType];
+        } else {
+            delete $scope.unitPrices[ticketType];
+        }
     };
 
+    $scope.submitDataRegisterVisits = function () {
+        const selectedTickets = [];
+        const unitPrices = {};
+        $scope.isLoading = true;
 
+        if ($scope.ticketTypes.free) {
+            selectedTickets.push("Miễn phí vé");
+        }
+        if ($scope.ticketTypes.adult) {
+            selectedTickets.push("Vé người lớn");
+        }
+        if ($scope.ticketTypes.child) {
+            selectedTickets.push("Vé trẻ em");
+        }
+        if ($scope.ticketTypes.adult) {
+            unitPrices.adult = $scope.unitPrice.adult;
+        }
+        if ($scope.ticketTypes.child) {
+            unitPrices.child = $scope.unitPrice.child;
+        }
+
+        $scope.agent.openingTime = $filter('date')($scope.agent.openingTime, 'HH:mm:ss');
+        $scope.agent.closingTime = $filter('date')($scope.agent.closingTime, 'HH:mm:ss');
+
+        const dataVisit = new FormData();
+        dataVisit.append("visitLocationsDto", new Blob([JSON.stringify($scope.agent)], {type: "application/json"}));
+        dataVisit.append("visitLocationImage", $scope.agent.visitLocationImage);
+        dataVisit.append("selectedTickets", new Blob([JSON.stringify(selectedTickets)], {type: "application/json"}));
+        dataVisit.append("unitPrices", new Blob([JSON.stringify(unitPrices)], {type: "application/json"}));
+
+        VisitLocationServiceAG.registerVisit(dataVisit).then(function successCallback() {
+            // $location.path('/business/select-type');
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
+    };
+
+    $scope.init();
 });

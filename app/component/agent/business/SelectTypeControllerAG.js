@@ -1,4 +1,4 @@
-travel_app.controller('SelectTypeControllerAG', function ($scope, AgenciesServiceAG) {
+travel_app.controller('SelectTypeControllerAG', function ($scope, AgenciesServiceAG, HotelServiceAG, TransportServiceAG, VisitLocationServiceAG) {
     let user = $scope.user;
 
     function errorCallback(error) {
@@ -10,6 +10,19 @@ travel_app.controller('SelectTypeControllerAG', function ($scope, AgenciesServic
         if (user !== undefined && user !== null && user !== "") {
             AgenciesServiceAG.findByUserId(user.id).then(function successCallback(response) {
                 $scope.agencies = response.data;
+                let agencyId = response.data.id;
+
+                HotelServiceAG.findByAgencyId(agencyId).then(function successCallback(response) {
+                    $scope.hotels = response.data;
+                }, errorCallback);
+
+                TransportServiceAG.findByAgencyId(agencyId).then(function successCallback(response) {
+                    $scope.transport = response.data;
+                }, errorCallback);
+
+                VisitLocationServiceAG.findByAgencyId(agencyId).then(function successCallback(response) {
+                    $scope.visits = response.data;
+                }, errorCallback);
             }, errorCallback);
         }
     }

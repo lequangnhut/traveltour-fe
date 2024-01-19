@@ -1,251 +1,13 @@
+<!--====== Start Preloader ======-->
+<div class="preloader" ng-show="isLoading">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+</div><!--====== End Preloader ======-->
+
 <form ng-submit="submitDataRegisterVisits()" name="register_visits" method="post">
     <section id="business-information" ng-show="!showNextForm">
-        <div class="container-fluid">
-            <div class="logo text-center">
-                <div class="d-flex align-items-center justify-content-center">
-                    <img src="/assets/admin/assets/img/icons/logo.png" alt="logo" width="40"/>
-                    <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">TravelTour</p>
-                </div>
-                <div class="content-text mt-3">
-                    <div class="h4">Đăng kí thông tin đối tác TravelTour</div>
-                </div>
-                <div class="progress-register">
-                    <!-- Tiến dộ -->
-                    <div class="progress-container">
-                        <div class="container">
-                            <div class="d-flex justify-content-center">
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <div class="vector-wrapper">
-                                                <span class="num">1</span>
-                                            </div>
-                                        </div>
-                                        <div class="text-wrapper">Tạo doanh nghiệp</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <span class="num">2</span>
-                                        </div>
-                                        <div class="text-wrapper">Thông tin địa điểm</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <span class="num">3</span>
-                                        </div>
-                                        <div class="text-wrapper">Thông tin vé</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <span class="num">4</span>
-                                        </div>
-                                        <div class="text-wrapper">Xác nhận thông tin</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="main d-flex justify-content-center theme-wizard">
-                <div class="form card">
-                    <div class="row g-3">
-                        <div class="h3 color-greend fw-medium">TẠO DOANH NGHIỆP</div>
-                        <div class="col-12">
-                            <label for="inputNameBusiness" class="form-label">Tên doanh nghiệp</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="inputNameBusiness"
-                                   placeholder="Công ty du lịch TravelTour"
-                                   name="name"
-                                   ng-model="agent.name"
-                                   ng-class="{ 'is-invalid': register_visits.name.$invalid && register_visits.name.$touched, 'is-valid': register_visits.name.$valid && register_visits.name.$touched }"
-                                   ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
-                                   required
-                            >
-                            <small class="text-danger"
-                                   ng-show="register_visits.name.$touched && register_visits.name.$error.required">
-                                Vui lòng nhập tên doanh nghiệp !
-                            </small>
-                            <small class="text-danger"
-                                   ng-show="register_visits.name.$touched && register_visits.name.$error.pattern">
-                                Tên doanh nghiệp không đúng định dạng !
-                            </small>
-                        </div>
-
-                        <div class="col-12">
-                            <label for="inputFullname" class="form-label">Tên người đại diện</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="inputFullname"
-                                   placeholder="Nguyễn Văn A"
-                                   name="fname"
-                                   ng-model="agent.fname"
-                                   ng-class="{ 'is-invalid': register_visits.fname.$invalid && register_visits.fname.$touched, 'is-valid': register_visits.fname.$valid && register_visits.fname.$touched }"
-                                   ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
-                                   required
-                            >
-                            <small class="text-danger"
-                                   ng-show="register_visits.fname.$touched && register_visits.fname.$error.required">
-                                Vui lòng nhập tên người đại diện !
-                            </small>
-                            <small class="text-danger"
-                                   ng-show="register_visits.fname.$touched && register_visits.fname.$error.pattern">
-                                Tên người đại diện không đúng định dạng !
-                            </small>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="inputEmail4" class="form-label">Mã số thuế</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="inputEmail4"
-                                   placeholder="1423142144"
-                                   name="mst"
-                                   ng-model="agent.mst"
-                                   ng-class="{ 'is-invalid': register_visits.mst.$invalid && register_visits.mst.$touched, 'is-valid': register_visits.mst.$valid && register_visits.mst.$touched }"
-                                   ng-pattern="/^\d{10,13}$/"
-                                   required
-                            >
-                            <small class="text-danger"
-                                   ng-show="register_visits.mst.$touched && register_visits.mst.$error.required">
-                                Vui lòng nhập mã số thuế !
-                            </small>
-                            <small class="text-danger"
-                                   ng-show="register_visits.mst.$touched && register_visits.mst.$error.pattern">
-                                Mã số thuế không đúng định dạng !
-                            </small>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="inputPassword4" class="form-label"> Số điện thoại</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="inputPassword4"
-                                   placeholder="0969653264"
-                                   name="phone"
-                                   ng-model="agent.phone"
-                                   ng-class="{ 'is-invalid': register_visits.phone.$invalid && register_visits.phone.$touched, 'is-valid': register_visits.phone.$valid && register_visits.phone.$touched }"
-                                   ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
-                                   required
-                            >
-                            <small class="text-danger"
-                                   ng-show="register_visits.phone.$touched && register_visits.phone.$error.required">
-                                Vui lòng nhập số điện thoại !
-                            </small>
-                            <small class="text-danger"
-                                   ng-show="register_visits.phone.$touched && register_visits.phone.$error.pattern">
-                                Số điện thoại không đúng định dạng !
-                            </small>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label">Tỉnh/Thành phố</label>
-                            <select class="form-select"
-                                    name="province"
-                                    ng-class="{ 'is-invalid': register_visits.province.$invalid && register_visits.province.$touched, 'is-valid': register_visits.province.$valid && register_visits.province.$touched }"
-                                    ng-options="city.Id as city.Name for city in provinces"
-                                    ng-change="onProvinceChange()"
-                                    ng-model="agent.province"
-                                    required
-                            >
-                                <option value="" disabled selected>Chọn Tỉnh/Thành phố</option>
-                            </select>
-                            <small class="text-danger"
-                                   ng-show="register_visits.province.$touched && register_visits.province.$error.required">
-                                Vui lòng chọn tỉnh/thành phố.
-                            </small>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label">Quận/Huyện</label>
-                            <select class="form-select"
-                                    name="districts"
-                                    ng-class="{ 'is-invalid': register_visits.districts.$invalid && register_visits.districts.$touched, 'is-valid': register_visits.districts.$valid && register_visits.districts.$touched }"
-                                    ng-options="district.Id as district.Name for district in districts"
-                                    ng-disabled="!agent.province"
-                                    ng-change="onDistrictChange()"
-                                    ng-model="agent.districts"
-                                    required
-                            >
-                                <option value="" disabled selected>Chọn Quận/Huyện</option>
-                            </select>
-                            <small class="text-danger"
-                                   ng-show="register_visits.districts.$touched && register_visits.districts.$error.required">
-                                Vui lòng chọn quận/huyện.
-                            </small>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label">Phường/Xã</label>
-                            <select class="form-select"
-                                    name="ward"
-                                    ng-class="{ 'is-invalid': register_visits.ward.$invalid && register_visits.ward.$touched, 'is-valid': register_visits.ward.$valid && register_visits.ward.$touched }"
-                                    ng-options="ward.Id as ward.Name for ward in wards"
-                                    ng-disabled="!agent.districts"
-                                    ng-change="onWardChange()"
-                                    ng-model="agent.ward"
-                                    required
-                            >
-                                <option value="" disabled selected>Chọn Phường/Xã</option>
-                            </select>
-                            <small class="text-danger"
-                                   ng-show="register_visits.ward.$touched && register_visits.ward.$error.required">
-                                Vui lòng chọn phường/xã.
-                            </small>
-                        </div>
-
-                        <div class="col-12">
-                            <label class="form-label">Địa chỉ</label>
-                            <input type="text"
-                                   class="form-control"
-                                   placeholder="1234 Main St"
-                                   name="address"
-                                   ng-model="agent.address"
-                                   ng-class="{ 'is-invalid': register_visits.address.$invalid && register_visits.address.$touched, 'is-valid': register_visits.address.$valid && register_visits.address.$touched }"
-                                   required
-                            >
-                            <small class="text-danger"
-                                   ng-show="register_visits.address.$touched && register_visits.address.$error.required">
-                                Vui lòng nhập địa chỉ doanh nghiệp !
-                            </small>
-                        </div>
-
-                        <div class="col-12">
-                            <label class="form-label">Giấy phép đăng ký kinh doanh</label>
-                            <input class="form-control"
-                                   type="file"
-                                   name="business_license"
-                                   ng-model="agent.business_license"
-                                   ngf-max-size="10MB"
-                                   ng-class="{ 'is-invalid': register_visits.business_license.$invalid && register_visits.business_license.$touched, 'is-valid': register_visits.business_license.$valid && register_visits.business_license.$touched }"
-                                   ngf-select="uploadBusinessLicense($file)"
-                                   required
-                            >
-                            <small class="text-danger"
-                                   ng-show="register_visits.business_license.$touched && register_visits.business_license.$error.required">
-                                Vui lòng tải lên giấy phép đăng ký kinh doanh !
-                            </small>
-                        </div>
-
-                        <div class="d-flex justify-content-end mt-5">
-                            <button type="button" class="btn btn-submit-form" ng-click="goToNextSection()">
-                                Tiếp tục
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="business-information" ng-show="showNextForm && !showThirdForm">
         <div class="container-fluid">
             <div class="logo text-center">
                 <div class="d-flex align-items-center justify-content-center">
@@ -309,18 +71,18 @@
                             <input type="text"
                                    class="form-control"
                                    placeholder="Làng du lịch Ông Đề"
-                                   name="name_agent"
-                                   ng-class="{ 'is-invalid': register_visits.name_agent.$invalid && register_visits.name_agent.$touched, 'is-valid': register_visits.name_agent.$valid && register_visits.name_agent.$touched }"
-                                   ng-model="agent.name_agent"
+                                   name="visitLocationName"
+                                   ng-class="{ 'is-invalid': register_visits.visitLocationName.$invalid && register_visits.visitLocationName.$touched, 'is-valid': register_visits.visitLocationName.$valid && register_visits.visitLocationName.$touched }"
+                                   ng-model="agent.visitLocationName"
                                    ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
                                    required
                             >
                             <small class="text-danger"
-                                   ng-show="register_visits.name_agent.$touched && register_visits.name_agent.$error.required">
+                                   ng-show="register_visits.visitLocationName.$touched && register_visits.visitLocationName.$error.required">
                                 Vui lòng nhập tên địa điểm!
                             </small>
                             <small class="text-danger"
-                                   ng-show="register_visits.name_agent.$touched && register_visits.name_agent.$error.pattern">
+                                   ng-show="register_visits.visitLocationName.$touched && register_visits.visitLocationName.$error.pattern">
                                 Tên địa điểm không đúng định dạng !
                             </small>
                         </div>
@@ -328,15 +90,15 @@
                         <div class="col-md-6">
                             <label for="locationType" class="form-label">Loại địa điểm</label>
                             <select id="locationType" class="form-select"
-                                    name="locationType"
-                                    ng-model="agent.locationType"
-                                    ng-class="{ 'is-invalid': register_visits.locationType.$invalid && register_visits.locationType.$touched, 'is-valid': register_visits.locationType.$valid && register_visits.locationType.$touched }"
+                                    name="visitLocationTypeId"
+                                    ng-model="agent.visitLocationTypeId"
+                                    ng-class="{ 'is-invalid': register_visits.visitLocationTypeId.$invalid && register_visits.visitLocationTypeId.$touched, 'is-valid': register_visits.visitLocationTypeId.$valid && register_visits.visitLocationTypeId.$touched }"
+                                    ng-options="visit.id as visit.visitLocationTypeName for visit in visitType"
                                     required>
-                                <option value="0" selected="selected">Di tích lịch sử</option>
-                                <option value="1">Khu du lịch sính thái</option>
+                                <option value="" selected disabled>Chọn loại địa điểm</option>
                             </select>
                             <small class="text-danger"
-                                   ng-show="register_visits.locationType.$touched && register_visits.locationType.$error.required">
+                                   ng-show="register_visits.visitLocationTypeId.$touched && register_visits.visitLocationTypeId.$error.required">
                                 Vui lòng chọn trạng thái !
                             </small>
                         </div>
@@ -345,35 +107,61 @@
                             <label for="website" class="form-label">Địa chỉ website</label>
                             <input class="form-control" id="website"
                                    type="text" placeholder="abc.vn"
-                                   name="website"
+                                   name="urlWebsite"
                                    ng-pattern="/^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/"
-                                   ng-model="agent.website"
-                                   ng-class="{ 'is-invalid': register_visits.website.$invalid && register_visits.website.$touched, 'is-valid': register_visits.website.$valid && register_visits.website.$touched }"
+                                   ng-model="agent.urlWebsite"
+                                   ng-class="{ 'is-invalid': register_visits.urlWebsite.$invalid && register_visits.urlWebsite.$touched, 'is-valid': register_visits.urlWebsite.$valid && register_visits.urlWebsite.$touched }"
                                    required/>
                             <small class="text-danger"
-                                   ng-show="register_visits.website.$touched && register_visits.website.$error.required">
-                                Vui lòng nhập địa chỉ website !
+                                   ng-show="register_visits.urlWebsite.$touched && register_visits.urlWebsite.$error.required">
+                                Vui lòng nhập địa chỉ urlWebsite !
                             </small>
                             <small class="text-danger"
-                                   ng-show="register_visits.website.$touched && register_visits.website.$error.pattern">
+                                   ng-show="register_visits.urlWebsite.$touched && register_visits.urlWebsite.$error.pattern">
                                 Website có dạng như example.abc, example.ab.cd !
+                            </small>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="inputPassword4" class="form-label"> Số điện thoại</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="inputPassword4"
+                                   placeholder="0969653264"
+                                   name="phone"
+                                   ng-model="agent.phone"
+                                   ng-class="{ 'is-invalid': register_visits.phone.$invalid && register_visits.phone.$touched, 'is-valid': register_visits.phone.$valid && register_visits.phone.$touched && !phoneError }"
+                                   ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                                   ng-change="checkDuplicatePhone()"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_visits.phone.$touched && register_visits.phone.$error.required">
+                                Vui lòng nhập số điện thoại !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="register_visits.phone.$touched && register_visits.phone.$error.pattern">
+                                Số điện thoại không đúng định dạng !
+                            </small>
+                            <small class="text-danger" ng-show="register_visits.phone.$touched && phoneError">
+                                Số điện thoại đã tồn tại ở một tài khoản khác !
                             </small>
                         </div>
 
                         <div class="col-md-4">
                             <label class="form-label">Tỉnh/Thành phố</label>
                             <select class="form-select"
-                                    name="provinceVisit"
-                                    ng-class="{ 'is-invalid': register_visits.provinceVisit.$invalid && register_visits.provinceVisit.$touched, 'is-valid': register_visits.provinceVisit.$valid && register_visits.provinceVisit.$touched }"
-                                    ng-options="city.Id as city.Name for city in provinceVisits"
-                                    ng-change="onProvinceVisitChange()"
-                                    ng-model="agent.provinceVisit"
+                                    name="province"
+                                    ng-class="{ 'is-invalid': register_visits.province.$invalid && register_visits.province.$touched, 'is-valid': register_visits.province.$valid && register_visits.province.$touched }"
+                                    ng-options="city.Id as city.Name for city in provinces"
+                                    ng-change="onProvinceChange()"
+                                    ng-model="address.province"
                                     required
                             >
                                 <option value="" disabled selected>Chọn Tỉnh/Thành phố</option>
                             </select>
                             <small class="text-danger"
-                                   ng-show="register_visits.provincevisit.$touched && register_visits.provincevisit.$error.required">
+                                   ng-show="register_visits.province.$touched && register_visits.province.$error.required">
                                 Vui lòng chọn tỉnh/thành phố.
                             </small>
                         </div>
@@ -381,18 +169,18 @@
                         <div class="col-md-4">
                             <label class="form-label">Quận/Huyện</label>
                             <select class="form-select"
-                                    name="districtVisit"
-                                    ng-class="{ 'is-invalid': register_visits.districtVisit.$invalid && register_visits.districtVisit.$touched, 'is-valid': register_visits.districtVisit.$valid && register_visits.districtVisit.$touched }"
-                                    ng-options="district.Id as district.Name for district in districtVisits"
-                                    ng-disabled="!agent.provinceVisit"
-                                    ng-change="onDistrictVisitChange()"
-                                    ng-model="agent.districtVisit"
+                                    name="district"
+                                    ng-class="{ 'is-invalid': register_visits.district.$invalid && register_visits.district.$touched, 'is-valid': register_visits.district.$valid && register_visits.district.$touched }"
+                                    ng-options="district.Id as district.Name for district in districts"
+                                    ng-disabled="!address.province"
+                                    ng-change="onDistrictChange()"
+                                    ng-model="address.district"
                                     required
                             >
                                 <option value="" disabled selected>Chọn Quận/Huyện</option>
                             </select>
                             <small class="text-danger"
-                                   ng-show="register_visits.districtVisit.$touched && register_visits.districtVisit.$error.required">
+                                   ng-show="register_visits.district.$touched && register_visits.district.$error.required">
                                 Vui lòng chọn quận/huyện.
                             </small>
                         </div>
@@ -400,18 +188,18 @@
                         <div class="col-md-4">
                             <label class="form-label">Phường/Xã</label>
                             <select class="form-select"
-                                    name="wardVisit"
-                                    ng-class="{ 'is-invalid': register_visits.wardVisit.$invalid && register_visits.wardVisit.$touched, 'is-valid': register_visits.wardVisit.$valid && register_visits.wardVisit.$touched }"
+                                    name="ward"
+                                    ng-class="{ 'is-invalid': register_visits.ward.$invalid && register_visits.ward.$touched, 'is-valid': register_visits.ward.$valid && register_visits.ward.$touched }"
                                     ng-options="ward.Id as ward.Name for ward in wards"
-                                    ng-disabled="!agent.districtVisit"
+                                    ng-disabled="!address.district"
                                     ng-change="onWardChange()"
-                                    ng-model="agent.wardVisit"
+                                    ng-model="address.ward"
                                     required
                             >
                                 <option value="" disabled selected>Chọn Phường/Xã</option>
                             </select>
                             <small class="text-danger"
-                                   ng-show="register_visits.wardVisit.$touched && register_visits.wardVisit.$error.required">
+                                   ng-show="register_visits.ward.$touched && ward.wardVisit.$error.required">
                                 Vui lòng chọn phường/xã.
                             </small>
                         </div>
@@ -421,13 +209,13 @@
                             <input type="text"
                                    class="form-control"
                                    placeholder="1234 Main St"
-                                   name="addressVisit"
-                                   ng-model="agent.addressVisit"
-                                   ng-class="{ 'is-invalid': register_visits.addressVisit.$invalid && register_visits.addressVisit.$touched, 'is-valid': register_visits.addressVisit.$valid && register_visits.addressVisit.$touched }"
+                                   name="address"
+                                   ng-model="agent.address"
+                                   ng-class="{ 'is-invalid': register_visits.address.$invalid && register_visits.address.$touched, 'is-valid': register_visits.address.$valid && register_visits.address.$touched }"
                                    required
                             >
                             <small class="text-danger"
-                                   ng-show="register_visits.addressVisit.$touched && register_visits.addressVisit.$error.required">
+                                   ng-show="register_visits.address.$touched && register_visits.address.$error.required">
                                 Vui lòng nhập địa chỉ !
                             </small>
                         </div>
@@ -437,12 +225,13 @@
                             <input type="time"
                                    class="form-control"
                                    id="time_open"
-                                   name="timeOpen"
-                                   ng-model="agent.timeOpen"
-                                   ng-class="{ 'is-invalid': register_visits.timeOpen.$invalid && register_visits.timeOpen.$touched, 'is-valid': register_visits.timeOpen.$valid && register_visits.time_open.$touched }"
-                                   required>
+                                   name="openingTime"
+                                   ng-model="agent.openingTime"
+                                   ng-class="{ 'is-invalid': register_visits.openingTime.$invalid && register_visits.openingTime.$touched, 'is-valid': register_visits.openingTime.$valid && register_visits.time_open.$touched }"
+                                   required
+                            >
                             <small class="text-danger"
-                                   ng-show="register_visits.timeOpen.$touched && register_visits.timeOpen.$error.required">
+                                   ng-show="register_visits.openingTime.$touched && register_visits.openingTime.$error.required">
                                 Vui lòng nhập thời gian!
                             </small>
                         </div>
@@ -452,12 +241,13 @@
                             <input type="time"
                                    class="form-control"
                                    id="time_close"
-                                   name="timeClose"
-                                   ng-model="agent.timeClose"
-                                   ng-class="{ 'is-invalid': register_visits.timeClose.$invalid && register_visits.timeClose.$touched, 'is-valid': register_visits.timeClose.$valid && register_visits.time_open.$touched }"
-                                   required>
+                                   name="closingTime"
+                                   ng-model="agent.closingTime"
+                                   ng-class="{ 'is-invalid': register_visits.closingTime.$invalid && register_visits.closingTime.$touched, 'is-valid': register_visits.closingTime.$valid && register_visits.time_open.$touched }"
+                                   required
+                            >
                             <small class="text-danger"
-                                   ng-show="register_visits.timeClose.$touched && register_visits.timeClose.$error.required">
+                                   ng-show="register_visits.closingTime.$touched && register_visits.closingTime.$error.required">
                                 Vui lòng nhập thời gian!
                             </small>
                         </div>
@@ -466,25 +256,29 @@
                             <label class="form-label">Hình ảnh chứng minh</label>
                             <input class="form-control"
                                    type="file"
-                                   name="business_images"
-                                   ng-model="agent.business_images"
+                                   name="visitLocationImage"
+                                   ng-model="agent.visitLocationImage"
                                    ngf-max-size="10MB"
-                                   ng-class="{ 'is-invalid': register_visits.business_images.$invalid && register_visits.business_images.$touched, 'is-valid': register_visits.business_images.$valid && register_visits.business_images.$touched }"
-                                   ngf-select="uploadBusinessImage($file)"
+                                   ng-class="{ 'is-invalid': register_visits.visitLocationImage.$invalid && register_visits.visitLocationImage.$touched, 'is-valid': register_visits.visitLocationImage.$valid && register_visits.visitLocationImage.$touched }"
+                                   ngf-select="uploadVisitLocationImage($file)"
                                    required
                             >
                             <small class="text-danger"
-                                   ng-show="register_visits.business_images.$touched && register_visits.business_images.$error.required">
+                                   ng-show="register_visits.visitLocationImage.$touched && register_visits.visitLocationImage.$error.required">
                                 Vui lòng tải lên hình ảnh của doanh nghiệp !
                             </small>
                         </div>
 
                         <div class="d-flex justify-content-end mt-5">
-                            <a role="button" class="btn btn-submit-form mx-3" ng-click="goPreviousSectionOne()">
-                                Quay về
+                            <a role="button"
+                               href="/business/select-type"
+                               class="btn btn-submit-form btn-prev"
+                               style="background: #5c636a; margin-right: 20px"
+                            >
+                                <i class="fa-solid fa-arrow-left"></i> Trở về
                             </a>
                             <button type="button" class="btn btn-submit-form"
-                                    ng-click="goToThirdSection()"
+                                    ng-click="goToNextSection()"
                             >
                                 Tiếp tục
                             </button>
@@ -495,7 +289,7 @@
         </div>
     </section>
 
-    <section id="business-information" ng-show="showThirdForm && !showFourthForm">
+    <section id="business-information" ng-show="showNextForm && !showThirdForm">
         <div class="container-fluid">
             <div class="logo text-center">
                 <div class="d-flex align-items-center justify-content-center">
@@ -560,75 +354,91 @@
 
                         <div class="col-12 mb-3">
                             <div class="form-check">
-                                    <input class="form-check-input" type="checkbox">
-                                    <label class="form-label">Miễn phí vé</label>
+                                <input class="form-check-input"
+                                       id="free_ticket"
+                                       type="checkbox"
+                                       ng-model="ticketTypes.free"
+                                       ng-required="!ticketTypes.adult && !ticketTypes.child"
+
+                                >
+                                <label class="form-label" for="free_ticket">Miễn phí vé</label>
                             </div>
                         </div>
 
-                        <div class="col-12 mb-3 ">
+                        <div class="col-12 mb-3">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox"  value="">
-                                <label class="form-label">Vé người lớn</label>
+                                <input class="form-check-input"
+                                       id="adult_ticket"
+                                       type="checkbox"
+                                       ng-model="ticketTypes.adult"
+                                       ng-change="updatePrices('adult')"
+                                       ng-required="!ticketTypes.free && !ticketTypes.child"
+                                >
+                                <label class="form-label" for="adult_ticket">Vé người lớn</label>
                             </div>
 
-                            <div class="input-group mt-3">
-                            <input type="text"
-                                   class="form-control"
-                                   id="adult_ticket"
-                                   placeholder="300,000"
-                                   name="adultTicket"
-                                   ng-model="agent.adultTicket"
-                                   ng-class="{ 'is-invalid': register_visits.adultTicket.$invalid && register_visits.adultTicket.$touched, 'is-valid': register_visits.adultTicket.$valid && register_visits.adultTicket.$touched }"
-                                   ng-pattern="/^(\d{1,3}(,\d{3})*(,\d{1,3})*(,\d{3})*|\d+(,\d{1,3})*)$/"
-                                   required
-                            >
-                            </div>
-                            <small class="text-danger"
-                                   ng-show="register_visits.adultTicket.$touched && register_visits.adultTicket.$error.required">
-                                Vui lòng nhập giá !
-                            </small>
-                            <small class="text-danger"
-                                   ng-show="register_visits.phone.$touched && register_visits.adultTicket.$error.pattern">
-                                Giá không đúng định dạng !
-                            </small>
-
-                        </div>
-
-                        <div class="col-12 mb-3 ">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox"  value="">
-                                <label class="form-label" >Vé trẻ em</label>
-                            </div>
-
-                            <div class="input-group mt-3">
+                            <div class="mt-3">
+                                <label class="form-label">ĐƠN GIÁ</label>
                                 <input type="text"
                                        class="form-control"
-                                       id="child_ticket"
-                                       placeholder="150,000"
-                                       name="childTicket"
-                                       ng-model="agent.childTicket"
-                                       ng-class="{ 'is-invalid': register_visits.childTicket.$invalid && register_visits.childTicket.$touched, 'is-valid': register_visits.childTicket.$valid && register_visits.childTicket.$touched }"
+                                       placeholder="300,000"
+                                       name="adult"
+                                       ng-model="unitPrice.adult"
+                                       ng-class="{ 'is-invalid': register_visits.adult.$invalid && register_visits.adult.$touched, 'is-valid': register_visits.adult.$valid && register_visits.adult.$touched }"
                                        ng-pattern="/^(\d{1,3}(,\d{3})*(,\d{1,3})*(,\d{3})*|\d+(,\d{1,3})*)$/"
-                                       required
+                                       ng-disabled="!ticketTypes.adult"
                                 >
                             </div>
                             <small class="text-danger"
-                                   ng-show="register_visits.childTicket.$touched && register_visits.childTicket.$error.required">
+                                   ng-show="register_visits.adult.$touched && register_visits.adult.$error.required">
                                 Vui lòng nhập giá !
                             </small>
                             <small class="text-danger"
-                                   ng-show="register_visits.childTicket.$touched && register_visits.childTicket.$error.pattern">
+                                   ng-show="register_visits.adult.$touched && register_visits.adult.$error.pattern">
                                 Giá không đúng định dạng !
                             </small>
+                        </div>
 
+                        <div class="col-12 mb-3 ">
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       id="child_ticket"
+                                       ng-model="ticketTypes.child"
+                                       ng-change="updatePrices('child')"
+                                       ng-required="!ticketTypes.free && !ticketTypes.adult"
+                                >
+                                <label class="form-label" for="child_ticket">Vé trẻ em</label>
+                            </div>
+
+                            <div class="mt-3">
+                                <label class="form-label">ĐƠN GIÁ</label>
+                                <input type="text"
+                                       class="form-control"
+                                       placeholder="150,000"
+                                       name="child"
+                                       ng-model="unitPrice.child"
+                                       ng-class="{ 'is-invalid': register_visits.child.$invalid && register_visits.child.$touched, 'is-valid': register_visits.child.$valid && register_visits.child.$touched }"
+                                       ng-pattern="/^(\d{1,3}(,\d{3})*(,\d{1,3})*(,\d{3})*|\d+(,\d{1,3})*)$/"
+                                       ng-disabled="!ticketTypes.child"
+                                >
+                            </div>
+                            <small class="text-danger"
+                                   ng-show="register_visits.child.$touched && register_visits.child.$error.required">
+                                Vui lòng nhập giá !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="register_visits.child.$touched && register_visits.child.$error.pattern">
+                                Giá không đúng định dạng !
+                            </small>
                         </div>
 
                         <div class="d-flex justify-content-end mt-5">
-                            <a role="button" class="btn btn-submit-form mx-3" ng-click="goPreviousSectionTwo()">
+                            <a role="button" class="btn btn-submit-form mx-3" ng-click="goPreviousSectionOne()">
                                 Quay về
                             </a>
                             <button type="button" class="btn btn-submit-form"
-                                    ng-click="goToFourthSection()"
+                                    ng-click="goToThirdSection()"
                                     ng-disabled="register_visits.$invalid"
                             >
                                 Tiếp tục
@@ -640,7 +450,7 @@
         </div>
     </section>
 
-    <section id="business-information" ng-show="showFourthForm">
+    <section id="business-information" ng-show="showThirdForm && !showFourthForm">
         <div class="container-fluid">
             <div class="logo text-center">
                 <div class="d-flex align-items-center justify-content-center">
@@ -717,8 +527,10 @@
                         <a role="button" class="btn btn-submit-form mx-3" ng-click="goPreviousSectionTwo()">
                             Quay về
                         </a>
-                        <button type="submit" class="btn btn-submit-form"
-                                ng-disabled="!checkboxChecked">
+                        <button type="submit"
+                                class="btn btn-submit-form"
+                                ng-disabled="!checkboxChecked || phoneError"
+                        >
                             Xác nhận
                         </button>
                     </div>

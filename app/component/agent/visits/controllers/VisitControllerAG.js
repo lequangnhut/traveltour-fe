@@ -1,9 +1,8 @@
-travel_app.controller('VisitControllerAG', function ($scope, $http){
+travel_app.controller('VisitControllerAG', function ($scope, $http) {
 
     $scope.provinces = [];
     $scope.districts = [];
     $scope.wards = [];
-
 
     $scope.agent = {
         name: null,
@@ -18,7 +17,7 @@ travel_app.controller('VisitControllerAG', function ($scope, $http){
         time_open_agent: null,
         time_close_agent: null,
         business_images: null,
-        locationTypeUpdate:null,
+        locationTypeUpdate: null,
         agency_status: null,
         locationName: null,
         citizen: null,
@@ -26,7 +25,6 @@ travel_app.controller('VisitControllerAG', function ($scope, $http){
         munberAdultTicket: null,
         munberChildTicket: null
     }
-
 
     $scope.validateCheckbox = function () {
         return $scope.checkboxChecked;
@@ -48,13 +46,11 @@ travel_app.controller('VisitControllerAG', function ($scope, $http){
         $scope.agent.districtName = null;
         $scope.agent.wardName = null;
     };
+
     $scope.onDistrictChange = function () {
         $scope.wards = $scope.districts.find(d => d.Id === $scope.agent.districtName).Wards;
         $scope.agent.wardName = null;
     };
-
-
-
 
     /**
      * Upload hình ảnh và lưu vào biến business_images
@@ -89,7 +85,4 @@ travel_app.controller('VisitControllerAG', function ($scope, $http){
     $scope.submitDataCreateBookingVisits = function () {
         console.log($scope.agent)
     };
-
-
-
 });
