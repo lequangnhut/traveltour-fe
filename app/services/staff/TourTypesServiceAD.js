@@ -10,4 +10,13 @@ travel_app.service('ToursTypeServiceAD', function ($http, $q) {
         return deferred.promise;
     };
 
+    this.getAllTourTypes = function () {
+        const deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: API_TOUR_TYPE + 'find-all'
+        }).then(deferred.resolve, deferred.reject);
+        return deferred.promise;
+    };
+
 });

@@ -8,7 +8,6 @@
                             <h3 class="color-greend fw-bold text-uppercase">Thêm tour cơ bản</h3>
                         </div>
                     </div>
-                    <!--                    <div class="mt-3">Tên khách sạn: <span>Khách sạn Traveltour</span></div>-->
                 </div>
             </div>
 
@@ -35,10 +34,11 @@
                         <select id="inputType" class="form-select" style="padding-bottom: 2px; padding-top: 20px;"
                                 name="tourType"
                                 ng-model="tourBasic.tourType"
-                                ng-class="{ 'is-invalid': tourBasicForm.tourType.$invalid && tourBasicForm.tourType.$touched, 'is-valid': tourBasicForm.tourType.$valid && tourBasicForm.tourType.$touched }"
+                                ng-options="tourType.id as tourType.tourTypeName for tourType in tourTypeList"
+                                ng-class="{ 'is-invalid': tourBasicForm.tourType.$invalid && tourBasicForm.tourType.$touched,
+                                            'is-valid': tourBasicForm.tourType.$valid && tourBasicForm.tourType.$touched }"
                                 required>
-                            <option selected>Choose...</option>
-                            <option>...</option>
+                            <option value="" selected disabled hidden>Chọn loại tour</option>
                         </select>
                         <small class="text-danger"
                                ng-show="tourBasicForm.tourType.$touched && tourBasicForm.tourType.$error.required">Vui
@@ -51,8 +51,9 @@
                                 ng-class="{ 'is-invalid': tourBasicForm.tourStatus.$invalid && tourBasicForm.tourStatus.$touched,
                                             'is-valid': tourBasicForm.tourStatus.$valid && tourBasicForm.tourStatus.$touched }"
                                 required>
-                            <option selected>Choose...</option>
-                            <option>...</option>
+                            <option value="" selected disabled hidden>Chọn trang thái</option>
+                            <option value="true">Đang hoạt động</option>
+                            <option value="false">Ngưng hoạt động</option>
                         </select>
                         <small class="text-danger"
                                ng-show="tourBasicForm.tourStatus.$touched && tourBasicForm.tourStatus.$error.required">Vui

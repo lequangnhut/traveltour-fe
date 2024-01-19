@@ -17,8 +17,12 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
 
     $scope.tourTypeNames = {};
 
+    //================================================================
+
+    // Khai báo biến để lưu danh sách tourType
+    $scope.tourTypeList = [];
+
     function errorCallback(error) {
-        console.log(error)
         toastAlert('error', "Máy chủ không tồn tại !");
     }
 
@@ -94,7 +98,6 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
     $scope.getTourBasicList = function () {
         ToursServiceAD.findAllTours($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
             .then(function (response) {
-                console.log(response); // Kiểm tra dữ liệu trả về
                 $scope.tourBasicList = response.data.content;
                 $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
                 $scope.totalElements = response.data.totalElements; // Tổng số phần tử
@@ -125,6 +128,20 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
         }, 500); // 500ms debounce
     };
 
+    $scope.getTourBasicList();
+
+    /*==============================================================================*/
+    //form create
+
+    $scope.loadSelectTourType = function () {
+        ToursTypeServiceAD.getAllTourTypes()
+            .then(function (response) {
+                $scope.tourTypeList = response.data;
+            }, errorCallback);
+    };
+
+    // Gọi hàm để tải danh sách tourType khi controller được khởi tạo
+    $scope.loadSelectTourType();
 
     $scope.createTour = function () {
         ToursServiceAD.createTour($scope.tourBasic)
@@ -132,7 +149,5 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
                 // Xử lý khi tạo tour thành công
             }, errorCallback);
     };
-
-    $scope.getTourBasicList();
 
 });
