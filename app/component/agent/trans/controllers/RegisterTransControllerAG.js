@@ -64,7 +64,7 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $loc
         dataTrans.append("transportDto", new Blob([JSON.stringify($scope.agent)], {type: "application/json"}));
         dataTrans.append("transportImg", $scope.agent.transportationBrandImg);
 
-        TransportServiceAG.registerTransport(dataTrans).then(function successCallback() {
+            TransportServiceAG.registerTransport(dataTrans).then(function successCallback() {
             $location.path('/business/select-type');
             centerAlert('Thành công !', 'Thông tin phương tiện đã được cập nhật thành công.', 'success')
         }, errorCallback).finally(function () {

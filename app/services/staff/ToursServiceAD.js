@@ -38,17 +38,13 @@ travel_app.service('ToursServiceAD', function ($http, $q) {
      * API tạo tour mới
      */
     this.createTour = function (tourDto) {
-        var deferred = $q.defer();
-        $http({
+        return $http({
             method: 'POST',
             url: API_TOUR + 'create-tour',
-            data: tourDto
-        }).then(function (response) {
-            deferred.resolve(response);
-        }, function (error) {
-            deferred.reject(error);
-        });
-        return deferred.promise;
+            headers: {'Content-Type': undefined},
+            data: tourDto,
+            transformRequest: angular.identity
+        })
     };
 
 
@@ -60,7 +56,9 @@ travel_app.service('ToursServiceAD', function ($http, $q) {
         $http({
             method: 'PUT',
             url: API_TOUR + 'update-tour/' + id,
-            data: tourData
+            data: tourData,
+            headers: {'Content-Type': undefined},
+            transformRequest: angular.identity
         }).then(function (response) {
             deferred.resolve(response);
         }, function (error) {
@@ -76,7 +74,7 @@ travel_app.service('ToursServiceAD', function ($http, $q) {
     this.deactivateTour = function (id) {
         const deferred = $q.defer();
         $http({
-            method: 'PUT',
+            method: 'DELETE',
             url: API_TOUR + 'deactivate-tour/' + id
         }).then(function (response) {
             deferred.resolve(response);
