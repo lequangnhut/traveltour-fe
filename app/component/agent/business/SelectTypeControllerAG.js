@@ -1,4 +1,4 @@
-travel_app.controller('SelectTypeControllerAG', function ($scope, AgenciesServiceAG, HotelServiceAG, TransportServiceAG, VisitLocationServiceAG) {
+travel_app.controller('SelectTypeControllerAG', function ($scope, $location, AgenciesServiceAG, HotelServiceAG, TransportServiceAG, VisitLocationServiceAG) {
     let user = $scope.user;
 
     function errorCallback(error) {
@@ -22,6 +22,13 @@ travel_app.controller('SelectTypeControllerAG', function ($scope, AgenciesServic
 
                 VisitLocationServiceAG.findByAgencyId(agencyId).then(function successCallback(response) {
                     $scope.visits = response.data;
+
+                    for (let i = 0; i < user.roles.length; i++) {
+                        console.log(user.roles[i].nameRole);
+                    }
+                    if ($scope.hotels.isAccepted && $scope.transport.isAccepted && $scope.visits.isAccepted) {
+                        $location.path('/business/hotel');
+                    }
                 }, errorCallback);
             }, errorCallback);
         }
