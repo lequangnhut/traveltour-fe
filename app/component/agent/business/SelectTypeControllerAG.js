@@ -22,13 +22,6 @@ travel_app.controller('SelectTypeControllerAG', function ($scope, $location, Age
 
                 VisitLocationServiceAG.findByAgencyId(agencyId).then(function successCallback(response) {
                     $scope.visits = response.data;
-
-                    for (let i = 0; i < user.roles.length; i++) {
-                        console.log(user.roles[i].nameRole);
-                    }
-                    if ($scope.hotels.isAccepted && $scope.transport.isAccepted && $scope.visits.isAccepted) {
-                        $location.path('/business/hotel');
-                    }
                 }, errorCallback);
             }, errorCallback);
         }
