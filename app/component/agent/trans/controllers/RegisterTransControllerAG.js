@@ -4,10 +4,7 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $loc
     $scope.checkboxChecked = false;
 
     $scope.agent = {
-        userId: null,
-        transportationBrandName: null,
-        transportationBrandDescription: null,
-        transportationBrandImg: null
+        transportationBrandName: null, transportationBrandDescription: null, transportationBrandImg: null
     }
 
     function errorCallback(error) {
@@ -69,6 +66,7 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $loc
 
         TransportServiceAG.registerTransport(dataTrans).then(function successCallback() {
             $location.path('/business/select-type');
+            centerAlert('Thành công !', 'Thông tin phương tiện đã được cập nhật thành công.', 'success')
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });

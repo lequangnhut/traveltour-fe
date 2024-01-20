@@ -1,17 +1,22 @@
-travel_app.controller('MainController', function ($scope, $rootScope, $location, $window, $anchorScroll, AuthService, NotificationService) {
+travel_app.controller('MainController', function ($scope, $rootScope, $location, $window, $anchorScroll, AuthService, AgenciesServiceAG, HotelServiceAG, TransportServiceAG, VisitLocationServiceAG, NotificationService) {
     $anchorScroll();
+    $scope.selectedRole = localStorage.getItem('selectedRole') || null;
     $scope.activeNavItem = localStorage.getItem('activeNavItem') || null;
 
     $scope.isAuthenticated = AuthService.getToken() !== null;
-    $scope.user = AuthService.getUser();
+    let user = $scope.user = AuthService.getUser();
 
-    /**
-     * Gọi trong localStored ra để hiển thị thông báo
-     */
+    function errorCallback(error) {
+        console.log(error)
+        toastAlert('error', "Máy chủ không tồn tại !");
+    }
+
     $scope.init = function () {
+        // lấy năm hiện tại show lên template
         $scope.year = new Date().getFullYear();
-        const notification = NotificationService.getNotification();
 
+        // hiển thị swal alert
+        const notification = NotificationService.getNotification();
         if (notification) {
             toastAlert(notification.type, notification.message);
             NotificationService.clearNotification();
@@ -23,10 +28,44 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
         if (AuthService.getUser() !== null) {
             $scope.roles = AuthService.getUser().roles.map(role => role.nameRole);
         }
-
         $scope.hasRole = function (roleToCheck) {
             return $scope.roles.includes(roleToCheck);
         };
+
+        /**
+         * Hiển thị nội dung dựa trên vai trò được chọn
+         */
+        $scope.showContentForRole = function (role) {
+            $scope.selectedRole = role;
+            localStorage.setItem('selectedRole', role);
+        };
+        /**
+         * Kiểm tra xem một vai trò có đang được chọn không
+         */
+        $scope.isSelectedRole = function (roleToCheck) {
+            return $scope.selectedRole === roleToCheck;
+        };
+
+        // Kiểm tra và hiển thị nội dung của slide bar
+        if (user !== undefined && user !== null && user !== "") {
+            AgenciesServiceAG.findByUserId(user.id).then(function successCallback(response) {
+                let agencies = response.data;
+
+                if (agencies !== undefined && agencies !== null && agencies !== "") {
+                    HotelServiceAG.findByAgencyId(agencies.id).then(function successCallback(response) {
+                        $scope.hotels = response.data;
+                    }, errorCallback);
+
+                    TransportServiceAG.findByAgencyId(agencies.id).then(function successCallback(response) {
+                        $scope.transport = response.data;
+                    }, errorCallback);
+
+                    VisitLocationServiceAG.findByAgencyId(agencies.id).then(function successCallback(response) {
+                        $scope.visits = response.data;
+                    }, errorCallback);
+                }
+            }, errorCallback);
+        }
     };
 
     $scope.init();

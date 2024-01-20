@@ -179,7 +179,8 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http, $fi
         dataVisit.append("unitPrices", new Blob([JSON.stringify(unitPrices)], {type: "application/json"}));
 
         VisitLocationServiceAG.registerVisit(dataVisit).then(function successCallback() {
-            // $location.path('/business/select-type');
+            $location.path('/business/select-type');
+            centerAlert('Thành công !', 'Thông tin địa điểm tham quan đã được cập nhật thành công.', 'success')
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });

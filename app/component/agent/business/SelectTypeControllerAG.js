@@ -1,4 +1,4 @@
-travel_app.controller('SelectTypeControllerAG', function ($scope, AgenciesServiceAG, HotelServiceAG, TransportServiceAG, VisitLocationServiceAG) {
+travel_app.controller('SelectTypeControllerAG', function ($scope, $location, AgenciesServiceAG, HotelServiceAG, TransportServiceAG, VisitLocationServiceAG) {
     let user = $scope.user;
 
     function errorCallback(error) {
