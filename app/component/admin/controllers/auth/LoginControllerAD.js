@@ -13,6 +13,8 @@ travel_app.controller('LoginControllerAD', function ($scope, $location, AuthServ
      * @message Login with jwt
      */
     $scope.loginAccountAdmin = function () {
+        $scope.isLoading = true;
+
         let loginData = {
             email: $scope.user.email,
             password: $scope.user.password
@@ -30,10 +32,9 @@ travel_app.controller('LoginControllerAD', function ($scope, $location, AuthServ
                         for (let i = 0; i < role.length; i++) {
                             if (role[i] === 'ROLE_CUSTOMER') {
                                 toastAlert('warning', 'Không đủ quyền truy cập !');
+                                $scope.isLoading = false;
                             } else if (['ROLE_AGENT_TRANSPORT', 'ROLE_AGENT_HOTEL', 'ROLE_AGENT_PLACE'].includes(role[i])) {
                                 AuthService.findByEmail(email).then(function successCallback(response) {
-                                    $scope.isLoading = true;
-
                                     let token = data.token;
                                     let user = response.data;
 
@@ -80,6 +81,7 @@ travel_app.controller('LoginControllerAD', function ($scope, $location, AuthServ
                     }, errorCallback);
                 } else {
                     toastAlert('warning', "Sai thông tin đăng nhập !");
+                    $scope.isLoading = false;
                 }
             }
         }, errorCallback);

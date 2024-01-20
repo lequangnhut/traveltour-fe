@@ -20,7 +20,27 @@ travel_app.service('HotelServiceAG', function ($http) {
     };
 
     /**
-     * Lấy danh sách check box
+     * Lấy danh sách loại khách sạn
+     */
+    this.getListHotelType = function () {
+        return $http({
+            method: 'GET',
+            url: API_HOTELS + 'list-hotels-type'
+        })
+    };
+
+    /**
+     * Lấy danh sách loại giờng
+     */
+    this.findListBedType = function () {
+        return $http({
+            method: "GET",
+            url: API_HOTELS + "list-bed-type"
+        });
+    };
+
+    /**
+     * Lấy danh sách check box vị trí tiện ích khách sạn
      */
     this.getListPlaceUtilities = function () {
         return $http({
@@ -29,6 +49,15 @@ travel_app.service('HotelServiceAG', function ($http) {
         });
     };
 
+    /**
+     * Lấy danh sách check box vị trí tiện ích phòng
+     */
+    this.getListRoomUtilities = function () {
+        return $http({
+            method: "GET",
+            url: API_HOTELS + "list-room-utilities"
+        });
+    };
 
     /**
      * Thêm khách sạn mới

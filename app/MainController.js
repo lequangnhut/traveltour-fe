@@ -22,6 +22,10 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
             NotificationService.clearNotification();
         }
 
+        $scope.gotoRedirect = function (url) {
+            window.location.href = url
+        }
+
         /**
          * Set role gọi ra slide bar
          */
