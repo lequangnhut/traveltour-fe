@@ -1,4 +1,8 @@
 travel_app.controller('BasicTourControllerAD', function ($scope, $location, $routeParams, $timeout, ToursServiceAD, ToursTypeServiceAD) {
+    const fileName = "default.jpg";
+    const mimeType = "image/jpeg";
+
+    $scope.hasImage = false;
 
     $scope.tourBasicList = []; // Biến để lưu danh sách tours
     $scope.currentPage = 0; // Trang hiện tại
@@ -8,14 +12,17 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
     // Đối tượng tourBasic mới cho form tour
     $scope.tourBasic = {
         tourName: null,
-        tourType: null,
-        tourStatus: null,
-        tourImage: null
+        tourTypeId: null, dateCreated: null,
+        isActive: null,
+        tourImg: null,
+        tourDescription: ''
     };
 
     let searchTimeout;
 
     $scope.tourTypeNames = {};
+
+    let tourId = $routeParams.id;
 
     //================================================================
 
@@ -23,24 +30,37 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
     $scope.tourTypeList = [];
 
     function errorCallback(error) {
+        console.log(error)
         toastAlert('error', "Máy chủ không tồn tại !");
     }
 
     /**
-     * Tải lên hình ảnh tour và lưu vào biến tourBasic.tourImage
+     * Tải lên hình ảnh tour và lưu vào biến tourBasic.tourImg
      * @param file
      */
     $scope.uploadTourImage = function (file) {
         if (file && !file.$error) {
-            $scope.tourBasic.tourImage = file;
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $scope.tourBasic.tourImg = e.target.result;
+                $scope.tourImgNoCloud = file;
+                $scope.hasImage = true; // Đánh dấu là đã có ảnh
+                $scope.$apply();
+            };
+
+            reader.readAsDataURL(file);
         }
     };
 
-    /**
-     * Gửi dữ liệu tour để cập nhật hoặc tạo mới
-     */
-    $scope.submitTour = function () {
-        console.log($scope.tourBasic);
+    $scope.getCurrentImageSource = function () {
+        if ($scope.tourBasic.tourImg && typeof $scope.tourBasic.tourImg === 'string' && $scope.tourBasic.tourImg.startsWith('http')) {
+            $scope.tourImgNoCloud = $scope.tourBasic.tourImg;
+            return $scope.tourBasic.tourImg;
+        } else if ($scope.tourBasic.tourImg && typeof $scope.tourBasic.tourImg === 'string') {
+            // If tourImg is a data URL
+            return $scope.tourBasic.tourImg;
+        }
     };
 
     $scope.loadTourTypeName = function (tourId) {
@@ -106,6 +126,14 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
                     $scope.loadTourTypeName(tour.tourTypeId);
                 });
             }, errorCallback);
+
+        if (tourId !== undefined && tourId !== null && tourId !== "") {
+            ToursServiceAD.findTourById(tourId).then(function successCallback(response) {
+                if (response.status === 200) {
+                    $scope.tourBasic = response.data;
+                }
+            }, errorCallback);
+        }
     };
 
 
@@ -143,11 +171,67 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
     // Gọi hàm để tải danh sách tourType khi controller được khởi tạo
     $scope.loadSelectTourType();
 
-    $scope.createTour = function () {
-        ToursServiceAD.createTour($scope.tourBasic)
-            .then(function (response) {
-                // Xử lý khi tạo tour thành công
-            }, errorCallback);
+    $scope.createTourSubmit = () => {
+        $scope.isLoading = true;
+        const dataTrans = new FormData();
+
+        dataTrans.append("toursDto", new Blob([JSON.stringify($scope.tourBasic)], {type: "application/json"}));
+        dataTrans.append("tourImg", $scope.tourImgNoCloud);
+
+        ToursServiceAD.createTour(dataTrans).then(function successCallback() {
+            toastAlert('success', 'Thêm mới thành công !');
+            $location.path('/admin/basic-tour-list');
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
     };
 
+    function urlToFile(url, fileName, mimeType) {
+        return fetch(url)
+            .then(response => response.blob())
+            .then(blob => new File([blob], fileName, {type: mimeType}));
+    }
+
+    //form update
+    $scope.updateTourSubmit = () => {
+        const dataTour = new FormData();
+        $scope.isLoading = true;
+
+        if ($scope.hasImage) {
+            dataTour.append("toursDto", new Blob([JSON.stringify($scope.tourBasic)], {type: "application/json"}));
+            dataTour.append("tourImg", $scope.tourImgNoCloud);
+            updateTour(tourId, dataTour);
+        } else {
+            urlToFile($scope.tourBasic.tourImg, fileName, mimeType).then(file => {
+                dataTour.append("toursDto", new Blob([JSON.stringify($scope.tourBasic)], {type: "application/json"}));
+                dataTour.append("tourImg", file);
+                updateTour(tourId, dataTour);
+            }, errorCallback);
+        }
+    };
+
+    const updateTour = (tourId, dataTour) => {
+        ToursServiceAD.updateTour(tourId, dataTour).then(function successCallback() {
+            toastAlert('success', 'Cập nhật thành công !');
+            $location.path('/admin/basic-tour-list');
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
+    }
+
+
+    //delete
+    /**
+     * Gọi api delete tour
+     */
+    $scope.deleteTour = function (userId, tourName) {
+        function confirmDeleteTour() {
+            ToursServiceAD.deactivateTour(userId).then(function successCallback() {
+                toastAlert('success', 'Xóa tour thành công !');
+                $scope.getTourBasicList();
+            }, errorCallback);
+        }
+
+        confirmAlert('Bạn có chắc chắn muốn xóa tour ' + tourName + ' không ?', confirmDeleteTour);
+    }
 });
