@@ -162,15 +162,36 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/business/register-business', {
             templateUrl: 'app/component/agent/business/register-business.html',
-            controller: 'RegisterBusinessControllerAG'
+            controller: 'RegisterBusinessControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/register-business-success', {
             templateUrl: 'app/component/agent/business/register-business-success.html',
-            controller: ''
+            controller: '',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/select-type', {
             templateUrl: 'app/component/agent/business/select-type.html',
-            controller: 'SelectTypeControllerAG'
+            controller: 'SelectTypeControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -181,7 +202,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'SelectTypeControllerAG'
         })
         .when('/business/register-hotel', {
-            templateUrl: 'app/component/agent/hotel/views/pages/register/register-hotel.html',
+            templateUrl: 'app/component/agent/hotel/views/pages/register-hotel.html',
             controller: 'RegisterHotelControllerAG'
         })
         .when('/business/hotel/hotel-information-list', {

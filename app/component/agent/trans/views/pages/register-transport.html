@@ -1,261 +1,13 @@
+<!--====== Start Preloader ======-->
+<div class="preloader" ng-show="isLoading">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+</div><!--====== End Preloader ======-->
+
 <form ng-submit="submitDataRegisterTrans()" name="register_trans" method="post">
     <section id="business-information" ng-show="!showNextForm">
-        <div class="container-fluid">
-            <div class="logo text-center">
-                <div class="d-flex align-items-center justify-content-center">
-                    <img src="/assets/admin/assets/img/icons/logo.png" alt="logo" width="40"/>
-                    <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">TravelTour</p>
-                </div>
-                <div class="content-text mt-3">
-                    <div class="h4">Đăng kí thông tin đối tác TravelTour</div>
-                </div>
-                <div class="progress-register">
-                    <!-- Tiến dộ -->
-                    <div class="progress-container">
-                        <div class="container">
-                            <div class="d-flex justify-content-center">
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <div class="vector-wrapper">
-                                                <span class="num">1</span>
-                                            </div>
-                                        </div>
-                                        <div class="text-wrapper">Tạo doanh nghiệp</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <span class="num">2</span>
-                                        </div>
-                                        <div class="text-wrapper">Thông tin phương tiện</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <span class="num">3</span>
-                                        </div>
-                                        <div class="text-wrapper">Xác nhận thông tin</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="main d-flex justify-content-center theme-wizard">
-                <div class="form card">
-                    <div class="row g-3">
-                        <div class="h3 color-greend fw-medium">TẠO DOANH NGHIỆP</div>
-                        <div class="col-12">
-                            <label for="inputNameBusiness" class="form-label">Tên doanh nghiệp</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="inputNameBusiness"
-                                   placeholder="Công ty du lịch TravelTour"
-                                   name="nameAgency"
-                                   ng-model="agent.nameAgency"
-                                   ng-class="{ 'is-invalid': register_trans.nameAgency.$invalid && register_trans.nameAgency.$touched, 'is-valid': register_trans.nameAgency.$valid && register_trans.nameAgency.$touched }"
-                                   ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
-                                   required
-                            >
-                            <small class="text-danger"
-                                   ng-show="register_trans.nameAgency.$touched && register_trans.nameAgency.$error.required">
-                                Vui lòng nhập tên doanh nghiệp !
-                            </small>
-                            <small class="text-danger"
-                                   ng-show="register_trans.nameAgency.$touched && register_trans.nameAgency.$error.pattern">
-                                Tên doanh nghiệp không đúng định dạng !
-                            </small>
-                        </div>
-                        <div class="col-6">
-                            <label for="inputFullname" class="form-label">Tên người đại diện</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="inputFullname"
-                                   placeholder="Nguyễn Văn A"
-                                   name="representativeName"
-                                   ng-model="agent.representativeName"
-                                   ng-class="{ 'is-invalid': register_trans.representativeName.$invalid && register_trans.representativeName.$touched, 'is-valid': register_trans.representativeName.$valid && register_trans.representativeName.$touched }"
-                                   ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
-                                   required
-                            >
-                            <small class="text-danger"
-                                   ng-show="register_trans.representativeName.$touched && register_trans.representativeName.$error.required">
-                                Vui lòng nhập tên người đại diện !
-                            </small>
-                            <small class="text-danger"
-                                   ng-show="register_trans.representativeName.$touched && register_trans.representativeName.$error.pattern">
-                                Tên người đại diện không đúng định dạng !
-                            </small>
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label">URL Website</label>
-                            <input type="text"
-                                   class="form-control"
-                                   placeholder="https://excample.com.vn"
-                                   name="urlWebsite"
-                                   ng-model="agent.urlWebsite"
-                                   ng-class="{ 'is-invalid': register_trans.urlWebsite.$invalid && register_trans.urlWebsite.$touched, 'is-valid': register_trans.urlWebsite.$valid && register_trans.urlWebsite.$touched }"
-                                   required
-                            >
-                            <small class="text-danger"
-                                   ng-show="register_trans.urlWebsite.$touched && register_trans.urlWebsite.$error.required">
-                                Vui lòng nhập website !
-                            </small>
-                            <small class="text-danger"
-                                   ng-show="register_trans.urlWebsite.$touched && register_trans.urlWebsite.$error.pattern">
-                                Tên người đại diện không đúng định dạng !
-                            </small>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="inputEmail4" class="form-label">Mã số thuế</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="inputEmail4"
-                                   placeholder="1423142144"
-                                   name="taxId"
-                                   ng-model="agent.taxId"
-                                   ng-class="{ 'is-invalid': register_trans.taxId.$invalid && register_trans.taxId.$touched, 'is-valid': register_trans.taxId.$valid && register_trans.taxId.$touched }"
-                                   ng-pattern="/^\d{10,13}$/"
-                                   required
-                            >
-                            <small class="text-danger"
-                                   ng-show="register_trans.taxId.$touched && register_trans.taxId.$error.required">
-                                Vui lòng nhập mã số thuế !
-                            </small>
-                            <small class="text-danger"
-                                   ng-show="register_trans.taxId.$touched && register_trans.taxId.$error.pattern">
-                                Mã số thuế không đúng định dạng !
-                            </small>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="inputPassword4" class="form-label"> Số điện thoại</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="inputPassword4"
-                                   placeholder="0969653264"
-                                   name="phone"
-                                   ng-model="agent.phone"
-                                   ng-class="{ 'is-invalid': register_trans.phone.$invalid && register_trans.phone.$touched, 'is-valid': register_trans.phone.$valid && register_trans.phone.$touched && !phoneError }"
-                                   ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
-                                   ng-change="checkDuplicatePhone()"
-                                   required
-                            >
-                            <small class="text-danger"
-                                   ng-show="register_trans.phone.$touched && register_trans.phone.$error.required">
-                                Vui lòng nhập số điện thoại !
-                            </small>
-                            <small class="text-danger"
-                                   ng-show="register_trans.phone.$touched && register_trans.phone.$error.pattern">
-                                Số điện thoại không đúng định dạng !
-                            </small>
-                            <small class="text-danger" ng-show="register_trans.phone.$touched && phoneError">
-                                Số điện thoại đã tồn tại ở một tài khoản khác !
-                            </small>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label">Tỉnh/Thành phố</label>
-                            <select class="form-select"
-                                    name="province"
-                                    ng-class="{ 'is-invalid': register_trans.province.$invalid && register_trans.province.$touched, 'is-valid': register_trans.province.$valid && register_trans.province.$touched }"
-                                    ng-options="city.Id as city.Name for city in provinces"
-                                    ng-change="onProvinceChange()"
-                                    ng-model="agent.province"
-                                    required
-                            >
-                                <option value="" disabled selected>Chọn Tỉnh/Thành phố</option>
-                            </select>
-                            <small class="text-danger"
-                                   ng-show="register_trans.province.$touched && register_trans.province.$error.required">
-                                Vui lòng chọn tỉnh/thành phố.
-                            </small>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label">Quận/Huyện</label>
-                            <select class="form-select"
-                                    name="districts"
-                                    ng-class="{ 'is-invalid': register_trans.districts.$invalid && register_trans.districts.$touched, 'is-valid': register_trans.districts.$valid && register_trans.districts.$touched }"
-                                    ng-options="district.Id as district.Name for district in districts"
-                                    ng-disabled="!agent.province"
-                                    ng-change="onDistrictChange()"
-                                    ng-model="agent.districts"
-                                    required
-                            >
-                                <option value="" disabled selected>Chọn Quận/Huyện</option>
-                            </select>
-                            <small class="text-danger"
-                                   ng-show="register_trans.districts.$touched && register_trans.districts.$error.required">
-                                Vui lòng chọn quận/huyện.
-                            </small>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label">Phường/Xã</label>
-                            <select class="form-select"
-                                    name="ward"
-                                    ng-class="{ 'is-invalid': register_trans.ward.$invalid && register_trans.ward.$touched, 'is-valid': register_trans.ward.$valid && register_trans.ward.$touched }"
-                                    ng-options="ward.Id as ward.Name for ward in wards"
-                                    ng-disabled="!agent.districts"
-                                    ng-change="onWardChange()"
-                                    ng-model="agent.ward"
-                                    required
-                            >
-                                <option value="" disabled selected>Chọn Phường/Xã</option>
-                            </select>
-                            <small class="text-danger"
-                                   ng-show="register_trans.ward.$touched && register_trans.ward.$error.required">
-                                Vui lòng chọn phường/xã.
-                            </small>
-                        </div>
-
-                        <div class="col-12">
-                            <label class="form-label">Địa chỉ</label>
-                            <input type="text"
-                                   class="form-control"
-                                   placeholder="1234 Main St"
-                                   name="address"
-                                   ng-model="agent.address"
-                                   ng-class="{ 'is-invalid': register_trans.address.$invalid && register_trans.address.$touched, 'is-valid': register_trans.address.$valid && register_trans.address.$touched }"
-                                   required
-                            >
-                            <small class="text-danger"
-                                   ng-show="register_trans.address.$touched && register_trans.address.$error.required">
-                                Vui lòng nhập địa chỉ doanh nghiệp !
-                            </small>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label">Giấy phép đăng ký kinh doanh</label>
-                            <input class="form-control"
-                                   type="file"
-                                   name="imgDocument"
-                                   ng-model="agent.imgDocument"
-                                   ngf-max-size="10MB"
-                                   ng-class="{ 'is-invalid': register_trans.imgDocument.$invalid && register_trans.imgDocument.$touched, 'is-valid': register_trans.imgDocument.$valid && register_trans.imgDocument.$touched }"
-                                   ngf-select="uploadBusinessLicense($file)"
-                                   required
-                            >
-                            <small class="text-danger"
-                                   ng-show="register_trans.imgDocument.$touched && register_trans.imgDocument.$error.required">
-                                Vui lòng tải lên giấy phép đăng ký kinh doanh !
-                            </small>
-                        </div>
-
-                        <div class="d-flex justify-content-end mt-5">
-                            <button type="button" class="btn btn-submit-form" ng-click="goToNextSection()">
-                                Tiếp tục
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="business-information" ng-show="showNextForm && !showThirdForm">
         <div class="container-fluid">
             <div class="logo text-center">
                 <div class="d-flex align-items-center justify-content-center">
@@ -342,13 +94,27 @@
                                 Vui lòng tải lên giấy phép đăng ký kinh doanh !
                             </small>
                         </div>
+                        <div class="col-12">
+                            <label class="form-label">GHI CHÚ</label>
+                            <textarea class="form-control"
+                                      placeholder="Nội dung..."
+                                      name="transportationBrandDescription"
+                                      ng-class="{ 'is-invalid': register_trans.transportationBrandDescription.$invalid && register_trans.transportationBrandDescription.$touched, 'is-valid': register_trans.transportationBrandDescription.$valid && register_trans.transportationBrandDescription.$touched }"
+                                      ng-model="agent.transportationBrandDescription"
+                            >
+                            </textarea>
+                        </div>
 
                         <div class="d-flex justify-content-end mt-5">
-                            <a role="button" class="btn btn-submit-form mx-3" ng-click="goPreviousSectionOne()">
-                                Quay về
+                            <a role="button"
+                               href="/business/select-type"
+                               class="btn btn-submit-form btn-prev"
+                               style="background: #5c636a; margin-right: 20px"
+                            >
+                                <i class="fa-solid fa-arrow-left"></i> Trở về
                             </a>
                             <button type="button" class="btn btn-submit-form"
-                                    ng-click="goToThirdSection()"
+                                    ng-click="goToNextSection()"
                                     ng-disabled="register_trans.$invalid || phoneError"
                             >
                                 Tiếp tục
@@ -360,7 +126,7 @@
         </div>
     </section>
 
-    <section id="business-information" ng-show="showThirdForm">
+    <section id="business-information" ng-show="showNextForm && !showThirdForm">
         <div class="container-fluid">
             <div class="logo text-center">
                 <div class="d-flex align-items-center justify-content-center">
@@ -423,7 +189,7 @@
                     </div>
 
                     <div class="d-flex justify-content-end mt-5">
-                        <a role="button" class="btn btn-submit-form mx-3" ng-click="goPreviousSectionTwo()">
+                        <a role="button" class="btn btn-submit-form mx-3" ng-click="goPreviousSectionOne()">
                             Quay về
                         </a>
                         <button type="submit" class="btn btn-submit-form"
