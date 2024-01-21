@@ -31,6 +31,14 @@ travel_app.service('AccountServiceAD', function ($http) {
         })
     };
 
+
+    this.findUsersByRolesIsGuild = function () {
+        return $http({
+            method: 'GET',
+            url: API_ACCOUNT + 'find-all-account-role-is-guild'
+        })
+    };
+
     /**
      * API tạo tài khoản
      */
