@@ -67,10 +67,9 @@ travel_app.service('HotelServiceAG', function ($http) {
     this.registerHotels = function (dataHotels) {
         return $http({
             method: 'POST',
-            url: API_HOTELS + 'information-hotel/register-hotels',
+            url: API_HOTELS + 'register-hotels',
             headers: {'Content-Type': undefined},
-            data: dataHotels,
-            transformRequest: angular.identity,
+            data: dataHotels
         });
-    }
+    };
 })
