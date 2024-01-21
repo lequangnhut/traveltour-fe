@@ -4,7 +4,9 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $loc
     $scope.checkboxChecked = false;
 
     $scope.agent = {
-        transportationBrandName: null, transportationBrandDescription: null, transportationBrandImg: null
+        transportationBrandName: null,
+        transportationBrandDescription: null,
+        transportationBrandImg: null
     }
 
     function errorCallback(error) {

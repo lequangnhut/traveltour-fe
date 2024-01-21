@@ -12,8 +12,13 @@ body::-webkit-scrollbar-thumb {
 }
 
 /*====== Start Preloader css ======*/
-.skill-wrapper, .footer-newsletter-widget .footer-content form .form_control, .sidebar-widget-area .booking-form-widget .sidebar-booking-form .bk-item .nice-select, .sidebar-widget-area .booking-form-widget .sidebar-booking-form .bk-item input, .sidebar-widget-area .sidebar-widget, .single-blog-post-four .entry-content .main-btn.filled-btn:hover svg, .gw-testimonial-item-two, .destination-details-wrapper .destination-info .features-list li span, .single-place-item-three .place-content .meta .icon-btn, .single-place-item-three:hover, .single-place-item .place-content .info, .booking-form .nice-select:focus, .booking-form .form_control:focus, .booking-form-wrapper, .activity-nav-tab, .single-service-item-four .content .icon-btn, .single-service-item-four:hover, .single-service-item-three .content .meta span.rate, .single-service-item-three:hover, .single-service-item .content .icon-btn, .single-service-item, .video-popup, .single-event-item, .single-activity-item .content .meta, .single-counter-item-two .icon, .single-counter-item, .single-team-item, .fancy-icon-box-three .icon, .fancy-icon-box-two, .fancy-icon-box .icon, .single-features-list .icon-inner .icon, .single-features-item-three .content, .single-features-item .img-holder .content, .about-two_content-box .card-list .card-item, .hero-search-form, .hero-wrapper-three .hero-arrows .slick-arrow:hover, .navigation-white.header-navigation .navbar-toggler span, .header-four .header-navigation.sticky, .header-navigation.breakpoint-on .nav-menu, .header-navigation .main-menu ul > li .sub-menu, .preloader, .main-btn.filled-btn:hover svg, .main-btn i, .white-bg {
-    background-color: #fff;
+.preloader .bg {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100vh;
+    background: #fff;
+    opacity: .7;
 }
 
 .hero-slider-two .slick-arrow, .hero-slider-one .slick-arrow, .footer-top .social-box ul.social-link li a, .product-details-wrapper .product-info ul.social-link li a, .single-place-item-three .place-content .meta .icon-btn, .single-gallery-item .gallery-img .icon-btn, .single-gallery-item .gallery-img .hover-overlay, .single-service-item-four .content .icon-btn, .single-service-item .content .icon-btn, .video-popup, .gowilds-pagination li a, .single-skill-circle .inner-circle, .single-info-item-two .icon, .single-info-item .icon, .single-cta-item .content .icon-btn, .single-counter-item-two .icon, .single-counter-item .icon, .fancy-icon-box-three .icon, .fancy-icon-box-two .icon, .fancy-icon-box .icon, .single-features-list .icon-inner .icon, .single-features-item .img-holder .text .icon-btn, .hero-wrapper-three .hero-arrows .slick-arrow, .header-navigation.breakpoint-on .nav-menu .main-menu ul li .dd-trigger, .preloader, .main-btn svg {

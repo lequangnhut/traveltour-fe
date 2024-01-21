@@ -14,15 +14,22 @@ travel_app.controller('SignupController', function ($scope, $location, AuthServi
         agreeTerms: false
     }
 
+    function errorCallback() {
+        toastAlert('error', "Máy chủ không tồn tại !");
+    }
+
     /**
      * @message Register user
      */
     $scope.registerAccount = function () {
+        $scope.isLoading = true;
         let users = $scope.user;
 
         AuthService.registerAuth(users).then(function successCallback() {
             $location.path("/login");
             centerAlert('Thành công !', 'Đăng ký tài khoản thành công. Vui lòng xác thực email để đăng nhập !', 'success');
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
         });
     };
 

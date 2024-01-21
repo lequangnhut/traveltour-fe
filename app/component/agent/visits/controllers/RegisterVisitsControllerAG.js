@@ -73,6 +73,7 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http, $fi
                 $scope.agent = response.data;
             }, errorCallback);
         }
+
         /**
          * API lấy dữ liệu loại địa điểm
          */
