@@ -18,12 +18,12 @@
                         <label for="tourNameSelect" class="form-label">Tên tour</label>
                         <select id="tourNameSelect" class="form-select"
                                 name="tourNameSelect"
-                                ng-model="tourDetail.tourName"
+                                ng-model="tourDetail.tourId"
+                                ng-options="tour.id as tour.tourName for tour in tourBasicList"
                                 ng-class="{ 'is-invalid': tourDetailForm.tourNameSelect.$touched && tourDetailForm.tourNameSelect.$error.required,
                                             'is-valid': tourDetailForm.tourNameSelect.$touched && tourDetailForm.tourNameSelect.$valid}"
                                 required>
-                            <option value="" disabled selected>Choose...</option>
-                            <option>...</option>
+                            <option value="" disabled selected>Chọn tour</option>
                         </select>
                         <small class="text-danger"
                                ng-show="tourDetailForm.tourNameSelect.$touched && tourDetailForm.tourNameSelect.$error.required">
@@ -35,12 +35,12 @@
                         <label for="tourGuideSelect" class="form-label">Hướng dẫn viên</label>
                         <select id="tourGuideSelect" class="form-select"
                                 name="tourGuideSelect"
-                                ng-model="tourDetail.tourGuide"
+                                ng-model="tourDetail.guideId"
+                                ng-options="usersByRolesIsGuild.id as usersByRolesIsGuild.fullName for usersByRolesIsGuild in UsersByRolesIsGuildSelect"
                                 ng-class="{ 'is-invalid': tourDetailForm.tourGuideSelect.$touched && tourDetailForm.tourGuideSelect.$error.required,
                                             'is-valid': tourDetailForm.tourGuideSelect.$touched && tourDetailForm.tourGuideSelect.$valid}"
                                 required>
                             <option value="" disabled selected>Choose...</option>
-                            <option>...</option>
                         </select>
                         <small class="text-danger"
                                ng-show="tourDetailForm.tourGuideSelect.$touched && tourDetailForm.tourGuideSelect.$error.required">
@@ -67,76 +67,116 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="startDate" class="form-label">Ngày đi</label>
-                        <input type="date" class="form-control" id="startDate"
-                               name="startDate"
-                               ng-model="tourDetail.startDate"
-                               ng-class="{ 'is-invalid': tourDetailForm.startDate.$touched && (!tourDetailForm.startDate.$valid || !isStartDateValid()),
-                                            'is-valid': tourDetailForm.startDate.$touched &&q (tourDetailForm.startDate.$valid || isStartDateValid())}"
+                        <label class="form-label">Điểm đi</label>
+                        <select class="form-select"
+                                name="fromLocation"
+                                ng-class="{ 'is-invalid': tourDetailForm.fromLocation.$invalid && tourDetailForm.fromLocation.$touched,
+                                            'is-valid': tourDetailForm.fromLocation.$valid && tourDetailForm.fromLocation.$touched }"
+                                ng-options="city.Name as city.Name for city in provinces"
+                                ng-change="onProvinceChange('fromLocation')"
+                                ng-model="tourDetail.fromLocation"
+                                required
+                        >
+                            <option value="" disabled selected>Chọn Điểm đi</option>
+                        </select>
+                        <small class="text-danger"
+                               ng-show="tourDetailForm.fromLocation.$touched && tourDetailForm.fromLocation.$error.required">
+                            Vui lòng chọn Điểm đi
+                        </small>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Điểm đến</label>
+                        <select class="form-select"
+                                name="toLocation"
+                                ng-class="{ 'is-invalid': tourDetailForm.toLocation.$invalid && tourDetailForm.toLocation.$touched,
+                                            'is-valid': tourDetailForm.toLocation.$valid && tourDetailForm.toLocation.$touched }"
+                                ng-options="city.Id as city.Name for city in provinces"
+                                ng-change="onProvinceChange('toLocation')"
+                                ng-model="tourDetail.toLocation"
+                                required
+                        >
+                            <option value="" disabled selected>Chọn Điểm đến</option>
+                        </select>
+                        <small class="text-danger"
+                               ng-show="tourDetailForm.toLocation.$touched && tourDetailForm.toLocation.$error.required">
+                            Vui lòng chọn Điểm đến
+                        </small>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="departureDate" class="form-label">Ngày đi</label>
+                        <input type="date" class="form-control" id="departureDate"
+                               name="departureDate"
+                               ng-model="tourDetail.departureDate"
+                               ng-class="{ 'is-invalid': tourDetailForm.departureDate.$touched && (!tourDetailForm.departureDate.$valid || !isStartDateValid()),
+                                            'is-valid': tourDetailForm.departureDate.$touched &&q (tourDetailForm.departureDate.$valid || isStartDateValid())}"
                                required>
                         <small class="text-danger"
-                               ng-show="tourDetailForm.startDate.$touched && !tourDetailForm.startDate.$valid">
+                               ng-show="tourDetailForm.departureDate.$touched && !tourDetailForm.departureDate.$valid">
                             Vui lòng nhập ngày đi hợp lệ!
                         </small>
                         <small class="text-danger"
-                               ng-show="tourDetailForm.startDate.$touched && !isStartDateValid()">
+                               ng-show="tourDetailForm.departureDate.$touched && !isStartDateValid()">
                             Ngày đi không thể sau ngày về!
                         </small>
                     </div>
 
                     <div class="col-md-6">
-                        <label for="endDate" class="form-label">Ngày về</label>
-                        <input type="date" class="form-control" id="endDate"
-                               name="endDate"
-                               ng-model="tourDetail.endDate"
-                               ng-class="{ 'is-invalid': tourDetailForm.endDate.$touched && (!tourDetailForm.endDate.$valid || !isEndDateValid()),
-                                            'is-valid': tourDetailForm.endDate.$touched && (tourDetailForm.endDate.$valid || isEndDateValid()) }"
+                        <label for="arrivalDate" class="form-label">Ngày về</label>
+                        <input type="date" class="form-control" id="arrivalDate"
+                               name="arrivalDate"
+                               ng-model="tourDetail.arrivalDate"
+                               ng-class="{ 'is-invalid': tourDetailForm.arrivalDate.$touched && (!tourDetailForm.arrivalDate.$valid || !isEndDateValid()),
+                                            'is-valid': tourDetailForm.arrivalDate.$touched && (tourDetailForm.arrivalDate.$valid || isEndDateValid()) }"
                                required>
                         <small class="text-danger"
-                               ng-show="tourDetailForm.endDate.$touched && !tourDetailForm.endDate.$valid">
+                               ng-show="tourDetailForm.arrivalDate.$touched && !tourDetailForm.arrivalDate.$valid">
                             Vui lòng chọn ngày về!
                         </small>
                         <small class="text-danger"
-                               ng-show="tourDetailForm.endDate.$touched && !isEndDateValid()">
+                               ng-show="tourDetailForm.arrivalDate.$touched && !isEndDateValid()">
                             Ngày về phải lớn hơn hoặc bằng ngày đi!
                         </small>
                     </div>
 
                     <div class="col-md-4">
-                        <label for="price" class="form-label">Giá</label>
-                        <input type="number" class="form-control" id="price"
-                               name="price"
-                               ng-model="tourDetail.price"
-                               ng-class="{ 'is-invalid': tourDetailForm.price.$touched && (!tourDetailForm.price.$valid || !isPriceValid()),
-                                            'is-valid': tourDetailForm.price.$touched && (tourDetailForm.price.$valid || isPriceValid())}"
+                        <label for="unitPrice" class="form-label">Giá</label>
+                        <input type="number" class="form-control" id="unitPrice"
+                               name="unitPrice"
+                               ng-model="tourDetail.unitPrice"
+                               ng-class="{ 'is-invalid': tourDetailForm.unitPrice.$touched && (!tourDetailForm.unitPrice.$valid || !isPriceValid()),
+                                            'is-valid': tourDetailForm.unitPrice.$touched && (tourDetailForm.unitPrice.$valid || isPriceValid())}"
                                required>
                         <small class="text-danger"
-                               ng-show="tourDetailForm.price.$touched && tourDetailForm.price.$error.required">
+                               ng-show="tourDetailForm.unitPrice.$touched && tourDetailForm.unitPrice.$error.required">
                             Giá không được bỏ trống!
                         </small>
                         <small class="text-danger"
-                               ng-show="tourDetailForm.price.$touched && !isPriceValid()">
+                               ng-show="tourDetailForm.unitPrice.$touched && !isPriceValid()">
                             Giá phải lớn hơn 0!
                         </small>
                     </div>
 
                     <div class="col-md-4">
-                        <label for="tourStatus" class="form-label">Trạng thái</label>
-                        <select id="tourStatus" class="form-select" ng-model="tourDetail.tourStatus"
-                                name="tourStatus"
-                                ng-class="{ 'is-invalid': tourDetailForm.tourStatus.$touched && tourDetailForm.tourStatus.$error.required }"
+                        <label for="tourDetailStatus" class="form-label">Trạng thái</label>
+                        <select id="tourDetailStatus" class="form-select" ng-model="tourDetail.tourDetailStatus"
+                                name="tourDetailStatus"
+                                ng-class="{ 'is-invalid': tourDetailForm.tourDetailStatus.$touched && tourDetailForm.tourDetailStatus.$error.required,
+                                            'is-valid': tourDetailForm.tourDetailStatus.$touched && tourDetailForm.tourDetailStatus.$valid}"
                                 required>
                             <option value="" disabled selected>Choose...</option>
+                            <option>...</option>
                         </select>
                         <small class="text-danger"
-                               ng-show="tourDetailForm.tourStatus.$touched && tourDetailForm.tourStatus.$error.required">
+                               ng-show="tourDetailForm.tourDetailStatus.$touched && tourDetailForm.tourDetailStatus.$error.required">
                             Vui lòng chọn trạng thái!
                         </small>
                     </div>
 
                     <div class="col-md-4">
                         <label for="note" class="form-label">Ghi chú</label>
-                        <input class="form-control" type="text" id="note" ng-model="tourDetail.note">
+                        <input class="form-control" type="text" id="note" ng-model="tourDetail.tourDetailNotes">
                     </div>
 
                     <div class="col-12 d-flex justify-content-end mt-5">

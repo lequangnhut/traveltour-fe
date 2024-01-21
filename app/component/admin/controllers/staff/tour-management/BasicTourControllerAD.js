@@ -4,11 +4,6 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
 
     $scope.hasImage = false;
 
-    $scope.tourBasicList = []; // Biến để lưu danh sách tours
-    $scope.currentPage = 0; // Trang hiện tại
-    $scope.pageSize = 5; // Số lượng tours trên mỗi trang
-
-
     // Đối tượng tourBasic mới cho form tour
     $scope.tourBasic = {
         tourName: null,
@@ -17,10 +12,13 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
         tourImg: null,
         tourDescription: ''
     };
+    $scope.tourTypeNames = {};
 
     let searchTimeout;
 
-    $scope.tourTypeNames = {};
+    $scope.tourBasicList = []; // Biến để lưu danh sách tours
+    $scope.currentPage = 0; // Trang hiện tại
+    $scope.pageSize = 5; // Số lượng tours trên mỗi trang
 
     let tourId = $routeParams.id;
 
@@ -141,6 +139,13 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
         $scope.sortBy = column;
         $scope.sortDir = ($scope.sortDir === 'asc') ? 'desc' : 'asc';
         $scope.getTourBasicList();
+    };
+
+    $scope.getSortIcon = function(column) {
+        if ($scope.sortBy === column) {
+            return $scope.sortDir === 'asc' ? 'fa-sort-up' : 'fa-sort-down';
+        }
+        return 'fa-sort';
     };
 
     $scope.searchTours = function () {

@@ -100,7 +100,7 @@
                                 <!-- Pagination Numbers -->
                                 <li class="page-item" ng-repeat="n in getPaginationRange()"
                                     ng-class="{active: n === currentPage}">
-                                    <a class="page-link" ng-click="setPage(n)">{{n + 1}}</a>
+                                    <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
                                 </li>
 
                                 <!-- Ellipsis at the end -->
@@ -124,30 +124,40 @@
                 <tr class="bg-light">
                     <th><span><input class="form-check-input checkbox-all" type="checkbox" value=""></span></th>
                     <th># <i class="fa-solid fa-sort"></i></th>
-                    <th ng-click="sortData('id')">ID <i class="fa-solid fa-sort"></i></th>
-                    <th ng-click="sortData('tourName')">Tên tour <i class="fa-solid fa-sort"></i></th>
-                    <th ng-click="sortData('tourTypeId')">Loại tour <i class="fa-solid fa-sort"></i></th>
-                    <th ng-click="sortData('dateCreated')">Ngày tạo <i class="fa-solid fa-sort"></i></th>
-                    <th ng-click="sortData('isActive')">Trạng thái <i class="fa-solid fa-sort"></i></th>
+                    <th class="cursor-pointer" ng-click="sortData('id')">ID
+                        <i class="fa" ng-class="getSortIcon('id')"></i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('tourName')">Tên tour
+                        <i class="fa" ng-class="getSortIcon('tourName')"></i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('tourTypeId')">Loại tour
+                        <i class="fa" ng-class="getSortIcon('tourTypeId')"></i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('dateCreated')">Ngày tạo
+                        <i class="fa" ng-class="getSortIcon('dateCreated')"></i>
+                    </th>
+<!--                    <th class="cursor-pointer" ng-click="sortData('isActive')">Trạng thái-->
+<!--                        <i class="fa" ng-class="getSortIcon('isActive')"></i>-->
+<!--                    </th>-->
                     <th>Thao tác</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="tour in tourBasicList">
                     <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
-                    <td>{{$index + 1}}</td>
-                    <td>{{tour.id}}</td>
-                    <td>{{tour.tourName}}</td>
-                    <td>{{tourTypeNames[tour.tourTypeId] || 'Đang tải...'}}</td>
-                    <td>{{tour.dateCreated | date:'dd-MM-yyyy'}}</td>
-                    <td>
-                        <div class="d-flex align-items-center justify-content-center">
-                            <span ng-class="{'status-success': tour.isActive, 'status-error': !tour.isActive}"></span>
-                            <span ng-class="{'text-status-success': tour.isActive, 'text-status-error': !tour.isActive}">
-                                    {{tour.isActive ? 'Đang hoạt động' : 'Ngưng hoạt động'}}
-                                </span>
-                        </div>
-                    </td>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ tour.id }}</td>
+                    <td>{{ tour.tourName }}</td>
+                    <td>{{ tourTypeNames[tour.tourTypeId] || 'Đang tải...' }}</td>
+                    <td>{{ tour.dateCreated | vietnameseDateTime }}</td>
+<!--                    <td>-->
+<!--                        <div class="d-flex align-items-center justify-content-center">-->
+<!--                            <span ng-class="{'status-success': tour.isActive, 'status-error': !tour.isActive}"></span>-->
+<!--                            <span ng-class="{'text-status-success': tour.isActive, 'text-status-error': !tour.isActive}">-->
+<!--                                    {{ tour.isActive ? 'Đang hoạt động' : 'Ngưng hoạt động' }}-->
+<!--                                </span>-->
+<!--                        </div>-->
+<!--                    </td>-->
                     <td class="d-flex align-items-center justify-content-center w-100" style="padding-right: 10px">
                         <a href="admin/basic-tour-list/basic-tour-update/{{tour.id}}"
                            style="color: #ffc107; margin-right: 20px">
@@ -166,7 +176,7 @@
             </table>
             <div class="card-footer">
                 <div class="d-flex justify-content-end">
-                    {{getDisplayRange()}} trong tổng số {{totalElements}}
+                    {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                 </div>
             </div>
         </div>
