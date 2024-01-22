@@ -16,20 +16,16 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $loc
         }
     };
 
-    $scope.agent = {
-        transportationBrandName: null,
-        transportationBrandDescription: null,
-        transportationBrandImg: null
-    }
-
     function errorCallback(error) {
         console.log(error)
         toastAlert('error', "Máy chủ không tồn tại !");
     }
 
-    $scope.validateCheckbox = function () {
-        return $scope.checkboxChecked;
-    };
+    $scope.agent = {
+        transportationBrandName: null,
+        transportationBrandDescription: null,
+        transportationBrandImg: null
+    }
 
     /**
      * @message Check duplicate phone

@@ -69,7 +69,7 @@
             <div class="main d-flex justify-content-center theme-wizard">
                 <div class="form card">
                     <div class="row">
-                        <div class="h3 color-greend fw-medium mb-3">THÔNG TIN KHÁCH SẠN</div>
+                        <div class="h3 color-green fw-medium mb-3">THÔNG TIN KHÁCH SẠN</div>
                         <!-- Tên doanh nghiệp -->
                         <div class="col-12 mb-3">
                             <label for="inputNameBusiness" class="form-label">Tên khách sạn</label>
@@ -383,7 +383,7 @@
                 <div class="main d-flex justify-content-center theme-wizard">
                     <div class="form card">
                         <div class="row g-3">
-                            <div class="h3 color-greend fw-medium">THÔNG TIN PHÒNG</div>
+                            <div class="h3 color-green fw-medium">THÔNG TIN PHÒNG</div>
                             <div class="col-12">
                                 <label for="inputNameBusiness" class="form-label">Tên loại phòng</label>
                                 <input type="text"
@@ -658,7 +658,11 @@
                         <div class="row g-3">
                             <div class="col-12">
                                 <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input" name="" id="">
+                                    <input type="checkbox"
+                                           class="form-check-input"
+                                           ng-model="checkboxChecked"
+                                           name="" id=""
+                                    >
                                     Tôi cam kết cung cấp thông tin đầy đủ, chính xác và minh bạch khi đăng ký bán phòng
                                     trên trang web du lịch. Chúng tôi hiểu rằng sự minh bạch và tin cậy là yếu tố quan
                                     trọng để tạo ra một môi trường kinh doanh tích cực và lâu dài.
@@ -675,6 +679,7 @@
                                 </button>
                                 <button type="submit"
                                         class="btn btn-submit-form"
+                                        ng-disabled="!checkboxChecked"
                                 >
                                     Xác nhận<i class="fa-solid fa-arrow-right"></i>
                                 </button>

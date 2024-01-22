@@ -19,9 +19,9 @@
                 <div class="row">
                     <div class="box col-xl-4 card" ng-if="hasRole('ROLE_AGENT_HOTEL')">
                         <a href="/business/welcome-hotel" ng-show="hotels.isAccepted"
-                           ng-click="showContentForRole('ROLE_AGENT_HOTEL', '/business/welcome-hotel')">
+                           ng-click="showContentForRole('ROLE_AGENT_HOTEL')">
                             <div class="box-icon mb-3">
-                                <i class="fa-solid fa-hotel color-greend" style="font-size: 30px"></i>
+                                <i class="fa-solid fa-hotel color-green" style="font-size: 30px"></i>
                             </div>
                             <div class="box-content fw-medium text-dark">
                                 Khách sạn
@@ -29,7 +29,7 @@
                         </a>
                         <a href="/business/register-hotel" ng-show="!hotels.isAccepted">
                             <div class="box-icon mb-3">
-                                <i class="fa-solid fa-hotel color-greend" style="font-size: 30px"></i>
+                                <i class="fa-solid fa-hotel color-green" style="font-size: 30px"></i>
                             </div>
                             <div class="box-content fw-medium text-dark">
                                 Khách sạn
@@ -40,9 +40,9 @@
                     </div>
                     <div class="box col-xl-4 card" ng-if="hasRole('ROLE_AGENT_TRANSPORT')">
                         <a href="/business/welcome-transport" ng-show="transport.isAccepted"
-                           ng-click="showContentForRole('ROLE_AGENT_TRANSPORT', '/business/welcome-transport')">
+                           ng-click="showContentForRole('ROLE_AGENT_TRANSPORT')">
                             <div class="box-icon mb-3">
-                                <i class="fa-solid fa-car color-greend" style="font-size: 30px"></i>
+                                <i class="fa-solid fa-car color-green" style="font-size: 30px"></i>
                             </div>
                             <div class="box-content fw-medium text-dark">
                                 Phương tiện
@@ -50,7 +50,7 @@
                         </a>
                         <a href="/business/register-transports" ng-show="!transport.isAccepted">
                             <div class="box-icon mb-3">
-                                <i class="fa-solid fa-car color-greend" style="font-size: 30px"></i>
+                                <i class="fa-solid fa-car color-green" style="font-size: 30px"></i>
                             </div>
                             <div class="box-content fw-medium text-dark">
                                 Phương tiện
@@ -61,9 +61,9 @@
                     </div>
                     <div class="box col-xl-4 card" ng-if="hasRole('ROLE_AGENT_PLACE')">
                         <a href="/business/welcome-place" ng-show="visits.isAccepted"
-                           ng-click="showContentForRole('ROLE_AGENT_PLACE', '/business/welcome-place')">
+                           ng-click="showContentForRole('ROLE_AGENT_PLACE')">
                             <div class="box-icon mb-3">
-                                <i class="fa-brands fa-pagelines color-greend" style="font-size: 30px"></i>
+                                <i class="fa-brands fa-pagelines color-green" style="font-size: 30px"></i>
                             </div>
                             <div class="box-content fw-medium text-dark">
                                 Tham quan
@@ -71,7 +71,7 @@
                         </a>
                         <a href="/business/register-visit" ng-show="!visits.isAccepted">
                             <div class="box-icon mb-3">
-                                <i class="fa-brands fa-pagelines color-greend" style="font-size: 30px"></i>
+                                <i class="fa-brands fa-pagelines color-green" style="font-size: 30px"></i>
                             </div>
                             <div class="box-content fw-medium text-dark">
                                 Tham quan

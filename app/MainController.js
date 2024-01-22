@@ -1,4 +1,4 @@
-travel_app.controller('MainController', function ($scope, $rootScope, $location, $window, $anchorScroll, AuthService, AgenciesServiceAG, HotelServiceAG, TransportServiceAG, VisitLocationServiceAG, NotificationService) {
+travel_app.controller('MainController', function ($scope, $rootScope, $location, $window, $timeout, $anchorScroll, AuthService, AgenciesServiceAG, HotelServiceAG, TransportServiceAG, VisitLocationServiceAG, NotificationService) {
     $anchorScroll();
     $scope.selectedRole = localStorage.getItem('selectedRole') || null;
     $scope.activeNavItem = localStorage.getItem('activeNavItem') || null;
@@ -26,10 +26,6 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
             NotificationService.clearNotification();
         }
 
-        $scope.gotoRedirect = function (url) {
-            $window.location.path(url)
-        }
-
         /**
          * Set role gọi ra slide bar
          */
@@ -43,11 +39,12 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
         /**
          * Hiển thị nội dung dựa trên vai trò được chọn
          */
-        $scope.showContentForRole = function (role, url) {
-            $scope.selectedRole = role;
-            localStorage.setItem('selectedRole', role);
-            $scope.setActiveNavItem('welcome')
-            $scope.gotoRedirect(url);
+        $scope.showContentForRole = function (role) {
+            $timeout(function () {
+                $scope.selectedRole = role;
+                localStorage.setItem('selectedRole', role);
+                $scope.setActiveNavItem('welcome');
+            });
         };
 
         /**

@@ -17,10 +17,6 @@ travel_app.controller('RegisterBusinessControllerAG', function ($scope, $http, $
         }
     };
 
-    $scope.validateCheckbox = function () {
-        return $scope.checkboxChecked;
-    };
-
     $scope.address = {
         province: null,
         district: null,

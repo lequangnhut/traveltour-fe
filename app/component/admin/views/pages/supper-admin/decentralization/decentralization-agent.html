@@ -3,17 +3,7 @@
         <div class="header-control-center">
             <div class="d-flex justify-content-between align-items-center row ">
                 <div class="col-xl-6 mt-3">
-                    <h3 class="color-greend fw-bold">DANH SÁCH PHÂN QUYỀN ĐỐI TÁC</h3>
-                </div>
-                <div class="col-xl-6 d-flex align-items-center justify-content-end header-control-center mt-3">
-                    <div class="row ">
-                        <div class="col-sm-3 d-flex align-items-center">
-                            <button class="btn d-flex ">
-                                <i class="fa-solid fa-file-export"></i>
-                                <span>Xuất</span>
-                            </button>
-                        </div>
-                    </div>
+                    <h3 class="color-green fw-bold">DANH SÁCH PHÂN QUYỀN ĐỐI TÁC</h3>
                 </div>
             </div>
         </div>
@@ -26,34 +16,24 @@
                     Bạn muốn tìm kiếm gì ?
                     <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                                <a href="#" class="bg-light">
+                                <a href="#" class="bg-light text-dark">
                                     <i class="fa-solid fa-magnifying-glass bg-light"></i>
                                 </a>
                             </span>
-                        <input type="text" class="form-control" placeholder="Tìm kiếm" ng-model="searchText">
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Tìm kiếm email, họ tên, số điện thoại..."
+                               ng-model="searchTerm"
+                               ng-change="searchDecentralizationAgency()"
+                        >
                     </div>
                 </div>
-                <div class="col-xl-3 mb-3">
-                    Lọc
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Tất cả</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div>
-                <div class="col-xl-3 mb-3">
-                    Trạng thái
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Thành công</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div>
-                <div class="col-xl-2 d-flex align-items-center justify-content-end mb-3 h-100"
+                <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
                      style="margin: 20px 0 0 0">
-                    <button class="btn btn-primary">Tìm kiếm</button>
+                    <a href="/admin/decentralized-agent-management/create-agency-account" class="btn btn-primary">
+                        <i class="fa-solid fa-plus" style="margin-right: 10px"></i>
+                        Thêm tài khoản
+                    </a>
                 </div>
             </div>
         </div>
@@ -70,8 +50,10 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end align-items-baseline col-lg-2">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Tất cả hàng</option>
+                        <select class="form-select" aria-label="Default select example"
+                                ng-model="pageSize"
+                                ng-init="pageSize='5'"
+                                ng-change="pageSizeChanged()">
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="15">15</option>
@@ -80,21 +62,34 @@
                     <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
                         <nav aria-label="Page navigation example float-end">
                             <ul class="pagination justify-content-center align-items-center">
-                                <li class="page-item" ng-class="{ 'disabled': currentPage  === 0 }">
-                                    <a href="#" class="page-link" ng-click="loadPage(currentPage - 1)">
-                                        <i class="fa-solid fa-chevron-left"></i>
+                                <!-- Previous Page -->
+                                <li class="page-item cursor-pointer" ng-class="{disabled: currentPage === 0}">
+                                    <a class="page-link" ng-click="setPage(0)">
+                                        <i class="fa-solid fa-angles-left"></i>
                                     </a>
                                 </li>
-                                <li class="page-item"
-                                    ng-repeat="pageNumber in [].constructor(totalPages) track by $index"
-                                    ng-class="{ 'active': currentPage === $index }">
-                                    <a href="#" class="page-link" ng-click="loadPage($index)">
-                                        {{ $index + 1 }}
-                                    </a>
+
+                                <!-- Ellipsis at the beginning -->
+                                <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                    <span class="page-link">...</span>
                                 </li>
-                                <li class="page-item" ng-class="{ 'disabled': currentPage === totalPages - 1 }">
-                                    <a href="#" class="page-link" ng-click="loadPage(currentPage + 1)">
-                                        <i class="fa-solid fa-angle-right"></i>
+
+                                <!-- Pagination Numbers -->
+                                <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
+                                    ng-class="{active: n === currentPage}">
+                                    <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                </li>
+
+                                <!-- Ellipsis at the end -->
+                                <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                    <span class="page-link">...</span>
+                                </li>
+
+                                <!-- Next Page -->
+                                <li class="page-item cursor-pointer"
+                                    ng-class="{disabled: currentPage === totalPages - 1}">
+                                    <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                        <i class="fa-solid fa-angles-right"></i>
                                     </a>
                                 </li>
                             </ul>
@@ -105,22 +100,37 @@
             <table class="table table-responsive text-center">
                 <thead>
                 <tr class="bg-light">
-                    <th scope="col"># <i class="fa-solid fa-sort"></i></th>
-                    <th scope="col">Email <i class="fa-solid fa-sort"></i></th>
-                    <th scope="col">Họ và tên <i class="fa-solid fa-sort"></i></th>
-                    <th scope="col">Số điện thoại <i class="fa-solid fa-sort"></i></th>
-                    <th scope="col">Vai trò <i class="fa-solid fa-sort"></i></th>
-                    <th scope="col">Vai trò <i class="fa-solid fa-sort"></i></th>
-                    <th scope="col">Vai trò <i class="fa-solid fa-sort"></i></th>
-                    <th scope="col">Trạng thái <i class="fa-solid fa-sort"></i></th>
+                    <th>#
+                        <i class="fa-solid fa-sort"></i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('email')">Email
+                        <i class="fa" ng-class="getSortIcon('email')"></i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('fullName')">Họ và tên
+                        <i class="fa" ng-class="getSortIcon('fullName')"></i>
+                    </th>
+                    <th>Vai trò
+                        <i class="fa-solid fa-sort"></i>
+                    </th>
+                    <th>Vai trò
+                        <i class="fa-solid fa-sort"></i>
+                    </th>
+                    <th>Vai trò
+                        <i class="fa-solid fa-sort"></i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('isActive')">Trạng thái
+                        <i class="fa" ng-class="getSortIcon('isActive')"></i>
+                    </th>
+                    <th>Thao tác
+                        <i class="fa-solid fa-sort"></i>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="agent in userRoleAgent | filter:searchText">
+                <tr ng-repeat="agent in userRoleAgent">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ agent.email }}</td>
                     <td>{{ agent.fullName }}</td>
-                    <td>{{ agent.phone }}</td>
                     <td>
                         <div class="mb-3">
                             <label class="form-check-label" for="{{ agent.id }} + _AGENT_HOTEL">
@@ -169,12 +179,22 @@
                             <span class="text-status-error">Ngưng hoạt động</span>
                         </div>
                     </td>
+                    <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                        <a href="/admin/decentralized-agent-management/update-agency-account/{{ agent.id }}"
+                           role="button" class="fs-1 btn text-warning">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <a href="#" ng-click="deleteAccountAgent(agent.id, agent.fullName)"
+                           role="button" class="fs-1 btn text-danger">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
             <div class="card-footer">
                 <div class="d-flex justify-content-end">
-                    5 trong tổng số 15
+                    {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                 </div>
             </div>
         </div>
