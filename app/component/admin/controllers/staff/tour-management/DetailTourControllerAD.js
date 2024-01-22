@@ -1,6 +1,6 @@
-travel_app.controller('DetailTourControllerAD', function ($scope, $location, $routeParams, $timeout, $http, TourDetailsServiceAD, ToursServiceAD, AccountServiceAD) {
+travel_app.controller('DetailTourControllerAD', function ($scope) {
     $scope.tourDetail = {
-        tourDetailId: null,
+        tourId: null,
         guideId: null,
         departureDate: null,
         arrivalDate: null,
@@ -13,22 +13,6 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $location, $ro
         fromLocation: null,
         toLocation: null,
     };
-
-    let searchTimeout;
-
-    $scope.tourDetailList = []; // Biến để lưu danh sách tours
-    $scope.currentPage = 0; // Trang hiện tại
-    $scope.pageSize = 5; // Số lượng tours trên mỗi trang
-
-    let tourDetailId = $routeParams.id;
-
-    // Khai báo biến để lưu danh sách tourType
-    $scope.tourTypeList = [];
-
-    function errorCallback(error) {
-        console.log(error)
-        toastAlert('error', "Máy chủ không tồn tại !");
-    }
 
     // Hàm kiểm tra ngày bắt đầu có hợp lệ
     $scope.isStartDateValid = function () {
@@ -46,6 +30,7 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $location, $ro
     };
 
 
+    // Hàm kiểm tra số lượng khách có hợp lệ
     $scope.isNumberOfGuestsValid = function () {
         return $scope.tourDetail.numberOfGuests >= 16 && $scope.tourDetail.numberOfGuests <= 50; // Số lượng khách phải lớn hơn 0
     };
@@ -228,7 +213,7 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $location, $ro
 
     //delete
     /**
-     * Gọi api delete tour
+     * Gọi api delete tour detai
      */
     $scope.deleteTourDetail = function (tourDetailId) {
         function confirmDeleteTour() {
