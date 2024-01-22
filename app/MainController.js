@@ -12,10 +12,14 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
     }
 
     $scope.init = function () {
-        // lấy năm hiện tại show lên template
+        /**
+         * Lấy năm hiện tại và fill ở footer
+         */
         $scope.year = new Date().getFullYear();
 
-        // hiển thị swal alert
+        /**
+         * Hiển thị thông báo
+         */
         const notification = NotificationService.getNotification();
         if (notification) {
             toastAlert(notification.type, notification.message);
@@ -23,7 +27,7 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
         }
 
         $scope.gotoRedirect = function (url) {
-            window.location.href = url
+            $window.location.path(url)
         }
 
         /**
@@ -39,10 +43,13 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
         /**
          * Hiển thị nội dung dựa trên vai trò được chọn
          */
-        $scope.showContentForRole = function (role) {
+        $scope.showContentForRole = function (role, url) {
             $scope.selectedRole = role;
             localStorage.setItem('selectedRole', role);
+            $scope.setActiveNavItem('welcome')
+            $scope.gotoRedirect(url);
         };
+
         /**
          * Kiểm tra xem một vai trò có đang được chọn không
          */
@@ -50,7 +57,9 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
             return $scope.selectedRole === roleToCheck;
         };
 
-        // Kiểm tra và hiển thị nội dung của slide bar
+        /**
+         * Lấy api và set điều kiện ở slide bar
+         */
         if (user !== undefined && user !== null && user !== "") {
             AgenciesServiceAG.findByUserId(user.id).then(function successCallback(response) {
                 let agencies = response.data;
@@ -156,7 +165,8 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
             '/business/register-visit',
             '/business/register-business',
             '/business/register-business-success',
-            '/business/select-type'
+            '/business/select-type',
+            '/business/hotel/home'
         ];
         return $scope.isActive(hiddenPaths);
     };
@@ -172,7 +182,8 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
             '/business/register-visit',
             '/business/register-business',
             '/business/register-business-success',
-            '/business/select-type'
+            '/business/select-type',
+            '/business/hotel/home'
         ];
         return $scope.isActive(marginPaths) ? {'margin': '0'} : {};
     };

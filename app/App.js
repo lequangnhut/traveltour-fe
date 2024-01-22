@@ -160,6 +160,36 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Agent
          */
+        .when('/business/welcome-hotel', {
+            templateUrl: 'app/component/agent/welcome.html',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/welcome-transport', {
+            templateUrl: 'app/component/agent/welcome.html',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/welcome-place', {
+            templateUrl: 'app/component/agent/welcome.html',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
         .when('/business/register-business', {
             templateUrl: 'app/component/agent/business/register-business.html',
             controller: 'RegisterBusinessControllerAG',
@@ -173,7 +203,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/business/register-business-success', {
             templateUrl: 'app/component/agent/business/register-business-success.html',
-            controller: '',
             resolve: {
                 "check": function ($location, AuthService) {
                     if (!AuthService.getToken()) {
@@ -197,13 +226,13 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Agent Hotel
          */
-        .when('/business/hotel', {
-            templateUrl: 'app/component/agent/hotel/views/pages/dashboard/dashboard.html',
-            controller: 'SelectTypeControllerAG'
-        })
         .when('/business/register-hotel', {
             templateUrl: 'app/component/agent/hotel/views/pages/register-hotel.html',
             controller: 'RegisterHotelControllerAG'
+        })
+        .when('/business/hotel/home', {
+            templateUrl: 'app/component/agent/hotel/views/pages/dashboard/dashboard.html',
+            controller: 'SelectTypeControllerAG'
         })
         .when('/business/hotel/hotel-information-list', {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-list.html',

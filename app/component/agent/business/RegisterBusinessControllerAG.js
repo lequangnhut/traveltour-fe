@@ -1,6 +1,25 @@
 travel_app.controller('RegisterBusinessControllerAG', function ($scope, $http, $location, AuthService, AgenciesServiceAG) {
     let user = $scope.user;
+
     $scope.phoneError = null;
+    $scope.checkboxChecked = false;
+    $scope.currentStep = 1;
+
+    $scope.nextStep = function () {
+        if ($scope.currentStep < 4) {
+            $scope.currentStep++;
+        }
+    };
+
+    $scope.prevStep = function () {
+        if ($scope.currentStep <= 4) {
+            $scope.currentStep--;
+        }
+    };
+
+    $scope.validateCheckbox = function () {
+        return $scope.checkboxChecked;
+    };
 
     $scope.address = {
         province: null,
@@ -78,7 +97,6 @@ travel_app.controller('RegisterBusinessControllerAG', function ($scope, $http, $
         if (user !== undefined && user !== null && user !== "") {
             AgenciesServiceAG.findByUserId(user.id).then(function successCallback(response) {
                 $scope.agent = response.data;
-                console.log(response.data)
             }, errorCallback);
         }
     }

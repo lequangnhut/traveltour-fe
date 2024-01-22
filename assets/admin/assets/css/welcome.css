@@ -1,0 +1,39 @@
+#welcome {
+    width: 100%;
+    height: 100vh;
+    padding: 50px 50px 0 0;
+    overflow: hidden;
+    position: relative;
+}
+
+#welcome .banner {
+    width: 600px;
+}
+
+#welcome .bg {
+    position: absolute;
+    height: 1500px;
+    width: 1500px;
+    background-color: #63ab45;
+    top: -300px;
+    left: 65%;
+    border-radius: 280px;
+    transform: rotate(60deg);
+    z-index: -1;
+}
+
+#welcome .btn-start {
+    padding: 12px 50px;
+    border: 1px solid #d4d8e3;
+    border-radius: 30px;
+}
+
+/* Áp dụng định lý pitago*/
+#welcome .bg .img-bg {
+    position: absolute;
+    transform: rotate(-60deg);
+    width: 350px;
+    height: 350px;
+    bottom: 140px;
+    left: 140px;
+}

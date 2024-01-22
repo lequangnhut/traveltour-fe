@@ -1799,7 +1799,7 @@ button {
 
 .page-banner .page-banner-content ul.breadcrumb-link li:not(:last-child):after {
     display: inline-block;
-    content: "";
+    content: ">";
     font-weight: 400;
     font-family: "Montserrat", sans-serif;
     margin-left: 20px;

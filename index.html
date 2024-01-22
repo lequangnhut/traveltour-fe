@@ -66,6 +66,7 @@
         <link href="/assets/admin/assets/css/register-business.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/theme-table.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/upload.css" type="text/css" rel="stylesheet">
+        <link href="/assets/admin/assets/css/welcome.css" type="text/css" rel="stylesheet">
         <script>
             var phoenixIsRTL = window.config.config.phoenixIsRTL;
             if (phoenixIsRTL) {
@@ -170,27 +171,6 @@
                                 </a>
                             </div>
                         </li>
-                        <li class="nav-item"
-                            ng-if="!hasRole('ROLE_SUPERADMIN') && !hasRole('ROLE_ADMIN') && !hasRole('ROLE_STAFF')">
-                            <!-- label-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link label-1"
-                                   ng-click="setActiveNavItem('goto-home')"
-                                   ng-class="{ 'active': activeNavItem === 'goto-home'}"
-                                   href="/business/hotel"
-                                >
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon"></div>
-                                        <span class="nav-link-icon">
-                                            <span data-feather="home"></span>
-                                        </span>
-                                        <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Trang chủ</span>
-                                        </span>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
                         <li class="nav-item">
                             <div ng-if="hasRole('ROLE_SUPERADMIN')">
                                 <!-- label-->
@@ -272,199 +252,6 @@
                                         </span>
                                             <span class="nav-link-text-wrapper">
                                             <span class="nav-link-text">Phân quyền đối tác</span>
-                                        </span>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div ng-if="hasRole('ROLE_ADMIN')">
-                                <!-- QUẢN LÝ NHÂN VIÊN - Header -->
-                                <p class="navbar-vertical-label">QUẢN LÝ NHÂN VIÊN</p>
-                                <hr class="navbar-vertical-line"/>
-
-                                <!-- QUẢN LÝ NHÂN VIÊN - List-->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'staff-list'}"
-                                       ng-click="setActiveNavItem('staff-list')"
-                                       href="/admin/staff/staff-list"
-                                    >
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="users"></span>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Thông tin nhân viên</span>
-                                        </span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- QUẢN LÝ DOANG NGHIỆP - Header -->
-                                <p class="navbar-vertical-label">QUẢN LÝ DOANH NGHIỆP</p>
-                                <hr class="navbar-vertical-line"/>
-
-                                <!-- QUẢN LÝ DOANG NGHIỆP - List-->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'agency-list'}"
-                                       ng-click="setActiveNavItem('agency-list')"
-                                       href="/admin/agency/agency-list">
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="file-text"></span>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Thông tin doanh nghiệp</span>
-                                        </span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- QUẢN LÝ LOẠI DỊCH VỤ-->
-                                <p class="navbar-vertical-label">QUẢN LÝ LOẠI DỊCH VỤ</p>
-                                <hr class="navbar-vertical-line"/>
-
-                                <!-- Thể loại tour-->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'tour-list'}"
-                                       ng-click="setActiveNavItem('tour-list')"
-                                       href="/admin/type/tour-type-list">
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="globe"></span>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Thể loại tour</span>
-                                        </span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- Thể loại lưu trú -->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'hotel-type'}"
-                                       ng-click="setActiveNavItem('hotel-type')"
-                                       href="/admin/type/hotel-type-list">
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="home"></span>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Thể loại lưu trú</span>
-                                        </span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- Thể loại địa điểm -->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'location-type'}"
-                                       ng-click="setActiveNavItem('location-type')"
-                                       href="/admin/type/location-type-list">
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="map"></span>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Thể loại địa điểm</span>
-                                        </span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- Thể loại phương tiện -->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'transportation-type'}"
-                                       ng-click="setActiveNavItem('transportation-type')"
-                                       href="/admin/type/transportation-type-list">
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="target"></span>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Thể loại phương tiện</span>
-                                        </span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- Thể loại tiện ích lưu trú -->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'hotel-utility'}"
-                                       ng-click="setActiveNavItem('hotel-utility')"
-                                       href="/admin/type/hotel-utility-list">
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="grid"></span>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Thể loại tiện ích lưu trú</span>
-                                        </span>
-                                        </div>
-                                    </a>
-                                </div>
-                                <!-- Thể loại tiện ích phòng -->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'room-utility'}"
-                                       ng-click="setActiveNavItem('room-utility')"
-                                       href="/admin/type/room-utility-list">
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="server"></span>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Thể loại tiện ích phòng</span>
-                                        </span>
-                                        </div>
-                                    </a>
-                                </div>
-                                <!-- Thể loại tiện ích giường -->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'bed-type'}"
-                                       ng-click="setActiveNavItem('bed-type')"
-                                       href="/admin/type/bed-type-list">
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="slack"></span>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Thể loại giường</span>
-                                        </span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- label-->
-                                <p class="navbar-vertical-label">BÁO CÁO - THỐNG KÊ</p>
-                                <hr class="navbar-vertical-line"/>
-
-                                <!-- Thể loại tiện ích lưu trú -->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'revenue'}"
-                                       ng-click="setActiveNavItem('revenue')"
-                                       href="/admin/report/revenue">
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="trello"></span>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Doanh thu</span>
-                                        </span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- Thể loại tiện ích lưu trú -->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'statistical'}"
-                                       ng-click="setActiveNavItem('statistical')"
-                                       href="/admin/report/statistical">
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="sliders"></span>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Thống kê</span>
                                         </span>
                                         </div>
                                     </a>
@@ -687,9 +474,220 @@
                                 </div>
                             </div>
 
+                            <div ng-if="hasRole('ROLE_ADMIN')">
+                                <!-- QUẢN LÝ NHÂN VIÊN - Header -->
+                                <p class="navbar-vertical-label">QUẢN LÝ NHÂN VIÊN</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- QUẢN LÝ NHÂN VIÊN - List-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'staff-list'}"
+                                       ng-click="setActiveNavItem('staff-list')"
+                                       href="/admin/staff/staff-list"
+                                    >
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span data-feather="users"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thông tin nhân viên</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- QUẢN LÝ DOANG NGHIỆP - Header -->
+                                <p class="navbar-vertical-label">QUẢN LÝ DOANH NGHIỆP</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- QUẢN LÝ DOANG NGHIỆP - List-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'agency-list'}"
+                                       ng-click="setActiveNavItem('agency-list')"
+                                       href="/admin/agency/agency-list">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span data-feather="file-text"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thông tin doanh nghiệp</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- QUẢN LÝ LOẠI DỊCH VỤ-->
+                                <p class="navbar-vertical-label">QUẢN LÝ LOẠI DỊCH VỤ</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- Thể loại tour-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'tour-list'}"
+                                       ng-click="setActiveNavItem('tour-list')"
+                                       href="/admin/type/tour-type-list">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span data-feather="globe"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thể loại tour</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- Thể loại lưu trú -->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'hotel-type'}"
+                                       ng-click="setActiveNavItem('hotel-type')"
+                                       href="/admin/type/hotel-type-list">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span data-feather="home"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thể loại lưu trú</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- Thể loại địa điểm -->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'location-type'}"
+                                       ng-click="setActiveNavItem('location-type')"
+                                       href="/admin/type/location-type-list">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span data-feather="map"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thể loại địa điểm</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- Thể loại phương tiện -->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'transportation-type'}"
+                                       ng-click="setActiveNavItem('transportation-type')"
+                                       href="/admin/type/transportation-type-list">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span data-feather="target"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thể loại phương tiện</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- Thể loại tiện ích lưu trú -->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'hotel-utility'}"
+                                       ng-click="setActiveNavItem('hotel-utility')"
+                                       href="/admin/type/hotel-utility-list">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span data-feather="grid"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thể loại tiện ích lưu trú</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Thể loại tiện ích phòng -->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'room-utility'}"
+                                       ng-click="setActiveNavItem('room-utility')"
+                                       href="/admin/type/room-utility-list">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span data-feather="server"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thể loại tiện ích phòng</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Thể loại tiện ích giường -->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'bed-type'}"
+                                       ng-click="setActiveNavItem('bed-type')"
+                                       href="/admin/type/bed-type-list">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span data-feather="slack"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thể loại giường</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- label-->
+                                <p class="navbar-vertical-label">BÁO CÁO - THỐNG KÊ</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- Thể loại tiện ích lưu trú -->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'revenue'}"
+                                       ng-click="setActiveNavItem('revenue')"
+                                       href="/admin/report/revenue">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span data-feather="trello"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Doanh thu</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- Thể loại tiện ích lưu trú -->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'statistical'}"
+                                       ng-click="setActiveNavItem('statistical')"
+                                       href="/admin/report/statistical">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span data-feather="sliders"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thống kê</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
                             <div ng-if="isSelectedRole('ROLE_AGENT_HOTEL')"
                                  ng-show="hotels.isAccepted && hotels.isActive"
                             >
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1"
+                                       ng-click="setActiveNavItem('welcome')"
+                                       ng-class="{ 'active': activeNavItem === 'welcome'}"
+                                       href="/business/welcome-hotel"
+                                    >
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                            <span data-feather="aperture"></span>
+                                        </span>
+                                            <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Chào quý doanh nghiệp</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
                                 <!-- label-->
                                 <p class="navbar-vertical-label text-uppercase">QUẢN LÝ KHÁCH SẠN</p>
                                 <hr class="navbar-vertical-line"/>
@@ -799,14 +797,14 @@
 
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link label-1" href="/business/select-type">
+                                    <a class="nav-link label-1" href="/business/hotel/home">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="rotate-ccw"></span>
+                                            <span data-feather="home"></span>
                                         </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Quay về trang chủ</span>
+                                            <span class="nav-link-text">Quản lý khách sạn</span>
                                         </span>
                                         </div>
                                     </a>
@@ -816,6 +814,24 @@
                             <div ng-if="isSelectedRole('ROLE_AGENT_TRANSPORT')"
                                  ng-show="transport.isAccepted && transport.isActive"
                             >
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1"
+                                       ng-click="setActiveNavItem('welcome')"
+                                       ng-class="{ 'active': activeNavItem === 'welcome'}"
+                                       href="/business/welcome-transport"
+                                    >
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                            <span data-feather="aperture"></span>
+                                        </span>
+                                            <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Chào quý doanh nghiệp</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
                                 <!-- label-->
                                 <p class="navbar-vertical-label">QUẢN LÝ PHƯƠNG TIỆN</p>
                                 <hr class="navbar-vertical-line"/>
@@ -900,6 +916,24 @@
                             <div ng-if="isSelectedRole('ROLE_AGENT_PLACE')"
                                  ng-show="visits.isAccepted && visits.isActive"
                             >
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1"
+                                       ng-click="setActiveNavItem('welcome')"
+                                       ng-class="{ 'active': activeNavItem === 'welcome'}"
+                                       href="/business/welcome-place"
+                                    >
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                            <span data-feather="aperture"></span>
+                                        </span>
+                                            <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Chào quý khách</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
                                 <!-- label-->
                                 <p class="navbar-vertical-label">QUẢN LÝ ĐỊA ĐIỂM</p>
                                 <hr class="navbar-vertical-line"/>
