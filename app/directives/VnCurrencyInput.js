@@ -1,17 +1,20 @@
-travel_app.directive('vnCurrencyInput', function ($filter) {
+travel_app.directive('formatPriceInput', function () {
     return {
         require: 'ngModel',
-        link: function (scope, element, attrs, ngModelController) {
-            ngModelController.$parsers.push(function (data) {
-                var transformedInput = data.replace(/[^0-9.]/g, '');
+        link: function (scope, element, attrs, ngModelCtrl) {
+            ngModelCtrl.$parsers.push(function (inputValue) {
+                let rawValue = inputValue.replace(/[^0-9]/g, '');
+                let price = parseInt(rawValue);
 
-                transformedInput = $filter('vnCurrency')(transformedInput);
+                if (!isNaN(price)) {
+                    let formattedValue = price.toLocaleString('en-US');
+                    ngModelCtrl.$setViewValue(formattedValue);
+                    ngModelCtrl.$render();
+                    return price;
+                }
 
-                ngModelController.$setViewValue(transformedInput);
-                ngModelController.$render();
-                return transformedInput;
+                return inputValue;
             });
         }
     };
 });
-

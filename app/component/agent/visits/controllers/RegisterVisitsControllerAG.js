@@ -1,9 +1,19 @@
 travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http, $filter, $location, AuthService, VisitLocationServiceAG, AgenciesServiceAG) {
-    $scope.showNextForm = false;
-    $scope.showThirdForm = false;
+    $scope.currentStep = 1;
     $scope.checkboxChecked = false;
-
     $scope.phoneError = null;
+
+    $scope.nextStep = function () {
+        if ($scope.currentStep < 4) {
+            $scope.currentStep++;
+        }
+    };
+
+    $scope.prevStep = function () {
+        if ($scope.currentStep <= 4) {
+            $scope.currentStep--;
+        }
+    };
 
     $scope.address = {
         province: null,
@@ -44,25 +54,6 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http, $fi
 
     $scope.validateCheckbox = function () {
         return $scope.checkboxChecked;
-    };
-
-    $scope.goToNextSection = function () {
-        $scope.showNextForm = true;
-    };
-
-    $scope.goToThirdSection = function () {
-        $scope.showThirdForm = true;
-    };
-
-    $scope.goPreviousSectionOne = function () {
-        $scope.showNextForm = false;
-        $scope.showThirdForm = false;
-        $scope.showFourthForm = false;
-    };
-
-    $scope.goPreviousSectionTwo = function () {
-        $scope.showThirdForm = false;
-        $scope.showFourthForm = false;
     };
 
     $scope.init = function () {

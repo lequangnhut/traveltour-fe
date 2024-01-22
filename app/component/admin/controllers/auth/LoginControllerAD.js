@@ -70,9 +70,9 @@ travel_app.controller('LoginControllerAD', function ($scope, $location, AuthServ
                                     let user = response.data;
 
                                     AuthService.setAuthData(token, user);
-
                                     window.location.href = '/admin/dashboard';
                                     NotificationService.setNotification('success', 'Đăng nhập thành công !');
+                                    $scope.setActiveNavItem('dashboard');
                                 }, errorCallback).finally(function () {
                                     $scope.isLoading = false;
                                 });
