@@ -143,6 +143,13 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
         $scope.getTourBasicList();
     };
 
+    $scope.getSortIcon = function(column) {
+        if ($scope.sortBy === column) {
+            return $scope.sortDir === 'asc' ? 'fa-sort-up' : 'fa-sort-down';
+        }
+        return 'fa-sort';
+    };
+
     $scope.searchTours = function () {
         if (searchTimeout) $timeout.cancel(searchTimeout);
 
@@ -227,7 +234,7 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
     $scope.deleteTour = function (userId, tourName) {
         function confirmDeleteTour() {
             ToursServiceAD.deactivateTour(userId).then(function successCallback() {
-                toastAlert('success', 'Xóa tour thành công !');
+                toastAlert('success', 'Xóa thành công !');
                 $scope.getTourBasicList();
             }, errorCallback);
         }
