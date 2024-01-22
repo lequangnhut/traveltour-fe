@@ -150,17 +150,24 @@
 
                     <div class="col-md-4">
                         <label for="unitPrice" class="form-label">Giá</label>
-                        <input type="number"
+                        <input type="text"
                                class="form-control"
-                               id="unitPrice" placeholder="1.000.000"
+                               id="unitPrice"
+                               placeholder="1.000.000"
                                name="unitPrice"
                                ng-model="tourDetail.unitPrice"
-                               ng-class="{ 'is-invalid': tourDetailForm.unitPrice.$touched && (!tourDetailForm.unitPrice.$valid || !isPriceValid()),
+                               ng-class="{ 'is-invalid': (tourDetailForm.unitPrice.$touched && (!tourDetailForm.unitPrice.$valid || !isPriceValid() || invalidPriceFormat)),
                                             'is-valid': tourDetailForm.unitPrice.$touched && (tourDetailForm.unitPrice.$valid || isPriceValid())}"
+                               format-price-input
+                               ng-keypress="onPriceKeyPress($event); checkPriceFormat()"
                                required>
                         <small class="text-danger"
                                ng-show="tourDetailForm.unitPrice.$touched && tourDetailForm.unitPrice.$error.required">
                             Giá không được bỏ trống!
+                        </small>
+                        <small class="text-danger"
+                               ng-show="tourDetailForm.unitPrice.$touched && invalidPriceFormat">
+                            Giá không đúng định dạng số!
                         </small>
                         <small class="text-danger"
                                ng-show="tourDetailForm.unitPrice.$touched && !isPriceValid()">

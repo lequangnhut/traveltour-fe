@@ -8,7 +8,7 @@
 </div><!--====== End Preloader ======-->
 
 <form ng-submit="registerBusiness()" name="register_business" method="post">
-    <section id="business-information">
+    <section id="business-information" ng-show="currentStep === 1">
         <div class="container-fluid">
             <div class="logo text-center">
                 <div class="d-flex align-items-center justify-content-center">
@@ -219,13 +219,55 @@
                         </div>
 
                         <div class="d-flex justify-content-end mt-5">
-                            <button type="submit"
+                            <button type="button"
                                     class="btn btn-submit-form"
                                     ng-disabled="register_business.$invalid || phoneError"
+                                    ng-click="nextStep()"
                             >
-                                Gửi yêu cầu
+                                Tiếp tục <i class="fa-solid fa-arrow-right"></i>
                             </button>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="business-information" ng-show="currentStep === 2">
+        <div class="container-fluid">
+            <div class="logo text-center">
+                <div class="d-flex align-items-center justify-content-center">
+                    <img src="/assets/admin/assets/img/icons/logo.png" alt="logo" width="40"/>
+                    <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">TravelTour</p>
+                </div>
+                <div class="content-text mt-3">
+                    <div class="h4">Đăng kí thông tin đối tác với TravelTour</div>
+                </div>
+            </div>
+            <div class="main d-flex justify-content-center theme-wizard">
+                <div class="form card">
+                    <div class="h3 color-greend fw-medium mb-3">XÁC NHẬN ĐĂNG KÍ DOANH NGHIỆP TRÊN TRAVEL TOUR</div>
+                    <div class="col-12">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" ng-model="checkboxChecked" name="" id="">
+                            Tôi cam kết cung cấp thông tin đầy đủ, chính xác và minh bạch khi đăng ký bán phòng trên
+                            trang web du lịch. Chúng tôi hiểu rằng sự minh bạch và tin cậy là yếu tố quan trọng để tạo
+                            ra một môi trường kinh doanh tích cực và lâu dài.
+                        </label>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-5">
+                        <button type="button"
+                                class="btn btn-submit-form btn-prev"
+                                style="background: #5c636a; margin-right: 20px"
+                                ng-click="prevStep()"
+                        >
+                            <i class="fa-solid fa-arrow-left"></i> Trở về
+                        </button>
+                        <button type="submit" class="btn btn-submit-form"
+                                ng-disabled="!checkboxChecked">
+                            Xác nhận
+                        </button>
                     </div>
                 </div>
             </div>

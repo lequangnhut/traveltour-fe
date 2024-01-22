@@ -1,6 +1,6 @@
-travel_app.controller('DetailTourControllerAD', function ($scope) {
+travel_app.controller('DetailTourControllerAD', function ($scope, $location, $routeParams, $timeout, $http, TourDetailsServiceAD, ToursServiceAD, AccountServiceAD) {
     $scope.tourDetail = {
-        tourId: null,
+        tourDetailId: null,
         guideId: null,
         departureDate: null,
         arrivalDate: null,
@@ -13,6 +13,22 @@ travel_app.controller('DetailTourControllerAD', function ($scope) {
         fromLocation: null,
         toLocation: null,
     };
+
+    let searchTimeout;
+
+    $scope.tourDetailList = []; // Biến để lưu danh sách tours
+    $scope.currentPage = 0; // Trang hiện tại
+    $scope.pageSize = 5; // Số lượng tours trên mỗi trang
+
+    let tourDetailId = $routeParams.id;
+
+    $scope.tourTypeList = [];
+
+    $scope.invalidPriceFormat = false;
+    function errorCallback(error) {
+        console.log(error)
+        toastAlert('error', "Máy chủ không tồn tại !");
+    }
 
     // Hàm kiểm tra ngày bắt đầu có hợp lệ
     $scope.isStartDateValid = function () {
@@ -30,7 +46,6 @@ travel_app.controller('DetailTourControllerAD', function ($scope) {
     };
 
 
-    // Hàm kiểm tra số lượng khách có hợp lệ
     $scope.isNumberOfGuestsValid = function () {
         return $scope.tourDetail.numberOfGuests >= 16 && $scope.tourDetail.numberOfGuests <= 50; // Số lượng khách phải lớn hơn 0
     };
@@ -42,6 +57,27 @@ travel_app.controller('DetailTourControllerAD', function ($scope) {
     $scope.isPriceValid = function () {
         return isPriceValid($scope.tourDetail.unitPrice);
     }
+
+    $scope.onPriceKeyPress = function (event) {
+        let inputValue = event.key;
+
+        if (/^[0-9]+$/.test(inputValue)) {
+            return true;
+        } else {
+            event.preventDefault();
+            return false;
+        }
+    };
+
+    $scope.checkPriceFormat = function () {
+        // Kiểm tra xem giá có đúng định dạng số không
+        if (!/^[0-9]*$/.test($scope.tourDetail.unitPrice)) {
+            $scope.invalidPriceFormat = true;
+        } else {
+            $scope.invalidPriceFormat = false;
+        }
+    };
+
 
 
     //phân trang
@@ -213,7 +249,7 @@ travel_app.controller('DetailTourControllerAD', function ($scope) {
 
     //delete
     /**
-     * Gọi api delete tour detai
+     * Gọi api delete tour
      */
     $scope.deleteTourDetail = function (tourDetailId) {
         function confirmDeleteTour() {
