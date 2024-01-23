@@ -1,101 +1,104 @@
 <div class="container mt-4 mb-5">
-    <div class="container-fluid">
-        <div class="header-control mb-4">
-            <div class="">
-                <div class="d-flex align-items-center row">
-                    <div class="col-lg-6">
-                        <h3 class="color-green fw-bold">CẬP NHẬT PHƯƠNG TIỆN</h3>
-                    </div>
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-bold">CẬP NHẬT PHƯƠNG TIỆN</h3>
                 </div>
-                <div class="mt-3">Công ty: <span>Tập Đoàn Xe Khách Phương Trang (FUTA)</span></div>
             </div>
+            <div class="mt-3 fw-bold">Công ty: <span>{{ transport.transportationBrandName }}</span></div>
         </div>
+    </div>
 
-        <div class="card card-custom">
-            <form class="row g-3 form-input-custom" name="form_transport">
-                <div class="col-12">
-                    <label for="inputState" class="form-label">LOẠI PHƯƠNG TIỆN</label>
-                    <select id="inputState"
-                            class="form-select"
-                            name="transportation"
-                            ng-class="{ 'is-invalid': form_transport.transportation.$invalid && form_transport.transportation.$touched, 'is-valid': form_transport.transportation.$valid && form_transport.transportation.$touched }"
-                            ng-model="agent.transportation"
-                            required
-                    >
-                        <option value="" disabled selected>Chọn loại phương tiện</option>
-                        <option>Demo</option>
-                    </select>
-                    <small class="text-danger"
-                           ng-show="form_transport.transportation.$touched && form_transport.transportation.$error.required">
-                        Vui lòng chọn loại phương tiện !
-                    </small>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">BIỂN SỐ XE</label>
-                    <input type="text"
-                           class="form-control"
-                           placeholder="30B-029.29"
-                           name="variable"
-                           ng-model="agent.variable"
-                           ng-class="{ 'is-invalid': form_transport.variable.$invalid && form_transport.variable.$touched, 'is-valid': form_transport.variable.$valid && form_transport.variable.$touched }"
-                           ng-pattern="/^[0-9]{2}[A-Z]-[0-9]{3,4}\.[0-9]{2}$/"
-                           required
-                    >
-                    <small class="text-danger"
-                           ng-show="form_transport.variable.$touched && form_transport.variable.$error.required">
-                        Vui lòng nhập biển số xe !
-                    </small>
-                    <small class="text-danger"
-                           ng-show="form_transport.variable.$touched && form_transport.variable.$error.pattern">
-                        Biển số xe không đúng định dạng !
-                    </small>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">SỐ CHỔ NGỒI</label>
-                    <input type="text"
-                           class="form-control"
-                           placeholder="29 chổ"
-                           name="seat_number"
-                           ng-model="agent.seat_number"
-                           ng-class="{ 'is-invalid': form_transport.seat_number.$invalid && form_transport.seat_number.$touched, 'is-valid': form_transport.seat_number.$valid && form_transport.seat_number.$touched }"
-                           ng-pattern="/^[0-9]*$/"
-                           required
-                    >
-                    <small class="text-danger"
-                           ng-show="form_transport.seat_number.$touched && form_transport.seat_number.$error.required">
-                        Vui lòng nhập số chổ ngồi !
-                    </small>
-                    <small class="text-danger"
-                           ng-show="form_transport.seat_number.$touched && form_transport.seat_number.$error.pattern">
-                        Số chổ ngồi không đúng định dạng !
-                    </small>
-                </div>
-                <div class="col-12">
-                    <label class="form-label">TRẠNG THÁI</label>
-                    <select class="form-select"
-                            name="active"
-                            ng-class="{ 'is-invalid': form_transport.active.$invalid && form_transport.active.$touched, 'is-valid': form_transport.active.$valid && form_transport.active.$touched }"
-                            ng-model="agent.active"
-                            required
-                    >
-                        <option value="" disabled selected>Chọn trạng thái</option>
-                        <option>Demo</option>
-                    </select>
-                    <small class="text-danger"
-                           ng-show="form_transport.active.$touched && form_transport.active.$error.required">
-                        Vui lòng chọn trạng thái !
-                    </small>
-                </div>
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" ng-submit="updateTrans()" name="form_transport">
+            <div class="col-12">
+                <label for="inputState" class="form-label">LOẠI PHƯƠNG TIỆN</label>
+                <select id="inputState"
+                        class="form-select"
+                        name="transportationTypeId"
+                        ng-class="{ 'is-invalid': form_transport.transportationTypeId.$invalid && form_transport.transportationTypeId.$touched, 'is-valid': form_transport.transportationTypeId.$valid && form_transport.transportationTypeId.$touched }"
+                        ng-options="transport.id as transport.transportationTypeName for transport in transportType"
+                        ng-model="transportitation.transportationTypeId"
+                        required
+                >
+                    <option value="" disabled selected>Chọn loại phương tiện</option>
+                    <option>Demo</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="form_transport.transportationTypeId.$touched && form_transport.transportationTypeId.$error.required">
+                    Vui lòng chọn loại phương tiện !
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">BIỂN SỐ XE</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="30B-029.29"
+                       name="licensePlate"
+                       ng-model="transportitation.licensePlate"
+                       ng-class="{ 'is-invalid': form_transport.licensePlate.$invalid && form_transport.licensePlate.$touched, 'is-valid': form_transport.licensePlate.$valid && form_transport.licensePlate.$touched }"
+                       ng-pattern="/^[0-9]{2}[A-Z]-[0-9]{3,4}\.[0-9]{2}$/"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="form_transport.licensePlate.$touched && form_transport.licensePlate.$error.required">
+                    Vui lòng nhập biển số xe !
+                </small>
+                <small class="text-danger"
+                       ng-show="form_transport.licensePlate.$touched && form_transport.licensePlate.$error.pattern">
+                    Biển số xe không đúng định dạng !
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">SỐ CHỔ NGỒI</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="29 chổ"
+                       name="amountSeat"
+                       ng-model="transportitation.amountSeat"
+                       ng-class="{ 'is-invalid': form_transport.amountSeat.$invalid && form_transport.amountSeat.$touched, 'is-valid': form_transport.amountSeat.$valid && form_transport.amountSeat.$touched }"
+                       ng-pattern="/^[0-9]*$/"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="form_transport.amountSeat.$touched && form_transport.amountSeat.$error.required">
+                    Vui lòng nhập số chổ ngồi !
+                </small>
+                <small class="text-danger"
+                       ng-show="form_transport.amountSeat.$touched && form_transport.amountSeat.$error.pattern">
+                    Số chổ ngồi không đúng định dạng !
+                </small>
+            </div>
+            <div class="col-12">
+                <label class="form-label">TRẠNG THÁI</label>
+                <select class="form-select"
+                        name="isActive"
+                        ng-class="{ 'is-invalid': form_transport.isActive.$invalid && form_transport.isActive.$touched, 'is-valid': form_transport.isActive.$valid && form_transport.isActive.$touched }"
+                        ng-model="transportitation.isActive"
+                        required
+                >
+                    <option value="" disabled selected>Chọn trạng thái</option>
+                    <option value="true" ng-selected="transportitation.isActive === true">Đang hoạt động</option>
+                    <option value="false" ng-selected="transportitation.isActive === false">Ngưng hoạt động</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="form_transport.isActive.$touched && form_transport.isActive .$error.required">
+                    Vui lòng chọn trạng thái !
+                </small>
+            </div>
 
-                <div class="col-12 d-flex justify-content-end mt-5">
-                    <button type="button" class="btn" style="margin-right: 20px">
-                        <a class="btn" href="/business/transport/transports-list">Trở về</a>
-                    </button>
-                    <button type="submit" class="btn btn-submit fw-bold" ng-disabled="form_transport.$invalid">
-                        Cập nhật
-                    </button>
-                </div>
-            </form>
-        </div>
+            <div class="col-12 d-flex justify-content-end mt-5">
+                <button type="button" class="btn" style="margin-right: 20px">
+                    <a class="btn" href="/business/transport/transport-management">Trở về</a>
+                </button>
+                <button type="submit"
+                        class="btn btn-submit fw-bold"
+                        ng-disabled="form_transport.$invalid"
+                >
+                    Cập nhật
+                </button>
+            </div>
+        </form>
     </div>
 </div>

@@ -13,9 +13,9 @@ travel_app.controller('TripControllerAG', function ($scope, $http) {
     }
 
     $scope.validateDates = function () {
-        var start = new Date($scope.agent.date_trip_start);
-        var end = new Date($scope.agent.date_trip_end);
-        var now = new Date();
+        const start = new Date($scope.agent.date_trip_start);
+        const end = new Date($scope.agent.date_trip_end);
+        const now = new Date();
 
         // Kiểm tra nếu ngày / giờ về phải trước ngày / giờ đi
         if (start >= end) {

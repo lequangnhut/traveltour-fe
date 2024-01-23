@@ -1,234 +1,179 @@
 <div class="container">
-    <div class="container-fluid">
-        <div class="header-control mb-4">
-            <div class="header-control-center">
-                <div class="d-flex justify-content-between align-items-center row ">
-                    <div class="col-xl-6 mt-3">
-                        <h3 class="color-green fw-bold">DANH SÁCH PHƯƠNG TIỆN</h3>
-                    </div>
-                    <div class="col-xl-6 d-flex align-items-center justify-content-end header-control-center mt-3">
-                        <div class="row ">
-                            <div class="col-sm-3 d-flex align-items-center">
-                                <button class="btn d-flex ">
-                                    <i class="fa-solid fa-file-export"></i>
-                                    <span>Xuất</span>
-                                </button>
-                            </div>
-                            <div class="col-sm-9">
-                                <a href="/business/transport/transports-list/transports-create" class="btn btn-green">
-                                    <i class="fa-solid fa-plus" style="margin-right: 10px"></i>
-                                    Phương tiện mới
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+    <div class="header-control mb-4">
+        <div class="header-control-center">
+            <div class="d-flex justify-content-between align-items-center row ">
+                <div class="col-xl-6 mt-3">
+                    <h3 class="color-green fw-bold">DANH SÁCH PHƯƠNG TIỆN</h3>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="">
-            <div class="card card-customer">
-                <div class="row" style="margin: 20px 16px 20px 16px">
-                    <div class="col-xl-4">
-                        Bạn muốn tìm kiếm gì ?
-                        <div class="input-group mb-3">
+    <div class="">
+        <div class="card card-customer">
+            <div class="row" style="margin: 20px 16px 20px 16px">
+                <div class="col-xl-4">
+                    Bạn muốn tìm kiếm gì ?
+                    <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                                <a href="#" class="bg-light">
+                                <a href="#" class="bg-light text-dark">
                                     <i class="fa-solid fa-magnifying-glass bg-light"></i>
                                 </a>
                             </span>
-                            <input type="text" class="form-control" placeholder="Tìm kiếm" aria-label="Username"
-                                   aria-describedby="basic-addon1">
-                        </div>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Tìm kiếm biển số xe, số chổ ngồi..."
+                               ng-model="searchTerm"
+                               ng-change="searchTransportBrand()"
+                        >
                     </div>
-                    <div class="col-xl-3 mb-3">
-                        Lọc
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Tất cả</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                    <div class="col-xl-3 mb-3">
-                        Trạng thái
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Thành công</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                    <div class="col-xl-2 d-flex align-items-center justify-content-end mb-3 h-100"
-                         style="margin: 20px 0 0 0">
-                        <button class="btn btn-primary">Tìm kiếm</button>
-                    </div>
+                </div>
+                <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
+                     style="margin: 20px 0 0 0">
+                    <a href="/business/transport/transport-management/create-transport" class="btn btn-primary">
+                        <i class="fa-solid fa-plus" style="margin-right: 10px"></i>
+                        Thêm phương tiện
+                    </a>
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <div class="table-components table-responsive mb-5">
-            <div class="card table-responsive table-customer">
-                <div class="card-header ">
-                    <div class="row">
-                        <div class="h4 col-lg-5 d-flex align-items-center h-100">
-                            <div class="d-flex align-items-center">
-                                <span class="h4">Danh sách phương tiện</span>
-                            </div>
+    <div class="table-components table-responsive mb-5">
+        <div class="card table-responsive table-customer">
+            <div class="card-header ">
+                <div class="row">
+                    <div class="h4 col-lg-5 d-flex align-items-center h-100">
+                        <div class="d-flex align-items-center">
+                            <span class="h4">Danh sách phương tiện</span>
                         </div>
-                        <div class="d-flex justify-content-end align-items-baseline col-lg-2">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Tất cả hàng</option>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="15">15</option>
-                            </select>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
-                            <nav aria-label="Page navigation example float-end">
-                                <ul class="pagination justify-content-center align-items-center">
-                                    <li class="page-item bg-light">
-                                        <a class="page-link"><i class="fa-solid fa-chevron-left"></i></a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#"><i class="fa-solid fa-angle-right"></i></a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end align-items-baseline col-lg-2">
+                        <select class="form-select" aria-label="Default select example"
+                                ng-model="pageSize"
+                                ng-init="pageSize='5'"
+                                ng-change="pageSizeChanged()">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                        </select>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
+                        <nav aria-label="Page navigation example float-end">
+                            <ul class="pagination justify-content-center align-items-center">
+                                <!-- Previous Page -->
+                                <li class="page-item cursor-pointer" ng-class="{disabled: currentPage === 0}">
+                                    <a class="page-link" ng-click="setPage(0)">
+                                        <i class="fa-solid fa-angles-left"></i>
+                                    </a>
+                                </li>
+
+                                <!-- Ellipsis at the beginning -->
+                                <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                    <span class="page-link">...</span>
+                                </li>
+
+                                <!-- Pagination Numbers -->
+                                <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
+                                    ng-class="{active: n === currentPage}">
+                                    <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                </li>
+
+                                <!-- Ellipsis at the end -->
+                                <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                    <span class="page-link">...</span>
+                                </li>
+
+                                <!-- Next Page -->
+                                <li class="page-item cursor-pointer"
+                                    ng-class="{disabled: currentPage === totalPages - 1}">
+                                    <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                        <i class="fa-solid fa-angles-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
-                <table class="table table-responsive text-center">
-                    <thead>
-                    <tr class="bg-light">
-                        <th><span><input class="form-check-input checkbox-all" type="checkbox" value="" id=""></span>
-                        </th>
-                        <th scope="col"># <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">ID <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Biển số <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Loại phương tiện <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Số chổ ngồi <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Ngày tạo <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Trạng thái <i class="fa-solid fa-sort"></i></th>
-                        <th scope="col">Thao tác</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
-                        <td>1</td>
-                        <td>P0001</td>
-                        <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>Giường đôi</td>
-                        <td>300.000</td>
-                        <td>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <span class="status-success"></span> <span class="text-status-success">Đang book</span>
-                            </div>
-                        </td>
-                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                            <a href="business/transport/transports-list/transports-update"
-                               role="button" class="btn" style="background: #ffc107; margin-right: 10px">
-                                <i class="fa-solid fa-pen-to-square text-white"></i>
-                            </a>
-                            <a href="business/transport/transports-list/transports-update"
-                               role="button" class="btn" style="background: #dc3545">
-                                <i class="fa-solid fa-trash  text-white"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
-                        <td>2</td>
-                        <td>P0001</td>
-                        <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>Giường đôi</td>
-                        <td>300.000</td>
-                        <td>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <span class="status-warning"></span> <span class="text-status-warning">Cảnh báo</span>
-                            </div>
-                        </td>
-                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                            <button class="btn" style="background: #ffc107; margin-right: 10px"><i
-                                    class="fa-solid fa-pen-to-square text-white"></i></button>
-                            <button class="btn" style="background: #dc3545"><i
-                                    class="fa-solid fa-trash  text-white"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
-                        <td>3</td>
-                        <td>P0001</td>
-                        <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>Giường đôi</td>
-                        <td>300.000</td>
-                        <td>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <span class="status-error"></span> <span class="text-status-error">Đang book</span>
-                            </div>
-                        </td>
-                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                            <button class="btn" style="background: #ffc107; margin-right: 10px"><i
-                                    class="fa-solid fa-pen-to-square text-white"></i></button>
-                            <button class="btn" style="background: #dc3545"><i
-                                    class="fa-solid fa-trash  text-white"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center"><span><span>
-                            <input class="form-check-input" type="checkbox" value=""></span></span></td>
-                        <td>4</td>
-                        <td>P0001</td>
-                        <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>Giường đôi</td>
-                        <td>300.000</td>
-                        <td>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <span class="status-info"></span> <span class="text-info">Thông báo</span>
-                            </div>
-                        </td>
-                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                            <button class="btn" style="background: #ffc107; margin-right: 10px"><i
-                                    class="fa-solid fa-pen-to-square text-white"></i></button>
-                            <button class="btn" style="background: #dc3545"><i
-                                    class="fa-solid fa-trash  text-white"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
-                        <td>5</td>
-                        <td>P0001</td>
-                        <td>Phòng studio</td>
-                        <td>2</td>
-                        <td>Giường đôi</td>
-                        <td>300.000</td>
-                        <td>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <span class="status-normal"></span><span class="text-status-normal">Đang book</span>
-                            </div>
-                        </td>
-                        <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                            <button class="btn" style="background: #ffc107; margin-right: 10px"><i
-                                    class="fa-solid fa-pen-to-square text-white"></i></button>
-                            <button class="btn" style="background: #dc3545"><i
-                                    class="fa-solid fa-trash  text-white"></i></button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-end">
-                        5 trong tổng số 15
-                    </div>
+            </div>
+            <table class="table table-responsive text-center">
+                <div ng-include="'app/component/utils/loading-table.html'"></div>
+                <thead>
+                <tr class="bg-light">
+                    <th>
+                        <span>
+                            <input class="form-check-input checkbox-all" type="checkbox" value="">
+                        </span>
+                    </th>
+                    <th>#
+                        <i class="fa-solid fa-sort"></i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('id')">ID
+                        <i class="fa" ng-class="getSortIcon('id')"></i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('licensePlate')">Biển số
+                        <i class="fa" ng-class="getSortIcon('licensePlate')"></i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('transportationTypeId')">Loại phương tiện
+                        <i class="fa" ng-class="getSortIcon('transportationTypeId')"></i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('amountSeat')">Số chổ ngồi
+                        <i class="fa" ng-class="getSortIcon('amountSeat')"></i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('dateCreated')">Ngày tạo
+                        <i class="fa" ng-class="getSortIcon('dateCreated')"></i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('isActive')">Trạng thái
+                        <i class="fa" ng-class="getSortIcon('isActive')"></i>
+                    </th>
+                    <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="transport in transportData">
+                    <td>
+                        <span>
+                            <input class="form-check-input" type="checkbox" value="" id="">
+                        </span>
+                    </td>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ transport.id }}</td>
+                    <td>{{ transport.licensePlate }}</td>
+                    <td>{{ transportTypeName[transport.transportationTypeId] || 'Đang tải...' }}</td>
+                    <td>{{ transport.amountSeat + ' Chổ' }}</td>
+                    <td>{{ transport.dateCreated | vietnameseDateTime }}</td>
+                    <td ng-if="transport.isActive == true">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <span class="status-success"></span>
+                            <span class="text-status-success">Đang hoạt động</span>
+                        </div>
+                    </td>
+                    <td ng-if="transport.isActive == false">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <span class="status-error"></span>
+                            <span class="text-status-error">Ngưng hoạt động</span>
+                        </div>
+                    </td>
+                    <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                        <a href="/business/transport/transport-management/update-transport/{{ transport.id }}"
+                           role="button" class="fs-1 btn text-warning">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <a href="#" ng-click="deleteTrans(transport.id, transport.licensePlate)"
+                           role="button" class="fs-1 btn text-danger">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-if="transportData.length === 0">
+                    <td colspan="8">Không có dữ liệu phương tiện.</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="card-footer">
+                <div class="d-flex justify-content-end">
+                    {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                 </div>
             </div>
         </div>
