@@ -1,0 +1,92 @@
+<!--====== Start Preloader ======-->
+<div class="preloader" ng-show="isLoading">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+    <div class="bg"></div>
+</div><!--====== End Preloader ======-->
+
+<section id="dashboard-hotel">
+    <div class="container">
+        <header>
+            <div class="bg">
+                <div class="">
+                    <div class="h3 fw-bold text-uppercase mb-5 color-green">Danh sách điểm tham quan</div>
+                </div>
+                <div class="list-hotel">
+                    <div class="list-hotel-item">
+                        <div class="row">
+                            <div class="col-xl-4 mb-4" ng-repeat="visit in visitLocation">
+                                <div class="item">
+                                    <div class="card card-banner">
+                                        <div class="card-header">
+                                            <div class="img-card-dashboard">
+                                                <img ng-src="{{ visit.visitLocationImage }}"
+                                                     class="img-fluid" alt="avatar-hotel"/>
+                                            </div>
+                                            <div class="item-title mt-3">
+                                                <div class="item-title mt-3">
+                                                    <div class="h4 fw-medium">{{ visit.visitLocationName }}</div>
+                                                    <div class="">ID: <span>{{ visit.id }}</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex justify-content-between w-100">
+                                            <a class="btn btn-primary" href="">Sửa thông tin địa điểm</a>
+                                            <a class="btn"
+                                               href="/business/welcome-place"
+                                               ng-click="showContentForRole('ROLE_AGENT_PLACE')"
+                                            >
+                                                Tiếp tục >
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section>
+            <div class="add-hotel-container">
+                <div class="add-hotel-item">
+                    <div class="row">
+                        <div class="col-xl-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="h4 fw-medium mb-3">Tôi đã có thương hiệu của mình</div>
+                                    <div class="">Chào mừng bạn đã đến với trang quản lý Điểm tham quan của mình. Hãy
+                                        quản lý thông tin Điểm tham quan, cập nhật các tiện ích, và tận hưởng trải
+                                        nghiệm quản lý hiệu quả từ TravelTour.
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-end">
+                                    <a href="/business/select-type" class="btn btn-light">Trở về</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="h4 fw-medium mb-3">Tôi muốn liệt kê phương tiện mới</div>
+                                    <div class="">Bắt đầu hành trình mới với việc thêm Điểm tham quan của bạn vào hệ
+                                        thống của chúng tôi. Hãy điền đầy đủ thông tin và làm cho Điểm tham quan của bạn
+                                        trở nên nổi bật trên TravelTour.
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-end">
+                                    <a href="/business/register-visit" class="btn btn-primary">
+                                        Thêm địa điểm mới</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>

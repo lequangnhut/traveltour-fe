@@ -1,17 +1,17 @@
 travel_app.service('TransportBrandServiceAG', function ($http) {
     let API_TRANS_BRAND = BASE_API + 'agent/transport-brand/';
 
-    this.findByAgencyId = function (userId) {
+    this.findAllByAgencyId = function (agencyId) {
         return $http({
             method: 'GET',
-            url: API_TRANS_BRAND + 'find-by-agency-id/' + userId
+            url: API_TRANS_BRAND + 'find-all-transport-brand/' + agencyId
         })
     }
 
-    this.registerTransport = function (dataTrans) {
+    this.registerTransport = function (dataTrans, apiUrl) {
         return $http({
             method: 'POST',
-            url: API_TRANS_BRAND + 'register-transport',
+            url: API_TRANS_BRAND + apiUrl + '-transport',
             headers: {'Content-Type': undefined},
             data: dataTrans,
             transformRequest: angular.identity

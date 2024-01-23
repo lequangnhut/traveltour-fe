@@ -59,15 +59,33 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $loc
      * Submit gửi dữ liệu cho api
      */
     $scope.submitDataRegisterTrans = function () {
+        TransportBrandServiceAG.findAllByAgencyId($scope.agent.id).then(function successCallback(response) {
+            let transportBrand = response.data;
+
+            if (transportBrand.length === 1) {
+                let existingTrans = transportBrand[0];
+
+                if (existingTrans.transportationBrandName == null) {
+                    $scope.submitDataAPITransport('register');
+                } else {
+                    $scope.submitDataAPITransport('create');
+                }
+            } else {
+                $scope.submitDataAPITransport('create');
+            }
+        }, errorCallback);
+    };
+
+    $scope.submitDataAPITransport = function (apiUrl) {
         $scope.isLoading = true;
 
         const dataTrans = new FormData();
         dataTrans.append("transportDto", new Blob([JSON.stringify($scope.agent)], {type: "application/json"}));
         dataTrans.append("transportImg", $scope.agent.transportationBrandImg);
 
-        TransportBrandServiceAG.registerTransport(dataTrans).then(function successCallback() {
+        TransportBrandServiceAG.registerTransport(dataTrans, apiUrl).then(function successCallback() {
             $location.path('/business/select-type');
-            centerAlert('Thành công !', 'Thông tin phương tiện đã được cập nhật thành công.', 'success')
+            centerAlert('Thành công !', 'Thông tin phương tiện đã được cập nhật thành công.', 'success');
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
