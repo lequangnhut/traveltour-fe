@@ -25,7 +25,7 @@ travel_app.controller('DecentralizationControllerStaffAD', function ($scope, $ti
     }
 
     function errorCallback() {
-        toastAlert('error', "Máy chủ không tồn tại !");
+        $location.path('/admin/internal-server-error')
     }
 
     /**

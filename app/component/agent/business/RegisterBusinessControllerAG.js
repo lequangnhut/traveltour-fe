@@ -38,8 +38,7 @@ travel_app.controller('RegisterBusinessControllerAG', function ($scope, $http, $
     }
 
     function errorCallback(error) {
-        console.log(error)
-        toastAlert('error', "Máy chủ không tồn tại !");
+        $location.path('/admin/internal-server-error')
     }
 
     $scope.init = function () {

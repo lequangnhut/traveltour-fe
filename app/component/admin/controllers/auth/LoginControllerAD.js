@@ -4,9 +4,8 @@ travel_app.controller('LoginControllerAD', function ($scope, $location, AuthServ
         password: null,
     }
 
-    function errorCallback(error) {
-        console.log(error)
-        toastAlert('error', "Máy chủ không tồn tại !");
+    function errorCallback() {
+        $location.path('/admin/internal-server-error')
     }
 
     /**

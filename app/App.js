@@ -5,6 +5,19 @@ let BASE_API = 'http://localhost:8080/api/v1/'
 travel_app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         /**
+         * Config Error
+         */
+        .when('/admin/page-not-found', {
+            templateUrl: 'app/component/error/404.html'
+        })
+        .when('/admin/internal-server-error', {
+            templateUrl: 'app/component/error/500.html'
+        })
+        .when('/admin/page-forbidden', {
+            templateUrl: 'app/component/error/403.html'
+        })
+
+        /**
          * Super Admin
          */
         .when('/login-admin', {

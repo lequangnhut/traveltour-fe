@@ -16,9 +16,8 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $loc
         }
     };
 
-    function errorCallback(error) {
-        console.log(error)
-        toastAlert('error', "Máy chủ không tồn tại !");
+    function errorCallback() {
+        $location.path('/admin/internal-server-error')
     }
 
     $scope.agent = {
