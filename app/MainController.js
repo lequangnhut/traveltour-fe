@@ -1,4 +1,4 @@
-travel_app.controller('MainController', function ($scope, $rootScope, $location, $window, $timeout, $anchorScroll, AuthService, AgenciesServiceAG, HotelServiceAG, TransportServiceAG, VisitLocationServiceAG, NotificationService) {
+travel_app.controller('MainController', function ($scope, $rootScope, $location, $window, $timeout, $anchorScroll, AuthService, AgenciesServiceAG, HotelServiceAG, TransportBrandServiceAG, VisitLocationServiceAG, NotificationService) {
     $anchorScroll();
     $scope.selectedRole = localStorage.getItem('selectedRole') || null;
     $scope.activeNavItem = localStorage.getItem('activeNavItem') || null;
@@ -65,7 +65,7 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
                         $scope.hotels = response.data;
                     }, errorCallback);
 
-                    TransportServiceAG.findByAgencyId(agencies.id).then(function successCallback(response) {
+                    TransportBrandServiceAG.findByAgencyId(agencies.id).then(function successCallback(response) {
                         $scope.transport = response.data;
                     }, errorCallback);
 
@@ -163,6 +163,8 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
             '/business/register-business-success',
             '/business/select-type',
             '/business/hotel/home',
+            '/business/transport/home',
+            '/business/visit/home',
             '/admin/page-not-found',
             '/admin/internal-server-error',
             '/admin/page-forbidden',
@@ -183,6 +185,8 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
             '/business/register-business-success',
             '/business/select-type',
             '/business/hotel/home',
+            '/business/transport/home',
+            '/business/visit/home',
             '/admin/page-not-found',
             '/admin/internal-server-error',
             '/admin/page-forbidden',

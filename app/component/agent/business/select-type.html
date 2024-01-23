@@ -18,7 +18,7 @@
             <div class="d-flex justify-content-center align-items-center mt-3">
                 <div class="row">
                     <div class="box col-xl-4 card" ng-if="hasRole('ROLE_AGENT_HOTEL')">
-                        <a href="/business/welcome-hotel" ng-show="hotels.isAccepted"
+                        <a href="/business/hotel/home" ng-show="hotels.isAccepted"
                            ng-click="showContentForRole('ROLE_AGENT_HOTEL')">
                             <div class="box-icon mb-3">
                                 <i class="fa-solid fa-hotel color-green" style="font-size: 30px"></i>
@@ -39,7 +39,7 @@
                         </a>
                     </div>
                     <div class="box col-xl-4 card" ng-if="hasRole('ROLE_AGENT_TRANSPORT')">
-                        <a href="/business/welcome-transport" ng-show="transport.isAccepted"
+                        <a href="/business/transport/home" ng-show="transport.isAccepted"
                            ng-click="showContentForRole('ROLE_AGENT_TRANSPORT')">
                             <div class="box-icon mb-3">
                                 <i class="fa-solid fa-car color-green" style="font-size: 30px"></i>
@@ -60,7 +60,7 @@
                         </a>
                     </div>
                     <div class="box col-xl-4 card" ng-if="hasRole('ROLE_AGENT_PLACE')">
-                        <a href="/business/welcome-place" ng-show="visits.isAccepted"
+                        <a href="/business/visit/home" ng-show="visits.isAccepted"
                            ng-click="showContentForRole('ROLE_AGENT_PLACE')">
                             <div class="box-icon mb-3">
                                 <i class="fa-brands fa-pagelines color-green" style="font-size: 30px"></i>

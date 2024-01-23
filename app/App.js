@@ -237,7 +237,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/business/hotel/home', {
             templateUrl: 'app/component/agent/hotel/views/pages/dashboard/dashboard.html',
-            controller: 'SelectTypeControllerAG'
+            controller: ''
         })
         .when('/business/hotel/hotel-information-list', {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-list.html',
@@ -295,39 +295,43 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/register-transport.html',
             controller: 'RegisterTransControllerAG'
         })
-        .when('/business/transport/transports-list', {
+        .when('/business/transport/home', {
+            templateUrl: 'app/component/agent/trans/views/pages/dashboard/dashboard.html',
+            controller: ''
+        })
+        .when('/business/transport/transport-management', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-list.html',
             controller: 'TransportControllerAG'
         })
-        .when('/business/transport/transports-list/transports-create', {
+        .when('/business/transport/transport-management/create-transport', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-create.html',
             controller: 'TransportControllerAG'
         })
-        .when('/business/transport/transports-list/transports-update', {
+        .when('/business/transport/transport-management/update-transport/:id', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-update.html',
             controller: 'TransportControllerAG'
         })
-        .when('/business/booking/bookings-list', {
+        .when('/business/transport/booking-management', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-list.html',
             controller: 'BookingControllerAG'
         })
-        .when('/business/booking/bookings-list/bookings-create', {
+        .when('/business/transport/booking-management/create-booking', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-create.html',
             controller: 'BookingControllerAG'
         })
-        .when('/business/booking/bookings-list/bookings-update', {
+        .when('/business/transport/booking-management/update-booking/:id', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-update.html',
             controller: 'BookingControllerAG'
         })
-        .when('/business/trip/trips-list', {
+        .when('/business/transport/trip-management', {
             templateUrl: 'app/component/agent/trans/views/pages/trips/trip-list.html',
             controller: 'TripControllerAG'
         })
-        .when('/business/trip/trips-list/trips-create', {
+        .when('/business/transport/trip-management/create-trip', {
             templateUrl: 'app/component/agent/trans/views/pages/trips/trip-create.html',
             controller: 'TripControllerAG'
         })
-        .when('/business/trip/trips-list/trips-update', {
+        .when('/business/transport/trip-management/update-trip/:id', {
             templateUrl: 'app/component/agent/trans/views/pages/trips/trip-update.html',
             controller: 'TripControllerAG'
         })
@@ -338,6 +342,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/business/register-visit', {
             templateUrl: 'app/component/agent/visits/views/pages/register-visits.html',
             controller: 'RegisterVisitsControllerAG'
+        })
+        .when('/business/visit/home', {
+            templateUrl: 'app/component/agent/visits/views/pages/dashboard/dashboard.html',
+            controller: ''
         })
         .when('/business/visit/visit-list', {
             templateUrl: 'app/component/agent/visits/views/pages/visits/visit-list.html',
@@ -590,7 +598,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'ForgotPwController'
         })
         .otherwise({
-            redirectTo: '/home'
+            redirectTo: '/admin/page-not-found'
         })
 
     if (window.history && window.history.pushState) {

@@ -1,216 +1,214 @@
 <div class="container mt-4 mb-5">
-    <div class="container-fluid">
-        <div class="header-control mb-4">
-            <div class="">
-                <div class="d-flex align-items-center row">
-                    <div class="col-lg-6">
-                        <h3 class="color-green fw-bold">THÊM TÀI KHOẢN NHÂN VIÊN</h3>
-                    </div>
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-bold">THÊM TÀI KHOẢN NHÂN VIÊN</h3>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="card card-custom">
-            <form class="row g-3 form-input-custom" ng-submit="createAccountStaff()" name="form_account" role="form">
-                <div class="col-md-12">
-                    <label class="form-label">ĐỊA CHỈ EMAIL</label>
-                    <input type="text"
-                           class="form-control"
-                           placeholder="exam@gmail.com"
-                           name="email"
-                           ng-model="admin.email"
-                           ng-class="{ 'is-invalid': form_account.email.$invalid && form_account.email.$touched, 'is-valid': form_account.email.$valid && form_account.email.$touched && !emailError }"
-                           ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
-                           ng-change="checkDuplicateEmail()"
-                           required
-                    >
-                    <small class="text-danger"
-                           ng-show="form_account.email.$touched && form_account.email.$error.required">
-                        Vui lòng nhập địa chỉ email !
-                    </small>
-                    <small class="text-danger"
-                           ng-show="form_account.email.$touched && form_account.email.$error.pattern">
-                        Địa chỉ email không đúng định dạng !
-                    </small>
-                    <small class="text-danger" ng-show="form_account.email.$touched && emailError">
-                        Email đã tồn tại ở một tài khoản khác!
-                    </small>
-                </div>
-                <div class="col-md-12">
-                    <label class="form-label">MẬT KHẨU</label>
-                    <input type="password"
-                           class="form-control"
-                           placeholder="*********"
-                           name="password"
-                           ng-model="admin.password"
-                           ng-class="{ 'is-invalid': form_account.password.$invalid && form_account.password.$touched, 'is-valid': form_account.password.$valid && form_account.password.$touched }"
-                           ng-minlength="6"
-                           required
-                    >
-                    <small class="text-danger"
-                           ng-show="form_account.password.$touched && form_account.password.$error.required">
-                        Vui lòng nhập mật khẩu !
-                    </small>
-                    <small class="text-danger"
-                           ng-show="form_account.password.$error.minlength && form_account.password.$dirty">
-                        Mật khẩu cần ít nhất 6 ký tự.
-                    </small>
-                </div>
-                <div class="col-md-12">
-                    <label class="form-label">NHẬP LẠI MẬT KHẨU</label>
-                    <input type="password"
-                           class="form-control"
-                           placeholder="*********"
-                           name="cpsw"
-                           ng-model="admin.cpsw"
-                           ng-class="{ 'is-invalid': form_account.cpsw.$invalid && form_account.cpsw.$touched, 'is-valid': form_account.cpsw.$valid && form_account.cpsw.$touched }"
-                           ng-pattern="admin.password"
-                           ng-minlength="6"
-                           required
-                    >
-                    <small class="text-danger"
-                           ng-show="form_account.cpsw.$touched && form_account.cpsw.$error.required">
-                        Vui lòng nhập lại mật khẩu !
-                    </small>
-                    <small class="text-danger"
-                           ng-show="form_account.cpsw.$error.minlength && form_account.cpsw.$dirty">
-                        Mật khẩu cần ít nhất 6 ký tự.
-                    </small>
-                    <small class="text-danger"
-                           ng-show="form_account.cpsw.$touched && form_account.cpsw.$error.pattern">
-                        Xác nhận mật khẩu không khớp.
-                    </small>
-                </div>
-                <div class="col-md-12">
-                    <label class="form-label">HỌ VÀ TÊN</label>
-                    <input type="text"
-                           class="form-control"
-                           placeholder="Nguyễn Văn A"
-                           name="fullName"
-                           ng-model="admin.fullName"
-                           ng-class="{ 'is-invalid': form_account.fullName.$invalid && form_account.fullName.$touched, 'is-valid': form_account.fullName.$valid && form_account.fullName.$touched }"
-                           ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
-                           required
-                    >
-                    <small class="text-danger"
-                           ng-show="form_account.fullName.$touched && form_account.fullName.$error.required">
-                        Vui lòng nhập họ và tên !
-                    </small>
-                    <small class="text-danger"
-                           ng-show="form_account.fullName.$touched && form_account.fullName.$error.pattern">
-                        Họ và tên không đúng định dạng !
-                    </small>
-                </div>
-                <div class="col-md-12">
-                    <label class="form-label">SỐ ĐIỆN THOẠI</label>
-                    <input type="text"
-                           class="form-control"
-                           placeholder="0969653264"
-                           name="phone"
-                           ng-model="admin.phone"
-                           ng-class="{ 'is-invalid': form_account.phone.$invalid && form_account.phone.$touched, 'is-valid': form_account.phone.$valid && form_account.phone.$touched && !phoneError }"
-                           ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
-                           ng-change="checkDuplicatePhone()"
-                           required
-                    >
-                    <small class="text-danger"
-                           ng-show="form_account.phone.$touched && form_account.phone.$error.required">
-                        Vui lòng nhập số điện thoại !
-                    </small>
-                    <small class="text-danger"
-                           ng-show="form_account.phone.$touched && form_account.phone.$error.pattern">
-                        Số điện thoại không đúng định dạng !
-                    </small>
-                    <small class="text-danger" ng-show="form_account.phone.$touched && phoneError">
-                        Số điện thoại đã tồn tại ở một tài khoản khác !
-                    </small>
-                </div>
-                <div class="col-md-12">
-                    <label class="form-label">CMND / CCCD</label>
-                    <input type="text"
-                           class="form-control"
-                           placeholder="089388928928"
-                           name="citizenCard"
-                           ng-model="admin.citizenCard"
-                           ng-class="{ 'is-invalid': form_account.citizenCard.$invalid && form_account.citizenCard.$touched, 'is-valid': form_account.citizenCard.$valid && form_account.citizenCard.$touched && !cardError }"
-                           ng-pattern="/^[0-9]{9,12}$/"
-                           ng-change="checkDuplicateCard()"
-                           required
-                    >
-                    <small class="text-danger"
-                           ng-show="form_account.citizenCard.$touched && form_account.citizenCard.$error.required">
-                        Vui lòng nhập CMND / CCCD !
-                    </small>
-                    <small class="text-danger"
-                           ng-show="form_account.citizenCard.$touched && form_account.citizenCard.$error.pattern">
-                        CMND / CCCD không đúng định dạng !
-                    </small>
-                    <small class="text-danger" ng-show="form_account.citizenCard.$touched && cardError">
-                        CMND / CCCD đã tồn tại ở một tài khoản khác !
-                    </small>
-                </div>
-                <div class="col-md-12">
-                    <label class="form-label">TRẠNG THÁI HOẠT ĐỘNG</label>
-                    <select class="form-select"
-                            name="isActive"
-                            ng-class="{ 'is-invalid': form_account.isActive.$invalid && form_account.isActive.$touched, 'is-valid': form_account.isActive.$valid && form_account.isActive.$touched }"
-                            ng-model="admin.isActive"
-                            required
-                    >
-                        <option value="" disabled selected>Chọn trạng thái</option>
-                        <option value="true">Hoạt động</option>
-                        <option value="false">Ngưng hoạt động</option>
-                    </select>
-                    <small class="text-danger"
-                           ng-show="form_account.isActive.$touched && form_account.isActive.$error.required">
-                        Vui lòng chọn trạng thái !
-                    </small>
-                </div>
-                <div class="col-md-12">
-                    <label class="form-label">PHÂN QUYỀN</label>
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label class="form-check-label">
-                                <input type="checkbox"
-                                       ng-click="toggleRole('ROLE_ADMIN')"
-                                       class="form-check-input"
-                                >
-                                Quản trị
-                            </label>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-check-label">
-                                <input type="checkbox"
-                                       ng-click="toggleRole('ROLE_STAFF')"
-                                       class="form-check-input"
-                                >
-                                Nhân viên
-                            </label>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-check-label">
-                                <input type="checkbox"
-                                       ng-click="toggleRole('ROLE_GUIDE')"
-                                       class="form-check-input"
-                                >
-                                Hướng dẫn viên
-                            </label>
-                        </div>
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" ng-submit="createAccountStaff()" name="form_account" role="form">
+            <div class="col-md-12">
+                <label class="form-label">ĐỊA CHỈ EMAIL</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="exam@gmail.com"
+                       name="email"
+                       ng-model="admin.email"
+                       ng-class="{ 'is-invalid': form_account.email.$invalid && form_account.email.$touched, 'is-valid': form_account.email.$valid && form_account.email.$touched && !emailError }"
+                       ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                       ng-change="checkDuplicateEmail()"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="form_account.email.$touched && form_account.email.$error.required">
+                    Vui lòng nhập địa chỉ email !
+                </small>
+                <small class="text-danger"
+                       ng-show="form_account.email.$touched && form_account.email.$error.pattern">
+                    Địa chỉ email không đúng định dạng !
+                </small>
+                <small class="text-danger" ng-show="form_account.email.$touched && emailError">
+                    Email đã tồn tại ở một tài khoản khác!
+                </small>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label">MẬT KHẨU</label>
+                <input type="password"
+                       class="form-control"
+                       placeholder="*********"
+                       name="password"
+                       ng-model="admin.password"
+                       ng-class="{ 'is-invalid': form_account.password.$invalid && form_account.password.$touched, 'is-valid': form_account.password.$valid && form_account.password.$touched }"
+                       ng-minlength="6"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="form_account.password.$touched && form_account.password.$error.required">
+                    Vui lòng nhập mật khẩu !
+                </small>
+                <small class="text-danger"
+                       ng-show="form_account.password.$error.minlength && form_account.password.$dirty">
+                    Mật khẩu cần ít nhất 6 ký tự.
+                </small>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label">NHẬP LẠI MẬT KHẨU</label>
+                <input type="password"
+                       class="form-control"
+                       placeholder="*********"
+                       name="cpsw"
+                       ng-model="admin.cpsw"
+                       ng-class="{ 'is-invalid': form_account.cpsw.$invalid && form_account.cpsw.$touched, 'is-valid': form_account.cpsw.$valid && form_account.cpsw.$touched }"
+                       ng-pattern="admin.password"
+                       ng-minlength="6"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="form_account.cpsw.$touched && form_account.cpsw.$error.required">
+                    Vui lòng nhập lại mật khẩu !
+                </small>
+                <small class="text-danger"
+                       ng-show="form_account.cpsw.$error.minlength && form_account.cpsw.$dirty">
+                    Mật khẩu cần ít nhất 6 ký tự.
+                </small>
+                <small class="text-danger"
+                       ng-show="form_account.cpsw.$touched && form_account.cpsw.$error.pattern">
+                    Xác nhận mật khẩu không khớp.
+                </small>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label">HỌ VÀ TÊN</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="Nguyễn Văn A"
+                       name="fullName"
+                       ng-model="admin.fullName"
+                       ng-class="{ 'is-invalid': form_account.fullName.$invalid && form_account.fullName.$touched, 'is-valid': form_account.fullName.$valid && form_account.fullName.$touched }"
+                       ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="form_account.fullName.$touched && form_account.fullName.$error.required">
+                    Vui lòng nhập họ và tên !
+                </small>
+                <small class="text-danger"
+                       ng-show="form_account.fullName.$touched && form_account.fullName.$error.pattern">
+                    Họ và tên không đúng định dạng !
+                </small>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label">SỐ ĐIỆN THOẠI</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="0969653264"
+                       name="phone"
+                       ng-model="admin.phone"
+                       ng-class="{ 'is-invalid': form_account.phone.$invalid && form_account.phone.$touched, 'is-valid': form_account.phone.$valid && form_account.phone.$touched && !phoneError }"
+                       ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                       ng-change="checkDuplicatePhone()"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="form_account.phone.$touched && form_account.phone.$error.required">
+                    Vui lòng nhập số điện thoại !
+                </small>
+                <small class="text-danger"
+                       ng-show="form_account.phone.$touched && form_account.phone.$error.pattern">
+                    Số điện thoại không đúng định dạng !
+                </small>
+                <small class="text-danger" ng-show="form_account.phone.$touched && phoneError">
+                    Số điện thoại đã tồn tại ở một tài khoản khác !
+                </small>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label">CMND / CCCD</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="089388928928"
+                       name="citizenCard"
+                       ng-model="admin.citizenCard"
+                       ng-class="{ 'is-invalid': form_account.citizenCard.$invalid && form_account.citizenCard.$touched, 'is-valid': form_account.citizenCard.$valid && form_account.citizenCard.$touched && !cardError }"
+                       ng-pattern="/^[0-9]{9,12}$/"
+                       ng-change="checkDuplicateCard()"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="form_account.citizenCard.$touched && form_account.citizenCard.$error.required">
+                    Vui lòng nhập CMND / CCCD !
+                </small>
+                <small class="text-danger"
+                       ng-show="form_account.citizenCard.$touched && form_account.citizenCard.$error.pattern">
+                    CMND / CCCD không đúng định dạng !
+                </small>
+                <small class="text-danger" ng-show="form_account.citizenCard.$touched && cardError">
+                    CMND / CCCD đã tồn tại ở một tài khoản khác !
+                </small>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label">TRẠNG THÁI HOẠT ĐỘNG</label>
+                <select class="form-select"
+                        name="isActive"
+                        ng-class="{ 'is-invalid': form_account.isActive.$invalid && form_account.isActive.$touched, 'is-valid': form_account.isActive.$valid && form_account.isActive.$touched }"
+                        ng-model="admin.isActive"
+                        required
+                >
+                    <option value="" disabled selected>Chọn trạng thái</option>
+                    <option value="true">Hoạt động</option>
+                    <option value="false">Ngưng hoạt động</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="form_account.isActive.$touched && form_account.isActive.$error.required">
+                    Vui lòng chọn trạng thái !
+                </small>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label">PHÂN QUYỀN</label>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-check-label">
+                            <input type="checkbox"
+                                   ng-click="toggleRole('ROLE_ADMIN')"
+                                   class="form-check-input"
+                            >
+                            Quản trị
+                        </label>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-check-label">
+                            <input type="checkbox"
+                                   ng-click="toggleRole('ROLE_STAFF')"
+                                   class="form-check-input"
+                            >
+                            Nhân viên
+                        </label>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-check-label">
+                            <input type="checkbox"
+                                   ng-click="toggleRole('ROLE_GUIDE')"
+                                   class="form-check-input"
+                            >
+                            Hướng dẫn viên
+                        </label>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-12 d-flex justify-content-end mt-5">
-                    <button type="button" class="btn" style="margin-right: 20px">
-                        <a class="btn" href="/admin/decentralized-staff-management">Trở về</a>
-                    </button>
-                    <button type="submit"
-                            ng-disabled="form_account.$invalid || emailError || phoneError || cardError"
-                            class="btn btn-submit fw-bold"
-                    >
-                        Thêm mới
-                    </button>
-                </div>
-            </form>
-        </div>
+            <div class="col-12 d-flex justify-content-end mt-5">
+                <button type="button" class="btn" style="margin-right: 20px">
+                    <a class="btn" href="/admin/decentralized-staff-management">Trở về</a>
+                </button>
+                <button type="submit"
+                        ng-disabled="form_account.$invalid || emailError || phoneError || cardError"
+                        class="btn btn-submit fw-bold"
+                >
+                    Thêm mới
+                </button>
+            </div>
+        </form>
     </div>
 </div>
