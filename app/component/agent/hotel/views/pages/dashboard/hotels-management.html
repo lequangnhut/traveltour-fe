@@ -1,0 +1,87 @@
+<!--====== Start Preloader ======-->
+<div class="preloader" ng-show="isLoading">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+    <div class="bg"></div>
+</div><!--====== End Preloader ======-->
+
+<section id="dashboard-hotel">
+    <div class="container">
+        <header>
+            <div class="bg">
+                <div class="">
+                    <div class="h3 fw-bold text-uppercase mb-5 color-greend">Danh sách khách sạn</div>
+                </div>
+                <div class="list-hotel">
+                    <div class="list-hotel-item">
+                        <div class="row">
+                            <div class="col-xl-4 mb-4" ng-repeat="hotel in hotels">
+                                <div class="item">
+                                    <div class="card card-banner">
+                                        <div class="card-header">
+                                            <div class="img-card-dashboard">
+                                                <img ng-src="{{ hotel.hotelAvatar || '/assets/admin/assets/img/bg/default-image-hotel.png' }}"
+                                                     class="img-fluid"/>
+                                            </div>
+                                            <div class="item-title mt-3">
+                                                <div class="item-title mt-3">
+                                                    <div class="h4 fw-medium">{{ hotel.hotelName }}</div>
+                                                    <div class="">ID: <span>{{ hotel.id }}</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex justify-content-between w-100">
+                                            <a class="btn btn-primary" href="">Sửa thông tin khách sạn</a>
+                                            <a class="btn" href="/business/welcome-hotel"
+                                               ng-click="showContentForRole('ROLE_AGENT_HOTEL')">Tiếp tục ></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section>
+            <div class="add-hotel-container">
+                <div class="add-hotel-item">
+                    <div class="row">
+                        <div class="col-xl-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="h4 fw-medium mb-3">Tôi đã có khách sạn của mình</div>
+                                    <div class="">Chào mừng đã đến với trang quản lý khách sạn của mình. Hãy quản lý
+                                        thông tin khách sạn,
+                                        cập nhật các tiện ích, và tận hưởng trải nghiệm quản lý hiệu quả từ TravelTour.
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-end">
+                                    <a href="/business/select-type" class="btn btn-light">Trở về</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="h4 fw-medium mb-3">Tôi muốn liệt kê khách sạn mới</div>
+                                    <div class="">Bắt đầu hành trình mới với việc thêm khách sạn của bạn vào hệ thống
+                                        của chúng tôi. Hãy điền
+                                        đầy đủ thông tin và làm cho khách sạn của bạn trở nên nổi bật trên TravelTour.
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-end">
+                                    <a href="/business/register-hotel" class="btn btn-primary">Thêm
+                                        khách sạn mới</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>

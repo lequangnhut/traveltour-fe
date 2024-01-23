@@ -8,17 +8,17 @@ travel_app.service('VisitLocationServiceAG', function ($http) {
         })
     }
 
-    this.findByAgencyId = function (userId) {
+    this.findAllByAgencyId = function (agencyId) {
         return $http({
             method: 'GET',
-            url: API_VISIT + 'find-by-agency-id/' + userId
+            url: API_VISIT + 'find-all-by-agency-id/' + agencyId
         })
     }
 
-    this.registerVisit = function (dataVisit) {
+    this.registerVisit = function (dataVisit, apiUrl) {
         return $http({
             method: 'POST',
-            url: API_VISIT + 'register-visit-location',
+            url: API_VISIT + apiUrl + '-visit-location',
             headers: {
                 'Content-Type': undefined
             },

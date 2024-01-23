@@ -58,19 +58,19 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
          */
         if (user !== undefined && user !== null && user !== "") {
             AgenciesServiceAG.findByUserId(user.id).then(function successCallback(response) {
-                let agencies = response.data;
+                let agencies = $scope.agencies = response.data;
 
                 if (agencies !== undefined && agencies !== null && agencies !== "") {
-                    HotelServiceAG.findByAgencyId(agencies.id).then(function successCallback(response) {
-                        $scope.hotels = response.data;
+                    HotelServiceAG.findAllByAgencyId(agencies.id).then(function successCallback(response) {
+                        $scope.hotels = response.data[0];
                     }, errorCallback);
 
-                    TransportBrandServiceAG.findByAgencyId(agencies.id).then(function successCallback(response) {
-                        $scope.transport = response.data;
+                    TransportBrandServiceAG.findAllByAgencyId(agencies.id).then(function successCallback(response) {
+                        $scope.transport = response.data[0];
                     }, errorCallback);
 
-                    VisitLocationServiceAG.findByAgencyId(agencies.id).then(function successCallback(response) {
-                        $scope.visits = response.data;
+                    VisitLocationServiceAG.findAllByAgencyId(agencies.id).then(function successCallback(response) {
+                        $scope.visits = response.data[0];
                     }, errorCallback);
                 }
             }, errorCallback);

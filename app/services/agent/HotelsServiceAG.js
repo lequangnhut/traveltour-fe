@@ -1,10 +1,17 @@
 travel_app.service('HotelServiceAG', function ($http) {
     let API_HOTELS = BASE_API + 'agent/hotels/';
 
-    this.findByAgencyId = function (userId) {
+    this.findAllByAgencyId = function (agencyId) {
         return $http({
             method: 'GET',
-            url: API_HOTELS + 'find-by-agency-id/' + userId
+            url: API_HOTELS + 'find-all-by-agency-id/' + agencyId
+        })
+    }
+
+    this.findByAgencyId = function (agencyId) {
+        return $http({
+            method: 'GET',
+            url: API_HOTELS + 'find-by-agency-id/' + agencyId
         })
     }
 
@@ -60,14 +67,15 @@ travel_app.service('HotelServiceAG', function ($http) {
     };
 
     /**
-     * Thêm khách sạn mới
+     * Thêm thông tin khách sạn mới
      * @param dataHotels dữ liệu thông tin khách sạn
+     * @param apiUrl
      * @returns {*}
      */
-    this.registerHotels = function (dataHotels) {
+    this.registerHotels = function (dataHotels, apiUrl) {
         return $http({
             method: 'POST',
-            url: API_HOTELS + 'register-hotels',
+            url: API_HOTELS + apiUrl + '-hotels',
             headers: {'Content-Type': undefined},
             data: dataHotels
         });

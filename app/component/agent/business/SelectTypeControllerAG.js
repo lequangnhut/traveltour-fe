@@ -11,16 +11,16 @@ travel_app.controller('SelectTypeControllerAG', function ($scope, $location, Age
                 $scope.agencies = response.data;
                 let agencyId = response.data.id;
 
-                HotelServiceAG.findByAgencyId(agencyId).then(function successCallback(response) {
-                    $scope.hotels = response.data;
+                HotelServiceAG.findAllByAgencyId(agencyId).then(function successCallback(response) {
+                    $scope.hotels = response.data[0];
                 }, errorCallback);
 
-                TransportBrandServiceAG.findByAgencyId(agencyId).then(function successCallback(response) {
-                    $scope.transport = response.data;
+                TransportBrandServiceAG.findAllByAgencyId(agencyId).then(function successCallback(response) {
+                    $scope.transport = response.data[0];
                 }, errorCallback);
 
-                VisitLocationServiceAG.findByAgencyId(agencyId).then(function successCallback(response) {
-                    $scope.visits = response.data;
+                VisitLocationServiceAG.findAllByAgencyId(agencyId).then(function successCallback(response) {
+                    $scope.visits = response.data[0];
                 }, errorCallback);
             }, errorCallback);
         }

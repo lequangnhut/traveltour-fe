@@ -16,7 +16,7 @@ travel_app.controller("RegisterHotelControllerAG", function ($scope, $http, $loc
     };
 
     function errorCallback() {
-        $location.path('/admin/internal-server-error')
+        // $location.path('/admin/internal-server-error')
     }
 
     $scope.address = {
@@ -59,8 +59,14 @@ travel_app.controller("RegisterHotelControllerAG", function ($scope, $http, $loc
             AgenciesServiceAG.findByUserId(user.id).then(function successCallback(response) {
                 let agencyId = $scope.hotels.agenciesId = response.data.id;
 
-                HotelServiceAG.findByAgencyId(agencyId).then(function successCallback(response) {
-                    $scope.hotels = response.data;
+                HotelServiceAG.findAllByAgencyId(agencyId).then(function successCallback(response) {
+                    let hotel = response.data;
+
+                    if (hotel.length === 1) {
+                        HotelServiceAG.findByAgencyId(agencyId).then(function successCallback(response) {
+                            $scope.hotels = response.data;
+                        }, errorCallback);
+                    }
                 }, errorCallback);
             }, errorCallback);
         }
@@ -251,29 +257,62 @@ travel_app.controller("RegisterHotelControllerAG", function ($scope, $http, $loc
      * Submit dữ liệu gửi lên api
      */
     $scope.submitRegisterHotel = function () {
-        $scope.isLoading = true;
-        const formData = new FormData();
+        let agencyId = $scope.agencies.id;
+        let apiUrl = null;
 
-        const dataHotelRoom = {
-            hotelsDto: $scope.hotels,
-            roomTypesDto: $scope.rooms,
-            selectedPlaceUtilitiesIds: $scope.selectedPlaceUtilitiesIds,
-            selectedRoomUtilitiesIds: $scope.selectedRoomUtilitiesIds,
+        HotelServiceAG.findAllByAgencyId(agencyId)
+            .then(handleHotelResponse)
+            .catch(errorCallback);
+
+        function handleHotelResponse(response) {
+            $scope.isLoading = true;
+
+            let hotel = response.data;
+
+            if (hotel.length === 1) {
+                let existingHotel = hotel[0];
+
+                if (existingHotel.hotelName == null) {
+                    apiUrl = 'register';
+                } else {
+                    apiUrl = 'create';
+                }
+            } else {
+                apiUrl = 'create';
+            }
+
+            const formData = prepareFormData();
+            return HotelServiceAG.registerHotels(formData, apiUrl)
+                .then(handleRegisterSuccess)
+                .catch(errorCallback)
+                .finally(function () {
+                    $scope.isLoading = false;
+                });
         }
 
-        formData.append('dataHotelRoom', new Blob([JSON.stringify(dataHotelRoom)], {type: 'application/json'}));
-        angular.forEach($scope.rooms.roomTypeImage, function (file) {
-            formData.append('roomTypeImage', file);
-        });
-        formData.append('hotelAvatar', $scope.hotels.hotelAvatar);
-        formData.append('roomTypeAvatar', $scope.rooms.roomTypeAvatar);
+        function prepareFormData() {
+            const formData = new FormData();
 
-        HotelServiceAG.registerHotels(formData).then(function () {
+            const dataHotelRoom = {
+                hotelsDto: $scope.hotels,
+                roomTypesDto: $scope.rooms,
+                selectedPlaceUtilitiesIds: $scope.selectedPlaceUtilitiesIds,
+                selectedRoomUtilitiesIds: $scope.selectedRoomUtilitiesIds,
+            }
+
+            formData.append('dataHotelRoom', new Blob([JSON.stringify(dataHotelRoom)], {type: 'application/json'}));
+            angular.forEach($scope.rooms.roomTypeImage, function (file) {
+                formData.append('roomTypeImage', file);
+            });
+            formData.append('hotelAvatar', $scope.hotels.hotelAvatar);
+            formData.append('roomTypeAvatar', $scope.rooms.roomTypeAvatar);
+            return formData;
+        }
+
+        function handleRegisterSuccess() {
             centerAlert('Thành công !', 'Thông tin khách sạn đã được cập nhật thành công.', 'success');
             $location.path('/business/select-type');
-        }, errorCallback).finally(function () {
-            $scope.isLoading = false;
-        });
+        }
     };
 
     $scope.init();

@@ -236,8 +236,8 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'RegisterHotelControllerAG'
         })
         .when('/business/hotel/home', {
-            templateUrl: 'app/component/agent/hotel/views/pages/dashboard/dashboard.html',
-            controller: ''
+            templateUrl: 'app/component/agent/hotel/views/pages/dashboard/hotels-management.html',
+            controller: 'ListHotelControllerAG'
         })
         .when('/business/hotel/hotel-information-list', {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-list.html',
@@ -296,8 +296,8 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'RegisterTransControllerAG'
         })
         .when('/business/transport/home', {
-            templateUrl: 'app/component/agent/trans/views/pages/dashboard/dashboard.html',
-            controller: ''
+            templateUrl: 'app/component/agent/trans/views/pages/dashboard/management-transport.html',
+            controller: 'ListTransportBrandControllerAG'
         })
         .when('/business/transport/transport-management', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-list.html',
@@ -344,8 +344,8 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'RegisterVisitsControllerAG'
         })
         .when('/business/visit/home', {
-            templateUrl: 'app/component/agent/visits/views/pages/dashboard/dashboard.html',
-            controller: ''
+            templateUrl: 'app/component/agent/visits/views/pages/dashboard/management-visit.html',
+            controller: 'ListVisitControllerAG'
         })
         .when('/business/visit/visit-list', {
             templateUrl: 'app/component/agent/visits/views/pages/visits/visit-list.html',

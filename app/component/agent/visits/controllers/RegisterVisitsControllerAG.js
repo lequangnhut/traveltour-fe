@@ -48,18 +48,11 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http, $fi
         ward: null,
         address: null,
         openingTime: null,
-        closingTime: null
+        closingTime: null,
+        agenciesId: null
     }
 
     $scope.init = function () {
-        let user = $scope.user;
-
-        if (user !== undefined && user !== null && user !== "") {
-            AgenciesServiceAG.findByUserId(user.id).then(function successCallback(response) {
-                $scope.agent = response.data;
-            }, errorCallback);
-        }
-
         /**
          * API lấy dữ liệu loại địa điểm
          */
@@ -136,6 +129,24 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http, $fi
     };
 
     $scope.submitDataRegisterVisits = function () {
+        VisitLocationServiceAG.findAllByAgencyId($scope.agencies.id).then(function successCallback(response) {
+            let locationVisit = response.data;
+
+            if (locationVisit.length === 1) {
+                let existingVisit = locationVisit[0];
+
+                if (existingVisit.visitLocationName == null) {
+                    $scope.submitAPIVisit('register');
+                } else {
+                    $scope.submitAPIVisit('create');
+                }
+            } else {
+                $scope.submitAPIVisit('create');
+            }
+        }, errorCallback);
+    }
+
+    $scope.submitAPIVisit = function (apiUrl) {
         const selectedTickets = [];
         const unitPrices = {};
         $scope.isLoading = true;
@@ -158,6 +169,7 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http, $fi
 
         $scope.agent.openingTime = $filter('date')($scope.agent.openingTime, 'HH:mm:ss');
         $scope.agent.closingTime = $filter('date')($scope.agent.closingTime, 'HH:mm:ss');
+        $scope.agent.agenciesId = $scope.agencies.id;
 
         const dataVisit = new FormData();
         dataVisit.append("visitLocationsDto", new Blob([JSON.stringify($scope.agent)], {type: "application/json"}));
@@ -165,7 +177,7 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http, $fi
         dataVisit.append("selectedTickets", new Blob([JSON.stringify(selectedTickets)], {type: "application/json"}));
         dataVisit.append("unitPrices", new Blob([JSON.stringify(unitPrices)], {type: "application/json"}));
 
-        VisitLocationServiceAG.registerVisit(dataVisit).then(function successCallback() {
+        VisitLocationServiceAG.registerVisit(dataVisit, apiUrl).then(function successCallback() {
             $location.path('/business/select-type');
             centerAlert('Thành công !', 'Thông tin địa điểm tham quan đã được cập nhật thành công.', 'success')
         }, errorCallback).finally(function () {

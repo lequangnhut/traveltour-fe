@@ -1,0 +1,9 @@
+.img-card-dashboard {
+    height: 300px;
+}
+
+.img-card-dashboard img {
+    height: 300px;
+    object-fit: cover;
+    width: 100%;
+}
