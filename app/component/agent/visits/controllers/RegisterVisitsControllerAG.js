@@ -15,6 +15,11 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http, $fi
         }
     };
 
+    function errorCallback(error) {
+        console.log(error)
+        toastAlert('error', "Máy chủ không tồn tại !");
+    }
+
     $scope.address = {
         province: null,
         district: null,
@@ -46,15 +51,6 @@ travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http, $fi
         openingTime: null,
         closingTime: null
     }
-
-    function errorCallback(error) {
-        console.log(error)
-        toastAlert('error', "Máy chủ không tồn tại !");
-    }
-
-    $scope.validateCheckbox = function () {
-        return $scope.checkboxChecked;
-    };
 
     $scope.init = function () {
         let user = $scope.user;

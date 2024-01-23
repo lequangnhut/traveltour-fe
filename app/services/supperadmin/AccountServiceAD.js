@@ -1,25 +1,5 @@
 travel_app.service('AccountServiceAD', function ($http) {
-        let API_ACCOUNT = BASE_API + 'superadmin/account/';
-
-    /**
-     * API lấy tất cả danh sách tài khoản staff
-     */
-    this.findAllAccountStaff = function (page) {
-        return $http({
-            method: 'GET',
-            url: API_ACCOUNT + 'find-all-account-staff?page=' + page
-        })
-    };
-
-    /**
-     * API lấy tất cả danh sách tài khoản agent
-     */
-    this.findAllAccountAgent = function (page) {
-        return $http({
-            method: 'GET',
-            url: API_ACCOUNT + 'find-all-account-agent?page=' + page
-        })
-    };
+    let API_ACCOUNT = BASE_API + 'superadmin/account/';
 
     /**
      * API tìm bằng id

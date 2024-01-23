@@ -6392,15 +6392,6 @@ ul.slick-dots li.slick-active {
     margin-right: 20px;
 }
 
-.btn-greend {
-    background-color: #63AB45;
-    color: #FFFFFF
-}
-
-.color-greend {
-    color: #63AB45;
-}
-
 /* định dạng backtop */
 #back-top {
     z-index: 5;

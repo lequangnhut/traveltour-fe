@@ -1,6 +1,7 @@
 travel_app.controller("RegisterHotelControllerAG", function ($scope, $http, $location, AuthService, HotelServiceAG, AgenciesServiceAG) {
     $scope.currentStep = 1;
     $scope.phoneError = null;
+    $scope.checkboxChecked = false;
 
     $scope.nextStep = function () {
         if ($scope.currentStep < 4) {

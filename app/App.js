@@ -15,37 +15,29 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/dashboard/dashboard.html',
             controller: 'DashboardControllerAD'
         })
-        .when('/admin/account-management', {
-            templateUrl: 'app/component/admin/views/pages/supper-admin/account/account-list.html',
-            controller: 'AccountControllerAD'
+        .when('/admin/decentralized-staff-management', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/decentralization/decentralization-staff.html',
+            controller: 'DecentralizationControllerStaffAD'
         })
-        .when('/admin/account-management/account-create', {
-            templateUrl: 'app/component/admin/views/pages/supper-admin/account/account-create.html',
-            controller: 'AccountControllerAD'
+        .when('/admin/decentralized-staff-management/create-staff-account', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/account/staff-create.html',
+            controller: 'DecentralizationControllerStaffAD'
         })
-        .when('/admin/account-management/account-update/:id', {
-            templateUrl: 'app/component/admin/views/pages/supper-admin/account/account-update.html',
-            controller: 'AccountControllerAD'
-        })
-        .when('/admin/agent-management', {
-            templateUrl: 'app/component/admin/views/pages/supper-admin/agent/agent-list.html',
-            controller: 'AccountControllerAD'
-        })
-        .when('/admin/agent-management/agent-create', {
-            templateUrl: 'app/component/admin/views/pages/supper-admin/agent/agent-create.html',
-            controller: 'AccountControllerAD'
-        })
-        .when('/admin/agent-management/agent-update/:id', {
-            templateUrl: 'app/component/admin/views/pages/supper-admin/agent/agent-update.html',
-            controller: 'AccountControllerAD'
+        .when('/admin/decentralized-staff-management/update-staff-account/:id', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/account/staff-update.html',
+            controller: 'DecentralizationControllerStaffAD'
         })
         .when('/admin/decentralized-agent-management', {
             templateUrl: 'app/component/admin/views/pages/supper-admin/decentralization/decentralization-agent.html',
-            controller: 'DecentralizationControllerAD'
+            controller: 'DecentralizationControllerAgentAD'
         })
-        .when('/admin/decentralized-staff-management', {
-            templateUrl: 'app/component/admin/views/pages/supper-admin/decentralization/decentralization-staff.html',
-            controller: 'DecentralizationControllerAD'
+        .when('/admin/decentralized-agent-management/create-agency-account', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/agent/agent-create.html',
+            controller: 'DecentralizationControllerAgentAD'
+        })
+        .when('/admin/decentralized-agent-management/update-agency-account/:id', {
+            templateUrl: 'app/component/admin/views/pages/supper-admin/agent/agent-update.html',
+            controller: 'DecentralizationControllerAgentAD'
         })
 
         /**
