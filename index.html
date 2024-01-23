@@ -48,7 +48,6 @@
         <script src="/assets/admin/assets/vendors/simplebar/simplebar.min.js"></script>
         <script src="/assets/admin/assets/js/config.js"></script>
 
-
         <!--Stylesheets-->
         <link href="/assets/admin/assets/vendors/dropzone/dropzone.min.css" rel="stylesheet">
         <link href="/assets/admin/assets/vendors/flatpickr/flatpickr.min.css" rel="stylesheet">
@@ -97,7 +96,6 @@
         <script src="/assets/admin/assets/vendors/echarts/echarts.min.js"></script>
         <script src="/assets/admin/assets/vendors/dropzone/dropzone.min.js"></script>
         <script src="/lib/angularjs/axios.min.js"></script>
-
     </div>
 </head>
 <body ng-controller="MainController">
@@ -970,7 +968,7 @@
         </nav>
 
         <!--Header-->
-        <nav class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
+        <nav class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault" ng-cloak ng-hide="hideHeader()">
             <div class="collapse navbar-collapse justify-content-between">
                 <div class="navbar-logo">
                     <button class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent" type="button"

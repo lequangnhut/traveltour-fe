@@ -15,9 +15,8 @@ travel_app.controller("RegisterHotelControllerAG", function ($scope, $http, $loc
         }
     };
 
-    function errorCallback(error) {
-        console.log(error)
-        toastAlert('error', "Máy chủ không tồn tại !");
+    function errorCallback() {
+        $location.path('/admin/internal-server-error')
     }
 
     $scope.address = {

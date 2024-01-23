@@ -6,9 +6,8 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
     $scope.isAuthenticated = AuthService.getToken() !== null;
     let user = $scope.user = AuthService.getUser();
 
-    function errorCallback(error) {
-        console.log(error)
-        toastAlert('error', "Máy chủ không tồn tại !");
+    function errorCallback() {
+        $location.path('/admin/internal-server-error')
     }
 
     $scope.init = function () {
@@ -163,7 +162,10 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
             '/business/register-business',
             '/business/register-business-success',
             '/business/select-type',
-            '/business/hotel/home'
+            '/business/hotel/home',
+            '/admin/page-not-found',
+            '/admin/internal-server-error',
+            '/admin/page-forbidden',
         ];
         return $scope.isActive(hiddenPaths);
     };
@@ -180,10 +182,26 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
             '/business/register-business',
             '/business/register-business-success',
             '/business/select-type',
-            '/business/hotel/home'
+            '/business/hotel/home',
+            '/admin/page-not-found',
+            '/admin/internal-server-error',
+            '/admin/page-forbidden',
         ];
         return $scope.isActive(marginPaths) ? {'margin': '0'} : {};
     };
+
+    /**
+     * Ẩn header
+     * @returns {boolean}
+     */
+    $scope.hideHeader = function () {
+        const hidePaths = [
+            '/admin/page-not-found',
+            '/admin/internal-server-error',
+            '/admin/page-forbidden'
+        ];
+        return $scope.isActive(hidePaths);
+    }
 
     $rootScope.$on('$routeChangeSuccess', function () {
         setTimeout(function () {

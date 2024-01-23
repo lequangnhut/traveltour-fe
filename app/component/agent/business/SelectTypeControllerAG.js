@@ -2,8 +2,7 @@ travel_app.controller('SelectTypeControllerAG', function ($scope, $location, Age
     let user = $scope.user;
 
     function errorCallback(error) {
-        console.log(error)
-        toastAlert('error', "Máy chủ không tồn tại !");
+        $location.path('/admin/internal-server-error')
     }
 
     $scope.init = function () {
