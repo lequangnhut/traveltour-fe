@@ -1,4 +1,4 @@
-travel_app.controller("HotelInformationEdit", function ($scope, $http, $location, $routeParams, HotelServiceAG, PlaceUtilitiesService, HotelTypeService, AgenciesServiceAG) {
+travel_app.controller("HotelInformationEdit", function ($scope, $http, $timeout, $location, $routeParams, HotelServiceAG, PlaceUtilitiesService, HotelTypeService, AgenciesServiceAG) {
 
     $scope.hotelEdit = {
         id: null,
@@ -6,9 +6,9 @@ travel_app.controller("HotelInformationEdit", function ($scope, $http, $location
         urlWebsite: null,
         phone: null,
         floorNumber: null,
-        // province: null,
-        // district: null,
-        // ward: null,
+        province: null,
+        district: null,
+        ward: null,
         address: null,
         hotelAvatar: null,
         hotelTypeId: null,
@@ -26,7 +26,6 @@ travel_app.controller("HotelInformationEdit", function ($scope, $http, $location
     var hotelId = $routeParams.id;
 
 
-
     function errorCallback(error) {
         console.log(error)
         toastAlert('error', "Máy chủ không tồn tại !");
@@ -35,15 +34,29 @@ travel_app.controller("HotelInformationEdit", function ($scope, $http, $location
     /**
      * Phương thức lây khách thông tin khách sạn dựa vào id trên đường dẫn
      */
-    HotelServiceAG.getHotelByIdHotels(hotelId).then(function(response) {
+    HotelServiceAG.getHotelByIdHotels(hotelId).then(function (response) {
         $scope.isLoading = true;
-        if(response.data.status === '200'){
-            $scope.hotelEdit = response.data.data
-        }
+        $timeout(function () {
+            if (response.data.status === '200') {
+                console.log(response.data.data)
+                $scope.hotelEdit = response.data.data
+
+                let selectedProvince = $scope.provinces.find(p => p.Name === $scope.hotelEdit.province);
+                if (selectedProvince) {
+                    $scope.hotelEdit.province = selectedProvince.Name;
+                    $scope.districts = selectedProvince ? selectedProvince.Districts : [];
+                    let selectedDistrict = $scope.districts.find(d => d.Name === $scope.hotelEdit.district);
+                    if (selectedDistrict) {
+                        $scope.hotelEdit.district = selectedDistrict.Name;
+                    }
+                    $scope.wards = selectedDistrict ? selectedDistrict.Wards : [];
+                }
+            }
+        }, 0);
+
     }, errorCallback).finally(function () {
         $scope.isLoading = false;
     });
-
 
 
     /**
@@ -52,8 +65,8 @@ travel_app.controller("HotelInformationEdit", function ($scope, $http, $location
      * @param selectedPlaceUtils
      * @returns {*}
      */
-    $scope.comparePlaceUtilities = function(placeUtilities, selectedPlaceUtils) {
-        return selectedPlaceUtils.some(function(selectedPlaceUtil) {
+    $scope.comparePlaceUtilities = function (placeUtilities, selectedPlaceUtils) {
+        return selectedPlaceUtils.some(function (selectedPlaceUtil) {
             return selectedPlaceUtil.id === placeUtilities.id;
         });
     };
@@ -72,14 +85,13 @@ travel_app.controller("HotelInformationEdit", function ($scope, $http, $location
         }
     });
 
-    $scope.hotelEdit.province = "01";
-    $scope.hotelEdit.district = "001";
-    $scope.hotelEdit.ward = "00001";
     /**
      * API lấy dữ liệu địa chỉ trong file data.json
      */
     $http.get('/lib/address/data.json').then(function (response) {
+        console.log(response.data)
         $scope.provinces = response.data;
+
     });
 
     /**
@@ -199,7 +211,7 @@ travel_app.controller("HotelInformationEdit", function ($scope, $http, $location
                     if (response.status === 200) {
                         $location.path('/business/hotel/home');
                         centerAlert('Thành công !', 'Thông tin khách sạn đã thêm thành công.', 'success')
-                    } else if(response.status === 500) {
+                    } else if (response.status === 500) {
                         toastAlert('error', response.message);
                     }
                 }, errorCallback).finally(function () {

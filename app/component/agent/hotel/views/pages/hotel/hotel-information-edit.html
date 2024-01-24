@@ -93,11 +93,12 @@
                             <select class="form-select"
                                     name="province"
                                     ng-class="{ 'is-invalid': register_hotelEdit.province.$invalid && register_hotelEdit.province.$touched, 'is-valid': register_hotelEdit.province.$valid && register_hotelEdit.province.$touched }"
-                                    ng-options="province.Id as province.Name for province in provinces"
+                                    ng-options="province.Name as province.Name for province in provinces"
                                     ng-change="onProvinceChange()"
                                     ng-model="hotelEdit.province"
                                     required
                             >
+                                <option value="001" selected>Chon tỉnh/thành phố</option>
                             </select>
                             <small class="text-danger"
                                    ng-show="register_hotelEdit.province.$touched && register_hotelEdit.province.$error.required">
@@ -111,13 +112,13 @@
                             <select class="form-select"
                                     name="districts"
                                     ng-class="{ 'is-invalid': register_hotelEdit.districts.$invalid && register_hotelEdit.districts.$touched, 'is-valid': register_hotelEdit.districts.$valid && register_hotelEdit.districts.$touched }"
-                                    ng-options="district.Id as district.Name for district in districts"
+                                    ng-options="district.Name as district.Name for district in districts"
                                     ng-disabled="!hotelEdit.province"
                                     ng-change="onDistrictChange()"
                                     ng-model="hotelEdit.district"
                                     required
                             >
-                                <option value="001" selected>{{location.district}}</option>
+                                <option value="001" selected>Chon Quận/Huyện</option>
                             </select>
                             <small class="text-danger"
                                    ng-show="register_hotelEdit.districts.$touched && register_hotelEdit.districts.$error.required">
@@ -131,13 +132,13 @@
                             <select class="form-select"
                                     name="ward"
                                     ng-class="{ 'is-invalid': register_hotelEdit.ward.$invalid && register_hotelEdit.ward.$touched, 'is-valid': register_hotelEdit.ward.$valid && register_hotelEdit.ward.$touched }"
-                                    ng-options="ward.Id as ward.Name for ward in wards"
+                                    ng-options="ward.Name as ward.Name for ward in wards"
                                     ng-disabled="!hotelEdit.district"
                                     ng-change="onWardChange()"
                                     ng-model="hotelEdit.ward"
                                     required
                             >
-                                <option value="" selected>{{location.ward}}</option>
+                                <option value="" selected>Chon Phường/Xã </option>
                             </select>
                             <small class="text-danger"
                                    ng-show="register_hotelEdit.ward.$touched && register_hotelEdit.ward.$error.required">
