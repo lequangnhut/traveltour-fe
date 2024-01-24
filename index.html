@@ -515,7 +515,7 @@
                                     <a class="nav-link dropdown-indicator label-1"
                                        ng-class="{ 'active': activeNavItem === 'location-type'}"
                                        ng-click="setActiveNavItem('location-type')"
-                                       href="/admin/type/location-type-list">
+                                       href="/admin/type/visit-location-type-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span data-feather="map"></span>
@@ -1266,6 +1266,8 @@
                                     </div>
                                 </div>
                             </div>
+
+
                         </div>
                     </li>
                 </ul>
@@ -1398,7 +1400,13 @@
 <script src="app/services/supperadmin/AccountServiceAD.js"></script>
 
 <!--====== Admin Service ======-->
-<script src="app/services/admin/TourTypeService.js"></script>
+<script src="app/services/admin/HotelTypeServiceAD.js"></script>
+<script src="app/services/admin/BedTypeServiceAD.js"></script>
+<script src="app/services/admin/VisitLocationTypeServiceAD.js"></script>
+<script src="app/services/admin/TransportTypeServiceAD.js"></script>
+<script src="app/services/admin/TourTypeServiceAD.js"></script>
+<script src="app/services/admin/RoomUtilityServiceAD.js"></script>
+<script src="app/services/admin/PlaceUtilityServiceAD.js"></script>
 
 <!--====== Staff Service ======-->
 <script src="app/services/staff/ToursServiceAD.js"></script>
@@ -1426,16 +1434,12 @@
 
 <!--====== Controller Admin Management ======-->
 <script src="app/component/admin/controllers/admin-form/typesAD/HotelTypeControllerAD.js"></script>
-<script src="app/component/admin/controllers/admin-form/typesAD/LocationTypeControllerAD.js"></script>
-<script src="app/component/admin/controllers/admin-form/typesAD/TourTypeControllerAD.js"></script>
-<script src="app/component/admin/controllers/admin-form/typesAD/TransTypeControllerAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/typesAD/BedTypeControllerAD.js"></script>
-<script src="app/component/admin/controllers/admin-form/typesAD/HotelUtilityControllerAD.js"></script>
+<script src="app/component/admin/controllers/admin-form/typesAD/VisitLocationTypeControllerAD.js"></script>
+<script src="app/component/admin/controllers/admin-form/typesAD/TransTypeControllerAD.js"></script>
+<script src="app/component/admin/controllers/admin-form/typesAD/TourTypeControllerAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/typesAD/RoomUtilityControllerAD.js"></script>
-<script src="app/component/admin/controllers/admin-form/staffAD/StaffControllerAD.js"></script>
-<script src="app/component/admin/controllers/admin-form/agencyAD/AgencyControllerAD.js"></script>
-<script src="app/component/admin/controllers/admin-form/reportAD/RevenueControllerAD.js"></script>
-<script src="app/component/admin/controllers/admin-form/reportAD/StatisticalControllerAD.js"></script>
+<script src="app/component/admin/controllers/admin-form/typesAD/PlaceUtilityControllerAD.js"></script>
 
 <!--====== Controller Staff ======-->
 <script src="app/component/admin/controllers/staff/tour-management/BasicTourControllerAD.js"></script>

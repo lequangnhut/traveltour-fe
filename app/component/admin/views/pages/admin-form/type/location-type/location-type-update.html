@@ -14,26 +14,30 @@
             </div>
 
             <div class="card card-custom" style="padding:20px">
-                <form class="row g-3 form-input-custom" ng-submit="submitAdminType()"
+                <form class="row g-3 form-input-custom" ng-submit="updateType()"
                       method="POST" role="form" name="typeform">
                     <div class="col-12">
-                        <label for="fullname" class="form-label">Nhập tên loại địa điểm</label>
-                        <input class="form-control" id="fullname" type="text"
+                        <label for="visitLocationTypeName" class="form-label">Nhập tên loại địa điểm</label>
+                        <input class="form-control" id="visitLocationTypeName" type="text"
                                placeholder="Nhập tên loại địa điểm"
-                               name="typename"
-                               ng-model="type.typename"
-                               ng-class="{ 'is-invalid': typeform.typename.$invalid && typeform.typename.$touched, 'is-valid': typeform.typename.$valid && typeform.typename.$touched }"
+                               name="visitLocationTypeName"
+                               ng-model="formType.visitLocationTypeName"
+                               ng-class="{ 'is-invalid': typeform.visitLocationTypeName.$invalid && typeform.visitLocationTypeName.$touched, 'is-valid': typeform.visitLocationTypeName.$valid && typeform.visitLocationTypeName.$touched }"
+                               ng-change="checkDuplicateTypeNameUpdate()"
                                required/>
                         <small class="text-danger"
-                               ng-show="typeform.typename.$touched && typeform.typename.$error.required">
+                               ng-show="typeform.visitLocationTypeName.$touched && typeform.visitLocationTypeName.$error.required">
                             Vui lòng nhập loại địa điểm !
+                        </small>
+                        <small class="text-danger" ng-show="typeform.visitLocationTypeName.$touched && nameError">
+                            Loại địa điểm đã tồn tại !
                         </small>
                     </div>
                     <div class="col-12 d-flex justify-content-end mt-5">
                         <button class="btn" style="margin-right: 20px">
-                            <a class="btn" href="/admin/type/location-type-list">Trở về</a>
+                            <a class="btn" href="/admin/type/visit-location-type-list">Trở về</a>
                         </button>
-                        <button type="submit" class="btn btn-submit" ng-disabled="typeform.$invalid">Cập nhật</button>
+                        <button type="submit" class="btn btn-submit" ng-disabled="typeform.$invalid || nameError">Cập nhật</button>
                     </div>
                 </form>
             </div>

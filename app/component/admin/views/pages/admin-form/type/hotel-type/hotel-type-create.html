@@ -13,27 +13,31 @@
             </div>
 
             <div class="card card-custom" style="padding:20px">
-                <form class="row g-3 form-input-custom" ng-submit="submitAdminType()"
+                <form class="row g-3 form-input-custom" ng-submit="createType()"
                       method="POST" role="form" name="typeform">
                     <div class="col-12">
-                        <label for="fullname" class="form-label">Nhập tên loại lưu trú</label>
-                        <input class="form-control" id="fullname" type="text"
+                        <label for="hotelTypeName" class="form-label">Nhập tên loại lưu trú</label>
+                        <input class="form-control" id="hotelTypeName" type="text"
                                placeholder="Nhập tên loại lưu trú"
-                               name="typename"
-                               ng-model="type.typename"
-                               ng-class="{ 'is-invalid': typeform.typename.$invalid && typeform.typename.$touched, 'is-valid': typeform.typename.$valid && typeform.typename.$touched }"
+                               name="hotelTypeName"
+                               ng-model="formType.hotelTypeName"
+                               ng-class="{ 'is-invalid': typeform.hotelTypeName.$invalid && typeform.hotelTypeName.$touched, 'is-valid': typeform.hotelTypeName.$valid && typeform.hotelTypeName.$touched }"
+                               ng-change="checkDuplicateTypeName()"
                                required/>
                         <small class="text-danger"
-                               ng-show="typeform.typename.$touched && typeform.typename.$error.required">
+                               ng-show="typeform.hotelTypeName.$touched && typeform.hotelTypeName.$error.required">
                             Vui lòng nhập loại lưu trú !
                         </small>
+                        <small class="text-danger" ng-show="typeform.hotelTypeName.$touched && nameError">
+                            Loại lưu trú đã tồn tại !
+                        </small>
                     </div>
-                        <div class="col-12 d-flex justify-content-end mt-5">
-                            <button class="btn" style="margin-right: 20px">
-                                <a class="btn" href="/admin/type/hotel-type-list">Trở về</a>
-                            </button>
-                            <button type="submit" class="btn btn-submit" ng-disabled="typeform.$invalid">Thêm</button>
-                        </div>
+                    <div class="col-12 d-flex justify-content-end mt-5">
+                        <button class="btn" style="margin-right: 20px">
+                            <a class="btn" href="/admin/type/hotel-type-list">Trở về</a>
+                        </button>
+                        <button type="submit" class="btn btn-submit" ng-disabled="typeform.$invalid || nameError">Thêm</button>
+                    </div>
                 </form>
             </div>
         </div>
