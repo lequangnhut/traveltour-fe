@@ -1,6 +1,5 @@
 travel_app.service('AgenciesServiceAG', function ($http) {
     let API_AGENCIES = BASE_API + 'agent/agencies/';
-    let API_HOTEL = BASE_API + 'agent/hotels';
 
     this.findByUserId = function (userId) {
         return $http({
@@ -20,44 +19,22 @@ travel_app.service('AgenciesServiceAG', function ($http) {
     }
 
     /**
-     * Lấy danh sách khách sạn
+     * @message API check duplicate phone
      */
-    this.getListHotel = function (idAgency) {
-        var formData = new FormData();
-        formData.append('idAgency', idAgency);
-
+    this.checkExistPhone = function (phone) {
         return $http({
-            method: 'POST',
-            url: API_HOTEL + '/list-hotels',
-            data: formData,
-            headers: {'Content-Type': undefined},
-            transformRequest: angular.identity
+            method: 'GET',
+            url: API_AGENCIES + 'check-duplicate-phone/' + phone
         })
-    };
-
-
-    /**
-     * Thêm khách sạn mới
-     * @param dataHotel dữ liệu thông tin khách sạn
-     * @returns {*}
-     */
-    this.createHotel = function (dataHotel, selectHotelUtilities) {
-        var formData = new FormData();
-
-        formData.append('companyDataDto', new Blob([JSON.stringify(dataHotel)], {type: "application/json"}));
-        formData.append('selectHotelUtilities', new Blob([JSON.stringify(selectHotelUtilities)], {type: "application/json"}));
-
-        if (dataHotel.avatarHotel) {
-            formData.append('avatarHotel', dataHotel.avatarHotel[0]);
-        }
-
-        return $http({
-            method: 'POST',
-            url: API_HOTEL + '/information-hotel/create',
-            headers: {'Content-Type': undefined},
-            data: formData,
-            transformRequest: angular.identity,
-        });
     }
 
+    /**
+     * @message API check duplicate phone
+     */
+    this.checkExistTaxId = function (taxId) {
+        return $http({
+            method: 'GET',
+            url: API_AGENCIES + 'check-duplicate-taxId/' + taxId
+        })
+    }
 })

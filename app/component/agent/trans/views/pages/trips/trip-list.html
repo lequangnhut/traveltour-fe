@@ -45,7 +45,7 @@
                 <div class="row">
                     <div class="h4 col-lg-5 d-flex align-items-center h-100">
                         <div class="d-flex align-items-center">
-                            <span class="h4">Danh sách hoạt động của phương tiện</span>
+                            <span class="h4">Danh sách chuyến đi</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end align-items-baseline col-lg-2">
@@ -110,7 +110,7 @@
                     <th class="cursor-pointer" ng-click="sortData('id')">ID
                         <i class="fa" ng-class="getSortIcon('id')"></i>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('licensePlate')">Mã phương tiện
+                    <th class="cursor-pointer" ng-click="sortData('licensePlate')">Phương tiện
                         <i class="fa" ng-class="getSortIcon('licensePlate')"></i>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('licensePlate')">Điểm đi
@@ -135,38 +135,51 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr ng-repeat="schedule in transportationSchedules">
                     <td>
                         <span>
                             <input class="form-check-input" type="checkbox" value="">
                         </span>
                     </td>
-                    <td>2</td>
-                    <td>P0001</td>
-                    <td>Phòng studio</td>
-                    <td>2</td>
-                    <td>2</td>
-                    <td>1</td>
-                    <td>Giường đôi</td>
-                    <td>300.000</td>
-                    <td>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ schedule.id }}</td>
+                    <td>{{ schedule.transportationId }}</td>
+                    <td>{{ schedule.fromLocation }}</td>
+                    <td>{{ schedule.toLocation }}</td>
+                    <td>{{ schedule.bookedSeat }}</td>
+                    <td>{{ schedule.bookedSeat }}</td>
+                    <td>{{ schedule.unitPrice }}</td>
+                    <td ng-if="schedule.isStatus == 0">
                         <div class="d-flex align-items-center justify-content-center">
-                            <span class="status-warning"></span> <span class="text-status-warning">Cảnh báo</span>
+                            <span class="status-success"></span>
+                            <span class="text-status-success">Chờ đi chuyển</span>
+                        </div>
+                    </td>
+                    <td ng-if="schedule.isStatus == 1">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <span class="status-error"></span>
+                            <span class="text-status-error">Đang di chuyển</span>
+                        </div>
+                    </td>
+                    <td ng-if="schedule.isStatus == 2">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <span class="status-error"></span>
+                            <span class="text-status-error">Đã hoàn tất</span>
                         </div>
                     </td>
                     <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                        <a href="/business/transport/trip-management/update-trip/{{ transport.id }}"
+                        <a href="/business/transport/trip-management/update-trip/{{ schedule.id }}"
                            role="button" class="fs-1 btn text-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a href="#" ng-click="deleteTrans(transport.id, transport.licensePlate)"
+                        <a href="#" ng-click="deleteSchedule(schedule.id, schedule.toLocation)"
                            role="button" class="fs-1 btn text-danger">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
                 </tr>
-                <tr ng-if="transportData.length === 0">
-                    <td colspan="8">Không có dữ liệu phương tiện.</td>
+                <tr ng-if="transportationSchedules.length === 0">
+                    <td colspan="11">Không có dữ liệu chuyến đi.</td>
                 </tr>
                 </tbody>
             </table>

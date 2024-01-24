@@ -1,6 +1,10 @@
-travel_app.controller('TransportControllerAG', function ($scope, $routeParams, $timeout, $location, TransportServiceAG) {
+travel_app.controller('TransportControllerAG', function ($scope, $routeParams, $timeout, $location, LocalStorageService, TransportServiceAG) {
     let searchTimeout;
     let transportId = $routeParams.id;
+    let brandId = LocalStorageService.get('brandId');
+
+    $scope.licenseError = null;
+    $scope.isLoading = true;
 
     $scope.currentPage = 0;
     $scope.pageSize = 5;
@@ -20,8 +24,18 @@ travel_app.controller('TransportControllerAG', function ($scope, $routeParams, $
         $location.path('/admin/internal-server-error');
     }
 
+    /**
+     * @message Check duplicate phone
+     */
+    $scope.checkDuplicateLicense = function () {
+        TransportServiceAG.findByLicensePlate($scope.transportitation.licensePlate).then(function successCallback(response) {
+            $scope.licenseError = response.data.exists;
+            console.log(response.data)
+        }, errorCallback);
+    };
+
     $scope.init = function () {
-        TransportServiceAG.findAllTransport($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function successCallback(response) {
+        TransportServiceAG.findAllTransport(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function successCallback(response) {
             if (response.status === 200) {
                 $scope.transportData = response.data.content;
                 $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
@@ -52,12 +66,14 @@ travel_app.controller('TransportControllerAG', function ($scope, $routeParams, $
             if (searchTimeout) $timeout.cancel(searchTimeout);
 
             searchTimeout = $timeout(function () {
-                TransportServiceAG.findAllTransport($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
+                TransportServiceAG.findAllTransport(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
                     .then(function (response) {
                         $scope.transportData = response.data.content;
                         $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
                         $scope.totalElements = response.data.totalElements;
-                    }, errorCallback);
+                    }, errorCallback).finally(function () {
+                    $scope.isLoading = false;
+                });
             }, 500);
         };
 
@@ -68,11 +84,22 @@ travel_app.controller('TransportControllerAG', function ($scope, $routeParams, $
         $scope.findTransportTypeName = function (transportTypeId) {
             if (!$scope.transportTypeName[transportTypeId]) {
                 TransportServiceAG.findByTransportTypeId(transportTypeId).then(function (response) {
-                    console.log(response.data.data)
                     $scope.transportTypeName[transportTypeId] = response.data.data.transportationTypeName;
                 }, errorCallback);
             }
         };
+
+        /**
+         * Tìm tên thương hiệu phương tiện bằng brandId
+         * @param transportTypeId
+         */
+        TransportServiceAG.findByTransportBrandId(brandId).then(function (response) {
+            if (response.status === 200) {
+                $scope.transportBrand = response.data.data;
+            } else {
+                $location.path('/admin/page-not-found');
+            }
+        }, errorCallback);
 
         if (transportId !== undefined && transportId !== null && transportId !== "") {
             TransportServiceAG.findByTransportId(transportId).then(function successCallback(response) {
@@ -147,7 +174,7 @@ travel_app.controller('TransportControllerAG', function ($scope, $routeParams, $
      * Gọi api tạo mới
      */
     $scope.createTrans = function () {
-        $scope.transportitation.transportationBrandId = $scope.transport.id;
+        $scope.transportitation.transportationBrandId = brandId;
         let transportation = $scope.transportitation;
 
         TransportServiceAG.create(transportation).then(function successCallback() {
