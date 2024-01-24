@@ -395,17 +395,25 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-type/hotel-type-update.html',
             controller: 'HotelTypeControllerAD'
         })
-        .when('/admin/type/location-type-list', {
+        .when('/admin/type/hotel-type-list/hotel-type-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-type/hotel-type-update.html',
+            controller: 'HotelTypeControllerAD'
+        })
+        .when('/admin/type/visit-location-type-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/location-type/location-type-list.html',
-            controller: 'LocationTypeControllerAD'
+            controller: 'VisitLocationTypeControllerAD'
         })
-        .when('/admin/type/location-type-list/location-type-create', {
+        .when('/admin/type/visit-location-type-list/visit-location-type-create', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/location-type/location-type-create.html',
-            controller: 'LocationTypeControllerAD'
+            controller: 'VisitLocationTypeControllerAD'
         })
-        .when('/admin/type/location-type-list/location-type-update', {
+        .when('/admin/type/visit-location-type-list/visit-location-type-update', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/location-type/location-type-update.html',
-            controller: 'LocationTypeControllerAD'
+            controller: 'VisitLocationTypeControllerAD'
+        })
+        .when('/admin/type/visit-location-type-list/visit-location-type-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/location-type/location-type-update.html',
+            controller: 'VisitLocationTypeControllerAD'
         })
         .when('/admin/type/tour-type-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/tour-type/tour-type-list.html',
@@ -416,6 +424,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'TourTypeControllerAD'
         })
         .when('/admin/type/tour-type-list/tour-type-update', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/tour-type/tour-type-update.html',
+            controller: 'TourTypeControllerAD'
+        })
+        .when('/admin/type/tour-type-list/tour-type-update/:id', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/tour-type/tour-type-update.html',
             controller: 'TourTypeControllerAD'
         })
@@ -431,17 +443,25 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-type/transportation-type-update.html',
             controller: 'TransTypeControllerAD'
         })
+        .when('/admin/type/transportation-type-list/transportation-type-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-type/transportation-type-update.html',
+            controller: 'TransTypeControllerAD'
+        })
         .when('/admin/type/hotel-utility-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-list.html',
-            controller: 'HotelUtilityControllerAD'
+            controller: 'PlaceUtilityControllerAD'
         })
         .when('/admin/type/hotel-utility-list/hotel-utility-create', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-create.html',
-            controller: 'HotelUtilityControllerAD'
+            controller: 'PlaceUtilityControllerAD'
         })
         .when('/admin/type/hotel-utility-list/hotel-utility-update', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-update.html',
-            controller: 'HotelUtilityControllerAD'
+            controller: 'PlaceUtilityControllerAD'
+        })
+        .when('/admin/type/hotel-utility-list/hotel-utility-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-update.html',
+            controller: 'PlaceUtilityControllerAD'
         })
         .when('/admin/type/room-utility-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/room-utility/room-utility-list.html',
@@ -452,6 +472,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'RoomUtilityControllerAD'
         })
         .when('/admin/type/room-utility-list/room-utility-update', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/room-utility/room-utility-update.html',
+            controller: 'RoomUtilityControllerAD'
+        })
+        .when('/admin/type/room-utility-list/room-utility-update/:id', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/room-utility/room-utility-update.html',
             controller: 'RoomUtilityControllerAD'
         })
@@ -467,6 +491,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/bed-type/bed-type-update.html',
             controller: 'BedTypeControllerAD'
         })
+        .when('/admin/type/bed-type-list/bed-type-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/bed-type/bed-type-update.html',
+            controller: 'BedTypeControllerAD'
+        })
         .when('/admin/staff/staff-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/staff/staff-list.html',
             controller: 'StaffControllerAD'
@@ -479,6 +507,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/admin-form/staff/staff-update.html',
             controller: 'StaffControllerAD'
         })
+        .when('/admin/staff/staff-list/staff-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/staff/staff-update.html',
+            controller: 'StaffControllerAD'
+        })
         .when('/admin/agency/agency-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-list.html',
             controller: 'AgencyControllerAD'
@@ -488,6 +520,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'AgencyControllerAD'
         })
         .when('/admin/agency/agency-list/agency-update', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-update.html',
+            controller: 'AgencyControllerAD'
+        })
+        .when('/admin/agency/agency-list/agency-update/:id', {
             templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-update.html',
             controller: 'AgencyControllerAD'
         })

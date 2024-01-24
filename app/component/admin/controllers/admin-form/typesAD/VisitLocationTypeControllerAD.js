@@ -1,5 +1,4 @@
-travel_app.controller('TourTypeControllerAD', function ($scope, $location, $rootScope, $routeParams, $timeout, TourTypeServiceAD) {
-
+travel_app.controller('VisitLocationTypeControllerAD', function ($scope, $location, $rootScope, $routeParams, $timeout, VisitLocationTypeServiceAD) {
     $scope.hasImage = false;
     // Biến để lưu danh sách tours
     $scope.typeList = [];
@@ -9,7 +8,7 @@ travel_app.controller('TourTypeControllerAD', function ($scope, $location, $root
     $scope.pageSize = 5;
     // Đối tượng duyệt dữ liệu cho các form mới cho form tour
     $scope.formType = {
-        tourTypeName : null
+        visitLocationTypeName : null
     };
 
     let searchTimeout;
@@ -61,7 +60,7 @@ travel_app.controller('TourTypeControllerAD', function ($scope, $location, $root
     //show list
     $scope.getTypeList = function () {
         $scope.isLoading = true;
-        TourTypeServiceAD.findAllType($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
+        VisitLocationTypeServiceAD.findAllType($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
             .then(function (response) {
                 $scope.typeList = response.data.data.content;
                 $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
@@ -71,11 +70,11 @@ travel_app.controller('TourTypeControllerAD', function ($scope, $location, $root
         });
 
         if (typeId !== undefined && typeId !== null && typeId !== "") {
-            TourTypeServiceAD.findById(typeId)
+            VisitLocationTypeServiceAD.findById(typeId)
                 .then(function successCallback(response) {
                     if (response.status === 200) {
                         $scope.formType = response.data.data;
-                        $rootScope.namenow = $scope.formType.tourTypeName;
+                        $rootScope.namenow = $scope.formType.visitLocationTypeName;
                     }
                 }, errorCallback).finally(function (){
                 $scope.isLoading = false;
@@ -92,7 +91,7 @@ travel_app.controller('TourTypeControllerAD', function ($scope, $location, $root
     $scope.searchTypes = function () {
         if (searchTimeout) $timeout.cancel(searchTimeout);
         searchTimeout = $timeout(function () {
-            TourTypeServiceAD.findAllType($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
+            VisitLocationTypeServiceAD.findAllType($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
                 .then(function (response) {
                     if (response.data.status === "404"){
                         $scope.typeList.length = 0;
@@ -111,7 +110,7 @@ travel_app.controller('TourTypeControllerAD', function ($scope, $location, $root
 
     //Check name cho thêm mới
     $scope.checkDuplicateTypeName = function () {
-        TourTypeServiceAD.checkExistTypeName($scope.formType.tourTypeName)
+        VisitLocationTypeServiceAD.checkExistTypeName($scope.formType.visitLocationTypeName)
             .then(function successCallback(response) {
                 if (response.status === 200){
                     $scope.nameError = response.data.data.exists;
@@ -123,11 +122,11 @@ travel_app.controller('TourTypeControllerAD', function ($scope, $location, $root
 
     //Check name cho cập nhật
     $scope.checkDuplicateTypeNameUpdate = function () {
-        if($scope.formType.tourTypeName == $rootScope.namenow){
+        if($scope.formType.visitLocationTypeName == $rootScope.namenow){
             $scope.nameError = false;
             return;
         }
-        TourTypeServiceAD.checkExistTypeName($scope.formType.tourTypeName)
+        VisitLocationTypeServiceAD.checkExistTypeName($scope.formType.visitLocationTypeName)
             .then(function successCallback(response) {
                 if (response.data.data.status === 200){
                     $scope.nameError = response.data.data.exists;
@@ -141,9 +140,9 @@ travel_app.controller('TourTypeControllerAD', function ($scope, $location, $root
     $scope.createType = function () {
         $scope.isLoading = true;
         let dataType = $scope.formType
-        TourTypeServiceAD.createThisType(dataType).then(function successCallback() {
+        VisitLocationTypeServiceAD.createThisType(dataType).then(function successCallback() {
             toastAlert('success', 'Thêm mới thành công !');
-            $location.path('/admin/type/tour-type-list');
+            $location.path('/admin/type/visit-location-type-list');
         }, errorCallback).finally(function (){
             $scope.isLoading = false;
         });
@@ -152,9 +151,9 @@ travel_app.controller('TourTypeControllerAD', function ($scope, $location, $root
     // Cập nhật loại
     function confirmUpdateType() {
         $scope.isLoading = true;
-        TourTypeServiceAD.updateThisType($scope.formType).then(function successCallback() {
+        VisitLocationTypeServiceAD.updateThisType($scope.formType).then(function successCallback() {
             toastAlert('success', 'Cập nhật thành công !');
-            $location.path('/admin/type/tour-type-list');
+            $location.path('/admin/type/visit-location-type-list');
             $scope.getTypeList();
         }, errorCallback).finally(function (){
             $scope.isLoading = false;
@@ -168,15 +167,15 @@ travel_app.controller('TourTypeControllerAD', function ($scope, $location, $root
     $scope.deleteType = function (typeId) {
         $scope.isLoading = true;
         function confirmDeleteType() {
-            TourTypeServiceAD.checkTypeIsWorking(typeId).then(
+            VisitLocationTypeServiceAD.checkTypeIsWorking(typeId).then(
                 function successCallback(response) {
                     if (response.data.status.toString() === "200"){
                         toastAlert('error', "Thể loại đang được sử dụng !");
                     }else{
-                        TourTypeServiceAD.deleteThisType(typeId)
+                        VisitLocationTypeServiceAD.deleteThisType(typeId)
                             .then(function (deleteResponse) {
                                 toastAlert('success', 'Xóa thành công !');
-                                $location.path('/admin/type/tour-type-list');
+                                $location.path('/admin/type/visit-location-type-list');
                                 //$scope.getTypeList(); - Lý do cmt là để dô nó lỗi
                                 if($scope.typeList.length < 2){
                                     $scope.setPage($scope.currentPage-1);
@@ -192,5 +191,4 @@ travel_app.controller('TourTypeControllerAD', function ($scope, $location, $root
             });
         }confirmAlert('Bạn có chắc chắn muốn xóa không ?', confirmDeleteType);
     };
-
 });

@@ -7,33 +7,37 @@
                 <div class="">
                     <div class="d-flex align-items-center row">
                         <div class="col-lg-6">
-                            <h1 class="color-green fw-medium">Cập nhật tiện ích phòng</h1>
+                            <h1 class="color-green fw-medium">Cập nhật loại tiện ích</h1>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="card card-custom" style="padding:20px">
-                <form class="row g-3 form-input-custom" ng-submit="submitAdminType()"
+                <form class="row g-3 form-input-custom" ng-submit="updateType()"
                       method="POST" role="form" name="typeform">
                     <div class="col-12">
-                        <label for="fullname" class="form-label">Nhập tên tiện ích phòng</label>
-                        <input class="form-control" id="fullname" type="text"
-                               placeholder="Nhập tên tiện ích phòng"
-                               name="typename"
-                               ng-model="type.typename"
-                               ng-class="{ 'is-invalid': typeform.typename.$invalid && typeform.typename.$touched, 'is-valid': typeform.typename.$valid && typeform.typename.$touched }"
+                        <label for="roomUtilitiesName" class="form-label">Nhập tên loại tiện ích</label>
+                        <input class="form-control" id="roomUtilitiesName" type="text"
+                               placeholder="Nhập tên loại tiện ích"
+                               name="roomUtilitiesName"
+                               ng-model="formType.roomUtilitiesName"
+                               ng-class="{ 'is-invalid': typeform.roomUtilitiesName.$invalid && typeform.roomUtilitiesName.$touched, 'is-valid': typeform.roomUtilitiesName.$valid && typeform.roomUtilitiesName.$touched }"
+                               ng-change="checkDuplicateTypeNameUpdate()"
                                required/>
                         <small class="text-danger"
-                               ng-show="typeform.typename.$touched && typeform.typename.$error.required">
-                            Vui lòng nhập tiện ích phòng !
+                               ng-show="typeform.roomUtilitiesName.$touched && typeform.roomUtilitiesName.$error.required">
+                            Vui lòng nhập loại tiện ích !
+                        </small>
+                        <small class="text-danger" ng-show="typeform.roomUtilitiesName.$touched && nameError">
+                            Loại tiện ích đã tồn tại !
                         </small>
                     </div>
                     <div class="col-12 d-flex justify-content-end mt-5">
                         <button class="btn" style="margin-right: 20px">
                             <a class="btn" href="/admin/type/room-utility-list">Trở về</a>
                         </button>
-                        <button type="submit" class="btn btn-submit" ng-disabled="typeform.$invalid">Cập nhật</button>
+                        <button type="submit" class="btn btn-submit" ng-disabled="typeform.$invalid || nameError">Cập nhật</button>
                     </div>
                 </form>
             </div>
