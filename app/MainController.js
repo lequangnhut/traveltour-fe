@@ -174,7 +174,13 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
             '/admin/page-not-found',
             '/admin/internal-server-error',
             '/admin/page-forbidden',
+            '/business/hotel/home/hotel/create',
         ];
+
+        // Kiểm tra đường dẫn chứa id phía sau
+        if ($location.path().includes('/business/hotel/home/hotel/update/')) {
+            return true;
+        }
         return $scope.isActive(hiddenPaths);
     };
 
@@ -196,7 +202,12 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
             '/admin/page-not-found',
             '/admin/internal-server-error',
             '/admin/page-forbidden',
+            '/business/hotel/home/hotel/create',
         ];
+        if ($location.path().includes('/business/hotel/home/hotel/update/')) {
+            return {'margin': '0'};
+        }
+
         return $scope.isActive(marginPaths) ? {'margin': '0'} : {};
     };
 

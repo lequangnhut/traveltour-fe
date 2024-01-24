@@ -104,4 +104,13 @@ travel_app.service('HotelServiceAG', function ($http) {
             transformRequest: angular.identity,
         });
     }
+
+    this.getHotelByIdHotels = function (id)   {
+        return $http({
+            method: "GET",
+            url: API_HOTELS + "findByHotelId/" + id,
+            headers: {'Content-Type': undefined},
+            transformRequest: angular.identity
+        })
+    }
 })

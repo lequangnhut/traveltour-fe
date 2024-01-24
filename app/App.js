@@ -239,13 +239,13 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/hotel/views/pages/dashboard/hotels-management.html',
             controller: 'ListHotelControllerAG'
         })
-        .when('/business/hotel/home/create', {
+        .when('/business/hotel/home/hotel/create', {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-add.html',
             controller: 'HotelInformationAdd'
         })
-        .when('/business/hotel/hotel-information-list/update', {
+        .when('/business/hotel/home/hotel/update/:id', {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-edit.html',
-            controller: ''
+            controller: 'HotelInformationEdit'
         })
         .when('/business/hotel/hotel-amenities-list', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-list.html',
