@@ -1,11 +1,11 @@
-travel_app.service('TourDetailsServiceAD', function ($http, $q) {
-    let API_TOUR_DETAIL = BASE_API + 'staff/tour-detail/';
+travel_app.service('CustomerServiceAD', function ($http, $q) {
+    let API_CUSTOMER = BASE_API + 'super-admin/account-customer/';
 
-    this.findAllTourDetails = function (page, size, sortBy, sortDir, searchTerm) {
+    this.getAllCustomer = function (page, size, sortBy, sortDir, searchTerm) {
         const deferred = $q.defer();
         $http({
             method: 'GET',
-            url: API_TOUR_DETAIL + 'find-all-tourDetail',
+            url: API_CUSTOMER + 'find-role-customer',
             params: {
                 page: page || 0,
                 size: size || 10,
@@ -17,31 +17,31 @@ travel_app.service('TourDetailsServiceAD', function ($http, $q) {
         return deferred.promise;
     };
 
-    this.findTourDetailById = function (id) {
+    this.findCustomerById = function (id) {
         const deferred = $q.defer();
         $http({
             method: 'GET',
-            url: API_TOUR_DETAIL + 'find-by-id/' + id
+            url: API_CUSTOMER + 'find-by-id/' + id
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
     };
 
-    this.createTourDetail = function (tourDetailsDto) {
+    this.createCustomer = function (data) {
         return $http({
             method: 'POST',
-            url: API_TOUR_DETAIL + 'create-tourDetail',
+            url: API_CUSTOMER + 'create-account-customer',
             headers: {'Content-Type': undefined},
-            data: tourDetailsDto,
+            data: data,
             transformRequest: angular.identity
         });
     };
 
-    this.updateTourDetail = function (id, tourDetailsDto) {
+    this.updateCustomer = function (id, data) {
         const deferred = $q.defer();
         $http({
             method: 'PUT',
-            url: API_TOUR_DETAIL + 'update-tourDetail/' + id,
-            data: tourDetailsDto,
+            url: API_CUSTOMER + 'update-account-customer/' + id,
+            data: data,
             headers: {'Content-Type': undefined},
             transformRequest: angular.identity
         }).then(function (response) {
@@ -52,11 +52,11 @@ travel_app.service('TourDetailsServiceAD', function ($http, $q) {
         return deferred.promise;
     };
 
-    this.deactivateTourDetail = function (id) {
+    this.deactivateCustomer = function (id) {
         const deferred = $q.defer();
         $http({
             method: 'DELETE',
-            url: API_TOUR_DETAIL + 'delete-tourDetail/' + id
+            url: API_CUSTOMER + 'delete-account-customer/' + id
         }).then(function (response) {
             deferred.resolve(response);
         }, function (error) {

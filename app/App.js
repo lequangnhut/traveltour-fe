@@ -383,7 +383,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-create.html',
             controller: 'CustomerControllerAD'
         })
-        .when('/admin/customer-list/customer-update', {
+        .when('/admin/customer-list/customer-update/:id', {
             templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-update.html',
             controller: 'CustomerControllerAD'
         })

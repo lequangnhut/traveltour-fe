@@ -71,7 +71,7 @@
                         <input class="form-control" type="file" id="tourImg" name="tourImg" accept=".png, .jpg, .jpeg"
                                ng-class="{ 'is-invalid': tourBasicForm.tourImg.$invalid && tourBasicForm.tourImg.$touched,
                         'is-valid': tourBasicForm.tourImg.$valid && tourBasicForm.tourImg.$touched }"
-                               ngf-select="uploadTourImage($file)" accept="image/*">
+                               ngf-select="uploadTourImage($file)">
                         <small class="text-danger"
                                ng-show="tourBasicForm.tourImg.$touched && tourBasicForm.tourImg.$error.required">Vui
                             lòng tải lên ảnh tour!</small>
@@ -80,7 +80,7 @@
                     <!-- Display the selected image -->
                     <div ng-if="tourBasic.tourImg !== null" class="m-0">
                         <label for="imagePreview" class="form-label">Ảnh hiện tại</label> <br>
-                        <img id="imagePreview" ng-src="{{ getCurrentImageSource() }}" alt="Current Image" style="max-width: 100px;">
+                            <img id="imagePreview" ng-src="{{ getCurrentImageSource() }}" alt="Current Image" style="max-width: 100px;">
                     </div>
 
                     <div class="col-12 d-flex justify-content-end mt-5">

@@ -25,9 +25,9 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $location, $ro
     $scope.tourTypeList = [];
 
     $scope.invalidPriceFormat = false;
-    function errorCallback(error) {
-        console.log(error)
-        toastAlert('error', "Máy chủ không tồn tại !");
+
+    function errorCallback() {
+        $location.path('/admin/internal-server-error')
     }
 
     // Hàm kiểm tra ngày bắt đầu có hợp lệ
@@ -79,7 +79,6 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $location, $ro
     };
 
 
-
     //phân trang
     $scope.setPage = function (page) {
         if (page >= 0 && page < $scope.totalPages) {
@@ -126,13 +125,13 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $location, $ro
     $scope.getTourDetailList = function () {
         TourDetailsServiceAD.findAllTourDetails($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
             .then(function (response) {
+                if (response.data.data === null || response.data.data.content.length === 0) {
+                    $scope.setPage(Math.max(0, $scope.currentPage - 1));
+                    return
+                }
                 $scope.tourDetailList = response.data.data.content;
                 $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                 $scope.totalElements = response.data.data.totalElements; // Tổng số phần tử
-
-                // response.data.content.forEach(tour => {
-                //     $scope.loadTourTypeName(tour.tourTypeId);
-                // });
             }, errorCallback);
 
         if (tourDetailId !== undefined && tourDetailId !== null && tourDetailId !== "") {
