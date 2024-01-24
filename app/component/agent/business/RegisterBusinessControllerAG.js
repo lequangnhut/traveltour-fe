@@ -1,7 +1,8 @@
-travel_app.controller('RegisterBusinessControllerAG', function ($scope, $http, $location, AuthService, AgenciesServiceAG) {
+travel_app.controller('RegisterBusinessControllerAG', function ($scope, $http, $location, AgenciesServiceAG) {
     let user = $scope.user;
 
     $scope.phoneError = null;
+    $scope.taxIdError = null;
     $scope.checkboxChecked = false;
     $scope.currentStep = 1;
 
@@ -81,8 +82,17 @@ travel_app.controller('RegisterBusinessControllerAG', function ($scope, $http, $
          * @message Check duplicate phone
          */
         $scope.checkDuplicatePhone = function () {
-            AuthService.checkExistPhone($scope.agent.phone).then(function successCallback(response) {
+            AgenciesServiceAG.checkExistPhone($scope.agent.phone).then(function successCallback(response) {
                 $scope.phoneError = response.data.exists;
+            }, errorCallback);
+        };
+
+        /**
+         * @message Check duplicate taxId
+         */
+        $scope.checkDuplicateTaxId = function () {
+            AgenciesServiceAG.checkExistTaxId($scope.agent.taxId).then(function successCallback(response) {
+                $scope.taxIdError = response.data.exists;
             }, errorCallback);
         };
 

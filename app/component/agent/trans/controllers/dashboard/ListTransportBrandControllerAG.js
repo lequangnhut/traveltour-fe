@@ -1,4 +1,4 @@
-travel_app.controller('ListTransportBrandControllerAG', function ($scope, $location, TransportBrandServiceAG) {
+travel_app.controller('ListTransportBrandControllerAG', function ($scope, $routeParams, $location, TransportBrandServiceAG) {
 
     function errorCallback() {
         $location.path('/admin/internal-server-error')

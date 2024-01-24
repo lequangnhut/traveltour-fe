@@ -321,15 +321,15 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/business/transport/trip-management', {
             templateUrl: 'app/component/agent/trans/views/pages/trips/trip-list.html',
-            controller: 'TripControllerAG'
+            controller: 'SchedulesControllerAG'
         })
         .when('/business/transport/trip-management/create-trip', {
             templateUrl: 'app/component/agent/trans/views/pages/trips/trip-create.html',
-            controller: 'TripControllerAG'
+            controller: 'SchedulesControllerAG'
         })
         .when('/business/transport/trip-management/update-trip/:id', {
             templateUrl: 'app/component/agent/trans/views/pages/trips/trip-update.html',
-            controller: 'TripControllerAG'
+            controller: 'SchedulesControllerAG'
         })
 
         /**
@@ -629,9 +629,12 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/password/forgot.html',
             controller: 'ForgotPwController'
         })
+        .when('/', {
+            redirectTo: '/home'
+        })
         .otherwise({
             redirectTo: '/admin/page-not-found'
-        })
+        });
 
     if (window.history && window.history.pushState) {
         $locationProvider.html5Mode({

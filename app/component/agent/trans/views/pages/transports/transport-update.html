@@ -6,7 +6,7 @@
                     <h3 class="color-green fw-bold">CẬP NHẬT PHƯƠNG TIỆN</h3>
                 </div>
             </div>
-            <div class="mt-3 fw-bold">Công ty: <span>{{ transport.transportationBrandName }}</span></div>
+            <div class="mt-3 fw-bold">Công ty: <span>{{ transportBrand.transportationBrandName }}</span></div>
         </div>
     </div>
 
@@ -37,8 +37,9 @@
                        placeholder="30B-029.29"
                        name="licensePlate"
                        ng-model="transportitation.licensePlate"
-                       ng-class="{ 'is-invalid': form_transport.licensePlate.$invalid && form_transport.licensePlate.$touched, 'is-valid': form_transport.licensePlate.$valid && form_transport.licensePlate.$touched }"
+                       ng-class="{ 'is-invalid': form_transport.licensePlate.$invalid && form_transport.licensePlate.$touched, 'is-valid': form_transport.licensePlate.$valid && form_transport.licensePlate.$touched && !licenseError }"
                        ng-pattern="/^[0-9]{2}[A-Z]-[0-9]{3,4}\.[0-9]{2}$/"
+                       ng-change="checkDuplicateLicense()"
                        required
                 >
                 <small class="text-danger"
@@ -48,6 +49,10 @@
                 <small class="text-danger"
                        ng-show="form_transport.licensePlate.$touched && form_transport.licensePlate.$error.pattern">
                     Biển số xe không đúng định dạng !
+                </small>
+                <small class="text-danger"
+                       ng-show="form_transport.licensePlate.$touched && licenseError">
+                    Biển số xe đã tồn tại !
                 </small>
             </div>
             <div class="col-md-6">
@@ -94,7 +99,7 @@
                 </button>
                 <button type="submit"
                         class="btn btn-submit fw-bold"
-                        ng-disabled="form_transport.$invalid"
+                        ng-disabled="form_transport.$invalid || licenseError"
                 >
                     Cập nhật
                 </button>

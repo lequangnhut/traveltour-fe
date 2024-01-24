@@ -7,3 +7,13 @@
     object-fit: cover;
     width: 100%;
 }
+
+.btn-green {
+    background: #63ab45;
+    color: #fff;
+}
+
+.btn-green:hover {
+    background: #366c1f;
+    color: #fff;
+}

@@ -831,25 +831,6 @@
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
                                     <a class="nav-link label-1"
-                                       ng-click="setActiveNavItem('bookings-list')"
-                                       ng-class="{ 'active': activeNavItem === 'bookings-list'}"
-                                       href="/business/transport/booking-management"
-                                    >
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span class="nav-link-icon">
-                                            <span data-feather="navigation"></span>
-                                        </span>
-                                            <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Danh sách booking</span>
-                                        </span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- label-->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link label-1"
                                        ng-click="setActiveNavItem('trips-list')"
                                        ng-class="{ 'active': activeNavItem === 'trips-list'}"
                                        href="/business/transport/trip-management"
@@ -861,6 +842,25 @@
                                         </span>
                                             <span class="nav-link-text-wrapper">
                                             <span class="nav-link-text">Danh sách chuyến đi</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1"
+                                       ng-click="setActiveNavItem('bookings-list')"
+                                       ng-class="{ 'active': activeNavItem === 'bookings-list'}"
+                                       href="/business/transport/booking-management"
+                                    >
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                            <span data-feather="navigation"></span>
+                                        </span>
+                                            <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Danh sách booking</span>
                                         </span>
                                         </div>
                                     </a>
@@ -1393,7 +1393,8 @@
 
 <!--====== Service ======-->
 <script src="app/services/auth/AuthService.js"></script>
-<script src="app/services/notification/NotificationService.js"></script>
+<script src="app/services/utils/NotificationService.js"></script>
+<script src="app/services/utils/LocalStorageService.js"></script>
 
 <!--====== Super Admin Service ======-->
 <script src="app/services/supperadmin/DecentralizationServiceAD.js"></script>
@@ -1421,6 +1422,7 @@
 <script src="app/services/agent/TransportServiceAG.js"></script>
 <script src="app/services/agent/PlaceUtilitiesService.js"></script>
 <script src="app/services/agent/HotelTypeService.js"></script>
+<script src="app/services/agent/SchedulesServiceAG.js"></script>
 
 <!--====== Customer Service ======-->
 <script src="app/services/staff/CustomerServiceAD.js"></script>
@@ -1461,7 +1463,7 @@
 <script src="app/component/agent/trans/controllers/RegisterTransControllerAG.js"></script>
 <script src="app/component/agent/trans/controllers/bookings/BookingControllerAG.js"></script>
 <script src="app/component/agent/trans/controllers/transports/TransportControllerAG.js"></script>
-<script src="app/component/agent/trans/controllers/trips/TripControllerAG.js"></script>
+<script src="app/component/agent/trans/controllers/schedules/SchedulesControllerAG.js"></script>
 <script src="app/component/agent/trans/controllers/dashboard/ListTransportBrandControllerAG.js"></script>
 
 <!--====== Controller Agent Hotel ======-->

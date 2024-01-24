@@ -16,7 +16,7 @@ travel_app.controller("RegisterHotelControllerAG", function ($scope, $http, $loc
     };
 
     function errorCallback() {
-        // $location.path('/admin/internal-server-error')
+        $location.path('/admin/internal-server-error')
     }
 
     $scope.address = {
@@ -257,62 +257,29 @@ travel_app.controller("RegisterHotelControllerAG", function ($scope, $http, $loc
      * Submit dữ liệu gửi lên api
      */
     $scope.submitRegisterHotel = function () {
-        let agencyId = $scope.agencies.id;
-        let apiUrl = null;
+        $scope.isLoading = true;
+        const formData = new FormData();
 
-        HotelServiceAG.findAllByAgencyId(agencyId)
-            .then(handleHotelResponse)
-            .catch(errorCallback);
-
-        function handleHotelResponse(response) {
-            $scope.isLoading = true;
-
-            let hotel = response.data;
-
-            if (hotel.length === 1) {
-                let existingHotel = hotel[0];
-
-                if (existingHotel.hotelName == null) {
-                    apiUrl = 'register';
-                } else {
-                    apiUrl = 'create';
-                }
-            } else {
-                apiUrl = 'create';
-            }
-
-            const formData = prepareFormData();
-            return HotelServiceAG.registerHotels(formData, apiUrl)
-                .then(handleRegisterSuccess)
-                .catch(errorCallback)
-                .finally(function () {
-                    $scope.isLoading = false;
-                });
+        const dataHotelRoom = {
+            hotelsDto: $scope.hotels,
+            roomTypesDto: $scope.rooms,
+            selectedPlaceUtilitiesIds: $scope.selectedPlaceUtilitiesIds,
+            selectedRoomUtilitiesIds: $scope.selectedRoomUtilitiesIds,
         }
 
-        function prepareFormData() {
-            const formData = new FormData();
+        formData.append('dataHotelRoom', new Blob([JSON.stringify(dataHotelRoom)], {type: 'application/json'}));
+        angular.forEach($scope.rooms.roomTypeImage, function (file) {
+            formData.append('roomTypeImage', file);
+        });
+        formData.append('hotelAvatar', $scope.hotels.hotelAvatar);
+        formData.append('roomTypeAvatar', $scope.rooms.roomTypeAvatar);
 
-            const dataHotelRoom = {
-                hotelsDto: $scope.hotels,
-                roomTypesDto: $scope.rooms,
-                selectedPlaceUtilitiesIds: $scope.selectedPlaceUtilitiesIds,
-                selectedRoomUtilitiesIds: $scope.selectedRoomUtilitiesIds,
-            }
-
-            formData.append('dataHotelRoom', new Blob([JSON.stringify(dataHotelRoom)], {type: 'application/json'}));
-            angular.forEach($scope.rooms.roomTypeImage, function (file) {
-                formData.append('roomTypeImage', file);
-            });
-            formData.append('hotelAvatar', $scope.hotels.hotelAvatar);
-            formData.append('roomTypeAvatar', $scope.rooms.roomTypeAvatar);
-            return formData;
-        }
-
-        function handleRegisterSuccess() {
+        HotelServiceAG.registerHotels(formData).then(function () {
             centerAlert('Thành công !', 'Thông tin khách sạn đã được cập nhật thành công.', 'success');
             $location.path('/business/select-type');
-        }
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
     };
 
     $scope.init();
