@@ -80,4 +80,28 @@ travel_app.service('HotelServiceAG', function ($http) {
             data: dataHotels
         });
     };
+
+    /**
+     * Thêm khách sạn mới
+     * @param dataHotel dữ liệu thông tin khách sạn
+     * @returns {*}
+     */
+    this.createHotel = function (dataHotel, selectHotelUtilities) {
+        var formData = new FormData();
+
+        formData.append('companyDataDto', new Blob([JSON.stringify(dataHotel)], {type: "application/json"}));
+        formData.append('selectHotelUtilities', new Blob([JSON.stringify(selectHotelUtilities)], {type: "application/json"}));
+
+        if (dataHotel.avatarHotel) {
+            formData.append('avatarHotel', dataHotel.avatarHotel[0]);
+        }
+
+        return $http({
+            method: 'POST',
+            url: API_HOTELS + 'information-hotel/create',
+            headers: {'Content-Type': undefined},
+            data: formData,
+            transformRequest: angular.identity,
+        });
+    }
 })

@@ -36,15 +36,21 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
         };
 
         /**
-         * Hiển thị nội dung dựa trên vai trò được chọn
+         * Hiển thị nội dung dựa trên vai trò được chọn và lưu id khách sạn vào local
          */
-        $scope.showContentForRole = function (role) {
+        $scope.showContentForRole = function (role, hotelId) {
             $timeout(function () {
                 $scope.selectedRole = role;
                 localStorage.setItem('selectedRole', role);
                 $scope.setActiveNavItem('welcome');
             });
+
+            if (hotelId !== undefined) {
+                $window.localStorage.setItem('selectedHotelId', hotelId);
+                console.log("Lưu ID khách sạn: " + hotelId);
+            }
         };
+
 
         /**
          * Kiểm tra xem một vai trò có đang được chọn không

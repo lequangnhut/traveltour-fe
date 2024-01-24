@@ -239,13 +239,9 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/hotel/views/pages/dashboard/hotels-management.html',
             controller: 'ListHotelControllerAG'
         })
-        .when('/business/hotel/hotel-information-list', {
-            templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-list.html',
-            controller: ''
-        })
-        .when('/business/hotel/hotel-information-list/create', {
+        .when('/business/hotel/home/create', {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-add.html',
-            controller: ''
+            controller: 'HotelInformationAdd'
         })
         .when('/business/hotel/hotel-information-list/update', {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-edit.html',

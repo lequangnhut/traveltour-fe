@@ -15,4 +15,5 @@ travel_app.controller('ListHotelControllerAG', function ($scope, $location, Hote
     }
 
     $scope.init();
+
 });
