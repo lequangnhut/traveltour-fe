@@ -1,7 +1,7 @@
-travel_app.controller('MainController', function ($scope, $rootScope, $location, $window, $timeout, $anchorScroll, AuthService, AgenciesServiceAG, HotelServiceAG, TransportBrandServiceAG, VisitLocationServiceAG, NotificationService) {
+travel_app.controller('MainController', function ($scope, $rootScope, $location, $window, $timeout, $anchorScroll, AuthService, AgenciesServiceAG, HotelServiceAG, TransportBrandServiceAG, VisitLocationServiceAG, LocalStorageService, NotificationService) {
     $anchorScroll();
-    $scope.selectedRole = localStorage.getItem('selectedRole') || null;
-    $scope.activeNavItem = localStorage.getItem('activeNavItem') || null;
+    $scope.selectedRole = LocalStorageService.get('selectedRole') || null;
+    $scope.activeNavItem = LocalStorageService.get('activeNavItem') || null;
 
     $scope.isAuthenticated = AuthService.getToken() !== null;
     let user = $scope.user = AuthService.getUser();
@@ -38,16 +38,16 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
         /**
          * Hiển thị nội dung dựa trên vai trò được chọn và lưu id khách sạn vào local
          */
-        $scope.showContentForRole = function (role, hotelId) {
+        $scope.showContentForRole = function (role, brandId) {
             $timeout(function () {
                 $scope.selectedRole = role;
-                localStorage.setItem('selectedRole', role);
+                LocalStorageService.set('selectedRole', role);
                 $scope.setActiveNavItem('welcome');
             });
 
-            if (hotelId !== undefined) {
-                $window.localStorage.setItem('selectedHotelId', hotelId);
-                console.log("Lưu ID khách sạn: " + hotelId);
+            LocalStorageService.remove('brandId');
+            if (brandId !== undefined) {
+                LocalStorageService.set('brandId', brandId);
             }
         };
 
@@ -91,11 +91,11 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
      */
     $scope.setActiveNavItem = function (navItem) {
         $scope.activeNavItem = navItem;
-        localStorage.setItem('activeNavItem', navItem);
+        LocalStorageService.set('activeNavItem', navItem);
     };
 
     $window.addEventListener('beforeunload', function () {
-        localStorage.setItem('activeNavItem', $scope.activeNavItem);
+        LocalStorageService.set('activeNavItem', $scope.activeNavItem);
     });
 
     $scope.goHome = function () {
@@ -143,7 +143,7 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
     $scope.logoutAuthAdmin = function () {
         AuthService.clearAuthData();
         $scope.isAuthenticated = false;
-        localStorage.removeItem('activeNavItem');
+        LocalStorageService.remove('activeNavItem');
         window.location.href = '/login-admin';
     };
 

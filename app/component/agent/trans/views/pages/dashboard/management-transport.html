@@ -12,7 +12,7 @@
         <header>
             <div class="bg">
                 <div class="">
-                    <div class="h3 fw-bold text-uppercase mb-5 color-green">Danh sách phương tiện</div>
+                    <div class="h3 fw-bold text-uppercase mb-5 color-green">Danh sách nhà xe</div>
                 </div>
                 <div class="list-hotel">
                     <div class="list-hotel-item">
@@ -33,10 +33,10 @@
                                             </div>
                                         </div>
                                         <div class="card-footer d-flex justify-content-between w-100">
-                                            <a class="btn btn-primary" href="">Sửa thông tin thương hiệu</a>
-                                            <a class="btn"
+                                            <a class="btn" href="">Sửa thông tin nhà xe</a>
+                                            <a class="btn btn-green"
                                                href="/business/welcome-transport"
-                                               ng-click="showContentForRole('ROLE_AGENT_TRANSPORT')"
+                                               ng-click="showContentForRole('ROLE_AGENT_TRANSPORT', trans.id)"
                                             >
                                                 Tiếp tục >
                                             </a>
@@ -56,16 +56,16 @@
                         <div class="col-xl-4">
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="h4 fw-medium mb-3">Tôi đã có thương hiệu của mình</div>
-                                    <div class="">Chào mừng bạn đã đến với trang quản lý phương tiện của mình. Hãy quản
+                                    <div class="h4 fw-medium mb-3">Tôi đã có nhà xe của mình</div>
+                                    <div class="">Chào mừng bạn đã đến với trang quản lý nhà xe của mình. Hãy quản
                                         lý
-                                        thông tin phương tiện, cập nhật các tiện ích, và tận hưởng trải nghiệm quản lý
+                                        thông tin nhà xe, cập nhật các tiện ích, và tận hưởng trải nghiệm quản lý
                                         hiệu
                                         quả từ TravelTour.
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-end">
-                                    <a href="/business/select-type" class="btn btn-light">Trở về</a>
+                                    <a href="/business/select-type" class="btn btn-green">Trở về</a>
                                 </div>
                             </div>
                         </div>
@@ -73,18 +73,17 @@
                         <div class="col-xl-4">
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="h4 fw-medium mb-3">Tôi muốn liệt kê phương tiện mới</div>
+                                    <div class="h4 fw-medium mb-3">Tôi muốn liệt kê nhà xe mới</div>
                                     <div class="">Bắt đầu hành trình mới với việc thêm khách sạn của bạn vào hệ thống
                                         của chúng tôi. Hãy điền
                                         đầy đủ thông tin và làm cho Nhà xe của bạn trở nên nổi bật trên TravelTour.
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-end">
-                                    <a href="/business/register-transports" class="btn btn-primary">
-                                        Thêm thương hiệu mới</a>
+                                    <a href="/business/register-transports" class="btn btn-green">
+                                        Thêm nhà xe mới</a>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

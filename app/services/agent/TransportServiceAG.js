@@ -1,10 +1,10 @@
 travel_app.service('TransportServiceAG', function ($http) {
     let API_TRANS = BASE_API + 'agent/transportation/';
 
-    this.findAllTransport = function (page, size, sortBy, sortDir, searchTerm) {
+    this.findAllTransport = function (brandId, page, size, sortBy, sortDir, searchTerm) {
         return $http({
             method: 'GET',
-            url: API_TRANS + 'find-all-transportation',
+            url: API_TRANS + 'find-all-transportation/' + brandId,
             params: {
                 page: page || 0,
                 size: size || 5,
@@ -19,6 +19,20 @@ travel_app.service('TransportServiceAG', function ($http) {
         return $http({
             method: 'GET',
             url: API_TRANS + 'find-by-transportation-id/' + transportId
+        })
+    }
+
+    this.findByTransportBrandId = function (transportBrandId) {
+        return $http({
+            method: 'GET',
+            url: API_TRANS + 'find-by-transport-brandId/' + transportBrandId
+        })
+    }
+
+    this.findByLicensePlate = function (licensePlate) {
+        return $http({
+            method: 'GET',
+            url: API_TRANS + 'check-duplicate-license-plate/' + licensePlate
         })
     }
 

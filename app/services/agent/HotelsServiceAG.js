@@ -69,13 +69,12 @@ travel_app.service('HotelServiceAG', function ($http) {
     /**
      * Thêm thông tin khách sạn mới
      * @param dataHotels dữ liệu thông tin khách sạn
-     * @param apiUrl
      * @returns {*}
      */
-    this.registerHotels = function (dataHotels, apiUrl) {
+    this.registerHotels = function (dataHotels) {
         return $http({
             method: 'POST',
-            url: API_HOTELS + apiUrl + '-hotels',
+            url: API_HOTELS + 'register-hotels',
             headers: {'Content-Type': undefined},
             data: dataHotels
         });
@@ -84,6 +83,7 @@ travel_app.service('HotelServiceAG', function ($http) {
     /**
      * Thêm khách sạn mới
      * @param dataHotel dữ liệu thông tin khách sạn
+     * @param selectHotelUtilities
      * @returns {*}
      */
     this.createHotel = function (dataHotel, selectHotelUtilities) {

@@ -73,8 +73,9 @@
                                    placeholder="1423142144"
                                    name="taxId"
                                    ng-model="agent.taxId"
-                                   ng-class="{ 'is-invalid': register_business.taxId.$invalid && register_business.taxId.$touched, 'is-valid': register_business.taxId.$valid && register_business.taxId.$touched }"
+                                   ng-class="{ 'is-invalid': register_business.taxId.$invalid && register_business.taxId.$touched, 'is-valid': register_business.taxId.$valid && register_business.taxId.$touched && !taxIdError }"
                                    ng-pattern="/^\d{10,13}$/"
+                                   ng-change="checkDuplicateTaxId()"
                                    required
                             >
                             <small class="text-danger"
@@ -84,6 +85,9 @@
                             <small class="text-danger"
                                    ng-show="register_business.taxId.$touched && register_business.taxId.$error.pattern">
                                 Mã số thuế không đúng định dạng !
+                            </small>
+                            <small class="text-danger" ng-show="register_business.taxId.$touched && taxIdError">
+                                Mã số thuế đã tồn tại ở một doanh nghiệp khác !
                             </small>
                         </div>
                         <div class="col-md-6">
@@ -108,7 +112,7 @@
                                 Số điện thoại không đúng định dạng !
                             </small>
                             <small class="text-danger" ng-show="register_business.phone.$touched && phoneError">
-                                Số điện thoại đã tồn tại ở một tài khoản khác !
+                                Số điện thoại đã tồn tại ở một doanh nghiệp khác !
                             </small>
                         </div>
                         <div class="col-12">
@@ -221,7 +225,7 @@
                         <div class="d-flex justify-content-end mt-5">
                             <button type="button"
                                     class="btn btn-submit-form"
-                                    ng-disabled="register_business.$invalid || phoneError"
+                                    ng-disabled="register_business.$invalid || phoneError || taxIdError"
                                     ng-click="nextStep()"
                             >
                                 Tiếp tục <i class="fa-solid fa-arrow-right"></i>
