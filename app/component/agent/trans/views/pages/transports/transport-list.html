@@ -109,7 +109,7 @@
                     <th>#
                         <i class="fa-solid fa-sort"></i>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('id')">ID
+                    <th class="cursor-pointer" ng-click="sortData('id')">Ảnh
                         <i class="fa" ng-class="getSortIcon('id')"></i>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('licensePlate')">Biển số
@@ -138,7 +138,10 @@
                         </span>
                     </td>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ transport.id }}</td>
+                    <td>
+                        <img ng-src="{{ transport.transportationImg }}" class="img-fluid cursor-pointer" alt="avatar"
+                             width="60" title="Xem ảnh xe" ng-click="openImageModal(transport.transportationImg)">
+                    </td>
                     <td>{{ transport.licensePlate }}</td>
                     <td>{{ transportTypeName[transport.transportationTypeId] || 'Đang tải...' }}</td>
                     <td>{{ transport.amountSeat + ' Chổ' }}</td>
@@ -175,6 +178,21 @@
                 <div class="d-flex justify-content-end">
                     {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Ảnh xe</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="" id="modalImage" class="img-fluid" alt="Ảnh phương tiện">
             </div>
         </div>
     </div>

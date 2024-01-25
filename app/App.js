@@ -331,16 +331,16 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-update.html',
             controller: 'BookingControllerAG'
         })
-        .when('/business/transport/trip-management', {
-            templateUrl: 'app/component/agent/trans/views/pages/trips/trip-list.html',
+        .when('/business/transport/schedules-management', {
+            templateUrl: 'app/component/agent/trans/views/pages/schedules/schedules-list.html',
             controller: 'SchedulesControllerAG'
         })
-        .when('/business/transport/trip-management/create-trip', {
-            templateUrl: 'app/component/agent/trans/views/pages/trips/trip-create.html',
+        .when('/business/transport/schedules-management/create-schedules', {
+            templateUrl: 'app/component/agent/trans/views/pages/schedules/schedules-create.html',
             controller: 'SchedulesControllerAG'
         })
-        .when('/business/transport/trip-management/update-trip/:id', {
-            templateUrl: 'app/component/agent/trans/views/pages/trips/trip-update.html',
+        .when('/business/transport/schedules-management/update-schedules/:id', {
+            templateUrl: 'app/component/agent/trans/views/pages/schedules/schedules-update.html',
             controller: 'SchedulesControllerAG'
         })
 

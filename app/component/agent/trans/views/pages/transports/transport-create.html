@@ -1,3 +1,4 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
 <div class="container mt-4 mb-5">
     <div class="header-control mb-4">
         <div class="">
@@ -19,7 +20,7 @@
                         name="transportationTypeId"
                         ng-class="{ 'is-invalid': form_transport.transportationTypeId.$invalid && form_transport.transportationTypeId.$touched, 'is-valid': form_transport.transportationTypeId.$valid && form_transport.transportationTypeId.$touched }"
                         ng-options="transport.id as transport.transportationTypeName for transport in transportType"
-                        ng-model="transportitation.transportationTypeId"
+                        ng-model="transportation.transportationTypeId"
                         required
                 >
                     <option value="" disabled selected>Chọn loại phương tiện</option>
@@ -30,13 +31,14 @@
                     Vui lòng chọn loại phương tiện !
                 </small>
             </div>
+
             <div class="col-md-6">
                 <label class="form-label">BIỂN SỐ XE</label>
                 <input type="text"
                        class="form-control"
                        placeholder="30B-029.29"
                        name="licensePlate"
-                       ng-model="transportitation.licensePlate"
+                       ng-model="transportation.licensePlate"
                        ng-class="{ 'is-invalid': form_transport.licensePlate.$invalid && form_transport.licensePlate.$touched, 'is-valid': form_transport.licensePlate.$valid && form_transport.licensePlate.$touched && !licenseError }"
                        ng-pattern="/^[0-9]{2}[A-Z]-[0-9]{3,4}\.[0-9]{2}$/"
                        ng-change="checkDuplicateLicense()"
@@ -55,13 +57,14 @@
                     Biển số xe đã tồn tại !
                 </small>
             </div>
+
             <div class="col-md-6">
                 <label class="form-label">SỐ CHỔ NGỒI</label>
                 <input type="text"
                        class="form-control"
                        placeholder="29"
                        name="amountSeat"
-                       ng-model="transportitation.amountSeat"
+                       ng-model="transportation.amountSeat"
                        ng-class="{ 'is-invalid': form_transport.amountSeat.$invalid && form_transport.amountSeat.$touched, 'is-valid': form_transport.amountSeat.$valid && form_transport.amountSeat.$touched }"
                        ng-pattern="/^[0-9]*$/"
                        required
@@ -75,6 +78,49 @@
                     Số chổ ngồi không đúng định dạng !
                 </small>
             </div>
+
+            <div class="col-6">
+                <label class="form-label">Ảnh đại diện xe</label>
+                <input class="form-control"
+                       type="file"
+                       name="transportationImg"
+                       accept="image/*"
+                       ng-model="transportation.transportationImg"
+                       ng-class="{ 'is-invalid': form_transport.transportationImg.$invalid && form_transport.transportationImg.$touched, 'is-valid': form_transport.transportationImg.$valid && form_transport.transportationImg.$touched }"
+                       ngf-select="uploadAvatarTransport($file)"
+                       ngf-max-size="10MB"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="form_transport.transportationImg.$touched && form_transport.transportationImg.$error.required">
+                    Vui lòng chọn ít nhất một ảnh!
+                </small>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label">Hình ảnh xe</label>
+                <input class="form-control"
+                       type="file"
+                       name="transportTypeImg"
+                       ng-model="transportation.transportTypeImg"
+                       accept="image/*"
+                       ng-class="{ 'is-invalid': form_transport.transportTypeImg.$invalid && form_transport.transportTypeImg.$touched, 'is-valid': form_transport.transportTypeImg.$valid && form_transport.transportTypeImg.$touched }"
+                       ngf-select="uploadTransportTypeImg($files)"
+                       ngf-multiple="true"
+                       ngf-max-size="10MB"
+                       ngf-max-files="5"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="form_transport.transportTypeImg.$touched && form_transport.transportTypeImg.$error.required">
+                    Vui lòng chọn ít nhất một ảnh!
+                </small>
+                <small class="text-danger"
+                       ng-show="form_transport.transportTypeImg.$error.ngfMaxFiles">
+                    Bạn chỉ được chọn tối đa 5 ảnh!
+                </small>
+            </div>
+
             <div class="col-12 d-flex justify-content-end mt-5">
                 <button type="button" class="btn" style="margin-right: 20px">
                     <a class="btn" href="/business/transport/transport-management">Trở về</a>

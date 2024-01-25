@@ -22,6 +22,13 @@ travel_app.service('TransportServiceAG', function ($http) {
         })
     }
 
+    this.findImageByTransportId = function (transportId) {
+        return $http({
+            method: 'GET',
+            url: API_TRANS + 'find-image-by-transportId/' + transportId
+        })
+    }
+
     this.findByTransportBrandId = function (transportBrandId) {
         return $http({
             method: 'GET',
@@ -54,6 +61,7 @@ travel_app.service('TransportServiceAG', function ($http) {
         return $http({
             method: 'POST',
             url: API_TRANS + 'create-transportation',
+            headers: {'Content-Type': undefined},
             data: transportationsDto
         })
     }
@@ -62,6 +70,7 @@ travel_app.service('TransportServiceAG', function ($http) {
         return $http({
             method: 'PUT',
             url: API_TRANS + 'update-transportation',
+            headers: {'Content-Type': undefined},
             data: transportationsDto
         })
     }
