@@ -22,14 +22,15 @@
                             </span>
                         <input type="text"
                                class="form-control"
-                               placeholder="Tìm kiếm"
+                               placeholder="Tìm kiếm mã, giá, điểm đi, đến..."
                                ng-model="searchTerm"
+                               ng-change="searchTransportationSchedules()"
                         >
                     </div>
                 </div>
                 <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
                      style="margin: 20px 0 0 0">
-                    <a href="/business/transport/trip-management/create-trip" class="btn btn-primary">
+                    <a href="/business/transport/schedules-management/create-schedules" class="btn btn-primary">
                         <i class="fa-solid fa-plus" style="margin-right: 10px"></i>
                         Tạo chuyến đi
                     </a>
@@ -97,36 +98,32 @@
                 </div>
             </div>
             <table class="table table-responsive text-center">
+                <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
-                    <th>
-                        <span>
-                            <input class="form-check-input checkbox-all" type="checkbox" value="">
-                        </span>
-                    </th>
                     <th>#
                         <i class="fa-solid fa-sort"></i>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('id')">ID
                         <i class="fa" ng-class="getSortIcon('id')"></i>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('licensePlate')">Phương tiện
-                        <i class="fa" ng-class="getSortIcon('licensePlate')"></i>
+                    <th class="cursor-pointer" ng-click="sortData('transportationId')">Phương tiện
+                        <i class="fa" ng-class="getSortIcon('transportationId')"></i>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('licensePlate')">Điểm đi
-                        <i class="fa" ng-class="getSortIcon('licensePlate')"></i>
+                    <th class="cursor-pointer" ng-click="sortData('fromLocation')">Điểm đi
+                        <i class="fa" ng-class="getSortIcon('fromLocation')"></i>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('licensePlate')">Điểm đến
-                        <i class="fa" ng-class="getSortIcon('licensePlate')"></i>
+                    <th class="cursor-pointer" ng-click="sortData('toLocation')">Điểm đến
+                        <i class="fa" ng-class="getSortIcon('toLocation')"></i>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('transportationTypeId')">Số chổ ngồi
-                        <i class="fa" ng-class="getSortIcon('transportationTypeId')"></i>
+                    <th class="cursor-pointer" ng-click="sortData('bookedSeat')">Số chổ ngồi
+                        <i class="fa" ng-class="getSortIcon('bookedSeat')"></i>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('amountSeat')">Đã đặt
-                        <i class="fa" ng-class="getSortIcon('amountSeat')"></i>
+                    <th class="cursor-pointer" ng-click="sortData('bookedSeat')">Đã đặt
+                        <i class="fa" ng-class="getSortIcon('bookedSeat')"></i>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('dateCreated')">Đơn giá
-                        <i class="fa" ng-class="getSortIcon('dateCreated')"></i>
+                    <th class="cursor-pointer" ng-click="sortData('unitPrice')">Đơn giá
+                        <i class="fa" ng-class="getSortIcon('unitPrice')"></i>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('isActive')">Trạng thái
                         <i class="fa" ng-class="getSortIcon('isActive')"></i>
@@ -136,11 +133,6 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="schedule in transportationSchedules">
-                    <td>
-                        <span>
-                            <input class="form-check-input" type="checkbox" value="">
-                        </span>
-                    </td>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ schedule.id }}</td>
                     <td>{{ schedule.transportationId }}</td>
@@ -148,45 +140,91 @@
                     <td>{{ schedule.toLocation }}</td>
                     <td>{{ schedule.bookedSeat }}</td>
                     <td>{{ schedule.bookedSeat }}</td>
-                    <td>{{ schedule.unitPrice }}</td>
+                    <td>{{ schedule.unitPrice | vnCurrency }}</td>
                     <td ng-if="schedule.isStatus == 0">
                         <div class="d-flex align-items-center justify-content-center">
-                            <span class="status-success"></span>
-                            <span class="text-status-success">Chờ đi chuyển</span>
+                            <span class="status-warning"></span>
+                            <span class="text-status-warning">Chờ vận hành</span>
                         </div>
                     </td>
                     <td ng-if="schedule.isStatus == 1">
                         <div class="d-flex align-items-center justify-content-center">
-                            <span class="status-error"></span>
-                            <span class="text-status-error">Đang di chuyển</span>
+                            <span class="status-success"></span>
+                            <span class="text-status-success">Đang vận hành</span>
                         </div>
                     </td>
                     <td ng-if="schedule.isStatus == 2">
                         <div class="d-flex align-items-center justify-content-center">
+                            <span class="status-success"></span>
+                            <span class="text-status-success">Đã hoàn tất</span>
+                        </div>
+                    </td>
+                    <td ng-if="schedule.isStatus == 3">
+                        <div class="d-flex align-items-center justify-content-center">
                             <span class="status-error"></span>
-                            <span class="text-status-error">Đã hoàn tất</span>
+                            <span class="text-status-error">Hủy chuyến đi</span>
                         </div>
                     </td>
                     <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                        <a href="/business/transport/trip-management/update-trip/{{ schedule.id }}"
+                        <a href="/business/transport/schedules-management/update-schedules/{{ schedule.id }}"
                            role="button" class="fs-1 btn text-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a href="#" ng-click="deleteSchedule(schedule.id, schedule.toLocation)"
+                        <a href="#" ng-click="deleteSchedule(schedule.id, schedule.fromLocation, schedule.toLocation)"
                            role="button" class="fs-1 btn text-danger">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
                 </tr>
                 <tr ng-if="transportationSchedules.length === 0">
-                    <td colspan="11">Không có dữ liệu chuyến đi.</td>
+                    <td colspan="10">Không có dữ liệu chuyến đi.</td>
                 </tr>
                 </tbody>
             </table>
             <div class="card-footer">
-                <div class="d-flex justify-content-end">
+                <div class="d-flex justify-content-start position-absolute">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#modalActiveFalse">
+                        Đã hủy
+                    </button>
+                </div>
+                <div class="d-flex justify-content-end mt-2">
                     {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalActiveFalse" tabindex="-1" aria-labelledby="modalFalse" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalFalse">Danh sách chuyến đi bị hủy</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-inverse table-responsive">
+                    <thead class="thead-inverse">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td scope="row"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>

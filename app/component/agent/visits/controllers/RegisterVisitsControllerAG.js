@@ -1,4 +1,4 @@
-travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http, $filter, $location, AuthService, VisitLocationServiceAG, AgenciesServiceAG) {
+travel_app.controller('RegisterVisitsControllerAG', function ($scope, $http, $filter, $location, AuthService, VisitLocationServiceAG) {
     $scope.currentStep = 1;
     $scope.checkboxChecked = false;
     $scope.phoneError = null;

@@ -11,10 +11,12 @@ travel_app.controller('TransportControllerAG', function ($scope, $routeParams, $
 
     $scope.transportTypeName = {};
 
-    $scope.transportitation = {
+    $scope.transportation = {
         id: null,
         transportationBrandId: null,
         transportationTypeId: null,
+        transportationImg: null,
+        transportTypeImg: null,
         licensePlate: null,
         amountSeat: null,
         isActive: null
@@ -28,10 +30,35 @@ travel_app.controller('TransportControllerAG', function ($scope, $routeParams, $
      * @message Check duplicate phone
      */
     $scope.checkDuplicateLicense = function () {
-        TransportServiceAG.findByLicensePlate($scope.transportitation.licensePlate).then(function successCallback(response) {
+        TransportServiceAG.findByLicensePlate($scope.transportation.licensePlate).then(function successCallback(response) {
             $scope.licenseError = response.data.exists;
             console.log(response.data)
         }, errorCallback);
+    };
+
+    /**
+     * Upload hình ảnh và lưu vào biến transportationImg
+     * @param file
+     */
+    $scope.uploadAvatarTransport = function (file) {
+        if (file && !file.$error) {
+            $scope.transportation.transportationImg = file;
+        }
+    };
+
+    /**
+     * Upload hình ảnh và lưu vào biến transportTypeImg
+     * @param file
+     */
+    $scope.uploadTransportTypeImg = function (file) {
+        if (file && !file.$error) {
+            $scope.transportation.transportTypeImg = file;
+        }
+    };
+
+    $scope.openImageModal = function (imageUrl) {
+        document.getElementById('modalImage').src = imageUrl;
+        $('#imageModal').modal('show');
     };
 
     $scope.init = function () {
@@ -78,6 +105,18 @@ travel_app.controller('TransportControllerAG', function ($scope, $routeParams, $
         };
 
         /**
+         * Tìm transportImage bằng transportId
+         * @param transportId
+         */
+        TransportServiceAG.findImageByTransportId(transportId).then(function (response) {
+            if (response.status === 200) {
+                $scope.transportTypeImg = response.data.data;
+            } else {
+                $location.path('/admin/page-not-found');
+            }
+        }, errorCallback);
+
+        /**
          * Tìm thể loại phương tiện bằng id
          * @param transportTypeId
          */
@@ -104,7 +143,7 @@ travel_app.controller('TransportControllerAG', function ($scope, $routeParams, $
         if (transportId !== undefined && transportId !== null && transportId !== "") {
             TransportServiceAG.findByTransportId(transportId).then(function successCallback(response) {
                 if (response.status === 200) {
-                    $scope.transportitation = response.data.data;
+                    $scope.transportation = response.data.data;
                 } else {
                     $location.path('/admin/page-not-found');
                 }
@@ -174,26 +213,54 @@ travel_app.controller('TransportControllerAG', function ($scope, $routeParams, $
      * Gọi api tạo mới
      */
     $scope.createTrans = function () {
-        $scope.transportitation.transportationBrandId = brandId;
-        let transportation = $scope.transportitation;
+        $scope.isLoading = true;
+        $scope.transportation.transportationBrandId = brandId;
 
-        TransportServiceAG.create(transportation).then(function successCallback() {
+        let transportation = $scope.transportation;
+        let transportTypeImg = $scope.transportation.transportTypeImg;
+        let transportationImg = $scope.transportation.transportationImg;
+
+        const transportData = new FormData();
+
+        transportData.append('transportationsDto', new Blob([JSON.stringify(transportation)], {type: 'application/json'}));
+        angular.forEach(transportTypeImg, function (file) {
+            transportData.append('transportTypeImg', file);
+        });
+        transportData.append('transportationImg', transportationImg);
+
+        TransportServiceAG.create(transportData).then(function successCallback() {
             toastAlert('success', 'Thêm mới thành công !')
             $location.path('/business/transport/transport-management');
-        }, errorCallback);
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
     }
 
     /**
      * Gọi api cập nhật
      */
     function confirmUpdate() {
-        $scope.transportitation.id = transportId;
-        let transportation = $scope.transportitation;
+        $scope.isLoading = true;
+        $scope.transportation.id = transportId;
 
-        TransportServiceAG.update(transportation).then(function successCallback() {
+        let transportation = $scope.transportation;
+        let transportTypeImg = $scope.transportation.transportTypeImg;
+        let transportationImg = $scope.transportation.transportationImg;
+
+        const transportData = new FormData();
+
+        transportData.append('transportationsDto', new Blob([JSON.stringify(transportation)], {type: 'application/json'}));
+        angular.forEach(transportTypeImg, function (file) {
+            transportData.append('transportTypeImg', file);
+        });
+        transportData.append('transportationImg', transportationImg);
+
+        TransportServiceAG.update(transportData).then(function successCallback() {
             toastAlert('success', 'Cập nhật thành công !');
             $location.path('/business/transport/transport-management');
-        }, errorCallback);
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
     }
 
     $scope.updateTrans = function () {
@@ -209,7 +276,9 @@ travel_app.controller('TransportControllerAG', function ($scope, $routeParams, $
                 toastAlert('success', 'Xóa phương tiện thành công !');
                 $location.path('/business/transport/transport-management');
                 $scope.init();
-            }, errorCallback);
+            }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
         }
 
         confirmAlert('Bạn có chắc chắn muốn xóa phương tiện ' + licensePlate + ' không ?', confirmDeleteStaff);
