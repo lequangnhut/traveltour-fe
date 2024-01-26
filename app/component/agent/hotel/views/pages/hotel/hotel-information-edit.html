@@ -172,7 +172,7 @@
                                     name="hotelType"
                                     ng-class="{ 'is-invalid': update_hotel.hotelType.$invalid && update_hotel.hotelType.$touched, 'is-valid': update_hotel.hotelType.$valid && update_hotel.hotelType.$touched }"
                                     ng-options="hotelType.id as hotelType.hotelTypeName for hotelType in hotelTypes"
-                                    ng-model="hotelEdit.hotelType"
+                                    ng-model="hotelEdit.hotelTypeId"
                                     required
                             >
                                 <option value="" disabled selected>Chọn thể loại phòng</option>
@@ -213,11 +213,10 @@
                                    type="file"
                                    id="formFile"
                                    name="hotelAvatar"
-                                   accept="image/*"
-                                   ng-model="hotelEdit.hotelAvatar"
-                                   ngf-select="validatehotelAvatar()"
+                                   accept=".png, .jpg, .jpeg"
+                                   ng-model="hotelEdit.hotelAvatarUpdated"
+                                   ngf-select="uploadTourImage($file)"
                                    multiple
-                                   required
                             >
                             <small class="text-danger"
                                    ng-show="update_hotel.hotelAvatar.$touched && update_hotel.hotelAvatar.$error.required">
@@ -227,6 +226,10 @@
                                    ng-show="update_hotel.hotelAvatar.$error.maxImages">
                                 Số lượng ảnh tối đa là 1!
                             </small>
+                        </div>
+                        <div ng-if="hotelEdit.hotelAvatar !== null" class="m-0">
+                            <label for="imagePreview" class="form-label">Ảnh hiện tại</label> <br>
+                            <img id="imagePreview" ng-src="{{getCurrentImageSource()}}" alt="Current Image" style="max-width: 100px;">
                         </div>
 
                         <!-- Tiện ích khách sạn -->
@@ -238,9 +241,9 @@
                                         <input class="form-check-input"
                                                type="checkbox"
                                                id="{{placeUtilities.id}}"
-                                               ng-model="hotelEdit.placeUtilities"
-                                               ng-change="updateplaceUtilitiesCount()"
-                                               ng-checked="comparePlaceUtilities(placeUtilities, hotelEdit.placeUtilities)"
+                                               ng-model="placeUtilities.checked"
+                                               ng-checked="placeUtilities.checked"
+                                               ng-change="updateSelectedUtilities(placeUtilities)"
                                         >
                                         <label class="form-check-label" for="{{placeUtilities.id}}">
                                             {{placeUtilities.label}}
@@ -252,12 +255,10 @@
                                     Vui lòng chọn ít nhất một tiện ích!
                                 </small>
                             </div>
-
-                            <div class="row" ng-if="showErrorListPlaceMessage !== null">
-                                <p ng-show="showErrorListPlaceMessage"></p>
-                            </div>
-
                         </div>
+
+
+
 
                         <div class="col-12 d-flex justify-content-end mt-5">
                             <button class="btn" style="margin-right: 20px">
@@ -265,8 +266,8 @@
                             </button>
                             <button type="submit"
                                     class="btn btn-submit"
-                                    ng-disabled="update_hotel.$invalid || noplaceUtilitiesSelected()"
-                                    ng-click="createHotel()">Sửa khách sạn
+                                    ng-disabled="update_hotel.$invalid || noPlaceUtilitiesSelected()"
+                                    ng-click="updateHotel()">Sửa khách sạn
                             </button>
                         </div>
 
