@@ -91,22 +91,26 @@
                 </div>
             </div>
             <table class="table table-responsive text-center">
+                <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
                     <th><span><input class="form-check-input checkbox-all" type="checkbox" value=""></span></th>
-                    <th># <i class="fa-solid fa-sort"></i></th>
+                    <th># </th>
+                    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
                     <th class="cursor-pointer" ng-click="sortData('id')">ID
-                        <i class="fa" ng-class="getSortIcon('id')"></i>
+                        <i class="material-icons sorting-icon">{{getSortIcon('id')}}</i>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('tourName')">Tên tour
-                        <i class="fa" ng-class="getSortIcon('tourName')"></i>
+                        <i class="material-icons sorting-icon">{{getSortIcon('tourName')}}</i>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('tourTypeId')">Loại tour
-                        <i class="fa" ng-class="getSortIcon('tourTypeId')"></i>
+                        <i class="material-icons sorting-icon">{{getSortIcon('tourTypeId')}}</i>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('dateCreated')">Ngày tạo
-                        <i class="fa" ng-class="getSortIcon('dateCreated')"></i>
+                        <i class="material-icons sorting-icon">{{getSortIcon('dateCreated')}}</i>
                     </th>
+
                     <!--                    <th class="cursor-pointer" ng-click="sortData('isActive')">Trạng thái-->
                     <!--                        <i class="fa" ng-class="getSortIcon('isActive')"></i>-->
                     <!--                    </th>-->
@@ -129,23 +133,23 @@
                     <!--                                </span>-->
                     <!--                        </div>-->
                     <!--                    </td>-->
-                    <td class="d-flex align-items-center justify-content-center w-100" style="padding-right: 10px">
+                    <td class="d-flex align-items-center justify-content-center">
                         <a href="admin/basic-tour-list/trips-tour-list/{{tour.id}}"
-                           style="color: #0798ff; margin-right: 20px">
+                           role="button" class="fs-1 btn text-primary px-2">
                             <i class="fa-solid fa-plane"></i>
                         </a>
                         <a href="admin/basic-tour-list/basic-tour-update/{{tour.id}}"
-                           style="color: #ffc107; margin-right: 20px">
+                           role="button" class="fs-1 btn text-warning px-3">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a class="" style="color: #dc3545"
+                        <a role="button" class="fs-1 btn text-danger px-2"
                            ng-click="deleteTour(tour.id, tour.tourName)">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
                 </tr>
                 <tr ng-if="tourBasicList.length === 0">
-                    <td colspan="8">Trang này không có dữ liệu tour.</td>
+                    <td colspan="8">Trang này không có dữ liệu.</td>
                 </tr>
                 </tbody>
             </table>

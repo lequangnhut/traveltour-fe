@@ -92,32 +92,45 @@
                 </div>
             </div>
             <table class="table table-responsive text-center">
+                <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
                     <th><span><input class="form-check-input checkbox-all" type="checkbox" value=""></span>
                     </th>
-                    <th># <i class="fa-solid fa-sort"></i></th>
-                    <th class="cursor-pointer" ng-click="sortData('id')">ID <i class="fa-solid fa-sort"></i></th>
-                    <th class="cursor-pointer" ng-click="sortData('tourId')">Tên tour <i class="fa-solid fa-sort"></i>
+                    <th>#</th>
+                    <th class="cursor-pointer" ng-click="sortData('id')">ID
+                        <i class="material-icons sorting-icon">{{ getSortIcon('id') }}</i>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('guideId')">Hướng dẫn viên <i
-                            class="fa-solid fa-sort"></i></th>
-                    <th class="cursor-pointer" ng-click="sortData('numberOfGuests')">Số khách <i
-                            class="fa-solid fa-sort"></i></th>
-                    <th class="cursor-pointer" ng-click="sortData('fromLocation')">Điểm đi <i
-                            class="fa-solid fa-sort"></i></th>
-                    <th class="cursor-pointer" ng-click="sortData('toLocation')">Điểm đến <i
-                            class="fa-solid fa-sort"></i></th>
-                    <th class="cursor-pointer" ng-click="sortData('departureDate')">Ngày đi <i
-                            class="fa-solid fa-sort"></i></th>
-                    <th class="cursor-pointer" ng-click="sortData('arrivalDate')">Ngày về <i
-                            class="fa-solid fa-sort"></i></th>
-                    <th class="cursor-pointer" ng-click="sortData('unitPrice')">Giá <i class="fa-solid fa-sort"></i>
+                    <th class="cursor-pointer" ng-click="sortData('tourId')">Tên tour
+                        <i class="material-icons sorting-icon">{{ getSortIcon('tourId') }}</i>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('tourDetailNotes')">Ghi chú <i
-                            class="fa-solid fa-sort"></i></th>
-                    <th class="cursor-pointer" ng-click="sortData('tourDetailStatus')">Trạng thái <i
-                            class="fa-solid fa-sort"></i></th>
+                    <th class="cursor-pointer" ng-click="sortData('guideId')">Hướng dẫn viên
+                        <i class="material-icons sorting-icon">{{ getSortIcon('guideId') }}</i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('numberOfGuests')">Số khách
+                        <i class="material-icons sorting-icon">{{ getSortIcon('numberOfGuests') }}</i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('fromLocation')">Điểm đi
+                        <i class="material-icons sorting-icon">{{ getSortIcon('fromLocation') }}</i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('toLocation')">Điểm đến
+                        <i class="material-icons sorting-icon">{{ getSortIcon('toLocation') }}</i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('departureDate')">Ngày đi
+                        <i class="material-icons sorting-icon">{{ getSortIcon('departureDate') }}</i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('arrivalDate')">Ngày về
+                        <i class="material-icons sorting-icon">{{ getSortIcon('arrivalDate') }}</i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('unitPrice')">Giá
+                        <i class="material-icons sorting-icon">{{ getSortIcon('unitPrice') }}</i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('tourDetailNotes')">Ghi chú
+                        <i class="material-icons sorting-icon">{{ getSortIcon('tourDetailNotes') }}</i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('tourDetailStatus')">Trạng thái
+                        <i class="material-icons sorting-icon">{{ getSortIcon('tourDetailStatus') }}</i>
+                    </th>
                     <th>Thao tác</th>
                 </tr>
                 </thead>
@@ -136,16 +149,19 @@
                     <td>{{ tourDetail.unitPrice }}</td>
                     <td>{{ tourDetail.tourDetailNotes }}</td>
                     <td>{{ tourDetail.tourDetailStatus }}</td>
-                    <td class="d-flex align-items-center justify-content-center w-100" style="padding-right: 10px">
+                    <td class="d-flex align-items-center justify-content-center">
                         <a href="admin/detail-tour-list/detail-tour-update/{{tourDetail.id}}"
-                           style="color: #ffc107; margin-right: 20px">
+                           role="button" class="fs-1 btn text-warning px-2">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a class="" style="color: #dc3545"
+                        <a role="button" class="fs-1 btn text-danger px-3"
                            ng-click="deleteTourDetail(tourDetail.id)">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
+                </tr>
+                <tr ng-if="tourDetailList.length === 0">
+                    <td colspan="14">Trang này không có dữ liệu.</td>
                 </tr>
                 </tbody>
             </table>

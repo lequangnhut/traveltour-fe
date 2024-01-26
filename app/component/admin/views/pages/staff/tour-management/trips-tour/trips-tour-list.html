@@ -2,18 +2,24 @@
     <div class="header-control mb-4">
         <div class="header-control-center">
             <div class="d-flex justify-content-between align-items-center row ">
-                <div class="col-xl-8 mt-3">
+                <div class="col-xl-8 col-md-8 mt-3">
                     <h3 class="color-green fw-bold text-uppercase">Kế hoạch tour {{ tourName }}</h3>
+                </div>
+                <div class="col-xl-4 col-md-4 mt-3">
+                    <button class="btn btn-green btn-flex float-end" ng-click="toggleActivities()">
+                        <i class="material-icons" ng-bind="showActivities ? 'visibility_off' : 'visibility'"></i>
+                        <span ng-bind="showActivities ? 'Ẩn hoạt động' : 'Xem hoạt động'"></span>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="card card-customer">
+<div class="card card-customer overflow-auto" style="max-height: 530px;" ng-show="showActivities">
     <div class="row" style="margin: 20px 16px 20px 16px">
         <div class="mb-3" ng-repeat="tourTrips in tourTripsList">
-            <span class="fw-bold me-1">Ngay {{ tourTrips.dayInTrip }}: </span>
+            <span class="fw-bold me-1">Ngày {{ tourTrips.dayInTrip }}: </span>
             <div ng-bind-html="tourTrips.activityInDay"></div>
         </div>
         <div ng-if="tourTripsList.length === 0">
@@ -102,14 +108,15 @@
             </div>
         </div>
         <table class="table table-responsive text-center">
+            <div ng-include="'app/component/utils/loading-table.html'"></div>
             <thead>
             <tr class="bg-light">
                 <th><span><input class="form-check-input checkbox-all" type="checkbox" value=""></span>
                 </th>
-                <th># <i class="fa-solid fa-sort"></i></th>
-                <th class="cursor-pointer" ng-click="sortData('dayInTrip')">Ngày <i
-                        class="fa-solid fa-sort"></i></th>
-                <th>Thao tác</th>
+                <th># </th>
+                <th class="cursor-pointer" ng-click="sortData('dayInTrip')">Ngày
+                    <i class="material-icons sorting-icon">{{ getSortIcon('dayInTrip') }}</i>
+                <th style="width: 200px">Thao tác</th>
             </tr>
             </thead>
             <tbody>
@@ -117,16 +124,19 @@
                 <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
                 <td>{{ $index + 1 }}</td>
                 <td>{{ tourTrips.dayInTrip }}</td>
-                <td class="d-flex align-items-center justify-content-center w-100" style="padding-right: 10px">
+                <td class="d-flex align-items-center justify-content-center">
                     <a href="/admin/basic-tour-list/trips-tour-list/trips-tour-update/{{tourTrips.id}}"
-                       style="color: #ffc107; margin-right: 20px">
+                       role="button" class="fs-1 btn text-warning px-2">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </a>
-                    <a class="" style="color: #dc3545"
+                    <a role="button" class="fs-1 btn text-danger px-3"
                        ng-click="deleteTourTrips(tourTrips.id)">
                         <i class="fa-solid fa-trash"></i>
                     </a>
                 </td>
+            </tr>
+            <tr ng-if="tourTripsList.length === 0">
+                <td colspan="4">Trang này không có dữ liệu.</td>
             </tr>
             </tbody>
         </table>
@@ -136,6 +146,5 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 

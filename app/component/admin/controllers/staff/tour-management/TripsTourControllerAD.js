@@ -1,4 +1,6 @@
 travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location, $routeParams, $timeout, TourTripsServiceAD, ToursServiceAD) {
+    $scope.isLoading = true;
+
     $scope.tourTrips = {
         tourId: $routeParams.tourId,
         dayInTrip: null,
@@ -15,6 +17,8 @@ travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location
     $scope.tourName = '';
     $scope.activityInDayTouched = false
     $scope.maxActivityInDay = 1;
+
+    $scope.showActivities = false;
 
     function errorCallback() {
         // $location.path('/admin/internal-server-error')
@@ -33,6 +37,10 @@ travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location
 
     $scope.canSubmit = function () {
         return $scope.activityInDayTouched && !$scope.isActive();
+    };
+
+    $scope.toggleActivities = function () {
+        $scope.showActivities = !$scope.showActivities;
     };
 
     //phân trang
@@ -92,7 +100,9 @@ travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location
                 $scope.tourTripsList.forEach(function (tourTrips) {
                     tourTrips.activityInDay = $sce.trustAsHtml(tourTrips.activityInDay);
                 });
-            }, errorCallback);
+            }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
 
         if (tourTripsId !== undefined && tourTripsId !== null && tourTripsId !== "") {
             TourTripsServiceAD.findTripsById(tourTripsId).then(function successCallback(response) {
@@ -122,9 +132,9 @@ travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location
 
     $scope.getSortIcon = function (column) {
         if ($scope.sortBy === column) {
-            return $scope.sortDir === 'asc' ? 'fa-sort-up' : 'fa-sort-down';
+            return $scope.sortDir === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down';
         }
-        return 'fa-sort';
+        return 'swap_vert';
     };
 
     $scope.getTourTripsList();

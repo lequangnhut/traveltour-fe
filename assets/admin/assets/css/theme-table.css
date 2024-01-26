@@ -39,6 +39,21 @@
     font-size: 14px;
 }
 
+.card-customer::-webkit-scrollbar {
+    width: 0;
+}
+
+/*
+.card-customer::-webkit-scrollbar-track {
+    background: #e1e1e1;
+}
+.card-customer::-webkit-scrollbar-thumb {
+    background: #c9c9c9;
+}
+.card-customer::-webkit-scrollbar-thumb:hover {
+    background: #e3e3e3;
+}
+*/
 .table-components .card-header {
     vertical-align: middle;
 }
