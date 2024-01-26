@@ -1,4 +1,6 @@
 travel_app.controller('CustomerControllerAD', function ($scope, $location, $routeParams, $timeout, $http, CustomerServiceAD, AuthService) {
+    $scope.isLoading = true;
+
     const fileName = "default.jpg";
     const mimeType = "image/jpeg";
 
@@ -161,7 +163,9 @@ travel_app.controller('CustomerControllerAD', function ($scope, $location, $rout
                 $scope.customerList = response.data.data.content;
                 $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                 $scope.totalElements = response.data.data.totalElements; // Tổng số phần tử
-            }, errorCallback);
+            }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
 
         if (customerId !== undefined && customerId !== null && customerId !== "") {
             CustomerServiceAD.findCustomerById(customerId).then(function successCallback(response) {
@@ -184,10 +188,11 @@ travel_app.controller('CustomerControllerAD', function ($scope, $location, $rout
 
     $scope.getSortIcon = function (column) {
         if ($scope.sortBy === column) {
-            return $scope.sortDir === 'asc' ? 'fa-sort-up' : 'fa-sort-down';
+            return $scope.sortDir === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down';
         }
-        return 'fa-sort';
+        return 'swap_vert';
     };
+
 
     $scope.searchCustomers = function () {
         if (searchTimeout) $timeout.cancel(searchTimeout);

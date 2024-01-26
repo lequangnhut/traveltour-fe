@@ -32,7 +32,6 @@
         </div>
     </div>
 
-
     <div class="table-components table-responsive mb-5">
         <div class="card table-responsive table-customer">
             <div class="card-header ">
@@ -90,21 +89,31 @@
                 </div>
             </div>
             <table class="table table-responsive text-center">
+                <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
                     <th><span><input class="form-check-input checkbox-all" type="checkbox" value=""></span>
                     </th>
-                    <th># <i class="fa-solid fa-sort"></i></th>
-                    <th class="cursor-pointer" ng-click="sortData('id')">ID <i class="fa-solid fa-sort"></i></th>
-                    <th class="cursor-pointer" ng-click="sortData('fullName')">Họ tên <i class="fa-solid fa-sort"></i>
+                    <th>#</th>
+                    <th class="cursor-pointer" ng-click="sortData('id')">ID
+                        <i class="material-icons sorting-icon">{{getSortIcon('id')}}</i>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('email')">Email <i class="fa-solid fa-sort"></i></th>
-                    <th class="cursor-pointer" ng-click="sortData('phone')">Số điện thoại <i
-                            class="fa-solid fa-sort"></i></th>
-                    <th class="cursor-pointer" ng-click="sortData('birth')">Ngày sinh <i class="fa-solid fa-sort"></i>
+                    <th class="cursor-pointer" ng-click="sortData('fullName')">Họ tên
+                        <i class="material-icons sorting-icon">{{getSortIcon('fullName')}}</i>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('gender')">Giới tính <i class="fa-solid fa-sort"></i>
+                    <th class="cursor-pointer" ng-click="sortData('email')">Email
+                        <i class="material-icons sorting-icon">{{getSortIcon('email')}}</i>
                     </th>
+                    <th class="cursor-pointer" ng-click="sortData('phone')">Số điện thoại
+                        <i class="material-icons sorting-icon">{{getSortIcon('phone')}}</i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('birth')">Ngày sinh
+                        <i class="material-icons sorting-icon">{{getSortIcon('birth')}}</i>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('gender')">Giới tính
+                        <i class="material-icons sorting-icon">{{getSortIcon('gender')}}</i>
+                    </th>
+
                     <th>Thao tác</th>
                 </tr>
                 </thead>
@@ -118,19 +127,19 @@
                     <td>{{ customer.phone }}</td>
                     <td>{{ customer.birth | date: 'dd/MM/yyyy' }}</td>
                     <td>{{ customer.gender === 1 ? 'Nam' : (customer.gender === 2 ? 'Nữ' : 'Khác') }}</td>
-                    <td class="d-flex align-items-center justify-content-center w-100" style="padding-right: 10px">
+                    <td class="d-flex align-items-center justify-content-center">
                         <a href="admin/customer-list/customer-update/{{customer.id}}"
-                           style="color: #ffc107; margin-right: 20px">
+                           role="button" class="fs-1 btn text-warning px-2">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a class="" style="color: #dc3545"
+                        <a role="button" class="fs-1 btn text-danger px-3"
                            ng-click="deleteCustomer(customer.id, customer.fullName)">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
                 </tr>
-                <tr ng-if="tourBasicList.length === 0">
-                    <td colspan="8">Không có dữ liệu tour.</td>
+                <tr ng-if="customerList.length === 0">
+                    <td colspan="9">Trang này không có dữ liệu.</td>
                 </tr>
                 </tbody>
             </table>

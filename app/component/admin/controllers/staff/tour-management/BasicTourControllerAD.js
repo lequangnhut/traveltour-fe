@@ -1,4 +1,6 @@
 travel_app.controller('BasicTourControllerAD', function ($scope, $location, $routeParams, $timeout, ToursServiceAD, ToursTypeServiceAD) {
+    $scope.isLoading = true;
+
     const fileName = "default.jpg";
     const mimeType = "image/jpeg";
 
@@ -57,7 +59,6 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
             $scope.tourImgNoCloud = $scope.tourBasic.tourImg;
             return $scope.tourBasic.tourImg;
         } else if ($scope.tourBasic.tourImg && typeof $scope.tourBasic.tourImg === 'string') {
-            // If tourImg is a data URL
             return $scope.tourBasic.tourImg;
         }
     };
@@ -128,7 +129,9 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
                 response.data.content.forEach(tour => {
                     $scope.loadTourTypeName(tour.tourTypeId);
                 });
-            }, errorCallback);
+            }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
 
         if (tourId !== undefined && tourId !== null && tourId !== "") {
             ToursServiceAD.findTourById(tourId).then(function successCallback(response) {
@@ -142,16 +145,17 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $location, $rou
 
     $scope.sortData = function (column) {
         $scope.sortBy = column;
-        $scope.sortDir = ($scope.sortDir === 'asc') ? 'desc' : 'asc';
+        $scope.sortDir = ($scope.sortBy === column && $scope.sortDir === 'asc') ? 'desc' : 'asc';
         $scope.getTourBasicList();
     };
 
     $scope.getSortIcon = function (column) {
         if ($scope.sortBy === column) {
-            return $scope.sortDir === 'asc' ? 'fa-sort-up' : 'fa-sort-down';
+            return $scope.sortDir === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down';
         }
-        return 'fa-sort';
+        return 'swap_vert';
     };
+
 
     $scope.searchTours = function () {
         if (searchTimeout) $timeout.cancel(searchTimeout);

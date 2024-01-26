@@ -1,4 +1,6 @@
 travel_app.controller('DetailTourControllerAD', function ($scope, $location, $routeParams, $timeout, $http, TourDetailsServiceAD, ToursServiceAD, AccountServiceAD) {
+    $scope.isLoading = true;
+
     $scope.tourDetail = {
         tourDetailId: null,
         guideId: null,
@@ -132,7 +134,9 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $location, $ro
                 $scope.tourDetailList = response.data.data.content;
                 $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                 $scope.totalElements = response.data.data.totalElements; // Tổng số phần tử
-            }, errorCallback);
+            }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
 
         if (tourDetailId !== undefined && tourDetailId !== null && tourDetailId !== "") {
             TourDetailsServiceAD.findTourDetailById(tourDetailId).then(function successCallback(response) {
@@ -156,9 +160,9 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $location, $ro
 
     $scope.getSortIcon = function (column) {
         if ($scope.sortBy === column) {
-            return $scope.sortDir === 'asc' ? 'fa-sort-up' : 'fa-sort-down';
+            return $scope.sortDir === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down';
         }
-        return 'fa-sort';
+        return 'swap_vert';
     };
 
     //tìm kiếm
