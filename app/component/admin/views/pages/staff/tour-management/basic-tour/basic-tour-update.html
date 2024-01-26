@@ -27,14 +27,10 @@
                                name="tourName" ng-model="tourBasic.tourName"
                                ng-class="{ 'is-invalid': tourBasicForm.tourName.$invalid,
                                             'is-valid': tourBasicForm.tourName.$valid }"
-                               ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u" required/>
+                                required/>
                         <small class="text-danger"
                                ng-show="tourBasicForm.tourName.$error.required">
                             Vui lòng nhập tên tour!</small>
-                        <small class="text-danger"
-                               ng-show="tourBasicForm.tourName.$error.pattern">
-                            Tên tour không đúng định dạng!
-                        </small>
                     </div>
                     <div class="col-12">
                         <label for="inputType" class="form-label">Loại tour</label>
