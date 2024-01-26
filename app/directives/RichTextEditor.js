@@ -1,7 +1,7 @@
-travel_app.directive('richTextEditor', function() {
+travel_app.directive('richTextEditor', function () {
     return {
         restrict: 'A',
-        link: function(scope, element, attrs) {
+        link: function (scope, element, attrs) {
             // Tạo code AngularJS cho Rich Text Editor ở đây
             let optionsButtons = element[0].querySelectorAll(".option-button");
             let advancedOptionButton = element[0].querySelectorAll(".adv-option-button");
@@ -13,8 +13,8 @@ travel_app.directive('richTextEditor', function() {
             // Khởi tạo font và size
             let fontList = ["Arial", "Verdana", "Times New Roman", "Garamond", "Georgia", "Courier New", "cursive"];
 
-            fontList.forEach(function(font) {
-                var option = document.createElement("option");
+            fontList.forEach(function (font) {
+                let option = document.createElement("option");
                 option.value = font;
                 option.innerHTML = font;
                 fontName.appendChild(option);
@@ -30,20 +30,20 @@ travel_app.directive('richTextEditor', function() {
             fontSizeRef.value = 3;
 
             // Xử lý sự kiện cho các nút
-            Array.prototype.forEach.call(optionsButtons, function(button) {
-                button.addEventListener('click', function() {
+            Array.prototype.forEach.call(optionsButtons, function (button) {
+                button.addEventListener('click', function () {
                     modifyText(button.id);
                 });
             });
 
-            Array.prototype.forEach.call(advancedOptionButton, function(button) {
-                button.addEventListener('change', function() {
+            Array.prototype.forEach.call(advancedOptionButton, function (button) {
+                button.addEventListener('change', function () {
                     modifyText(button.id, button.value);
                 });
             });
 
             // Tạo bảng
-            createTableButton.addEventListener('click', function() {
+            createTableButton.addEventListener('click', function () {
                 let numRows = prompt("Nhập số hàng:");
                 let numCols = prompt("Nhập số cột:");
                 if (numRows && numCols) {

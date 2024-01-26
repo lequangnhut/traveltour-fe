@@ -15,11 +15,25 @@ travel_app.service('SchedulesServiceAG', function ($http) {
         })
     }
 
+    this.findAllScheduleByTransportId = function (transportId) {
+        return $http({
+            method: 'GET',
+            url: API_SCHEDULE + 'find-all-transport-by-transport-brandId/' + transportId
+        })
+    }
+
+    this.findByScheduleId = function (scheduleId) {
+        return $http({
+            method: 'GET',
+            url: API_SCHEDULE + 'find-schedule-by-scheduleId/' + scheduleId
+        })
+    }
+
     this.create = function (scheduleDto) {
         return $http({
             method: 'POST',
             url: API_SCHEDULE + 'create-schedule',
-            data: scheduleDto
+            data: scheduleDto,
         })
     }
 

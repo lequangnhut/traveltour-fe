@@ -1,0 +1,135 @@
+<!--====== Start Preloader ======-->
+<div class="preloader" ng-show="isLoading">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+</div><!--====== End Preloader ======-->
+<section>
+    <div class="container">
+        <div class="container-fluid">
+            <div class="header-control mb-4">
+                <div class="">
+                    <div class="d-flex align-items-center row">
+                        <div class="col-lg-6">
+                            <h3 class="color-green fw-bold text-uppercase">Thêm hoạt động</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-custom">
+                <form class="row g-3 form-input-custom" name="tourTripsForm" ng-submit="createTourTripsSubmit()"
+                      novalidate>
+
+                    <div class="container-desciption mb-3" rich-text-editor>
+                        <div class="">
+                            <label class="form-label">Hoạt động <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="options">
+                            <!-- Text Format -->
+                            <button type="button" id="bold" type="button" class="option-button format">
+                                <i class="fa-solid fa-bold"></i>
+                            </button>
+                            <button id="italic" type="button" class="option-button format">
+                                <i class="fa-solid fa-italic"></i>
+                            </button>
+                            <button id="underline" type="button" class="option-button format">
+                                <i class="fa-solid fa-underline"></i>
+                            </button>
+                            <button id="strikethrough" type="button" class="option-button format">
+                                <i class="fa-solid fa-strikethrough"></i>
+                            </button>
+                            <button id="superscript" type="button" class="option-button script">
+                                <i class="fa-solid fa-superscript"></i>
+                            </button>
+                            <button id="subscript" type="button" class="option-button script">
+                                <i class="fa-solid fa-subscript"></i>
+                            </button>
+                            <!-- List -->
+                            <button id="insertOrderedList" type="button" class="option-button">
+                                <i class="fa-solid fa-list-ol"></i>
+                            </button>
+                            <button id="insertUnorderedList" type="button" class="option-button">
+                                <i class="fa-solid fa-list"></i>
+                            </button>
+                            <!-- Table -->
+                            <button id="createTable" type="button">
+                                <i class="fa-solid fa-table"></i>
+                            </button>
+                            <!-- Undo/Redo -->
+                            <button id="undo" type="button" class="option-button">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </button>
+                            <button id="redo" type="button" class="option-button">
+                                <i class="fa-solid fa-rotate-right"></i>
+                            </button>
+                            <!-- Link -->
+                            <button id="createLink" type="button" class="adv-option-button">
+                                <i class="fa fa-link"></i>
+                            </button>
+                            <button id="unlink" type="button" class="option-button">
+                                <i class="fa fa-unlink"></i>
+                            </button>
+                            <!-- Alignment -->
+                            <button id="justifyLeft" type="button" class="option-button align">
+                                <i class="fa-solid fa-align-left"></i>
+                            </button>
+                            <button id="justifyCenter" type="button" class="option-button align">
+                                <i class="fa-solid fa-align-center"></i>
+                            </button>
+                            <button id="justifyRight" type="button" class="option-button align">
+                                <i class="fa-solid fa-align-right"></i>
+                            </button>
+                            <button id="justifyFull" type="button" class="option-button align">
+                                <i class="fa-solid fa-align-justify"></i>
+                            </button>
+                            <button id="indent" type="button" class="option-button spacing">
+                                <i class="fa-solid fa-indent"></i>
+                            </button>
+                            <button id="outdent" type="button" class="option-button spacing">
+                                <i class="fa-solid fa-outdent"></i>
+                            </button>
+                            <!-- Headings -->
+                            <select id="formatBlock" type="section" class="adv-option-button">
+                                <option value="H1">H1</option>
+                                <option value="H2">H2</option>
+                                <option value="H3">H3</option>
+                                <option value="H4">H4</option>
+                                <option value="H5">H5</option>
+                                <option value="H6">H6</option>
+                            </select>
+                            <!-- Font -->
+                            <select id="fontName" type="select" class="adv-option-button"></select>
+                            <select id="fontSize" type="select" class="adv-option-button"></select>
+                            <!-- Color -->
+                            <div class="input-wrapper">
+                                <input type="color" id="foreColor" class="adv-option-button"/>
+                                <label for="foreColor">Màu chữ</label>
+                            </div>
+                            <div class="input-wrapper">
+                                <input type="color" id="backColor" class="adv-option-button"/>
+                                <label for="backColor">Làm nổi bật</label>
+                            </div>
+                        </div>
+                        <div class="form-control mb-1" contenteditable="true" id="text-input" name="activityInDay"
+                             ng-model="tourTrips.activityInDay" ng-blur="setTouched()"></div>
+                        <span class="text-danger" id="invalid-templateDescription"></span>
+                        <span class="text-danger m-2" ng-show="isActive()">
+                            Vui lòng nhập hoạt động
+                        </span>
+                    </div>
+
+                    <div class="col-12 d-flex justify-content-end mt-5">
+                        <button class="btn" style="margin-right: 20px"><a class="btn"
+                                                                          href="/admin/basic-tour-list/trips-tour-list/{{tourTrips.tourId}}">Trở
+                            về</a></button>
+                        <button type="submit" class="btn btn-submit" ng-disabled="!canSubmit()">
+                            Thêm
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
