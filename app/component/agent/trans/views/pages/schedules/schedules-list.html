@@ -135,11 +135,11 @@
                 <tr ng-repeat="schedule in transportationSchedules">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ schedule.id }}</td>
-                    <td>{{ schedule.transportationId }}</td>
+                    <td>{{ transportation[schedule.transportationId].licensePlate || 'Đang tải...' }}</td>
                     <td>{{ schedule.fromLocation }}</td>
                     <td>{{ schedule.toLocation }}</td>
-                    <td>{{ schedule.bookedSeat }}</td>
-                    <td>{{ schedule.bookedSeat }}</td>
+                    <td>{{ transportation[schedule.transportationId].amountSeat + ' Chỗ' || 'Đang tải...' }}</td>
+                    <td>{{ schedule.bookedSeat + ' Chỗ' }}</td>
                     <td>{{ schedule.unitPrice | vnCurrency }}</td>
                     <td ng-if="schedule.isStatus == 0">
                         <div class="d-flex align-items-center justify-content-center">
@@ -182,49 +182,9 @@
                 </tbody>
             </table>
             <div class="card-footer">
-                <div class="d-flex justify-content-start position-absolute">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#modalActiveFalse">
-                        Đã hủy
-                    </button>
-                </div>
-                <div class="d-flex justify-content-end mt-2">
+                <div class="d-flex justify-content-end">
                     {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalActiveFalse" tabindex="-1" aria-labelledby="modalFalse" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalFalse">Danh sách chuyến đi bị hủy</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-striped table-inverse table-responsive">
-                    <thead class="thead-inverse">
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td scope="row"></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>

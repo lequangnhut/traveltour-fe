@@ -19,6 +19,7 @@
                         name="transportationId"
                         ng-class="{ 'is-invalid': form_trips.transportationId.$invalid && form_trips.transportationId.$touched, 'is-valid': form_trips.transportationId.$valid && form_trips.transportationId.$touched }"
                         ng-options="transport.id as transport.id + ' - ' +  transport.licensePlate + ' - ' + transport.amountSeat + ' Chổ' for transport in transportations"
+                        ng-change="onTransportationIdChange()"
                         ng-model="schedules.transportationId"
                         required
                 >
@@ -55,6 +56,7 @@
                        class="form-control"
                        name="departureTime"
                        ng-class="{ 'is-invalid': form_trips.departureTime.$invalid && form_trips.departureTime.$touched, 'is-valid': form_trips.departureTime.$valid && form_trips.departureTime.$touched }"
+                       ng-change="onDepartureTimeChange()"
                        ng-model="schedules.departureTime"
                        required
                 >
@@ -73,7 +75,8 @@
                 <input type="datetime-local"
                        class="form-control"
                        name="arrivalTime"
-                       ng-class="{ 'is-invalid': form_trips.arrivalTime.$invalid && form_trips.arrivalTime.$touched, 'is-valid': form_trips.arrivalTime.$valid && form_trips.arrivalTime.$touched }"
+                       ng-class="{ 'is-invalid': form_trips.arrivalTime.$invalid && form_trips.arrivalTime.$touched, 'is-valid': form_trips.arrivalTime.$valid && form_trips.arrivalTime.$touched && !dateError }"
+                       ng-change="onArrivalTimeChange()"
                        ng-model="schedules.arrivalTime"
                        required
                 >
@@ -83,7 +86,11 @@
                 </small>
                 <small class="text-danger"
                        ng-show="!form_trips.arrivalTime.$error.required && form_trips.arrivalTime.$error.dateRange">
-                    Ngày / giờ về phải trước ngày / giờ đi!
+                    Ngày / giờ về phải trước ngày / giờ đi !
+                </small>
+                <small class="text-danger"
+                       ng-show="form_trips.arrivalTime.$touched && dateError">
+                    Phương tiện sẽ hoạt động vào ngày {{ returnDate | vietnameseDateTime }}.
                 </small>
             </div>
 
@@ -163,7 +170,7 @@
                 </button>
                 <button type="submit"
                         class="btn btn-submit fw-bold"
-                        ng-disabled="form_trips.$invalid"
+                        ng-disabled="form_trips.$invalid || dateError"
                 >
                     Thêm mới
                 </button>
