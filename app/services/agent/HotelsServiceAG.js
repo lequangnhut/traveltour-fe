@@ -104,4 +104,35 @@ travel_app.service('HotelServiceAG', function ($http) {
             transformRequest: angular.identity,
         });
     }
+
+    this.getHotelByIdHotels = function (id)   {
+        return $http({
+            method: "GET",
+            url: API_HOTELS + "findByHotelId/" + id,
+            headers: {'Content-Type': undefined},
+            transformRequest: angular.identity
+        })
+    }
+
+
+    this.updateHotel = function (dataHotel, selectedUtilities, hotelAvatarUpdated) {
+        var formData = new FormData();
+
+        formData.append('dataHotel', new Blob([JSON.stringify(dataHotel)], {type: "application/json"}));
+        formData.append('selectedUtilities', new Blob([JSON.stringify(selectedUtilities)], {type: "application/json"}));
+
+        if (hotelAvatarUpdated && hotelAvatarUpdated.length > 0) {
+            formData.append('hotelAvatarUpdated', hotelAvatarUpdated[0], hotelAvatarUpdated[0].name);
+        } else {
+            var emptyImageBlob = new Blob([''], { type: "image/png" });
+            formData.append('hotelAvatarUpdated', emptyImageBlob, 'empty-image.png');
+        }
+
+        return $http({
+            method: 'POST',
+            url: API_HOTELS + 'information-hotel/update',
+            headers: {'Content-Type': undefined},
+            data: formData,
+        });
+    }
 })

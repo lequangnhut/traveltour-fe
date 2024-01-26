@@ -33,7 +33,7 @@
                                             </div>
                                         </div>
                                         <div class="card-footer d-flex justify-content-between w-100">
-                                            <a class="btn" href="">Sửa thông tin khách sạn</a>
+                                            <a class="btn" href="{{ '/business/hotel/home/hotel/update/' + hotel.id }}">Sửa thông tin khách sạn</a>
                                             <a class="btn btn-primary" href="/business/welcome-hotel"
                                                ng-click="showContentForRole('ROLE_AGENT_HOTEL', hotel.id)"
                                                 >Tiếp tục ></a>
@@ -75,7 +75,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-end">
-                                    <a href="/business/hotel/home/create" class="btn btn-primary">Thêm
+                                    <a href="/business/hotel/home/hotel/create" class="btn btn-primary">Thêm
                                         khách sạn mới</a>
                                 </div>
                             </div>
