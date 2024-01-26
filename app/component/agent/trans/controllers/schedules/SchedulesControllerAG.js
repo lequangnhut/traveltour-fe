@@ -3,12 +3,21 @@ travel_app.controller('SchedulesControllerAG', function ($scope, $timeout, $filt
     let brandId = LocalStorageService.get('brandId');
     let scheduleId = $routeParams.id;
 
+    $scope.dateError = null;
+
+    $scope.transportation = {};
     $scope.provinces = [];
 
-    $scope.isLoading = false;
+    $scope.isLoading = true;
 
     $scope.currentPage = 0;
     $scope.pageSize = 5;
+
+    $scope.inputStatus = {
+        transportationId: false,
+        departureTime: false,
+        arrivalTime: false
+    };
 
     $scope.schedules = {
         id: null,
@@ -18,6 +27,7 @@ travel_app.controller('SchedulesControllerAG', function ($scope, $timeout, $filt
         departureTime: null,
         arrivalTime: null,
         unitPrice: null,
+        priceFormat: null,
         bookedSeat: null,
         tripType: null,
         dateCreated: null,
@@ -88,11 +98,52 @@ travel_app.controller('SchedulesControllerAG', function ($scope, $timeout, $filt
         });
     };
 
+    /**
+     * Hàm kiểm tra trùng lặp giờ di chuyển
+     */
+    $scope.checkDuplicateTransportSchedule = function () {
+        if ($scope.inputStatus.transportationId && $scope.inputStatus.departureTime && $scope.inputStatus.arrivalTime) {
+            let transportationId = $scope.schedules.transportationId;
+            let departureTime = new Date($scope.schedules.departureTime).toISOString();
+            let arrivalTime = new Date($scope.schedules.arrivalTime).toISOString();
+
+            SchedulesServiceAG.checkDuplicateSchedule(transportationId, departureTime, arrivalTime).then(function (response) {
+                if (response.status === 200) {
+                    $scope.dateError = response.data.data.exists;
+                    $scope.returnDate = response.data.data.returnDate;
+                } else {
+                    $location.path('/admin/page-not-found');
+                }
+            }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+        }
+    }
+
+    $scope.onTransportationIdChange = function () {
+        $scope.inputStatus.transportationId = !!$scope.schedules.transportationId;
+        $scope.checkDuplicateTransportSchedule();
+    }
+
+    $scope.onDepartureTimeChange = function () {
+        $scope.inputStatus.departureTime = !!$scope.schedules.departureTime;
+        $scope.checkDuplicateTransportSchedule();
+    }
+
+    $scope.onArrivalTimeChange = function () {
+        $scope.inputStatus.arrivalTime = !!$scope.schedules.arrivalTime;
+        $scope.checkDuplicateTransportSchedule();
+    }
+
     $scope.init = function () {
         SchedulesServiceAG.findAllSchedules(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function (response) {
             $scope.transportationSchedules = response.data.content;
             $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
             $scope.totalElements = response.data.totalElements;
+
+            response.data.content.forEach(transportation => {
+                $scope.findTransportation(transportation.transportationId);
+            });
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
@@ -128,6 +179,18 @@ travel_app.controller('SchedulesControllerAG', function ($scope, $timeout, $filt
         }, errorCallback);
 
         /**
+         * Tìm biển số xe bằng transportId
+         * @param transportId
+         */
+        $scope.findTransportation = function (transportId) {
+            if (!$scope.transportation[transportId]) {
+                SchedulesServiceAG.findTransportByTransportId(transportId).then(function (response) {
+                    $scope.transportation[transportId] = response.data.data;
+                }, errorCallback);
+            }
+        }
+
+        /**
          * Tìm tên thương hiệu phương tiện bằng brandId
          * @param transportTypeId
          */
@@ -145,7 +208,7 @@ travel_app.controller('SchedulesControllerAG', function ($scope, $timeout, $filt
                     $scope.schedules = response.data.data.schedules;
                     $scope.schedules.departureTime = new Date($scope.schedules.departureTime);
                     $scope.schedules.arrivalTime = new Date($scope.schedules.arrivalTime);
-                    $scope.schedules.unitPrice = response.data.data.price;
+                    $scope.schedules.priceFormat = response.data.data.price;
                 } else {
                     $location.path('/admin/page-not-found');
                 }
@@ -259,6 +322,7 @@ travel_app.controller('SchedulesControllerAG', function ($scope, $timeout, $filt
             SchedulesServiceAG.delete(scheduleId).then(function () {
                 $location.path('/business/transport/schedules-management');
                 toastAlert('success', 'Xóa chuyến đi thành công !');
+                $scope.init();
             }, errorCallback).finally(function () {
                 $scope.isLoading = false;
             });

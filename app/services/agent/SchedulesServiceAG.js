@@ -29,6 +29,13 @@ travel_app.service('SchedulesServiceAG', function ($http) {
         })
     }
 
+    this.findTransportByTransportId = function (transportId) {
+        return $http({
+            method: 'GET',
+            url: API_SCHEDULE + 'find-transport-by-transportId/' + transportId
+        })
+    }
+
     this.create = function (scheduleDto) {
         return $http({
             method: 'POST',
@@ -49,6 +56,18 @@ travel_app.service('SchedulesServiceAG', function ($http) {
         return $http({
             method: 'GET',
             url: API_SCHEDULE + 'delete-schedule/' + scheduleId
+        })
+    }
+
+    this.checkDuplicateSchedule = function (transportId, departureTime, arrivalTime) {
+        return $http({
+            method: 'GET',
+            url: API_SCHEDULE + 'check-duplicate-schedules',
+            params: {
+                transportId: transportId,
+                departureTime: departureTime,
+                arrivalTime: arrivalTime
+            }
         })
     }
 })

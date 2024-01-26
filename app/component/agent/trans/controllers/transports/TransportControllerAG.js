@@ -32,7 +32,6 @@ travel_app.controller('TransportControllerAG', function ($scope, $routeParams, $
     $scope.checkDuplicateLicense = function () {
         TransportServiceAG.findByLicensePlate($scope.transportation.licensePlate).then(function successCallback(response) {
             $scope.licenseError = response.data.exists;
-            console.log(response.data)
         }, errorCallback);
     };
 

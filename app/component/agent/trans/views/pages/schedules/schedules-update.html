@@ -12,13 +12,15 @@
     </div>
 
     <div class="card card-custom">
-        <form class="row g-3 form-input-custom" ng-submit="updateSchedule()" name="form_trips">
+        <form class="row g-3 form-input-custom" ng-submit="updateSchedule()" name="form_trip">
             <div class="col-6">
                 <label class="form-label">PHƯƠNG TIỆN</label>
                 <select class="form-select"
                         name="transportationId"
-                        ng-class="{ 'is-invalid': form_trips.transportationId.$invalid && form_trips.transportationId.$touched, 'is-valid': form_trips.transportationId.$valid && form_trips.transportationId.$touched }"
+                        ng-class="{ 'is-invalid': form_trip.transportationId.$invalid && form_trip.transportationId.$touched, 'is-valid': form_trip.transportationId.$valid && form_trip.transportationId.$touched }"
                         ng-options="transport.id as transport.id + ' - ' +  transport.licensePlate + ' - ' + transport.amountSeat + ' Chổ' for transport in transportations"
+                        ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
+                        ng-change="onTransportationIdChange()"
                         ng-model="schedules.transportationId"
                         required
                 >
@@ -26,7 +28,7 @@
                     <option>Demo</option>
                 </select>
                 <small class="text-danger"
-                       ng-show="form_trips.transportationId.$touched && form_trips.transportationId.$error.required">
+                       ng-show="form_trip.transportationId.$touched && form_trip.transportationId.$error.required">
                     Vui lòng chọn phương tiện !
                 </small>
             </div>
@@ -35,8 +37,9 @@
                 <label class="form-label">LOẠI DỊCH VỤ</label>
                 <select class="form-select"
                         name="tripType"
-                        ng-class="{ 'is-invalid': form_trips.tripType.$invalid && form_trips.tripType.$touched, 'is-valid': form_trips.tripType.$valid && form_trips.tripType.$touched }"
+                        ng-class="{ 'is-invalid': form_trip.tripType.$invalid && form_trip.tripType.$touched, 'is-valid': form_trip.tripType.$valid && form_trip.tripType.$touched }"
                         ng-model="schedules.tripType"
+                        disabled
                         required
                 >
                     <option value="" disabled selected>Chọn loại vé</option>
@@ -44,7 +47,7 @@
                     <option value="false" ng-selected="schedules.tripType === false">Khách lẻ</option>
                 </select>
                 <small class="text-danger"
-                       ng-show="form_trips.tripType.$touched && form_trips.tripType.$error.required">
+                       ng-show="form_trip.tripType.$touched && form_trip.tripType.$error.required">
                     Vui lòng chọn loại vé !
                 </small>
             </div>
@@ -54,16 +57,18 @@
                 <input type="datetime-local"
                        class="form-control"
                        name="departureTime"
-                       ng-class="{ 'is-invalid': form_trips.departureTime.$invalid && form_trips.departureTime.$touched, 'is-valid': form_trips.departureTime.$valid && form_trips.departureTime.$touched }"
+                       ng-class="{ 'is-invalid': form_trip.departureTime.$invalid && form_trip.departureTime.$touched, 'is-valid': form_trip.departureTime.$valid && form_trip.departureTime.$touched }"
+                       ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
+                       ng-change="onDepartureTimeChange()"
                        ng-model="schedules.departureTime"
                        required
                 >
                 <small class="text-danger"
-                       ng-show="form_trips.departureTime.$touched && form_trips.departureTime.$error.required">
+                       ng-show="form_trip.departureTime.$touched && form_trip.departureTime.$error.required">
                     Vui lòng chọn ngày / giờ đi !
                 </small>
                 <small class="text-danger"
-                       ng-show="!form_trips.departureTime.$error.required && form_trips.departureTime.$error.futureDate">
+                       ng-show="form_trip.departureTime.$touched && !form_trip.departureTime.$error.required && form_trip.departureTime.$error.futureDate">
                     Ngày / giờ đi phải là ngày / giờ tương lai!
                 </small>
             </div>
@@ -73,17 +78,23 @@
                 <input type="datetime-local"
                        class="form-control"
                        name="arrivalTime"
-                       ng-class="{ 'is-invalid': form_trips.arrivalTime.$invalid && form_trips.arrivalTime.$touched, 'is-valid': form_trips.arrivalTime.$valid && form_trips.arrivalTime.$touched }"
+                       ng-class="{ 'is-invalid': form_trip.arrivalTime.$invalid && form_trip.arrivalTime.$touched, 'is-valid': form_trip.arrivalTime.$valid && form_trip.arrivalTime.$touched && !dateError }"
+                       ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
+                       ng-change="onArrivalTimeChange()"
                        ng-model="schedules.arrivalTime"
                        required
                 >
                 <small class="text-danger"
-                       ng-show="form_trips.arrivalTime.$touched && form_trips.arrivalTime.$error.required">
+                       ng-show="form_trip.arrivalTime.$touched && form_trip.arrivalTime.$error.required">
                     Vui lòng chọn ngày / giờ về !
                 </small>
                 <small class="text-danger"
-                       ng-show="!form_trips.arrivalTime.$error.required && form_trips.arrivalTime.$error.dateRange">
+                       ng-show="!form_trip.arrivalTime.$error.required && form_trip.arrivalTime.$error.dateRange">
                     Ngày / giờ về phải trước ngày / giờ đi!
+                </small>
+                <small class="text-danger"
+                       ng-show="form_trip.arrivalTime.$touched && dateError">
+                    Phương tiện sẽ hoạt động vào ngày {{ returnDate | vietnameseDateTime }}.
                 </small>
             </div>
 
@@ -92,16 +103,17 @@
                 <label class="form-label">Điểm Đi</label>
                 <select class="form-select"
                         name="fromLocation"
-                        ng-class="{ 'is-invalid': form_trips.fromLocation.$invalid && form_trips.fromLocation.$touched, 'is-valid': form_trips.fromLocation.$valid && form_trips.fromLocation.$touched }"
+                        ng-class="{ 'is-invalid': form_trip.fromLocation.$invalid && form_trip.fromLocation.$touched, 'is-valid': form_trip.fromLocation.$valid && form_trip.fromLocation.$touched }"
                         ng-options="city.Name as city.Name for city in provinces"
                         ng-model="schedules.fromLocation"
                         ng-change="updateToLocation()"
+                        disabled
                         required
                 >
                     <option value="" disabled selected>Chọn điểm đi</option>
                 </select>
                 <small class="text-danger"
-                       ng-show="form_trips.fromLocation.$touched && form_trips.fromLocation.$error.required">
+                       ng-show="form_trip.fromLocation.$touched && form_trip.fromLocation.$error.required">
                     Vui lòng chọn điểm đi!
                 </small>
             </div>
@@ -110,16 +122,17 @@
                 <label class="form-label">Điểm Đến</label>
                 <select class="form-select"
                         name="toLocation"
-                        ng-class="{ 'is-invalid': form_trips.toLocation.$invalid && form_trips.toLocation.$touched, 'is-valid': form_trips.toLocation.$valid && form_trips.toLocation.$touched }"
+                        ng-class="{ 'is-invalid': form_trip.toLocation.$invalid && form_trip.toLocation.$touched, 'is-valid': form_trip.toLocation.$valid && form_trip.toLocation.$touched }"
                         ng-options="city.Name as city.Name for city in provinces"
                         ng-model="schedules.toLocation"
                         ng-change="updateToLocation()"
+                        disabled
                         required
                 >
                     <option value="" disabled selected>Chọn điểm đến</option>
                 </select>
                 <small class="text-danger"
-                       ng-show="form_trips.toLocation.$touched && form_trips.toLocation.$error.required && !toLocationError">
+                       ng-show="form_trip.toLocation.$touched && form_trip.toLocation.$error.required && !toLocationError">
                     Vui lòng chọn điểm đến!
                 </small>
                 <small class="text-danger" ng-show="toLocationError">
@@ -132,14 +145,15 @@
                 <input type="text"
                        class="form-control"
                        placeholder="100.000 đ"
-                       name="unitPrice"
+                       name="priceFormat"
                        format-price-input
-                       ng-model="schedules.unitPrice"
-                       ng-class="{ 'is-invalid': form_trips.unitPrice.$invalid && form_trips.unitPrice.$touched, 'is-valid': form_trips.unitPrice.$valid && form_trips.unitPrice.$touched }"
+                       ng-model="schedules.priceFormat"
+                       ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
+                       ng-class="{ 'is-invalid': form_trip.priceFormat.$invalid && form_trip.priceFormat.$touched, 'is-valid': form_trip.priceFormat.$valid && form_trip.priceFormat.$touched }"
                        required
                 >
                 <small class="text-danger"
-                       ng-show="form_trips.unitPrice.$touched && form_trips.unitPrice.$error.required">
+                       ng-show="form_trip.priceFormat.$touched && form_trip.priceFormat.$error.required">
                     Vui lòng nhập tổng tiền !
                 </small>
             </div>
@@ -151,9 +165,9 @@
                        placeholder="Số chổ ngồi đã được mặc định"
                        name="bookedSeat"
                        ng-model="schedules.bookedSeat"
-                       ng-class="{ 'is-invalid': form_trips.bookedSeat.$invalid && form_trips.bookedSeat.$touched, 'is-valid': form_trips.bookedSeat.$valid && form_trips.bookedSeat.$touched }"
+                       ng-class="{ 'is-invalid': form_trip.bookedSeat.$invalid && form_trip.bookedSeat.$touched, 'is-valid': form_trip.bookedSeat.$valid && form_trip.bookedSeat.$touched }"
+                       ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
                        ng-pattern="/^[0-9]*$/"
-                       disabled
                 >
             </div>
 
@@ -161,7 +175,8 @@
                 <label class="form-label">TRẠNG THÁI CHUYẾN ĐI</label>
                 <select class="form-select"
                         name="isStatus"
-                        ng-class="{ 'is-invalid': form_trips.isStatus.$invalid && form_trips.isStatus.$touched, 'is-valid': form_trips.isStatus.$valid && form_trips.isStatus.$touched }"
+                        ng-class="{ 'is-invalid': form_trip.isStatus.$invalid && form_trip.isStatus.$touched, 'is-valid': form_trip.isStatus.$valid && form_trip.isStatus.$touched }"
+                        ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
                         ng-model="schedules.isStatus"
                         required
                 >
@@ -171,7 +186,7 @@
                     <option value="2" ng-selected="schedules.isStatus === 2">Đã hoàn thành</option>
                 </select>
                 <small class="text-danger"
-                       ng-show="form_trips.isStatus.$touched && form_trips.isStatus.$error.required">
+                       ng-show="form_trip.isStatus.$touched && form_trip.isStatus.$error.required">
                     Vui lòng chọn trạng thái !
                 </small>
             </div>
@@ -180,7 +195,8 @@
                 <label class="form-label">TRẠNG THÁI HOẠT ĐỘNG</label>
                 <select class="form-select"
                         name="isActive"
-                        ng-class="{ 'is-invalid': form_trips.isActive.$invalid && form_trips.isActive.$touched, 'is-valid': form_trips.isActive.$valid && form_trips.isActive.$touched }"
+                        ng-class="{ 'is-invalid': form_trip.isActive.$invalid && form_trip.isActive.$touched, 'is-valid': form_trip.isActive.$valid && form_trip.isActive.$touched }"
+                        ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
                         ng-model="schedules.isActive"
                         required
                 >
@@ -189,7 +205,7 @@
                     <option value="false" ng-selected="schedules.isActive === false">Ngưng hoạt động</option>
                 </select>
                 <small class="text-danger"
-                       ng-show="form_trips.isActive.$touched && form_trips.isActive.$error.required">
+                       ng-show="form_trip.isActive.$touched && form_trip.isActive.$error.required">
                     Vui lòng chọn trạng thái !
                 </small>
             </div>
@@ -200,7 +216,7 @@
                 </button>
                 <button type="submit"
                         class="btn btn-submit fw-bold"
-                        ng-disabled="form_trips.$invalid"
+                        ng-disabled="form_trip.$invalid || dateError"
                 >
                     Cập nhật
                 </button>
