@@ -1,5 +1,40 @@
-travel_app.controller("InformationController", function ($scope) {
+travel_app.controller("InformationController", function ($scope, $location, $routeParams, $timeout, $http, CustomerInfoServiceCT) {
     $scope.selectedImageSrc = null;
+
+    $scope.isLoading = true;
+
+    const fileName = "default.jpg";
+    const mimeType = "image/jpeg";
+
+    $scope.hasImage = false;
+
+    $scope.customer = {
+        avatar: null,
+        email: null,
+        password: null,
+        gender: null,
+        fullName: null,
+        birth: null,
+        address: null,
+        citizenCard: null,
+        phone: null,
+        isActive: null
+    }
+
+
+    $scope.customerList = [];
+    $scope.currentPage = 0; // Trang hiện tại
+    $scope.pageSize = 5; // Số lượng tours trên mỗi trang
+
+    let searchTimeout;
+    let customerId = $routeParams.id;
+
+    $scope.emailError = false;
+    $scope.phoneError = false;
+    $scope.cardError = false;
+    $scope.invalidBirth = false;
+
+    //==================================================================================================
 
     /**
      * Phương thức hiển thị modal
@@ -80,4 +115,23 @@ travel_app.controller("InformationController", function ($scope) {
     $scope.closeModalChangeAddress = function () {
         $('#change-address').modal('hide');
     };
+
+    //============================================================================================================
+
+    $scope.getCustomer = function () {
+        if (customerId !== undefined && customerId !== null && customerId !== "") {
+            CustomerInfoServiceCT.findCustomerById(customerId).then(function successCallback(response) {
+                if (response.status === 200) {
+                    console.log(response)
+                    $timeout(function () {
+                        $scope.customer = response.data.data;
+                        $scope.customer.birth = new Date(response.data.data.birth);
+                    }, 0);
+                }
+            });
+        }
+    };
+
+    $scope.getCustomer();
+
 })

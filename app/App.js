@@ -555,7 +555,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/home/home.html',
             controller: 'HomeController'
         })
-        .when('/information', {
+        .when('/information/:id', {
             templateUrl: 'app/component/customers/views/pages/info/information.html',
             controller: 'InformationController',
             resolve: {
