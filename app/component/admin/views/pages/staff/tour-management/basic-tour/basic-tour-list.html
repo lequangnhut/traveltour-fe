@@ -98,17 +98,29 @@
                     <th># </th>
                     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-                    <th class="cursor-pointer" ng-click="sortData('id')">ID
-                        <i class="material-icons sorting-icon">{{getSortIcon('id')}}</i>
+                    <th class="cursor-pointer" ng-click="sortData('id')">
+                        <div class="icon-left">
+                            ID
+                            <i class="material-icons sorting-icon">{{getSortIcon('id')}}</i>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('tourName')">Tên tour
-                        <i class="material-icons sorting-icon">{{getSortIcon('tourName')}}</i>
+                    <th class="cursor-pointer" ng-click="sortData('tourName')">
+                        <div class="icon-left">
+                            Tên tour
+                            <i class="material-icons sorting-icon">{{getSortIcon('tourName')}}</i>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('tourTypeId')">Loại tour
-                        <i class="material-icons sorting-icon">{{getSortIcon('tourTypeId')}}</i>
+                    <th class="cursor-pointer" ng-click="sortData('tourTypeId')">
+                        <div class="icon-left">
+                            Loại tour
+                            <i class="material-icons sorting-icon">{{getSortIcon('tourTypeId')}}</i>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('dateCreated')">Ngày tạo
-                        <i class="material-icons sorting-icon">{{getSortIcon('dateCreated')}}</i>
+                    <th class="cursor-pointer" ng-click="sortData('dateCreated')">
+                        <div class="icon-left">
+                            Ngày tạo
+                            <i class="material-icons sorting-icon">{{getSortIcon('dateCreated')}}</i>
+                        </div>
                     </th>
 
                     <!--                    <th class="cursor-pointer" ng-click="sortData('isActive')">Trạng thái-->

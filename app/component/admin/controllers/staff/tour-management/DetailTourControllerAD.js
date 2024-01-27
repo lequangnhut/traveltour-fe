@@ -139,7 +139,7 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $location, $ro
         });
 
         if (tourDetailId !== undefined && tourDetailId !== null && tourDetailId !== "") {
-            TourDetailsServiceAD.findTourDetailById(tourDetailId).then(function successCallback(response) {
+            TourDetailsServiceAD.findTourDetailById(tourDetailId).then( response => {
                 if (response.status === 200) {
                     $timeout(function () {
                         $scope.tourDetail = response.data.data;

@@ -1,3 +1,4 @@
+/* CSS cho cột và biểu tượng sắp xếp */
 .btn-flex {
     display: flex;
     align-items: center;
@@ -11,34 +12,53 @@
 .btn-flex span {
     font-size: 0.9rem;
 }
+
 .sorting-icon {
-    font-size: 16px;
+    font-size: 1.1rem !important;
     vertical-align: middle;
     color: #666;
     transition: color 0.3s ease;
     cursor: pointer;
 }
 
-th.cursor-pointer:hover .sorting-icon, .sort-active {
+/* Hiển thị màu và opacity khi hover vào cột */
+th.cursor-pointer:hover .sorting-icon,
+.sort-active {
     color: #333;
     opacity: 1;
 }
 
+/* Điều chỉnh opacity cho cột không được sắp xếp */
 .sort-inactive {
     opacity: 0.7;
 }
 
 th.cursor-pointer:hover {
-    background-color: #f2f2f2; /* màu nền nhẹ khi hover vào cột */
+    background-color: #f2f2f2; /* Màu nền nhẹ khi hover vào cột */
 }
-.sorting-icon.desc {
-    background: linear-gradient(to bottom left, #ffffff 50%, transparent 50%);
-    -webkit-background-clip: text;
-    color: transparent;
+
+/* CSS cho cột và biểu tượng sắp xếp */
+/* CSS cho cột và biểu tượng sắp xếp */
+.icon-left {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Canh giữa theo chiều ngang */
+    white-space: nowrap; /* Ngăn ngừng text tràn xuống dòng mới */
+    overflow: hidden; /* Ẩn nội dung dư thừa nếu màn hình quá nhỏ */
+    text-overflow: ellipsis; /* Hiển thị ba dấu chấm (...) nếu nội dung quá dài */
 }
-.sorting-icon.asc {
-    background: linear-gradient(to top left, #ffffff 50%, transparent 50%);
-    -webkit-background-clip: text;
-    color: transparent;
+
+.icon-left i.material-icons {
+    margin: 0 5px; /* Khoảng cách giữa biểu tượng và văn bản */
+    font-size: 0.9rem;
+}
+
+.icon-left span {
+    font-size: 0.9rem;
+}
+
+th, td {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
 }
 
