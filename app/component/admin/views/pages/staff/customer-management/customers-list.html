@@ -95,25 +95,36 @@
                     <th><span><input class="form-check-input checkbox-all" type="checkbox" value=""></span>
                     </th>
                     <th>#</th>
-                    <th class="cursor-pointer" ng-click="sortData('id')">ID
-                        <i class="material-icons sorting-icon">{{getSortIcon('id')}}</i>
+                    <th class="cursor-pointer" ng-click="sortData('id')">
+                        <div class="icon-left">ID
+                            <i class="material-icons sorting-icon">{{ getSortIcon('id') }}</i>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('fullName')">Họ tên
-                        <i class="material-icons sorting-icon">{{getSortIcon('fullName')}}</i>
+                    <th class="cursor-pointer" ng-click="sortData('fullName')">
+                        <div class="icon-left">Họ tên
+                            <i class="material-icons sorting-icon">{{ getSortIcon('fullName') }}</i>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('email')">Email
-                        <i class="material-icons sorting-icon">{{getSortIcon('email')}}</i>
+                    <th class="cursor-pointer" ng-click="sortData('email')">
+                        <div class="icon-left">Email
+                            <i class="material-icons sorting-icon">{{ getSortIcon('email') }}</i>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('phone')">Số điện thoại
-                        <i class="material-icons sorting-icon">{{getSortIcon('phone')}}</i>
+                    <th class="cursor-pointer" ng-click="sortData('phone')">
+                        <div class="icon-left">Số điện thoại
+                            <i class="material-icons sorting-icon">{{ getSortIcon('phone') }}</i>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('birth')">Ngày sinh
-                        <i class="material-icons sorting-icon">{{getSortIcon('birth')}}</i>
+                    <th class="cursor-pointer" ng-click="sortData('birth')">
+                        <div class="icon-left">Ngày sinh
+                            <i class="material-icons sorting-icon">{{ getSortIcon('birth') }}</i>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('gender')">Giới tính
-                        <i class="material-icons sorting-icon">{{getSortIcon('gender')}}</i>
+                    <th class="cursor-pointer" ng-click="sortData('gender')">
+                        <div class="icon-left">Giới tính
+                            <i class="material-icons sorting-icon">{{ getSortIcon('gender') }}</i>
+                        </div>
                     </th>
-
                     <th>Thao tác</th>
                 </tr>
                 </thead>
@@ -122,8 +133,10 @@
                     <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ customer.id }}</td>
-                    <td>{{ customer.fullName }}</td>
-                    <td>{{ customer.email }}</td>
+                    <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ customer.fullName }}">{{ customer.fullName }}</td>
+                    <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ customer.email }}">
+                        {{ customer.email }}
+                    </td>
                     <td>{{ customer.phone }}</td>
                     <td>{{ customer.birth | date: 'dd/MM/yyyy' }}</td>
                     <td>{{ customer.gender === 1 ? 'Nam' : (customer.gender === 2 ? 'Nữ' : 'Khác') }}</td>
