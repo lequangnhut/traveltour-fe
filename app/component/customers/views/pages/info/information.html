@@ -16,15 +16,24 @@
                                     <img src="/assets/customers/images/user/avata-user-default.png" alt="avata-user"
                                          class="img-fluid avatar-user">
                                     <div class="profile-info">
-                                        <div class="name h4">Nguyễn An</div>
+                                        <div class="name h4"> {{customer.fullname}}</div>
                                         <div class="d-flex align-items-center">
                                         <span class="label">Giới tính:
-                                            <span class="fw-bold">
-                                                Nam
+                                            <span class="fw-bold" ng-if="(customer.gender) == null">
+                                               (Chưa Cập Nhật)
+                                            </span>
+                                             <span class="fw-bold" ng-if="(customer.gender) == 1">
+                                               Nữ
+                                            </span>
+                                             <span class="fw-bold" ng-if="(customer.gender) == 2">
+                                              Nam
+                                            </span>
+                                            <span class="fw-bold" ng-if="(customer.gender) == 3">
+                                              Khác
                                             </span>
                                         </span>
                                             <span class="line"></span>
-                                            <span class="label">Ngày sinh: <span class="fw-bold">(Chưa cập nhật)</span></span>
+                                            <span class="label">Ngày sinh: <span class="fw-bold"> {{customer.birth | date:'dd-MM-yyyy'}}</span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -41,7 +50,7 @@
                                 <div class="persional-acccount w-100">
                                     <div class="item d-flex align-items-center justify-content-between">
                                         <div class="box-profile d-flex align-items-center">
-                                            <span>Tài khoản: <span class="fw-bold">0969653264</span></span>
+                                            <span>Tài khoản: <span class="fw-bold"> {{customer.phone}}</span></span>
                                         </div>
                                         <div class="change">
                                             <button ng-click="showModalChangePhoneNumber()" class="btn">Thay đổi
@@ -50,14 +59,14 @@
                                     </div>
                                     <div class="item d-flex align-items-center justify-content-between">
                                         <div class="box-profile d-flex align-items-center">
-                                            <span>ID: <span class="fw-bold">23146347</span></span>
+                                            <span>ID: <span class="fw-bold"> {{customer.id}}</span></span>
                                         </div>
                                         <div class="change">
                                         </div>
                                     </div>
                                     <div class="item d-flex align-items-center justify-content-between">
                                         <div class="box-profile d-flex align-items-center">
-                                            <span>Email: <span class="fw-bold">Anntpc04830@fpt.edu.vn</span></span>
+                                            <span>Email: <span class="fw-bold">{{customer.email}}</span></span>
                                         </div>
                                         <div class="change">
                                             <button ng-click="showModalChangeEmail()" class="btn">Thay đổi</button>
@@ -65,7 +74,7 @@
                                     </div>
                                     <div class="item d-flex align-items-center justify-content-between">
                                         <div class="box-profile d-flex align-items-center">
-                                            <span>Địa chỉ: <span class="fw-bold">(Chưa cập nhật)</span></span>
+                                            <span>Địa chỉ: <span class="fw-bold">{{customer.address}}</span></span>
                                         </div>
                                         <div class="change">
                                             <button ng-click="showModalChangeAddress()" class="btn">Thay đổi</button>
