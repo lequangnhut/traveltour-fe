@@ -22,8 +22,9 @@
                             </span>
                         <input type="text"
                                class="form-control"
-                               placeholder="Tìm kiếm"
+                               placeholder="Tìm kiếm họ tên, số điện thoại, email..."
                                ng-model="searchTerm"
+                               ng-change="searchOrderTransport()"
                         >
                     </div>
                 </div>
@@ -45,7 +46,7 @@
                 <div class="row">
                     <div class="h4 col-lg-5 d-flex align-items-center h-100">
                         <div class="d-flex align-items-center">
-                            <span class="h4">Danh sách phương tiện đã được booking</span>
+                            <span class="h4">Danh sách phương tiện đã booking</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end align-items-baseline col-lg-2">
@@ -97,58 +98,69 @@
                 </div>
             </div>
             <table class="table table-responsive text-center">
+                <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
-                    <th><span><input class="form-check-input checkbox-all" type="checkbox" value="" id=""></span>
+                    <th>#</th>
+                    <th class="cursor-pointer" ng-click="sortData('id')">
+                        <div class="icon-left">
+                            Chuyến đi
+                            <i class="material-icons sorting-icon">{{ getSortIcon('id') }}</i>
+                        </div>
                     </th>
-                    <th>#
-                        <i class="fa-solid fa-sort"></i>
+                    <th class="cursor-pointer" ng-click="sortData('customerName')">
+                        <div class="icon-left">
+                            Họ tên
+                            <i class="material-icons sorting-icon">{{ getSortIcon('customerName') }}</i>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('id')">ID
-                        <i class="fa" ng-class="getSortIcon('id')"></i>
+                    <th class="cursor-pointer" ng-click="sortData('amountTicket')">
+                        <div class="icon-left">
+                            Số lượng vé
+                            <i class="material-icons sorting-icon">{{ getSortIcon('amountTicket') }}</i>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('id')">Mã phương tiện
-                        <i class="fa" ng-class="getSortIcon('id')"></i>
+                    <th class="cursor-pointer" ng-click="sortData('orderTotal')">
+                        <div class="icon-left">
+                            Tổng tiền
+                            <i class="material-icons sorting-icon">{{ getSortIcon('orderTotal') }}</i>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('fullName')">Họ tên
-                        <i class="fa" ng-class="getSortIcon('fullName')"></i>
+                    <th class="cursor-pointer" ng-click="sortData('dateCreated')">
+                        <div class="icon-left">
+                            Ngày đặt
+                            <i class="material-icons sorting-icon">{{ getSortIcon('dateCreated') }}</i>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('phone')">Số điện thoại
-                        <i class="fa" ng-class="getSortIcon('phone')"></i>
-                    </th>
-                    <th class="cursor-pointer" ng-click="sortData('id')">Số vé
-                        <i class="fa" ng-class="getSortIcon('id')"></i>
-                    </th>
-                    <th class="cursor-pointer" ng-click="sortData('id')">Tổng tiền
-                        <i class="fa" ng-class="getSortIcon('id')"></i>
-                    </th>
-                    <th class="cursor-pointer" ng-click="sortData('dateCreated')">Ngày đặt
-                        <i class="fa" ng-class="getSortIcon('dateCreated')"></i>
-                    </th>
-                    <th class="cursor-pointer" ng-click="sortData('isActive')">Trạng thái
-                        <i class="fa" ng-class="getSortIcon('isActive')"></i>
+                    <th class="cursor-pointer" ng-click="sortData('orderStatus')">
+                        <div class="icon-left">
+                            Trạng thái
+                            <i class="material-icons sorting-icon">{{ getSortIcon('orderStatus') }}</i>
+                        </div>
                     </th>
                     <th>Thao tác</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="booking in bookingData">
+                <tr ng-repeat="booking in orderTransport">
+                    <td>{{ $index + 1 }}</td>
                     <td>
-                        <span>
-                            <input class="form-check-input" type="checkbox" value="">
-                        </span>
+                        {{ transportScheduleName[booking.transportationScheduleId].fromLocation + ' - ' + transportScheduleName[booking.transportationScheduleId].toLocation || 'Đang tải...' }}
                     </td>
-                    <td>2</td>
-                    <td>P0001</td>
-                    <td>Phòng studio</td>
-                    <td>2</td>
-                    <td>2</td>
-                    <td>1</td>
-                    <td>Giường đôi</td>
-                    <td>300.000</td>
-                    <td>
+                    <td>{{ booking.customerName }}</td>
+                    <td>{{ booking.amountTicket }}</td>
+                    <td>{{ booking.orderTotal | vnCurrency }}</td>
+                    <td>{{ booking.dateCreated | vietnameseDateTime }}</td>
+                    <td ng-if="booking.orderStatus == 0">
                         <div class="d-flex align-items-center justify-content-center">
-                            <span class="status-warning"></span> <span class="text-status-warning">Cảnh báo</span>
+                            <span class="status-success"></span>
+                            <span class="text-status-success">Đã tạo vé</span>
+                        </div>
+                    </td>
+                    <td ng-if="booking.orderStatus == 1">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <span class="status-success"></span>
+                            <span class="text-status-success">Đã hủy vé</span>
                         </div>
                     </td>
                     <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
@@ -156,14 +168,19 @@
                            role="button" class="fs-1 btn text-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a href="#" ng-click="deleteBooking(booking.id, booking.licensePlate)"
-                           role="button" class="fs-1 btn text-danger">
+                        <a href="#"
+                           ng-click="deleteOrderTransport(booking.id, booking.amountTicket,
+                           transportScheduleName[booking.transportationScheduleId].fromLocation,
+                           transportScheduleName[booking.transportationScheduleId].toLocation)"
+                           role="button"
+                           class="fs-1 btn text-danger"
+                        >
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
                 </tr>
-                <tr ng-if="bookingData.length === 0">
-                    <td colspan="8">Không có dữ liệu phương tiện.</td>
+                <tr ng-if="orderTransport.length === 0">
+                    <td colspan="10">Không có dữ liệu phương tiện.</td>
                 </tr>
                 </tbody>
             </table>

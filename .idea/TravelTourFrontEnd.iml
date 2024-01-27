@@ -11,6 +11,7 @@
     <orderEntry type="library" name="angular" level="application" />
     <orderEntry type="library" name="chart.js" level="application" />
     <orderEntry type="library" name="font-awesome" level="application" />
+    <orderEntry type="library" name="line" level="application" />
     <orderEntry type="library" name="tinymce" level="application" />
   </component>
 </module>
