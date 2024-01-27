@@ -321,15 +321,15 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/business/transport/booking-management', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-list.html',
-            controller: 'BookingControllerAG'
+            controller: 'OrderTransportControllerAG'
         })
         .when('/business/transport/booking-management/create-booking', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-create.html',
-            controller: 'BookingControllerAG'
+            controller: 'OrderTransportControllerAG'
         })
         .when('/business/transport/booking-management/update-booking/:id', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-update.html',
-            controller: 'BookingControllerAG'
+            controller: 'OrderTransportControllerAG'
         })
         .when('/business/transport/schedules-management', {
             templateUrl: 'app/component/agent/trans/views/pages/schedules/schedules-list.html',
@@ -554,6 +554,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/home', {
             templateUrl: 'app/component/customers/views/pages/home/home.html',
             controller: 'HomeController'
+        })
+        .when('/home/see-ticket-informatione/:orderTransportId', {
+            templateUrl: 'app/component/customers/views/pages/home/home.html',
+            controller: 'TicketController'
         })
         .when('/information/:id', {
             templateUrl: 'app/component/customers/views/pages/info/information.html',

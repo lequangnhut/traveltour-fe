@@ -12,6 +12,13 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
 
     $scope.init = function () {
         /**
+         * Định dạng giá tiền fill lên trong db
+         */
+        $scope.formatPrice = function (price) {
+            return new Intl.NumberFormat('vi-VN', {currency: 'VND'}).format(price);
+        };
+
+        /**
          * Lấy năm hiện tại và fill ở footer
          */
         $scope.year = new Date().getFullYear();
@@ -50,7 +57,6 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
                 LocalStorageService.set('brandId', brandId);
             }
         };
-
 
         /**
          * Kiểm tra xem một vai trò có đang được chọn không
