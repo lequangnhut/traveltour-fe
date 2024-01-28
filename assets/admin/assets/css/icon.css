@@ -13,12 +13,17 @@
     font-size: 0.9rem;
 }
 
+/* CSS cho biểu tượng sắp xếp */
 .sorting-icon {
     font-size: 1.1rem !important;
     vertical-align: middle;
     color: #666;
     transition: color 0.3s ease;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1; /* Đặt line-height về 1 để loại bỏ khoảng trắng không mong muốn */
+    opacity: 0.75; /* Đặt mức độ mờ mặc định */
 }
 
 /* Hiển thị màu và opacity khi hover vào cột */
@@ -38,7 +43,6 @@ th.cursor-pointer:hover {
 }
 
 /* CSS cho cột và biểu tượng sắp xếp */
-/* CSS cho cột và biểu tượng sắp xếp */
 .icon-left {
     display: flex;
     align-items: center;
@@ -48,13 +52,11 @@ th.cursor-pointer:hover {
     text-overflow: ellipsis; /* Hiển thị ba dấu chấm (...) nếu nội dung quá dài */
 }
 
-.icon-left i.material-icons {
+.icon-left svg {
     margin: 0 5px; /* Khoảng cách giữa biểu tượng và văn bản */
-    font-size: 0.9rem;
-}
-
-.icon-left span {
-    font-size: 0.9rem;
+    width: 0.5em; /* Kích thước của biểu tượng SVG */
+    padding-bottom: 1px;
+    transform: scale(0.85); /* giảm tỷ lệ lên 0.9 lần */
 }
 
 th, td {

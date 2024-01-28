@@ -2,8 +2,18 @@
     <div class="header-control mb-4">
         <div class="header-control-center">
             <div class="d-flex justify-content-between align-items-center row ">
-                <div class="col-xl-12 mt-3">
-                    <h3 class="color-green fw-bold text-uppercase">Danh sách tour chi tiết</h3>
+                <div class="col-xl-6 mt-3">
+                    <h3 class="color-green fw-bold text-uppercase">dịch vụ khách sạn cho tour</h3>
+                </div>
+                <div class="col-xl-6 mt-3">
+                    <button type="button" class="btn btn-green float-end ms-3"
+                            data-bs-toggle="modal" data-bs-target="#modalSchedule">
+                        Lịch trình
+                    </button>
+                    <button type="button" class="btn btn-green float-end"
+                            data-bs-toggle="modal" data-bs-target="#tourInformationModal">
+                        Xem TT tour
+                    </button>
                 </div>
             </div>
         </div>
@@ -12,9 +22,9 @@
     <div class="">
         <div class="card card-customer">
             <div class="row" style="margin: 20px 16px 20px 16px">
-                <div class="col-xl-4">
+                <div class="col-xl-6 col-md-6 col-sm-6 mb-3">
                     Bạn muốn tìm kiếm gì ?
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3 mt-1">
                             <span class="input-group-text" id="basic-addon1"><i
                                     class="fa-solid fa-magnifying-glass bg-light"></i></span>
                         <input type="text" class="form-control" placeholder="Tìm kiếm" ng-model="searchTerm"
@@ -22,12 +32,36 @@
                                aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                 </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 mb-3"></div>
+                <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
+                    <select class="form-select">
+                        <option value="" selected>Chọn địa điểm</option>
+                    </select>
+                </div>
+                <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
+                    <select class="form-select">
+                        <option value="" selected>Chọn địa điểm</option>
+                    </select>
+                </div>
+                <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
+                    <select class="form-select">
+                        <option value="" selected>Chọn địa điểm</option>
+                    </select>
+                </div>
+                <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
+                    <select class="form-select">
+                        <option value="" selected>Chọn địa điểm</option>
+                    </select>
+                </div>
+                <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
+                    <select class="form-select">
+                        <option value="" selected>Chọn địa điểm</option>
+                    </select>
+                </div>
 
-                <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
-                     style="margin: 16px 0 0 0">
-                    <a href="/admin/detail-tour-list/detail-tour-create" class="btn btn-primary">
-                        <i class="fa-solid fa-plus" style="margin-right: 10px"></i> Tạo tour
-                        mới
+                <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
+                    <a href="/admin/detail-tour-list/detail-tour-create" class="btn btn-primary w-100">
+                        Tìm kiếm
                     </a>
                 </div>
             </div>
@@ -41,7 +75,7 @@
                 <div class="row">
                     <div class="h4 col-lg-5 d-flex align-items-center h-100">
                         <div class="d-flex align-items-center">
-                            <span class="h4">Danh sách tour chi tiết</span>
+                            <span class="h4">Danh sách dịch vụ khách sạn cho tour</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end align-items-baseline col-lg-2">
@@ -98,59 +132,24 @@
                     <th><span><input class="form-check-input checkbox-all" type="checkbox" value=""></span>
                     </th>
                     <th>#</th>
-                    <th class="cursor-pointer" ng-click="sortData('id')">
-                        <div class="icon-left">ID
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                    <th class="cursor-pointer" ng-click="sortData('hotelName')">
+                        <div class="icon-left">Tên khách sạn
+                            <i class="material-icons sorting-icon">{{ getSortIcon('hotelName') }}</i>
                         </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('tourId')">
-                        <div class="icon-left">Tên tour
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('tourId')"></span>
+                    <th class="cursor-pointer" ng-click="sortData('numberPhone')">
+                        <div class="icon-left">Số điện thoại
+                            <i class="material-icons sorting-icon">{{ getSortIcon('numberPhone') }}</i>
                         </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('guideId')">
-                        <div class="icon-left">Hướng dẫn viên
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('guideId')"></span>
+                    <th class="cursor-pointer" ng-click="sortData('location')">
+                        <div class="icon-left">Địa điểm
+                            <i class="material-icons sorting-icon">{{ getSortIcon('location') }}</i>
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('numberOfGuests')">
-                        <div class="icon-left">Số khách
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('numberOfGuests')"></span>
-                        </div>
-                    </th>
-                    <th class="cursor-pointer" ng-click="sortData('fromLocation')">
-                        <div class="icon-left">Điểm đi
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('fromLocation')"></span>
-                        </div>
-                    </th>
-                    <th class="cursor-pointer" ng-click="sortData('toLocation')">
-                        <div class="icon-left">Điểm đến
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('toLocation')"></span>
-                        </div>
-                    </th>
-                    <th class="cursor-pointer" ng-click="sortData('departureDate')">
-                        <div class="icon-left">Ngày đi
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('departureDate')"></span>
-                        </div>
-                    </th>
-                    <th class="cursor-pointer" ng-click="sortData('arrivalDate')">
-                        <div class="icon-left">Ngày về
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('arrivalDate')"></span>
-                        </div>
-                    </th>
-                    <th class="cursor-pointer" ng-click="sortData('unitPrice')">
-                        <div class="icon-left">Giá
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('unitPrice')"></span>
-                        </div>
-                    </th>
-                    <th class="cursor-pointer" ng-click="sortData('tourDetailNotes')">
-                        <div class="icon-left">Ghi chú
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('tourDetailNotes')"></span>
-                        </div>
-                    </th>
-                    <th class="cursor-pointer" ng-click="sortData('tourDetailStatus')">
-                        <div class="icon-left">Trạng thái
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('tourDetailStatus')"></span>
+                        <div class="icon-left">Trung bình giá
+                            <i class="material-icons sorting-icon">{{ getSortIcon('numberOfGuests') }}</i>
                         </div>
                     </th>
                     <th>Thao tác</th>
@@ -160,17 +159,10 @@
                 <tr ng-repeat="tourDetail in tourDetailList">
                     <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ tourDetail.id }}</td>
-                    <td>{{ tourDetail.tourId }}</td>
                     <td>{{ tourDetail.guideId }}</td>
                     <td>{{ tourDetail.numberOfGuests }}</td>
                     <td>{{ tourDetail.fromLocation }}</td>
                     <td>{{ tourDetail.toLocation }}</td>
-                    <td>{{ tourDetail.departureDate | vietnameseDateTime }}</td>
-                    <td>{{ tourDetail.arrivalDate | vietnameseDateTime }}</td>
-                    <td>{{ tourDetail.unitPrice }}</td>
-                    <td>{{ tourDetail.tourDetailNotes }}</td>
-                    <td>{{ tourDetail.tourDetailStatus }}</td>
                     <td class="d-flex align-items-center justify-content-center">
                         <a href="admin/detail-tour-list/detail-tour-update/{{tourDetail.id}}"
                            role="button" class="fs-1 btn text-warning px-2">
@@ -200,3 +192,65 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="tourInformationModal" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+            <h5 class="modal-title text-center mt-3" id="">THÔNG TIN TOUR</h5>
+            <hr>
+            <div class="modal-body">
+                <div class="fw-normal px-3">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td class="fw-bold">Tên tour:</td>
+                            <td>Cần Thơ - Hà Nội</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Ngày đi - giờ đi:</td>
+                            <td>12/02/2022 - 05:30:00 AM</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Ngày về - giờ về:</td>
+                            <td>16/06/2026 - 05:30:00 PM</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Điểm đi - điểm đến:</td>
+                            <td>Cần Thơ - Đà Lạc</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Số khách:</td>
+                            <td>20 (15 người lớn, 5 trẻ em)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalSchedule" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <h5 class="modal-title text-center mt-3" id="tourName">LỊCH TRÌNH</h5>
+            <hr>
+            <div class="modal-body">
+                <div class="mb-3" ng-repeat="tourTrips in tourTripsList">
+                    <span class="fw-bold me-1">Ngày {{ tourTrips.dayInTrip }}: </span>
+                    <div ng-bind-html="tourTrips.activityInDay"></div>
+                </div>
+                <div ng-if="tourTripsList.length === 0">
+                    <div class="text-center">HIỆN CHƯA CÓ KẾ HOẠCH</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>

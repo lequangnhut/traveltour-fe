@@ -96,6 +96,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Admin Partner Services
          */
+        .when('/admin/service-list', {
+            templateUrl: 'app/component/admin/views/pages/staff/partner-service/service-list.html',
+            controller: 'ServiceListControllerAD'
+        })
         .when('/admin/vehicle-list', {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/vehicle/vehicle-list.html',
             controller: 'VehicleControllerAD'
@@ -108,17 +112,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/vehicle/vehicle-update.html',
             controller: 'VehicleControllerAD'
         })
-        .when('/admin/stay-list', {
-            templateUrl: 'app/component/admin/views/pages/staff/partner-service/stay/stay-list.html',
-            controller: 'StayControllerAD'
+        .when('/admin/service-list/hotel-list', {
+            templateUrl: 'app/component/admin/views/pages/staff/partner-service/hotel/hotel-list.html',
+            controller: 'HotelControllerAD'
         })
-        .when('/admin/stay-list/stay-create', {
-            templateUrl: 'app/component/admin/views/pages/staff/partner-service/stay/stay-create.html',
-            controller: 'StayControllerAD'
+        .when('/admin/service-list/hotel-list/hotel-create', {
+            templateUrl: 'app/component/admin/views/pages/staff/partner-service/hotel/hotel-create.html',
+            controller: 'HotelControllerAD'
         })
-        .when('/admin/stay-list/stay-update/:id', {
-            templateUrl: 'app/component/admin/views/pages/staff/partner-service/stay/stay-update.html',
-            controller: 'StayControllerAD'
+        .when('/admin/service-list/hotel-list/hotel-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/staff/partner-service/hotel/hotel-update.html',
+            controller: 'HotelControllerAD'
         })
         .when('/admin/sightseeing-list', {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/sightseeing/sightseeing-list.html',
