@@ -1,6 +1,6 @@
 travel_app.controller('SightseeingServiceControllerAD', function ($scope) {
 
-    // $scope.stay = {
+    // $scope.hotel = {
     //     tourName: null,
     //     hotelName: null,
     //     address: null,
@@ -10,7 +10,7 @@ travel_app.controller('SightseeingServiceControllerAD', function ($scope) {
     //
     // // Hàm xử lý khi submit form
     // $scope.submitSightseeing = function () {
-    //     console.log($scope.stay);
+    //     console.log($scope.hotel);
     // };
 
 });

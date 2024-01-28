@@ -97,32 +97,32 @@
                     <th>#</th>
                     <th class="cursor-pointer" ng-click="sortData('id')">
                         <div class="icon-left">ID
-                            <i class="material-icons sorting-icon">{{ getSortIcon('id') }}</i>
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('fullName')">
                         <div class="icon-left">Họ tên
-                            <i class="material-icons sorting-icon">{{ getSortIcon('fullName') }}</i>
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('fullName')"></span>
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('email')">
                         <div class="icon-left">Email
-                            <i class="material-icons sorting-icon">{{ getSortIcon('email') }}</i>
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('email')"></span>
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('phone')">
                         <div class="icon-left">Số điện thoại
-                            <i class="material-icons sorting-icon">{{ getSortIcon('phone') }}</i>
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('phone')"></span>
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('birth')">
                         <div class="icon-left">Ngày sinh
-                            <i class="material-icons sorting-icon">{{ getSortIcon('birth') }}</i>
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('birth')"></span>
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('gender')">
                         <div class="icon-left">Giới tính
-                            <i class="material-icons sorting-icon">{{ getSortIcon('gender') }}</i>
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('gender')"></span>
                         </div>
                     </th>
                     <th>Thao tác</th>
@@ -133,8 +133,11 @@
                     <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ customer.id }}</td>
-                    <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ customer.fullName }}">{{ customer.fullName }}</td>
-                    <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ customer.email }}">
+                    <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="{{ customer.fullName }}">{{ customer.fullName }}
+                    </td>
+                    <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="{{ customer.email }}">
                         {{ customer.email }}
                     </td>
                     <td>{{ customer.phone }}</td>

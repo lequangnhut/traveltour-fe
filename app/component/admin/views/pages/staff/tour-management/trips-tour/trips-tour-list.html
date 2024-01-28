@@ -114,10 +114,11 @@
                 <th><span><input class="form-check-input checkbox-all" type="checkbox" value=""></span>
                 </th>
                 <th>#</th>
-                <th class="cursor-pointer" ng-click="sortData('dayInTrip')">Ngày
-                    <div class="icon-left">
-                        <i class="material-icons sorting-icon">{{ getSortIcon('dayInTrip') }}</i>
+                <th class="cursor-pointer" ng-click="sortData('dayInTrip')">
+                    <div class="icon-left">Ngày
+                        <span class="sorting-icon" ng-bind-html="getSortIcon('dayInTrip')"></span>
                     </div>
+                </th>
                 <th style="width: 200px">Thao tác</th>
             </tr>
             </thead>

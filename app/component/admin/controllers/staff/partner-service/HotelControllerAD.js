@@ -1,4 +1,4 @@
-travel_app.controller('StayControllerAD', function ($scope) {
+travel_app.controller('HotelControllerAD', function ($scope) {
     // Khởi tạo đối tượng stayDetail
     $scope.stay = {
         tourName: null,
