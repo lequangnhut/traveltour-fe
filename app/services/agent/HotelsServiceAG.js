@@ -129,7 +129,7 @@ travel_app.service('HotelServiceAG', function ($http) {
         }
 
         return $http({
-            method: 'POST',
+            method: 'PUT',
             url: API_HOTELS + 'information-hotel/update',
             headers: {'Content-Type': undefined},
             data: formData,

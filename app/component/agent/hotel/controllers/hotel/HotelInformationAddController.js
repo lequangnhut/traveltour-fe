@@ -1,4 +1,4 @@
-travel_app.controller("HotelInformationAdd", function ($scope, $http, $location, HotelServiceAG, PlaceUtilitiesService, HotelTypeService, AgenciesServiceAG) {
+travel_app.controller("HotelInformationAddController", function ($scope, $http, $location, HotelServiceAG, PlaceUtilitiesService, HotelTypeService, AgenciesServiceAG) {
     $scope.company = {
         hotelName: null,
         phoneNumber: null,
@@ -17,7 +17,6 @@ travel_app.controller("HotelInformationAdd", function ($scope, $http, $location,
     };
 
     function errorCallback(error) {
-        console.log(error)
         toastAlert('error', "Máy chủ không tồn tại !");
     }
 
@@ -27,8 +26,6 @@ travel_app.controller("HotelInformationAdd", function ($scope, $http, $location,
     $scope.wards = [];
 
     $scope.selectHotelType = function () {
-        // Logic khi chọn loại khách sạn
-        console.log("Selected hotel type: ", $scope.company.hotelType);
     };
 
     /**
@@ -156,15 +153,12 @@ travel_app.controller("HotelInformationAdd", function ($scope, $http, $location,
                         return checkbox.id;
                     });
 
-                console.log($scope.company)
-                console.log($scope.company.agencyId);
-
                 HotelServiceAG.createHotel($scope.company, selectedCheckboxValues).then(function successCallback(response) {
                     if (response.status === 200) {
                         $location.path('/business/hotel/home');
-                        centerAlert('Thành công !', 'Thông tin khách sạn đã thêm thành công.', 'success')
+                        toastAlert('success', response.data.message)
                     } else if(response.status === 500) {
-                        toastAlert('error', response.message);
+                        toastAlert('error', response.data.message);
                     }
                 }, errorCallback).finally(function () {
                     $scope.isLoading = false;
