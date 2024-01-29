@@ -1,4 +1,4 @@
-travel_app.controller("HotelInformationEdit", function ($scope, $http, $timeout, $location, $routeParams, HotelServiceAG, PlaceUtilitiesService, HotelTypeService, AgenciesServiceAG) {
+travel_app.controller("HotelInformationEditController", function ($scope, $http, $timeout, $location, $routeParams, HotelServiceAG, PlaceUtilitiesService, HotelTypeService, AgenciesServiceAG) {
 
     $scope.hotelEdit = {
         id: null,
@@ -31,7 +31,6 @@ travel_app.controller("HotelInformationEdit", function ($scope, $http, $timeout,
     $scope.init();
 
     function errorCallback(error) {
-        console.log(error)
         toastAlert('error', "Máy chủ không tồn tại !");
     }
 
@@ -44,7 +43,6 @@ travel_app.controller("HotelInformationEdit", function ($scope, $http, $timeout,
             if (response.data.status === '200') {
 
                 $scope.hotelEdit = response.data.data
-                console.log($scope.hotelEdit)
 
                 let selectedProvince = $scope.provinces.find(p => p.Name === $scope.hotelEdit.province);
                 if (selectedProvince) {
@@ -79,8 +77,6 @@ travel_app.controller("HotelInformationEdit", function ($scope, $http, $timeout,
                         });
                         var checked = ids &&
                             ids.indexOf(item.id) !== -1;
-
-                        console.log(ids)
                         return {id: item.id, label: item.placeUtilitiesName, checked: checked};
                     });
 
@@ -108,8 +104,7 @@ travel_app.controller("HotelInformationEdit", function ($scope, $http, $timeout,
 
 
     $scope.selectHotelType = function () {
-        // Logic khi chọn loại khách sạn
-        console.log("Selected hotel type: ", $scope.hotelEdit.hotelType);
+
     };
 
     /**
@@ -146,7 +141,6 @@ travel_app.controller("HotelInformationEdit", function ($scope, $http, $timeout,
                 $scope.districts = selectedProvince ? selectedProvince.Districts : [];
                 $scope.hotelEdit.district = null;
                 $scope.hotelEdit.ward = null;
-
             };
 
             /**
@@ -173,7 +167,6 @@ travel_app.controller("HotelInformationEdit", function ($scope, $http, $timeout,
                 }
             };
         }catch (e) {
-            console.error("Error")
         } finally {
             $scope.isLoading = false;
         }
@@ -273,10 +266,6 @@ travel_app.controller("HotelInformationEdit", function ($scope, $http, $timeout,
             AgenciesServiceAG.findByUserId(user.id).then(function successCallback(response) {
                 $scope.hotelEdit.agencyId = response.data.id;
 
-                console.log($scope.dataHotel)
-                console.log($scope.selectedUtilitieses)
-                console.log($scope.hotelEdit.hotelAvatarUpdated)
-
                 // Chuyển đổi object thành mảng số nguyên
                 var selectedUtilitiesArray = Object.values($scope.selectedUtilitieses);
                 var selectedUtilitiesIds = selectedUtilitiesArray.map(function (utility) {
@@ -287,7 +276,7 @@ travel_app.controller("HotelInformationEdit", function ($scope, $http, $timeout,
                     .then(function successCallback(response) {
                         if (response.status === 200) {
                             $location.path('/business/hotel/home');
-                            centerAlert('Thành công !', 'Thông tin khách sạn đã thêm thành công.', 'success')
+                            toastAlert('success', response.data.message);
                         } else if (response.status === 500) {
                             toastAlert('error', response.message);
                         }
@@ -295,6 +284,7 @@ travel_app.controller("HotelInformationEdit", function ($scope, $http, $timeout,
                     $scope.isLoading = false;
                 });
             }, errorCallback).finally(function () {
+
             });
         }
     };

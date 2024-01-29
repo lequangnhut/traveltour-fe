@@ -257,22 +257,22 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/business/hotel/home/hotel/create', {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-add.html',
-            controller: 'HotelInformationAdd'
+            controller: 'HotelInformationAddController'
         })
         .when('/business/hotel/home/hotel/update/:id', {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-edit.html',
-            controller: 'HotelInformationEdit'
+            controller: 'HotelInformationEditController'
         })
-        .when('/business/hotel/hotel-amenities-list', {
-            templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-list.html',
-            controller: 'HotelAmenitiesListControllerAG'
+        .when('/business/hotel/room-type-list', {
+            templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-list.html',
+            controller: 'RoomTypeListController'
         })
-        .when('/business/hotel/hotel-amenities-list/create', {
-            templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-add.html',
-            controller: 'HotelAmenitiesAddControllerAG'
+        .when('/business/hotel/room-type-list/create', {
+            templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-add.html',
+            controller: 'RoomTypeAddController'
         })
-        .when('/business/hotel/hotel-amenities-list/update', {
-            templateUrl: 'app/component/agent/hotel/views/pages/service/amenities/hotel-amenities-edit.html',
+        .when('/business/hotel/hotel-modal-list/update', {
+            templateUrl: 'app/component/agent/hotel/views/pages/service/hotel-amenities-edit.html',
             controller: ''
         })
         .when('/business/hotel/booking-list', {
@@ -295,7 +295,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/room-type-information-edit.html',
             controller: 'AccommodationLocationInformationEditController'
         })
-        .when('/business/hotel/room-amenities-update', {
+        .when('/business/hotel/room-modal-update', {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/room-amenities.html',
             controller: 'AccommodationLocationInformationEditController'
         })

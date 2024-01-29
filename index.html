@@ -70,6 +70,7 @@
         <link href="/assets/admin/assets/css/editor.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/dashboard.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/icon.css" type="text/css" rel="stylesheet">
+        <link href="/assets/admin/assets/css/img-perview.css" type="text/css" rel="stylesheet">
         <script>
             var phoenixIsRTL = window.config.config.phoenixIsRTL;
             if (phoenixIsRTL) {
@@ -674,28 +675,9 @@
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
                                     <a class="nav-link label-1"
-                                       ng-click="setActiveNavItem('hotel-list')"
-                                       ng-class="{ 'active': activeNavItem === 'hotel-list'}"
-                                       href="/business/hotel/hotel-information-list"
-                                    >
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span class="nav-link-icon">
-                                            <span data-feather="phone-call"></span>
-                                        </span>
-                                            <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Quản lí khách sạn</span>
-                                        </span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- label-->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link label-1"
                                        ng-click="setActiveNavItem('room-list')"
                                        ng-class="{ 'active': activeNavItem === 'room-list'}"
-                                       href="/business/hotel/hotel-amenities-list"
+                                       href="/business/hotel/room-type-list"
                                     >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
@@ -1430,6 +1412,9 @@
 <script src="app/services/agent/PlaceUtilitiesService.js"></script>
 <script src="app/services/agent/HotelTypeService.js"></script>
 <script src="app/services/agent/SchedulesServiceAG.js"></script>
+<script src="app/services/agent/RoomTypeService.js"></script>
+<script src="app/services/agent/RoomUtilitesService.js"></script>
+<script src="app/services/agent/BedTypeService.js"></script>
 <script src="app/services/agent/OrderTransportService.js"></script>
 
 <!--====== Customer Service ======-->
@@ -1477,10 +1462,11 @@
 
 <!--====== Controller Agent Hotel ======-->
 <script src="app/component/agent/hotel/controllers/RegisterHotelControllerAG.js"></script>
-<script src="app/component/agent/hotel/controllers/service/amenities/HotelAmenitiesListControllerAG.js"></script>
+<script src="app/component/agent/hotel/controllers/service/RoomTypeListController.js"></script>
 <script src="app/component/agent/hotel/controllers/dashboard/ListHotelControllerAG.js"></script>
-<script src="app/component/agent/hotel/controllers/hotel/HotelInformationAdd.js"></script>
-<script src="app/component/agent/hotel/controllers/hotel/HotelInformationEdit.js"></script>
+<script src="app/component/agent/hotel/controllers/hotel/HotelInformationAddController.js"></script>
+<script src="app/component/agent/hotel/controllers/hotel/HotelInformationEditController.js"></script>
+<script src="app/component/agent/hotel/controllers/service/RoomTypeAddController.js"></script>
 
 <!--====== Controller Agent Visit ======-->
 <script src="app/component/agent/visits/controllers/RegisterVisitsControllerAG.js"></script>
