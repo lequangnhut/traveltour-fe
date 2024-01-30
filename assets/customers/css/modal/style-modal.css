@@ -1,0 +1,61 @@
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+
+}
+
+ .thong-tin-ve {
+     border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    /* Khoảng trống dưới main */
+    font-family: Arial, sans-serif;
+}
+
+
+
+.ve-xe {
+    border-radius: 10px;
+    padding: 10px; /* Thêm padding để tăng khoảng trắng xung quanh nội dung */
+    background-color: #f0f0f0; /* Màu nền để làm nổi bật các thành phần */
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+}
+
+.thong-tin-nguoi-dai-dien {
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #f2f2f2;
+}
+
+.ma-qr-ve-xe {
+    border-bottom: 1px solid black;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+.thong-tin-nguoi-dai-dien label {
+    font-weight: bold;
+}
+
+.thong-tin-nguoi-dai-dien input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+.tong-tien {
+    border-top: 1px solid black;
+    text-align: center;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+.modal-dialog {
+    width: 5000px !important;
+    height: 400px;
+}
