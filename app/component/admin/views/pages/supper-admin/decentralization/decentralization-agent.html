@@ -100,30 +100,26 @@
             <table class="table table-responsive text-center">
                 <thead>
                 <tr class="bg-light">
-                    <th>#
-                        <i class="fa-solid fa-sort"></i>
+                    <th>#</th>
+                    <th ng-click="sortData('email')">
+                        <div class="icon-left">Email
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('email')"></span>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('email')">Email
-                        <i class="fa" ng-class="getSortIcon('email')"></i>
+                    <th ng-click="sortData('fullName')">
+                        <div class="icon-left">Họ và tên
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('fullName')"></span>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('fullName')">Họ và tên
-                        <i class="fa" ng-class="getSortIcon('fullName')"></i>
+                    <th>Vai trò</th>
+                    <th>Vai trò</th>
+                    <th>Vai trò</th>
+                    <th ng-click="sortData('isActive')">
+                        <div class="icon-left">Trạng thái
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('isActive')"></span>
+                        </div>
                     </th>
-                    <th>Vai trò
-                        <i class="fa-solid fa-sort"></i>
-                    </th>
-                    <th>Vai trò
-                        <i class="fa-solid fa-sort"></i>
-                    </th>
-                    <th>Vai trò
-                        <i class="fa-solid fa-sort"></i>
-                    </th>
-                    <th class="cursor-pointer" ng-click="sortData('isActive')">Trạng thái
-                        <i class="fa" ng-class="getSortIcon('isActive')"></i>
-                    </th>
-                    <th>Thao tác
-                        <i class="fa-solid fa-sort"></i>
-                    </th>
+                    <th>Thao tác</th>
                 </tr>
                 </thead>
                 <tbody>

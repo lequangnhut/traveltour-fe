@@ -7,7 +7,7 @@
     <div class="bg"></div>
 </div><!--====== End Preloader ======-->
 
-<form ng-submit="submitDataRegisterTrans()" name="register_trans" method="post">
+<form ng-submit="updateTransport()" name="register_trans" method="post">
     <section id="business-information" ng-show="currentStep === 1">
         <div class="container-fluid">
             <div class="logo text-center">
@@ -16,49 +16,13 @@
                     <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">TravelTour</p>
                 </div>
                 <div class="content-text mt-3">
-                    <div class="h4">Đăng kí thông tin nhà xe TravelTour</div>
-                </div>
-                <div class="progress-register">
-                    <!-- Tiến dộ -->
-                    <div class="progress-container">
-                        <div class="container">
-                            <div class="d-flex justify-content-center">
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                 id="tick">
-                                                <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="text-wrapper">Tạo doanh nghiệp</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <span class="num">2</span>
-                                        </div>
-                                        <div class="text-wrapper">Thông tin phương tiện</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <span class="num">3</span>
-                                        </div>
-                                        <div class="text-wrapper">Xác nhận thông tin</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="h4">Cập nhật thông tin nhà xe với TravelTour</div>
                 </div>
             </div>
             <div class="main d-flex justify-content-center theme-wizard">
                 <div class="form card">
                     <div class="row g-3">
-                        <div class="h3 color-green fw-medium">THÔNG TIN THƯƠNG HIỆU</div>
+                        <div class="h3 color-green fw-medium">CẬP NHẬT NHÀ XE</div>
                         <div class="col-12">
                             <label class="form-label">Tên thương hiệu</label>
                             <input type="text"
@@ -86,14 +50,24 @@
                                    name="transportationBrandImg"
                                    ng-model="transportBrand.transportationBrandImg"
                                    ngf-max-size="10MB"
+                                   accept="image/*"
                                    ng-class="{ 'is-invalid': register_trans.transportationBrandImg.$invalid && register_trans.transportationBrandImg.$touched, 'is-valid': register_trans.transportationBrandImg.$valid && register_trans.transportationBrandImg.$touched }"
                                    ngf-select="uploadBusinessImage($file)"
-                                   required
                             >
                             <small class="text-danger"
                                    ng-show="register_trans.transportationBrandImg.$touched && register_trans.transportationBrandImg.$error.required">
-                                Vui lòng tải lên hình ảnh nhà xe !
+                                Vui lòng tải lên hình ảnh nhà xe!
                             </small>
+                            <div class="mt-2">
+                                <label class="form-label">Ảnh hiện tại</label>
+                                <br>
+                                <img ng-src="{{ transportBrand.transportationBrandImg }}"
+                                     class="img-fluid rounded-1 cursor-pointer"
+                                     width="100"
+                                     alt="avatar ảnh"
+                                     ng-click="openImageModal(transportBrand.transportationBrandImg)"
+                                >
+                            </div>
                         </div>
                         <div class="col-12">
                             <label class="form-label">GHI CHÚ</label>
@@ -108,12 +82,19 @@
 
                         <div class="d-flex justify-content-end mt-5">
                             <a role="button"
-                               href="/business/select-type"
+                               href="/business/transport/home"
                                class="btn btn-submit-form btn-prev"
                                style="background: #5c636a; margin-right: 20px"
                             >
                                 <i class="fa-solid fa-arrow-left"></i> Trở về
                             </a>
+                            <button type="button"
+                                    class="btn btn-delete-form"
+                                    ng-click="deleteTransport()"
+                                    style="margin-right: 20px"
+                            >
+                                Xóa
+                            </button>
                             <button type="button" class="btn btn-submit-form"
                                     ng-click="nextStep()"
                                     ng-disabled="register_trans.$invalid || phoneError"
@@ -135,44 +116,7 @@
                     <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">TravelTour</p>
                 </div>
                 <div class="content-text mt-3">
-                    <div class="h4">Đăng kí thông tin đối tác TravelTour</div>
-                </div>
-                <div class="progress-register">
-                    <!-- Tiến dộ -->
-                    <div class="progress-container">
-                        <div class="container">
-                            <div class="d-flex justify-content-center">
-                                <div class="item">
-                                    <div class="item-1">
-                                        <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                             id="tick">
-                                            <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
-                                        </svg>
-                                        <div class="text-wrapper">Tạo doanh nghiệp</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                 id="tick">
-                                                <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="text-wrapper">Thông tin phương tiện</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <span class="num">3</span>
-                                        </div>
-                                        <div class="text-wrapper">Xác nhận thông tin</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="h4">Đăng kí thông tin đối tác với TravelTour</div>
                 </div>
             </div>
             <div class="main d-flex justify-content-center theme-wizard">
@@ -203,3 +147,18 @@
         </div>
     </section>
 </form>
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Ảnh xe</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="" id="modalImage" class="img-fluid" alt="Ảnh phương tiện">
+            </div>
+        </div>
+    </div>
+</div>

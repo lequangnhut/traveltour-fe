@@ -20,6 +20,7 @@
                         name="transportationScheduleId"
                         ng-class="{ 'is-invalid': form_booking.transportationScheduleId.$invalid && form_booking.transportationScheduleId.$touched, 'is-valid': form_booking.transportationScheduleId.$valid && form_booking.transportationScheduleId.$touched }"
                         ng-options="schedules.id as schedules.id + ' - ' + schedules.fromLocation + ' - ' + schedules.toLocation for schedules in transportSchedules"
+                        ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
                         ng-model="bookings.transportationScheduleId"
                         ng-change="updateAmountAndTotal()"
                         required
@@ -41,6 +42,7 @@
                        name="amountTicket"
                        ng-model="bookings.amountTicket"
                        ng-class="{ 'is-invalid': form_booking.amountTicket.$invalid && form_booking.amountTicket.$touched, 'is-valid': form_booking.amountTicket.$valid && form_booking.amountTicket.$touched }"
+                       ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
                        ng-pattern="/^[1-4]$/"
                        ng-maxlength="1"
                        ng-change="updateTotal()"
@@ -85,6 +87,7 @@
                        placeholder="Nguyễn Văn A"
                        name="customerName"
                        ng-model="bookings.customerName"
+                       ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
                        ng-class="{ 'is-invalid': form_booking.customerName.$invalid && form_booking.customerName.$touched, 'is-valid': form_booking.customerName.$valid && form_booking.customerName.$touched }"
                        ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
                        required
@@ -106,6 +109,7 @@
                        placeholder="987654321012"
                        name="customerCitizenCard"
                        ng-model="bookings.customerCitizenCard"
+                       ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
                        ng-class="{ 'is-invalid': form_booking.customerCitizenCard.$invalid && form_booking.customerCitizenCard.$touched, 'is-valid': form_booking.customerCitizenCard.$valid && form_booking.customerCitizenCard.$touched }"
                        ng-pattern="/^[0-9]{9,12}$/"
                        required
@@ -127,6 +131,7 @@
                        placeholder="exam@gmail.com"
                        name="customerEmail"
                        ng-model="bookings.customerEmail"
+                       ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
                        ng-class="{ 'is-invalid': form_booking.customerEmail.$invalid && form_booking.customerEmail.$touched, 'is-valid': form_booking.customerEmail.$valid && form_booking.customerEmail.$touched }"
                        ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
                        required
@@ -148,6 +153,7 @@
                        placeholder="0969653264"
                        name="customerPhone"
                        ng-model="bookings.customerPhone"
+                       ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
                        ng-class="{ 'is-invalid': form_booking.customerPhone.$invalid && form_booking.customerPhone.$touched, 'is-valid': form_booking.customerPhone.$valid && form_booking.customerPhone.$touched }"
                        ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
                        required
@@ -167,6 +173,7 @@
                 <select class="form-select"
                         name="paymentMethod"
                         ng-class="{ 'is-invalid': form_booking.paymentMethod.$invalid && form_booking.paymentMethod.$touched, 'is-valid': form_booking.paymentMethod.$valid && form_booking.paymentMethod.$touched }"
+                        ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
                         ng-model="bookings.paymentMethod"
                         required
                 >
@@ -187,6 +194,7 @@
                 <textarea class="form-control"
                           cols="30" rows="3"
                           placeholder="Nội dung..."
+                          ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
                           ng-model="bookings.orderNote"
                 >
                 </textarea>
@@ -196,7 +204,10 @@
                 <button type="button" class="btn" style="margin-right: 20px">
                     <a class="btn" href="/business/transport/booking-management">Trở về</a>
                 </button>
-                <button type="submit" class="btn btn-submit fw-bold" ng-disabled="form_booking.$invalid">
+                <button type="submit"
+                        class="btn btn-submit fw-bold"
+                        ng-disabled="form_booking.$invalid || schedules.isStatus === 1 || schedules.isStatus === 2"
+                >
                     Cập nhật
                 </button>
             </div>

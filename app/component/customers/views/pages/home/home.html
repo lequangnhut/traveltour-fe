@@ -926,7 +926,71 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ...
+                <div class="row">
+                    <div class="col-9">
+                        <div class="mb-3">
+                            <label>Họ và tên (người đại diện):
+                                <span class="fw-bold">{{ orderTransport.customerName }} -</span>
+                                <span class="fw-bold">{{ orderTransport.customerCitizenCard }}</span>
+                            </label>
+                        </div>
+                        <div class="mb-3">
+                            <label>Số điện thoại (người đại diện):
+                                <span class="fw-bold">{{ orderTransport.customerPhone }}</span>
+                            </label>
+                        </div>
+                        <div class="mb-3">
+                            <label>Địa chỉ email (người đại diện):
+                                <span class="fw-bold">{{ orderTransport.customerEmail }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <img ng-src="{{ orderTransport.orderCode }}" class="img-fluid rounded-top" width="120" alt="avatar">
+                    </div>
+                    <div class="col-4 mb-3">
+                        <label>Số lượng vé:
+                            <span class="fw-bold">{{ orderTransport.amountTicket }} vé</span>
+                        </label>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <label>Đơn giá:
+                            <span class="fw-bold">{{ transportSchedule.unitPrice | vnCurrency }}</span>
+                        </label>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <label>Tổng tiền:
+                            <span class="fw-bold">{{ orderTransport.orderTotal | vnCurrency }}</span>
+                        </label>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label>Chuyến đi:
+                            <span class="fw-bold">{{ transportSchedule.fromLocation }}</span>
+                            <i class="fa-solid fa-arrow-right fs--2"></i>
+                            <span class="fw-bold">{{ transportSchedule.toLocation }}</span>
+                        </label>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label>Khởi hành vào lúc:
+                            <span class="fw-bold">{{ transportSchedule.departureTime | vietnameseDateTime }}</span>
+                        </label>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label>Dự kiến đến vào lúc:
+                            <span class="fw-bold">{{ transportSchedule.arrivalTime | vietnameseDateTime }}</span>
+                        </label>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label>Ghi chú:
+                            <span class="fw-bold" ng-if="orderTransport.orderNote !== null">
+                                {{ transportSchedule.orderNote }}
+                            </span>
+                            <span class="fw-bold" ng-if="orderTransport.orderNote === null">
+                                Không có ghi chú.
+                            </span>
+                        </label>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Thoát</button>

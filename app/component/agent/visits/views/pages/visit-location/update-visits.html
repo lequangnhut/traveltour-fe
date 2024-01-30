@@ -7,7 +7,7 @@
     <div class="bg"></div>
 </div><!--====== End Preloader ======-->
 
-<form ng-submit="submitDataRegisterVisits()" name="register_visits" method="post">
+<form ng-submit="updateVisitLocation()" name="register_visits" method="post">
     <section id="business-information" ng-show="currentStep === 1">
         <div class="container-fluid">
             <div class="logo text-center">
@@ -16,57 +16,13 @@
                     <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">TravelTour</p>
                 </div>
                 <div class="content-text mt-3">
-                    <div class="h4">Đăng kí thông tin đối tác TravelTour</div>
-                </div>
-                <div class="progress-register">
-                    <!-- Tiến dộ -->
-                    <div class="progress-container">
-                        <div class="container">
-                            <div class="d-flex justify-content-center">
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                 id="tick">
-                                                <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="text-wrapper">Tạo doanh nghiệp</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <span class="num">2</span>
-                                        </div>
-                                        <div class="text-wrapper">Thông tin địa điểm</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <span class="num">3</span>
-                                        </div>
-                                        <div class="text-wrapper">Thông tin vé</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <span class="num">4</span>
-                                        </div>
-                                        <div class="text-wrapper">Xác nhận thông tin</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="h4">Cập nhật thông tin địa điểm tham quan TravelTour</div>
                 </div>
             </div>
             <div class="main d-flex justify-content-center theme-wizard">
                 <div class="form card">
                     <div class="row g-3">
-                        <div class="h3 color-green fw-medium">THÔNG TIN ĐỊA ĐIỂM</div>
+                        <div class="h3 color-green fw-medium">THÊM THÔNG TIN ĐỊA ĐIỂM</div>
                         <div class="col-12">
                             <label class="form-label">Tên địa điểm</label>
                             <input type="text"
@@ -150,8 +106,8 @@
                             <select class="form-select"
                                     name="province"
                                     ng-class="{ 'is-invalid': register_visits.province.$invalid && register_visits.province.$touched, 'is-valid': register_visits.province.$valid && register_visits.province.$touched }"
-                                    ng-options="city.Id as city.Name for city in provinces"
-                                    ng-change="onProvinceChangeCreate()"
+                                    ng-options="city.Name as city.Name for city in provinces"
+                                    ng-change="onProvinceChangeUpdate()"
                                     ng-model="address.province"
                                     required
                             >
@@ -168,9 +124,9 @@
                             <select class="form-select"
                                     name="district"
                                     ng-class="{ 'is-invalid': register_visits.district.$invalid && register_visits.district.$touched, 'is-valid': register_visits.district.$valid && register_visits.district.$touched }"
-                                    ng-options="district.Id as district.Name for district in districts"
+                                    ng-options="district.Name as district.Name for district in districts"
                                     ng-disabled="!address.province"
-                                    ng-change="onDistrictChangeCreate()"
+                                    ng-change="onDistrictChangeUpdate()"
                                     ng-model="address.district"
                                     required
                             >
@@ -187,9 +143,9 @@
                             <select class="form-select"
                                     name="ward"
                                     ng-class="{ 'is-invalid': register_visits.ward.$invalid && register_visits.ward.$touched, 'is-valid': register_visits.ward.$valid && register_visits.ward.$touched }"
-                                    ng-options="ward.Id as ward.Name for ward in wards"
+                                    ng-options="ward.Name as ward.Name for ward in wards"
                                     ng-disabled="!address.district"
-                                    ng-change="onWardChangeCreate()"
+                                    ng-change="onWardChangeUpdate()"
                                     ng-model="address.ward"
                                     required
                             >
@@ -225,6 +181,7 @@
                                    name="openingTime"
                                    ng-model="visitLocation.openingTime"
                                    ng-class="{ 'is-invalid': register_visits.openingTime.$invalid && register_visits.openingTime.$touched, 'is-valid': register_visits.openingTime.$valid && register_visits.time_open.$touched }"
+                                   format-time
                                    required
                             >
                             <small class="text-danger"
@@ -241,6 +198,7 @@
                                    name="closingTime"
                                    ng-model="visitLocation.closingTime"
                                    ng-class="{ 'is-invalid': register_visits.closingTime.$invalid && register_visits.closingTime.$touched, 'is-valid': register_visits.closingTime.$valid && register_visits.time_open.$touched }"
+                                   format-time
                                    required
                             >
                             <small class="text-danger"
@@ -258,22 +216,38 @@
                                    ngf-max-size="10MB"
                                    ng-class="{ 'is-invalid': register_visits.visitLocationImage.$invalid && register_visits.visitLocationImage.$touched, 'is-valid': register_visits.visitLocationImage.$valid && register_visits.visitLocationImage.$touched }"
                                    ngf-select="uploadVisitLocationImage($file)"
-                                   required
                             >
                             <small class="text-danger"
                                    ng-show="register_visits.visitLocationImage.$touched && register_visits.visitLocationImage.$error.required">
                                 Vui lòng tải lên hình ảnh của doanh nghiệp !
                             </small>
+                            <div class="mt-2">
+                                <label class="form-label">Ảnh hiện tại</label>
+                                <br>
+                                <img ng-src="{{ visitLocation.visitLocationImage }}"
+                                     class="img-fluid rounded-1 cursor-pointer"
+                                     width="100"
+                                     alt="avatar ảnh"
+                                     ng-click="openImageModal(visitLocation.visitLocationImage)"
+                                >
+                            </div>
                         </div>
 
                         <div class="d-flex justify-content-end mt-5">
                             <a role="button"
-                               href="/business/select-type"
+                               href="/business/visit/home"
                                class="btn btn-submit-form btn-prev"
                                style="background: #5c636a; margin-right: 20px"
                             >
                                 <i class="fa-solid fa-arrow-left"></i> Trở về
                             </a>
+                            <button type="button"
+                                    class="btn btn-delete-form"
+                                    ng-click="deleteVisitLocation()"
+                                    style="margin-right: 20px"
+                            >
+                                Xóa
+                            </button>
                             <button type="button" class="btn btn-submit-form"
                                     ng-click="nextStep()"
                             >
@@ -294,54 +268,7 @@
                     <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">TravelTour</p>
                 </div>
                 <div class="content-text mt-3">
-                    <div class="h4">Đăng kí thông tin đối tác TravelTour</div>
-                </div>
-                <div class="progress-register">
-                    <!-- Tiến dộ -->
-                    <div class="progress-container">
-                        <div class="container">
-                            <div class="d-flex justify-content-center">
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                 id="tick">
-                                                <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="text-wrapper">Tạo doanh nghiệp</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                 id="tick">
-                                                <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="text-wrapper">Thông tin địa điểm</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <span class="num">3</span>
-                                        </div>
-                                        <div class="text-wrapper">Thông tin vé</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-1">
-                                        <div class="vector-wrapper">
-                                            <span class="num">4</span>
-                                        </div>
-                                        <div class="text-wrapper">Xác nhận thông tin</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="h4">Cập nhật thông tin địa điểm tham quan TravelTour</div>
                 </div>
             </div>
             <div class="main d-flex justify-content-center theme-wizard">
@@ -456,7 +383,7 @@
                     <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">TravelTour</p>
                 </div>
                 <div class="content-text mt-3">
-                    <div class="h4">Đăng kí thông tin đối tác TravelTour</div>
+                    <div class="h4">Cập nhật thông tin địa điểm tham quan TravelTour</div>
                 </div>
                 <div class="progress-register">
                     <!-- Tiến dộ -->
@@ -509,15 +436,13 @@
             </div>
             <div class="main d-flex justify-content-center theme-wizard">
                 <div class="form card">
-                    <div class="h3 color-green fw-medium mb-3">XÁC NHẬN ĐĂNG KÝ PHƯƠNG TIỆN TRÊN TRAVEL TOUR</div>
+                    <div class="h3 color-green fw-medium mb-3">XÁC NHẬN CẬP NHẬT ĐIỂM THAM QUAN TRÊN TRAVEL TOUR</div>
                     <div class="col-12">
                         <label class="form-check-label">
                             <input type="checkbox" class="form-check-input" ng-model="checkboxChecked" name="" id="">
                             Tôi cam kết cung cấp thông tin đầy đủ, chính xác và minh bạch khi đăng ký bán phòng trên
-                            trang
-                            web du lịch. Chúng tôi hiểu rằng sự minh bạch và tin cậy là yếu tố quan trọng để tạo ra một
-                            môi
-                            trường kinh doanh tích cực và lâu dài.
+                            trang web du lịch. Chúng tôi hiểu rằng sự minh bạch và tin cậy là yếu tố quan trọng để tạo
+                            ra một môi trường kinh doanh tích cực và lâu dài.
                         </label>
                     </div>
 
@@ -537,3 +462,18 @@
         </div>
     </section>
 </form>
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Ảnh địa điểm tham quan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="" id="modalImage" class="img-fluid" alt="Ảnh phương tiện">
+            </div>
+        </div>
+    </div>
+</div>
