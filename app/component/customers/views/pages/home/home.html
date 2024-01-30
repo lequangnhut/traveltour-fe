@@ -918,7 +918,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="modelTicket" tabindex="-1" aria-labelledby="modelTicketLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modelTicketLabel">Thông tin vé xe của khách
@@ -926,69 +926,182 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-9">
-                        <div class="mb-3">
-                            <label>Họ và tên (người đại diện):
-                                <span class="fw-bold">{{ orderTransport.customerName }} -</span>
-                                <span class="fw-bold">{{ orderTransport.customerCitizenCard }}</span>
-                            </label>
+                <div class="container">
+                    <div class="row justify-content-md-center">
+                        <div class="col col-lg-12">
+                            <section class="ve-xe">
+                                <div class="container ">
+                                    <div class="row d-flex justify-content-between">
+                                        <div class="col-md-4 text-end" style="padding: 1rem 0 0 0;">
+                                            <h1 class="card-title"></h1>
+                                            <!--                                            <p class="card-text">Bến xe miền đông</p>-->
+                                            <h6 class="card-subtitle"></h6>
+                                        </div>
+                                        <div class="col-md-4"
+                                             style="padding: 1rem; display: flex; align-items: center; justify-content: space-between;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
+                                                 viewBox="0 0 24 24">
+                                                <path fill="#ea1aa8"
+                                                      d="M4.5 14q-.84 0-1.42-.58t-.58-1.419q0-.84.58-1.42Q3.66 10 4.5 10q.698 0 1.237.425q.538.425.698 1.075H21q.213 0 .356.144q.144.144.144.357t-.144.356q-.143.143-.356.143H6.435q-.16.65-.698 1.075Q5.198 14 4.5 14"/>
+                                            </svg>
+                                            <p class="card-title" style="flex-grow: 1; text-align: center; font-weight: bold">2 giờ</p>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24"><path fill="#ea1aa8" d="M19.5 14q-.698 0-1.237-.425q-.538-.425-.698-1.075H2.5v-1h15.065q.16-.65.698-1.075Q18.802 10 19.5 10q.84 0 1.42.58t.58 1.419q0 .84-.58 1.42q-.58.581-1.42.581"/></svg>
+                                        </div>
+
+                                        <div class="col-md-4 text-start" style="padding: 1rem 0 0 0; ">
+                                            <h1 class="card-title"></h1>
+                                            <!--                                            <p class="card-text">Bến xe miền đông</p>-->
+                                            <h6 class="card-subtitle"></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
-                        <div class="mb-3">
-                            <label>Số điện thoại (người đại diện):
-                                <span class="fw-bold">{{ orderTransport.customerPhone }}</span>
-                            </label>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row justify-content-md-center">
+                        <div class="col col-lg-8 ">
+                            <section class="thong-tin-ve" style="height: 100%;">
+                                <ul>
+                                    Thông tin người đại diện:
+                                    <li>
+
+                                    </li>
+                                </ul>
+                                <ul>
+                                    Số điện thoại:
+                                    <li>
+
+                                    </li>
+                                </ul>
+                                <ul>
+                                    Email:
+                                    <li>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    Số lượng vé:
+                                    <li>
+
+                                    </li>
+                                </ul>
+                                <ul>
+                                    Chuyến đi:
+                                    <li>
+
+                                    </li>
+                                </ul>
+                                <ul>Khởi hành vào lúc:
+                                    <li></li>
+                                </ul>
+                                <ul> Dự kiến vào lúc:
+                                    <li>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    Ghi chú:
+                                    <li>
+                                    </li>
+                                </ul>
+                            </section>
+
+                            <!--                            <section class="thong-tin-ve" style="height: 100%;">-->
+                            <!--                                <div class="mt-3 row">-->
+                            <!--                                    <label class="col-form-label" for="name-surrogate">Thông tin người đại-->
+                            <!--                                        diện: </label>-->
+                            <!--                                    <div class="col">-->
+                            <!--                                        <input id="name-surrogate" type="text" class="form-control">-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="mt-3 row">-->
+                            <!--                                    <label class="col-form-label" for="phone-surrogate">Số điện thoại: </label>-->
+                            <!--                                    <div class="col">-->
+                            <!--                                        <input id="phone-surrogate" type="text" class="form-control">-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="mt-3 row">-->
+                            <!--                                    <label class="col-form-label" for="email">Email: </label>-->
+                            <!--                                    <div class="col">-->
+                            <!--                                        <input id="email" type="text" class="form-control">-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="mt-3 mb-3 row">-->
+                            <!--                                    <label class="col-form-label" for="numbe-ticket">Số lượng vé: </label>-->
+                            <!--                                    <div class="col">-->
+                            <!--                                        <input id="numbe-ticket" type="text" class="form-control">-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="mt-3 mb-3 row">-->
+                            <!--                                    <label class="col-form-label" for="trip">Chuyến đi: </label>-->
+                            <!--                                    <div class="col">-->
+                            <!--                                        <input id="trip" type="text" class="form-control">-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="mt-3 mb-3 row">-->
+                            <!--                                    <label class="col-form-label" for="departure-time">Khỏi hành vào lúc: </label>-->
+                            <!--                                    <div class="col">-->
+                            <!--                                        <input id="departure-time" type="text" class="form-control">-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="mt-3 mb-3 row">-->
+                            <!--                                    <label class="col-form-label" for="intend-time">Dự kiến vào lúc: </label>-->
+                            <!--                                    <div class="col">-->
+                            <!--                                        <input id="intend-time" type="text" class="form-control">-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="mt-3 mb-3 row">-->
+                            <!--                                    <label class="col-form-label" for="note">Ghi chú: </label>-->
+                            <!--                                    <div class="col">-->
+                            <!--                                        <input id="note" type="text" class="form-control">-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </section>-->
                         </div>
-                        <div class="mb-3">
-                            <label>Địa chỉ email (người đại diện):
-                                <span class="fw-bold">{{ orderTransport.customerEmail }}</span>
-                            </label>
+
+                        <div class="col col-lg-4">
+                            <section class="thong-tin-nguoi-dai-dien" style="height: 100%;">
+                                <div class="ma-qr-ve-xe">
+                                    <div class="mt-5 mb-5">
+                                        <!--                                        <img src="image/k3uiqprnpc851.png" alt="" style="height: 100px; width: 100px;">-->
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <ul>
+                                        Đơn Giá:
+                                        <li>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="mt-3">
+                                    <ul>
+                                        Số lượng:
+                                        <li>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="mt-3 mb-3">
+                                    <ul>
+                                        Giảm giá:
+                                        <li>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tong-tien">
+                                    <div class="mt-5 mb-5">
+                                        <ul>
+                                            Tổng tiền:
+                                            <li>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <img ng-src="{{ orderTransport.orderCode }}" class="img-fluid rounded-top" width="120" alt="avatar">
-                    </div>
-                    <div class="col-4 mb-3">
-                        <label>Số lượng vé:
-                            <span class="fw-bold">{{ orderTransport.amountTicket }} vé</span>
-                        </label>
-                    </div>
-                    <div class="col-4 mb-3">
-                        <label>Đơn giá:
-                            <span class="fw-bold">{{ transportSchedule.unitPrice | vnCurrency }}</span>
-                        </label>
-                    </div>
-                    <div class="col-4 mb-3">
-                        <label>Tổng tiền:
-                            <span class="fw-bold">{{ orderTransport.orderTotal | vnCurrency }}</span>
-                        </label>
-                    </div>
-                    <div class="col-12 mb-3">
-                        <label>Chuyến đi:
-                            <span class="fw-bold">{{ transportSchedule.fromLocation }}</span>
-                            <i class="fa-solid fa-arrow-right fs--2"></i>
-                            <span class="fw-bold">{{ transportSchedule.toLocation }}</span>
-                        </label>
-                    </div>
-                    <div class="col-6 mb-3">
-                        <label>Khởi hành vào lúc:
-                            <span class="fw-bold">{{ transportSchedule.departureTime | vietnameseDateTime }}</span>
-                        </label>
-                    </div>
-                    <div class="col-6 mb-3">
-                        <label>Dự kiến đến vào lúc:
-                            <span class="fw-bold">{{ transportSchedule.arrivalTime | vietnameseDateTime }}</span>
-                        </label>
-                    </div>
-                    <div class="col-12 mb-3">
-                        <label>Ghi chú:
-                            <span class="fw-bold" ng-if="orderTransport.orderNote !== null">
-                                {{ transportSchedule.orderNote }}
-                            </span>
-                            <span class="fw-bold" ng-if="orderTransport.orderNote === null">
-                                Không có ghi chú.
-                            </span>
-                        </label>
                     </div>
                 </div>
             </div>
