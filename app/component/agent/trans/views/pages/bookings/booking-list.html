@@ -102,40 +102,34 @@
                 <thead>
                 <tr class="bg-light">
                     <th>#</th>
-                    <th class="cursor-pointer" ng-click="sortData('id')">
-                        <div class="icon-left">
-                            Chuyến đi
-                            <i class="material-icons sorting-icon">{{ getSortIcon('id') }}</i>
+                    <th ng-click="sortData('transportationScheduleId')">
+                        <div class="icon-left">Chuyến đi
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('transportationScheduleId')"></span>
                         </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('customerName')">
-                        <div class="icon-left">
-                            Họ tên
-                            <i class="material-icons sorting-icon">{{ getSortIcon('customerName') }}</i>
+                    <th ng-click="sortData('customerName')">
+                        <div class="icon-left">Họ tên
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('customerName')"></span>
                         </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('amountTicket')">
-                        <div class="icon-left">
-                            Số lượng vé
-                            <i class="material-icons sorting-icon">{{ getSortIcon('amountTicket') }}</i>
+                    <th ng-click="sortData('amountTicket')">
+                        <div class="icon-left">Số lượng vé
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('amountTicket')"></span>
                         </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('orderTotal')">
-                        <div class="icon-left">
-                            Tổng tiền
-                            <i class="material-icons sorting-icon">{{ getSortIcon('orderTotal') }}</i>
+                    <th ng-click="sortData('orderTotal')">
+                        <div class="icon-left">Tổng tiền
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('orderTotal')"></span>
                         </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('dateCreated')">
-                        <div class="icon-left">
-                            Ngày đặt
-                            <i class="material-icons sorting-icon">{{ getSortIcon('dateCreated') }}</i>
+                    <th ng-click="sortData('dateCreated')">
+                        <div class="icon-left">Ngày đặt
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('dateCreated')"></span>
                         </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('orderStatus')">
-                        <div class="icon-left">
-                            Trạng thái
-                            <i class="material-icons sorting-icon">{{ getSortIcon('orderStatus') }}</i>
+                    <th ng-click="sortData('orderStatus')">
+                        <div class="icon-left">Trạng thái
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('orderStatus')"></span>
                         </div>
                     </th>
                     <th>Thao tác</th>

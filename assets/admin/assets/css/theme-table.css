@@ -176,6 +176,10 @@
     color: #007bff
 }
 
+.table-customer table tr th {
+    cursor: pointer;
+}
+
 .form-input-custom {
     font-family: "Montserrat", sans-serif;
 }

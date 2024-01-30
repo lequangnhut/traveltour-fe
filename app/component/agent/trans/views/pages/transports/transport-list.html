@@ -106,26 +106,36 @@
                             <input class="form-check-input checkbox-all" type="checkbox" value="">
                         </span>
                     </th>
-                    <th>#
-                        <i class="fa-solid fa-sort"></i>
+                    <th>#</th>
+                    <th ng-click="sortData('id')">
+                        <div class="icon-left">Ảnh
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('id')">Ảnh
-                        <i class="fa" ng-class="getSortIcon('id')"></i>
+                    <th ng-click="sortData('licensePlate')">
+                        <div class="icon-left">Biển số
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('licensePlate')"></span>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('licensePlate')">Biển số
-                        <i class="fa" ng-class="getSortIcon('licensePlate')"></i>
+                    <th ng-click="sortData('transportationTypeId')">
+                        <div class="icon-left">Loại phương tiện
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('transportationTypeId')"></span>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('transportationTypeId')">Loại phương tiện
-                        <i class="fa" ng-class="getSortIcon('transportationTypeId')"></i>
+                    <th ng-click="sortData('amountSeat')">
+                        <div class="icon-left">Số chổ ngồi
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('amountSeat')"></span>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('amountSeat')">Số chổ ngồi
-                        <i class="fa" ng-class="getSortIcon('amountSeat')"></i>
+                    <th ng-click="sortData('dateCreated')">
+                        <div class="icon-left">Ngày tạo
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('dateCreated')"></span>
+                        </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('dateCreated')">Ngày tạo
-                        <i class="fa" ng-class="getSortIcon('dateCreated')"></i>
-                    </th>
-                    <th class="cursor-pointer" ng-click="sortData('isActive')">Trạng thái
-                        <i class="fa" ng-class="getSortIcon('isActive')"></i>
+                    <th ng-click="sortData('isActive')">
+                        <div class="icon-left">Trạng thái
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('isActive')"></span>
+                        </div>
                     </th>
                     <th>Thao tác</th>
                 </tr>
