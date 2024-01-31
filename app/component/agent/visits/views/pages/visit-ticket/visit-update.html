@@ -1,0 +1,83 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<div class="container mt-3 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-bold">CẬP NHẬT VÉ THAM QUAN</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" ng-submit="updateVisitTicket()" name="form_ticket" method="post">
+            <div class="col-md-6">
+                <label class="form-label">Địa điểm tham quan</label>
+                <select class="form-select"
+                        name="visitLocationId"
+                        ng-model="visitTicket.visitLocationId"
+                        ng-class="{ 'is-invalid': form_ticket.visitLocationId.$invalid && form_ticket.visitLocationId.$touched, 'is-valid': form_ticket.visitLocationId.$valid && form_ticket.visitLocationId.$touched }"
+                        ng-options="visitLocation.id as visitLocation.visitLocationName for visitLocation in visitLocationSelect"
+                        required
+                >
+                    <option value="" disabled selected>Chọn địa điểm tham quan</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="form_ticket.visitLocationId.$touched && form_ticket.visitLocationId.$error.required">
+                    Vui lòng chọn địa điểm tham quan !
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Loại vé</label>
+                <select class="form-select"
+                        name="ticketTypeName"
+                        ng-model="visitTicket.ticketTypeName"
+                        ng-class="{ 'is-invalid': form_ticket.ticketTypeName.$invalid && form_ticket.ticketTypeName.$touched, 'is-valid': form_ticket.ticketTypeName.$valid && form_ticket.ticketTypeName.$touched }"
+                        required
+                >
+                    <option value="" disabled selected>Chọn loại vé</option>
+                    <option value="Miễn phí vé">Miễn phí vé</option>
+                    <option value="Vé người lớn">Vé người lớn</option>
+                    <option value="Vé trẻ em">Vé trẻ em</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="form_ticket.ticketTypeName.$touched && form_ticket.ticketTypeName.$error.required">
+                    Vui lòng chọn loại vé !
+                </small>
+            </div>
+
+            <div class="col-md-12">
+                <label for="inputVisitPhone" class="form-label">Giá tiền</label>
+                <input type="text"
+                       class="form-control"
+                       id="inputVisitPhone"
+                       placeholder="100.000 đ"
+                       name="unitPrice"
+                       vietnam-currency-input
+                       ng-model="visitTicket.unitPrice"
+                       ng-class="{ 'is-invalid': form_ticket.unitPrice.$invalid && form_ticket.unitPrice.$touched, 'is-valid': form_ticket.unitPrice.$valid && form_ticket.unitPrice.$touched }"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="form_ticket.unitPrice.$touched && form_ticket.unitPrice.$error.required">
+                    Vui lòng nhập giá tiền vé tham quan !
+                </small>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end mt-5">
+                <button class="btn" type="button" style="margin-right: 20px">
+                    <a class="btn" href="/business/visit/visit-ticket-management">Trở về</a>
+                </button>
+                <button type="submit"
+                        class="btn btn-submit fw-bold"
+                        ng-disabled="form_ticket.$invalid"
+                >
+                    Cập nhật
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
