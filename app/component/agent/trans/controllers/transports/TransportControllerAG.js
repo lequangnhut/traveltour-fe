@@ -269,7 +269,9 @@ travel_app.controller('TransportControllerAG', function ($scope, $sce, $routePar
      * Gọi api delete
      */
     $scope.deleteTrans = function (transportId, licensePlate) {
-        function confirmDeleteStaff() {
+        $scope.isLoading = true;
+
+        function confirmDelete() {
             TransportServiceAG.delete(transportId).then(function successCallback() {
                 toastAlert('success', 'Xóa phương tiện thành công !');
                 $location.path('/business/transport/transport-management');
@@ -279,7 +281,7 @@ travel_app.controller('TransportControllerAG', function ($scope, $sce, $routePar
             });
         }
 
-        confirmAlert('Bạn có chắc chắn muốn xóa phương tiện ' + licensePlate + ' không ?', confirmDeleteStaff);
+        confirmAlert('Bạn có chắc chắn muốn xóa phương tiện ' + licensePlate + ' không ?', confirmDelete);
     }
 
     $scope.init();
