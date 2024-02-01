@@ -49,36 +49,16 @@ travel_app.service("RoomTypeService", function($http, $q) {
     /**
      * Service lưu khách sạn
      * @param roomTypes thông tin loại phòng
-     * @param roomTypeAvatarData ảnh đại diện khách sạn
-     * @param listRoomTypeImg danh sách hình ảnh khách sạn
-     * @param selectedCheckboxValues danh sách dịch vụ phòng
      * @returns {*}
      */
-    this.saveRoomType = function (roomTypes, roomTypeAvatarData, listRoomTypeImg, selectedCheckboxValues) {
+    this.editInfoRoomType = function (roomTypes) {
         var formData = new FormData();
 
         formData.append('roomTypes', new Blob([JSON.stringify(roomTypes)], {type: "application/json"}));
-        formData.append('selectedCheckboxValues', new Blob([JSON.stringify(selectedCheckboxValues)], {type: "application/json"}));
-
-        if (roomTypeAvatarData && roomTypeAvatarData.length > 0) {
-            formData.append('roomTypeAvatarData', roomTypeAvatarData[0], roomTypeAvatarData[0].name);
-        } else {
-            var emptyImageBlob = new Blob([''], { type: "image/png" });
-            formData.append('roomTypeAvatarData', emptyImageBlob, 'empty-image.png');
-        }
-
-        if (listRoomTypeImg && listRoomTypeImg.length > 0) {
-            for (var i = 0; i < listRoomTypeImg.length; i++) {
-                formData.append('listRoomTypeImg', listRoomTypeImg[i], listRoomTypeImg[i].name);
-            }
-        } else {
-            var emptyListImageBlob = new Blob([''], { type: "image/png" });
-            formData.append('listRoomTypeImg', emptyListImageBlob, 'empty-image.png');
-        }
 
         return $http({
             method: 'POST',
-            url: API_ROOM_TYPE + 'saveRoomType',
+            url: API_ROOM_TYPE + 'editInfoRoomType',
             headers: {'Content-Type': undefined},
             data: formData,
         });

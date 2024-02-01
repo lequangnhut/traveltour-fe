@@ -25,9 +25,9 @@
                                                 <img ng-src="{{ hotel.hotelAvatar || '/assets/admin/assets/img/bg/default-image-hotel.png' }}"
                                                      class="img-fluid"/>
                                             </div>
-                                            <div class="item-title mt-3">
-                                                <div class="item-title mt-3">
-                                                    <div class="h4 fw-medium">{{ hotel.hotelName }}</div>
+                                            <div class="item-title mt-3 overflow-hidden" style="text-overflow: ellipsis; white-space: nowrap;" >
+                                                <div class="item-title mt-3" >
+                                                    <div class="h4 fw-medium " >{{ hotel.hotelName }}</div>
                                                     <div class="">ID: <span>{{ hotel.id }}</span></div>
                                                 </div>
                                             </div>
