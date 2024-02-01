@@ -311,6 +311,14 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/dashboard/management-transport.html',
             controller: 'ListTransportBrandControllerAG'
         })
+        .when('/business/transport/home/create-transport', {
+            templateUrl: 'app/component/agent/trans/views/pages/transport-brand/create-transport.html',
+            controller: 'RegisterTransControllerAG'
+        })
+        .when('/business/transport/home/update-transport/:id', {
+            templateUrl: 'app/component/agent/trans/views/pages/transport-brand/update-transport.html',
+            controller: 'RegisterTransControllerAG'
+        })
         .when('/business/transport/transport-management', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-list.html',
             controller: 'TransportControllerAG'
@@ -359,16 +367,24 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/visits/views/pages/dashboard/management-visit.html',
             controller: 'ListVisitControllerAG'
         })
-        .when('/business/visit/visit-list', {
-            templateUrl: 'app/component/agent/visits/views/pages/visits/visit-list.html',
+        .when('/business/visit/home/create-visit-location', {
+            templateUrl: 'app/component/agent/visits/views/pages/visit-location/create-visits.html',
+            controller: 'RegisterVisitsControllerAG'
+        })
+        .when('/business/visit/home/update-visit-location/:id', {
+            templateUrl: 'app/component/agent/visits/views/pages/visit-location/update-visits.html',
+            controller: 'RegisterVisitsControllerAG'
+        })
+        .when('/business/visit/visit-ticket-management', {
+            templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/visit-list.html',
             controller: 'VisitControllerAG'
         })
-        .when('/business/visit/visit-list/visit-create', {
-            templateUrl: 'app/component/agent/visits/views/pages/visits/visit-create.html',
+        .when('/business/visit/visit-ticket-management/create-visit-ticket', {
+            templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/visit-create.html',
             controller: 'VisitControllerAG'
         })
-        .when('/business/visit/visit-list/visit-update', {
-            templateUrl: 'app/component/agent/visits/views/pages/visits/visit-update.html',
+        .when('/business/visit/visit-ticket-management/update-visit-ticket/:id', {
+            templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/visit-update.html',
             controller: 'VisitControllerAG'
         })
         .when('/business/booking-visit/booking-info', {

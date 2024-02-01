@@ -19,6 +19,14 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
         };
 
         /**
+         * Mở image bự hơn trong modal
+         */
+        $scope.openImageModal = function (imageUrl) {
+            document.getElementById('modalImage').src = imageUrl;
+            $('#imageModal').modal('show');
+        };
+
+        /**
          * Lấy năm hiện tại và fill ở footer
          */
         $scope.year = new Date().getFullYear();
@@ -167,6 +175,7 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
      * @returns {boolean}
      */
     $scope.hideSidebar = function () {
+        const locationPath = $location.path();
         const hiddenPaths = [
             '/business/register-hotel',
             '/business/register-transports',
@@ -181,12 +190,19 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
             '/admin/internal-server-error',
             '/admin/page-forbidden',
             '/business/hotel/home/hotel/create',
+            '/business/transport/home/create-transport',
+            '/business/visit/home/create-visit-location'
         ];
 
         // Kiểm tra đường dẫn chứa id phía sau
-        if ($location.path().includes('/business/hotel/home/hotel/update/')) {
+        if (
+            locationPath.includes('/business/hotel/home/hotel/update/') ||
+            locationPath.includes('/business/transport/home/update-transport/') ||
+            locationPath.includes('/business/visit/home/update-visit-location/')
+        ) {
             return true;
         }
+
         return $scope.isActive(hiddenPaths);
     };
 
@@ -195,6 +211,7 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
      * @returns {{display: string}|{}}
      */
     $scope.sidebarStyle = function () {
+        const locationPath = $location.path();
         const marginPaths = [
             '/business/register-hotel',
             '/business/register-transports',
@@ -209,8 +226,16 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
             '/admin/internal-server-error',
             '/admin/page-forbidden',
             '/business/hotel/home/hotel/create',
+            '/business/transport/home/create-transport',
+            '/business/visit/home/create-visit-location'
         ];
-        if ($location.path().includes('/business/hotel/home/hotel/update/')) {
+
+        // Kiểm tra đường dẫn chứa id phía sau
+        if (
+            locationPath.includes('/business/hotel/home/hotel/update/') ||
+            locationPath.includes('/business/transport/home/update-transport/') ||
+            locationPath.includes('/business/visit/home/update-visit-location/')
+        ) {
             return {'margin': '0'};
         }
 

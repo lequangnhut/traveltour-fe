@@ -19,17 +19,20 @@
                         class="form-select"
                         name="transportationScheduleId"
                         ng-class="{ 'is-invalid': form_booking.transportationScheduleId.$invalid && form_booking.transportationScheduleId.$touched, 'is-valid': form_booking.transportationScheduleId.$valid && form_booking.transportationScheduleId.$touched }"
-                        ng-options="schedules.id as schedules.id + ' - ' + schedules.fromLocation + ' - ' + schedules.toLocation for schedules in transportSchedules"
                         ng-model="bookings.transportationScheduleId"
                         ng-change="updateAmountAndTotal()"
-                        required
-                >
+                        required>
                     <option value="" disabled selected>Chọn mã chuyến đi</option>
-                    <option>Demo</option>
+                    <option ng-repeat="schedule in transportSchedules"
+                            ng-if="schedule.isStatus === 0"
+                            value="{{schedule.id}}"
+                    >
+                        {{ schedule.id + ' - ' + schedule.fromLocation + ' - ' + schedule.toLocation }}
+                    </option>
                 </select>
                 <small class="text-danger"
                        ng-show="form_booking.transportationScheduleId.$touched && form_booking.transportationScheduleId.$error.required">
-                    Vui lòng chọn mã chuyến đi !
+                    Vui lòng chọn mã chuyến đi!
                 </small>
             </div>
 

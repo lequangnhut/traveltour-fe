@@ -13,7 +13,7 @@ travel_app.controller('TicketController', function ($scope, $location, $timeout,
         OrderTransportService.findByOrderTransportId(orderTransportId).then(function successCallback(response) {
             if (response.status === 200) {
                 $scope.orderTransport = response.data.data.orderTransportations;
-                console.log(response.data.data.orderTransportations);
+                $scope.transportSchedule = response.data.data.exportDataOrderTransportDto.transportationSchedules;
             } else {
                 $location.path('/admin/page-not-found')
             }

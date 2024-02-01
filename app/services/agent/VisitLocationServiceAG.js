@@ -15,6 +15,13 @@ travel_app.service('VisitLocationServiceAG', function ($http) {
         })
     }
 
+    this.findByVisitLocationId = function (visitLocationId) {
+        return $http({
+            method: 'GET',
+            url: API_VISIT + 'find-by-visit-location-id/' + visitLocationId
+        })
+    }
+
     this.registerVisit = function (dataVisit, apiUrl) {
         return $http({
             method: 'POST',
@@ -24,6 +31,25 @@ travel_app.service('VisitLocationServiceAG', function ($http) {
             },
             data: dataVisit,
             transformRequest: angular.identity
+        })
+    }
+
+    this.update = function (dataVisit) {
+        return $http({
+            method: 'PUT',
+            url: API_VISIT + 'update-visit-location',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: dataVisit,
+            transformRequest: angular.identity
+        })
+    }
+
+    this.delete = function (visitLocationId) {
+        return $http({
+            method: 'GET',
+            url: API_VISIT + 'delete-visit-location/' + visitLocationId
         })
     }
 })

@@ -3,7 +3,7 @@
         <div class="header-control-center">
             <div class="d-flex justify-content-between align-items-center row ">
                 <div class="col-xl-6 mt-3">
-                    <h3 class="color-green fw-bold">DANH SÁCH BOOKING PHƯƠNG TIỆN</h3>
+                    <h3 class="color-green fw-bold">DANH SÁCH VÉ THAM QUAN</h3>
                 </div>
             </div>
         </div>
@@ -22,17 +22,17 @@
                             </span>
                         <input type="text"
                                class="form-control"
-                               placeholder="Tìm kiếm họ tên, số điện thoại, email..."
+                               placeholder="Tìm kiếm"
                                ng-model="searchTerm"
-                               ng-change="searchOrderTransport()"
+                               ng-change="searchVisitTicket()"
                         >
                     </div>
                 </div>
                 <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
                      style="margin: 20px 0 0 0">
-                    <a href="/business/transport/booking-management/create-booking" class="btn btn-primary">
+                    <a href="/business/visit/visit-ticket-management/create-visit-ticket" class="btn btn-primary">
                         <i class="fa-solid fa-plus" style="margin-right: 10px"></i>
-                        Thêm booking
+                        Tạo vé tham quan
                     </a>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                 <div class="row">
                     <div class="h4 col-lg-5 d-flex align-items-center h-100">
                         <div class="d-flex align-items-center">
-                            <span class="h4">Danh sách phương tiện đã booking</span>
+                            <span class="h4">Danh sách vé tham quan</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end align-items-baseline col-lg-2">
@@ -101,80 +101,75 @@
                 <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
+                    <th>
+                        <span>
+                            <input class="form-check-input checkbox-all" type="checkbox" value="">
+                        </span>
+                    </th>
                     <th>#</th>
-                    <th ng-click="sortData('transportationScheduleId')">
-                        <div class="icon-left">Chuyến đi
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('transportationScheduleId')"></span>
+                    <th ng-click="sortData('id')">
+                        <div class="icon-left">Ảnh
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
-                    <th ng-click="sortData('customerName')">
-                        <div class="icon-left">Họ tên
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('customerName')"></span>
+                    <th ng-click="sortData('visitLocationId')">
+                        <div class="icon-left">Tên địa điểm
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
-                    <th ng-click="sortData('amountTicket')">
-                        <div class="icon-left">Số lượng vé
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('amountTicket')"></span>
+                    <th ng-click="sortData('visitLocationId')">
+                        <div class="icon-left">Số điện thoại
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
-                    <th ng-click="sortData('orderTotal')">
-                        <div class="icon-left">Tổng tiền
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('orderTotal')"></span>
+                    <th ng-click="sortData('ticketTypeName')">
+                        <div class="icon-left">Loại vé
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
-                    <th ng-click="sortData('dateCreated')">
-                        <div class="icon-left">Ngày đặt
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('dateCreated')"></span>
+                    <th ng-click="sortData('unitPrice')">
+                        <div class="icon-left">Giá tiền
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
-                    <th ng-click="sortData('orderStatus')">
-                        <div class="icon-left">Trạng thái
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('orderStatus')"></span>
+                    <th ng-click="sortData('visitLocationId')">
+                        <div class="icon-left">Địa chỉ
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
-                    <th>Thao tác</th>
+                    <th scope="col">Thao tác</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="booking in orderTransport">
+                <tr ng-repeat="ticket in visitTicketData">
+                    <td>
+                        <span>
+                            <input class="form-check-input" type="checkbox" value="">
+                        </span>
+                    </td>
                     <td>{{ $index + 1 }}</td>
                     <td>
-                        {{ transportScheduleName[booking.transportationScheduleId].fromLocation + ' - ' + transportScheduleName[booking.transportationScheduleId].toLocation || 'Đang tải...' }}
+                        <img ng-src="{{ visitLocations.visitLocationImage || 'Đang tải...' }}" class="img-fluid cursor-pointer" alt="avatar"
+                             width="60" title="Xem ảnh xe" ng-click="openImageModal(visitLocations.visitLocationImage)">
                     </td>
-                    <td>{{ booking.customerName }}</td>
-                    <td>{{ booking.amountTicket }}</td>
-                    <td>{{ booking.orderTotal | vnCurrency }}</td>
-                    <td>{{ booking.dateCreated | vietnameseDateTime }}</td>
-                    <td ng-if="booking.orderStatus == 0">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <span class="status-success"></span>
-                            <span class="text-status-success">Đã tạo vé</span>
-                        </div>
-                    </td>
-                    <td ng-if="booking.orderStatus == 1">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <span class="status-success"></span>
-                            <span class="text-status-success">Đã hủy vé</span>
-                        </div>
-                    </td>
+                    <td>{{ visitLocations.visitLocationName }}</td>
+                    <td>{{ visitLocations.phone }}</td>
+                    <td>{{ ticket.ticketTypeName }}</td>
+                    <td>{{ ticket.unitPrice | vnCurrency }}</td>
+                    <td>{{ visitLocations.province }}</td>
                     <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                        <a href="/business/transport/booking-management/update-booking/{{ booking.id }}"
+                        <a href="/business/visit/visit-ticket-management/update-visit-ticket/{{ ticket.id }}"
                            role="button" class="fs-1 btn text-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a href="#"
-                           ng-click="deleteOrderTransport(booking.id, booking.amountTicket,
-                           transportScheduleName[booking.transportationScheduleId].fromLocation,
-                           transportScheduleName[booking.transportationScheduleId].toLocation)"
-                           role="button"
-                           class="fs-1 btn text-danger"
-                        >
+                        <a href="#" ng-click="deleteVisitTicket(ticket.id, visitLocations.visitLocationName)"
+                           role="button" class="fs-1 btn text-danger">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
                 </tr>
-                <tr ng-if="orderTransport.length === 0">
-                    <td colspan="10">Không có dữ liệu phương tiện.</td>
+                <tr ng-if="visitTicketData.length === 0">
+                    <td colspan="9">Không có dữ liệu phương tiện.</td>
                 </tr>
                 </tbody>
             </table>
@@ -188,19 +183,15 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="info-booking" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <h5 class="modal-title" id="imageModalLabel">Ảnh địa điểm tham quan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <img src="" id="modalImage" class="img-fluid" alt="Ảnh phương tiện">
             </div>
         </div>
     </div>

@@ -193,6 +193,14 @@ body::-webkit-scrollbar-thumb {
     transition: 0.2s linear;
 }
 
+#business-information .btn-delete-form {
+    background: #c02929;
+    padding: 12px 40px;
+    color: #fff;
+    border-radius: 40px;
+    transition: 0.2s linear;
+}
+
 #business-information .btn-submit-form:hover {
     background: #4c872e;
 }

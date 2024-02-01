@@ -33,7 +33,10 @@
                                             </div>
                                         </div>
                                         <div class="card-footer d-flex justify-content-between w-100">
-                                            <a class="btn" href="">Sửa thông tin nhà xe</a>
+                                            <a class="btn"
+                                               href="/business/transport/home/update-transport/{{ trans.id }}">
+                                                Sửa thông tin nhà xe
+                                            </a>
                                             <a class="btn btn-green"
                                                href="/business/welcome-transport"
                                                ng-click="showContentForRole('ROLE_AGENT_TRANSPORT', trans.id)"
@@ -43,6 +46,9 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-xl-4 mb-4" ng-if="transportations.length === 0">
+                                Không có thông tin nhà xe
                             </div>
                         </div>
                     </div>
@@ -80,7 +86,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-end">
-                                    <a href="/business/register-transports" class="btn btn-green">
+                                    <a href="/business/transport/home/create-transport" class="btn btn-green">
                                         Thêm nhà xe mới</a>
                                 </div>
                             </div>

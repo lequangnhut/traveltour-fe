@@ -216,7 +216,7 @@
                 </button>
                 <button type="submit"
                         class="btn btn-submit fw-bold"
-                        ng-disabled="form_trip.$invalid || dateError"
+                        ng-disabled="form_trip.$invalid || dateError || schedules.isStatus === 1 || schedules.isStatus === 2"
                 >
                     Cập nhật
                 </button>
