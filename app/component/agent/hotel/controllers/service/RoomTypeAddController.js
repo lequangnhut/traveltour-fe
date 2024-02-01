@@ -1,4 +1,4 @@
-travel_app.controller('RoomTypeAddController', function ($scope, $location, RoomUtilitiesService, BedTypeService, HotelServiceAG, LocalStorageService, RoomTypeService) {
+travel_app.controller('RoomTypeAddController', function ($scope, $location, RoomUtilitiesService, RoomTypeService, BedTypeService, HotelServiceAG, LocalStorageService) {
     var hotelId = LocalStorageService.get("brandId")
 
     $scope.roomTypes = {
@@ -139,13 +139,16 @@ travel_app.controller('RoomTypeAddController', function ($scope, $location, Room
      * Phương thức lưu phòng khách sạn
      */
     $scope.saveRoomType = function () {
+        var successSound = new Audio('assets/admin/assets/sound/success.mp3');
+        var errorSound = new Audio('assets/admin/assets/sound/error.mp3');
+
         $scope.isLoading = true;
         $scope.roomTypesData = {
             roomTypeName: $scope.roomTypes.roomTypeName,
             hotelId: $scope.roomTypes.hotelId,
             capacityAdults: $scope.roomTypes.capacityAdults,
             capacityChildren: $scope.roomTypes.capacityChildren,
-            bedTypeId: $scope.roomTypes.bedTypeId,
+            bedTypeId: $scope.roomBedsById[0].bedTypeId,
             amountRoom: $scope.roomTypes.amountRoom,
             price: $scope.roomTypes.price,
             roomTypeDescription: $scope.roomTypes.roomTypeDescription,
@@ -162,8 +165,10 @@ travel_app.controller('RoomTypeAddController', function ($scope, $location, Room
         RoomTypeService.saveRoomType($scope.roomTypesData, $scope.roomTypes.roomTypeAvatar, $scope.roomTypes.listRoomTypeImg, selectedCheckboxValues).then(function (response) {
             if(response.data.status === "200"){
                 $location.path('/business/hotel/room-type-list');
+                successSound.play();
                 toastAlert('success', response.data.message)
             }else if(response.data.status === "500") {
+                errorSound.play();
                 toastAlert('error', response.data.message)
             }
         }, errorCallback).finally(function () {

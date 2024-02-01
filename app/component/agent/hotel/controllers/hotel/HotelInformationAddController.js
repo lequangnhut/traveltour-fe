@@ -140,6 +140,9 @@ travel_app.controller("HotelInformationAddController", function ($scope, $http, 
 
     let user = $scope.user;
     $scope.createHotel = function () {
+        var successSound = new Audio('assets/admin/assets/sound/success.mp3');
+        var errorSound = new Audio('assets/admin/assets/sound/error.mp3');
+
         $scope.isLoading = true;
         if (user !== undefined && user !== null && user !== "") {
             AgenciesServiceAG.findByUserId(user.id).then(function successCallback(response) {
@@ -156,8 +159,10 @@ travel_app.controller("HotelInformationAddController", function ($scope, $http, 
                 HotelServiceAG.createHotel($scope.company, selectedCheckboxValues).then(function successCallback(response) {
                     if (response.status === 200) {
                         $location.path('/business/hotel/home');
+                        successSound.play()
                         toastAlert('success', response.data.message)
                     } else if(response.status === 500) {
+                        errorSound.play()
                         toastAlert('error', response.data.message);
                     }
                 }, errorCallback).finally(function () {
