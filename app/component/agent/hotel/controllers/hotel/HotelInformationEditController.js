@@ -236,6 +236,8 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
 
     let user = $scope.user;
     $scope.updateHotel = function () {
+        var successSound = new Audio('assets/admin/assets/sound/success.mp3');
+        var errorSound = new Audio('assets/admin/assets/sound/error.mp3');
         $scope.isLoading = true;
 
         $scope.dataHotel = {
@@ -276,8 +278,10 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
                     .then(function successCallback(response) {
                         if (response.status === 200) {
                             $location.path('/business/hotel/home');
+                            successSound.play()
                             toastAlert('success', response.data.message);
                         } else if (response.status === 500) {
+                            errorSound.play()
                             toastAlert('error', response.message);
                         }
                     }, errorCallback).finally(function () {

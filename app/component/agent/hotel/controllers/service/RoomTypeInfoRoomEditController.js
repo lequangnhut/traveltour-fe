@@ -1,4 +1,4 @@
-travel_app.controller("RoomTypeInfoRoomEditController", function($scope, $routeParams, RoomTypeService, BedTypeService) {
+travel_app.controller("RoomTypeInfoRoomEditController", function($scope, $location, $routeParams, RoomTypeService, BedTypeService) {
     $scope.editInfoRoom = {
         id: null,
         roomTypeName: null,
@@ -46,6 +46,8 @@ travel_app.controller("RoomTypeInfoRoomEditController", function($scope, $routeP
 
 
     $scope.editInfoRoomType = function () {
+        var successSound = new Audio('assets/admin/assets/sound/success.mp3');
+        var errorSound = new Audio('assets/admin/assets/sound/error.mp3');
 
         $scope.editRoomTypeData = {
             id: $scope.editInfoRoom.id,
@@ -59,15 +61,21 @@ travel_app.controller("RoomTypeInfoRoomEditController", function($scope, $routeP
             roomTypeDescription: $scope.editInfoRoom.roomTypeDescription,
             bedTypeId: $scope.editInfoRoom.roomBedsById[0].bedTypeId,
         }
-        console.log($scope.editRoomTypeData)
         RoomTypeService.editInfoRoomType($scope.editRoomTypeData).then(function(response) {
+            $scope.isLoading = true;
             if(response.data.status === "200"){
+                $location.path('/business/hotel/room-type-list');
+                successSound.play();
                 toastAlert('success', response.data.message)
             } else if(response.data.status === "500"){
+                errorSound.play();
                 toastAlert('error', response.data.message)
             } else {
+                errorSound.play();
                 toastAlert('error', response.data.message)
             }
+        },errorCallback).finally(function () {
+          $scope.isLoading = false;
         })
     }
 

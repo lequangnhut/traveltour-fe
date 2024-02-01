@@ -272,8 +272,12 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'RoomTypeAddController'
         })
         .when('/business/hotel/room-type-list/update-info-room/:id', {
-            templateUrl: 'app/component/agent/hotel/views/pages/service/hotel-type-info-room-edit.html',
+            templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-info-room-edit.html',
             controller: 'RoomTypeInfoRoomEditController'
+        })
+        .when('/business/hotel/room-type-list/update-img-room/:id', {
+            templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-image-edit.html',
+            controller: 'RoomTypeImageController'
         })
         .when('/business/hotel/home/hotel-type-in/update/:id', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-add.html',
