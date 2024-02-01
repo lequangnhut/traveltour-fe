@@ -20,6 +20,17 @@
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
+                        <div class="col-12">
+                            <div class="card mb-3">
+                                <img class="img-fluid" ng-src="{{roomTypesDetails.roomTypeAvatar}}"/>
+                                <div class="card-body ">
+                                    <div class="bg-header-model">
+                                        <div class="{{ roomTypesDetails.id }}"></div>
+                                        <div class="h2 text-center fw-medium">{{ roomTypesDetails.roomTypeName}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-7">
                             <div class="card">
                                 <div class="card-header p-3 fw-bold">
@@ -42,18 +53,17 @@
                                             class="fw-normal">{{ formatCurrency(roomTypesDetails.price) }}</span></p>
                                     <p class="m-2 fw-medium">
                                         Trạng thái:
-                                        <span class="fw-normal color-green" ng-if="roomTypesDetails.isDeleted === false">
+                                        <span class="fw-normal color-green"
+                                              ng-if="roomTypesDetails.isDeleted === false">
                                                 Đang hoạt động
-                                        </span>
-                                        <span class="fw-normal text-danger" ng-if="roomTypesDetails.isDeleted === true">
-                                                Ngưng hoạt động
                                         </span>
                                     </p>
                                     <p class="m-2 fw-medium">Chi tiết: <span
                                             class="fw-normal">{{ roomTypesDetails.roomTypeDescription }}</span></p>
                                 </div>
                                 <div class="card-footer d-flex justify-content-center p-3">
-                                    <button class="btn btn-green">Sửa thông tin phòng</button>
+                                    <a href="{{'/business/hotel/room-type-list/update-info-room/' + roomTypesDetails.id}}" ng-click="closeModal()"
+                                       class="btn btn-green">Sửa thông tin phòng</a>
                                 </div>
                             </div>
                         </div>
@@ -74,24 +84,17 @@
                         </div>
                         <div class="col-12 mb-5 mt-5 p-3">
                             <div class="row">
-                                <div class="col-md-9">
-                                    <img class="img-fluid" ng-src="{{roomTypesDetails.roomTypeAvatar}}"/>
-                                </div>
-                                <div class="col-md-3">
-                                    <img class="img-fluid m-1"
-                                         ng-src="{{ roomTypesDetails.roomImagesById.length > 0 ? roomTypesDetails.roomImagesById[0].roomTypeImg : 'assets/admin/assets/img/bg/default-image-hotel.png' }}"/>
-                                    <img class="img-fluid m-1"
-                                         ng-src="{{ roomTypesDetails.roomImagesById.length > 0 ? roomTypesDetails.roomImagesById[1].roomTypeImg : 'assets/admin/assets/img/bg/default-image-hotel.png' }}"/>
-                                    <div class="image-preview">
-                                        <img class="img-fluid m-1"
-                                             ng-src="{{ roomTypesDetails.roomImagesById.length > 0 ? roomTypesDetails.roomImagesById[2].roomTypeImg : 'assets/admin/assets/img/bg/default-image-hotel.png' }}"/>
-                                        <div class="overlay m-1">
-                                            <button class="btn-view-more m-1 btn" ng-click="openImageModal()">Xem thêm
-                                                ảnh
-                                            </button>
+                                <div class="col-12" >
+                                    <div class="row" >
+                                        <div class="col-xl-3 p-1" ng-repeat="img in roomTypesDetails.roomImagesById">
+                                            <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px"
+                                                 ng-src="{{img.roomTypeImg}}"/>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <a href="" class="btn btn-green">Chỉnh sửa hình ảnh</a>
                             </div>
                         </div>
                     </div>

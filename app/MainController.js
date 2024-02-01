@@ -175,7 +175,6 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
      * @returns {boolean}
      */
     $scope.hideSidebar = function () {
-        const locationPath = $location.path();
         const hiddenPaths = [
             '/business/register-hotel',
             '/business/register-transports',
