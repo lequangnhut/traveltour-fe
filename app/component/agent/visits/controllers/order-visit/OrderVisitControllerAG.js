@@ -1,6 +1,6 @@
-travel_app.controller('VisitControllerAG', function ($scope, $timeout, $sce, $location, $routeParams, LocalStorageService, VisitLocationTicketServiceAG) {
+travel_app.controller('OrderVisitControllerAG', function ($scope, $timeout, $sce, $location, $routeParams, OrderVisitServiceAG, LocalStorageService) {
     let searchTimeout;
-    let visitTicketId = $routeParams.id;
+    let bookingVisitId = $routeParams.id;
     let brandId = LocalStorageService.get('brandId');
 
     $scope.isLoading = true;
@@ -10,11 +10,37 @@ travel_app.controller('VisitControllerAG', function ($scope, $timeout, $sce, $lo
 
     $scope.visitLocations = {};
 
-    $scope.visitTicket = {
+    $scope.ticketTypes = {
+        free: null,
+        adult: null,
+        child: null
+    };
+
+    $scope.unitPrice = {
+        adult: null,
+        child: null,
+        freeQuantity: null,
+        adultQuantity: null,
+        childQuantity: null
+    }
+
+    $scope.orderVisit = {
         id: null,
+        userId: null,
         visitLocationId: null,
-        ticketTypeName: null,
-        unitPrice: null
+        customerName: null,
+        customerCitizenCard: null,
+        customerPhone: null,
+        customerEmail: null,
+        capacityAdult: null,
+        capacityKid: null,
+        checkIn: null,
+        orderTotal: null,
+        paymentMethod: null,
+        orderCode: null,
+        dateCreated: null,
+        orderStatus: null,
+        orderNote: null,
     }
 
     function errorCallback() {
@@ -22,15 +48,11 @@ travel_app.controller('VisitControllerAG', function ($scope, $timeout, $sce, $lo
     }
 
     $scope.init = function () {
-        VisitLocationTicketServiceAG.findAllVisitTicket(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function successCallback(response) {
+        OrderVisitServiceAG.findAllOrderVisit(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function successCallback(response) {
             if (response.status === 200) {
-                $scope.visitTicketData = response.data.content;
+                $scope.orderVisitData = response.data.content;
                 $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
                 $scope.totalElements = response.data.totalElements;
-
-                response.data.content.forEach(visitLocations => {
-                    $scope.findVisitLocationName(visitLocations.visitLocationId);
-                });
             }
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
@@ -39,11 +61,11 @@ travel_app.controller('VisitControllerAG', function ($scope, $timeout, $sce, $lo
         /**
          * Tìm kiếm
          */
-        $scope.searchVisitTicket = function () {
+        $scope.searchOrderVisit = function () {
             if (searchTimeout) $timeout.cancel(searchTimeout);
 
             searchTimeout = $timeout(function () {
-                VisitLocationTicketServiceAG.findAllVisitTicket(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
+                OrderVisitServiceAG.findAllOrderVisit(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
                     .then(function (response) {
                         $scope.visitTicketData = response.data.content;
                         $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
@@ -55,37 +77,22 @@ travel_app.controller('VisitControllerAG', function ($scope, $timeout, $sce, $lo
         };
 
         /**
-         * Tìm visitLocation bằng visitLocationId
-         * @param visitLocationId
+         * Tìm visitLocation bằng brandId
+         * @param brandId
          */
-        $scope.findVisitLocationName = function (visitLocationId) {
-            if (!$scope.visitLocations[visitLocationId]) {
-                VisitLocationTicketServiceAG.findByVisitLocationId(visitLocationId).then(function (response) {
-                    if (response.status === 200) {
-                        $scope.visitLocationSelect = response.data.data;
-                        let visitLocation = $scope.visitLocations[visitLocationId] = response.data.data;
-
-                        for (let i = 0; i < visitLocation.length; i++) {
-                            $scope.visitLocations = visitLocation[i];
-                        }
-                    } else {
-                        $location.path('/admin/page-not-found');
-                    }
-                }, errorCallback);
+        OrderVisitServiceAG.findAllVisitLocation(brandId).then(function (response) {
+            if (response.status === 200) {
+                $scope.visitLocationSelect = response.data.data;
+            } else {
+                $location.path('/admin/page-not-found');
             }
-        };
+        }, errorCallback);
 
         /**
          * Tìm bằng visitTicketId để cập nhật
          */
-        if (visitTicketId !== undefined && visitTicketId !== null && visitTicketId !== "") {
-            VisitLocationTicketServiceAG.findByVisitTicketId(visitTicketId).then(function (response) {
-                if (response.status === 200) {
-                    $scope.visitTicket = response.data.data;
-                } else {
-                    $location.path('/admin/page-not-found');
-                }
-            }, errorCallback);
+        if (bookingVisitId !== undefined && bookingVisitId !== null && bookingVisitId !== "") {
+
         }
     }
 
@@ -151,19 +158,48 @@ travel_app.controller('VisitControllerAG', function ($scope, $timeout, $sce, $lo
         return $sce.trustAsHtml('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"/></svg>');
     };
 
-    $scope.createVisitTicket = function () {
+    $scope.createOrderVisit = function () {
         $scope.isLoading = true;
-        let dataTicket = $scope.visitTicket;
+        let dataOrderVisit = $scope.orderVisit;
+        const selectedTickets = [];
+        const ticketDetails = {};
 
-        VisitLocationTicketServiceAG.create(dataTicket).then(function () {
-            toastAlert('success', 'Tạo vé tham quan thành công !');
-            $location.path('/business/visit/visit-ticket-management');
-        }, errorCallback).finally(function () {
-            $scope.isLoading = false;
-        });
+        if ($scope.ticketTypes.free) {
+            selectedTickets.push("Miễn phí vé");
+            ticketDetails.free = {
+                quantity: 0,
+                unitPrice: $scope.unitPrice.adult || 0
+            };
+        }
+        if ($scope.ticketTypes.adult) {
+            selectedTickets.push("Vé người lớn");
+            ticketDetails.adult = {
+                quantity: $scope.unitPrice.adultQuantity || 0,
+                unitPrice: $scope.unitPrice.adult || 0
+            };
+        }
+        if ($scope.ticketTypes.child) {
+            selectedTickets.push("Vé trẻ em");
+            ticketDetails.child = {
+                quantity: $scope.unitPrice.childQuantity || 0,
+                unitPrice: $scope.unitPrice.child || 0
+            };
+        }
+
+        console.log("Data Order Visit:", dataOrderVisit);
+        console.log("Selected Tickets:", selectedTickets);
+        console.log("Ticket Details:", ticketDetails);
+
+        // Rest of your code
+        // OrderVisitServiceAG.create(dataOrderVisit).then(function () {
+        //     toastAlert('success', 'Tạo booking thành công !');
+        //     $location.path('/business/visit/order-visit-management');
+        // }, errorCallback).finally(function () {
+        //     $scope.isLoading = false;
+        // });
     };
 
-    $scope.updateVisitTicket = function () {
+    $scope.updateOrderVisit = function () {
         let dataTicket = $scope.visitTicket;
 
         function confirmUpdate() {
@@ -177,15 +213,15 @@ travel_app.controller('VisitControllerAG', function ($scope, $timeout, $sce, $lo
             });
         }
 
-        confirmAlert('Bạn có chắc chắn muốn cập nhật vé tham quan không ?', confirmUpdate);
+        confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdate);
     };
 
-    $scope.deleteVisitTicket = function (visitTicketId, locationName) {
+    $scope.deleteOrderVisit = function (bookingVisitId, locationName) {
 
         function confirmDelete() {
             $scope.isLoading = true;
 
-            VisitLocationTicketServiceAG.delete(visitTicketId).then(function () {
+            VisitLocationTicketServiceAG.delete(bookingVisitId).then(function () {
                 toastAlert('success', 'Xóa vé tham quan thành công !');
                 $location.path('/business/visit/visit-ticket-management');
                 $scope.init();

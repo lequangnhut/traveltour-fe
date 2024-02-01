@@ -217,7 +217,7 @@ travel_app.controller('OrderTransportControllerAG', function ($scope, $routePara
 
         OrderTransportService.create(orderTransportationsDto).then(function successCallback() {
             toastAlert('success', 'Thêm mới thành công !')
-            $location.path('/business/transport/booking-management');
+            $location.path('/business/transport/order-visit-management');
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
@@ -234,7 +234,7 @@ travel_app.controller('OrderTransportControllerAG', function ($scope, $routePara
 
             OrderTransportService.update(orderTransportationsDto).then(function successCallback() {
                 toastAlert('success', 'Cập nhật thành công !')
-                $location.path('/business/transport/booking-management');
+                $location.path('/business/transport/order-visit-management');
             }, errorCallback).finally(function () {
                 $scope.isLoading = false;
             });
@@ -250,7 +250,7 @@ travel_app.controller('OrderTransportControllerAG', function ($scope, $routePara
         function confirmDelete() {
             OrderTransportService.delete(orderTransportId).then(function () {
                 toastAlert('success', 'Xóa vé thành công !');
-                $location.path('/business/transport/booking-management');
+                $location.path('/business/transport/order-visit-management');
                 $scope.init();
             }, errorCallback).finally(function () {
                 $scope.isLoading = false;

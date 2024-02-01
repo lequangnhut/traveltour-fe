@@ -173,7 +173,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/staff/bill/bill-update.html',
             controller: 'BillControllerAD'
         })
-        .when('/admin/booking-list', {
+        .when('/admin/order-visit-list', {
             templateUrl: 'app/component/admin/views/pages/staff/booking/booking-list.html',
             controller: 'BookingControllerAD'
         })
@@ -279,15 +279,15 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-add.html',
             controller: 'HotelInformationEditController'
         })
-        .when('/business/hotel/booking-list', {
+        .when('/business/hotel/order-visit-list', {
             templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-list.html',
             controller: 'HotelAmenitiesListControllerAG'
         })
-        .when('/business/hotel/booking-list/create', {
+        .when('/business/hotel/order-visit-list/create', {
             templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-add.html',
             controller: 'HotelAmenitiesListControllerAG'
         })
-        .when('/business/hotel/booking-list/update', {
+        .when('/business/hotel/order-visit-list/update', {
             templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-edit.html',
             controller: 'HotelAmenitiesListControllerAG'
         })
@@ -309,7 +309,13 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/business/register-transports', {
             templateUrl: 'app/component/agent/trans/views/pages/register-transport.html',
-            controller: 'RegisterTransControllerAG'
+            controller: 'RegisterTransControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    // Ví dụ như trang này tui có 2 điều kiện để vào, là có được user và token (bắt buộc)
+                    // thứ 2 là nếu người dùng chưa đăng kí xe, còn lại nếu đã đăng kí thì không được vào
+                }
+            }
         })
         .when('/business/transport/home', {
             templateUrl: 'app/component/agent/trans/views/pages/dashboard/management-transport.html',
@@ -335,15 +341,15 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-update.html',
             controller: 'TransportControllerAG'
         })
-        .when('/business/transport/booking-management', {
+        .when('/business/transport/order-transport-management', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-list.html',
             controller: 'OrderTransportControllerAG'
         })
-        .when('/business/transport/booking-management/create-booking', {
+        .when('/business/transport/order-transport-management/create-order-visit', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-create.html',
             controller: 'OrderTransportControllerAG'
         })
-        .when('/business/transport/booking-management/update-booking/:id', {
+        .when('/business/transport/order-transport-management/update-order-visit/:id', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-update.html',
             controller: 'OrderTransportControllerAG'
         })
@@ -380,28 +386,28 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'RegisterVisitsControllerAG'
         })
         .when('/business/visit/visit-ticket-management', {
-            templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/visit-list.html',
+            templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/ticket-list.html',
             controller: 'VisitControllerAG'
         })
         .when('/business/visit/visit-ticket-management/create-visit-ticket', {
-            templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/visit-create.html',
+            templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/ticket-create.html',
             controller: 'VisitControllerAG'
         })
         .when('/business/visit/visit-ticket-management/update-visit-ticket/:id', {
-            templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/visit-update.html',
+            templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/ticket-update.html',
             controller: 'VisitControllerAG'
         })
-        .when('/business/booking-visit/booking-info', {
+        .when('/business/visit/order-visit-management', {
             templateUrl: 'app/component/agent/visits/views/pages/bookings/booking-visit-list.html',
-            controller: ''
+            controller: 'OrderVisitControllerAG'
         })
-        .when('/business/booking-visit/booking-list/booking-create', {
+        .when('/business/visit/order-visit-management/create-order-visit', {
             templateUrl: 'app/component/agent/visits/views/pages/bookings/booking-visit-create.html',
-            controller: ''
+            controller: 'OrderVisitControllerAG'
         })
-        .when('/business/booking-visit/booking-list/booking-update', {
+        .when('/business/visit/order-visit-management/update-order-visit/:id', {
             templateUrl: 'app/component/agent/visits/views/pages/bookings/booking-visit-update.html',
-            controller: ''
+            controller: 'OrderVisitControllerAG'
         })
 
         /**
@@ -605,7 +611,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
                 }
             }
         })
-        .when('/booking', {
+        .when('/order-visit', {
             templateUrl: 'app/component/customers/views/pages/booking/booking.html',
             controller: ''
         })

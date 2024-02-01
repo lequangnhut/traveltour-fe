@@ -255,7 +255,7 @@ travel_app.controller('TransportControllerAG', function ($scope, $sce, $routePar
 
         TransportServiceAG.update(transportData).then(function successCallback() {
             toastAlert('success', 'Cập nhật thành công !');
-            $location.path('/business/transport/transport-management');
+            $location.path('/business/transport/order-transport-management');
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
@@ -274,7 +274,7 @@ travel_app.controller('TransportControllerAG', function ($scope, $sce, $routePar
         function confirmDelete() {
             TransportServiceAG.delete(transportId).then(function successCallback() {
                 toastAlert('success', 'Xóa phương tiện thành công !');
-                $location.path('/business/transport/transport-management');
+                $location.path('/business/transport/order-transport-management');
                 $scope.init();
             }, errorCallback).finally(function () {
                 $scope.isLoading = false;
