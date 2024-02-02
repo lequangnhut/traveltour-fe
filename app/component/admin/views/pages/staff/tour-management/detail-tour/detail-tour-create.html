@@ -20,7 +20,7 @@
     <div class="card card-custom">
         <form class="row g-3 form-input-custom" name="tourDetailForm" ng-submit="createTourDetailSubmit()"
               novalidate>
-            <div class="col-12">
+            <div class="col-md-6">
                 <label for="tourNameSelect" class="form-label">Tên tour</label>
                 <select id="tourNameSelect" class="form-select"
                         name="tourNameSelect"
@@ -68,7 +68,26 @@
                 </small>
                 <small class="text-danger"
                        ng-show="tourDetailForm.numberOfGuests.$touched && !isNumberOfGuestsValid()">
-                    Số lượng khách phải từ 16 dến 50!
+                    Số lượng khách phải từ 16 đến 50!
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label for="minimumNumberOfGuests" class="form-label">Số khách tối thiểu</label>
+                <input type="number" class="form-control" id="minimumNumberOfGuests"
+                       placeholder="Nhập số khách tối thiểu"
+                       name="minimumNumberOfGuests"
+                       ng-model="tourDetail.minimumNumberOfGuests"
+                       ng-class="{ 'is-invalid': tourDetailForm.minimumNumberOfGuests.$touched && (!tourDetailForm.minimumNumberOfGuests.$valid || !MinimumNumberOfGuestsValid()),
+                                            'is-valid': tourDetailForm.minimumNumberOfGuests.$touched && (tourDetailForm.minimumNumberOfGuests.$valid || MinimumNumberOfGuestsValid())}"
+                       required>
+                <small class="text-danger"
+                       ng-show="tourDetailForm.minimumNumberOfGuests.$touched && tourDetailForm.minimumNumberOfGuests.$error.required">
+                    Số khách không được bỏ trống!
+                </small>
+                <small class="text-danger"
+                       ng-show="tourDetailForm.minimumNumberOfGuests.$touched && !MinimumNumberOfGuestsValid()">
+                    Số lượng khách phải từ 1 đến 16!
                 </small>
             </div>
 

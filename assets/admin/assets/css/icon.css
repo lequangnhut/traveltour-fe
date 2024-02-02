@@ -48,7 +48,7 @@ th.cursor-pointer:hover {
     align-items: center;
     justify-content: center; /* Canh giữa theo chiều ngang */
     white-space: nowrap; /* Ngăn ngừng text tràn xuống dòng mới */
-    overflow: hidden; /* Ẩn nội dung dư thừa nếu màn hình quá nhỏ */
+    /*overflow: hidden; !* Ẩn nội dung dư thừa nếu màn hình quá nhỏ *!*/
     text-overflow: ellipsis; /* Hiển thị ba dấu chấm (...) nếu nội dung quá dài */
 }
 

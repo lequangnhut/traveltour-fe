@@ -9,26 +9,24 @@
         </div>
     </div>
 
-    <div class="">
-        <div class="card card-customer">
-            <div class="row" style="margin: 20px 16px 20px 16px">
-                <div class="col-xl-4">
-                    Bạn muốn tìm kiếm gì ?
-                    <div class="input-group mb-3">
+    <div class="card card-customer">
+        <div class="row" style="margin: 20px 16px 20px 16px">
+            <div class="col-xl-4">
+                Bạn muốn tìm kiếm gì ?
+                <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i
                                     class="fa-solid fa-magnifying-glass bg-light"></i></span>
-                        <input type="text" class="form-control" placeholder="Tìm kiếm" ng-model="searchTerm"
-                               ng-change="searchTours()"
-                               aria-label="Username" aria-describedby="basic-addon1">
-                    </div>
+                    <input type="text" class="form-control" placeholder="Tìm kiếm" ng-model="searchTerm"
+                           ng-change="searchTours()"
+                           aria-label="Username" aria-describedby="basic-addon1">
                 </div>
-                <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
-                     style="margin: 20px 0 0 0">
-                    <a href="/admin/basic-tour-list/basic-tour-create" class="btn btn-primary"><i
-                            class="fa-solid fa-plus" style="margin-right: 10px"></i> Tạo tour
-                        mới
-                    </a>
-                </div>
+            </div>
+            <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
+                 style="margin: 20px 0 0 0">
+                <a href="/admin/basic-tour-list/basic-tour-create" class="btn btn-primary"><i
+                        class="fa-solid fa-plus" style="margin-right: 10px"></i> Tạo tour
+                    mới
+                </a>
             </div>
         </div>
     </div>
@@ -95,7 +93,7 @@
                 <thead>
                 <tr class="bg-light">
                     <th><span><input class="form-check-input checkbox-all" type="checkbox" value=""></span></th>
-                    <th># </th>
+                    <th>#</th>
 
                     <th class="cursor-pointer" ng-click="sortData('id')">
                         <div class="icon-left">

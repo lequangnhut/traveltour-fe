@@ -17,6 +17,17 @@ travel_app.service('TourTripsServiceAD', function ($http, $q) {
         return deferred.promise;
     };
 
+    this.getTripsByTourId = function (tourId) {
+        const deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: API_TOUR_TRIPS + 'find-tourTrips-by-tourId/' + tourId,
+            params: {tourId: tourId || 'null'}
+
+        }).then(deferred.resolve, deferred.reject);
+        return deferred.promise;
+    };
+
     this.findTripsById = function (id) {
         const deferred = $q.defer();
         $http({

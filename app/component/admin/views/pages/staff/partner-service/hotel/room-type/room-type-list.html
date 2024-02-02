@@ -10,71 +10,40 @@
                             data-bs-toggle="modal" data-bs-target="#modalSchedule">
                         Lịch trình
                     </button>
-                    <button type="button" class="btn btn-green float-end"
+                    <button type="button" class="btn btn-green float-end ms-3"
                             data-bs-toggle="modal" data-bs-target="#tourInformationModal">
                         Xem TT tour
                     </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="">
-        <div class="card card-customer">
-            <div class="row" style="margin: 20px 16px 20px 16px">
-                <div class="col-xl-6 col-md-6 col-sm-6 order-1 order-sm-1">
-                    Bạn muốn tìm kiếm gì ?
-                    <div class="input-group mb-3 mt-1">
-                        <span class="input-group-text" id="basic-addon1"><i
-                                class="fa-solid fa-magnifying-glass bg-light"></i></span>
-                        <input type="text" class="form-control" placeholder="Tìm kiếm" ng-model="searchTerm"
-                               ng-change="searchHotelServiceByKey()" aria-label="Username"
-                               aria-describedby="basic-addon1">
-                    </div>
-                </div>
-                <div class="col-xl-6 col-md-6 col-sm-6 order-0 order-sm-2">
-                    <span ng-click="refreshSearch()">
-                    <i class="fa-solid fa-arrows-rotate float-end"></i>
-                    </span>
-                </div>
-                <div class="col-xl-2 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
-                    <label class="form-label">Địa điểm</label>
-                    <select class="form-select"
-                            name="location"
-                            ng-model="searchHotels.location"
-                            ng-options="city.Name as city.Name for city in provinces"
-                    >
-                        <option value="" selected>Chọn địa điểm</option>
-                    </select>
-                </div>
-                <div class="col-xl-2 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
-                    <label class="form-label">Ngày đi</label>
-                    <input class="form-control" ng-model="searchHotels.departureDate" type="date"/>
-                </div>
-                <div class="col-xl-2 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
-                    <label class="form-label">Ngày về</label>
-                    <input class="form-control" ng-model="searchHotels.arrivalDate" type="date"/>
-                </div>
-                <div class="col-xl-2 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
-                    <label class="form-label">SL người lớn</label>
-                    <input class="form-control" ng-model="searchHotels.numAdults" type="number" placeholder="20"/>
-                </div>
-                <div class="col-xl-2 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
-                    <label class="form-label">SL trẻ em</label>
-                    <input class="form-control" ng-model="searchHotels.numChildren" type="number" placeholder="5"/>
-                </div>
-
-                <div class="col-xl-2 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
-                    <label class="form-label"></label>
-                    <button type="button" class="btn btn-primary w-100"
-                            ng-click="searchHotelServiceByLocationAndDepartureDateAndArrivalDateAndNumAdultsAndNumChildren()">
-                        Tìm kiếm
+                    <button type="button" class="btn btn-green float-end"
+                            data-bs-toggle="modal" data-bs-target="#hotelInformationModal">
+                        Xem TT khách sạn
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="card card-customer">
+        <div class="row" style="margin: 20px 16px 20px 16px">
+            <div class="col-xl-4">
+                Bạn muốn tìm kiếm gì ?
+                <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i
+                                    class="fa-solid fa-magnifying-glass bg-light"></i></span>
+                    <input type="text" class="form-control" placeholder="Tìm kiếm" ng-model="searchTerm"
+                           ng-change="searchRoomType()"
+                           aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
+                 style="margin: 20px 0 0 0">
+                <a href="/admin/basic-tour-list/basic-tour-create" class="btn btn-primary"><i
+                        class="fa-solid fa-plus" style="margin-right: 10px"></i> Tạo tour
+                    mới
+                </a>
+            </div>
+        </div>
+    </div>
 
     <div class="table-components table-responsive mb-5">
         <div class="card table-responsive table-customer">
@@ -136,76 +105,93 @@
                 <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
-                    <th><span><input class="form-check-input checkbox-all" type="checkbox" value=""></span>
-                    </th>
-                    <th>#</th>
-                    <th class="cursor-pointer" ng-click="sortData('hotelName')">
-                        <div class="icon-left">Tên khách sạn
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('hotelName')"></span>
+                    <th>STT</th>
+                    <th class="cursor-pointer" ng-click="sortData('roomTypeName')">
+                        <div class="icon-left">
+                            Tên loài phòng
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('roomTypeName')"></span>
                         </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('phone')">
-                        <div class="icon-left">Số điện thoại
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('phone')"></span>
+                    <th class="cursor-pointer" ng-click="sortData('roomUtilitiesNames')">
+                        <div class="icon-left">
+                            Tên tiện ích
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('roomUtilitiesNames')"></span>
                         </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('location')">
-                        <div class="icon-left">Địa điểm
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('location')"></span>
+                    <th class="cursor-pointer" ng-click="sortData('bedTypeNames')">
+                        <div class="icon-left">
+                            Loại giường
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('bedTypeNames')"></span>
                         </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('averageRoomPrice')">
-                        <div class="icon-left">Trung bình giá
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('averageRoomPrice')"></span>
+                    <th class="cursor-pointer" ng-click="sortData('capacityChildren')">
+                        <div class="icon-left">
+                            Số trẻ em
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('capacityChildren')"></span>
                         </div>
                     </th>
-                    <th>Thao tác</th>
+                    <th class="cursor-pointer" ng-click="sortData('capacityAdults')">
+                        <div class="icon-left">
+                            Số người lớn
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('capacityAdults')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('price')">
+                        <div class="icon-left">
+                            Giá phòng
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('price')"></span>
+                        </div>
+                    </th>
+                    <th class="text-nowrap" style="width: fit-content;">
+                        Số lượng
+                    </th>
+
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="hotelService in hotelServiceList">
-                    <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
-                    <td>{{ $index + 1 }}</td>
+                <tr ng-repeat="rt in roomTypeList">
+                    <td><span><input class="form-check-input" type="checkbox" ng-model="rt.isChecked"></span></td>
                     <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="{{ hotelService.hotelName }}">
-                        {{ hotelService.hotelName }}
+                        title="{{ rt.roomTypeName }}">
+                        {{ rt.roomTypeName }}
                     </td>
-                    <td>{{ hotelService.phone }}</td>
                     <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="{{ hotelService.ward + ', ' + hotelService.district + ', ' + hotelService.province }}">
-                        {{ hotelService.ward + ', ' + hotelService.district + ', ' + hotelService.province }}
+                        title="{{ rt.roomUtilitiesNames }}">
+                        {{ rt.roomUtilitiesNames }}
                     </td>
-                    <td>{{ hotelService.averageRoomPrice }}</td>
-                    <td class="d-flex align-items-center justify-content-center">
-                        <a href="admin/detail-tour-list/detail-tour-update/{{hotelService.id}}"
-                           role="button" class="fs-1 btn text-warning px-2">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
-                        <a role="button" class="fs-1 btn text-danger px-3"
-                           ng-click="deleteTourDetail(hotelService.id)">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
-                        <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/hotel-list/{{hotelService.id}}/room-type-list"
-                           role="button" class="fs-1 btn text-primary px-2">
-                            <i class="fa-regular fa-square-plus"></i>
-                        </a>
+                    <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="{{ rt.bedTypeNames }}">
+                        {{ rt.bedTypeNames }}
+                    </td>
+                    <td>{{ rt.capacityChildren }}</td>
+                    <td>{{ rt.capacityAdults }}</td>
+                    <td>{{ rt.price }}</td>
+                    <td style="width: 105px">
+                        <input type="number" class="form-control" ng-disabled="!rt.isChecked"/>
                     </td>
                 </tr>
-                <tr ng-if="hotelServiceList.length === 0">
+                <tr ng-if="tourDetailList.length === 0">
                     <td colspan="14">Trang này không có dữ liệu.</td>
                 </tr>
                 </tbody>
             </table>
-            <div class="card-footer">
-                <div class="d-flex justify-content-end">
-                    {{ getDisplayRange() }} trong tổng số {{ totalElements }}
+            <div class="card-footer py-3">
+
+                <div class="row">
+                    <div class="col-6 d-flex justify-content-start">
+                        <button style="background-color: #f4f7ff" class="btn">Xác nhận</button>
+                    </div>
+                    <div class="col-6 d-flex justify-content-end align-items-center">
+                        {{ getDisplayRange() }} trong tổng số {{ totalElements }}
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal tour-->
 <div class="modal fade" id="tourInformationModal" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
@@ -259,6 +245,42 @@
                 </div>
                 <div ng-if="tourTripsList.length === 0">
                     <div class="text-center">HIỆN CHƯA CÓ KẾ HOẠCH</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal khách sạn-->
+<div class="modal fade" id="hotelInformationModal" tabindex="-1"
+     aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+            <h5 class="modal-title text-center mt-3">THÔNG TIN KHÁCH SẠN</h5>
+            <hr>
+            <div class="modal-body">
+                <div class="fw-normal px-3">
+                    <table class="table">
+                        <tr>
+                            <td class="fw-bold" style="width: 95px">Tên:</td>
+                            <td>{{ hotelInfo.hotelName }}</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Loại:</td>
+                            <td>{{ hotelInfo.hotelTypeName }}</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Địa chỉ:</td>
+                            <td>{{ hotelInfo.address }}</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Tiện ích:</td>
+                            <td>{{ hotelInfo.utilities }}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
             <div class="modal-footer">
