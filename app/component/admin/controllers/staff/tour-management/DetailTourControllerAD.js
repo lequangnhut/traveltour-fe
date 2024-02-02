@@ -7,6 +7,7 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
         departureDate: null,
         arrivalDate: null,
         numberOfGuests: null,
+        minimumNumberOfGuests: null,
         unitPrice: null,
         tourDetailNotes: null,
         tourDetailStatus: null,
@@ -50,6 +51,10 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
 
     $scope.isNumberOfGuestsValid = function () {
         return $scope.tourDetail.numberOfGuests >= 16 && $scope.tourDetail.numberOfGuests <= 50; // Số lượng khách phải lớn hơn 0
+    };
+
+    $scope.MinimumNumberOfGuestsValid = function () {
+        return $scope.tourDetail.minimumNumberOfGuests >= 1 && $scope.tourDetail.minimumNumberOfGuests <= 16;
     };
 
     function isPriceValid(price) {

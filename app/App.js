@@ -96,7 +96,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Admin Partner Services
          */
-        .when('/admin/service-list', {
+        .when('/admin/detail-tour-list/:tourDetailId/service-list', {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/service-list.html',
             controller: 'ServiceListControllerAD'
         })
@@ -112,17 +112,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/vehicle/vehicle-update.html',
             controller: 'VehicleControllerAD'
         })
-        .when('/admin/service-list/hotel-list', {
+        .when('/admin/detail-tour-list/:tourDetailId/service-list/hotel-list', {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/hotel/hotel-list.html',
-            controller: 'HotelControllerAD'
+            controller: 'HotelServiceControllerAD'
         })
-        .when('/admin/service-list/hotel-list/hotel-create', {
-            templateUrl: 'app/component/admin/views/pages/staff/partner-service/hotel/hotel-create.html',
-            controller: 'HotelControllerAD'
+        .when('/admin/detail-tour-list/:tourDetailId/service-list/hotel-list/:hotelId/room-type-list', {
+            templateUrl: 'app/component/admin/views/pages/staff/partner-service/hotel/room-type/room-type-list.html',
+            controller: 'RoomTypeControllerAD'
         })
         .when('/admin/service-list/hotel-list/hotel-update/:id', {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/hotel/hotel-update.html',
-            controller: 'HotelControllerAD'
+            controller: 'HotelServiceControllerAD'
         })
         .when('/admin/sightseeing-list', {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/sightseeing/sightseeing-list.html',

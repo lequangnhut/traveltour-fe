@@ -166,8 +166,8 @@
                     <td>{{ tourDetail.numberOfGuests }}</td>
                     <td>{{ tourDetail.fromLocation }}</td>
                     <td>{{ tourDetail.toLocation }}</td>
-                    <td>{{ tourDetail.departureDate | vietnameseDateTime }}</td>
-                    <td>{{ tourDetail.arrivalDate | vietnameseDateTime }}</td>
+                    <td>{{ tourDetail.departureDate | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ tourDetail.arrivalDate | date: 'dd/MM/yyyy' }}</td>
                     <td>{{ tourDetail.unitPrice }}</td>
                     <td>{{ tourDetail.tourDetailNotes }}</td>
                     <td>{{ tourDetail.tourDetailStatus }}</td>
@@ -180,7 +180,7 @@
                            ng-click="deleteTourDetail(tourDetail.id)">
                             <i class="fa-solid fa-trash"></i>
                         </a>
-                        <a href="/admin/service-list"
+                        <a href="/admin/detail-tour-list/{{tourDetail.id}}/service-list"
                            role="button" class="fs-1 btn px-2">
                             <img src="/assets/admin/assets/img/icons/preferences.png" alt="">
                         </a>
