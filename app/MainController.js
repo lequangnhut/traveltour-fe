@@ -18,6 +18,13 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
             return new Intl.NumberFormat('vi-VN', {currency: 'VND'}).format(price);
         };
 
+        $scope.replacePrice = function (price) {
+            if (price === undefined || price === null) {
+                return '';
+            }
+            return price.replace(/[^0-9]/g, '');
+        };
+
         /**
          * Mở image bự hơn trong modal
          */

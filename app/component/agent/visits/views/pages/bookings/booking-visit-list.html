@@ -103,17 +103,12 @@
                 <tr class="bg-light">
                     <th>#</th>
                     <th ng-click="sortData('id')">
-                        <div class="icon-left">ID
+                        <div class="icon-left">Địa điểm
                             <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
                     <th ng-click="sortData('id')">
-                        <div class="icon-left">Số vé
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
-                        </div>
-                    </th>
-                    <th ng-click="sortData('id')">
-                        <div class="icon-left">Họ tên
+                        <div class="icon-left">Khách hàng
                             <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
@@ -123,12 +118,17 @@
                         </div>
                     </th>
                     <th ng-click="sortData('id')">
+                        <div class="icon-left">Tổng số vé
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                        </div>
+                    </th>
+                    <th ng-click="sortData('id')">
                         <div class="icon-left">Tổng tiền
                             <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
                     <th ng-click="sortData('id')">
-                        <div class="icon-left">Ngày đặt
+                        <div class="icon-left">Ngày tham quan
                             <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
@@ -143,15 +143,22 @@
                 <tbody>
                 <tr ng-repeat="oVisit in orderVisitData">
                     <td>{{ $index + 1 }}</td>
-                    <td>1</td>
-                    <td>Phòng studio</td>
-                    <td>2</td>
-                    <td>1</td>
-                    <td>Giường đôi</td>
-                    <td>300.000</td>
-                    <td>
+                    <td>{{ visitLocations.visitLocationName }}</td>
+                    <td>{{ oVisit.customerName }}</td>
+                    <td>{{ oVisit.customerPhone }}</td>
+                    <td>{{ oVisit.capacityAdult + oVisit.capacityKid + ' Vé' }}</td>
+                    <td>{{ oVisit.orderTotal | vnCurrency }}</td>
+                    <td>{{ oVisit.checkIn | vietnameseDateTime }}</td>
+                    <td ng-if="oVisit.orderStatus == 0">
                         <div class="d-flex align-items-center justify-content-center">
-                            <span class="status-success"></span> <span class="text-status-success">Đang book</span>
+                            <span class="status-success"></span>
+                            <span class="text-status-success">Đã tạo vé</span>
+                        </div>
+                    </td>
+                    <td ng-if="oVisit.orderStatus == 1">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <span class="status-success"></span>
+                            <span class="text-status-success">Đã hủy vé</span>
                         </div>
                     </td>
                     <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
@@ -159,7 +166,7 @@
                            role="button" class="fs-1 btn text-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a href="#" ng-click="deleteBooking(oVisit.id, visitLocations.visitLocationName)"
+                        <a href="#" ng-click="deleteOrderVisit(oVisit.id, oVisit.customerName)"
                            role="button" class="fs-1 btn text-danger">
                             <i class="fa-solid fa-trash"></i>
                         </a>

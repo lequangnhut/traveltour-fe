@@ -379,10 +379,10 @@
                                        class="form-control"
                                        placeholder="300,000"
                                        name="adult"
-                                       format-price-input
                                        ng-model="unitPrice.adult"
                                        ng-class="{ 'is-invalid': register_visits.adult.$invalid && register_visits.adult.$touched, 'is-valid': register_visits.adult.$valid && register_visits.adult.$touched }"
                                        ng-pattern="/^(\d{1,3}(,\d{3})*(,\d{1,3})*(,\d{3})*|\d+(,\d{1,3})*)$/"
+                                       vietnam-currency-input
                                        ng-disabled="!ticketTypes.adult"
                                 >
                                 <small class="text-danger"
@@ -414,9 +414,9 @@
                                        class="form-control"
                                        placeholder="150,000"
                                        name="child"
-                                       format-price-input
                                        ng-model="unitPrice.child"
                                        ng-class="{ 'is-invalid': register_visits.child.$invalid && register_visits.child.$touched, 'is-valid': register_visits.child.$valid && register_visits.child.$touched }"
+                                       vietnam-currency-input
                                        ng-pattern="/^(\d{1,3}(,\d{3})*(,\d{1,3})*(,\d{3})*|\d+(,\d{1,3})*)$/"
                                        ng-disabled="!ticketTypes.child"
                                 >

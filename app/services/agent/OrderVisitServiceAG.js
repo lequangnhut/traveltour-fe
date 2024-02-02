@@ -22,26 +22,47 @@ travel_app.service("OrderVisitServiceAG", function ($http) {
         })
     }
 
-    this.create = function (orderTransportationsDto) {
-        return $http({
-            method: 'POST',
-            url: API_ORDER_TRANS + 'create-order-transport',
-            data: orderTransportationsDto
-        })
-    }
-
-    this.update = function (orderTransportationsDto) {
-        return $http({
-            method: 'PUT',
-            url: API_ORDER_TRANS + 'update-order-transport',
-            data: orderTransportationsDto
-        })
-    }
-
-    this.delete = function (orderTransportId) {
+    this.findByOrderVisitId = function (orderVisitId) {
         return $http({
             method: 'GET',
-            url: API_ORDER_TRANS + 'delete-order-transport/' + orderTransportId
+            url: API_ORDER_VISIT + 'find-by-order-visit-id/' + orderVisitId
+        })
+    }
+
+    this.findByVisitLocationId = function (visitLocationId) {
+        return $http({
+            method: 'GET',
+            url: API_ORDER_VISIT + 'find-by-visit-location-id/' + visitLocationId
+        })
+    }
+
+    this.findByVisitTicketId = function (visitTicketId) {
+        return $http({
+            method: 'GET',
+            url: API_ORDER_VISIT + 'find-by-visit-ticket-id/' + visitTicketId
+        })
+    }
+
+    this.create = function (orderVisitDto) {
+        return $http({
+            method: 'POST',
+            url: API_ORDER_VISIT + 'create-order-visit',
+            data: orderVisitDto
+        })
+    }
+
+    this.update = function (orderVisitDto) {
+        return $http({
+            method: 'PUT',
+            url: API_ORDER_VISIT + 'update-order-visit',
+            data: orderVisitDto
+        })
+    }
+
+    this.delete = function (orderVisitId) {
+        return $http({
+            method: 'GET',
+            url: API_ORDER_VISIT + 'delete-order-visit/' + orderVisitId
         })
     }
 })
