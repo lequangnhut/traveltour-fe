@@ -94,13 +94,22 @@
                 </div>
             </div>
             <table class="table table-responsive text-center">
+                <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
                     <th><span><input class="form-check-input checkbox-all" type="checkbox" value="" id=""></span>
                     </th>
                     <th scope="col"># <i class="fa-solid fa-sort"></i></th>
-                    <th scope="col" ng-click="sortData('id')">ID <i class="fa-solid fa-sort"></i></th>
-                    <th scope="col" ng-click="sortData('hotelTypeName')">Loại lưu trú <i class="fa-solid fa-sort"></i></th>
+                    <th ng-click="sortData('id')">
+                        <div class="icon-left">ID
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                        </div>
+                    </th>
+                    <th ng-click="sortData('hotelTypeName')">
+                        <div class="icon-left">Loại lưu trú
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('hotelTypeName')"></span>
+                        </div>
+                    </th>
                     <th scope="col">Thao tác</th>
                 </tr>
                 </thead>

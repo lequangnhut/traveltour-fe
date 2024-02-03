@@ -1,21 +1,43 @@
-travel_app.controller('BedTypeControllerAD', function ($scope, $location, $sce, $rootScope, $routeParams, $timeout, BedTypeServiceAD) {
+travel_app.controller('AgencyControllerWaitingAD', function ($scope, $location, $sce, $rootScope, $routeParams, $timeout, AgencyServiceAD) {
 
     $scope.hasImage = false;
-    // Biến để lưu danh sách tours
+    $scope.loading = true;
+    $scope.count = 0;
+    // Biến để lưu danh sách tỉnh thành
+    $scope.provinces = [];
+    $scope.districts = [];
+    $scope.wards = [];
+    // Biến để lưu danh sách doanh nghiệp
     $scope.typeList = [];
     // Trang hiện tại
     $scope.currentPage = 0;
     // Số lượng tours trên mỗi trang
     $scope.pageSize = 5;
     // Đối tượng duyệt dữ liệu cho các form mới cho form tour
-    $scope.formType = {
-        bedTypeName : null
-    };
+    // $scope.formType = {
+    //     bedTypeName : null
+    // };
+    $scope.agent = {
+        nameAgency: null,
+        representativeName: null,
+        taxId: null,
+        urlWebsite: null,
+        phone: null,
+        imgDocument: null,
+        province: null,
+        district: null,
+        ward: null,
+        address: null,
+        dateCreated: null,
+        isAcepted: null,
+        isActive: null
+    }
 
     let searchTimeout;
     let typeId = $routeParams.id;
 
     //================================================================
+
     function errorCallback() {
         $location.path('/admin/internal-server-error')
     }
@@ -61,24 +83,25 @@ travel_app.controller('BedTypeControllerAD', function ($scope, $location, $sce, 
     //show list
     $scope.getTypeList = function () {
         $scope.isLoading = true;
-        BedTypeServiceAD.findAllType($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
+        AgencyServiceAD.findAllTypeWaiting($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
             .then(function (response) {
                 if (response.data.status === "404") {
                     $scope.typeList.length = 0;
+                    $scope.totalElements = 0;
                 } else {
                     $scope.typeList = response.data.data.content;
                     $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                    $scope.totalElements = response.data.totalElements;
+                    $scope.totalElements = response.data.data.totalElements;
                 }
             }, errorCallback).finally(function () {$scope.isLoading = false;
         });
 
         if (typeId !== undefined && typeId !== null && typeId !== "") {
-            BedTypeServiceAD.findById(typeId)
+            AgencyServiceAD.findAgencieById(typeId)
                 .then(function successCallback(response) {
                     if (response.status === 200) {
-                        $scope.formType = response.data.data;
-                        $rootScope.namenow = $scope.formType.bedTypeName;
+                        $scope.agent = response.data.data;
+                        $rootScope.namenow = $scope.agent.bedTypeName;
                     }
                 }, errorCallback).finally(function (){
                 $scope.isLoading = false;
@@ -106,10 +129,11 @@ travel_app.controller('BedTypeControllerAD', function ($scope, $location, $sce, 
     $scope.searchTypes = function () {
         if (searchTimeout) $timeout.cancel(searchTimeout);
         searchTimeout = $timeout(function () {
-            BedTypeServiceAD.findAllType($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
+            AgencyServiceAD.findAllTypeWaiting($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
                 .then(function (response) {
                     if (response.data.status === "404"){
                         $scope.typeList.length = 0;
+                        $scope.totalElements = 0;
                     }else{
                         $scope.typeList = response.data.data.content;
                         $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
@@ -121,90 +145,53 @@ travel_app.controller('BedTypeControllerAD', function ($scope, $location, $sce, 
 
     $scope.getTypeList();
 
-    //================================================================
-
-    //Check name cho thêm mới
-    $scope.checkDuplicateTypeName = function () {
-        BedTypeServiceAD.checkExistTypeName($scope.formType.bedTypeName)
-            .then(function successCallback(response) {
-                if (response.status === 200){
-                    $scope.nameError = response.data.data.exists;
-                }else{
-                    $scope.nameError = response.data.data.exists;
-                }
-            });
-    };
-
-    //Check name cho cập nhật
-    $scope.checkDuplicateTypeNameUpdate = function () {
-        if($scope.formType.bedTypeName == $rootScope.namenow){
-            $scope.nameError = false;
+    $scope.openModal = function (typeId) {
+        if (!$scope.agent) {
             return;
         }
-        BedTypeServiceAD.checkExistTypeName($scope.formType.bedTypeName)
-            .then(function successCallback(response) {
-                if (response.data.data.status === 200){
-                    $scope.nameError = response.data.data.exists;
-                }else{
-                    $scope.nameError = response.data.data.exists;
-                }
-            });
+
+        fillModalWithData(typeId);
+        $('#scrollingLong2').modal('show');
     };
 
-    //Thêm loại
-    $scope.createType = function () {
-        $scope.isLoading = true;
-        let dataType = $scope.formType
-        BedTypeServiceAD.createThisType(dataType).then(function successCallback() {
-            toastAlert('success', 'Thêm mới thành công !');
-            $location.path('/admin/type/bed-type-list');
-        }, errorCallback).finally(function (){
-            $scope.isLoading = false;
-        });
-    }
-
-    // Cập nhật loại
-    function confirmUpdateType() {
-        $scope.isLoading = true;
-        BedTypeServiceAD.updateThisType($scope.formType).then(function successCallback() {
-            toastAlert('success', 'Cập nhật thành công !');
-            $location.path('/admin/type/bed-type-list');
-            $scope.getTypeList();
-        }, errorCallback).finally(function (){
-            $scope.isLoading = false;
-        });
-    }
-    $scope.updateType = function () {
-        confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdateType);
-    }
-
-    // Xóa loại
-    $scope.deleteType = function (typeId) {
-        $scope.isLoading = true;
-        function confirmDeleteType() {
-            BedTypeServiceAD.checkTypeIsWorking(typeId).then(
-                function successCallback(response) {
-                    if (response.data.status.toString() === "200"){
-                        toastAlert('error', "Thể loại đang được sử dụng !");
-                    }else{
-                        BedTypeServiceAD.deleteThisType(typeId)
-                            .then(function (deleteResponse) {
-                                toastAlert('success', 'Xóa thành công !');
-                                $location.path('/admin/type/bed-type-list');
-                                //$scope.getTypeList(); - Lý do cmt là để dô nó lỗi
-                                if($scope.typeList.length < 2){
-                                    $scope.setPage($scope.currentPage-1);
-                                }else{
-                                    $scope.setPage($scope.currentPage);
-                                }
-                            })
-                            .catch(function (deleteError) {
-                                toastAlert('error', 'Lỗi khi xóa !');
-                            });
-                    }},errorCallback).finally(function (){
+    function fillModalWithData(typeId) {
+        if (typeId !== undefined && typeId !== null && typeId !== "") {
+            AgencyServiceAD.findAgencieById(typeId)
+                .then(function successCallback(res) {
+                    $scope.agent = res.data.data;
+                }, errorCallback).finally(function () {
                 $scope.isLoading = false;
             });
-        }confirmAlert('Bạn có chắc chắn muốn xóa không ?', confirmDeleteType);
-    };
+        }
+        ;
+    }
+
+    function confirmAccept() {
+        AgencyServiceAD.acceptAgency($scope.agent.id).then(function successCallback() {
+            toastAlert('success', 'Phê duyệt thành công !');
+            $scope.getTypeList();
+            $location.path("admin/agency/agency-list")
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
+    }
+
+    $scope.acceptedThisAgency = function () {
+        confirmAlert('Bạn có chắc chắn muốn phê duyệt hồ sơ này không ?', confirmAccept);
+    }
+
+
+    function confirmDeny() {
+        AgencyServiceAD.deniedAgency($scope.agent.id).then(function successCallback() {
+            toastAlert('success', 'Từ chối hồ sơ thành công !');
+            $scope.getTypeList();
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
+    }
+
+    $scope.deniedThisAgency = function () {
+        confirmAlert('Bạn có chắc chắn muốn từ chối hồ sơ này không ?', confirmDeny);
+    }
 
 });

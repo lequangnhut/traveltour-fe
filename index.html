@@ -103,6 +103,8 @@
         <script src="/assets/admin/assets/vendors/echarts/echarts.min.js"></script>
         <script src="/assets/admin/assets/vendors/dropzone/dropzone.min.js"></script>
         <script src="/lib/angularjs/axios.min.js"></script>
+        <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
     </div>
 </head>
 <body ng-controller="MainController">
@@ -475,6 +477,26 @@
                                             <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Thông tin doanh nghiệp</span>
                                         </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- QUẢN LÝ DOANG NGHIỆP - List-->
+                                <div class="nav-item-wrapper" ng-controller="AgencyControllerAD" ng-init="updateWaitingCount()">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'register-list'}"
+                                       ng-click="setActiveNavItem('register-list')"
+                                       href="/admin/agency/agency-list-check">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span data-feather="file-text"></span>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Chờ phê duyệt</span>
+                                            </span>
+                                            <span class="notification-badge" style=" display: inline-block; padding: 2px 8px;
+                                                background-color: #4CAF50; color: #fff; border-radius: 50%; /* Tạo khung tròn */
+                                                margin-left: 45px; font-size: smaller">{{count}}
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -1399,6 +1421,7 @@
 <script src="app/services/admin/TourTypeServiceAD.js"></script>
 <script src="app/services/admin/RoomUtilityServiceAD.js"></script>
 <script src="app/services/admin/PlaceUtilityServiceAD.js"></script>
+<script src="app/services/admin/AgencyServiceAD.js"></script>
 
 <!--====== Staff Service ======-->
 <script src="app/services/staff/ToursServiceAD.js"></script>
@@ -1445,6 +1468,11 @@
 <script src="app/component/admin/controllers/admin-form/typesAD/TourTypeControllerAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/typesAD/RoomUtilityControllerAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/typesAD/PlaceUtilityControllerAD.js"></script>
+<script src="app/component/admin/controllers/admin-form/agencyAD/AgencyControllerAD.js"></script>
+<script src="app/component/admin/controllers/admin-form/agencyAD/AgencyControllerWaitingAD.js"></script>
+<script src="app/component/admin/controllers/admin-form/agencyAD/AgencyControllerDeniedAD.js"></script>
+<script src="app/component/admin/controllers/admin-form/agencyAD/AgencyControllerInactiveAD.js"></script>
+<script src="app/component/admin/controllers/admin-form/reportAD/RevenueControllerAD.js"></script>
 
 <!--====== Controller Staff ======-->
 <script src="app/component/admin/controllers/staff/tour-management/BasicTourControllerAD.js"></script>
