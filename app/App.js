@@ -561,10 +561,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-list.html',
             controller: 'AgencyControllerAD'
         })
-        .when('/admin/agency/agency-list/agency-create', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-create.html',
-            controller: 'AgencyControllerAD'
-        })
         .when('/admin/agency/agency-list/agency-update', {
             templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-update.html',
             controller: 'AgencyControllerAD'
@@ -572,6 +568,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/admin/agency/agency-list/agency-update/:id', {
             templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-update.html',
             controller: 'AgencyControllerAD'
+        })
+        .when('/admin/agency/agency-list-check', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-list-check.html',
+            controller: 'AgencyControllerWaitingAD'
         })
         .when('/admin/report/revenue', {
             templateUrl: 'app/component/admin/views/pages/admin-form/report/revenue.html',

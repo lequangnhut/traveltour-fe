@@ -1,47 +1,52 @@
-
-<section>
-    <div class="container">
-        <div class="container-fluid">
-            <div class="header-control mb-4">
-                <div class="">
-                    <div class="d-flex align-items-center row">
-                        <div class="col-lg-6">
-                            <h1 class="color-green fw-medium">Thêm loại lưu trú mới</h1>
-                        </div>
-                    </div>
+<!--====== Start Preloader ======-->
+<div class="preloader" ng-show="isLoading">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+</div><!--====== End Preloader ======-->
+<div class="container mt-4 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-bold">
+                        THÊM LOẠI LƯU TRÚ
+                    </h3>
                 </div>
-            </div>
-
-            <div class="card card-custom" style="padding:20px">
-                <form class="row g-3 form-input-custom" ng-submit="createType()"
-                      method="POST" role="form" name="typeform">
-                    <div class="col-12">
-                        <label for="hotelTypeName" class="form-label">Nhập tên loại lưu trú</label>
-                        <input class="form-control" id="hotelTypeName" type="text"
-                               placeholder="Nhập tên loại lưu trú"
-                               name="hotelTypeName"
-                               ng-model="formType.hotelTypeName"
-                               ng-class="{ 'is-invalid': typeform.hotelTypeName.$invalid && typeform.hotelTypeName.$touched, 'is-valid': typeform.hotelTypeName.$valid && typeform.hotelTypeName.$touched }"
-                               ng-change="checkDuplicateTypeName()"
-                               required/>
-                        <small class="text-danger"
-                               ng-show="typeform.hotelTypeName.$touched && typeform.hotelTypeName.$error.required">
-                            Vui lòng nhập loại lưu trú !
-                        </small>
-                        <small class="text-danger" ng-show="typeform.hotelTypeName.$touched && nameError">
-                            Loại lưu trú đã tồn tại !
-                        </small>
-                    </div>
-                    <div class="col-12 d-flex justify-content-end mt-5">
-                        <button class="btn" style="margin-right: 20px">
-                            <a class="btn" href="/admin/type/hotel-type-list">Trở về</a>
-                        </button>
-                        <button type="submit" class="btn btn-submit" ng-disabled="typeform.$invalid || nameError">Thêm</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
-</section>
+
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" ng-submit="createType()"
+              method="POST" role="form" name="typeform">
+            <div class="col-md-12">
+                <label for="hotelTypeName" class="form-label">Nhập tên loại lưu trú</label>
+                <input class="form-control" id="hotelTypeName" type="text"
+                       placeholder="Nhập tên loại lưu trú"
+                       name="hotelTypeName"
+                       ng-model="formType.hotelTypeName"
+                       ng-class="{ 'is-invalid': typeform.hotelTypeName.$invalid && typeform.hotelTypeName.$touched, 'is-valid': typeform.hotelTypeName.$valid && typeform.hotelTypeName.$touched }"
+                       ng-change="checkDuplicateTypeName()"
+                       required/>
+                <small class="text-danger"
+                       ng-show="typeform.hotelTypeName.$touched && typeform.hotelTypeName.$error.required">
+                    Vui lòng nhập loại lưu trú !
+                </small>
+                <small class="text-danger" ng-show="typeform.hotelTypeName.$touched && nameError">
+                    Loại lưu trú đã tồn tại !
+                </small>
+            </div>
+            <div class="col-md-12 d-flex justify-content-end mt-5">
+                <button class="btn" style="margin-right: 20px">
+                    <a class="btn" href="/admin/type/hotel-type-list">Trở về</a>
+                </button>
+                <button type="submit" class="btn btn-submit" ng-disabled="typeform.$invalid || nameError">Thêm</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 
 
