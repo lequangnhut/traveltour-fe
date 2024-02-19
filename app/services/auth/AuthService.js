@@ -64,6 +64,17 @@ travel_app.service('AuthService', function ($http, $window) {
     };
 
     /**
+     * @message API find by token
+     */
+    this.findByToken = function (token) {
+        return $http({
+            method: 'GET',
+            url: API_AUTH + 'find-by-token/' + token,
+            param: 'email' + token
+        });
+    };
+
+    /**
      * @message API check duplicate email
      */
     this.checkExistEmail = function (email) {

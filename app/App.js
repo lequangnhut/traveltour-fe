@@ -679,6 +679,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/password/forgot.html',
             controller: 'ForgotPwController'
         })
+        .when('/verify-success/:token', {
+            templateUrl: 'app/component/customers/views/pages/auth/verify-success.html',
+            controller: 'VerifyEmail'
+        })
         .when('/', {
             redirectTo: '/home'
         })

@@ -26,7 +26,7 @@ travel_app.controller('SignupController', function ($scope, $location, AuthServi
         let users = $scope.user;
 
         AuthService.registerAuth(users).then(function successCallback() {
-            $location.path("/login");
+            $location.path("/sign-in");
             centerAlert('Thành công !', 'Đăng ký tài khoản thành công. Vui lòng xác thực email để đăng nhập !', 'success');
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
