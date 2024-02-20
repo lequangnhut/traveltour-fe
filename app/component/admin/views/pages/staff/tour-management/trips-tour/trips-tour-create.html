@@ -1,10 +1,5 @@
-<!--====== Start Preloader ======-->
-<div class="preloader" ng-show="isLoading">
-    <div class="loader">
-        <div class="pre-shadow"></div>
-        <div class="pre-box"></div>
-    </div>
-</div><!--====== End Preloader ======-->
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
 <div class="container mt-3 mb-5">
     <div class="header-control mb-4">
         <div class="">
@@ -113,15 +108,13 @@
                 <div class="form-control mb-1" contenteditable="true" id="text-input" name="activityInDay"
                      ng-model="tourTrips.activityInDay" ng-blur="setTouched()"></div>
                 <span class="text-danger" id="invalid-templateDescription"></span>
-                <span class="text-danger m-2" ng-show="isActive()">
-                            Vui lòng nhập hoạt động
-                        </span>
+                <span class="text-danger m-2" ng-show="isActive()">Vui lòng nhập hoạt động</span>
             </div>
 
             <div class="col-12 d-flex justify-content-end mt-5">
-                <button class="btn" style="margin-right: 20px"><a class="btn"
-                                                                  href="/admin/basic-tour-list/trips-tour-list/{{tourTrips.tourId}}">Trở
-                    về</a></button>
+                <button class="btn" type="button" style="margin-right: 20px">
+                    <a class="btn" href="/admin/basic-tour-list/trips-tour-list/{{tourTrips.tourId}}">Trở về</a>
+                </button>
                 <button type="submit" class="btn btn-submit fw-bold" ng-disabled="!canSubmit()">
                     Thêm
                 </button>

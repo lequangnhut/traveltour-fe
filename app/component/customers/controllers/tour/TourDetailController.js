@@ -1,4 +1,4 @@
-travel_app.controller('TourDetailController', function ($scope, $location, $routeParams, $anchorScroll, TourDetailServiceCT, GoogleMapsService) {
+travel_app.controller('TourDetailController', function ($scope, $location, $sce, $routeParams, $anchorScroll, TourDetailServiceCT, GoogleMapsService) {
     $anchorScroll();
 
     const tourDetailId = $routeParams.id;
@@ -13,13 +13,19 @@ travel_app.controller('TourDetailController', function ($scope, $location, $rout
         TourDetailServiceCT.findByTourDetailId(tourDetailId).then(function (response) {
             if (response.status === 200) {
                 $scope.tourDetail = response.data.data;
+                $scope.tourDetailImagesById = response.data.data.tourDetailImagesById;
+                $scope.tourDetailDescription = $sce.trustAsHtml($scope.tourDetail.tourDetailDescription);
 
                 let departureDate = new Date($scope.tourDetail.departureDate);
                 let arrivalDate = new Date($scope.tourDetail.arrivalDate);
 
                 $scope.tourDetail.numberOfDays = Math.ceil((arrivalDate - departureDate) / (1000 * 60 * 60 * 24));
 
-                initMap();
+                if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+                    initMap();
+                } else {
+                    setTimeout(initMap, 1000);
+                }
             } else {
                 $location.path('/admin/page-not-found')
             }
@@ -32,6 +38,9 @@ travel_app.controller('TourDetailController', function ($scope, $location, $rout
         const directionsService = new google.maps.DirectionsService();
         const directionsRenderer = new google.maps.DirectionsRenderer();
 
+        let fromLocation = $scope.tourDetail.fromLocation;
+        let toLocation = $scope.tourDetail.toLocation;
+
         const mapOptions = {
             zoom: 8,
             center: {lat: 10.0276, lng: 105.7856}
@@ -42,15 +51,18 @@ travel_app.controller('TourDetailController', function ($scope, $location, $rout
         directionsRenderer.setMap(map);
 
         const request = {
-            origin: 'An Giang, Vietnam',
-            destination: 'Cần Thơ, Vietnam',
+            origin: fromLocation + ', Vietnam',
+            waypoints: [
+                {location: 'Chợ Kinh F, Xã Định Thành, An Giang, Vietnam'},
+                {location: 'Sóc Trăng, Vietnam'}
+            ],
+            destination: toLocation + ', Kiên Giang, Vietnam',
             travelMode: 'DRIVING'
         };
 
         directionsService.route(request, function (response, status) {
             if (status === 'OK') {
                 directionsRenderer.setDirections(response);
-                console.log(response)
             } else {
                 console.error('Error:', status);
             }

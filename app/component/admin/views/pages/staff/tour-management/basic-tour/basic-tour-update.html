@@ -1,10 +1,5 @@
-<!--====== Start Preloader ======-->
-<div class="preloader" ng-show="isLoading">
-    <div class="loader">
-        <div class="pre-shadow"></div>
-        <div class="pre-box"></div>
-    </div>
-</div><!--====== End Preloader ======-->
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
 <div class="container mt-3 mb-5">
     <div class="header-control mb-4">
         <div class="">
@@ -79,9 +74,10 @@
             </div>
 
             <div class="col-12 d-flex justify-content-end mt-5">
-                <button class="btn" style="margin-right: 20px"><a class="btn" href="/admin/basic-tour-list">Trở
-                    về</a></button>
-                <button type="submit" class="btn btn-submit" ng-disabled="tourBasicForm.$invalid">Cập nhật
+                <button class="btn" type="button" style="margin-right: 20px">
+                    <a class="btn" href="/admin/basic-tour-list">Trở về</a>
+                </button>
+                <button type="submit" class="btn btn-submit fw-bold" ng-disabled="tourBasicForm.$invalid">Cập nhật
                 </button>
             </div>
         </form>

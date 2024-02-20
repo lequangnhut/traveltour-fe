@@ -92,50 +92,18 @@
             </div>
             <div class="row">
                 <div class="col-xl-8">
-                    <div class="place-content-wrap pt-45 wow fadeInUp">
-                        <h3 class="title">Chi tiết về chuyến đi</h3>
-                        <p>Sed ut perspiciatis unde omniste natus error sit voluptatem accusantium doloremque laudantium
-                            totam rem aperiam, eaque ip quae abillo inventore veritatis et quasi architecto beatae vitae
-                            dicta sunt explicabo. Nemo
-                            enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit sed quia consequuntur
-                            magni dolores
-                            eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia
-                            dolor si amet
-                            consectetur adipisci velit sed quian numquam eius modi tempora incidunt ut labore dolore
-                            magnam aliquam
-                            quaerat voluptatem. Ut enim ad minima veniam qunostrum exercitationem ullam corporis
-                            suscipit laboriosaey
-                            nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea
-                            voluptate velit
-                            esse quam nihil molestiae consequatur veillum qui dolorem voluptas nulla pariatur</p>
-
-                        <h4>Cơ sở vật chất nâng cao</h4>
-                        <p>Neque porro quisquam est dolorem ipsum quia dolor si amet consectetur adipisci velit sed
-                            quian numquam eius tempora incidunt labore dolore magnam aliquam quaerat voluptatem.</p>
-                        <div class="row align-items-lg-center">
-                            <div class="col-lg-5">
-                                <ul class="check-list">
-                                    <li><span class="far fa-check-circle"></span>Parking in the Camp</li>
-                                    <li><span class="far fa-check-circle"></span>Pick and Drop Services</li>
-                                    <li><span class="far fa-check-circle"></span>Washing Machines</li>
-                                    <li><span class="far fa-check-circle"></span>Cruise Dinner & Music Event</li>
-                                    <li><span class="far fa-check-circle"></span>Visit 5 Best Places With Group</li>
-                                    <li><span class="far fa-check-circle"></span>Motorhome service</li>
-                                    <li><span class="far fa-check-circle"></span>1 Meal Per Day</li>
-                                </ul>
-                            </div>
-                            <div class="col-lg-7">
-                                <img src="/assets/customers/images/place/single-place-4.jpg" class="mb-20 w-100"
-                                     alt="place image">
-                            </div>
-                        </div>
-                        <h4>Kế hoạch tham quan</h4>
-                        <p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae
-                            consequatur
-                            vel eillum qui dolorem eum fugiat quo voluptas nulla pariatur</p>
+                    <div class="place-content-wrap mb-4 pt-45 wow fadeInUp" ng-bind-html="tourDetailDescription"
+                         style="text-align: justify; white-space: pre-line; font-family: 'Roboto',sans-serif;">
+                    </div>
+                    <div class="place-content-wrap mb-4 pt-45 wow fadeInUp"
+                         ng-if="tourDetail.tourDetailDescription.length === 10">
+                        Không có nội dung ghi chú.
                     </div>
                     <!--=== Days Area ===-->
                     <div class="days-area mb-55 wow fadeInUp">
+                        <div class="section-title mb-3">
+                            <h3>Lịch trình hoạt động - di chuyển của chuyến đi</h3>
+                        </div>
                         <ul class="nav nav-tabs mb-35">
                             <li class="nav-item">
                                 <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#day1">Ngày 1
@@ -235,102 +203,18 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="section-title mb-35">
-                                    <h3>Related Tours</h3>
+                                    <h3>Hình ảnh về chuyến đi</h3>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="place-arrows mb-35"></div>
                             </div>
                         </div>
-                        <div class="recent-place-slider">
+                        <div class="recent-place-slider" ng-repeat="img in tourDetailImagesById">
                             <!--=== Single Place Item ===-->
                             <div class="single-place-item mb-60">
-                                <div class="place-img">
-                                    <img src="/assets/customers/images/place/place-1.jpg" alt="Place Image">
-                                </div>
-                                <div class="place-content">
-                                    <div class="info">
-                                        <ul class="ratings">
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><a href="#">(4.9)</a></li>
-                                        </ul>
-                                        <h4 class="title"><a href="tour-details.html">Man and Woman Walks on Dock</a>
-                                        </h4>
-                                        <p class="location"><span class="fas fa-map-marker-alt"></span>North Province,
-                                            Maldives</p>
-                                        <p class="price"><span class="far fa-money-bill-alt"></span>Price<span
-                                                class="currency">$</span>93.65</p>
-                                        <div class="meta">
-                                            <span><span class="fas fa-clock"></span>05 Days</span>
-                                            <span><span class="fas fa-user"></span>25</span>
-                                            <span><a href="tour-details.html">Details<span
-                                                    class="fas fa-long-arrow-right"></span></a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--=== Single Place Item ===-->
-                            <div class="single-place-item mb-60">
-                                <div class="place-img">
-                                    <img src="/assets/customers/images/place/place-2.jpg" alt="Place Image">
-                                </div>
-                                <div class="place-content">
-                                    <div class="info">
-                                        <ul class="ratings">
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><a href="#">(4.9)</a></li>
-                                        </ul>
-                                        <h4 class="title"><a href="tour-details.html">Trees Under White Clouds during
-                                            Daytime</a></h4>
-                                        <p class="location"><span class="fas fa-map-marker-alt"></span>North Province,
-                                            Maldives</p>
-                                        <p class="price"><span class="far fa-money-bill-alt"></span>Price<span
-                                                class="currency">$</span>93.65</p>
-                                        <div class="meta">
-                                            <span><span class="fas fa-clock"></span>05 Days</span>
-                                            <span><span class="fas fa-user"></span>25</span>
-                                            <span><a href="tour-details.html">Details<span
-                                                    class="fas fa-long-arrow-right"></span></a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--=== Single Place Item ===-->
-                            <div class="single-place-item mb-60">
-                                <div class="place-img">
-                                    <img src="/assets/customers/images/place/place-3.jpg" alt="Place Image">
-                                </div>
-                                <div class="place-content">
-                                    <div class="info">
-                                        <ul class="ratings">
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><a href="#">(4.9)</a></li>
-                                        </ul>
-                                        <h4 class="title"><a href="tour-details.html">Body of Water Near Mountain</a>
-                                        </h4>
-                                        <p class="location"><span class="fas fa-map-marker-alt"></span>North Province,
-                                            Maldives</p>
-                                        <p class="price"><span class="far fa-money-bill-alt"></span>Price<span
-                                                class="currency">$</span>93.65</p>
-                                        <div class="meta">
-                                            <span><span class="fas fa-clock"></span>05 Days</span>
-                                            <span><span class="fas fa-user"></span>25</span>
-                                            <span><a href="tour-details.html">Details<span
-                                                    class="fas fa-long-arrow-right"></span></a></span>
-                                        </div>
-                                    </div>
+                                <div class="place-img-detail">
+                                    <img src="{{ img.tourDetailImg }}" alt="Place Image">
                                 </div>
                             </div>
                         </div>

@@ -64,4 +64,22 @@ travel_app.service('TourDetailsServiceAD', function ($http, $q) {
         });
         return deferred.promise;
     };
+
+    this.createTourDetailImage = function (tourDetailId, formData) {
+        return $http({
+            method: 'POST',
+            url: API_TOUR_DETAIL + 'create-tour-detail-image/' + tourDetailId,
+            data: formData,
+            headers: {'Content-Type': undefined},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.updateTourDetailImage = function (tourDetailImagesDto) {
+        return $http({
+            method: 'PUT',
+            url: API_TOUR_DETAIL + 'update-tour-detail-image',
+            data: tourDetailImagesDto
+        });
+    };
 });

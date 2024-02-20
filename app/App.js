@@ -80,6 +80,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/detail-tour/detail-tour-update.html',
             controller: 'DetailTourControllerAD'
         })
+        .when('/admin/detail-tour-list/image-tour/:id', {
+            templateUrl: 'app/component/admin/views/pages/staff/tour-management/detail-tour/tour-detail-image.html',
+            controller: 'TourDetailsImageControllerAD'
+        })
         .when('/admin/basic-tour-list/trips-tour-list/trips-tour-create/:tourId', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/trips-tour/trips-tour-create.html',
             controller: 'TripsTourControllerAD'

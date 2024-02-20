@@ -15,6 +15,7 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
         tourDetailDescription: null,
         fromLocation: null,
         toLocation: null,
+        tourDetailImage: null
     };
 
     let searchTimeout;
@@ -32,6 +33,78 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
     function errorCallback() {
         $location.path('/admin/internal-server-error')
     }
+
+    $scope.setTouched = function () {
+        $scope.activityInDayTouched = true;
+    };
+
+    $scope.isActive = function () {
+        return $scope.activityInDayTouched &&
+            ($scope.tourDetail.tourDetailDescription === null ||
+                $scope.tourDetail.tourDetailDescription === undefined ||
+                $scope.tourDetail.tourDetailDescription === '');
+    };
+
+    /**
+     * Phương thức mở modal
+     */
+    $scope.openModal = function (tourDetailId) {
+        $('#modal-tour-detail').modal('show');
+
+        if (tourDetailId !== undefined && tourDetailId !== null && tourDetailId !== "") {
+            TourDetailsServiceAD.findTourDetailById(tourDetailId).then(response => {
+                if (response.status === 200) {
+                    $timeout(function () {
+                        $scope.tourDetail = response.data.data;
+                        $scope.tourDetailImage = response.data.data.tourDetailImagesById;
+                        $scope.tourDetail.departureDate = new Date(response.data.data.departureDate);
+                        $scope.tourDetail.arrivalDate = new Date(response.data.data.arrivalDate);
+                    }, 0);
+                }
+            }, errorCallback);
+        }
+    }
+
+    /**
+     * Phương thức đóng modal
+     */
+    $scope.closeModal = function () {
+        $('#modal-tour-detail').modal('hide');
+    };
+
+    /**
+     * Upload hình ảnh và lưu vào biến transportTypeImg
+     * @param file
+     */
+    $scope.uploadTourDetailImg = function (file) {
+        if (file && !file.$error) {
+            $scope.tourDetail.tourDetailImage = file;
+        }
+    };
+
+    /**
+     * Hàm kiểm tra sự trùng lặp giữa điểm đi và điểm đến
+     * @returns {boolean}
+     */
+    function hasDuplicateSelection() {
+        return $scope.tourDetail.fromLocation === $scope.tourDetail.toLocation;
+    }
+
+    /**
+     * Hàm kiểm tra sự trùng lặp giữa điểm đi và điểm đến
+     */
+    $scope.updateToLocation = function () {
+        if (hasDuplicateSelection()) {
+            $scope.tourDetail.toLocation = null;
+            $scope.toLocationError = true;
+        } else {
+            $scope.toLocationError = false;
+        }
+
+        $scope.filteredProvinces = $scope.provinces.filter(function (city) {
+            return city.Name !== $scope.tourDetail.fromLocation;
+        });
+    };
 
     // Hàm kiểm tra ngày bắt đầu có hợp lệ
     $scope.isStartDateValid = function () {
@@ -78,11 +151,7 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
 
     $scope.checkPriceFormat = function () {
         // Kiểm tra xem giá có đúng định dạng số không
-        if (!/^[0-9]*$/.test($scope.tourDetail.unitPrice)) {
-            $scope.invalidPriceFormat = true;
-        } else {
-            $scope.invalidPriceFormat = false;
-        }
+        $scope.invalidPriceFormat = !/^[0-9]*$/.test($scope.tourDetail.unitPrice);
     };
 
 
@@ -211,7 +280,6 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
             let selectedProvince = $scope.provinces.find(p => p.Id === $scope.tourDetail[locationType]);
             if (selectedProvince) {
                 $scope.tourDetail[locationType] = selectedProvince.Name;
-                console.log($scope.tourDetail[locationType])
             }
         };
 
@@ -233,9 +301,15 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
 
     $scope.createTourDetailSubmit = () => {
         $scope.isLoading = true;
+        let tourDetail = $scope.tourDetail;
+        let tourDetailImage = $scope.tourDetail.tourDetailImage;
+
         const dataTourDetail = new FormData();
 
-        dataTourDetail.append("tourDetailsDto", new Blob([JSON.stringify($scope.tourDetail)], {type: "application/json"}));
+        dataTourDetail.append("tourDetailsDto", new Blob([JSON.stringify(tourDetail)], {type: "application/json"}));
+        angular.forEach(tourDetailImage, function (file) {
+            dataTourDetail.append('tourDetailImage', file);
+        });
 
         TourDetailsServiceAD.createTourDetail(dataTourDetail).then(function successCallback() {
             toastAlert('success', 'Thêm mới thành công !');
@@ -246,7 +320,7 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
     };
 
     //form update
-    $scope.updateTourDetailSubmit = () => {
+    function confirmUpdate() {
         const dataTourDetail = new FormData();
         $scope.isLoading = true;
 
@@ -258,7 +332,11 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
-    };
+    }
+
+    $scope.updateTourDetail = function () {
+        confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdate);
+    }
 
     //delete
     /**
@@ -267,11 +345,12 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
     $scope.deleteTourDetail = function (tourDetailId) {
         function confirmDeleteTour() {
             TourDetailsServiceAD.deactivateTourDetail(tourDetailId).then(function successCallback() {
-                toastAlert('success', 'Xóa thành công !');
+                toastAlert('success', 'Xóa tour thành công !');
+                $('#modal-tour-detail').modal('hide');
                 $scope.getTourDetailList();
             }, errorCallback);
         }
 
-        confirmAlert('Bạn có chắc chắn muốn xóa tour detail có id là ' + tourDetailId + ' không ?', confirmDeleteTour);
+        confirmAlert('Bạn có chắc chắn muốn xóa tour ' + tourDetailId + ' không ?', confirmDeleteTour);
     }
 });

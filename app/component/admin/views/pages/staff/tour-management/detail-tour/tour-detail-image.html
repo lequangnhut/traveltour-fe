@@ -1,0 +1,88 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<div class="container">
+    <div class="header-control mb-4">
+        <div class="header-control-center">
+            <div class="d-flex justify-content-between align-items-center row ">
+                <div class="col-xl-12 mt-3">
+                    <h3 class="color-green fw-bold text-uppercase">Hình ảnh Tour</h3>
+                </div>
+            </div>
+            <div class="mt-3 fw-bold">Thông tin Tour: <span>{{ tour.tourName }}</span></div>
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="form-input-custom" name="tourDetailImageForm">
+            <!-- Ảnh đại diện phòng -->
+            <div class="row">
+                <div class="col-9 mb-5">
+                    <label class="form-label">Hình ảnh Tour</label>
+                    <input class="form-control"
+                           type="file"
+                           name="tourDetailImg"
+                           accept="image/*"
+                           ng-model="tourDetailImage.tourDetailImg"
+                           ngf-select="uploadTourDetailImg($files)"
+                           ng-disabled="isInputImageDisabled"
+                           ngf-multiple="true"
+                           ngf-max-size="10MB"
+                           ngf-max-files="5"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="tourDetailImageForm.tourDetailImg.$touched && tourDetailImageForm.tourDetailImg.$error.required">
+                        Vui lòng chọn ít nhất một ảnh!
+                    </small>
+                    <small class="text-danger"
+                           ng-show="tourDetailImageForm.tourDetailImg.$error.ngfMaxFiles">
+                        Số lượng ảnh tối đa là 30!
+                    </small>
+                </div>
+                <div class="col-3 d-flex justify-content-end">
+                    <div class="col-xl-8 mt-4">
+                        <button type="button"
+                                ng-click="createImageDetail()"
+                                ng-disabled="tourDetailImageForm.$invalid"
+                                class="btn btn-green d-flex justify-content-center"
+                        >
+                            <i class="fa-solid fa-plus" style="margin-right: 10px"></i> Thêm ảnh mới
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row room-type-image-edit">
+                <div class="col-xl-3 col-md-4 col-sm-6 p-1" ng-repeat="img in tourDetailImage">
+                    <div class="image-container object-fit-contain">
+                        <img id="{{ img.id }}"
+                             style="height: 100%; width: 100%; border-radius: 8px"
+                             name="tourDetailImg"
+                             ng-model="tourDetailImage.tourDetailImg"
+                             ng-src="{{ img.tourDetailImg }}"/>
+                        <span class="delete-icon" ng-hide="isInputImageEnabled"
+                              ng-click="deleteTourDetailImage(img.id)">
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center">
+                <div ng-if="tourDetailImage === null || tourDetailImage.length <= 0">
+                    Không có hình ảnh.
+                </div>
+            </div>
+            <div class="col-12 d-flex justify-content-end mt-5">
+                <button class="btn" type="button" style="margin-right: 20px">
+                    <a class="btn" href="/admin/detail-tour-list">Trở về</a>
+                </button>
+                <button type="submit"
+                        class="btn btn-submit fw-bold"
+                        ng-click="updateTourDetailsImage()"
+                        ng-disabled="!canUpdate || !isInputImageDisabled">Cập nhật
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
