@@ -32,6 +32,9 @@ travel_app.controller("RoomTypeInfoRoomEditController", function($scope, $locati
         $scope.isLoading = false;
     });
 
+    /**
+     * Phương thức lấy thông tin loại phòng theo mã loại phòng
+     */
     RoomTypeService.getRoomTypeById($scope.id).then(function(response) {
         $scope.isLoading = true;
         if(response.data.status === "200"){
@@ -45,6 +48,9 @@ travel_app.controller("RoomTypeInfoRoomEditController", function($scope, $locati
     });
 
 
+    /**
+     * Phương thức lưu thông tin loại phòng
+     */
     $scope.editInfoRoomType = function () {
         var successSound = new Audio('assets/admin/assets/sound/success.mp3');
         var errorSound = new Audio('assets/admin/assets/sound/error.mp3');
@@ -78,7 +84,4 @@ travel_app.controller("RoomTypeInfoRoomEditController", function($scope, $locati
           $scope.isLoading = false;
         })
     }
-
-
-
 })

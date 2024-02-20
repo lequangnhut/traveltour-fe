@@ -13,4 +13,17 @@ travel_app.service("RoomUtilitiesService", function($http, $q) {
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
     }
+
+    this.updateRoomUtilities = function (roomTypeId, roomUtilities) {
+        var formData = new FormData();
+        formData.append('roomTypeId', roomTypeId);
+        formData.append('roomUtilitiesList', new Blob([JSON.stringify(roomUtilities)], {type: "application/json"}));
+
+        return $http({
+            method: 'PUT',
+            url: API_ROOM_UTILITES + 'update-room-utilities',
+            data: formData,
+            headers: {'Content-Type': undefined},
+        });
+    }
 })

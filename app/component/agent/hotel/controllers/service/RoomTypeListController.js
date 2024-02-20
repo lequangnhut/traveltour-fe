@@ -1,4 +1,4 @@
-travel_app.controller('RoomTypeListController', function ($scope, $timeout, RoomTypeService, LocalStorageService, BedTypeService) {
+travel_app.controller('RoomTypeListController', function ($scope, $timeout, $http, Upload, RoomTypeService, LocalStorageService, BedTypeService) {
     var hotelId = LocalStorageService.get("brandId")
 
     $scope.roomTypes = {
@@ -17,11 +17,30 @@ travel_app.controller('RoomTypeListController', function ($scope, $timeout, Room
         roomUtilities: [],
         roomBedsById: {},
     }
+
+    $scope.roomTypesDetails = {
+        id: null,
+        roomTypeName: null,
+        hotelId: null,
+        capacityAdults: null,
+        capacityChildren: null,
+        amountRoom: null,
+        price: null,
+        isActive: null,
+        isDeleted: null,
+        roomTypeAvatar: null,
+        roomTypeDescription: null,
+        roomImagesById: [],
+        roomUtilities: [],
+        roomBedsById: []
+    };
+
     $scope.bedTypes = [];
     $scope.selectedItems = [];
     $scope.selectAllChecked = false;
     $scope.roomTypes.isSelected = false;
-
+    $scope.roomTypesIdModel = null;
+    $scope.fileInputValue = '';
     let searchTimeout;
 
     $scope.currentPage = 0;
@@ -154,27 +173,13 @@ travel_app.controller('RoomTypeListController', function ($scope, $timeout, Room
      * @param roomTypeId
      */
     $scope.openModal = function (roomTypeId) {
-        $scope.roomTypesDetails = {
-            id: null,
-            roomTypeName: null,
-            hotelId: null,
-            capacityAdults: null,
-            capacityChildren: null,
-            amountRoom: null,
-            price: null,
-            isActive: null,
-            isDeleted: null,
-            roomTypeAvatar: null,
-            roomTypeDescription: null,
-            roomImagesById: [],
-            roomUtilities: [],
-            roomBedsById: []
-        };
 
-        RoomTypeService.getRoomTypeById(roomTypeId).then(function(response) {
+
+        RoomTypeService.getRoomTypeById(roomTypeId).then(function (response) {
             $scope.isLoading = true;
-            if(response.data.status === "200"){
+            if (response.data.status === "200") {
                 $scope.roomTypesDetails = response.data.data
+                $scope.roomTypesIdModel = $scope.roomTypesDetails.id;
             }
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
@@ -193,16 +198,16 @@ travel_app.controller('RoomTypeListController', function ($scope, $timeout, Room
     /**
      * Phương thức xử lí khi chọn chekcbox trên header table
      */
-    $scope.selectAll = function() {
+    $scope.selectAll = function () {
         if (!$scope.selectAllChecked) {
-            angular.forEach($scope.roomTypes, function(roomType) {
+            angular.forEach($scope.roomTypes, function (roomType) {
                 if (!roomType.isSelected) {
                     roomType.isSelected = true;
                     $scope.selectedItems.push(roomType);
                 }
             });
         } else {
-            angular.forEach($scope.roomTypes, function(roomType) {
+            angular.forEach($scope.roomTypes, function (roomType) {
                 roomType.isSelected = false;
                 var idx = $scope.selectedItems.indexOf(roomType);
                 if (idx > -1) {
@@ -219,7 +224,7 @@ travel_app.controller('RoomTypeListController', function ($scope, $timeout, Room
      * Phương thức xử lí khi lựa chọn checkbox
      * @param roomType
      */
-    $scope.toggleSelection = function(roomType) {
+    $scope.toggleSelection = function (roomType) {
         roomType.isSelected = !roomType.isSelected;
         var idx = $scope.selectedItems.indexOf(roomType);
 
@@ -229,7 +234,7 @@ travel_app.controller('RoomTypeListController', function ($scope, $timeout, Room
             $scope.selectedItems.splice(idx, 1);
         }
 
-        var allSelected = $scope.roomTypes.every(function(item) {
+        var allSelected = $scope.roomTypes.every(function (item) {
             return item.isSelected;
         });
 
@@ -240,8 +245,8 @@ travel_app.controller('RoomTypeListController', function ($scope, $timeout, Room
     /**
      * Phương thức xóa dữ liệu được chọn
      */
-    $scope.deleteSelectedItems = function() {
-        var selectedIds = $scope.selectedItems.map(function(item) {
+    $scope.deleteSelectedItems = function () {
+        var selectedIds = $scope.selectedItems.map(function (item) {
             return item.id;
         });
     };
@@ -251,7 +256,7 @@ travel_app.controller('RoomTypeListController', function ($scope, $timeout, Room
      * @param amount
      * @returns {string}
      */
-    $scope.formatCurrency = function(amount) {
+    $scope.formatCurrency = function (amount) {
         var formatter = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
             currency: 'VND'
@@ -262,15 +267,15 @@ travel_app.controller('RoomTypeListController', function ($scope, $timeout, Room
     /**
      * Phương thức mở loại giường
      */
-    $scope.openImageModal = function() {
+    $scope.openImageModal = function () {
         $('#imageModal').modal('show'); // Hiển thị modal khi click vào nút
     };
 
     /**
      * Phương thức lấy toàn bộ loại giường
      */
-    $scope.init = function() {
-        BedTypeService.getAllBedTypes().then(function(response) {
+    $scope.init = function () {
+        BedTypeService.getAllBedTypes().then(function (response) {
             $scope.bedTypes = response.data.data;
         }, errorCallback);
     }
@@ -282,13 +287,54 @@ travel_app.controller('RoomTypeListController', function ($scope, $timeout, Room
      * @param bedTypeId
      * @returns {null|string}
      */
-    $scope.getBedTypeName = function(bedTypeId) {
-        var bedType = $scope.bedTypes.find(function(bedType) {
+    $scope.getBedTypeName = function (bedTypeId) {
+        var bedType = $scope.bedTypes.find(function (bedType) {
             return bedType.id === bedTypeId;
         });
 
         return bedType ? bedType.bedTypeName : '';
     }
+
+    $scope.selectedFile = null;
+    $scope.openFileInput = function () {
+        document.getElementById('fileInput').click();
+    };
+
+    /**
+     * Phương thức chọn file
+     * @param $files
+     */
+    $scope.onFileSelect = function ($files) {
+        var file = $files;
+        $scope.uploadFile(file);
+    };
+
+    /**
+     * Phương thức upload file
+     * @param file
+     */
+    $scope.uploadFile = function (file) {
+        var successSound = new Audio('assets/admin/assets/sound/success.mp3');
+        var errorSound = new Audio('assets/admin/assets/sound/error.mp3');
+        $scope.isLoading = true;
+        if (file) {
+            RoomTypeService.updateAvatarRoomType($scope.roomTypesIdModel, file)
+                .then(function (response) {
+                    if (response.data.status === "200") {
+                        $scope.roomTypesDetails = response.data.data;
+                        toastAlert('success', response.data.message);
+                        successSound.play();
+                    } else {
+                        toastAlert('error', response.data.message);
+                        errorSound.play();
+                    }
+                }).finally(function () {
+                $scope.isLoading = false;
+                $scope.fileInputValue = ''; // Set selectedFile về null sau khi hoàn thành upload
+            });
+        }
+    };
+
 
 
 })

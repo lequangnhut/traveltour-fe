@@ -12,7 +12,7 @@ travel_app.service("RoomImagesService", function ($http) {
     this.editImageRoomType = function ( roomTypeId, listImageDelete, listRoomTypeImg){
         var formData = new FormData();
 
-        formData.append('roomTypeId', new Blob([JSON.stringify(roomTypeId)], {type: "application/json"}));
+        formData.append('roomTypeId', roomTypeId );
         formData.append('listImageDelete', new Blob([JSON.stringify(listImageDelete)], {type: "application/json"}));
 
         if (listRoomTypeImg && listRoomTypeImg.length > 0) {
