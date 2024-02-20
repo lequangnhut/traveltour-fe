@@ -7,7 +7,6 @@ travel_app.controller("RoomTypeImageController", function ($scope, $location, $r
         roomTypeImg: null,
     }
     $scope.deletedImages = [];
-
     function errorCallback(error) {
         toastAlert('error', "Máy chủ không tồn tại !");
     }
@@ -27,8 +26,9 @@ travel_app.controller("RoomTypeImageController", function ($scope, $location, $r
         $scope.isLoading = false;
     });
 
-
-
+    /**
+     * Phương thức thêm hình ảnh loại phòng
+     */
     $scope.deleteImage = function (imageId) {
         var index = -1;
         for (var i = 0; i < $scope.editImageRoom.length; i++) {
@@ -45,6 +45,9 @@ travel_app.controller("RoomTypeImageController", function ($scope, $location, $r
         }
     };
 
+    /**
+     * Phương thức bắt lỗi danh sách hình ảnh
+     */
     $scope.validateRoomTypeImg = function () {
         var maxImages = 30;
 
@@ -59,11 +62,13 @@ travel_app.controller("RoomTypeImageController", function ($scope, $location, $r
         $scope.isListImageSelected = !!$scope.editImageRoom.roomTypeImg;
     };
 
+    /**
+     * Phương thức chỉnh sửa hình ảnh loại phòng
+     */
     $scope.editImgRoomType = function () {
         var successSound = new Audio('assets/admin/assets/sound/success.mp3');
         var errorSound = new Audio('assets/admin/assets/sound/error.mp3');
         $scope.isLoading = true;
-        console.log($scope.id)
         RoomImagesService.editImageRoomType($scope.id, $scope.deletedImages, $scope.editImageRoom.roomTypeImg)
             .then(function (response)
         {

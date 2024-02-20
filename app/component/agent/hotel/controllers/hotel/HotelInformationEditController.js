@@ -102,11 +102,6 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
         });
     };
 
-
-    $scope.selectHotelType = function () {
-
-    };
-
     /**
      * Lấy danh sách danh sách loại phòng
      */
@@ -186,6 +181,10 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
         }
     };
 
+    /**
+     * Phương thức tải hình ảnh lên
+     * @param file
+     */
     $scope.uploadTourImage = function (file) {
         if (file && !file.$error) {
             var reader = new FileReader();
@@ -202,6 +201,10 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
     };
 
 
+    /**
+     * Phương thức lấy hình ảnh hiện tại
+     * @returns {string}
+     */
     $scope.getCurrentImageSource = function () {
         if ($scope.hotelEdit.hotelAvatar && typeof $scope.hotelEdit.hotelAvatar === 'string' && $scope.hotelEdit.hotelAvatar.startsWith('http')) {
             return $scope.hotelEdit.hotelAvatar;
@@ -211,6 +214,10 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
         }
     };
 
+    /**
+     * Phương thức cập nhật dịch vụ đã chọn
+     * @returns {string}
+     */
     $scope.updateSelectedUtilities = function (placeUtilities) {
         $scope.hotelEdit.placeUtilities.forEach(function (item) {
             if (!placeUtilities.checked) {
@@ -226,6 +233,10 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
         });
     }
 
+    /**
+     * Kiểm tra nếu như chưa lựa chọn dịch vụ thì tắt nút di
+     * @returns {string}
+     */
     $scope.noPlaceUtilitiesSelected = function () {
         // Kiểm tra xem có tiện ích nào được chọn không
         return !$scope.placeUtilitieses.some(function (placeUtilities) {
@@ -233,7 +244,10 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
         });
     };
 
-
+    /**
+     * Phương thức cập nhật khách sạn
+     * @returns {string}
+     */
     let user = $scope.user;
     $scope.updateHotel = function () {
         var successSound = new Audio('assets/admin/assets/sound/success.mp3');

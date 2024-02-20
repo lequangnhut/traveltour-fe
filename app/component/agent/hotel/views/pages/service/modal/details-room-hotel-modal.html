@@ -21,12 +21,14 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12">
-                            <div class="card mb-3">
+                            <div class="card mb-3" ng-mouseover="isHover = true" ng-mouseleave="isHover = false" style="position: relative;">
                                 <img class="img-fluid" ng-src="{{roomTypesDetails.roomTypeAvatar}}"/>
-                                <div class="card-body ">
-                                    <div class="bg-header-model">
+                                <button class="btn btn-sm btn-green change-image-btn" ng-show="isHover" ng-click="openFileInput()" style="position: absolute; top: 50% ; left: 50%; transform: translateX(-50%);">Thay đổi ảnh</button>
+                                <div class="card-body">
+                                    <div class="bg-header-model" >
                                         <div class="{{ roomTypesDetails.id }}"></div>
                                         <div class="h2 text-center fw-medium">{{ roomTypesDetails.roomTypeName}}</div>
+                                        <input type="file" id="fileInput" style="display: none;" ng-model="fileInputValue" ngf-select="onFileSelect($files)" multiple accept="image/*">
                                     </div>
                                 </div>
                             </div>
@@ -78,18 +80,20 @@
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-center p-3">
-                                    <button class="btn btn-green">Sửa tiện ích</button>
+                                    <a href="{{'/business/hotel/room-type-list/update-utilities-room/' + roomTypesDetails.id}}" ng-click="closeModal()" class="btn btn-green">Sửa tiện ích</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 mb-5 mt-5 p-3">
-                            <div class="row">
-                                <div class="col-12" >
-                                    <div class="row" >
-                                        <div class="col-xl-3 p-1" ng-repeat="img in roomTypesDetails.roomImagesById">
-                                            <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px"
-                                                 ng-src="{{img.roomTypeImg}}"/>
+                            <div class="row mb-5">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-md-3 p-1" ng-repeat="img in roomTypesDetails.roomImagesById">
+                                            <div class="image-container" style="padding-bottom: 75%; position: relative; overflow: hidden; border-radius: 8px;">
+                                                <img class="img-fluid position-absolute top-0 start-0" style="height: 100%; width: 100%; object-fit: cover;" ng-src="{{img.roomTypeImg}}"/>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -103,32 +107,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-dismiss="modal" ng-click="closeModal()">Đóng</button>
-                <button type="button" class="btn btn-green">Cập nhật</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal hiển thị danh sách hình ảnh -->
-<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="imageModalLabel">Danh sách hình ảnh</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Địa điểm để hiển thị danh sách hình ảnh -->
-
-                <div ng-repeat="image in roomTypesDetails.roomImagesById" class="row">
-                    <div class="col-md-1 col-xl-1">
-                        <img class="img-fluid m-1" ng-src="{{ image.roomTypeImg }}"/>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>

@@ -102,4 +102,19 @@ travel_app.service("RoomTypeService", function($http, $q) {
         });
     };
 
+    this.updateAvatarRoomType = function (roomTypeId, roomTypeAvatarData) {
+        var formData = new FormData();
+
+        formData.append('roomTypeId', roomTypeId);
+        if (roomTypeAvatarData && roomTypeAvatarData.length > 0 && roomTypeAvatarData[0].name) {
+            formData.append('roomTypeImg', roomTypeAvatarData[0], roomTypeAvatarData[0].name);
+        }
+        return $http({
+            method: 'PUT',
+            url: API_ROOM_TYPE + 'updateAvatarRoomType',
+            headers: {'Content-Type': undefined},
+            data: formData,
+        });
+    }
+
 })
