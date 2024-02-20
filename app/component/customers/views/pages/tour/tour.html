@@ -19,12 +19,11 @@
 <!--====== Start Places Section ======-->
 <section class="places-section pt-100 pb-100">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-xl-4 col-md-6 col-sm-12 places-column">
-                <!--=== Single Place Item ===-->
+        <div class="row">
+            <div class="col-xl-4 col-md-6 col-sm-12 places-column" ng-repeat="detail in tourDetail">
                 <div class="single-place-item mb-60 wow fadeInUp">
                     <div class="place-img">
-                        <img src="/assets/customers/images/place/place-1.jpg" alt="Place Image">
+                        <img ng-src="{{ detail.toursByTourId.tourImg }}" src="" alt="Place Image">
                     </div>
                     <div class="place-content">
                         <div class="info">
@@ -36,257 +35,30 @@
                                 <li><span class="fas fa-star"></span></li>
                                 <li><a href="#">(4.9)</a></li>
                             </ul>
-                            <h4 class="title"><a href="tour-details.html">Sitting on Boat Spreading Her Arms</a></h4>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span>North Province, Maldives</p>
-                            <p class="price"><span class="far fa-money-bill-alt"></span>Price<span class="currency">$</span>93.65
-                            </p>
-                            <div class="meta">
-                                <span><span class="fas fa-clock"></span>05 Days</span>
-                                <span><span class="fas fa-user"></span>25</span>
-                                <span><a href="/tour-detail">Details<span
-                                        class="fas fa-long-arrow-right"></span></a></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12 places-column">
-                <!--=== Single Place Item ===-->
-                <div class="single-place-item mb-60 wow fadeInUp">
-                    <div class="place-img">
-                        <img src="/assets/customers/images/place/place-2.jpg" alt="Place Image">
-                    </div>
-                    <div class="place-content">
-                        <div class="info">
-                            <ul class="ratings">
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><a href="#">(4.9)</a></li>
-                            </ul>
-                            <h4 class="title"><a href="tour-details.html">White Canopy Tent Near
-                                Coastline</a></h4>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span>North Province, Maldives</p>
-                            <p class="price"><span class="far fa-money-bill-alt"></span>Price<span class="currency">$</span>93.65
-                            </p>
-                            <div class="meta">
-                                <span><span class="fas fa-clock"></span>05 Days</span>
-                                <span><span class="fas fa-user"></span>25</span>
-                                <span><a href="tour-details.html">Details<span
-                                        class="fas fa-long-arrow-right"></span></a></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12 places-column">
-                <!--=== Single Place Item ===-->
-                <div class="single-place-item mb-60 wow fadeInUp">
-                    <div class="place-img">
-                        <img src="/assets/customers/images/place/place-3.jpg" alt="Place Image">
-                    </div>
-                    <div class="place-content">
-                        <div class="info">
-                            <ul class="ratings">
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><a href="#">(4.9)</a></li>
-                            </ul>
-                            <h4 class="title"><a href="tour-details.html">Sitting on Boat Spreading Her Arms</a></h4>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span>Tambon Khlong Sok, Thailand</p>
-                            <p class="price"><span class="far fa-money-bill-alt"></span>Price<span class="currency">$</span>93.65
-                            </p>
-                            <div class="meta">
-                                <span><span class="fas fa-clock"></span>05 Days</span>
-                                <span><span class="fas fa-user"></span>25</span>
-                                <span><a href="tour-details.html">Details<span
-                                        class="fas fa-long-arrow-right"></span></a></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12 places-column">
-                <!--=== Single Place Item ===-->
-                <div class="single-place-item mb-60 wow fadeInUp">
-                    <div class="place-img">
-                        <img src="/assets/customers/images/place/place-4.jpg" alt="Place Image">
-                    </div>
-                    <div class="place-content">
-                        <div class="info">
-                            <ul class="ratings">
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><a href="#">(4.9)</a></li>
-                            </ul>
-                            <h4 class="title"><a href="tour-details.html">Sitting on Boat Spreading Her Arms</a></h4>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span>Arefu, AG, Romania</p>
-                            <p class="price"><span class="far fa-money-bill-alt"></span>Price<span class="currency">$</span>93.65
-                            </p>
-                            <div class="meta">
-                                <span><span class="fas fa-clock"></span>05 Days</span>
-                                <span><span class="fas fa-user"></span>25</span>
-                                <span><a href="tour-details.html">Details<span
-                                        class="fas fa-long-arrow-right"></span></a></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12 places-column">
-                <!--=== Single Place Item ===-->
-                <div class="single-place-item mb-60 wow fadeInUp">
-                    <div class="place-img">
-                        <img src="/assets/customers/images/place/place-5.jpg" alt="Place Image">
-                    </div>
-                    <div class="place-content">
-                        <div class="info">
-                            <ul class="ratings">
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><a href="#">(4.9)</a></li>
-                            </ul>
-                            <h4 class="title"><a href="tour-details.html">Cottages In The Middle Of Beach</a></h4>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span>Vaitāpē, French Polynesia</p>
-                            <p class="price"><span class="far fa-money-bill-alt"></span>Price<span class="currency">$</span>93.65
-                            </p>
-                            <div class="meta">
-                                <span><span class="fas fa-clock"></span>05 Days</span>
-                                <span><span class="fas fa-user"></span>25</span>
-                                <span><a href="tour-details.html">Details<span
-                                        class="fas fa-long-arrow-right"></span></a></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12 places-column">
-                <!--=== Single Place Item ===-->
-                <div class="single-place-item mb-60 wow fadeInUp">
-                    <div class="place-img">
-                        <img src="/assets/customers/images/place/place-6.jpg" alt="Place Image">
-                    </div>
-                    <div class="place-content">
-                        <div class="info">
-                            <ul class="ratings">
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><a href="#">(4.9)</a></li>
-                            </ul>
-                            <h4 class="title"><a href="tour-details.html">Beautiful Floating Villa on River</a></h4>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span>Gaafu Dhaalu Atoll, Maldives</p>
-                            <p class="price"><span class="far fa-money-bill-alt"></span>Price<span class="currency">$</span>93.65
-                            </p>
-                            <div class="meta">
-                                <span><span class="fas fa-clock"></span>05 Days</span>
-                                <span><span class="fas fa-user"></span>25</span>
-                                <span><a href="tour-details.html">Details<span
-                                        class="fas fa-long-arrow-right"></span></a></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12 places-column">
-                <!--=== Single Place Item ===-->
-                <div class="single-place-item mb-60 wow fadeInUp">
-                    <div class="place-img">
-                        <img src="/assets/customers/images/place/place-7.jpg" alt="Place Image">
-                    </div>
-                    <div class="place-content">
-                        <div class="info">
-                            <ul class="ratings">
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><a href="#">(4.9)</a></li>
-                            </ul>
-                            <h4 class="title"><a href="tour-details.html">Man and Woman Walks on Dock</a></h4>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span>Maldives</p>
-                            <p class="price"><span class="far fa-money-bill-alt"></span>Price<span class="currency">$</span>93.65
-                            </p>
-                            <div class="meta">
-                                <span><span class="fas fa-clock"></span>05 Days</span>
-                                <span><span class="fas fa-user"></span>25</span>
-                                <span><a href="tour-details.html">Details<span
-                                        class="fas fa-long-arrow-right"></span></a></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12 places-column">
-                <!--=== Single Place Item ===-->
-                <div class="single-place-item mb-60 wow fadeInUp">
-                    <div class="place-img">
-                        <img src="/assets/customers/images/place/place-8.jpg" alt="Place Image">
-                    </div>
-                    <div class="place-content">
-                        <div class="info">
-                            <ul class="ratings">
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><a href="#">(4.9)</a></li>
-                            </ul>
-                            <h4 class="title"><a href="tour-details.html">Trees Under White Clouds during Daytime</a>
+                            <h4 class="title">
+                                <a href="">{{ detail.toursByTourId.tourName }}</a>
                             </h4>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span>Vaitāpē, French Polynesia</p>
-                            <p class="price"><span class="far fa-money-bill-alt"></span>Price<span class="currency">$</span>93.65
+                            <p class="location">
+                                <span class="fas fa-map-marker-alt"></span>
+                                {{ detail.toLocation }}
+                            </p>
+                            <p class="price">
+                                <span class="far fa-money-bill-alt"></span>
+                                <span class="fw-bold">{{ detail.unitPrice | vnCurrency }}</span>
                             </p>
                             <div class="meta">
-                                <span><span class="fas fa-clock"></span>05 Days</span>
-                                <span><span class="fas fa-user"></span>25</span>
-                                <span><a href="tour-details.html">Details<span
-                                        class="fas fa-long-arrow-right"></span></a></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12 places-column">
-                <!--=== Single Place Item ===-->
-                <div class="single-place-item mb-60 wow fadeInUp">
-                    <div class="place-img">
-                        <img src="/assets/customers/images/place/place-9.jpg" alt="Place Image">
-                    </div>
-                    <div class="place-content">
-                        <div class="info">
-                            <ul class="ratings">
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><a href="#">(4.9)</a></li>
-                            </ul>
-                            <h4 class="title"><a href="tour-details.html">Body of Water Near Mountain</a></h4>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span>Bali, Indonesia</p>
-                            <p class="price"><span class="far fa-money-bill-alt"></span>Price<span class="currency">$</span>93.65
-                            </p>
-                            <div class="meta">
-                                <span><span class="fas fa-clock"></span>05 Days</span>
-                                <span><span class="fas fa-user"></span>25</span>
-                                <span><a href="tour-details.html">Details<span
-                                        class="fas fa-long-arrow-right"></span></a></span>
+                                <span>
+                                    <span class="fas fa-clock"></span>
+                                    {{ detail.numberOfDays }} Ngày
+                                </span>
+                                <span>
+                                    <span class="fas fa-user"></span>
+                                    {{ detail.numberOfGuests }}
+                                </span>
+                                <span>
+                                    <a href="/tour-detail/{{detail.id}}">Chi tiết<span
+                                            class="fas fa-long-arrow-right"></span></a>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -297,12 +69,30 @@
             <div class="col-lg-12">
                 <!--=== Gowilds Pagination ===-->
                 <ul class="gowilds-pagination wow fadeInUp text-center">
-                    <li><a href="#"><span class="fas fa-arrow-left"></span></a></li>
-                    <li><a href="#" class="active">01</a></li>
-                    <li><a href="#">02</a></li>
-                    <li><a href="#">03</a></li>
-                    <li><a href="#">04</a></li>
-                    <li><a href="#"><span class="fas fa-arrow-right"></span></a></li>
+                    <li>
+                        <a href="#" ng-class="{disabled: currentPage === 0}" ng-click="setPage(0)">
+                            <span class="fas fa-arrow-left"></span>
+                        </a>
+                    </li>
+
+                    <li ng-if="currentPage > 2 && totalPages > 5">
+                        <a>...</a>
+                    </li>
+
+                    <li ng-repeat="n in getPaginationRange()" class="mx-1">
+                        <a href="#" ng-class="{active: n === currentPage}" ng-click="setPage(n)">{{ n + 1 }}</a>
+                    </li>
+
+                    <!-- Ellipsis at the end -->
+                    <li ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                        <a>...</a>
+                    </li>
+
+                    <li>
+                        <a ng-class="{disabled: currentPage === totalPages - 1}" ng-click="setPage(totalPages - 1)">
+                            <span class="fas fa-arrow-right"></span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

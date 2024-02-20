@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="tour-title mb-20">
-                            <h3 class="title">Boat Traveling on Made River</h3>
+                            <h3 class="title">{{ tourDetail.toursByTourId.tourName }}</h3>
                             <p><span class="fas fa-map-marker-alt"></span>Tambon Khlong Sok, Thailand</p>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                                     <span class="fal fa-box-usd"></span>
                                 </div>
                                 <div class="info">
-                                    <h4><span>From</span>$96.54</h4>
+                                    <h4><span>Chỉ từ</span>{{ tourDetail.unitPrice | vnCurrency }}</h4>
                                 </div>
                             </div>
                             <div class="info-box mb-20">
@@ -52,7 +52,7 @@
                                     <span class="fal fa-clock"></span>
                                 </div>
                                 <div class="info">
-                                    <h4><span>Durations</span>7 Days</h4>
+                                    <h4><span>Trong vòng</span>{{ tourDetail.numberOfDays }} Ngày</h4>
                                 </div>
                             </div>
                             <div class="info-box mb-20">
@@ -60,7 +60,7 @@
                                     <span class="fal fa-planet-ringed"></span>
                                 </div>
                                 <div class="info">
-                                    <h4><span>Tour Type</span>City Tour</h4>
+                                    <h4><span>Số lượng khách</span>{{ tourDetail.numberOfGuests }} Người</h4>
                                 </div>
                             </div>
                         </div>
@@ -78,24 +78,22 @@
                                 <li><span class="fas fa-star"></span></li>
                                 <li><span class="fas fa-star"></span></li>
                                 <li><span class="fas fa-star"></span></li>
-                                <li><a href="#">(3k Riviews)</a></li>
+                                <li><a href="#">(3k Lượt xem)</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="share-nav">
-                            <a href="#">Share<span class="fas fa-share"></span></a>
-                            <a href="#">Reviews<span class="fas fa-share"></span></a>
-                            <a href="#">Whislist<span class="fas fa-heart"></span></a>
+                            <a href="#">Chia sẽ<span class="fas fa-share"></span></a>
+                            <a href="#">Yêu thích<span class="fas fa-heart"></span></a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xl-8">
-                    <!--=== Place Content Wrap ===-->
                     <div class="place-content-wrap pt-45 wow fadeInUp">
-                        <h3 class="title">Explore Tours</h3>
+                        <h3 class="title">Chi tiết về chuyến đi</h3>
                         <p>Sed ut perspiciatis unde omniste natus error sit voluptatem accusantium doloremque laudantium
                             totam rem aperiam, eaque ip quae abillo inventore veritatis et quasi architecto beatae vitae
                             dicta sunt explicabo. Nemo
@@ -110,7 +108,8 @@
                             nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea
                             voluptate velit
                             esse quam nihil molestiae consequatur veillum qui dolorem voluptas nulla pariatur</p>
-                        <h4>Advance Facilities</h4>
+
+                        <h4>Cơ sở vật chất nâng cao</h4>
                         <p>Neque porro quisquam est dolorem ipsum quia dolor si amet consectetur adipisci velit sed
                             quian numquam eius tempora incidunt labore dolore magnam aliquam quaerat voluptatem.</p>
                         <div class="row align-items-lg-center">
@@ -130,7 +129,7 @@
                                      alt="place image">
                             </div>
                         </div>
-                        <h4>Tour Plan</h4>
+                        <h4>Kế hoạch tham quan</h4>
                         <p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae
                             consequatur
                             vel eillum qui dolorem eum fugiat quo voluptas nulla pariatur</p>
@@ -139,20 +138,20 @@
                     <div class="days-area mb-55 wow fadeInUp">
                         <ul class="nav nav-tabs mb-35">
                             <li class="nav-item">
-                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#day1">Day 1st
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#day1">Ngày 1
                                 </button>
                             </li>
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day2">Day 2nd</button>
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day2">Ngày 2</button>
                             </li>
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day3">Day 3rd</button>
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day3">Ngày 3</button>
                             </li>
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day4">Day 4th</button>
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day4">Ngày 4</button>
                             </li>
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day5">Day 5th</button>
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day5">Ngày 5</button>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -225,7 +224,7 @@
                     </div>
                     <!--=== Map Box ===-->
                     <div class="map-box mb-60 wow fadeInUp">
-                        <iframe src="https://maps.google.com/maps?q=new%20york&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"></iframe>
+                        <div id="map" style="height: 500px;"></div>
                     </div>
                     <!--=== Calendar Box ===-->
                     <div class="calendar-wrapper wow fadeInUp">
@@ -659,19 +658,19 @@
                     <div class="sidebar-widget-area pt-60 pl-lg-30">
                         <!--=== Booking Widget ===-->
                         <div class="sidebar-widget booking-form-widget wow fadeInUp mb-40">
-                            <h4 class="widget-title">Booking Tour</h4>
+                            <h4 class="widget-title">Đặt Tour</h4>
                             <form class="sidebar-booking-form">
                                 <div class="booking-date-time mb-20">
                                     <div class="booking-item">
-                                        <label>Date</label>
-                                        <div class="bk-item booking-time">
+                                        <label>Ngày</label>
+                                        <div class="bk-item booking-date">
                                             <span class="fas fa-calendar-alt"></span>
-                                            <input type="text" placeholder="Select Date" class="datepicker">
+                                            <input type="date" placeholder="Select Date" class="datepicker">
                                         </div>
                                     </div>
                                     <div class="booking-item">
-                                        <label>Time</label>
-                                        <div class="bk-item booking-date">
+                                        <label>Giờ</label>
+                                        <div class="bk-item booking-time">
                                             <span class="fas fa-calendar-alt"></span>
                                             <select class="wide">
                                                 <option value="01">12.00 Am</option>
@@ -692,9 +691,9 @@
                                     </div>
                                 </div>
                                 <div class="booking-guest-box mb-20">
-                                    <h6 class="mb-20">Tickets</h6>
+                                    <h6 class="mb-20">Vé</h6>
                                     <div class="booking-item">
-                                        <label>Adult (18+ years) $43</label>
+                                        <label>Người lớn (18 tuổi) $43</label>
                                         <div class="bk-item booking-user">
                                             <span class="fas fa-user"></span>
                                             <select class="wide">
@@ -707,20 +706,7 @@
                                         </div>
                                     </div>
                                     <div class="booking-item">
-                                        <label>Youth (13-17 years) $29</label>
-                                        <div class="bk-item booking-user">
-                                            <span class="fas fa-user"></span>
-                                            <select class="wide">
-                                                <option value="01">1</option>
-                                                <option value="02">2</option>
-                                                <option value="03">3</option>
-                                                <option value="04">4</option>
-                                                <option value="05">5</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="booking-item">
-                                        <label>Child (0-12 years) $0</label>
+                                        <label>Trẻ em (13-17 tuổi) $29</label>
                                         <div class="bk-item booking-user">
                                             <span class="fas fa-user"></span>
                                             <select class="wide">
@@ -734,39 +720,48 @@
                                     </div>
                                 </div>
                                 <div class="booking-extra mb-15 wow fadeInUp">
-                                    <h6 class="mb-10">Aditional Services</h6>
+                                    <h6 class="mb-10">Dịch vụ bổ sung</h6>
                                     <div class="extra">
-                                        <span class="fas fa-check-circle"></span>Service Per Boooking <span><span
+                                        <span class="fas fa-check-circle"></span>Dịch vụ mỗi lần đặt chỗ <span><span
                                             class="currency">$</span>50</span>
                                     </div>
                                     <div class="extra">
-                                        <span class="fas fa-check-circle"></span>Service Per Person <span><span
+                                        <span class="fas fa-check-circle"></span>Dịch vụ mỗi người <span><span
                                             class="currency">$</span>20</span>
                                     </div>
                                 </div>
                                 <div class="booking-total mb-20">
                                     <div class="total">
-                                        <label>Total</label>
+                                        <label>Tổng tiền</label>
                                         <span class="price"><span class="currency">$</span>70</span>
                                     </div>
                                 </div>
                                 <div class="submit-button">
                                     <a href="/booking" role="button" class="main-btn primary-btn">Đặt tour ngay
-                                        <span class="fas fa-paper-plane"></span>
+                                        <svg class="svg-inline--fa fa-paper-plane" aria-hidden="true" focusable="false"
+                                             data-prefix="fas" data-icon="paper-plane" role="img"
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 512" data-fa-i2svg="">
+                                            <path fill="currentColor"
+                                                  d="M511.6 36.86l-64 415.1c-1.5 9.734-7.375 18.22-15.97 23.05c-4.844 2.719-10.27 4.097-15.68 4.097c-4.188 0-8.319-.8154-12.29-2.472l-122.6-51.1l-50.86 76.29C226.3 508.5 219.8 512 212.8 512C201.3 512 192 502.7 192 491.2v-96.18c0-7.115 2.372-14.03 6.742-19.64L416 96l-293.7 264.3L19.69 317.5C8.438 312.8 .8125 302.2 .0625 289.1s5.469-23.72 16.06-29.77l448-255.1c10.69-6.109 23.88-5.547 34 1.406S513.5 24.72 511.6 36.86z"></path>
+                                        </svg>
                                     </a>
                                 </div>
                             </form>
                         </div>
                         <!--=== Booking Info Widget ===-->
                         <div class="sidebar-widget booking-info-widget wow fadeInUp mb-40">
-                            <h4 class="widget-title">Tour Information</h4>
+                            <h4 class="widget-title">Thông tin chuyến đi</h4>
                             <ul class="info-list">
-                                <li><span><span class="fas fa-user-circle"></span>Max Guests<span>35</span></span></li>
-                                <li><span><span class="fas fa-user-circle"></span>Minimum Age<span>12+</span></span>
+                                <li><span><span
+                                        class="fas fa-user-circle"></span>Khách tối đa<span>{{ tourDetail.numberOfGuests }}</span></span>
                                 </li>
-                                <li><span><span class="fas fa-map-marker-alt"></span>Tour Location<span>Thailand</span></span>
+                                <li><span><span
+                                        class="fas fa-user-circle"></span>Khách tối thiểu<span>{{ tourDetail.minimumNumberOfGuests }}</span></span>
                                 </li>
-                                <li><span><span class="fas fa-globe"></span>Language<span>English</span></span></li>
+                                <li><span><span
+                                        class="fas fa-map-marker-alt"></span>Địa điểm<span>{{ tourDetail.toLocation }}</span></span>
+                                </li>
+                                <li><span><span class="fas fa-globe"></span>Ngôn ngữ<span>Tiếng việt</span></span></li>
                             </ul>
                         </div>
                         <!--=== Recent Place Widget ===-->

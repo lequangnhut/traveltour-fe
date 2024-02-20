@@ -635,7 +635,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/tour/tour.html',
             controller: 'TourController'
         })
-        .when('/tour-detail', {
+        .when('/tour-detail/:id', {
             templateUrl: 'app/component/customers/views/pages/tour/tour-details.html',
             controller: 'TourDetailController'
         })

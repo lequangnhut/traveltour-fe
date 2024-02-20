@@ -482,7 +482,8 @@
                                 </div>
 
                                 <!-- QUẢN LÝ DOANG NGHIỆP - List-->
-                                <div class="nav-item-wrapper" ng-controller="AgencyControllerAD" ng-init="updateWaitingCount()">
+                                <div class="nav-item-wrapper" ng-controller="AgencyControllerAD"
+                                     ng-init="updateWaitingCount()">
                                     <a class="nav-link dropdown-indicator label-1"
                                        ng-class="{ 'active': activeNavItem === 'register-list'}"
                                        ng-click="setActiveNavItem('register-list')"
@@ -495,7 +496,7 @@
                                             </span>
                                             <span class="notification-badge" style=" display: inline-block; padding: 2px 8px;
                                                 background-color: #4CAF50; color: #fff; border-radius: 50%; /* Tạo khung tròn */
-                                                margin-left: 45px; font-size: smaller">{{count}}
+                                                margin-left: 45px; font-size: smaller">{{ count }}
                                             </span>
                                         </div>
                                     </a>
@@ -1408,6 +1409,7 @@
 <script src="app/services/auth/AuthService.js"></script>
 <script src="app/services/utils/NotificationService.js"></script>
 <script src="app/services/utils/LocalStorageService.js"></script>
+<script src="app/services/utils/GoogleMapService.js"></script>
 
 <!--====== Super Admin Service ======-->
 <script src="app/services/supperadmin/DecentralizationServiceAD.js"></script>
@@ -1451,6 +1453,9 @@
 
 <!--====== Customer Service ======-->
 <script src="app/services/staff/CustomerServiceAD.js"></script>
+<script src="app/services/customer/HomeServiceCT.js"></script>
+<script src="app/services/customer/tour/TourServiceCT.js"></script>
+<script src="app/services/customer/tour/TourDetailServiceCT.js"></script>
 <script src="app/services/customer/InformationServiceCT.js"></script>
 
 <!--====== Controller Super Admin ======-->
