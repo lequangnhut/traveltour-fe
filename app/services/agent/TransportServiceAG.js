@@ -81,4 +81,22 @@ travel_app.service('TransportServiceAG', function ($http) {
             url: API_TRANS + 'delete-transportation/' + transportId
         })
     }
+
+    this.createTransportImage = function (transportDetailId, formData) {
+        return $http({
+            method: 'POST',
+            url: API_TRANS + 'create-transport-detail-image/' + transportDetailId,
+            data: formData,
+            headers: {'Content-Type': undefined},
+            transformRequest: angular.identity
+        })
+    }
+
+    this.updateTransportImage = function (transportationImageDto) {
+        return $http({
+            method: 'PUT',
+            url: API_TRANS + 'update-transport-detail-image',
+            data: transportationImageDto
+        })
+    }
 })

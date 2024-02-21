@@ -345,6 +345,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-list.html',
             controller: 'TransportControllerAG'
         })
+        .when('/business/transport/transport-management/transport-image/:id', {
+            templateUrl: 'app/component/agent/trans/views/pages/transports/transport-detail-image.html',
+            controller: 'TransportDetailsImageControllerAD'
+        })
         .when('/business/transport/transport-management/create-transport', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-create.html',
             controller: 'TransportControllerAG'

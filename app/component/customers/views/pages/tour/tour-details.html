@@ -210,11 +210,15 @@
                                 <div class="place-arrows mb-35"></div>
                             </div>
                         </div>
-                        <div class="recent-place-slider" ng-repeat="img in tourDetailImagesById">
-                            <!--=== Single Place Item ===-->
-                            <div class="single-place-item mb-60">
-                                <div class="place-img-detail">
-                                    <img src="{{ img.tourDetailImg }}" alt="Place Image">
+                        <div class="row">
+                            <div class="col-4" ng-repeat="img in tourDetailImagesById">
+                                <div class="recent-place-slider  ms-2">
+                                    <!--=== Single Place Item ===-->
+                                    <div class="single-place-item mb-60">
+                                        <div class="place-img-detail">
+                                            <img src="{{ img.tourDetailImg }}" alt="Place Image">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

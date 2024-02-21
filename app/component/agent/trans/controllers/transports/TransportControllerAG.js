@@ -55,6 +55,33 @@ travel_app.controller('TransportControllerAG', function ($scope, $sce, $routePar
         }
     };
 
+    /**
+     * Phương thức mở modal
+     */
+    $scope.openModal = function (transportId) {
+        $('#modal-transport-detail').modal('show');
+
+        if (transportId !== undefined && transportId !== null && transportId !== "") {
+            TransportServiceAG.findByTransportId(transportId).then(function successCallback(response) {
+                if (response.status === 200) {
+                    $scope.transportation = response.data.data;
+                    $scope.transportationImages = response.data.data.transportationImagesById;
+                    $scope.transportBrand = response.data.data.transportationBrandsByTransportationBrandId;
+                    $scope.transportType = response.data.data.transportationTypesByTransportationTypeId;
+                } else {
+                    $location.path('/admin/page-not-found');
+                }
+            }, errorCallback);
+        }
+    }
+
+    /**
+     * Phương thức đóng modal
+     */
+    $scope.closeModal = function () {
+        $('#modal-transport-detail').modal('hide');
+    };
+
     $scope.init = function () {
         TransportServiceAG.findAllTransport(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function successCallback(response) {
             if (response.status === 200) {
@@ -255,7 +282,7 @@ travel_app.controller('TransportControllerAG', function ($scope, $sce, $routePar
 
         TransportServiceAG.update(transportData).then(function successCallback() {
             toastAlert('success', 'Cập nhật thành công !');
-            $location.path('/business/transport/order-transport-management');
+            $location.path('/business/transport/transport-management');
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
@@ -274,7 +301,7 @@ travel_app.controller('TransportControllerAG', function ($scope, $sce, $routePar
         function confirmDelete() {
             TransportServiceAG.delete(transportId).then(function successCallback() {
                 toastAlert('success', 'Xóa phương tiện thành công !');
-                $location.path('/business/transport/order-transport-management');
+                $location.path('/business/transport/transport-management');
                 $scope.init();
             }, errorCallback).finally(function () {
                 $scope.isLoading = false;
