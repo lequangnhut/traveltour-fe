@@ -14,10 +14,9 @@
                 <div class="">
                     <div class="d-flex align-items-center row">
                         <div class="col-lg-6">
-                            <h1 class="color-green fw-medium">Thêm loại phòng</h1>
+                            <h3 class="color-green fw-bold">THÊM LOẠI PHÒNG</h3>
                         </div>
                     </div>
-                    <div class="mt-3">Tên khách sạn: <span class="fw-medium">{{hotelName}}</span></div>
                 </div>
             </div>
 
@@ -136,6 +135,40 @@
                             Vui lòng nhập giá phòng!
                         </small>
                     </div>
+                    <!-- Giờ nhận phòng -->
+                    <div class="col-md-6">
+                        <label for="inputPrice" class="form-label">Giờ nhận phòng</label>
+                        <input type="time"
+                               class="form-control"
+                               id="inputCheckinTime"
+                               placeholder="12:00"
+                               name="checkinTime"
+                               ng-model="roomTypes.checkinTime"
+                               ng-class="{ 'is-invalid': addRoomTypeName.checkinTime.$invalid && addRoomTypeName.checkinTime.$touched, 'is-valid': addRoomTypeName.checkinTime.$valid && addRoomTypeName.checkinTime.$touched }"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="addRoomTypeName.checkinTime.$touched && addRoomTypeName.checkinTime.$error.required">
+                            Vui lòng nhập giờ nhận phòng!
+                        </small>
+                    </div>
+                    <!-- Giờ trả phòng -->
+                    <div class="col-md-6">
+                        <label for="inputPrice" class="form-label">Giờ trả phòng</label>
+                        <input type="time"
+                               class="form-control"
+                               id="inputChecoutTime"
+                               placeholder="12:00"
+                               name="checkoutTime"
+                               ng-model="roomTypes.checkoutTime"
+                               ng-class="{ 'is-invalid': addRoomTypeName.checkoutTime.$invalid && addRoomTypeName.checkoutTime.$touched, 'is-valid': addRoomTypeName.checkoutTime.$valid && addRoomTypeName.checkoutTime.$touched }"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="addRoomTypeName.checkoutTime.$touched && addRoomTypeName.checkoutTime.$error.required">
+                            Vui lòng nhập giờ trả phòng!
+                        </small>
+                    </div>
 
                     <!-- Mô tả -->
                     <div class="col-12">
@@ -221,6 +254,42 @@
                             <p ng-show="showErrorListPlaceMessage"></p>
                         </div>
                     </div>
+
+                    <!-- Tiện ích mở rộng phòng khách sạn -->
+                    <div class="mb-3 mt-3">
+                        <label for="formFile" class="form-label mb-3">Tiện ích mở rộng</label>
+                        <div class="row" >
+                            <div class="col-sm-4 col-xl-4">
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           ng-model="roomTypes.breakfastIncluded"
+                                           ng-change="updateCheckboxCount()"
+                                    >
+                                    <label class="form-check-label" for="{{checkbox.id}}">
+                                        Miễn phí ăn sáng
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xl-4">
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           ng-model="roomTypes.freeCancellation"
+                                           ng-change="updateCheckboxCount()"
+                                    >
+                                    <label class="form-check-label" for="{{checkbox.id}}">
+                                        Miễn phí hủy phòng
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-if="showErrorListPlaceMessage !== null">
+                            <p ng-show="showErrorListPlaceMessage"></p>
+                        </div>
+                    </div>
+
                     <div class="col-12 d-flex justify-content-end mt-5">
                         <button class="btn" style="margin-right: 20px"><a class="btn" href="/business/hotel/room-type-list">Trở về</a></button>
                         <button type="submit"

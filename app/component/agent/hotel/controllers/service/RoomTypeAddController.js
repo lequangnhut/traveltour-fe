@@ -1,4 +1,4 @@
-travel_app.controller('RoomTypeAddController', function ($scope, $location, RoomUtilitiesService, RoomTypeService, BedTypeService, HotelServiceAG, LocalStorageService) {
+travel_app.controller('RoomTypeAddController', function ($scope, $location, FormatDateService, RoomUtilitiesService, RoomTypeService, BedTypeService, HotelServiceAG, LocalStorageService) {
     var hotelId = LocalStorageService.get("brandId")
 
     $scope.roomTypes = {
@@ -12,6 +12,10 @@ travel_app.controller('RoomTypeAddController', function ($scope, $location, Room
         price: null,
         isActive: null,
         isDeleted: null,
+        breakfastIncluded: false,
+        freeCancellation: false,
+        checkinTime: null,
+        checkoutTime: null,
         roomTypeAvatar: null,
         roomTypeDescription: null,
         roomImagesById: [],
@@ -152,6 +156,8 @@ travel_app.controller('RoomTypeAddController', function ($scope, $location, Room
             amountRoom: $scope.roomTypes.amountRoom,
             price: $scope.roomTypes.price,
             roomTypeDescription: $scope.roomTypes.roomTypeDescription,
+            breakfastIncluded: $scope.roomTypes.breakfastIncluded,
+            freeCancellation: $scope.roomTypes.freeCancellation,
         }
 
         var selectedCheckboxValues = $scope.checkboxes
@@ -162,7 +168,14 @@ travel_app.controller('RoomTypeAddController', function ($scope, $location, Room
                 return checkbox.id;
             });
 
-        RoomTypeService.saveRoomType($scope.roomTypesData, $scope.roomTypes.roomTypeAvatar, $scope.roomTypes.listRoomTypeImg, selectedCheckboxValues).then(function (response) {
+        RoomTypeService.saveRoomType(
+            $scope.roomTypesData,
+            $scope.roomTypes.roomTypeAvatar,
+            $scope.roomTypes.listRoomTypeImg,
+            selectedCheckboxValues,
+            FormatDateService.formatDate($scope.roomTypes.checkinTime),
+            FormatDateService.formatDate($scope.roomTypes.checkoutTime)).then(function (response)
+        {
             if(response.data.status === "200"){
                 $location.path('/business/hotel/room-type-list');
                 successSound.play();

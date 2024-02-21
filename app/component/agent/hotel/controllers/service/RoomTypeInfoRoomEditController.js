@@ -1,4 +1,4 @@
-travel_app.controller("RoomTypeInfoRoomEditController", function($scope, $location, $routeParams, RoomTypeService, BedTypeService) {
+travel_app.controller("RoomTypeInfoRoomEditController", function($scope, $location, $routeParams, FormatDateService, RoomTypeService, BedTypeService) {
     $scope.editInfoRoom = {
         id: null,
         roomTypeName: null,
@@ -9,9 +9,13 @@ travel_app.controller("RoomTypeInfoRoomEditController", function($scope, $locati
         price: null,
         isDeleted: null,
         roomTypeDescription: null,
-        bedTypeId: null
+        bedTypeId: null,
+        breakfastIncluded: null,
+        freeCancellation: null,
     }
 
+    $scope.editInfoRoom.checkinTime = null;
+    $scope.editInfoRoom.checkoutTime = null,
     $scope.id = $routeParams.id;
 
     function errorCallback(error) {
@@ -39,6 +43,8 @@ travel_app.controller("RoomTypeInfoRoomEditController", function($scope, $locati
         $scope.isLoading = true;
         if(response.data.status === "200"){
             $scope.editInfoRoom = response.data.data;
+            $scope.editInfoRoom.checkinTime = FormatDateService.convertStringToTime(response.data.data.checkinTime);
+            $scope.editInfoRoom.checkoutTime = FormatDateService.convertStringToTime(response.data.data.checkoutTime);
         }else if(response.data.status === "404") {
             $scope.inValidRoom = response.data.message;
         }
@@ -65,8 +71,16 @@ travel_app.controller("RoomTypeInfoRoomEditController", function($scope, $locati
             isDeleted: $scope.editInfoRoom.isDeleted,
             roomTypeDescription: $scope.editInfoRoom.roomTypeDescription,
             bedTypeId: $scope.editInfoRoom.roomBedsById[0].bedTypeId,
+            breakfastIncluded: $scope.editInfoRoom.breakfastIncluded,
+            freeCancellation: $scope.editInfoRoom.freeCancellation,
         }
-        RoomTypeService.editInfoRoomType($scope.editRoomTypeData).then(function(response) {
+
+        console.log($scope.editInfoRoom.checkinTime)
+        RoomTypeService.editInfoRoomType(
+            $scope.editRoomTypeData,
+            FormatDateService.formatDate($scope.editInfoRoom.checkinTime),
+            FormatDateService.formatDate($scope.editInfoRoom.checkoutTime)).then(function(response)
+        {
             $scope.isLoading = true;
             if(response.data.status === "200"){
                 $location.path('/business/hotel/room-type-list');
