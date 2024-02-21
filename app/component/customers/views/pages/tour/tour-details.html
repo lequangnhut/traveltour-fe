@@ -552,36 +552,20 @@
                                     <div class="booking-item">
                                         <label>Ngày</label>
                                         <div class="bk-item booking-date">
-                                            <span class="fas fa-calendar-alt"></span>
-                                            <input type="date" placeholder="Select Date" class="datepicker">
+                                            <span>{{ tourDetail.departureDate | formatDate }}</span>
                                         </div>
                                     </div>
                                     <div class="booking-item">
                                         <label>Giờ</label>
-                                        <div class="bk-item booking-time">
-                                            <span class="fas fa-calendar-alt"></span>
-                                            <select class="wide">
-                                                <option value="01">12.00 Am</option>
-                                                <option value="01">01.00 Am</option>
-                                                <option value="01">02.00 Am</option>
-                                                <option value="01">03.00 Am</option>
-                                                <option value="01">04.00 Am</option>
-                                                <option value="01">05.00 Am</option>
-                                                <option value="01">06.00 Am</option>
-                                                <option value="01">07.00 Am</option>
-                                                <option value="01">08.00 Am</option>
-                                                <option value="01">09.00 Am</option>
-                                                <option value="01">10.00 Am</option>
-                                                <option value="01">11.00 Am</option>
-                                                <option value="01">12.00 Pm</option>
-                                            </select>
+                                        <div class="bk-item booking-date">
+                                            <span>{{ tourDetail.departureDate | formatTime }}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="booking-guest-box mb-20">
                                     <h6 class="mb-20">Vé</h6>
                                     <div class="booking-item">
-                                        <label>Người lớn (18 tuổi) $43</label>
+                                        <label>Người lớn (18 tuổi) {{ tourDetail.unitPrice | vnCurrency }}</label>
                                         <div class="bk-item booking-user">
                                             <span class="fas fa-user"></span>
                                             <select class="wide">
@@ -594,7 +578,7 @@
                                         </div>
                                     </div>
                                     <div class="booking-item">
-                                        <label>Trẻ em (13-17 tuổi) $29</label>
+                                        <label>Trẻ em (13-17 tuổi) {{ tourDetail.unitPrice * 0.3 | vnCurrency }}</label>
                                         <div class="bk-item booking-user">
                                             <span class="fas fa-user"></span>
                                             <select class="wide">
@@ -605,17 +589,6 @@
                                                 <option value="05">5</option>
                                             </select>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="booking-extra mb-15 wow fadeInUp">
-                                    <h6 class="mb-10">Dịch vụ bổ sung</h6>
-                                    <div class="extra">
-                                        <span class="fas fa-check-circle"></span>Dịch vụ mỗi lần đặt chỗ <span><span
-                                            class="currency">$</span>50</span>
-                                    </div>
-                                    <div class="extra">
-                                        <span class="fas fa-check-circle"></span>Dịch vụ mỗi người <span><span
-                                            class="currency">$</span>20</span>
                                     </div>
                                 </div>
                                 <div class="booking-total mb-20">
@@ -641,13 +614,11 @@
                             <h4 class="widget-title">Thông tin chuyến đi</h4>
                             <ul class="info-list">
                                 <li><span><span
-                                        class="fas fa-user-circle"></span>Khách tối đa<span>{{ tourDetail.numberOfGuests }}</span></span>
+                                        class="fas fa-user-circle"></span>Lượt khách tối đa<span>{{ tourDetail.numberOfGuests }}
+                                    Người</span></span>
                                 </li>
                                 <li><span><span
-                                        class="fas fa-user-circle"></span>Khách tối thiểu<span>{{ tourDetail.minimumNumberOfGuests }}</span></span>
-                                </li>
-                                <li><span><span
-                                        class="fas fa-map-marker-alt"></span>Địa điểm<span>{{ tourDetail.toLocation }}</span></span>
+                                        class="fas fa-map-marker-alt"></span>Điểm đích đến<span>{{ tourDetail.toLocation }}</span></span>
                                 </li>
                                 <li><span><span class="fas fa-globe"></span>Ngôn ngữ<span>Tiếng việt</span></span></li>
                             </ul>

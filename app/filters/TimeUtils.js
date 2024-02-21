@@ -48,6 +48,33 @@ travel_app.filter('vietnameseDateTime', function () {
     };
 });
 
+travel_app.filter('formatDate', function () {
+    return function (timestamp) {
+        if (!timestamp) return '';
+
+        let date = new Date(timestamp);
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+
+        return (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
+    };
+});
+
+travel_app.filter('formatTime', function () {
+    return function (timestamp) {
+        if (!timestamp) return '';
+
+        let date = new Date(timestamp);
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let seconds = date.getSeconds();
+
+        return (hours < 10 ? '0' : '') + hours + ':' + (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+    };
+});
+
+
 travel_app.filter('formatDateTime', function () {
     return function (apiDateTime) {
         const momentObj = moment(apiDateTime, 'YYYYMMDDHHmmss');

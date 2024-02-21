@@ -84,15 +84,15 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/detail-tour/tour-detail-image.html',
             controller: 'TourDetailsImageControllerAD'
         })
-        .when('/admin/basic-tour-list/trips-tour-list/trips-tour-create/:tourId', {
+        .when('/admin/detail-tour-list/trips-tour-list/trips-tour-create/:tourDetailId', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/trips-tour/trips-tour-create.html',
             controller: 'TripsTourControllerAD'
         })
-        .when('/admin/basic-tour-list/trips-tour-list/:tourId', {
+        .when('/admin/detail-tour-list/trips-tour-list/:tourDetailId', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/trips-tour/trips-tour-list.html',
             controller: 'TripsTourControllerAD'
         })
-        .when('/admin/basic-tour-list/trips-tour-list/trips-tour-update/:tourTripsId', {
+        .when('/admin/detail-tour-list/trips-tour-list/trips-tour-update/:tourTripsId', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/trips-tour/trips-tour-update.html',
             controller: 'TripsTourControllerAD'
         })
