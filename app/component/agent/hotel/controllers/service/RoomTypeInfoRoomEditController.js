@@ -39,7 +39,6 @@ travel_app.controller("RoomTypeInfoRoomEditController", function($scope, $locati
         $scope.isLoading = true;
         if(response.data.status === "200"){
             $scope.editInfoRoom = response.data.data;
-            console.log(response.data.data.roomBedsById[0].bedTypeId)
         }else if(response.data.status === "404") {
             $scope.inValidRoom = response.data.message;
         }

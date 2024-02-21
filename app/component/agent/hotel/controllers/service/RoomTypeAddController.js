@@ -148,7 +148,7 @@ travel_app.controller('RoomTypeAddController', function ($scope, $location, Room
             hotelId: $scope.roomTypes.hotelId,
             capacityAdults: $scope.roomTypes.capacityAdults,
             capacityChildren: $scope.roomTypes.capacityChildren,
-            bedTypeId: $scope.roomBedsById[0].bedTypeId,
+            bedTypeId: $scope.roomTypes.bedTypeId,
             amountRoom: $scope.roomTypes.amountRoom,
             price: $scope.roomTypes.price,
             roomTypeDescription: $scope.roomTypes.roomTypeDescription,

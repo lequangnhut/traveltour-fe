@@ -9,8 +9,16 @@ travel_app.controller('ListHotelControllerAG', function ($scope, $location, Hote
 
         if (agencyId !== undefined && agencyId !== null && agencyId !== "") {
             HotelServiceAG.findAllByAgencyId(agencyId).then(function successCallback(response) {
-                $scope.hotels = response.data;
+                var activeHotels = [];
+
+                angular.forEach(response.data, function(hotel) {
+                    if (hotel.isDelete === true) {
+                        activeHotels.push(hotel);
+                    }
+                });
+                $scope.hotels = activeHotels;
             }, errorCallback);
+
         }
     }
 

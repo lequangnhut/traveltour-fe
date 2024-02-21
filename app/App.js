@@ -291,9 +291,9 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-add.html',
             controller: 'HotelInformationEditController'
         })
-        .when('/business/hotel/order-visit-list', {
+        .when('/business/hotel/booking-list', {
             templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-list.html',
-            controller: 'HotelAmenitiesListControllerAG'
+            controller: 'BookingListController'
         })
         .when('/business/hotel/order-visit-list/create', {
             templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-add.html',
