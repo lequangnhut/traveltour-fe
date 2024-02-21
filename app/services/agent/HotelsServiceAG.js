@@ -135,4 +135,11 @@ travel_app.service('HotelServiceAG', function ($http) {
             data: formData,
         });
     }
+
+    this.deleteHotel = function (id) {
+        return $http({
+            method: 'DELETE',
+            url: API_HOTELS + 'deleteHotel/' + id
+        })
+    }
 })

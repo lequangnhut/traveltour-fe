@@ -306,4 +306,32 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
             });
         }
     };
+
+    $scope.confirmDelete = function() {
+        Swal.fire({
+            title: 'Bạn có chắc muốn xóa khách sạn?',
+            text: "Hành động này sẽ xóa thông tin khách sạn khỏi hệ thống!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Có, xóa!',
+            cancelButtonText: 'Hủy bỏ'
+        }).then(function(result) {
+            var successSound = new Audio('assets/admin/assets/sound/success.mp3');
+            var errorSound = new Audio('assets/admin/assets/sound/error.mp3');
+            if (result.isConfirmed) {
+                HotelServiceAG.deleteHotel(hotelId).then(function (response) {
+                    if (response.status === 200) {
+                        $location.path('/business/hotel/home');
+                        toastAlert('success', response.data.message);
+                        successSound.play()
+                    }else{
+                        errorSound.play()
+                        toastAlert('error', response.message);
+                    }
+                });
+            }
+        });
+    };
 })
