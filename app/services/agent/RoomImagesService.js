@@ -31,4 +31,31 @@ travel_app.service("RoomImagesService", function ($http) {
             data: formData,
         });
     };
+
+    this.addImagesRoomType = function (roomTypeId, listRoomTypeImg) {
+        var formData = new FormData();
+        formData.append('roomTypeId', roomTypeId);
+        for (var i = 0; i < listRoomTypeImg.length; i++) {
+            formData.append('listRoomTypeImg', listRoomTypeImg[i], listRoomTypeImg[i].name);
+        }
+        return $http({
+            method: 'POST',
+            url: API_ROOM_IMAGE + 'addImageRoomType',
+            headers: {'Content-Type': undefined},
+            data: formData,
+        });
+    }
+
+    this.deleteImageRoomType = function (roomTypeId, listImageDelete) {
+        var formData = new FormData();
+        formData.append('roomTypeId', roomTypeId );
+        formData.append('listImageDelete', new Blob([JSON.stringify(listImageDelete)], {type: "application/json"}));
+
+        return $http({
+            method: "DELETE",
+            url: API_ROOM_IMAGE + "deleteImageRoomType",
+            headers: {'Content-Type': undefined},
+            data: formData,
+        });
+    }
 })

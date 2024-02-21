@@ -55,3 +55,19 @@ travel_app.filter('formatDateTime', function () {
         return momentObj.format('DD/MM/YYYY HH:mm:ss');
     };
 });
+
+travel_app.filter('convertTime', function() {
+    return function(timeArray) {
+        if (Array.isArray(timeArray) && timeArray.length === 2) {
+            var hours = timeArray[0];
+            var minutes = timeArray[1];
+
+            var formattedHours = (hours < 10) ? '0' + hours : hours;
+            var formattedMinutes = (minutes < 10) ? '0' + minutes : minutes;
+
+            return formattedHours + ':' + formattedMinutes;
+        } else {
+            return null;
+        }
+    };
+});

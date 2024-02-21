@@ -1,4 +1,4 @@
-travel_app.controller('RoomTypeListController', function ($scope, $timeout, $http, Upload, RoomTypeService, LocalStorageService, BedTypeService) {
+travel_app.controller('RoomTypeListController', function ($scope, $timeout, $http, FormatDateService, Upload, RoomTypeService, LocalStorageService, BedTypeService) {
     var hotelId = LocalStorageService.get("brandId")
 
     $scope.roomTypes = {

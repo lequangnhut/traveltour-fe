@@ -7,6 +7,7 @@ travel_app.controller("RoomTypeImageController", function ($scope, $location, $r
         roomTypeImg: null,
     }
     $scope.deletedImages = [];
+
     function errorCallback(error) {
         toastAlert('error', "Máy chủ không tồn tại !");
     }
@@ -43,6 +44,7 @@ travel_app.controller("RoomTypeImageController", function ($scope, $location, $r
             $scope.checkCountImage = $scope.editImageRoom.length;
             $scope.validateRoomTypeImg();
         }
+        console.log($scope.deletedImages.length);
     };
 
     /**
@@ -51,10 +53,9 @@ travel_app.controller("RoomTypeImageController", function ($scope, $location, $r
     $scope.validateRoomTypeImg = function () {
         var maxImages = 30;
 
-        if ($scope.editImageRoom.roomTypeImg && 
-            $scope.editImageRoom.roomTypeImg.length > maxImages ||
-            $scope.editImageRoom.roomTypeImg.length + $scope.checkCountImage > maxImages)
-        {
+        if ($scope.editImageRoom && $scope.editImageRoom.roomTypeImg &&
+            ($scope.editImageRoom.roomTypeImg.length > maxImages ||
+                $scope.editImageRoom.roomTypeImg.length + $scope.checkCountImage > maxImages)) {
             $scope.editImageRoomForm.roomTypeImg.$setValidity('maxImages', false);
         } else {
             $scope.editImageRoomForm.roomTypeImg.$setValidity('maxImages', true);
@@ -63,28 +64,51 @@ travel_app.controller("RoomTypeImageController", function ($scope, $location, $r
     };
 
     /**
-     * Phương thức chỉnh sửa hình ảnh loại phòng
+     * Phương thức xóa hình ảnh loại phòng
      */
-    $scope.editImgRoomType = function () {
+    $scope.deleteImageRoomType = function () {
+        $scope.isLoading = true;
+        RoomImagesService.deleteImageRoomType($scope.id, $scope.deletedImages)
+            .then(function (response) {
+                $scope.isLoading = true;
+                if (response.data.status === "200") {
+                    $location.path('/business/hotel/room-type-list');
+                    $scope.playSuccessSound()
+                    toastAlert('success', response.data.message)
+                } else if (response.data.status === "500") {
+                    toastAlert('error', response.data.message)
+                    $scope.playErrorSound()
+                } else {
+                    toastAlert('error', response.data.message)
+                    $scope.playErrorSound()
+                }
+            }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        })
+    }
+
+    /**
+     * Phương thức thêm hình ảnh loại phòng
+     */
+    $scope.addImagesRoomType = function () {
         var successSound = new Audio('assets/admin/assets/sound/success.mp3');
         var errorSound = new Audio('assets/admin/assets/sound/error.mp3');
         $scope.isLoading = true;
-        RoomImagesService.editImageRoomType($scope.id, $scope.deletedImages, $scope.editImageRoom.roomTypeImg)
-            .then(function (response)
-        {
-            $scope.isLoading = true;
-            if (response.data.status === "200") {
-                $location.path('/business/hotel/room-type-list');
-                successSound.play();
-                toastAlert('success', response.data.message)
-            } else if (response.data.status === "500") {
-                toastAlert('error', response.data.message)
-                errorSound.play();
-            } else {
-                toastAlert('error', response.data.message)
-                errorSound.play();
-            }
-        }, errorCallback).finally(function () {
+        RoomImagesService.addImagesRoomType($scope.id, $scope.editImageRoom.roomTypeImg)
+            .then(function (response) {
+                $scope.isLoading = true;
+                if (response.data.status === "200") {
+                    $location.path('/business/hotel/room-type-list');
+                    successSound.play();
+                    toastAlert('success', response.data.message)
+                } else if (response.data.status === "500") {
+                    toastAlert('error', response.data.message)
+                    errorSound.play();
+                } else {
+                    toastAlert('error', response.data.message)
+                    errorSound.play();
+                }
+            }, errorCallback).finally(function () {
             $scope.isLoading = false;
         })
     }

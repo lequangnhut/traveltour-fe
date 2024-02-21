@@ -6,6 +6,9 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
     $scope.isAuthenticated = AuthService.getToken() !== null;
     let user = $scope.user = AuthService.getUser();
 
+    $scope.successSound = new Audio('assets/admin/assets/sound/success.mp3');
+    $scope.errorSound = new Audio('assets/admin/assets/sound/error.mp3');
+
     function errorCallback() {
         $location.path('/admin/internal-server-error')
     }
@@ -267,4 +270,12 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
             $('.preloader').fadeOut(500);
         }, 500);
     });
+
+    $scope.playSuccessSound = function() {
+        $scope.successSound.play();
+    };
+
+    $scope.playErrorSound = function() {
+        $scope.errorSound.play();
+    };
 });

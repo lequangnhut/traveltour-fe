@@ -51,10 +51,12 @@ travel_app.service("RoomTypeService", function($http, $q) {
      * @param roomTypes thông tin loại phòng
      * @returns {*}
      */
-    this.editInfoRoomType = function (roomTypes) {
+    this.editInfoRoomType = function (roomTypes, checkinTime, checkoutTime) {
         var formData = new FormData();
 
         formData.append('roomTypes', new Blob([JSON.stringify(roomTypes)], {type: "application/json"}));
+        formData.append('checkinTime', checkinTime);
+        formData.append('checkoutTime', checkoutTime);
 
         return $http({
             method: 'PUT',
@@ -72,11 +74,13 @@ travel_app.service("RoomTypeService", function($http, $q) {
      * @param selectedCheckboxValues danh sách dịch vụ phòng
      * @returns {*}
      */
-    this.saveRoomType = function (roomTypes, roomTypeAvatarData, listRoomTypeImg, selectedCheckboxValues) {
+    this.saveRoomType = function (roomTypes, roomTypeAvatarData, listRoomTypeImg, selectedCheckboxValues, checkinTime, checkoutTime) {
         var formData = new FormData();
 
         formData.append('roomTypes', new Blob([JSON.stringify(roomTypes)], {type: "application/json"}));
         formData.append('selectedCheckboxValues', new Blob([JSON.stringify(selectedCheckboxValues)], {type: "application/json"}));
+        formData.append('checkinTime', checkinTime);
+        formData.append('checkoutTime', checkoutTime);
 
         if (roomTypeAvatarData && roomTypeAvatarData.length > 0) {
             formData.append('roomTypeAvatarData', roomTypeAvatarData[0], roomTypeAvatarData[0].name);
