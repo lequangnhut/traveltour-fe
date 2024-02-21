@@ -119,9 +119,6 @@
                             <span class="sorting-icon" ng-bind-html="getSortIcon('dateCreated')"></span>
                         </div>
                     </th>
-                    <!--                    <th class="cursor-pointer" ng-click="sortData('isActive')">Trạng thái-->
-                    <!--                        <i class="fa" ng-class="getSortIcon('isActive')"></i>-->
-                    <!--                    </th>-->
                     <th>Thao tác</th>
                 </tr>
                 </thead>
@@ -133,19 +130,7 @@
                     <td>{{ tour.tourName }}</td>
                     <td>{{ tourTypeNames[tour.tourTypeId] || 'Đang tải...' }}</td>
                     <td>{{ tour.dateCreated | vietnameseDateTime }}</td>
-                    <!--                    <td>-->
-                    <!--                        <div class="d-flex align-items-center justify-content-center">-->
-                    <!--                            <span ng-class="{'status-success': tour.isActive, 'status-error': !tour.isActive}"></span>-->
-                    <!--                            <span ng-class="{'text-status-success': tour.isActive, 'text-status-error': !tour.isActive}">-->
-                    <!--                                    {{ tour.isActive ? 'Đang hoạt động' : 'Ngưng hoạt động' }}-->
-                    <!--                                </span>-->
-                    <!--                        </div>-->
-                    <!--                    </td>-->
                     <td class="d-flex align-items-center justify-content-center">
-                        <a href="admin/basic-tour-list/trips-tour-list/{{tour.id}}"
-                           role="button" class="fs-1 btn text-primary px-2">
-                            <i class="fa-solid fa-plane"></i>
-                        </a>
                         <a href="admin/basic-tour-list/basic-tour-update/{{tour.id}}"
                            role="button" class="fs-1 btn text-warning px-3">
                             <i class="fa-solid fa-pen-to-square"></i>

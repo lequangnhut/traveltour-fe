@@ -2,7 +2,7 @@ travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location
     $scope.isLoading = true;
 
     $scope.tourTrips = {
-        tourId: $routeParams.tourId,
+        tourDetailId: $routeParams.tourDetailId,
         dayInTrip: null,
         activityInDay: null,
     };
@@ -12,7 +12,7 @@ travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location
     $scope.pageSize = 5; // Số lượng tours trên mỗi trang
 
     let tourTripsId = $routeParams.tourTripsId;
-    let tourId = $scope.tourTrips.tourId;
+    let tourDetailId = $scope.tourTrips.tourDetailId;
 
     $scope.tourName = '';
     $scope.activityInDayTouched = false
@@ -21,7 +21,7 @@ travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location
     $scope.showActivities = false;
 
     function errorCallback() {
-        // $location.path('/admin/internal-server-error')
+        $location.path('/admin/internal-server-error')
     }
 
     $scope.setTouched = function () {
@@ -87,7 +87,7 @@ travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location
     };
 
     $scope.getTourTripsList = function () {
-        TourTripsServiceAD.getAllTrips($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, tourId)
+        TourTripsServiceAD.getAllTrips($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, tourDetailId)
             .then(function (response) {
                 if (response.data.data === null || response.data.data.content.length === 0) {
                     $scope.setPage(Math.max(0, $scope.currentPage - 1));
@@ -115,8 +115,8 @@ travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location
                 }
             }, errorCallback);
         }
-        if (tourId !== undefined && tourTripsId !== null && tourTripsId !== "") {
-            ToursServiceAD.findTourById(tourId).then(function successCallback(response) {
+        if (tourDetailId !== undefined && tourTripsId !== null && tourTripsId !== "") {
+            ToursServiceAD.findTourById(tourDetailId).then(function successCallback(response) {
                 $scope.tourName = response.data.tourName;
             }, errorCallback);
         }
@@ -155,7 +155,7 @@ travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location
 
         TourTripsServiceAD.createTrips(dataTourTrips).then(function successCallback() {
             toastAlert('success', 'Thêm mới thành công !');
-            $location.path('/admin/basic-tour-list/trips-tour-list/' + $scope.tourTrips.tourId); // Điều hướng sau khi danh sách cập nhật
+            $location.path('/admin/detail-tour-list/trips-tour-list/' + $scope.tourTrips.tourDetailId); // Điều hướng sau khi danh sách cập nhật
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
@@ -164,17 +164,21 @@ travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location
 
     //form update
     $scope.updateTourTripsSubmit = () => {
-        const dataTourTrips = new FormData();
-        $scope.isLoading = true;
+        function confirmUpdate() {
+            const dataTourTrips = new FormData();
+            $scope.isLoading = true;
 
-        dataTourTrips.append("tourTripsDto", new Blob([JSON.stringify($scope.tourTrips)], {type: "application/json"}));
+            dataTourTrips.append("tourTripsDto", new Blob([JSON.stringify($scope.tourTrips)], {type: "application/json"}));
 
-        TourTripsServiceAD.updateTrips(tourTripsId, dataTourTrips).then(function successCallback() {
-            toastAlert('success', 'Cập nhật thành công !');
-            $location.path('/admin/basic-tour-list/trips-tour-list/' + $scope.tourTrips.tourId);
-        }, errorCallback).finally(function () {
-            $scope.isLoading = false;
-        });
+            TourTripsServiceAD.updateTrips(tourTripsId, dataTourTrips).then(function successCallback() {
+                toastAlert('success', 'Cập nhật thành công !');
+                $location.path('/admin/detail-tour-list/trips-tour-list/' + $scope.tourTrips.tourDetailId);
+            }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+        }
+
+        confirmAlert('Bạn có chắc chắn muốn cập nhật kế hoạch không ?', confirmUpdate);
     };
 
     //delete
@@ -184,11 +188,11 @@ travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location
     $scope.deleteTourTrips = function (tourTripsId) {
         function confirmDeleteTour() {
             TourTripsServiceAD.deactivateTrips(tourTripsId).then(function successCallback() {
-                toastAlert('success', 'Xóa thành công !');
+                toastAlert('success', 'Xóa kế hoạch thành công !');
                 $scope.getTourTripsList();
             }, errorCallback);
         }
 
-        confirmAlert('Bạn có chắc chắn muốn xóa tour trips này không ?', confirmDeleteTour);
+        confirmAlert('Bạn có chắc chắn muốn xóa kế hoạch không ?', confirmDeleteTour);
     }
 });

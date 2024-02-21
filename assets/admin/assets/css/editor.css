@@ -1,4 +1,3 @@
-
 .container-desciption {
     background-color: #ffffff;
 }
@@ -72,4 +71,18 @@
 
 .container-desciption .active {
     background-color: #e0e9ff;
+}
+
+.show-animation {
+    animation-name: fadeInUp;
+    animation-duration: 1s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

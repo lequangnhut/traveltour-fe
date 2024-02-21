@@ -14,5 +14,7 @@
     <orderEntry type="library" name="line" level="application" />
     <orderEntry type="library" name="tinymce" level="application" />
     <orderEntry type="library" name="line" level="application" />
+    <orderEntry type="library" name="ckeditor" level="application" />
+    <orderEntry type="library" name="canvasjs" level="application" />
   </component>
 </module>

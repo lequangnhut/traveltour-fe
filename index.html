@@ -73,6 +73,8 @@
         <link href="/assets/admin/assets/css/icon.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/img-perview.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/room-type-image-edit.css" type="text/css" rel="stylesheet">
+        <link href="/assets/admin/assets/css/ckeditor.css" type="text/css" rel="stylesheet">
+        <link href="node_modules/froala-editor/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css"/>
         <script>
             var phoenixIsRTL = window.config.config.phoenixIsRTL;
             if (phoenixIsRTL) {
@@ -1387,6 +1389,8 @@
 <script src="/node_modules/angular/angular.js"></script>
 <script src="/lib/angular-route.min.js"></script>
 <script src="/node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
+<script src="/lib/ckeditor/ckeditor-classic.js"></script>
+<script src="node_modules/froala-editor/js/froala_editor.pkgd.min.js"></script>
 
 <!--====== Application ======-->
 <script src="app/App.js"></script>
@@ -1404,6 +1408,7 @@
 <script src="app/directives/RichTextEditor.js"></script>
 <script src="app/directives/contenteditable.js"></script>
 <script src="app/directives/FormatTime.js"></script>
+<script src="app/directives/ckEditor.js"></script>
 
 <!--====== Service ======-->
 <script src="app/services/auth/AuthService.js"></script>
@@ -1501,6 +1506,7 @@
 <script src="app/component/agent/trans/controllers/RegisterTransControllerAG.js"></script>
 <script src="app/component/agent/trans/controllers/bookings/OrderTransportControllerAG.js"></script>
 <script src="app/component/agent/trans/controllers/transports/TransportControllerAG.js"></script>
+<script src="app/component/agent/trans/controllers/transports/TransportDetailsImageControllerAD.js"></script>
 <script src="app/component/agent/trans/controllers/schedules/SchedulesControllerAG.js"></script>
 <script src="app/component/agent/trans/controllers/dashboard/ListTransportBrandControllerAG.js"></script>
 

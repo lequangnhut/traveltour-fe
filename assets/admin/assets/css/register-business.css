@@ -181,8 +181,16 @@ body::-webkit-scrollbar-thumb {
     padding: 50px;
 }
 
+.color-warning {
+    color: #ef890a;
+}
+
 .color-green {
     color: #63ab45;
+}
+
+.color-danger {
+    color: #c02929;
 }
 
 #business-information .btn-submit-form {

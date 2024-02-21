@@ -208,20 +208,24 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location
 
     //form update
     $scope.updateTourSubmit = () => {
-        const dataTour = new FormData();
-        $scope.isLoading = true;
+        function confirmUpdate() {
+            const dataTour = new FormData();
+            $scope.isLoading = true;
 
-        if ($scope.hasImage) {
-            dataTour.append("toursDto", new Blob([JSON.stringify($scope.tourBasic)], {type: "application/json"}));
-            dataTour.append("tourImg", $scope.tourImgNoCloud);
-            updateTour(tourId, dataTour);
-        } else {
-            urlToFile($scope.tourBasic.tourImg, fileName, mimeType).then(file => {
+            if ($scope.hasImage) {
                 dataTour.append("toursDto", new Blob([JSON.stringify($scope.tourBasic)], {type: "application/json"}));
-                dataTour.append("tourImg", file);
+                dataTour.append("tourImg", $scope.tourImgNoCloud);
                 updateTour(tourId, dataTour);
-            }, errorCallback);
+            } else {
+                urlToFile($scope.tourBasic.tourImg, fileName, mimeType).then(file => {
+                    dataTour.append("toursDto", new Blob([JSON.stringify($scope.tourBasic)], {type: "application/json"}));
+                    dataTour.append("tourImg", file);
+                    updateTour(tourId, dataTour);
+                }, errorCallback);
+            }
         }
+
+        confirmAlert('Bạn có chắc chắn muốn cập nhật tour không ?', confirmUpdate);
     };
 
     const updateTour = (tourId, dataTour) => {
