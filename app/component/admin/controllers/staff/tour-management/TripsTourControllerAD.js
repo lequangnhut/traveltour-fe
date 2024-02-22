@@ -108,7 +108,6 @@ travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location
             TourTripsServiceAD.findTripsById(tourTripsId).then(function successCallback(response) {
                 if (response.status === 200) {
                     $timeout(function () {
-                        console.log(response)
                         $scope.tourTrips = response.data.data;
 
                     }, 0);
