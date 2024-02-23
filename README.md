@@ -8,3 +8,4 @@ Mô tả ngắn về ứng dụng của bạn và mục tiêu chính.
 
 1. Clone dự án từ kho lưu trữ:
 
+2. Chạy lệnh này để deploy lên Ngrok: ngrok http --domain=bluegill-capable-closely.ngrok-free.app 3000

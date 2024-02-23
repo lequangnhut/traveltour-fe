@@ -756,6 +756,11 @@ button {
     animation: loaderShadow 0.5s linear infinite;
 }
 
+/* ẩn dòng chữ bản quyền trong bản đồ google map */
+.mapboxgl-control-container {
+    display: none;
+}
+
 @-webkit-keyframes loaderAnimate {
     17% {
         border-bottom-right-radius: 3px;

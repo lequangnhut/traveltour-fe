@@ -1,4 +1,4 @@
-travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $location, $routeParams, $timeout, $http, TourDetailsServiceAD, ToursServiceAD, AccountServiceAD) {
+travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $location, $routeParams, $timeout, $http, MapBoxService, TourDetailsServiceAD, ToursServiceAD, AccountServiceAD) {
     $scope.isLoading = true;
 
     $scope.tourDetail = {
@@ -30,6 +30,8 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
 
     $scope.invalidPriceFormat = false;
 
+    $scope.provinceDestination = [{type: 'select', hasData: false}];
+
     function errorCallback() {
         $location.path('/admin/internal-server-error')
     }
@@ -51,18 +53,54 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
     $scope.openModal = function (tourDetailId) {
         $('#modal-tour-detail').modal('show');
 
-        if (tourDetailId !== undefined && tourDetailId !== null && tourDetailId !== "") {
-            TourDetailsServiceAD.findTourDetailById(tourDetailId).then(response => {
+        if (!tourDetailId) return;
+
+        TourDetailsServiceAD.findTourDetailById(tourDetailId)
+            .then(response => {
                 if (response.status === 200) {
                     $timeout(function () {
                         $scope.tourDetail = response.data.data;
                         $scope.tourDetailImage = response.data.data.tourDetailImagesById;
                         $scope.tourDetail.departureDate = new Date(response.data.data.departureDate);
                         $scope.tourDetail.arrivalDate = new Date(response.data.data.arrivalDate);
+
+                        let fromLocation = $scope.tourDetail.fromLocation;
+                        let toLocation = $scope.tourDetail.toLocation;
+
+                        MapBoxService.geocodeAddressGetKilometer(fromLocation)
+                            .then(function (fromCoords) {
+                                return MapBoxService.geocodeAddressGetKilometer(toLocation).then(function (toCoords) {
+                                    const distance = $scope.calculateDistance(fromCoords, toCoords);
+                                    document.getElementById("expectedKm").innerText = distance + ' Km (Kilometer)';
+                                });
+                            })
+                            .catch(function (error) {
+                                console.error("Lỗi khi tính toán khoảng cách:", error);
+                            });
+
+                        $scope.filteredProvinces = $scope.provinces.filter(function (province) {
+                            return province.Name !== fromLocation && province.Name !== toLocation;
+                        });
                     }, 0);
                 }
-            }, errorCallback);
-        }
+            })
+            .catch(errorCallback);
+    }
+
+    $scope.calculateDistance = function (coords1, coords2) {
+        const R = 6371;
+        const lat1 = coords1.lat * Math.PI / 180;
+        const lat2 = coords2.lat * Math.PI / 180;
+        const dLat = (coords2.lat - coords1.lat) * Math.PI / 180;
+        const dLng = (coords2.lng - coords1.lng) * Math.PI / 180;
+
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1) * Math.cos(lat2) *
+            Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        const distance = R * c;
+        return Math.round(distance);
     }
 
     /**
@@ -70,6 +108,25 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
      */
     $scope.closeModal = function () {
         $('#modal-tour-detail').modal('hide');
+    };
+
+    /**
+     * Thêm địa chỉ tham quan vào trong lịch trình của tour
+     * @param index
+     */
+    $scope.provinceDestination = [{type: 'select', hasData: false}];
+
+    $scope.addOrRemoveSelectItem = function (index) {
+        $scope.provinceDestination[index].hasData = !$scope.provinceDestination[index].hasData;
+        if ($scope.provinceDestination[index].hasData) {
+            $scope.provinceDestination.splice(index + 1, 0, {type: 'select', hasData: false});
+        } else {
+            $scope.provinceDestination.splice(index, 1);
+        }
+    };
+
+    $scope.getProvinceDestination = function () {
+
     };
 
     /**

@@ -73,6 +73,7 @@
         <link href="/assets/admin/assets/css/icon.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/img-perview.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/room-type-image-edit.css" type="text/css" rel="stylesheet">
+        <link href="/node_modules/mapbox-gl/dist/mapbox-gl.css" type="text/css" rel="stylesheet">
 
         <script src="/assets/admin/assets/vendors/popper/popper.min.js"></script>
         <script src="/assets/admin/assets/vendors/bootstrap/bootstrap.min.js"></script>
@@ -1389,6 +1390,9 @@
 <script src="/node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
 <script src="/lib/ckeditor/ckeditor-classic.js"></script>
 
+<script src="/node_modules/mapbox-gl/dist/mapbox-gl.js"></script>
+<script src="/node_modules/@turf/turf/turf.min.js"></script>
+
 <!--====== Application ======-->
 <script src="app/App.js"></script>
 <script src="app/MainController.js"></script>
@@ -1411,6 +1415,7 @@
 <script src="app/services/auth/AuthService.js"></script>
 <script src="app/services/utils/NotificationService.js"></script>
 <script src="app/services/utils/LocalStorageService.js"></script>
+<script src="app/services/utils/MapBoxService.js"></script>
 
 <!--====== Super Admin Service ======-->
 <script src="app/services/supperadmin/DecentralizationServiceAD.js"></script>
@@ -1539,8 +1544,8 @@
 <script src="app/component/customers/controllers/home/TravelGuideController.js"></script>
 <script src="app/component/customers/controllers/home/ContactController.js"></script>
 <script src="app/component/customers/controllers/home/TicketController.js"></script>
-<script src="app/component/customers/controllers/tour/TourController.js"></script>
-<script src="app/component/customers/controllers/tour/TourDetailController.js"></script>
+<script src="app/component/customers/controllers/tour/TourControllerCT.js"></script>
+<script src="app/component/customers/controllers/tour/TourDetailControllerCT.js"></script>
 <script src="app/component/customers/controllers/location/LocationController.js"></script>
 <script src="app/component/customers/controllers/hotel/HotelController.js"></script>
 <script src="app/component/customers/controllers/hotel/HotelDetailController.js"></script>
