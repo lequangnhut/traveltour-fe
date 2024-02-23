@@ -37,7 +37,7 @@
                     <i class="fa-solid fa-arrows-rotate float-end"></i>
                     </span>
                 </div>
-                <div class="col-xl-2 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
+                <div class="col-xl-3 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
                     <label class="form-label">Địa điểm</label>
                     <select class="form-select"
                             name="location"
@@ -47,24 +47,33 @@
                         <option value="" selected>Chọn địa điểm</option>
                     </select>
                 </div>
-                <div class="col-xl-2 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
-                    <label class="form-label">Ngày đi</label>
-                    <input class="form-control" ng-model="searchHotels.departureDate" type="date"/>
+                <div class="col-xl-3 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
+                    <label class="form-label">Ngày đi <span class="text-danger">*</span></label>
+                    <input id="departureDateInput" class="form-control" ng-model="searchHotels.departureDate"
+                           type="datetime-local"/>
                 </div>
-                <div class="col-xl-2 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
-                    <label class="form-label">Ngày về</label>
-                    <input class="form-control" ng-model="searchHotels.arrivalDate" type="date"/>
+                <div class="col-xl-3 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
+                    <label class="form-label">Ngày về <span class="text-danger">*</span></label>
+                    <input id="arrivalDateInput" class="form-control" ng-model="searchHotels.arrivalDate"
+                           type="datetime-local"/>
                 </div>
-                <div class="col-xl-2 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
-                    <label class="form-label">SL người lớn</label>
-                    <input class="form-control" ng-model="searchHotels.numAdults" type="number" placeholder="20"/>
+                <div class="col-xl-3 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
+                    <label class="form-label">Người lớn <span class="text-danger">*</span></label>
+                    <input id="numAdultsInput" class="form-control" ng-model="searchHotels.numAdults" type="number"
+                           placeholder="20"/>
                 </div>
-                <div class="col-xl-2 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
-                    <label class="form-label">SL trẻ em</label>
-                    <input class="form-control" ng-model="searchHotels.numChildren" type="number" placeholder="5"/>
+                <div class="col-xl-3 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
+                    <label class="form-label">Trẻ em</label>
+                    <input id="numChildrenInput" class="form-control" ng-model="searchHotels.numChildren" type="number"
+                           placeholder="5"/>
+                </div>
+                <div class="col-xl-3 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
+                    <label class="form-label">Số lượng phòng <span class="text-danger">*</span></label>
+                    <input id="numRoomsInput" class="form-control" ng-model="searchHotels.numRooms" type="number"
+                           placeholder="2"/>
                 </div>
 
-                <div class="col-xl-2 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
+                <div class="col-xl-3 col-md-4 col-sm-6 mb-3 order-2 order-sm-3 float-end">
                     <label class="form-label"></label>
                     <button type="button" class="btn btn-primary w-100"
                             ng-click="searchHotelServiceByLocationAndDepartureDateAndArrivalDateAndNumAdultsAndNumChildren()">
@@ -185,8 +194,9 @@
                            ng-click="deleteTourDetail(hotelService.id)">
                             <i class="fa-solid fa-trash"></i>
                         </a>
-                        <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/hotel-list/{{hotelService.id}}/room-type-list"
-                           role="button" class="fs-1 btn text-primary px-2">
+                        <a role="button" class="fs-1 btn text-primary px-2"
+                           ng-click="navigateToRoomTypeList(tourDetailId,hotelService.id,
+                            hotelService.hotelName,hotelService.ward + ', ' + hotelService.district + ', ' + hotelService.province)">
                             <i class="fa-regular fa-square-plus"></i>
                         </a>
                     </td>

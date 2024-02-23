@@ -1,7 +1,7 @@
 travel_app.service('HotelServiceServiceAD', function ($http, $q) {
     let API_HOTEL_SERVICE = BASE_API + 'staff/hotel-service/';
 
-    this.getAllOrSearchHotels = function (page, size, sortBy, sortDir, searchTerm, location, departureDate, arrivalDate, numAdults, numChildren) {
+    this.getAllOrSearchHotels = function (page, size, sortBy, sortDir, searchTerm, location, departureDate, arrivalDate, numAdults, numChildren, numRooms) {
         const deferred = $q.defer();
         $http({
             method: 'GET',
@@ -16,7 +16,8 @@ travel_app.service('HotelServiceServiceAD', function ($http, $q) {
                 departureDate: departureDate || null,
                 arrivalDate: arrivalDate || null,
                 numAdults: numAdults || null,
-                numChildren: numChildren || null
+                numChildren: numChildren || null,
+                numRooms: numRooms || null
             }
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;

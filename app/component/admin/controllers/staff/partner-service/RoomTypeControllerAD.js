@@ -6,7 +6,16 @@ travel_app.controller('RoomTypeControllerAD',
 
         const tourDetailId = $routeParams.tourDetailId;
         const hotelId = $routeParams.hotelId;
+
         $scope.tourDetailId = tourDetailId;
+        $scope.hotelId = hotelId;
+        $scope.tourGuideId = null;
+
+        if (tourDetailId !== undefined && tourDetailId !== null && tourDetailId !== "") {
+            TourDetailsServiceAD.findTourDetailById(tourDetailId).then(response => {
+                $scope.tourGuideId = response.data.data.guideId;
+            })
+        }
 
         $scope.tourInfo = {
             tourName: null,
@@ -81,6 +90,7 @@ travel_app.controller('RoomTypeControllerAD',
 
             $scope.roomTypeList = await Promise.all(roomTypePromises);
             $scope.$apply()
+            console.log($scope.roomTypeList)
         };
 
 
@@ -102,7 +112,7 @@ travel_app.controller('RoomTypeControllerAD',
                 //fill modal tour info and tour trips
                 let tourDetail = tourDetailResponse.data.data;
                 const tourResponse = await ToursServiceAD.findTourById(tourDetail.tourId);
-                const tourTripsResponse = await TourTripsServiceAD.getTripsByTourId(tourDetail.tourId);
+                const tourTripsResponse = await TourTripsServiceAD.getTripsByTourId(tourDetail.id);
 
                 $scope.tourInfo = {
                     tourName: tourResponse.data.tourName,
@@ -219,6 +229,29 @@ travel_app.controller('RoomTypeControllerAD',
                 }
 
             }, 500);
+        };
+
+        $scope.onCheckChanged = function (room) {
+            if (room.isChecked) {
+                room.quantity = 1;
+            } else {
+                delete room.quantity;
+            }
+        };
+
+
+        $scope.confirmRoomSelection = function () {
+            let selectedRooms = $scope.roomTypeList.filter(function (room) {
+                return room.isChecked; // Lọc ra những phòng đã được chọn
+            }).map(function (room) {
+                return {
+                    ...room,
+                    quantity: room.quantity
+                };
+            });
+
+            sessionStorage.setItem('selectedRooms', JSON.stringify(selectedRooms));
+            sessionStorage.setItem('tourGuideId', $scope.tourGuideId);
         };
 
         $scope.getRoomTypeList();
