@@ -1,0 +1,226 @@
+<div class="container mt-4">
+    <div class="header-control mb-3">
+        <div class="header-control-center">
+            <div class="d-flex justify-content-between align-items-center row ">
+                <div class="col mt-3">
+                    <h3 class="color-green fw-bold text-uppercase mb-3">Chi tiết thanh toán</h3>
+                    <a href="#" class="text-decoration-none">< Quay lại đơn hàng</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 pe-2">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Chi tiết đơn hàng</h5>
+                    <hr>
+                    <div class="row" ng-repeat="sr in selectedRooms">
+                        <div class="col-3 pe-0">
+                            <img class="rounded-1 w-100"
+                                 src="{{sr.roomTypeAvatar}}"
+                                 alt=""/>
+                        </div>
+                        <div class="col-9">
+                            <div class="row">
+                                <div class="col-9">
+                                    <p class="fw-bold mb-0">{{ infoHotel.hotelName }}</p>
+                                    <p class="mb-0">{{ infoHotel.address }}</p>
+                                    <p class="fw-bold mb-0">{{ sr.roomTypeName }}</p>
+                                </div>
+                                <div class="col-3 px-0 position-relative">
+                                    <p>{{ sr.price | vnCurrency }}</p>
+                                    <p class="position-absolute bottom-0 mb-0">Số lượng: <span
+                                            class="fw-bold">{{ sr.quantity }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-5">
+                                    <p class="mb-0">Ngày nhận phòng</p>
+                                    <p class="fw-bold mb-0" style="font-size: 13px">{{ infoHotel.departureDate }}</p>
+                                </div>
+                                <div class="col-2 d-flex justify-content-center align-items-center px-2">
+                                    <p class="fw-bold mb-0">1 đêm</p>
+                                </div>
+                                <div class="col-5">
+                                    <p class="mb-0">Ngày trả phòng</p>
+                                    <p class="fw-bold mb-0" style="font-size: 13px">{{ infoHotel.arrivalDate }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="mt-3">
+                    </div>
+
+                    <div>
+                        <div class="d-flex justify-content-between">
+                            <span class="font-bold text-lg">Tổng tiền khách sạn:</span>
+                            <span class="font-bold text-lg"> {{ totalBeforeTax | vnCurrency }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Thuế GTGT:</span>
+                            <span> {{ VATAmount | vnCurrency }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Chiết khấu:</span>
+                            <span> {{ discountAmount | vnCurrency }}</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between font-bold text-xl mt-3 fw-bold">
+                            <span>Tổng tiền phải thanh toán:</span>
+                            <span> {{ total | vnCurrency }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 ps-2">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Thông tin của bạn để hoàn tất quá trình đặt phòng</h5>
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label">Họ và tên của bạn <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" ng-model="tourGuide.fullName" id="fullName"
+                               placeholder="Nguyễn Văn A" required>
+                        <div class="invalid-feedback">
+                            Vui lòng nhập họ của bạn.
+                        </div>
+                    </div>
+                    <!-- Form Row 2 for Email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">email của bạn <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" ng-model="tourGuide.email" id="email"
+                               placeholder="example@gmail.com" required>
+                        <div class="invalid-feedback">
+                            Vui lòng nhập email của bạn.
+                        </div>
+                    </div>
+                    <!-- Form Row 3 for Phone Number -->
+                    <div class="mb-3">
+                        <label for="phoneNumber" class="form-label">số điện thoại của bạn <span
+                                class="text-danger">*</span></label>
+                        <input type="tel" class="form-control" ng-model="tourGuide.phone" id="phoneNumber"
+                               placeholder="0375780079"
+                               required>
+                        <div class="invalid-feedback">
+                            Vui lòng nhập số điện thoại của bạn.
+                        </div>
+                    </div>
+                    <!-- Radio buttons for Booking for -->
+                    <div class="mb-3">
+                        <label class="form-label d-block mb-2">Bạn đặt phòng cho ai <span
+                                class="text-danger">*</span></label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="bookingFor" id="myself" value="myself"
+                                   checked>
+                            <label class="form-check-label" for="myself">
+                                Tôi là khách lưu trú chính
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="bookingFor" id="someoneElse"
+                                   value="someoneElse">
+                            <label class="form-check-label" for="someoneElse">
+                                Tôi đặt phòng này cho người khác
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Information Section -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Thông tin thanh toán</h5>
+                    <div class="mb-3">
+                        <label for="paymentMethod" class="form-label">Chọn phương thức thanh toán</label>
+                        <select class="form-select" id="paymentMethod" ng-model="payment.method"
+                                ng-change="toggleActivities()" required>
+                            <option value="" selected disabled>-- Chọn một phương thức --</option>
+                            <option value="1">Thanh toán sau khi trả phòng</option>
+                            <option value="2">Thanh toán qua thẻ nhân hàng</option>
+                        </select>
+                    </div>
+
+                    <form ng-show="showActivities">
+                        <h5 class="card-title">Thông tin tài khoản</h5>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="accountName" class="form-label required">Tên chủ thẻ <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="accountName" placeholder="Tên chủ thẻ"
+                                       required>
+                                <div class="invalid-feedback">
+                                    Vui lòng nhập tên chủ thẻ.
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cardNumber" class="form-label required">Số thẻ <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="cardNumber" placeholder="Số thẻ" required>
+                                <div class="invalid-feedback">
+                                    Vui lòng nhập số thẻ.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="expirationDate" class="form-label required">Ngày hết hạn <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="expirationDate" placeholder="MM/YY"
+                                       required>
+                                <div class="invalid-feedback">
+                                    Vui lòng nhập ngày hết hạn thẻ.
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cvc" class="form-label required">CVC <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="cvc" placeholder="CVC" required>
+                                <div class="invalid-feedback">
+                                    Vui lòng nhập CVC.
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Delivery Time Section -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Thời gian đến của bạn</h5>
+                    <ul class="ps-0">
+                        <li class="d-flex align-items-start mb-2">
+                            <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                            <span>Phòng của bạn sẽ sẵn sàng để nhận trong khoảng từ 14:00 đến 23:30</span>
+                        </li>
+                        <li class="d-flex align-items-start mb-2">
+                            <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                            <span>Lễ tân 24 giờ - Luôn có trực giúp mọi khi bạn cần!</span>
+                        </li>
+                        <li class="d-flex align-items-start">
+                            <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                            <span>Miễn phí hủy phòng trước ngày 11-12-2024</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="float-end mb-2">
+                <button ng-click="completeYourBooking()" class="btn btn-success" type="submit">Hoàn tất đặt phòng</button>
+            </div>
+            <div class="float-end mb-3">
+                <p>Vui lòng kiểm tra lại thông tin phòng trước khi nhấn nút hoàn tất đặt phòng</p>
+            </div>
+
+        </div>
+    </div>
+
+</div>

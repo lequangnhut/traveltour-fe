@@ -20,7 +20,7 @@ travel_app.controller('HotelServiceControllerAD',
         };
 
         $scope.searchHotels = {
-            location: null, departureDate: null, arrivalDate: null, numAdults: null, numChildren: null,
+            location: null, departureDate: null, arrivalDate: null, numAdults: null, numChildren: null, numRooms: null,
         };
 
         $scope.tourInfo = {
@@ -120,7 +120,7 @@ travel_app.controller('HotelServiceControllerAD',
 
                 let tourDetail = tourDetailResponse.data.data;
                 const tourResponse = await ToursServiceAD.findTourById(tourDetail.tourId);
-                const tourTripsResponse = await TourTripsServiceAD.getTripsByTourId(tourDetail.tourId);
+                const tourTripsResponse = await TourTripsServiceAD.getTripsByTourId(tourDetail.id);
 
                 $scope.tourInfo = {
                     tourName: tourResponse.data.tourName,
@@ -163,7 +163,6 @@ travel_app.controller('HotelServiceControllerAD',
                         utilities: placeUtilitiesNames,
                     };
                 }
-
             } catch (error) {
                 console.error("Error:", error);
             } finally {
@@ -249,11 +248,21 @@ travel_app.controller('HotelServiceControllerAD',
             if (searchTimeout) $timeout.cancel(searchTimeout);
 
             try {
-                const formattedDepartureDate = $scope.searchHotels.departureDate ? new Date($scope.searchHotels.departureDate).toISOString().split('T')[0] : null;
-                const formattedArrivalDate = $scope.searchHotels.arrivalDate ? new Date($scope.searchHotels.arrivalDate).toISOString().split('T')[0] : null;
-                const response = await HotelServiceServiceAD.getAllOrSearchHotels($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, '', $scope.searchHotels.location, formattedDepartureDate, formattedArrivalDate, $scope.searchHotels.numAdults, $scope.searchHotels.numChildren);
 
-                console.log(response)
+                const response = await HotelServiceServiceAD.getAllOrSearchHotels(
+                    $scope.currentPage,
+                    $scope.pageSize,
+                    $scope.sortBy,
+                    $scope.sortDir,
+                    '',
+                    $scope.searchHotels.location,
+                    $scope.searchHotels.departureDate,
+                    $scope.searchHotels.arrivalDate,
+                    $scope.searchHotels.numAdults,
+                    $scope.searchHotels.numChildren,
+                    $scope.searchHotels.numRooms
+                );
+
                 if (!response || !response.data || !response.data.data || !response.data.data.content) {
                     $scope.getHotelServiceList();
                     toastAlert('warning', 'Không tìm thấy !');
@@ -271,6 +280,43 @@ travel_app.controller('HotelServiceControllerAD',
                 console.error("Error:", error);
             }
         };
+
+        $scope.navigateToRoomTypeList = (tourDetailId, hotelServiceId, hotelName, address) => {
+            function checkAndFocusInput(condition, inputId, message) {
+                if (condition) {
+                    $timeout(() => {
+                        document.getElementById(inputId).focus();
+                    }, 0);
+                    toastAlert('warning', message);
+                    return true;
+                }
+                return false;
+            }
+
+            if (checkAndFocusInput(!$scope.searchHotels.departureDate && !$scope.searchHotels.arrivalDate, 'departureDateInput', 'Vui lòng chọn ngày đi và ngày về !') ||
+                checkAndFocusInput(!$scope.searchHotels.departureDate, 'departureDateInput', 'Vui lòng chọn ngày đi !') ||
+                checkAndFocusInput(!$scope.searchHotels.arrivalDate, 'arrivalDateInput', 'Vui lòng chọn ngày về !') ||
+                checkAndFocusInput(!$scope.searchHotels.numAdults && $scope.searchHotels.numAdults <= 0, 'numAdultsInput', 'Vui lòng nhập số lượng người lớn và phải lớn hơn 0 !') ||
+                checkAndFocusInput($scope.searchHotels.numChildren < 0, 'numChildrenInput', 'Số lượng trẻ em không thể là số âm!') ||
+                checkAndFocusInput(!$scope.searchHotels.numRooms && $scope.searchHotels.numRooms <= 0, 'numRoomsInput', 'Vui lòng nhập số lượng phòng và phải lớn hơn 0 !')) {
+                return;
+            }
+
+            let departureDate = new Date($scope.searchHotels.departureDate);
+            let arrivalDate = new Date($scope.searchHotels.arrivalDate);
+            const infoHotel = {
+                hotelName: hotelName,
+                departureDate: departureDate,
+                arrivalDate: arrivalDate,
+                capacityAdult: $scope.searchHotels.numAdults,
+                capacityKid: $scope.searchHotels.numChildren || 0,
+                address: address
+            };
+
+            sessionStorage.setItem('infoHotel', JSON.stringify(infoHotel));
+            $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/hotel-list/${hotelServiceId}/room-type-list`);
+        };
+
 
         $scope.refreshSearch = () => {
             $scope.searchTerm = ''

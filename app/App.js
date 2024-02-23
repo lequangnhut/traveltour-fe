@@ -124,6 +124,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/hotel/room-type/room-type-list.html',
             controller: 'RoomTypeControllerAD'
         })
+        .when('/admin/detail-tour-list/:tourDetailId/service-list/hotel-list/:hotelId/room-type-list/hotel-payment', {
+            templateUrl: 'app/component/admin/views/pages/staff/partner-service/hotel/hotel-payment.html',
+            controller: 'HotelPaymentControllerAD'
+        })
         .when('/admin/service-list/hotel-list/hotel-update/:id', {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/hotel/hotel-update.html',
             controller: 'HotelServiceControllerAD'

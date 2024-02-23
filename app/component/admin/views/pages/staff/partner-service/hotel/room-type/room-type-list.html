@@ -150,7 +150,8 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="rt in roomTypeList">
-                    <td><span><input class="form-check-input" type="checkbox" ng-model="rt.isChecked"></span></td>
+                    <td><span><input class="form-check-input" type="checkbox" ng-model="rt.isChecked"
+                                     ng-change="onCheckChanged(rt)"></span></td>
                     <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="{{ rt.roomTypeName }}">
                         {{ rt.roomTypeName }}
@@ -165,9 +166,10 @@
                     </td>
                     <td>{{ rt.capacityChildren }}</td>
                     <td>{{ rt.capacityAdults }}</td>
-                    <td>{{ rt.price }}</td>
+                    <td>{{ rt.price | vnCurrency }}</td>
                     <td style="width: 105px">
-                        <input type="number" class="form-control" ng-disabled="!rt.isChecked"/>
+                        <input type="number" class="form-control" ng-model="rt.quantity" ng-disabled="!rt.isChecked"
+                               min="1" max="999">
                     </td>
                 </tr>
                 <tr ng-if="tourDetailList.length === 0">
@@ -179,7 +181,10 @@
 
                 <div class="row">
                     <div class="col-6 d-flex justify-content-start">
-                        <button style="background-color: #f4f7ff" class="btn">Xác nhận</button>
+                        <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/hotel-list/{{hotelId}}/room-type-list/hotel-payment"
+                           style="background-color: #f4f7ff" class="btn"
+                           ng-click="confirmRoomSelection()"
+                        >Xác nhận</a>
                     </div>
                     <div class="col-6 d-flex justify-content-end align-items-center">
                         {{ getDisplayRange() }} trong tổng số {{ totalElements }}
