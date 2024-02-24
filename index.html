@@ -495,11 +495,15 @@
                                             <span data-feather="file-text"></span>
                                             <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Chờ phê duyệt</span>
+                                            <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
+                                                  style="font-size: 6px;margin-bottom: 4px" ng-if="count > 0">
                                             </span>
-                                            <span class="notification-badge" style=" display: inline-block; padding: 2px 8px;
-                                                background-color: #4CAF50; color: #fff; border-radius: 50%; /* Tạo khung tròn */
-                                                margin-left: 45px; font-size: smaller">{{ count }}
+
                                             </span>
+<!--                                            <span class="notification-badge" style=" display: inline-block; padding: 2px 8px;-->
+<!--                                                background-color: #4CAF50; color: #fff; border-radius: 50%; /* Tạo khung tròn */-->
+<!--                                                margin-left: 45px; font-size: smaller">{{ count }}-->
+<!--                                            </span>-->
                                         </div>
                                     </a>
                                 </div>
@@ -1215,6 +1219,105 @@
                         </div>
                     </li>
 
+                    <li ng-if="hasRole('ROLE_ADMIN')" ng-cloak class="nav-item dropdown" ng-controller="NotificationControllerAD">
+                        <a class="nav-link" href="#" style="min-width: 2.5rem;" role="button" data-bs-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside">
+                            <span data-feather="bell" style="height:20px;width:20px;color:#B197FC;"></span>
+                            <sup>
+                                <i class="fa-solid fa-circle fa-rotate-90 fa-2xs"
+                                   style="color: #fe3939;" ng-if="showNotification"></i>
+                            </sup>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end notification-dropdown-menu py-0 shadow border border-300 navbar-dropdown-caret"
+                             id="navbarDropdownNotfication2" aria-labelledby="navbarDropdownNotfication">
+                            <div class="card position-relative border-0">
+                                <div class="card-header p-2">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="text-black mb-0">Thông báo</h5>
+                                        <!--                                        <button class="btn btn-link p-0 fs&#45;&#45;1 fw-normal" type="button">-->
+                                        <!--                                            Đánh dấu đã đọc-->
+                                        <!--                                        </button>-->
+                                    </div>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="scrollbar-overlay" style="height: 27rem;">
+                                        <div class="border-300">
+                                            <a class="d-flex align-items-center gap-2 dropdown-item"
+                                               ng-if="!allNotification || allNotification.length === 0">
+                                                Không có thông báo mới.
+                                            </a>
+                                            <div class="px-2 px-sm-3 py-3 border-300 notification-card position-relative
+                                                 unread border-bottom"
+                                                 ng-style="{'background-color': notification.isSeen ? 'rgb(198 245 214 / 45%)' : 'white'}"
+                                                 ng-repeat="notification in visibleNotifications">
+                                                <div class="d-flex align-items-center justify-content-between position-relative"
+                                                >
+                                                    <div class="d-flex">
+                                                        <style>
+                                                            a:hover {
+                                                                text-decoration: none; /* Loại bỏ gạch chân khi hover */
+                                                                color: inherit; /* Giữ màu sắc nguyên bản khi hover */
+                                                            }
+                                                        </style>
+                                                        <a role="button" ng-click="seenNotificationAndGo(notification.id)">
+                                                            <div class="flex-1 me-sm-3">
+                                                                <h4 style="margin-bottom: 10px;font-size: small;line-height: revert;">
+                                                                    {{ notification.statusMessage }}
+                                                                </h4>
+                                                                <p class="fs--1 text-1000 fw-normal" style="margin-bottom: 10px;">
+                                                                    {{notification.isSeen ? '🍏 Đã xem' : '🍎 Chưa xem'}} -
+                                                                    <span>
+                                                                        {{notification.agenciesByAgenciesId.isAccepted === 0 ? 'Chưa đăng ký' :
+                                                                        notification.agenciesByAgenciesId.isAccepted === 1 ? 'Chờ xác nhận' :
+                                                                            notification.agenciesByAgenciesId.isAccepted === 2 ? 'Duyệt thành công' :
+                                                                                notification.agenciesByAgenciesId.isAccepted === 3 ? 'Duyệt thất bại' : ''
+                                                                        }}
+                                                                    </span>
+                                                                </p>
+                                                                <p class="text-800 fs--1 mb-0"><span
+                                                                        class="me-1 fas fa-clock"></span>
+                                                                    {{ notification.dateCreated | timeAgo }}
+                                                                </p>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="font-sans-serif d-none d-sm-block">
+                                                        <button class="btn fs--2 btn-sm dropdown-toggle dropdown-caret-none
+                                                                transition-none notification-dropdown-toggle"
+                                                                type="button" data-bs-toggle="dropdown"
+                                                                data-boundary="window" aria-haspopup="true"
+                                                                aria-expanded="false" data-bs-reference="parent"
+                                                                style="padding:4px"><span
+                                                                class="fas fa-ellipsis-h fs--2 text-900"></span>
+                                                        </button>
+                                                        <div class="dropdown-menu dropstart dropdown-menu-end py-2" style="width: 55%;">
+                                                            <a class="dropdown-item" role="button"
+                                                               ng-if="notification.isSeen === false"
+                                                               ng-click="seenNotification(notification.id)">Đánh dấu đã xem</a>
+                                                            <a class="dropdown-item" role="button" ng-click="deleteNotification(notification.id)">Xóa thông báo</a>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer p-0 border-top border-0">
+                                    <div class="my-2 text-center fw-bold fs--2 text-600">
+                                        <a ng-if="visibleNotifications.length < allNotification.length"
+                                           ng-click="showMore($event)" class="" style="font-size: larger">
+                                            Hiển thị thêm thông báo
+                                        </a>
+                                        <a ng-if="maxVisibleNotifications > 5" style="font-size: larger" ng-click="hideMore($event)">
+                                            Ẩn đi
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#" role="button"
                            data-bs-toggle="dropdown" data-bs-auto-close="outside"
@@ -1431,6 +1534,7 @@
 <script src="app/services/admin/RoomUtilityServiceAD.js"></script>
 <script src="app/services/admin/PlaceUtilityServiceAD.js"></script>
 <script src="app/services/admin/AgencyServiceAD.js"></script>
+<script src="app/services/admin/NotificationsServiceAD.js"></script>
 
 <!--====== Staff Service ======-->
 <script src="app/services/staff/ToursServiceAD.js"></script>
@@ -1487,6 +1591,7 @@
 <script src="app/component/admin/controllers/admin-form/agencyAD/AgencyControllerDeniedAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/agencyAD/AgencyControllerInactiveAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/reportAD/RevenueControllerAD.js"></script>
+<script src="app/component/admin/controllers/admin-form/notificationAD/NotificationControllerAD.js"></script>
 
 <!--====== Controller Staff ======-->
 <script src="app/component/admin/controllers/staff/tour-management/BasicTourControllerAD.js"></script>

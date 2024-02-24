@@ -82,13 +82,11 @@ travel_app.controller('AgencyControllerDeniedAD', function ($scope, $location, $
         $scope.isLoading = true;
         AgencyServiceAD.findAllTypeDenied($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
             .then(function (response) {
-                console.log(response)
                 if (response.data.status === "404") {
                     $scope.typeList.length = 0;
                     $scope.totalElementsDenied = 0;
                 } else {
                     $scope.typeList = response.data.data.content;
-                    console.log(response)
                     $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                     $scope.totalElementsDenied = response.data.data.totalElements;
                 }
@@ -135,7 +133,6 @@ travel_app.controller('AgencyControllerDeniedAD', function ($scope, $location, $
 
     $scope.openModalDenied = function (typeId) {
         if (!$scope.agent) {
-            console.error("Error: $scope.agent is not defined or null");
             return;
         }
         fillModalWithData(typeId);

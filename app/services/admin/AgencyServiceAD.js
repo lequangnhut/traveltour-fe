@@ -76,6 +76,13 @@ travel_app.service('AgencyServiceAD', function ($http, $q) {
         })
     };
 
+    this.findAgencieByIdNote = function (id) {
+        return $http({
+            method: 'GET',
+            url: API_TYPE + 'find-by-id-note/' + id
+        })
+    };
+
     this.countAllWaiting = function () {
         const deferred = $q.defer();
         $http({
