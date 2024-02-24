@@ -82,7 +82,6 @@ travel_app.controller('AgencyControllerInactiveAD', function ($scope, $location,
         $scope.isLoading = true;
         AgencyServiceAD.findAllTypeInactive($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
             .then(function (response) {
-                console.log(response)
                 if (response.data.data === null) {
                     $scope.typeList.length = 0;
                     $scope.totalElementsFalse = 0;
@@ -159,7 +158,6 @@ travel_app.controller('AgencyControllerInactiveAD', function ($scope, $location,
 
     $scope.openModalFalse = function (typeId) {
         if (!$scope.agent) {
-            console.error("Error: $scope.agent is not defined or null");
             return;
         }
         fillModalWithData(typeId);

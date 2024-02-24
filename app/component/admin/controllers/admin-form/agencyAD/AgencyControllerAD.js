@@ -199,7 +199,7 @@ travel_app.controller('AgencyControllerAD', function ($scope, $http, $location, 
     };
     setInterval(function () {
         $scope.updateWaitingCount();
-    }, 5000);
+    }, 2000);
 
 
     /**

@@ -83,6 +83,38 @@ travel_app.filter('formatDateTime', function () {
     };
 });
 
+travel_app.filter('timeAgo', function () {
+    return function (input) {
+        if (input) {
+            var seconds = Math.floor((new Date() - new Date(input)) / 1000);
+
+            var interval = Math.floor(seconds / 31536000);
+
+            if (interval > 1) {
+                return interval + " năm trước";
+            }
+            interval = Math.floor(seconds / 2592000);
+            if (interval > 1) {
+                return interval + " tháng trước";
+            }
+            interval = Math.floor(seconds / 86400);
+            if (interval > 1) {
+                return interval + " ngày trước";
+            }
+            interval = Math.floor(seconds / 3600);
+            if (interval > 1) {
+                return interval + " giờ trước";
+            }
+            interval = Math.floor(seconds / 60);
+            if (interval > 1) {
+                return interval + " phút trước";
+            }
+            return Math.floor(seconds) + " giây trước";
+        }
+        return '';
+    };
+});
+
 travel_app.filter('convertTime', function() {
     return function(timeArray) {
         if (Array.isArray(timeArray) && timeArray.length === 2) {
