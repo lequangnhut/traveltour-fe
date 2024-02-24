@@ -231,37 +231,38 @@
 
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'basic-tour-list'}"
                                        ng-click="setActiveNavItem('basic-tour-list')"
                                        href="/admin/basic-tour-list"
-                                       role="button"
                                     >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
                                                 <span data-feather="briefcase"></span>
                                             </span>
-                                            <span class="nav-link-text">Tour cơ bản</span>
-                                            <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
-                                                  style="font-size: 6px"></span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Tour cơ bản</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
+
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'detail-tour-list'}"
                                        ng-click="setActiveNavItem('detail-tour-list')"
                                        href="/admin/detail-tour-list"
-                                       role="button">
+                                    >
                                         <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon">
-                                            </div>
+                                            <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
                                                 <span data-feather="airplay"></span>
                                             </span>
-                                            <span class="nav-link-text">Tour chi tiết</span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Tour chi tiết</span>
+                                            </span>
                                             <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
                                                   style="font-size: 6px"></span>
                                         </div>
@@ -344,11 +345,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="list"></span>
-                                        </span>
+                                                <span data-feather="list"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Danh sách booking</span>
-                                        </span>
+                                                <span class="nav-link-text">Danh sách booking</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -1489,7 +1490,7 @@
 
 <!--====== Controller Staff ======-->
 <script src="app/component/admin/controllers/staff/tour-management/BasicTourControllerAD.js"></script>
-<script src="app/component/admin/controllers/staff/tour-management/DetailTourControllerAD.js"></script>
+<script src="app/component/admin/controllers/staff/tour-management/TourDetailControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/tour-management/TourDetailsImageControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/tour-management/TripsTourControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/partner-service/VehicleControllerAD.js"></script>

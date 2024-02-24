@@ -1,4 +1,4 @@
-travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $location, $routeParams, $timeout, $http, MapBoxService, TourDetailsServiceAD, ToursServiceAD, AccountServiceAD) {
+travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $location, $routeParams, $timeout, $http, MapBoxService, TourDetailsServiceAD, ToursServiceAD, AccountServiceAD) {
     $scope.isLoading = true;
 
     $scope.tourDetail = {
@@ -26,6 +26,8 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
 
     let tourDetailId = $routeParams.id;
 
+    $scope.dataProvince = [];
+    $scope.provinceBreak = [];
     $scope.tourTypeList = [];
 
     $scope.invalidPriceFormat = false;
@@ -52,8 +54,30 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
      */
     $scope.openModal = function (tourDetailId) {
         $('#modal-tour-detail').modal('show');
+        $scope.provinceDestination = [{type: 'select', hasData: false}];
+        $scope.provinceBreak = [];
 
         if (!tourDetailId) return;
+
+        TourDetailsServiceAD.findTourDestinationByTourDetailById(tourDetailId).then(response => {
+            if (response.status === 200) {
+                $timeout(function () {
+                    $scope.tourDestination = response.data.data;
+
+                    if ($scope.tourDestination != null) {
+                        $scope.tourDestination.forEach(function (destination) {
+                            let existingCity = $scope.provinces.find(function (city) {
+                                return city.Name === destination.province;
+                            });
+
+                            $scope.provinceBreak.push({id: existingCity.Id, Name: existingCity.Name});
+                        });
+                    } else {
+                        $scope.provinceBreak.push({Name: "Chưa có điểm dừng chân"});
+                    }
+                }, 0);
+            }
+        }, errorCallback);
 
         TourDetailsServiceAD.findTourDetailById(tourDetailId)
             .then(response => {
@@ -78,13 +102,136 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
                                 console.error("Lỗi khi tính toán khoảng cách:", error);
                             });
 
-                        $scope.filteredProvinces = $scope.provinces.filter(function (province) {
-                            return province.Name !== fromLocation && province.Name !== toLocation;
-                        });
+                        $scope.getProvinceBelow10KmAlongRoute(fromLocation, toLocation);
                     }, 0);
                 }
             })
             .catch(errorCallback);
+    }
+
+    /**
+     * Phương thức đóng modal
+     */
+    $scope.closeModal = function () {
+        $('#modal-tour-detail').modal('hide');
+    };
+
+    function getProvincesFromAPI() {
+        return $http.get('/lib/address/data.json')
+            .then(function (response) {
+                return response.data;
+            })
+            .catch(function (error) {
+                console.error("Lỗi khi lấy danh sách tỉnh thành từ API:", error);
+                return [];
+            });
+    }
+
+    $scope.getProvinceBelow10KmAlongRoute = function (fromLocation, toLocation) {
+        $scope.isLoading = true;
+
+        let provincesWithin10Km = [];
+        let uniqueProvinces = [];
+        let idCounter = 1;
+
+        MapBoxService.geocodeAddressGetKilometer(fromLocation)
+            .then(function (fromCoords) {
+                MapBoxService.geocodeAddressGetKilometer(toLocation)
+                    .then(function (toCoords) {
+                        MapBoxService.getRoutePoints(fromCoords, toCoords)
+                            .then(function (routePoints) {
+                                routePoints.forEach(function (point) {
+                                    getProvincesWithin10Km(point)
+                                        .then(function (provinces) {
+                                            provincesWithin10Km = provincesWithin10Km.concat(provinces);
+
+                                            provinces.forEach(function (province) {
+                                                if (!uniqueProvinces.includes(province)) {
+                                                    uniqueProvinces.push(province);
+                                                }
+                                            });
+
+                                            provinces.forEach(function (province) {
+                                                if (!uniqueProvinces.find(function (item) {
+                                                    return item.Name === province
+                                                })) {
+                                                    uniqueProvinces.push({id: idCounter++, Name: province});
+                                                }
+                                            });
+
+                                            $scope.filteredProvinces = uniqueProvinces.filter(function (item) {
+                                                return typeof item === 'object' && item.hasOwnProperty('id') && item.hasOwnProperty('Name') &&
+                                                    item.Name !== fromLocation && item.Name !== toLocation;
+                                            });
+                                        })
+                                        .catch(function (error) {
+                                            console.error("Lỗi khi kiểm tra tỉnh thành:", error);
+                                        });
+                                });
+
+                                provincesWithin10Km = provincesWithin10Km.filter(function (province, index, self) {
+                                    return index === self.findIndex(function (p) {
+                                        return p.id === province.id;
+                                    });
+                                });
+                            })
+                            .catch(function (error) {
+                                console.error("Lỗi khi lấy điểm trên lộ trình:", error);
+                            });
+                    })
+                    .catch(function (error) {
+                        console.error("Lỗi khi lấy tọa độ điểm đến:", error);
+                    });
+            })
+            .catch(function (error) {
+                console.error("Lỗi khi lấy tọa độ điểm đi:", error);
+            });
+    }
+
+    function getProvincesWithin10Km(point) {
+        return $q(function (resolve, reject) {
+            if (!point || typeof point.lat === 'undefined' || typeof point.lng === 'undefined') {
+                reject(new Error("Điểm không hợp lệ"));
+                return;
+            }
+
+            getProvincesFromAPI()
+                .then(function (provinces) {
+                    let promises = provinces.map(function (province) {
+                        return MapBoxService.geocodeAddressGetKilometer(province.Name)
+                            .then(function (fromCoords) {
+                                const distanceToProvince = $scope.calculateDistance(point, fromCoords);
+                                if (distanceToProvince <= 10) {
+                                    return province.Name;
+                                } else {
+                                    return null;
+                                }
+                            })
+                            .catch(function (error) {
+                                console.error("Lỗi tên tỉnh thành:", error);
+                                return null;
+                            });
+                    });
+
+                    $q.all(promises)
+                        .then(function (provinceNames) {
+                            provinceNames = provinceNames.filter(function (name) {
+                                return name !== null;
+                            });
+                            resolve(provinceNames);
+                        })
+                        .catch(function (error) {
+                            reject(error);
+                        })
+                        .then(function () {
+                            $scope.isLoading = false;
+                        });
+                })
+                .catch(function (error) {
+                    reject(error);
+                    $scope.isLoading = false;
+                });
+        });
     }
 
     $scope.calculateDistance = function (coords1, coords2) {
@@ -104,19 +251,18 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
     }
 
     /**
-     * Phương thức đóng modal
-     */
-    $scope.closeModal = function () {
-        $('#modal-tour-detail').modal('hide');
-    };
-
-    /**
      * Thêm địa chỉ tham quan vào trong lịch trình của tour
      * @param index
      */
-    $scope.provinceDestination = [{type: 'select', hasData: false}];
-
     $scope.addOrRemoveSelectItem = function (index) {
+        let selectedCount = $scope.provinceDestination.filter(function (item) {
+            return item.hasData;
+        }).length;
+
+        if (selectedCount >= 3) {
+            return;
+        }
+
         $scope.provinceDestination[index].hasData = !$scope.provinceDestination[index].hasData;
         if ($scope.provinceDestination[index].hasData) {
             $scope.provinceDestination.splice(index + 1, 0, {type: 'select', hasData: false});
@@ -126,8 +272,17 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
     };
 
     $scope.getProvinceDestination = function () {
+        let selectedValues = [];
 
+        $scope.provinceDestination.forEach(function (item) {
+            if (item.type === 'select' && item.value) {
+                selectedValues.push(item.value);
+            }
+        });
+
+        $scope.dataProvince = selectedValues;
     };
+
 
     /**
      * Upload hình ảnh và lưu vào biến transportTypeImg
@@ -339,13 +494,11 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
                 $scope.tourDetail[locationType] = selectedProvince.Name;
             }
         };
-
     };
 
     $scope.loadTourDetailForm()
 
     //form create
-
     $scope.loadSelectTourType = function () {
         ToursTypeServiceAD.getAllTourTypes()
             .then(function (response) {
@@ -355,7 +508,6 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
 
     // Gọi hàm để tải danh sách tourType khi controller được khởi tạo
     // $scope.loadSelectTourType();
-
     $scope.createTourDetailSubmit = () => {
         $scope.isLoading = true;
         let tourDetail = $scope.tourDetail;
@@ -375,6 +527,19 @@ travel_app.controller('DetailTourControllerAD', function ($scope, $sce, $locatio
             $scope.isLoading = false;
         });
     };
+
+    $scope.createTourDestinationSubmit = function () {
+        $scope.isLoading = true;
+        let tourDetailId = $scope.tourDetail.id
+        let dataProvince = $scope.dataProvince;
+
+        TourDetailsServiceAD.createTourDestination(dataProvince, tourDetailId).then(function successCallback() {
+            centerAlert('Thành công !', 'Cập nhật lịch trình tham quan thành công !', 'success');
+            $('#modal-tour-detail').modal('hide');
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
+    }
 
     //form update
     function confirmUpdate() {

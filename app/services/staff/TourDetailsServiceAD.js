@@ -26,6 +26,15 @@ travel_app.service('TourDetailsServiceAD', function ($http, $q) {
         return deferred.promise;
     };
 
+    this.findTourDestinationByTourDetailById = function (tourDetailId) {
+        const deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: API_TOUR_DETAIL + 'find-tour-destination-by-tour-detail-id/' + tourDetailId
+        }).then(deferred.resolve, deferred.reject);
+        return deferred.promise;
+    };
+
     this.createTourDetail = function (tourDetailsDto) {
         return $http({
             method: 'POST',
@@ -72,6 +81,14 @@ travel_app.service('TourDetailsServiceAD', function ($http, $q) {
             data: formData,
             headers: {'Content-Type': undefined},
             transformRequest: angular.identity
+        });
+    };
+
+    this.createTourDestination = function (dataProvince, tourDetailId) {
+        return $http({
+            method: 'POST',
+            url: API_TOUR_DETAIL + 'create-tour-destination/' + tourDetailId,
+            data: dataProvince
         });
     };
 

@@ -1,4 +1,4 @@
-travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location, $routeParams, $timeout, TourTripsServiceAD, ToursServiceAD) {
+travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location, $routeParams, $timeout, TourTripsServiceAD, TourDetailsServiceAD) {
     $scope.isLoading = true;
 
     $scope.tourTrips = {
@@ -109,17 +109,15 @@ travel_app.controller('TripsTourControllerAD', function ($scope, $sce, $location
                 if (response.status === 200) {
                     $timeout(function () {
                         $scope.tourTrips = response.data.data;
-
                     }, 0);
                 }
             }, errorCallback);
         }
         if (tourDetailId !== undefined && tourTripsId !== null && tourTripsId !== "") {
-            ToursServiceAD.findTourById(tourDetailId).then(function successCallback(response) {
-                $scope.tourName = response.data.tourName;
+            TourDetailsServiceAD.findTourDetailById(tourDetailId).then(function successCallback(response) {
+                $scope.tourName = response.data.data.toursByTourId.tourName;
             }, errorCallback);
         }
-
     };
 
     //sắp xếp

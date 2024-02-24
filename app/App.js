@@ -70,26 +70,26 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/admin/detail-tour-list', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/detail-tour/detail-tour-list.html',
-            controller: 'DetailTourControllerAD'
+            controller: 'TourDetailControllerAD'
         })
         .when('/admin/detail-tour-list/detail-tour-create', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/detail-tour/detail-tour-create.html',
-            controller: 'DetailTourControllerAD'
+            controller: 'TourDetailControllerAD'
         })
         .when('/admin/detail-tour-list/detail-tour-update/:id', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/detail-tour/detail-tour-update.html',
-            controller: 'DetailTourControllerAD'
+            controller: 'TourDetailControllerAD'
         })
         .when('/admin/detail-tour-list/image-tour/:id', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/detail-tour/tour-detail-image.html',
             controller: 'TourDetailsImageControllerAD'
         })
-        .when('/admin/detail-tour-list/trips-tour-list/trips-tour-create/:tourDetailId', {
-            templateUrl: 'app/component/admin/views/pages/staff/tour-management/trips-tour/trips-tour-create.html',
-            controller: 'TripsTourControllerAD'
-        })
         .when('/admin/detail-tour-list/trips-tour-list/:tourDetailId', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/trips-tour/trips-tour-list.html',
+            controller: 'TripsTourControllerAD'
+        })
+        .when('/admin/detail-tour-list/trips-tour-list/trips-tour-create/:tourDetailId', {
+            templateUrl: 'app/component/admin/views/pages/staff/tour-management/trips-tour/trips-tour-create.html',
             controller: 'TripsTourControllerAD'
         })
         .when('/admin/detail-tour-list/trips-tour-list/trips-tour-update/:tourTripsId', {

@@ -253,39 +253,46 @@
                             </div>
 
                             <div class="card">
-                                <div class="card-header p-3 fw-bold">
-                                    Lịch trình di chuyển
-                                </div>
-                                <div class="card-body p-3">
-                                    <div class="mb-3 row g-0" ng-repeat="item in provinceDestination">
-                                        <div class="col-10">
-                                            <select class="form-control"
-                                                    ng-if="item.type === 'select'"
-                                                    ng-options="city.Name as city.Name for city in filteredProvinces"
-                                                    ng-change="getProvinceDestination()"
-                                                    ng-model="item.value"
-                                                    required
-                                            >
-                                                <option value="" disabled selected>Chọn tỉnh / thành phố</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-2">
-                                            <a role="button" class="fs-1 btn text-info d-flex justify-content-center"
-                                               ng-click="addOrRemoveSelectItem($index)">
-                                                <i class="fa-solid"
-                                                   ng-class="{'fa-plus': !item.hasData, 'fa-minus': item.hasData}"></i>
-                                            </a>
+                                <form ng-submit="createTourDestinationSubmit()" name="tourDestinationForm">
+                                    <div class="card-header p-3 fw-bold">
+                                        Lịch trình di chuyển (10 Km)
+                                    </div>
+                                    <div class="card-body p-3">
+                                        <div ng-include="'app/component/utils/loading-table.html'"></div>
+                                        <div class="mb-3 row g-0" ng-repeat="item in provinceDestination">
+                                            <div class="col-10">
+                                                <select class="form-control"
+                                                        ng-if="item.type === 'select'"
+                                                        name="province"
+                                                        ng-options="city.Name as city.Name for city in filteredProvinces"
+                                                        ng-change="getProvinceDestination()"
+                                                        ng-model="item.value"
+                                                        required
+                                                >
+                                                    <option value="" disabled selected>Chọn tỉnh / thành phố</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-2">
+                                                <button type="button"
+                                                        class="fs-1 btn text-info d-flex justify-content-center border-0"
+                                                        ng-click="addOrRemoveSelectItem($index)"
+                                                        ng-disabled="isButtonDisabled">
+                                                    <i class="fa-solid"
+                                                       ng-class="{'fa-plus': !item.hasData, 'fa-minus': item.hasData}"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card-footer d-flex justify-content-center p-3">
-                                    <button role="button"
-                                            ng-click=""
-                                            class="btn btn-green"
-                                    >
-                                        Cập nhật
-                                    </button>
-                                </div>
+                                    <div class="card-footer d-flex justify-content-center p-3">
+                                        <button role="button"
+                                                type="submit"
+                                                ng-disabled="tourDestinationForm.$invalid"
+                                                class="btn btn-green"
+                                        >
+                                            Cập nhật
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
 
@@ -304,7 +311,13 @@
                                     <p class="m-2 fw-medium">Điểm đến: <span
                                             class="fw-bold">{{ tourDetail.toLocation }}</span></p>
                                     <p class="m-2 fw-medium">Dự kiến khoảng: <span id="expectedKm"
-                                            class="fw-bold"></span></p>
+                                                                                   class="fw-bold"></span></p>
+                                    <p class="m-2 fw-medium">Điểm dừng:
+                                        <span class="fw-bold" ng-repeat="province in provinceBreak">
+                                            {{ province.Name }}
+                                            <span ng-if="!$last">,</span>
+                                        </span>
+                                    </p>
                                     <p class="m-2 fw-medium">Ngày đi: <span
                                             class="fw-normal">{{ tourDetail.departureDate | formatDate }}</span>
                                     </p>
