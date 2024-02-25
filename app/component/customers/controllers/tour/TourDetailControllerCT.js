@@ -3,6 +3,29 @@ travel_app.controller('TourDetailController', function ($scope, $location, $sce,
 
     $scope.provinceData = [];
 
+    $scope.tourDetail = {
+        tourDetailId: null,
+        guideId: null,
+        departureDate: null,
+        arrivalDate: null,
+        numberOfGuests: null,
+        minimumNumberOfGuests: null,
+        unitPrice: null,
+        tourDetailNotes: null,
+        tourDetailStatus: null,
+        dateCreated: null,
+        tourDetailDescription: null,
+        fromLocation: null,
+        toLocation: null,
+        tourDetailImage: null
+    };
+
+    $scope.ticket = {
+        adults: '1',
+        children: '0',
+        baby: '0'
+    }
+
     const tourDetailId = $routeParams.id;
 
     function errorCallback() {
@@ -10,6 +33,8 @@ travel_app.controller('TourDetailController', function ($scope, $location, $sce,
     }
 
     $scope.init = function () {
+        $scope.isLoading = true;
+
         TourDetailServiceCT.findByTourDetailId(tourDetailId).then(function (response) {
             if (response.status === 200) {
                 $scope.tourDetail = response.data.data;
@@ -22,6 +47,7 @@ travel_app.controller('TourDetailController', function ($scope, $location, $sce,
                 $scope.tourDetail.numberOfDays = Math.ceil((arrivalDate - departureDate) / (1000 * 60 * 60 * 24));
 
                 $scope.initMap();
+                $scope.updateTotal();
             } else {
                 $location.path('/admin/page-not-found')
             }
@@ -44,10 +70,20 @@ travel_app.controller('TourDetailController', function ($scope, $location, $sce,
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
+
+        $scope.updateTotal = function () {
+            let unitPrice = $scope.tourDetail.unitPrice;
+            let amountAdults = $scope.ticket.adults;
+            let amountChildren = $scope.ticket.children;
+
+            $scope.totalPrice = (amountAdults * unitPrice) + (amountChildren * (unitPrice * 0.3));
+        };
     }
 
     // Khởi tạo bản đồ
     $scope.initMap = function () {
+        $scope.isLoading = true;
+
         $scope.provinceName = [];
 
         if (!tourDetailId) return;

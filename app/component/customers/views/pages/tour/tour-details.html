@@ -98,6 +98,7 @@
             </div>
             <div class="row">
                 <div class="col-xl-8">
+                    <div ng-include="'app/component/utils/loading-table.html'"></div>
                     <div class="place-content-wrap mb-4 pt-45 wow fadeInUp" ng-bind-html="tourDetailDescription"
                          style="text-align: justify; white-space: pre-line; font-family: 'Roboto',sans-serif;">
                     </div>
@@ -504,15 +505,58 @@
                 <div class="col-xl-4">
                     <!--=== Sidebar Widget Area ===-->
                     <div class="sidebar-widget-area pt-60 pl-lg-30">
+                        <div class="sidebar-widget booking-info-widget wow fadeInUp mb-40">
+                            <h4 class="widget-title">Thông tin chuyến đi</h4>
+                            <ul class="info-list">
+                                <li>
+                                    <span><span class="fas fa-user-circle"></span>
+                                        Lượt khách tối đa
+                                        <span>{{ tourDetail.numberOfGuests }} Người</span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span><span class="fas fa-map-marker-alt"></span>
+                                        Điểm đi
+                                        <span>{{ tourDetail.fromLocation }}</span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span><span class="fas fa-map-marker-alt"></span>
+                                        Điểm đến
+                                        <span>{{ tourDetail.toLocation }}</span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span><span class="fas fa-globe"></span>
+                                        Ngôn ngữ
+                                        <span>Tiếng việt</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
                         <!--=== Booking Widget ===-->
                         <div class="sidebar-widget booking-form-widget wow fadeInUp mb-40">
-                            <h4 class="widget-title">Đặt Tour</h4>
+                            <h4 class="widget-title">Đặt vé ngay</h4>
                             <form class="sidebar-booking-form">
                                 <div class="booking-date-time mb-20">
                                     <div class="booking-item">
-                                        <label>Ngày</label>
-                                        <div class="bk-item booking-date">
+                                        <label class="fw-normal">Ngày đi:</label>
+                                        <div class="bk-item booking-date fw-medium">
                                             <span>{{ tourDetail.departureDate | formatDate }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="booking-item">
+                                        <label class="fw-normal">Ngày về:</label>
+                                        <div class="bk-item booking-date fw-medium">
+                                            <span>{{ tourDetail.arrivalDate | formatDate }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="booking-item">
+                                        <label class="fw-normal">Thời gian:</label>
+                                        <div class="bk-item booking-date fw-medium">
+                                            <span>
+                                                <span>{{ tourDetail.departureDate | calculateDaysAndNights:tourDetail.arrivalDate }}</span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -522,12 +566,16 @@
                                         <label>Người lớn (18 tuổi) {{ tourDetail.unitPrice | vnCurrency }}</label>
                                         <div class="bk-item booking-user">
                                             <span class="fas fa-user"></span>
-                                            <select class="wide">
-                                                <option value="01">1</option>
-                                                <option value="02">2</option>
-                                                <option value="03">3</option>
-                                                <option value="04">4</option>
-                                                <option value="05">5</option>
+                                            <select class="wide" ng-model="ticket.adults" ng-change="updateTotal()">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
                                             </select>
                                         </div>
                                     </div>
@@ -535,20 +583,37 @@
                                         <label>Trẻ em (13-17 tuổi) {{ tourDetail.unitPrice * 0.3 | vnCurrency }}</label>
                                         <div class="bk-item booking-user">
                                             <span class="fas fa-user"></span>
-                                            <select class="wide">
-                                                <option value="01">1</option>
-                                                <option value="02">2</option>
-                                                <option value="03">3</option>
-                                                <option value="04">4</option>
-                                                <option value="05">5</option>
+                                            <select class="wide" ng-model="ticket.children" ng-change="updateTotal()">
+                                                <option value="0">0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="booking-item">
+                                        <label>Em bé (Dưới 2 tuổi) 0đ</label>
+                                        <div class="bk-item booking-user">
+                                            <span class="fas fa-user"></span>
+                                            <select class="wide" ng-model="ticket.baby" ng-change="updateTotal()">
+                                                <option value="0">0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="booking-total mb-20">
                                     <div class="total">
-                                        <label>Tổng tiền</label>
-                                        <span class="price"><span class="currency">$</span>70</span>
+                                        <label>Tạm tính</label>
+                                        <span class="price">
+                                            {{ totalPrice | vnCurrency }}
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="submit-button">
@@ -564,19 +629,7 @@
                             </form>
                         </div>
                         <!--=== Booking Info Widget ===-->
-                        <div class="sidebar-widget booking-info-widget wow fadeInUp mb-40">
-                            <h4 class="widget-title">Thông tin chuyến đi</h4>
-                            <ul class="info-list">
-                                <li><span><span
-                                        class="fas fa-user-circle"></span>Lượt khách tối đa<span>{{ tourDetail.numberOfGuests }}
-                                    Người</span></span>
-                                </li>
-                                <li><span><span
-                                        class="fas fa-map-marker-alt"></span>Điểm đích đến<span>{{ tourDetail.toLocation }}</span></span>
-                                </li>
-                                <li><span><span class="fas fa-globe"></span>Ngôn ngữ<span>Tiếng việt</span></span></li>
-                            </ul>
-                        </div>
+
                         <!--=== Recent Place Widget ===-->
                         <div class="sidebar-widget recent-place-widget mb-40 wow fadeInUp">
                             <h4 class="widget-title">Last Minute Deals</h4>

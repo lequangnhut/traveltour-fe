@@ -115,8 +115,8 @@ travel_app.filter('timeAgo', function () {
     };
 });
 
-travel_app.filter('convertTime', function() {
-    return function(timeArray) {
+travel_app.filter('convertTime', function () {
+    return function (timeArray) {
         if (Array.isArray(timeArray) && timeArray.length === 2) {
             var hours = timeArray[0];
             var minutes = timeArray[1];
@@ -128,5 +128,22 @@ travel_app.filter('convertTime', function() {
         } else {
             return null;
         }
+    };
+});
+
+travel_app.filter('calculateDaysAndNights', function () {
+    return function (departureDate, arrivalDate) {
+        // Chuyển đổi ngày đi và ngày về thành đối tượng Date
+        var departure = new Date(departureDate);
+        var arrival = new Date(arrivalDate);
+
+        // Tính toán số milliseconds giữa hai ngày
+        var timeDifference = arrival.getTime() - departure.getTime();
+
+        // Tính toán số ngày và số đêm
+        var days = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+        var nights = days - 1;
+
+        return days + " ngày " + nights + " đêm";
     };
 });
