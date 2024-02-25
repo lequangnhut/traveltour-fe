@@ -14,17 +14,10 @@
         <form class="row g-3 form-input-custom" ng-submit="updateOrderVisit()" name="order_visit" method="post">
             <div class="col-12">
                 <label class="form-label">Địa điểm than quan</label>
-                <select class="form-select"
-                        name="visitLocationId"
-                        ng-model="orderVisit.visitLocationId"
-                        ng-class="{ 'is-invalid': order_visit.visitLocationId.$invalid && order_visit.visitLocationId.$touched, 'is-valid': order_visit.visitLocationId.$valid && order_visit.visitLocationId.$touched }"
-                        ng-options="visitLocation.id as
-                            visitLocation.visitLocationName + ' - ' + visitLocation.province
-                            for visitLocation in visitLocationSelect"
-                        required
+                <input class="form-control"
+                       ng-model="visitLocationSelect[0].visitLocationName"
+                       disabled
                 >
-                    <option value="" selected disabled>Chọn địa điểm tham quan</option>
-                </select>
                 <small class="text-danger"
                        ng-show="order_visit.visitLocationId.$touched && order_visit.visitLocationId.$error.required">
                     Vui lòng chọn tên địa điểm !
@@ -216,7 +209,6 @@
                                placeholder="300,000"
                                name="adult"
                                ng-model="unitPrice.adult"
-                               vietnam-currency-input
                                ng-class="{ 'is-invalid': order_visit.adult.$invalid && order_visit.adult.$touched, 'is-valid': order_visit.adult.$valid && order_visit.adult.$touched }"
                                disabled
                         >
@@ -261,7 +253,6 @@
                                placeholder="150,000"
                                name="child"
                                ng-model="unitPrice.child"
-                               vietnam-currency-input
                                ng-class="{ 'is-invalid': order_visit.child.$invalid && order_visit.child.$touched, 'is-valid': order_visit.child.$valid && order_visit.child.$touched }"
                                disabled
                         >
@@ -276,7 +267,6 @@
                        placeholder="120.000"
                        name="orderTotal"
                        ng-model="orderVisit.orderTotal"
-                       vietnam-currency-input
                        ng-class="{ 'is-invalid': order_visit.orderTotal.$invalid && order_visit.orderTotal.$touched, 'is-valid': order_visit.orderTotal.$valid && order_visit.orderTotal.$touched }"
                        disabled
                 >

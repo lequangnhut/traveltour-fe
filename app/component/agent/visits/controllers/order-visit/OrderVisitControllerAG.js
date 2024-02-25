@@ -311,6 +311,7 @@ travel_app.controller('OrderVisitControllerAG', function ($scope, $timeout, $fil
     $scope.createOrderVisit = function () {
         $scope.isLoading = true;
         $scope.orderVisit.orderTotal = $scope.replacePrice($scope.orderVisit.orderTotal);
+        $scope.orderVisit.visitLocationId = $scope.visitLocationSelect[0].id;
         let dataOrderVisit = $scope.orderVisit;
 
         OrderVisitServiceAG.create(dataOrderVisit).then(function () {
@@ -324,6 +325,7 @@ travel_app.controller('OrderVisitControllerAG', function ($scope, $timeout, $fil
     $scope.updateOrderVisit = function () {
         function confirmUpdate() {
             $scope.isLoading = true;
+            $scope.orderVisit.visitLocationId = $scope.visitLocationSelect[0].id;
             let dataOrderVisit = $scope.orderVisit;
 
             OrderVisitServiceAG.update(dataOrderVisit).then(function () {

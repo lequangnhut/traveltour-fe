@@ -153,6 +153,7 @@ travel_app.controller('VisitControllerAG', function ($scope, $timeout, $sce, $lo
 
     $scope.createVisitTicket = function () {
         $scope.isLoading = true;
+        $scope.visitTicket.visitLocationId = $scope.visitLocations.id;
         let dataTicket = $scope.visitTicket;
 
         VisitLocationTicketServiceAG.create(dataTicket).then(function () {
@@ -164,6 +165,7 @@ travel_app.controller('VisitControllerAG', function ($scope, $timeout, $sce, $lo
     };
 
     $scope.updateVisitTicket = function () {
+        $scope.visitTicket.visitLocationId = $scope.visitLocations.id;
         let dataTicket = $scope.visitTicket;
 
         function confirmUpdate() {

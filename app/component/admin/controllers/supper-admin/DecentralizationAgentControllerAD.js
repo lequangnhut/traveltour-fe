@@ -1,4 +1,4 @@
-travel_app.controller('DecentralizationControllerAgentAD', function ($scope, $sce, $timeout, $location, $routeParams, AccountServiceAD, AuthService, DecentralizationServiceAD) {
+travel_app.controller('DecentralizationControllerAgentAD', function ($scope, $sce, $timeout, $location, $routeParams, RandomPasswordService, AccountServiceAD, AuthService, DecentralizationServiceAD) {
     let searchTimeout;
     let userId = $routeParams.id;
 
@@ -15,7 +15,7 @@ travel_app.controller('DecentralizationControllerAgentAD', function ($scope, $sc
 
     $scope.admin = {
         email: null,
-        password: null,
+        password: RandomPasswordService.generateRandomPassword(10),
         cpsw: null,
         fullName: null,
         address: null,
@@ -72,6 +72,8 @@ travel_app.controller('DecentralizationControllerAgentAD', function ($scope, $sc
      * Service tìm tất cả tài khoản của nhân viên và đối tác
      */
     $scope.init = function () {
+        $scope.isLoading = true;
+
         DecentralizationServiceAD.findAllDecentralizationAgent($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function successCallback(response) {
             if (response.status === 200) {
                 $scope.userRoleAgent = response.data.content;
@@ -84,7 +86,9 @@ travel_app.controller('DecentralizationControllerAgentAD', function ($scope, $sc
                     });
                 });
             }
-        }, errorCallback);
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
 
         /**
          * Tìm kiếm
@@ -98,7 +102,9 @@ travel_app.controller('DecentralizationControllerAgentAD', function ($scope, $sc
                         $scope.userRoleAgent = response.data.content;
                         $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
                         $scope.totalElements = response.data.totalElements;
-                    }, errorCallback);
+                    }, errorCallback).finally(function () {
+                    $scope.isLoading = false;
+                });
             }, 500);
         };
 
@@ -107,7 +113,9 @@ travel_app.controller('DecentralizationControllerAgentAD', function ($scope, $sc
                 if (response.status === 200) {
                     $scope.admin = response.data;
                 }
-            }, errorCallback);
+            }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
         }
     }
 
@@ -177,6 +185,8 @@ travel_app.controller('DecentralizationControllerAgentAD', function ($scope, $sc
      * Gọi api tạo mới agent
      */
     $scope.createAccountAgent = function () {
+        $scope.isLoading = true;
+
         let dataAccount = {
             accountDto: $scope.admin,
             roles: $scope.selectedRoles
@@ -184,17 +194,23 @@ travel_app.controller('DecentralizationControllerAgentAD', function ($scope, $sc
         AccountServiceAD.create(dataAccount).then(function successCallback() {
             toastAlert('success', 'Thêm mới thành công !');
             $location.path('/admin/decentralized-agent-management');
-        }, errorCallback);
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
     }
 
     /**
      * Gọi api cập nhật staff
      */
     function confirmUpdateAgent() {
+        $scope.isLoading = true;
+
         AccountServiceAD.update($scope.admin).then(function successCallback() {
             toastAlert('success', 'Cập nhật thành công !');
             $location.path('/admin/decentralized-agent-management');
-        }, errorCallback);
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
     }
 
     $scope.updateAccountAgent = function () {
@@ -205,12 +221,16 @@ travel_app.controller('DecentralizationControllerAgentAD', function ($scope, $sc
      * Gọi api delete staff
      */
     $scope.deleteAccountAgent = function (userId, fullName) {
+        $scope.isLoading = true;
+
         function confirmDeleteStaff() {
             AccountServiceAD.delete(userId).then(function successCallback() {
                 toastAlert('success', 'Xóa tài khoản thành công !');
                 $location.path('/admin/decentralized-agent-management');
                 $scope.init();
-            }, errorCallback);
+            }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
         }
 
         confirmAlert('Bạn có chắc chắn muốn xóa nhân viên ' + fullName + ' không ?', confirmDeleteStaff);
@@ -249,9 +269,13 @@ travel_app.controller('DecentralizationControllerAgentAD', function ($scope, $sc
     };
 
     $scope.updateRoles = function (userId, dataRole) {
+        $scope.isLoading = true;
+
         DecentralizationServiceAD.updateDecentralization(userId, dataRole).then(function successCallback() {
             toastAlert('success', 'Cập nhật quyền thành công !');
-        }, errorCallback);
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
     };
 
     $scope.init();

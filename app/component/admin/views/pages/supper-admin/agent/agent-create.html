@@ -1,3 +1,5 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
 <div class="container mt-4 mb-5">
     <div class="header-control mb-4">
         <div class="">
@@ -33,51 +35,6 @@
                 </small>
                 <small class="text-danger" ng-show="form_account.email.$touched && emailError">
                     Email đã tồn tại ở một tài khoản khác!
-                </small>
-            </div>
-            <div class="col-md-12">
-                <label class="form-label">MẬT KHẨU</label>
-                <input type="password"
-                       class="form-control"
-                       placeholder="*********"
-                       name="password"
-                       ng-model="admin.password"
-                       ng-class="{ 'is-invalid': form_account.password.$invalid && form_account.password.$touched, 'is-valid': form_account.password.$valid && form_account.password.$touched }"
-                       ng-minlength="6"
-                       required
-                >
-                <small class="text-danger"
-                       ng-show="form_account.password.$touched && form_account.password.$error.required">
-                    Vui lòng nhập mật khẩu !
-                </small>
-                <small class="text-danger"
-                       ng-show="form_account.password.$error.minlength && form_account.password.$dirty">
-                    Mật khẩu cần ít nhất 6 ký tự.
-                </small>
-            </div>
-            <div class="col-md-12">
-                <label class="form-label">NHẬP LẠI MẬT KHẨU</label>
-                <input type="password"
-                       class="form-control"
-                       placeholder="*********"
-                       name="cpsw"
-                       ng-model="admin.cpsw"
-                       ng-class="{ 'is-invalid': form_account.cpsw.$invalid && form_account.cpsw.$touched, 'is-valid': form_account.cpsw.$valid && form_account.cpsw.$touched }"
-                       ng-pattern="admin.password"
-                       ng-minlength="6"
-                       required
-                >
-                <small class="text-danger"
-                       ng-show="form_account.cpsw.$touched && form_account.cpsw.$error.required">
-                    Vui lòng nhập lại mật khẩu !
-                </small>
-                <small class="text-danger"
-                       ng-show="form_account.cpsw.$error.minlength && form_account.cpsw.$dirty">
-                    Mật khẩu cần ít nhất 6 ký tự.
-                </small>
-                <small class="text-danger"
-                       ng-show="form_account.cpsw.$touched && form_account.cpsw.$error.pattern">
-                    Xác nhận mật khẩu không khớp.
                 </small>
             </div>
             <div class="col-md-12">

@@ -14,17 +14,10 @@
         <form class="row g-3 form-input-custom" ng-submit="createOrderVisit()" name="order_visit" method="post">
             <div class="col-12">
                 <label class="form-label">Địa điểm than quan</label>
-                <select class="form-select"
-                        name="visitLocationId"
-                        ng-model="orderVisit.visitLocationId"
-                        ng-class="{ 'is-invalid': order_visit.visitLocationId.$invalid && order_visit.visitLocationId.$touched, 'is-valid': order_visit.visitLocationId.$valid && order_visit.visitLocationId.$touched }"
-                        ng-options="visitLocation.id as
-                            visitLocation.visitLocationName + ' - ' + visitLocation.province
-                            for visitLocation in visitLocationSelect"
-                        required
+                <input class="form-control"
+                       ng-model="visitLocationSelect[0].visitLocationName"
+                       disabled
                 >
-                    <option value="" selected disabled>Chọn địa điểm tham quan</option>
-                </select>
                 <small class="text-danger"
                        ng-show="order_visit.visitLocationId.$touched && order_visit.visitLocationId.$error.required">
                     Vui lòng chọn tên địa điểm !

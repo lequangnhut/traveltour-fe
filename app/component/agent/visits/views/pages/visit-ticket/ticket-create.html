@@ -15,15 +15,10 @@
         <form class="row g-3 form-input-custom" ng-submit="createVisitTicket()" name="form_ticket" method="post">
             <div class="col-md-6">
                 <label class="form-label">Địa điểm tham quan</label>
-                <select class="form-select"
-                        name="visitLocationId"
-                        ng-model="visitTicket.visitLocationId"
-                        ng-class="{ 'is-invalid': form_ticket.visitLocationId.$invalid && form_ticket.visitLocationId.$touched, 'is-valid': form_ticket.visitLocationId.$valid && form_ticket.visitLocationId.$touched }"
-                        ng-options="visitLocation.id as visitLocation.visitLocationName for visitLocation in visitLocationSelect"
-                        required
+                <input class="form-control"
+                       ng-model="visitLocations.visitLocationName"
+                       disabled
                 >
-                    <option value="" disabled selected>Chọn địa điểm tham quan</option>
-                </select>
                 <small class="text-danger"
                        ng-show="form_ticket.visitLocationId.$touched && form_ticket.visitLocationId.$error.required">
                     Vui lòng chọn địa điểm tham quan !
