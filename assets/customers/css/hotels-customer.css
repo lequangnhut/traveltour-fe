@@ -1,0 +1,14 @@
+.container-hotel{
+    min-height: 300px;
+}
+.infoHotel {
+    position: relative;
+}
+
+.infoHotel .rating {
+    height: 130px;
+}
+
+.infoHotel .price {
+
+}
