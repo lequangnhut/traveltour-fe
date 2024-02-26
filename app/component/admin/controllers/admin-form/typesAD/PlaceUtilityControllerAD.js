@@ -68,7 +68,7 @@ travel_app.controller('PlaceUtilityControllerAD', function ($scope, $location, $
                 } else {
                     $scope.typeList = response.data.data.content;
                     $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                    $scope.totalElements = response.data.totalElements;
+                    $scope.totalElements = response.data.data.totalElements;
                 }
             }, errorCallback).finally(function () {$scope.isLoading = false;
         });
@@ -113,7 +113,7 @@ travel_app.controller('PlaceUtilityControllerAD', function ($scope, $location, $
                     }else{
                         $scope.typeList = response.data.data.content;
                         $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                        $scope.totalElements = response.data.totalElements;
+                        $scope.totalElements = response.data.data.totalElements;
                     }
                 }, errorCallback);
         }, 500); // 500ms debounce

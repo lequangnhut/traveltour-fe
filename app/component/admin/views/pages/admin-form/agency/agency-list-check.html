@@ -182,10 +182,8 @@
                                         <span class="status-warning"></span> <span class="text-status-warning">Chờ phê duyệt</span>
                                     </div>
                                 </td>
-                                <td class="d-flex align-items-center justify-content-center"
-                                    style="padding-right: 10px">
-                                    <!--            -->
-                                    <a role="button" class="fs-1 btn text-warning" ng-click="openModal(type.id)"
+                                <td class="d-flex align-items-center justify-content-center">
+                                    <a role="button" class="fs-1 btn text-warning px-2" ng-click="openModal(type.id)"
                                        title="Xem hồ sơ">
                                         <i class="fa-solid fa-file-signature"></i>
                                     </a>
@@ -307,7 +305,7 @@
                                                        style="font-size: 15px; padding-left: 20px; padding-right: 20px;">
                                                         <a href="{{agent.imgDocument}}"
                                                            ng-if="agent.imgDocument != null" type="button"
-                                                           class="ng-scope"
+                                                           class="ng-scope fw-bold"
                                                            style="background-color: mediumseagreen; padding: 10px; border-radius: 8px; color: #ffffff; font-weight: 600; display: inline-block;">
                                                             Xem ảnh
                                                         </a>
@@ -317,13 +315,13 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer" style="padding-right: 0">
-                                        <a class="btn btn-warning" type="button" ng-click="acceptedThisAgency()"
+                                        <a class="btn btn-warning fw-bold" type="button" ng-click="acceptedThisAgency()"
                                            data-bs-dismiss="modal" style="background-color: goldenrod; color: #ffffff;">Đồng
                                             ý</a>
-                                        <a class="btn btn-danger" type="button" ng-click="deniedThisAgency()"
+                                        <a class="btn btn-danger fw-bold" type="button" ng-click="deniedThisAgency()"
                                            data-bs-dismiss="modal" style="background-color: #ff3659; color: #ffffff;">Từ
                                             chối</a>
-                                        <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal"
+                                        <button class="btn btn-outline-primary fw-bold" type="button" data-bs-dismiss="modal"
                                                 style="background-color: #367cff; color: #ffffff;">Trở về
                                         </button>
                                     </div>
@@ -458,10 +456,9 @@
                                         <span class="status-error"></span> <span class="text-status-error">Đăng ký thất bại</span>
                                     </div>
                                 </td>
-                                <td class="d-flex align-items-center justify-content-center"
-                                    style="padding-right: 10px">
+                                <td class="d-flex align-items-center justify-content-center">
                                     <!--            -->
-                                    <a role="button" class="fs-1 btn text-warning" ng-click="openModalDenied(type.id)"
+                                    <a role="button" class="fs-1 btn text-warning px-2" ng-click="openModalDenied(type.id)"
                                        title="Xem hồ sơ">
                                         <i class="fa-solid fa-file-signature"></i>
                                     </a>
@@ -591,7 +588,7 @@
                                                        style="font-size: 15px; padding-left: 20px; padding-right: 20px;">
                                                         <a href="{{agent.imgDocument}}"
                                                            ng-if="agent.imgDocument != null" type="button"
-                                                           class="ng-scope"
+                                                           class="ng-scope fw-bold"
                                                            style="background-color: mediumseagreen; padding: 10px; border-radius: 8px; color: #ffffff; font-weight: 600; display: inline-block;">
                                                             Xem ảnh
                                                         </a>
@@ -601,7 +598,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer" style="padding-right: 0">
-                                        <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal"
+                                        <button class="btn btn-outline-primary fw-bold" type="button" data-bs-dismiss="modal"
                                                 style="background-color: #367cff; color: #ffffff;">Trở về
                                         </button>
                                     </div>
