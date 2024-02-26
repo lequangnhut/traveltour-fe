@@ -30,162 +30,333 @@
                 </div>
                 <div class="col-md-5">
                     <!--====== Product Dropdown ======-->
-                    <div class="product-dropdown float-md-end">
-                        <span class="title">Sắp xếp</span>
+                    <div class="product-dropdown float-md-end d-flex justify-content-end align-items-center">
+                        <span class="m-3 fw-medium">Sắp xếp</span>
                         <select class="wide">
-                            <option data-display="Default">Default</option>
-                            <option value="01">Best Event</option>
-                            <option value="02">New Events</option>
-                            <option value="03">Upcoming Event</option>
+                            <option data-display="Default">Mặc định</option>
+                            <option value="01">Giá tăng dần</option>
+                            <option value="02">Giá giảm dần</option>
+                            <option value="03">Đánh giá tốt nhất</option>
                         </select>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-xl-4 col-md-6 col-sm-12">
+            <div class="col-xl-3 col-md-12">
                 <div class="single-event-item mb-30 wow fadeInUp">
                     <div class="img-holder">
                         <img src="/assets/customers/images/event/event-1.jpg" alt="Event Image">
                     </div>
                     <div class="content">
-                        <div class="meta">
-                            <span><span class="fas fa-calendar-alt"></span><a href="#">September 25, 2022</a></span>
-                            <h3 class="title"><a href="/hotel-detail">How To Enjoy Adventure
-                                Trip With Gowilds</a></h3>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span> Gaafu Dhaalu Atoll, Maldives</p>
+                        <div class="find-item mb-3">
+                            <p class="fw-medium">Ngân sách của bạn mỗi đêm</p>
+                            <div class="findHotelType">
+                                <label for="rangePrice" class="form-label">Chọn ngân sách:</label>
+                                <input type="range" class="form-range" id="rangePrice" ng-model="filler.priceFilter"
+                                       min="100000"
+                                       max="3000000" step="10000">
+                                <p>{{ filler.priceFilter | number:0 }} VND</p>
+
+
+                            </div>
+                        </div>
+                        <div class="find-item mb-3">
+                            <p class="fw-medium">Loại chỗ ở</p>
+                            <div class="findHotelType" ng-repeat="hotelType in hotelTypes | limitTo: limitHotelType">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{hotelType.id}}"
+                                           ng-model="hotelType.checked"
+                                           id="{{hotelType.hotelTypeName}}"
+                                           ng-change="toggleSelectionHotelType(hotelType.id)">
+                                    <label class="form-check-label" for="{{hotelType.hotelTypeName}}">
+                                        {{ hotelType.hotelTypeName }}
+                                    </label>
+                                </div>
+                            </div>
+                            <button class="btn text-green" ng-show="hotelTypes.length > 5 && !showMoreHotelType"
+                                    ng-click="showMoreItemsHotelType()">Hiển thị thêm <i
+                                    class="fa-solid fa-angle-down"></i></button>
+                            <button class="btn text-green" ng-show="showMoreHotelType"
+                                    ng-click="showLessItemsHotelType()">Ẩn bớt <i class="fa-solid fa-angle-up"></i>
+                            </button>
+                        </div>
+                        <div class="find-item mb-3">
+                            <p class="fw-medium">Tiện ích khách sạn</p>
+                            <div class="findHotelType"
+                                 ng-repeat="placeUtil in placeUtilities | limitTo: limitPlaceUtilities">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{placeUtil.id}}"
+                                           id="{{placeUtil.placeUtilitiesName}}"
+                                           ng-model="placeUtil.checked"
+                                           ng-change="toggleSelectionPlaceUtil(placeUtil.id)">
+                                    <label class="form-check-label" for="{{placeUtil.placeUtilitiesName}}">
+                                        {{ placeUtil.placeUtilitiesName }}
+                                    </label>
+                                </div>
+                            </div>
+                            <button class="btn text-green"
+                                    ng-show="placeUtilities.length > 5 && !showMorePlaceUtilities"
+                                    ng-click="showMoreItemsPlaceUtilities()">Hiển thị thêm <i
+                                    class="fa-solid fa-angle-down"></i></button>
+                            <button class="btn text-green" ng-show="showMorePlaceUtilities"
+                                    ng-click="showLessItemsPlaceUtilities()">Ẩn bớt <i class="fa-solid fa-angle-up"></i>
+                            </button>
+                        </div>
+                        <div class="find-item mb-3">
+                            <p class="fw-medium">Tiện ích phòng</p>
+                            <div class="findHotelType"
+                                 ng-repeat="roomUtil in roomUtilities | limitTo: limitRoomUtilities">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{roomUtil.id}}"
+                                           id="{{roomUtil.roomUtilitiesName}}"
+                                           ng-model="roomUtil.checked"
+                                           ng-change="toggleSelectionRoomUtil(roomUtil.id)">
+                                    <label class="form-check-label" for="{{roomUtil.roomUtilitiesName}}">
+                                        {{ roomUtil.roomUtilitiesName }}
+                                    </label>
+                                </div>
+                            </div>
+                            <button class="btn text-green" ng-show="roomUtilities.length > 5 && !showMoreRoomUtilities"
+                                    ng-click="showMoreItemsRoomUtilities()">Hiển thị thêm <i
+                                    class="fa-solid fa-angle-down"></i></button>
+                            <button class="btn text-green" ng-show="showMoreRoomUtilities"
+                                    ng-click="showLessItemsRoomUtilities()">Ẩn bớt <i class="fa-solid fa-angle-up"></i>
+                            </button>
+                        </div>
+                        <div class="find-item mb-3">
+                            <p class="fw-medium">Tiện ích mở rộng</p>
+                            <div class="findHotelType">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="freeBreakfastCheckbox"
+                                           ng-model="checkboxModel.freeBreakfast"
+                                           ng-change="toggleSelectionFreeBreakfast(checkboxModel.freeBreakfast)">
+                                    <label class="form-check-label" for="freeBreakfastCheckbox">Miễn phí ăn sáng</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="freeCancellationCheckbox"
+                                           ng-model="checkboxModel.freeCancellation"
+                                           ng-change="toggleSelectionFreeCancellation(checkboxModel.freeCancellation)">
+                                    <label class="form-check-label" for="freeCancellationCheckbox">Miễn phí hủy
+                                        phòng</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="find-item mb-3">
+                            <p class="fw-medium">Loại giường</p>
+                            <div class="findHotelType" ng-repeat="bedType in bedTypes | limitTo: limitBedType">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{bedType.id}}"
+                                           id="{{bedType.bedTypeName}}"
+                                           ng-model="bedType.checked"
+                                           ng-change="toggleSelectionRoomBed(bedType.id)">
+                                    <label class="form-check-label" for="{{bedType.bedTypeName}}">
+                                        {{ bedType.bedTypeName }}
+                                    </label>
+                                </div>
+                            </div>
+                            <button class="btn text-green" ng-show="bedTypes.length > 5 && !showMoreBedType"
+                                    ng-click="showMoreItemsRoomBed()">Hiển thị thêm <i
+                                    class="fa-solid fa-angle-down"></i></button>
+                            <button class="btn text-green" ng-show="showMoreBedType" ng-click="showLessItemsRoomBed()">
+                                Ẩn bớt <i class="fa-solid fa-angle-up"></i></button>
+                        </div>
+                        <div class="find-item mb-3">
+                            <p class="fw-medium">Điểm đánh giá của khách</p>
+                            <div class="findHotelType">
+                                <div class="form-check" ng-repeat="rating in ratings">
+                                    <input class="form-check-input" type="radio" name="rating"
+                                           ng-model="$parent.selectedRating" ng-value="rating.id"
+                                           id="{{ 'rating-' + rating.id }}">
+                                    <label class="form-check-label"
+                                           for="{{ 'rating-' + rating.id }}">{{ rating.label }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="find-item mb-3 d-flex justify-content-center mt-3">
+                            <button class="btn btn-green" ng-click="findAllRoomTypesByFillerClick()">Lọc khách sạn</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 col-md-6 col-sm-12">
-                <div class="single-event-item mb-30 wow fadeInUp">
-                    <div class="img-holder">
-                        <img src="/assets/customers/images/event/event-2.jpg" alt="Event Image">
-                    </div>
-                    <div class="content">
-                        <div class="meta">
-                            <span><span class="fas fa-calendar-alt"></span><a href="#">September 25, 2022</a></span>
-                            <h3 class="title"><a href="#">Great Advice For Build Awesome Mintality</a></h3>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span> Gaafu Dhaalu Atoll, Maldives</p>
+            <div class="col-xl-9 col-md-12">
+                <div class="mb-5 w-100">
+                    <div class="row single-event-item">
+                        <div class="col-md-2">
+                            <label for="locationFilter" class="form-label">Địa điểm</label>
+                            <input type="text" class="form-control" id="locationFilter">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="checkInDateFiller" class="form-label">Ngày nhận phòng</label>
+                            <input type="date" class="form-control" id="checkInDateFiller"
+                                   ng-model="filler.checkInDateFiller" ng-change="validateDates()">
+                            <span class="text-danger" ng-if="errorCheckInDateFiller">
+                                {{ errorCheckInDateFiller }}
+                            </span>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="checkOutDateFiller" class="form-label">Ngày trả phòng</label>
+                            <input type="date" class="form-control" id="checkOutDateFiller"
+                                   ng-model="filler.checkOutDateFiller" ng-change="validateDates()">
+                            <span class="text-danger" ng-if="errorCheckOutDateFiller">
+                                {{ errorCheckOutDateFiller }}
+                            </span>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="capacityAdultsFilter" class="form-label">Số người lớn</label>
+                            <input type="number" class="form-control" id="capacityAdultsFilter" ng-model="filler.capacityAdultsFilter">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="capacityChildrenFilter" class="form-label">Số trẻ em</label>
+                            <input type="number" class="form-control" id="capacityChildrenFilter" ng-model="filler.capacityChildrenFilter">
+                        </div>
+                        <div class="d-flex justify-content-end mt-3">
+                            <button type="button" class="btn btn-green"  ng-click="findAllRoomTypesByFillerClick()"><i
+                                    class="fa-solid fa-magnifying-glass"></i> Tìm khách sạn
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12">
-                <div class="single-event-item mb-30 wow fadeInUp">
-                    <div class="img-holder">
-                        <img src="/assets/customers/images/event/event-3.jpg" alt="Event Image">
-                    </div>
-                    <div class="content">
-                        <div class="meta">
-                            <span><span class="fas fa-calendar-alt"></span><a href="#">September 25, 2022</a></span>
-                            <h3 class="title"><a href="#">How To Enjoy Adventure
-                                Trip With Gowilds</a></h3>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span> Gaafu Dhaalu Atoll, Maldives</p>
+                <div ng-repeat="roomType in roomTypes" ng-if="roomTypes.length > 0">
+                    <div class="single-event-item mb-30 wow fadeInUp row">
+                        <div class="img-holder col-xl-3 col-lg-4 p-0">
+                            <img src="{{roomType.roomTypeAvatar}}"
+                                 onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'" />
+
+                        </div>
+                        <div class=" col-xl-9 col-lg-8">
+                            <div class="meta row">
+                                <div class="col-lg-7 container-hotel">
+                                    <div>
+                                        <span>
+                                            <i class="fa-solid fa-hotel"></i>
+                                            <a>
+                                                {{ getHotelTypeName(roomType.hotelsByHotelId.hotelTypeId) }}
+                                            </a>
+                                        </span>
+                                        <h3 class="fw-medium"><a href="#">{{ roomType.hotelsByHotelId.hotelName }}</a>
+                                        </h3>
+                                        <div class="d-flex align-items-center mb-3"
+                                             style="border-bottom: 1px solid rgba(29, 35, 31, 0.1);">
+                                            <p class="location" style="font-size: 14px"><span
+                                                    class="fas fa-map-marker-alt"></span> {{ roomType.hotelsByHotelId.address }}
+                                                -
+                                            </p>
+                                            <a href="#" class="btn text-green" style="font-size: 14px">Xem trên bản
+                                                đồ</a>
+                                        </div>
+                                    </div>
+                                    <div class="roomTypeByHotel mb-3"
+                                         style="padding-left: 10px ;border-left: 1px solid rgba(29, 35, 31, 0.1)">
+                                        <div style="font-size: 14px; line-height: 20px">
+                                            <div class="fw-medium"
+                                                 style="font-size: 15px">{{ roomType.roomTypeName }}
+                                            </div>
+                                            <p class="fs-7 mb-1">Loại
+                                                giường: {{getRoomBedsName(roomType.roomBedsById[0].bedTypeId)  }}</p>
+                                            <div ng-if="roomType.breakfastIncluded" class="text-green">
+                                                <i class="fa-solid fa-check"></i> Miễn phí ăn sáng
+                                            </div>
+                                            <div ng-if="roomType.freeCancellation" class="text-green">
+                                                <i class="fa-solid fa-check"></i> Miễn phí hủy phòng
+                                            </div>
+
+                                            <div ng-if="roomType.amountRoom <= 10 && roomType.amountRoom > 0" class="text-danger mt-3 fw-bold">
+                                                <i class="fa-solid fa-exclamation"></i> Chỉ còn {{roomType.amountRoom}} phòng với giá này trên trang của chúng tôi
+                                            </div>
+                                            <div ng-if="roomType.amountRoom === 0" class="text-danger mt-3 fw-bold">
+                                                <i class="fa-solid fa-exclamation"></i> Phòng này đã hết, Nhưng bạn có thể chọn phòng khác của khách sạn
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="infoHotel h-100 w-100 position-relative row">
+                                        <div class="rating col-xl-12 col-lg-12 col-sm-6 col-6">
+                                            <div class="float-end" style="font-size: 14px; line-height: 20px">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="rating-content float-end m-2">
+                                                        <p>Rất tốt</p>
+                                                        <p>133 Đánh giá</p>
+                                                    </div>
+                                                    <div class="rating-content float-end">
+                                                        <div class="btn-green text-center"
+                                                             style="width: 50px; height: 50px; line-height: 50px; border-radius: 8px">
+                                                            <span class="fw-medium fs-5">4.9</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
+                                            <div class="box">
+                                                <div class="amount-customer text-end">
+                                                    <p>
+                                                        {{ roomType.capacityAdults }} Người lớn *
+                                                        {{ roomType.capacityChildren }} Trẻ em
+                                                    </p>
+                                                </div>
+                                                <div class="fw-medium text-end"
+                                                     style="font-size: 20px">{{ roomType.price * daysBetween | number:0 }}
+                                                    VND
+                                                </div>
+                                                <p class="fs-7 float-end"> {{ daysBetween }} Đêm </p>
+                                                <button class="btn btn-green w-100 mt-3" ng-click="addViewedHotel(roomType)">Xem chi tiết</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12">
-                <div class="single-event-item mb-30 wow fadeInUp">
-                    <div class="img-holder">
-                        <img src="/assets/customers/images/event/event-4.jpg" alt="Event Image">
-                    </div>
-                    <div class="content">
-                        <div class="meta">
-                            <span><span class="fas fa-calendar-alt"></span><a href="#">September 25, 2022</a></span>
-                            <h3 class="title"><a href="#">How To Enjoy Adventure
-                                Trip With Gowilds</a></h3>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span> Gaafu Dhaalu Atoll, Maldives</p>
-                        </div>
+                <div class="div" ng-if="roomTypes.length <= 0">
+                    <div class="d-flex justify-content-center align-items-center">
+                        Không có phòng nào phù hợp với yêu cầu của bạn
+                        <sạn></sạn>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12">
-                <div class="single-event-item mb-30 wow fadeInUp">
-                    <div class="img-holder">
-                        <img src="/assets/customers/images/event/event-5.jpg" alt="Event Image">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="gowilds-pagination wow fadeInUp text-center d-flex align-items-center justify-content-center">
+                            <!-- Previous Page -->
+                            <li class="m-1" ng-class="{disabled: filler.page === 0}">
+                                <a href="#" ng-click="setPage(filler.page - 1)"><span class="fas fa-arrow-left"></span></a>
+                            </li>
+
+                            <!-- Ellipsis at the beginning -->
+                            <li class="m-1" ng-if="filler.page > 2 && totalPages > 5">
+                                <span style="font-size: 4px">
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                </span>
+                            </li>
+
+                            <!-- Pagination Numbers -->
+                            <li class="m-1" ng-repeat="n in getPaginationRange()"
+                                ng-class="{active: n === filler.page}">
+                                <a class="" ng-click="setPage(n)">{{ n + 1 }}</a>
+                            </li>
+
+                            <!-- Ellipsis at the end -->
+                            <li class="m-1" ng-if="filler.page < totalPages - 3 && totalPages > 5">
+                                <span style="font-size: 4px">
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                </span>
+                            </li>
+
+                            <!-- Next Page -->
+                            <li class="m-1" ng-class="{disabled: filler.page === totalPages - 1}">
+                                <a href="#" ng-click="setPage(filler.page + 1)"><span class="fas fa-arrow-right"></span></a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="content">
-                        <div class="meta">
-                            <span><span class="fas fa-calendar-alt"></span><a href="#">September 25, 2022</a></span>
-                            <h3 class="title"><a href="#">Grocery & Specialty For Food West</a></h3>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span> Gaafu Dhaalu Atoll, Maldives</p>
-                        </div>
-                    </div>
+
                 </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12">
-                <div class="single-event-item mb-30 wow fadeInUp">
-                    <div class="img-holder">
-                        <img src="/assets/customers/images/event/event-6.jpg" alt="Event Image">
-                    </div>
-                    <div class="content">
-                        <div class="meta">
-                            <span><span class="fas fa-calendar-alt"></span><a href="#">September 25, 2022</a></span>
-                            <h3 class="title"><a href="#">Vancouver International Travel Expo</a></h3>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span> Gaafu Dhaalu Atoll, Maldives</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12">
-                <div class="single-event-item mb-30 wow fadeInUp">
-                    <div class="img-holder">
-                        <img src="/assets/customers/images/event/event-7.jpg" alt="Event Image">
-                    </div>
-                    <div class="content">
-                        <div class="meta">
-                            <span><span class="fas fa-calendar-alt"></span><a href="#">September 25, 2022</a></span>
-                            <h3 class="title"><a href="#">How To Enjoy Adventure
-                                Trip With Gowilds</a></h3>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span> Gaafu Dhaalu Atoll, Maldives</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12">
-                <div class="single-event-item mb-30 wow fadeInUp">
-                    <div class="img-holder">
-                        <img src="/assets/customers/images/event/event-8.jpg" alt="Event Image">
-                    </div>
-                    <div class="content">
-                        <div class="meta">
-                            <span><span class="fas fa-calendar-alt"></span><a href="#">September 25, 2022</a></span>
-                            <h3 class="title"><a href="#">How To Enjoy Adventure
-                                Trip With Gowilds</a></h3>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span> Gaafu Dhaalu Atoll, Maldives</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12">
-                <div class="single-event-item mb-30 wow fadeInUp">
-                    <div class="img-holder">
-                        <img src="/assets/customers/images/event/event-9.jpg" alt="Event Image">
-                    </div>
-                    <div class="content">
-                        <div class="meta">
-                            <span><span class="fas fa-calendar-alt"></span><a href="#">September 25, 2022</a></span>
-                            <h3 class="title"><a href="#">How To Enjoy Adventure
-                                Trip With Gowilds</a></h3>
-                            <p class="location"><span class="fas fa-map-marker-alt"></span> Gaafu Dhaalu Atoll, Maldives</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <ul class="gowilds-pagination wow fadeInUp text-center">
-                    <li><a href="#"><span class="fas fa-arrow-left"></span></a></li>
-                    <li><a href="#" class="active">01</a></li>
-                    <li><a href="#">02</a></li>
-                    <li><a href="#">03</a></li>
-                    <li><a href="#">04</a></li>
-                    <li><a href="#"><span class="fas fa-arrow-right"></span></a></li>
-                </ul>
             </div>
         </div>
     </div>

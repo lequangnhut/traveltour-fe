@@ -6706,3 +6706,23 @@ ul.slick-dots li.slick-active {
     background: #6c7781;
     margin-right: 20px;
 }
+
+.text-green{
+    color: #63AB45;
+}
+.wide{
+    width: 200px;
+    height: 50px;
+    border-radius: 50px;
+    padding: 10px
+}
+.btn-green{
+    background-color: #63AB45;
+    color: white;
+}
+
+.btn-green:hover{
+    background-color: #498434;
+    color: white;
+}
+

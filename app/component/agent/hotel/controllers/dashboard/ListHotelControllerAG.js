@@ -12,7 +12,7 @@ travel_app.controller('ListHotelControllerAG', function ($scope, $location, Hote
                 var activeHotels = [];
 
                 angular.forEach(response.data, function(hotel) {
-                    if (hotel.isDelete === false) {
+                    if (hotel.isDeleted === false) {
                         activeHotels.push(hotel);
                     }
                 });

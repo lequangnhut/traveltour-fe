@@ -82,7 +82,7 @@ travel_app.controller('RoomTypeListController', function ($scope, $timeout, $htt
             $scope.getRoomTypeList();
         }
     };
-
+    $scope.setPage()
     /**
      * Phương thức xử lí phân trang
      * @returns {*[]}
@@ -112,6 +112,7 @@ travel_app.controller('RoomTypeListController', function ($scope, $timeout, $htt
 
         return range;
     };
+    $scope.getPaginationRange()
 
     /**
      * Phương thức lấy danh sách loại phòng
