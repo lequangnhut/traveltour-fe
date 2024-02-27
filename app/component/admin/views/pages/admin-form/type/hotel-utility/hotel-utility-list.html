@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
                      style="margin: 20px 0 0 0">
-                    <a href="/admin/type/hotel-utility-list/hotel-utility-create" class="btn btn-primary">
+                    <a href="/admin/type/hotel-utility-list/hotel-utility-create" class="btn btn-primary fw-bold">
                         <i class="fa-solid fa-plus" style="margin-right: 10px"></i>
                         Thêm thể loại
                     </a>
@@ -97,7 +97,7 @@
                 <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
-                    <th><span><input class="form-check-input checkbox-all" type="checkbox" value="" id=""></span>
+                    <th><span><input class="form-check-input checkbox-all" type="checkbox" value=""></span>
                     </th>
                     <th scope="col"># <i class="fa-solid fa-sort"></i></th>
                     <th ng-click="sortData('id')">
@@ -119,13 +119,13 @@
                     <td>{{$index + 1}}</td>
                     <td>{{type.id}}</td>
                     <td>{{type.placeUtilitiesName}}</td>
-                    <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                    <td class="d-flex align-items-center justify-content-center">
                         <a href="/admin/type/hotel-utility-list/hotel-utility-update/{{type.id}}"
-                           role="button" class="fs-1 btn text-warning">
+                           role="button" class="fs-1 btn text-warning px-2">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
                         <a href="" ng-click="deleteType(type.id)"
-                           role="button" class="fs-1 btn text-danger">
+                           role="button" class="fs-1 btn text-danger px-2">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>

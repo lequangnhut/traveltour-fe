@@ -1,3 +1,11 @@
+<!--====== Start Preloader ======-->
+<div class="preloader">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+    <div class="bg"></div>
+</div><!--====== End Preloader ======-->
 <section id="information-section">
     <div class="container mt-5">
         <div class="">
@@ -13,10 +21,11 @@
                         <div class="profile bg-light">
                             <div class=" d-flex align-items-center justify-content-between">
                                 <div class="box-profile d-flex align-items-center">
-                                    <img src="/assets/customers/images/user/avata-user-default.png" alt="avata-user"
-                                         class="img-fluid avatar-user">
+                                    <img id="" ng-src="{{ customer.avatar }}"
+                                         class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover;"
+                                         alt="example placeholder"/>
                                     <div class="profile-info">
-                                        <div class="name h4"> {{customer.fullname}}</div>
+                                        <div class="name h4"> {{customer.fullName}}</div>
                                         <div class="d-flex align-items-center">
                                         <span class="label">Giới tính:
                                             <span class="fw-bold" ng-if="(customer.gender) == null">
@@ -33,12 +42,13 @@
                                             </span>
                                         </span>
                                             <span class="line"></span>
-                                            <span class="label">Ngày sinh: <span class="fw-bold"> {{customer.birth | date:'dd-MM-yyyy'}}</span></span>
+                                            <span class="label">Ngày sinh: <span
+                                                    class="fw-bold"> {{customer.birth | date:'dd-MM-yyyy'}}</span></span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="change-information ">
-                                    <button ng-click="showModalChangeProfile()" class="btn">Thay đổi</button>
+                                    <button ng-click="showModalChangeProfile(customer.id)" class="btn">Thay đổi</button>
                                 </div>
                             </div>
                         </div>
@@ -50,10 +60,11 @@
                                 <div class="persional-acccount w-100">
                                     <div class="item d-flex align-items-center justify-content-between">
                                         <div class="box-profile d-flex align-items-center">
-                                            <span>Tài khoản: <span class="fw-bold"> {{customer.phone}}</span></span>
+                                            <span>Số Điện Thoại: <span class="fw-bold"> {{customer.phone}}</span></span>
                                         </div>
                                         <div class="change">
-                                            <button ng-click="showModalChangePhoneNumber()" class="btn">Thay đổi
+                                            <button ng-click="showModalChangePhoneNumber(customer.id)" class="btn">Thay
+                                                đổi
                                             </button>
                                         </div>
                                     </div>
@@ -67,17 +78,6 @@
                                     <div class="item d-flex align-items-center justify-content-between">
                                         <div class="box-profile d-flex align-items-center">
                                             <span>Email: <span class="fw-bold">{{customer.email}}</span></span>
-                                        </div>
-                                        <div class="change">
-                                            <button ng-click="showModalChangeEmail()" class="btn">Thay đổi</button>
-                                        </div>
-                                    </div>
-                                    <div class="item d-flex align-items-center justify-content-between">
-                                        <div class="box-profile d-flex align-items-center">
-                                            <span>Địa chỉ: <span class="fw-bold">{{customer.address}}</span></span>
-                                        </div>
-                                        <div class="change">
-                                            <button ng-click="showModalChangeAddress()" class="btn">Thay đổi</button>
                                         </div>
                                     </div>
                                     <div class="item d-flex align-items-center justify-content-between">
@@ -98,10 +98,102 @@
         </div>
     </div>
 </section>
+<!--Thay đổi thông tin, fullname, giới tính, ngày sinh-->
+<div id="change-profile" class="modal fade">
+    <form ng-submit="updateTourSubmit()" method="POST" name="infoForm">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="mb-3 d-flex justify-content-end">
+                    <button style="margin: 24px 24px 0 0" type="button" class="btn-close"
+                            data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="h4 text-center mb-3">Thông tin cá nhân</div>
+                        <div class="d-flex justify-content-center">
+                            <img id="selectedAvatar" ng-src="{{ getCurrentImageSource() }}"
+                                 class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover;"
+                                 alt="example placeholder"/>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="btn">
+                                <label class="form-label color-green m-1" for="avatar">Chọn hình ảnh</label>
+                                <input class="form-control d-none" type="file" id="avatar"
+                                       accept=".png, .jpg, .jpeg"
+                                       ngf-select="uploadTourImage($file)"
+                                       ng-model = "customerUpdate.avatarUpdate" />
 
-<div ng-include="'app/component/customers/views/components/modal/information/change-profile.html'"></div>
-<div ng-include="'app/component/customers/views/components/modal/information/change-phone-number.html'"></div>
-<div ng-include="'app/component/customers/views/components/modal/information/change-email.html'"></div>
-<div ng-include="'app/component/customers/views/components/modal/information/change-address.html'"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label" Tên của bạn></label>
+                            <input type="text" class="form-control fw-medium" id="fullName" name="fullname" placeholder="Tên của bạn"
+                                   ng-model="customerUpdate.fullName">
 
+                        </div>
+                        <div class="mb-3">
+                            Giới tính
+                            <select class="form-select fw-medium" name="gender" aria-label="Default select example"
+                                    ng-model="customerUpdate.gender">
+                                <option ng-selected="customerUpdate.gender === null" value="null">(Chưa Cập Nhật)</option>
+                                <option ng-selected="customerUpdate.gender === 1" value="1">Nữ</option>
+                                <option ng-selected="customerUpdate.gender === 2" value="2">Nam</option>
+                                <option ng-selected="customerUpdate.gender === 3" value="3">Khác</option>
+                            </select>
 
+                        </div>
+                        <div class="mb-3">
+                            <label for="birthDay" class="form-label ">Ngày sinh</label>
+                            <input type="date" class="form-control fw-medium" id="birthDay" ng-model="customerUpdate.birth | date:'dd-MM-yyyy'">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addrees" class="form-label">Địa chỉ</label>
+                            <input type="text" class="form-control fw-medium" id="addrees" name="address" placeholder="Địa chỉ"
+                                   ng-model="customerUpdate.address">
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 d-flex justify-content-center pb-5">
+                    <button type="submit" class="btn btn-green" style="padding: 8px 50px; border-radius: 30px"
+
+                            ng-disabled="change-profile.$invalid" data-bs-dismiss="modal">Cập nhật
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--Thay đổi thông tin số điện thoại-->
+<div id="change-phoneNumber" class="modal fade">
+    <form ng-submit="updateTourSubmit()" method="POST">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="mb-3 d-flex justify-content-end">
+                    <button style="margin: 24px 24px 0 0" type="button" class="btn-close"
+                            data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="h4 mb-3">Đổi số điện thoại</div>
+                        <div class="mb-3"><p>Nhập số điện thoại của bạn và hoàn tất quá trình thay đổi số điện thoại</p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Số điện thoại</label>
+                            <input type="text" class="form-control fw-medium" id="phone"
+                                   placeholder="Số điện thoại"
+                                   ng-model="customerUpdate.phone">
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 d-flex justify-content-center pb-5">
+                    <button type="submit" class="btn btn-green" style="padding: 8px 50px; border-radius: 30px"
+                            data-bs-dismiss="modal"
+                            ng-disabled="change-profile.$invalid">Cập nhật
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
