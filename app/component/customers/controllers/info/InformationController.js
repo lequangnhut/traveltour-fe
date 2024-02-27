@@ -1,5 +1,6 @@
-travel_app.controller("InformationController", function ($scope, $location, $routeParams, $timeout, $http, CustomerInfoServiceCT) {
+travel_app.controller("InformationController", function ($scope, $location, $routeParams, $timeout, $http, CustomerInfoServiceCT, AuthService) {
     $scope.selectedImageSrc = null;
+    $scope.phoneError = false;
 
     $scope.isLoading = true;
 
@@ -81,7 +82,17 @@ travel_app.controller("InformationController", function ($scope, $location, $rou
         fillModalEmailWithData(id);
         $('#change-email').modal('show');
     };
+    //============================================================================================================
 
+
+    /**
+     * @message Check duplicate phone
+     */
+    $scope.checkDuplicatePhone = function () {
+        AuthService.checkExistPhone($scope.customerUpdate.phone).then(function successCallback(response) {
+            $scope.phoneError = response.data.exists;
+        });
+    };
     //============================================================================================================
 
     $scope.getCustomer = function () {
