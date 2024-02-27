@@ -1,4 +1,4 @@
-let travel_app = angular.module('travel_app', ['ngRoute', 'ngFileUpload']);
+let travel_app = angular.module('travel_app', ['ngRoute', 'ngFileUpload', 'ngAnimate']);
 
 let BASE_API = 'http://localhost:8080/api/v1/'
 
@@ -678,6 +678,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/drive-move-detail', {
             templateUrl: 'app/component/customers/views/pages/move/drive-move-detail.html',
             controller: 'DriveMoveController'
+        })
+        /**
+         * Booking
+         */
+        .when('/tour-detail/:id/booking-tour', {
+            templateUrl: 'app/component/customers/views/pages/booking/booking.html',
+            controller: 'BookingTourCT'
+        })
+        .when('/tour-detail/:id/booking-tour/customer-information', {
+            templateUrl: 'app/component/customers/views/pages/booking/booking-info-customer.html',
+            controller: 'BookingTourCT'
         })
 
         /**

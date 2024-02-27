@@ -6707,15 +6707,37 @@ ul.slick-dots li.slick-active {
     margin-right: 20px;
 }
 
+.btn-outline-green {
+    color: #63ab45;
+    background-color: transparent;
+    border-color: #63ab45;
+}
+
+.btn-outline-green:hover {
+    color: white;
+    background-color: #63ab45;
+    border-color: #63ab45;
+}
+
+.text-transform-uppercase {
+    text-transform: uppercase;
+}
+
+.text-green {
+    color: #63ab45;
+}
+
 .text-green{
     color: #63AB45;
 }
+
 .wide{
     width: 200px;
     height: 50px;
     border-radius: 50px;
     padding: 10px
 }
+
 .btn-green{
     background-color: #63AB45;
     color: white;
@@ -6726,3 +6748,12 @@ ul.slick-dots li.slick-active {
     color: white;
 }
 
+.btn-orange {
+    background-color: #FF891E;
+    color: white;
+}
+
+.btn-orange:hover {
+    background-color: #fdaf65;
+    color: white;
+}

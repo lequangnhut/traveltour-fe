@@ -18,8 +18,8 @@
 
 <!--====== Start Places Section ======-->
 <section class="places-section pt-100 pb-100">
-    <div ng-include="'app/component/utils/loading-table.html'"></div>
-    <div class="container">
+    <div ng-include="'app/component/utils/loading-component.html'"></div>
+    <div class="container" ng-if="!isLoading">
         <div class="row">
             <div class="col-xl-4 col-md-6 col-sm-12 places-column" ng-repeat="detail in tourDetail"
                  ng-if="detail.tourDetailStatus !== 2 && detail.tourDetailStatus !== 3">

@@ -16,13 +16,6 @@ travel_app.controller('HomeController', function ($scope, $location, $anchorScro
                 $scope.tourDetail = response.data.data.content;
                 $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                 $scope.totalElements = response.data.data.totalElements;
-
-                angular.forEach($scope.tourDetail, function (detail) {
-                    let departureDate = new Date(detail.departureDate);
-                    let arrivalDate = new Date(detail.arrivalDate);
-
-                    detail.numberOfDays = Math.ceil((arrivalDate - departureDate) / (1000 * 60 * 60 * 24));
-                });
             } else {
                 $location.path('/admin/page-not-found')
             }

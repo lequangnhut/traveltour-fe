@@ -1,4 +1,4 @@
-travel_app.controller('TourDetailController', function ($scope, $location, $sce, $routeParams, $anchorScroll, TourTripsServiceAD, TourDetailsServiceAD, TourDetailServiceCT, MapBoxService) {
+travel_app.controller('TourDetailController', function ($scope, $location, $sce, $routeParams, $anchorScroll, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailServiceCT, MapBoxService) {
     $anchorScroll();
 
     $scope.provinceData = [];
@@ -78,6 +78,18 @@ travel_app.controller('TourDetailController', function ($scope, $location, $sce,
 
             $scope.totalPrice = (amountAdults * unitPrice) + (amountChildren * (unitPrice * 0.3));
         };
+
+        $scope.submitBooking = function () {
+            let dataBooking = {
+                ticket: $scope.ticket,
+                totalPrice: $scope.totalPrice,
+                tourDetail: $scope.tourDetail,
+                provinceName: $scope.provinceName
+            }
+
+            LocalStorageService.set('dataBooking', dataBooking);
+            $location.path('/tour-detail/' + tourDetailId + '/booking-tour');
+        }
     }
 
     // Khởi tạo bản đồ

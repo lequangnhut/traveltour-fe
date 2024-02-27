@@ -26,7 +26,10 @@
         <link rel="stylesheet" href="/assets/customers/css/default.css">
         <link rel="stylesheet" href="/assets/customers/css/style.css">
         <link rel="stylesheet" href="/assets/customers/css/modal/style-modal.css">
+        <link rel="stylesheet" href="/assets/customers/css/loading-component.css">
+        <link rel="stylesheet" href="/assets/customers/css/booking.css">
         <link rel="stylesheet" href="/assets/customers/css/hotels-customer.css">
+        <link rel="stylesheet" href="/assets/customers/css/payment-method.css">
 
         <script src="/assets/customers/vendor/jquery-3.6.0.min.js"></script>
         <script src="/assets/customers/vendor/slick/slick.min.js"></script>
@@ -1492,8 +1495,10 @@
 <!--====== Angular js ======-->
 <script src="/node_modules/angular/angular.js"></script>
 <script src="/lib/angular-route.min.js"></script>
+
 <script src="/node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
 <script src="/lib/ckeditor/ckeditor-classic.js"></script>
+<script src="/lib/angularjs/angular-animate.min.js"></script>
 
 <script src="/node_modules/mapbox-gl/dist/mapbox-gl.js"></script>
 <script src="/node_modules/@turf/turf/turf.min.js"></script>
@@ -1515,6 +1520,7 @@
 <script src="app/directives/contenteditable.js"></script>
 <script src="app/directives/FormatTime.js"></script>
 <script src="app/directives/ckEditor.js"></script>
+<script src="/app/directives/PaymentMethod.js"></script>
 
 <!--====== Service ======-->
 <script src="app/services/auth/AuthService.js"></script>
@@ -1522,6 +1528,7 @@
 <script src="app/services/utils/LocalStorageService.js"></script>
 <script src="app/services/utils/MapBoxService.js"></script>
 <script src="app/services/utils/RandomPassword.js"></script>
+<script src="app/services/utils/FormatDate.js"></script>
 
 <!--====== Super Admin Service ======-->
 <script src="app/services/supperadmin/DecentralizationServiceAD.js"></script>
@@ -1650,7 +1657,7 @@
 <script src="app/component/customers/controllers/auth/SignupController.js"></script>
 <script src="app/component/customers/controllers/auth/VerifyEmail.js"></script>
 <script src="app/component/customers/controllers/password/ForgotPwController.js"></script>
-<script src="app/component/customers/controllers/home/HomeController.js"></script>
+<script src="app/component/customers/controllers/home/HomeControllerCT.js"></script>
 <script src="app/component/customers/controllers/home/IntroduceController.js"></script>
 <script src="app/component/customers/controllers/home/TravelGuideController.js"></script>
 <script src="app/component/customers/controllers/home/ContactController.js"></script>
@@ -1663,5 +1670,9 @@
 <script src="app/component/customers/controllers/move/DriveMoveController.js"></script>
 <script src="app/component/customers/controllers/info/InformationController.js"></script>
 <script src="app/component/customers/controllers/info/ChangePasswordController.js"></script>
+
+<!--====== Controller Customer Booking ======-->
+<script src="app/component/customers/controllers/booking/BookingTourCT.js"></script>
+
 </body>
 </html>

@@ -52,7 +52,8 @@
 
 <!--====== Start Places Section ======-->
 <section class="places-section pb-100">
-    <div class="container">
+    <div ng-include="'app/component/utils/loading-component.html'"></div>
+    <div class="container" ng-if="!isLoading">
         <div class="row">
             <div class="col-xl-4 col-md-6 col-sm-12 places-column" ng-repeat="detail in tourDetail"
                  ng-if="detail.tourDetailStatus !== 2 && detail.tourDetailStatus !== 3">
@@ -75,20 +76,16 @@
                             </h4>
                             <p class="location">
                                 <span class="fas fa-map-marker-alt"></span>
-                                {{ detail.toLocation }}
+                                {{ detail.fromLocation }} - {{ detail.toLocation }}
                             </p>
                             <p class="price">
                                 <span class="far fa-money-bill-alt"></span>
-                                <span class="fw-bold">{{ detail.unitPrice | vnCurrency }}</span>
+                                Giá từ: <span class="fw-bold">{{ detail.unitPrice | vnCurrency }}</span>
                             </p>
                             <div class="meta">
                                 <span>
                                     <span class="fas fa-clock"></span>
-                                    {{ detail.numberOfDays }} Ngày
-                                </span>
-                                <span>
-                                    <span class="fas fa-user"></span>
-                                    {{ detail.numberOfGuests }}
+                                    {{ detail.departureDate | calculateDaysAndNights:detail.arrivalDate }}
                                 </span>
                                 <span>
                                     <a href="/tour-detail/{{detail.id}}">Chi tiết<span
