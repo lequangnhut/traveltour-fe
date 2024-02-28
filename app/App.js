@@ -684,11 +684,15 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/tour-detail/:id/booking-tour', {
             templateUrl: 'app/component/customers/views/pages/booking/booking.html',
-            controller: 'BookingTourCT'
+            controller: 'BookingTourControllerCT'
         })
         .when('/tour-detail/:id/booking-tour/customer-information', {
             templateUrl: 'app/component/customers/views/pages/booking/booking-info-customer.html',
-            controller: 'BookingTourCT'
+            controller: 'BookingTourControllerCT'
+        })
+        .when('/tour-detail/:id/booking-tour/customer-information/check-information', {
+            templateUrl: 'app/component/customers/views/pages/booking/booking-check-info.html',
+            controller: 'BookingSuccessControllerCT'
         })
 
         /**

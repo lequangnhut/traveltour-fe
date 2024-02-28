@@ -161,6 +161,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!--=== Reviews Area ===-->
                     <div class="reviews-wrapper mb-60 wow fadeInUp">
                         <div class="reviews-inner-box">
@@ -519,6 +520,14 @@
                                     </span>
                                 </li>
                                 <li>
+                                    <span><span class="fas fa-user-circle"></span>
+                                        Đã đặt
+                                        <span ng-if="tourDetail.bookedSeat !== 0">
+                                            {{ tourDetail.bookedSeat }}/{{ tourDetail.numberOfGuests }}
+                                        </span>
+                                    </span>
+                                </li>
+                                <li>
                                     <span><span class="fas fa-map-marker-alt"></span>
                                         Điểm xuất phát
                                         <span>{{ tourDetail.fromLocation }}</span>
@@ -571,7 +580,11 @@
                                         <label>Người lớn (18 tuổi) {{ tourDetail.unitPrice | vnCurrency }}</label>
                                         <div class="bk-item booking-user">
                                             <span class="fas fa-user"></span>
-                                            <select class="wide-select" ng-model="ticket.adults" ng-change="updateTotal()">
+                                            <select class="wide-select"
+                                                    ng-model="ticket.adults"
+                                                    ng-change="updateTotalPrice()"
+                                                    ng-disabled="tourDetail.bookedSeat === tourDetail.numberOfGuests"
+                                            >
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -588,7 +601,11 @@
                                         <label>Trẻ em (13-17 tuổi) {{ tourDetail.unitPrice * 0.3 | vnCurrency }}</label>
                                         <div class="bk-item booking-user">
                                             <span class="fas fa-user"></span>
-                                            <select class="wide-select" ng-model="ticket.children" ng-change="updateTotal()">
+                                            <select class="wide-select"
+                                                    ng-model="ticket.children"
+                                                    ng-change="updateTotalPrice()"
+                                                    ng-disabled="ticket.children < isExceedGuestLimit()"
+                                            >
                                                 <option value="0">0</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
@@ -602,27 +619,31 @@
                                         <label>Em bé (Dưới 2 tuổi) 0đ</label>
                                         <div class="bk-item booking-user">
                                             <span class="fas fa-user"></span>
-                                            <select class="wide-select" ng-model="ticket.baby" ng-change="updateTotal()">
+                                            <select class="wide-select"
+                                                    ng-model="ticket.baby"
+                                                    ng-change="updateTotalPrice()"
+                                                    ng-disabled="ticket.baby < isExceedGuestLimit()"
+                                            >
                                                 <option value="0">0</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="booking-total mb-20">
                                     <div class="total">
-                                        <label>Tạm tính</label>
+                                        <label>Tạm tính ({{ totalTikets }}) vé</label>
                                         <span class="price">
                                             {{ totalPrice | vnCurrency }}
                                         </span>
                                     </div>
                                 </div>
                                 <div class="submit-button">
-                                    <button type="submit" class="main-btn primary-btn">
+                                    <button type="submit"
+                                            class="main-btn primary-btn"
+                                            ng-if="tourDetail.bookedSeat !== tourDetail.numberOfGuests"
+                                    >
                                         Đặt tour ngay
                                         <svg class="svg-inline--fa fa-paper-plane" aria-hidden="true" focusable="false"
                                              data-prefix="fas" data-icon="paper-plane" role="img"
@@ -631,6 +652,10 @@
                                                   d="M511.6 36.86l-64 415.1c-1.5 9.734-7.375 18.22-15.97 23.05c-4.844 2.719-10.27 4.097-15.68 4.097c-4.188 0-8.319-.8154-12.29-2.472l-122.6-51.1l-50.86 76.29C226.3 508.5 219.8 512 212.8 512C201.3 512 192 502.7 192 491.2v-96.18c0-7.115 2.372-14.03 6.742-19.64L416 96l-293.7 264.3L19.69 317.5C8.438 312.8 .8125 302.2 .0625 289.1s5.469-23.72 16.06-29.77l448-255.1c10.69-6.109 23.88-5.547 34 1.406S513.5 24.72 511.6 36.86z"></path>
                                         </svg>
                                     </button>
+                                    <span class="d-flex justify-content-center text-danger fw-bold"
+                                          ng-if="tourDetail.bookedSeat === tourDetail.numberOfGuests">
+                                        Hiện tại tour đã hết vé !
+                                    </span>
                                 </div>
                             </form>
                         </div>

@@ -59,7 +59,7 @@
                                     <div class="vector-wrapper">
                                         <span class="num">4</span>
                                     </div>
-                                    <div class="text-wrapper">Xác nhận thông tin</div>
+                                    <div class="text-wrapper">Xem lại thông tin</div>
                                 </div>
                             </div>
                         </div>
@@ -202,7 +202,6 @@
                                                ng-model="bookings_tour_customer['customerName' + key]"
                                                placeholder="VD: Nguyen Van A"
                                                ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
-                                               ng-class="{ 'is-invalid': bookingCustomerForm['customerNameKH' + key].$invalid && bookingCustomerForm['customerNameKH' + key].$touched, 'is-valid': bookingCustomerForm['customerNameKH' + key].$valid && bookingCustomerForm['customerNameKH' + key].$touched }"
                                         >
                                         <!-- Thông báo lỗi -->
                                         <small class="text-danger"
@@ -215,6 +214,7 @@
                                         </small>
                                     </div>
                                 </div>
+
                                 <div class="row mb-3">
                                     <!-- Input Ngày sinh -->
                                     <div class="col-6 mb-3">
@@ -224,24 +224,27 @@
                                                class="form-control"
                                                name="customerBirthKH{{ key }}"
                                                ng-model="bookings_tour_customer['customerBirth' + key]"
-                                               ng-class="{ 'is-invalid': bookingCustomerForm['customerBirthKH' + key].$invalid && bookingCustomerForm['customerBirthKH' + key].$touched, 'is-valid': bookingCustomerForm['customerBirthKH' + key].$valid && bookingCustomerForm['customerBirthKH' + key].$touched }"
                                         >
                                         <!-- Thông báo lỗi -->
                                         <small class="text-danger"
                                                ng-show="bookingCustomerForm['customerBirthKH' + key].$touched && bookingCustomerForm['customerBirthKH' + key].$error.required">
                                             Vui lòng chọn ngày sinh !
                                         </small>
+                                        <small class="text-danger"
+                                               ng-show="isBirthDateInvalid(bookings_tour_customer['customerBirth' + key])">
+                                            {{ bookingCustomerForm['customerBirthKH' + key].$error.required ? 'Vui lòng chọn ngày sinh!' : 'Ngày sinh không hợp lệ!' }}
+                                        </small>
                                     </div>
                                     <!-- Input Số điện thoại -->
                                     <div class="col-6 mb-3">
-                                        <label for="customerPhone{{ key }}" class="form-label">Điện thoại di động</label>
+                                        <label for="customerPhone{{ key }}" class="form-label">Điện thoại di
+                                            động</label>
                                         <input type="tel"
                                                id="customerPhone{{ key }}"
                                                name="customerPhoneKH{{ key }}"
                                                maxlength="10"
                                                class="form-control"
                                                ng-model="bookings_tour_customer['customerPhone' + key]"
-                                               ng-class="{ 'is-invalid': bookingCustomerForm['customerPhoneKH' + key].$invalid && bookingCustomerForm['customerPhoneKH' + key].$touched, 'is-valid': bookingCustomerForm['customerPhoneKH' + key].$valid && bookingCustomerForm['customerPhoneKH' + key].$touched }"
                                                ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
                                                placeholder="VD: 0918298029"
                                         >
@@ -260,7 +263,11 @@
 
                             <div class="sidebar-widget category-widget mb-30 wow fadeInUp">
                                 <h5 class="widget-title fs-6">Yêu cầu thêm (tuỳ chọn)</h5>
-                                <textarea class="form-control" rows="2" placeholder="Yêu cầu đặc biệt"></textarea>
+                                <textarea class="form-control"
+                                          rows="2"
+                                          placeholder="Yêu cầu đặc biệt"
+                                          ng-model="bookings_tour.orderNote"
+                                ></textarea>
                                 <span>
                                     Định dạng: bằng tiếng Anh hoặc ngôn ngữ địa phương tại điểm đến. Yêu cầu tuỳ vào tình
                                     hình thực tế của nhà cung cấp.
@@ -292,7 +299,7 @@
                     <!--=== Booking Widget ===-->
                     <div class="sidebar-widget bg-white booking-form-widget wow fadeInUp mb-40">
                         <h4 class="mb-4">Thông tin vé của bạn</h4>
-                        <form ng-submit="submitBooking()" class="sidebar-booking-form">
+                        <div class="sidebar-booking-form">
                             <div class="booking-date-time mb-20">
                                 <img src="{{ tourDetail.toursByTourId.tourImg }}"
                                      class="img-fluid rounded-2 mb-2"
@@ -390,7 +397,7 @@
                                     </span>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div><!--=== Booking Info Widget ===-->
                 </div>
             </div>

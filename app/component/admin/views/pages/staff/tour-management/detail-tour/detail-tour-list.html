@@ -312,6 +312,14 @@
                                             class="fw-bold">{{ tourDetail.toLocation }}</span></p>
                                     <p class="m-2 fw-medium">Dự kiến khoảng: <span id="expectedKm"
                                                                                    class="fw-bold"></span></p>
+                                    <p class="m-2 fw-medium">Đã đặt:
+                                        <span class="fw-normal" ng-if="tourDetail.bookedSeat === 0">
+                                            Tour đang trống
+                                        </span>
+                                        <span class="fw-normal" ng-if="tourDetail.bookedSeat !== 0">
+                                            {{ tourDetail.bookedSeat }} Người
+                                        </span>
+                                    </p>
                                     <p class="m-2 fw-medium">Điểm dừng:
                                         <span class="fw-bold" ng-repeat="province in provinceBreak">
                                             {{ province.Name }}

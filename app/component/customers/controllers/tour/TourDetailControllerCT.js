@@ -15,6 +15,7 @@ travel_app.controller('TourDetailController', function ($scope, $location, $sce,
         tourDetailStatus: null,
         dateCreated: null,
         tourDetailDescription: null,
+        bookedSeat: null,
         fromLocation: null,
         toLocation: null,
         tourDetailImage: null
@@ -47,7 +48,7 @@ travel_app.controller('TourDetailController', function ($scope, $location, $sce,
                 $scope.tourDetail.numberOfDays = Math.ceil((arrivalDate - departureDate) / (1000 * 60 * 60 * 24));
 
                 $scope.initMap();
-                $scope.updateTotal();
+                $scope.updateTotalPrice();
             } else {
                 $location.path('/admin/page-not-found')
             }
@@ -71,24 +72,43 @@ travel_app.controller('TourDetailController', function ($scope, $location, $sce,
             $scope.isLoading = false;
         });
 
-        $scope.updateTotal = function () {
+        $scope.updateTotalPrice = function () {
             let unitPrice = $scope.tourDetail.unitPrice;
             let amountAdults = $scope.ticket.adults;
             let amountChildren = $scope.ticket.children;
 
             $scope.totalPrice = (amountAdults * unitPrice) + (amountChildren * (unitPrice * 0.3));
+            $scope.totalTikets = parseInt($scope.ticket.adults) + parseInt($scope.ticket.children) + parseInt($scope.ticket.baby);
+            $scope.isExceedGuestLimit();
         };
 
-        $scope.submitBooking = function () {
-            let dataBooking = {
-                ticket: $scope.ticket,
-                totalPrice: $scope.totalPrice,
-                tourDetail: $scope.tourDetail,
-                provinceName: $scope.provinceName
-            }
+        $scope.isExceedGuestLimit = function () {
+            let numberOfGuest = $scope.tourDetail.numberOfGuests;
+            let bookSeat = $scope.tourDetail.bookedSeat;
+            let totalAmountTicket = parseInt($scope.ticket.adults) + parseInt($scope.ticket.children) + parseInt($scope.ticket.baby);
 
-            LocalStorageService.set('dataBooking', dataBooking);
-            $location.path('/tour-detail/' + tourDetailId + '/booking-tour');
+            return totalAmountTicket + bookSeat + 1 > numberOfGuest;
+        }
+
+        $scope.submitBooking = function () {
+            let numberOfGuest = $scope.tourDetail.numberOfGuests;
+            let bookSeat = $scope.tourDetail.bookedSeat;
+            let totalAmountTicket = parseInt($scope.ticket.adults) + parseInt($scope.ticket.children) + parseInt($scope.ticket.baby);
+            let newAmountTicket = totalAmountTicket + bookSeat;
+
+            if (newAmountTicket > numberOfGuest) {
+                centerAlert('Cảnh báo !', 'Số lượng bạn chọn không phù hợp với tour hiện tại ! Vui lòng chọn lại, số lượng còn lại là ' + (numberOfGuest - bookSeat) + ' vé.', 'warning');
+            } else {
+                let dataBooking = {
+                    ticket: $scope.ticket,
+                    totalPrice: $scope.totalPrice,
+                    tourDetail: $scope.tourDetail,
+                    provinceName: $scope.provinceName
+                }
+
+                LocalStorageService.set('dataBooking', dataBooking);
+                $location.path('/tour-detail/' + tourDetailId + '/booking-tour');
+            }
         }
     }
 

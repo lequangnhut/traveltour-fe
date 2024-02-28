@@ -36,3 +36,11 @@
 #business-information .text-wrapper {
     margin-top: 10px;
 }
+
+.tour-name {
+    color: #63ab45;
+}
+
+.tour-name:hover {
+    color: #1a5b00;
+}

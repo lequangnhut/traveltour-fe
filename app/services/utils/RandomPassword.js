@@ -1,4 +1,5 @@
 travel_app.service('RandomPasswordService', function () {
+
     this.generateRandomPassword = function (length) {
         const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+";
         let password = "";

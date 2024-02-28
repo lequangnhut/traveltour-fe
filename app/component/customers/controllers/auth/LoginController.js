@@ -1,4 +1,4 @@
-travel_app.controller('LoginController', function ($scope, $location, $timeout, AuthService, NotificationService) {
+travel_app.controller('LoginController', function ($scope, $location, $window, $timeout, AuthService, NotificationService, LocalStorageService) {
 
     $scope.rememberMe = false;
 
@@ -41,8 +41,16 @@ travel_app.controller('LoginController', function ($scope, $location, $timeout, 
 
                                     AuthService.setAuthData(token, user);
 
-                                    window.location.href = '/home';
+                                    let redirectPath = LocalStorageService.get('redirectAfterLogin');
+
+                                    if (redirectPath) {
+                                        $window.location.href = redirectPath;
+                                    } else {
+                                        $window.location.href = '/home';
+                                    }
+
                                     NotificationService.setNotification('success', 'Đăng nhập thành công !');
+                                    LocalStorageService.remove('redirectAfterLogin');
                                 }, errorCallback).finally(function () {
                                     $scope.isLoading = false;
                                 });

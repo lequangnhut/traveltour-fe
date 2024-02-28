@@ -72,7 +72,7 @@
                                 <li><a href="#">(4.9)</a></li>
                             </ul>
                             <h4 class="title">
-                                <a href="">{{ detail.toursByTourId.tourName }}</a>
+                                <a href="/tour-detail/{{detail.id}}">{{ detail.toursByTourId.tourName }}</a>
                             </h4>
                             <p class="location">
                                 <span class="fas fa-map-marker-alt"></span>
@@ -100,7 +100,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <!--=== Gowilds Pagination ===-->
-                <ul class="gowilds-pagination wow fadeInUp text-center">
+                <ul class="gowilds-pagination wow fadeInUp text-center d-flex align-items-center justify-content-center">
                     <li>
                         <a href="#" ng-class="{disabled: currentPage === 0}" ng-click="setPage(0)">
                             <span class="fas fa-arrow-left"></span>
