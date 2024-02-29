@@ -1,23 +1,18 @@
-<!--====== Start Preloader ======-->
-<div class="preloader" ng-show="isLoading">
-    <div class="loader">
-        <div class="pre-shadow"></div>
-        <div class="pre-box"></div>
-    </div>
-</div><!--====== End Preloader ======-->
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
 <div class="container mt-3 mb-5">
     <div class="header-control mb-4">
         <div class="">
             <div class="d-flex align-items-center row">
                 <div class="col-lg-6">
-                    <h3 class="color-green fw-medium text-uppercase">Cập nhật khách hàng mới</h3>
+                    <h3 class="color-green fw-medium text-uppercase">thông tin cá nhân</h3>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="card card-custom">
-        <form class="row g-3 form-input-custom" ng-submit="updateCustomerSubmit()" name="customerForm"
+        <form class="row g-3 form-input-custom" ng-submit="updateInfoSubmit()" name="customerForm"
               role="form">
             <div class="col-12">
                 <div class="form-floating">
@@ -56,7 +51,7 @@
                        ng-class="{ 'is-invalid': customerForm.email.$invalid, 'is-valid': customerForm.email.$valid && !emailError }"
                        ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
                        ng-change="checkDuplicateEmail()"
-                       required
+                       readonly
                 >
                 <small class="text-danger"
                        ng-show="customerForm.email.$error.required">
@@ -119,7 +114,7 @@
                        ng-class="{ 'is-invalid': customerForm.phone.$invalid,
                                             'is-valid': customerForm.phone.$valid && !phoneError }"
                        ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
-                       ng-change="checkDuplicatePhone()"
+                       ng-change="checkDuplicateThisPhone()"
                        required
                 >
                 <small class="text-danger"
@@ -181,6 +176,7 @@
                         ng-class="{ 'is-invalid': customerForm.isActive.$invalid, 'is-valid': customerForm.isActive.$valid}"
                         ng-model="customer.isActive"
                         required
+                        ng-disabled="true"
                 >
                     <option value="" disabled selected>Chọn trạng thái</option>
                     <option ng-selected="customer.isActive" value="true">Hoạt động</option>
@@ -193,9 +189,9 @@
             </div>
 
             <div class="col-12 d-flex justify-content-end mt-5">
-                <button type="button" class="btn" style="margin-right: 20px">
-                    <a class="btn" href="/admin/customer-list">Trở về</a>
-                </button>
+<!--                <button type="button" class="btn" style="margin-right: 20px">-->
+<!--                    <a class="btn" href="/admin/customer-list">Trở về</a>-->
+<!--                </button>-->
                 <button type="submit"
                         ng-disabled="customerForm.$invalid || emailError || phoneError || cardError"
                         class="btn btn-submit fw-bold"

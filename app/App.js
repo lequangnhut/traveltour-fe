@@ -599,6 +599,13 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
 
         /**
+         * Admin Infomation
+         */
+        .when('/admin/information-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/information/information-update.html',
+            controller: 'CustomerControllerAD'
+        })
+        /**
          * Customer
          */
         .when('/home', {

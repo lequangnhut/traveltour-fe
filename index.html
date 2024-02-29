@@ -1342,7 +1342,7 @@
                         >
                             <div class="avatar avatar-l ">
                                 <img class="rounded-circle"
-                                     src="https://prium.github.io/phoenix/v1.13.0/assets/img/team/40x40/57.webp"
+                                     src="{{ user.avatar || 'https://t3.ftcdn.net/jpg/05/60/26/08/360_F_560260880_O1V3Qm2cNO5HWjN66mBh2NrlPHNHOUxW.jpg' }}"
                                      alt=""/>
                             </div>
                         </a>
@@ -1354,7 +1354,7 @@
                                     <div class="text-center pt-4 pb-3">
                                         <div class="avatar avatar-xl ">
                                             <img class="rounded-circle "
-                                                 src="https://prium.github.io/phoenix/v1.13.0/assets/img/team/72x72/57.webp"
+                                                 src="{{ user.avatar || 'https://t3.ftcdn.net/jpg/05/60/26/08/360_F_560260880_O1V3Qm2cNO5HWjN66mBh2NrlPHNHOUxW.jpg' }}"
                                                  alt=""/>
                                         </div>
                                         <h6 class="mt-2 text-black" ng-if="role !== 'ROLE_CUSTOMER'">
@@ -1369,9 +1369,9 @@
                                 <div class="overflow-auto scrollbar">
                                     <ul class="nav d-flex flex-column mb-2 pb-1">
                                         <li class="nav-item">
-                                            <a class="nav-link px-3" href="#">
+                                            <a class="nav-link px-3" href="admin/information-update/{{user.id}}">
                                                 <span class="me-2 text-900" data-feather="user"></span>
-                                                <span>Trang cá nhân</span>
+                                                <span>Thông tin cá nhân</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">

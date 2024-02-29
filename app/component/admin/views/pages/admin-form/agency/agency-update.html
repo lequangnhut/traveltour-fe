@@ -22,13 +22,9 @@
         opacity: 1;
     }
 </style>
-<!--====== Start Preloader ======-->
-<div class="preloader" ng-show="isLoading">
-    <div class="loader">
-        <div class="pre-shadow"></div>
-        <div class="pre-box"></div>
-    </div>
-</div><!--====== End Preloader ======-->
+
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
     <div class="container mt-4 mb-5">
             <div class="header-control mb-4">
                 <div class="">
