@@ -1,4 +1,4 @@
-travel_app.controller('CustomerControllerAD', function ($scope, $sce, $location, $routeParams, $timeout, $http, CustomerServiceAD, AuthService) {
+travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $location, $rootScope, $routeParams, $timeout, $http, CustomerServiceAD, AuthService, LocalStorageService) {
     $scope.isLoading = true;
 
     const fileName = "default.jpg";
@@ -113,7 +113,7 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $location,
                 return $scope.customer.avatar;
             }
         } else {
-            return 'https://prium.github.io/phoenix/v1.13.0/assets/img/team/150x150/58.webp';
+            return 'https://t3.ftcdn.net/jpg/05/60/26/08/360_F_560260880_O1V3Qm2cNO5HWjN66mBh2NrlPHNHOUxW.jpg';
         }
     };
 
@@ -172,6 +172,8 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $location,
                 if (response.status === 200) {
                     $timeout(function () {
                         $scope.customer = response.data.data;
+                        $rootScope.phonenow = response.data.data.phone;
+                        $rootScope.cardnow = response.data.data.citizenCard;
                         $scope.customer.birth = new Date(response.data.data.birth);
                     }, 0);
                 }
@@ -277,5 +279,84 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $location,
 
         confirmAlert('Bạn có chắc chắn muốn xóa khách hàng ' + fullName + ' không ?', confirmDeleteCustomer);
     }
+    /**
+     * * Của Thuynhdpc04763
+     */
+    $scope.checkDuplicateThisPhone = function () {
+        if($scope.customer.phone == $rootScope.phonenow){
+            $scope.phoneError = false;
+            return;
+        }
+        AuthService.checkExistPhone($scope.customer.phone)
+            .then(function successCallback(response) {
+                if (response.status === 200){
+                    $scope.phoneError = response.data.exists;
+                }else{
+                    $scope.phoneError = response.data.exists;
+                }
+            });
+    };
 
+    $scope.checkDuplicateCard = function () {
+        if($scope.customer.citizenCard == $rootScope.cardnow){
+            $scope.cardError = false;
+            return;
+        }
+        AuthService.checkExistCard($scope.customer.citizenCard).then(function successCallback(response) {
+            $scope.cardError = response.data.exists;
+        });
+    };
+
+    function confirmUpdate() {
+        const dataCustomer = new FormData();
+        $scope.isLoading = true;
+        if ($scope.hasImage) {
+            dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
+            dataCustomer.append("customerAvatar", $scope.customerAvatarNoCloud);
+            updateInfo(customerId, dataCustomer);
+        } else {
+            if($scope.customer.avatar === null){
+               $scope.customer.avatar = 'https://t3.ftcdn.net/jpg/05/60/26/08/360_F_560260880_O1V3Qm2cNO5HWjN66mBh2NrlPHNHOUxW.jpg'
+            }
+            urlToFile($scope.customer.avatar, fileName, mimeType).then(file => {
+                dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
+                dataCustomer.append("customerAvatar", file);
+                updateInfo(customerId, dataCustomer);
+            }, errorCallback);
+        }
+    };
+
+    const updateInfo = (customerId, dataCustomer) => {
+        CustomerServiceAD.updateCustomer(customerId, dataCustomer).then(function successCallback(response) {
+            if (response.status === 200) {
+                toastAlert('success', 'Cập nhật thành công !');
+                LocalStorageService.set('user', response.data.data);
+                var userRoles = response.data.data.roles;
+
+                if (hasAdminRole(userRoles)) {
+                    $window.location.href = '/admin/dashboard';
+                } else {
+                    $window.location.href = '/business/select-type';
+                }
+            } else {
+                $location.path('/admin/page-not-found');
+            }
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
+    }
+    $scope.updateInfoSubmit = function () {
+        confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdate);
+    }
+
+    function hasAdminRole(roles) {
+        var adminRoles = ['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_STAFF'];
+
+        for (var i = 0; i < roles.length; i++) {
+            if (adminRoles.includes(roles[i].nameRole)) {
+                return true;
+            }
+        }
+        return false;
+    }
 });
