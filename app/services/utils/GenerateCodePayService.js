@@ -11,7 +11,7 @@ travel_app.service('GenerateCodePayService', function () {
 
         const randomSuffix = Math.floor(Math.random() * 10000);
 
-        return `${paymentMethod}${tourDetailId}-${formattedDay}${formattedMonth}${year}${randomSuffix}`;
+        return `${paymentMethod}-${tourDetailId}-${formattedDay}${formattedMonth}${year}${randomSuffix}`;
     }
 
     this.generateCodePayment = function (paymentMethod) {

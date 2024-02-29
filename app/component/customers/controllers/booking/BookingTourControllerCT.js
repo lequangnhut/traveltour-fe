@@ -194,26 +194,41 @@ travel_app.controller('BookingTourControllerCT', function ($scope, $sce, $locati
         }
 
         let ticket = $scope.ticket;
+        let email = $scope.bookings_tour.customerEmail;
         let totalPrice = $scope.totalPrice;
         let tourDetail = $scope.tourDetail;
-        let bookingId = GenerateCodePayService.generateCodeBooking('VN', tourDetail.id);
+        let bookingId = GenerateCodePayService.generateCodeBooking('VNPAY', tourDetail.id);
 
         $scope.bookings_tour.id = bookingId;
         $scope.bookings_tour.capacityAdult = ticket.adults;
         $scope.bookings_tour.capacityKid = ticket.children;
         $scope.bookings_tour.capacityBaby = ticket.baby;
         $scope.bookings_tour.orderTotal = totalPrice;
+        $scope.bookings_tour.paymentMethod = 1; // 1: VNPay
         $scope.bookings_tour.orderCode = GenerateCodePayService.generateCodePayment('VNPAY');
 
-        BookingServiceCT.redirectVNPay(totalPrice, bookingId).then(function successCallBack(response) {
-            if (response.status === 200) {
-                $window.location.href = response.data.redirectUrl;
-            } else {
-                $location.path('/admin/page-not-found')
+        function confirmBookTour() {
+            let bookingDto = {
+                bookingToursDto: $scope.bookings_tour,
+                bookingTourCustomersDto: $scope.bookingCustomerList
             }
-        }, errorCallback).finally(function () {
-            $scope.isLoading = false;
-        });
+
+            BookingServiceCT.redirectVNPay(totalPrice, bookingId).then(function successCallBack(response) {
+                if (response.status === 200) {
+                    LocalStorageService.set('bookingDto', bookingDto);
+                    LocalStorageService.set('bookingTicket', bookingDto.bookingToursDto);
+
+                    $window.location.href = response.data.redirectUrl;
+                    $scope.bookingCustomerList.splice(0, $scope.bookingCustomerList.length);
+                } else {
+                    $location.path('/admin/page-not-found')
+                }
+            }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+        }
+
+        confirmAlert('Bạn có chắc chắn địa chỉ email: ' + email + ' là chính xác không ?', confirmBookTour);
     }
 
     $scope.paymentZaLoPay = function () {
@@ -224,7 +239,7 @@ travel_app.controller('BookingTourControllerCT', function ($scope, $sce, $locati
 
     }
 
-    $scope.$on('$routeChangeStart', function(event, next, current) {
+    $scope.$on('$routeChangeStart', function (event, next, current) {
         if (next.controller !== 'BookingSuccessControllerCT' && next.controller !== 'LoginController') {
             LocalStorageService.remove('redirectAfterLogin');
         }

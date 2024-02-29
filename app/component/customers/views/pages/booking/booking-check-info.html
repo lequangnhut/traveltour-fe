@@ -1,6 +1,6 @@
 <!--====== Start Breadcrumb Section ======-->
 <section class="page-banner overlay pt-170 pb-200 bg_cover"
-         style="background-image: url(/assets/customers/images/bg/page-bg.jpg);">
+         style="background-image: url(/assets/customers/images/bg/default-top-banner.jpg);">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-10">
@@ -65,7 +65,7 @@
                                     <div class="vector-wrapper">
                                         <span class="num">4</span>
                                     </div>
-                                    <div class="text-wrapper">Xem lại thông tin</div>
+                                    <div class="text-wrapper fw-medium">Xem lại thông tin</div>
                                 </div>
                             </div>
                         </div>
@@ -79,10 +79,15 @@
 <!--====== Start Blog Details Section ======-->
 <section class="blog-details-section pb-70">
     <div class="container">
-        <div class="alert alert-success" role="alert">
+
+        <div class="alert alert-success" role="alert" ng-if="transactionId != 0">
             TravelTour xin cảm ơn! Booking của bạn đã được xác nhận. Thông tin đã được gửi đến
             email <span class="fw-medium">{{ bookingTicket.customerEmail }}</span> .
         </div>
+        <div class="alert alert-danger" role="alert" ng-if="transactionId == 0">
+            TravelTour xin lỗi bạn! Booking của bạn hiện tại thanh toán chưa thành công. Vui lòng thanh toán lại.
+        </div>
+
         <div class="row">
             <div class="col-xl-12">
                 <div class="title-information mb-3">

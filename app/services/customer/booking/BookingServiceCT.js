@@ -20,4 +20,12 @@ travel_app.service('BookingServiceCT', function ($http) {
             data: bookingDto
         });
     }
+
+    this.createBookTourVNPay = function (bookingDto, transactionId) {
+        return $http({
+            method: 'POST',
+            url: API_BOOKING + 'create-book-tour-vnpay/' + transactionId,
+            data: bookingDto
+        });
+    }
 })

@@ -686,6 +686,9 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/move/drive-move-detail.html',
             controller: 'DriveMoveController'
         })
+        .when('/payment-policy', {
+            templateUrl: 'app/component/customers/views/pages/home/payment-policy.html'
+        })
         /**
          * Booking
          */
@@ -698,6 +701,14 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'BookingTourControllerCT'
         })
         .when('/tour-detail/:id/booking-tour/customer-information/check-information', {
+            templateUrl: 'app/component/customers/views/pages/booking/booking-check-info.html',
+            controller: 'BookingSuccessControllerCT'
+        })
+        .when('/tour-detail/:id/booking-tour/customer-information/check-information/payment-success', {
+            templateUrl: 'app/component/customers/views/pages/booking/booking-check-info.html',
+            controller: 'BookingSuccessControllerCT'
+        })
+        .when('/tour-detail/:id/booking-tour/customer-information/check-information/payment-failure', {
             templateUrl: 'app/component/customers/views/pages/booking/booking-check-info.html',
             controller: 'BookingSuccessControllerCT'
         })
