@@ -261,14 +261,19 @@
                                     <p ng-show="showErrorListPlaceMessage"></p>
                                 </div>
                             </div>
+                            <div class="mb-3 mt-3">
+                                <label class="form-label mb-3">Vị trí khách sạn của bạn trên bản đồ</label>
+                                <div id="map" style="height: 400px;"
+                                ng-click="isLocationSelected()"></div>
+                            </div>
 
                             <div class="col-12 d-flex justify-content-end mt-5">
                                 <button class="btn" style="margin-right: 20px">
                                     <a class="btn" href="/business/hotel/home">Trở về</a>
                                 </button>
                                 <button type="submit"
-                                        class="btn btn-submit"
-                                        ng-disabled="register_company.$invalid || noCheckboxSelected()"
+                                        class="btn btn-submit fw-bold"
+                                        ng-disabled="register_company.$invalid || noCheckboxSelected() || isLocationSelected()"
                                         ng-click="createHotel()">Thêm khách sạn
                                 </button>
                             </div>

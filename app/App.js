@@ -667,7 +667,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/hotel/hotel.html',
             controller: 'HotelCustomerController'
         })
-        .when('/hotel-detail', {
+        .when('/hotel/hotel-detail', {
             templateUrl: 'app/component/customers/views/pages/hotel/hotel-detail.html',
             controller: 'HotelDetailController'
         })

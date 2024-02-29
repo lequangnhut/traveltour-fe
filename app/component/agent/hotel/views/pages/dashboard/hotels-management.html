@@ -22,7 +22,8 @@
                                     <div class="card card-banner">
                                         <div class="card-header">
                                             <div class="img-card-dashboard">
-                                                <img ng-src="{{ hotel.hotelAvatar || '/assets/admin/assets/img/bg/default-image-hotel.png' }}" class="img-fluid"/>
+                                                <img ng-src="{{hotel.hotelAvatar}}" class="img-fluid"
+                                                     onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'" />
                                             </div>
                                             <div class="item-title mt-3 overflow-hidden" style="text-overflow: ellipsis; white-space: nowrap;">
                                                 <div class="item-title mt-3">

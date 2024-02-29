@@ -260,17 +260,18 @@
                                     </small>
                                 </div>
                             </div>
-
-
-
+                            <div class="mb-3 mt-3">
+                                <label class="form-label mb-3">Vị trí khách sạn mới của bạn trên bản đồ</label>
+                                <div id="map" style="height: 400px;"></div>
+                            </div>
 
                             <div class="col-12 d-flex justify-content-end mt-5">
                                 <button class="btn" style="margin-right: 20px">
                                     <a class="btn" href="/business/hotel/home">Trở về</a>
                                 </button>
                                 <button type="submit"
-                                        class="btn btn-submit"
-                                        ng-disabled="update_hotel.$invalid || noPlaceUtilitiesSelected()"
+                                        class="btn btn-submit fw-bold"
+                                        ng-disabled="update_hotel.$invalid || noPlaceUtilitiesSelected() || currentMarker === null"
                                         ng-click="updateHotel()">Sửa khách sạn
                                 </button>
                             </div>

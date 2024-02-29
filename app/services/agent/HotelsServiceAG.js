@@ -86,11 +86,13 @@ travel_app.service('HotelServiceAG', function ($http) {
      * @param selectHotelUtilities
      * @returns {*}
      */
-    this.createHotel = function (dataHotel, selectHotelUtilities) {
+    this.createHotel = function (dataHotel, selectHotelUtilities, longitude, latitude) {
         var formData = new FormData();
 
         formData.append('companyDataDto', new Blob([JSON.stringify(dataHotel)], {type: "application/json"}));
         formData.append('selectHotelUtilities', new Blob([JSON.stringify(selectHotelUtilities)], {type: "application/json"}));
+        formData.append('longitude', new Blob([JSON.stringify(longitude)], {type: "application/json"}));
+        formData.append('latitude', new Blob([JSON.stringify(latitude)], {type: "application/json"}));
 
         if (dataHotel.avatarHotel) {
             formData.append('avatarHotel', dataHotel.avatarHotel[0]);
@@ -115,11 +117,13 @@ travel_app.service('HotelServiceAG', function ($http) {
     }
 
 
-    this.updateHotel = function (dataHotel, selectedUtilities, hotelAvatarUpdated) {
+    this.updateHotel = function (dataHotel, selectedUtilities, hotelAvatarUpdated, longitude, latitude) {
         var formData = new FormData();
 
         formData.append('dataHotel', new Blob([JSON.stringify(dataHotel)], {type: "application/json"}));
         formData.append('selectedUtilities', new Blob([JSON.stringify(selectedUtilities)], {type: "application/json"}));
+        formData.append('longitude', longitude);
+        formData.append('latitude', latitude);
 
         if (hotelAvatarUpdated && hotelAvatarUpdated.length > 0) {
             formData.append('hotelAvatarUpdated', hotelAvatarUpdated[0], hotelAvatarUpdated[0].name);

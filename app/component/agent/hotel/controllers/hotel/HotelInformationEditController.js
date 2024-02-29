@@ -15,6 +15,8 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
         agenciesId: null,
         placeUtilities: [],
         hotelAvatarUpdated: null,
+        longitude: null,
+        latitude: null,
     };
 
     $scope.selectedUtilitieses = []
@@ -27,6 +29,9 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
     $scope.wards = [];
 
     var hotelId = $routeParams.id;
+    $scope.initialLocation = {lat: $scope.hotelEdit.latitude, lng: null};
+    var currentMarker = null;
+    $scope.newLocation = null
 
     $scope.init();
 
@@ -34,6 +39,26 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
         toastAlert('error', "Máy chủ không tồn tại !");
     }
 
+    mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
+
+    $scope.map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [105.8342, 21.0278], // Hoặc bất kỳ vị trí nào bạn muốn hiển thị khi bắt đầu
+        zoom: 12
+    });
+
+    $scope.map.on('load', function() {
+        // Giờ đây bạn có thể an toàn thêm sự kiện click vào bản đồ
+        $scope.map.on('click', function(e) {
+            $scope.newLocation = {
+                lat: e.lngLat.lat,
+                lng: e.lngLat.lng
+            };
+            addMarker($scope.newLocation);
+            console.log('New location:', $scope.newLocation);
+        });
+    });
 
     /**
      * Phương thức lây khách thông tin khách sạn dựa vào id trên đường dẫn
@@ -41,9 +66,13 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
     HotelServiceAG.getHotelByIdHotels(hotelId).then(function (response) {
         $timeout(function () {
             if (response.data.status === '200') {
-
                 $scope.hotelEdit = response.data.data
-
+                $scope.initialLocation.lat = $scope.hotelEdit.latitude;
+                $scope.initialLocation.lng = $scope.hotelEdit.longitude;
+                $scope.map.flyTo({center: [$scope.initialLocation.lng, $scope.initialLocation.lat]});
+                $scope.initialLocation = new mapboxgl.Marker()
+                    .setLngLat([$scope.initialLocation.lng, $scope.initialLocation.lat])
+                    .addTo($scope.map);
                 let selectedProvince = $scope.provinces.find(p => p.Name === $scope.hotelEdit.province);
                 if (selectedProvince) {
                     $scope.hotelEdit.province = selectedProvince.Name;
@@ -121,7 +150,7 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
     $scope.init = function () {
         $scope.isLoading = true;
 
-        try{
+        try {
 
             /**
              * lấy thông tin cho thông tin tỉnh thành
@@ -161,7 +190,7 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
                     $scope.hotelEdit.wardName = selectedWard.Name;
                 }
             };
-        }catch (e) {
+        } catch (e) {
         } finally {
             $scope.isLoading = false;
         }
@@ -244,6 +273,16 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
         });
     };
 
+    function addMarker(location) {
+        if (currentMarker) {
+            currentMarker.setLngLat([location.lng, location.lat]);
+        } else {
+            currentMarker = new mapboxgl.Marker()
+                .setLngLat([location.lng, location.lat])
+                .addTo($scope.map);
+        }
+    }
+
     /**
      * Phương thức cập nhật khách sạn
      * @returns {string}
@@ -266,6 +305,8 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
             address: $scope.hotelEdit.address,
             hotelTypeId: $scope.hotelEdit.hotelTypeId,
             agenciesId: $scope.hotelEdit.agenciesId,
+            longitude: $scope.hotelEdit.longitude,
+            latitude: $scope.hotelEdit.latitude
         }
 
         $scope.placeUtilitieses.forEach(function (item) {
@@ -288,7 +329,7 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
                     return utility.id;
                 });
 
-                HotelServiceAG.updateHotel($scope.dataHotel, selectedUtilitiesIds, $scope.hotelEdit.hotelAvatarUpdated)
+                HotelServiceAG.updateHotel($scope.dataHotel, selectedUtilitiesIds, $scope.hotelEdit.hotelAvatarUpdated, $scope.newLocation.lng, $scope.newLocation.lat,)
                     .then(function successCallback(response) {
                         if (response.status === 200) {
                             $location.path('/business/hotel/home');
@@ -307,7 +348,8 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
         }
     };
 
-    $scope.confirmDelete = function() {
+
+    $scope.confirmDelete = function () {
         Swal.fire({
             title: 'Bạn có chắc muốn xóa khách sạn?',
             text: "Hành động này sẽ xóa thông tin khách sạn khỏi hệ thống!",
@@ -317,7 +359,7 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
             cancelButtonColor: '#d33',
             confirmButtonText: 'Có, xóa!',
             cancelButtonText: 'Hủy bỏ'
-        }).then(function(result) {
+        }).then(function (result) {
             var successSound = new Audio('assets/admin/assets/sound/success.mp3');
             var errorSound = new Audio('assets/admin/assets/sound/error.mp3');
             if (result.isConfirmed) {
@@ -326,7 +368,7 @@ travel_app.controller("HotelInformationEditController", function ($scope, $http,
                         $location.path('/business/hotel/home');
                         toastAlert('success', response.data.message);
                         successSound.play()
-                    }else{
+                    } else {
                         errorSound.play()
                         toastAlert('error', response.message);
                     }

@@ -6731,6 +6731,10 @@ ul.slick-dots li.slick-active {
     color: #63AB45;
 }
 
+.text-orange {
+    color: #ff9800;
+}
+
 .wide{
     width: 200px;
     height: 50px;

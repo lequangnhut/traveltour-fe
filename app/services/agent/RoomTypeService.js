@@ -106,6 +106,12 @@ travel_app.service("RoomTypeService", function($http, $q) {
         });
     };
 
+    /**
+     * Service cập nhật ảnh khách sạn
+     * @param roomTypeId mã loại phòng
+     * @param roomTypeAvatarData ảnh đại diện khách sạn
+     * @returns {*}
+     */
     this.updateAvatarRoomType = function (roomTypeId, roomTypeAvatarData) {
         var formData = new FormData();
 
@@ -119,6 +125,18 @@ travel_app.service("RoomTypeService", function($http, $q) {
             headers: {'Content-Type': undefined},
             data: formData,
         });
+    }
+
+    this.findRoomTypesById = function (roomTypeId) {
+        const deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: API_ROOM_TYPE + 'findRoomTypesById',
+            params: {
+                roomTypeId: roomTypeId
+            }
+        }).then(deferred.resolve, deferred.reject);
+        return deferred.promise;
     }
 
 })

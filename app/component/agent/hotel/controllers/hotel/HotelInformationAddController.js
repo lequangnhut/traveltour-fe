@@ -28,6 +28,10 @@ travel_app.controller("HotelInformationAddController", function ($scope, $http, 
     $scope.selectHotelType = function () {
     };
 
+    $scope.currentMarker = null;
+    $scope.longitude = null;
+    $scope.latitude = null;
+
     /**
      * Lấy danh sách danh sách loại phòng
      */
@@ -98,6 +102,10 @@ travel_app.controller("HotelInformationAddController", function ($scope, $http, 
         }
     };
 
+    $scope.isLocationSelected = function() {
+        console.log(!($scope.longitude && $scope.latitude));
+        return !($scope.longitude && $scope.latitude);
+    };
 
     /**
      * Danh sách các tiện ích khách sạn
@@ -124,12 +132,6 @@ travel_app.controller("HotelInformationAddController", function ($scope, $http, 
 
     $scope.checkboxCount = 0;
 
-    $scope.updateCheckboxCount = function () {
-        $scope.checkboxCount = $scope.checkboxes.filter(function (checkbox) {
-            return checkbox.checked;
-        }).length;
-    };
-
     /**
      * Kiểm tra nếu như chưa lựa chọn dịch vụ thì tắt nút di
      * @returns {*}
@@ -137,6 +139,42 @@ travel_app.controller("HotelInformationAddController", function ($scope, $http, 
     $scope.noCheckboxSelected = function () {
         return $scope.checkboxCount <= 0;
     };
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
+
+    /**
+     * Tạo bản đồ
+     */
+    $scope.map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [105.8342, 21.0278],
+        zoom: 5
+    });
+
+    /**
+     * Xử lí sự kiện chọn vị trí trên bản đồ
+     */
+    $scope.map.on('load', function() {
+        $scope.map.on('click', function(e) {
+            $scope.longitude = e.lngLat.lng;
+            $scope.latitude = e.lngLat.lat;
+
+            if ($scope.currentMarker) {
+                $scope.currentMarker.remove();
+            }
+
+            $scope.currentMarker = new mapboxgl.Marker()
+                .setLngLat([$scope.longitude, $scope.latitude])
+                .addTo($scope.map);
+        });
+    });
+    $scope.updateCheckboxCount = function () {
+        $scope.checkboxCount = $scope.checkboxes.filter(function (checkbox) {
+            return checkbox.checked;
+        }).length;
+    };
+
 
     let user = $scope.user;
     $scope.createHotel = function () {
@@ -156,7 +194,7 @@ travel_app.controller("HotelInformationAddController", function ($scope, $http, 
                         return checkbox.id;
                     });
 
-                HotelServiceAG.createHotel($scope.company, selectedCheckboxValues).then(function successCallback(response) {
+                HotelServiceAG.createHotel($scope.company, selectedCheckboxValues, $scope.longitude, $scope.latitude).then(function successCallback(response) {
                     if (response.status === 200) {
                         $location.path('/business/hotel/home');
                         successSound.play()
@@ -172,4 +210,5 @@ travel_app.controller("HotelInformationAddController", function ($scope, $http, 
             });
         }
     };
+
 })
