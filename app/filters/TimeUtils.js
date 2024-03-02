@@ -147,3 +147,24 @@ travel_app.filter('calculateDaysAndNights', function () {
         return days + " ngày " + nights + " đêm";
     };
 });
+travel_app.filter('dateWithTimeFormat', function () {
+    return function (dateString) {
+        let date = new Date(dateString);
+        if (isNaN(date.getTime())) return dateString;
+
+        // Định dạng ngày giờ với AM/PM
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // Giờ '0' sẽ được hiểu là '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        let strTime = hours + ':' + minutes + ' ' + ampm;
+
+        let day = date.getDate().toString().padStart(2, '0');
+        let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Tháng trong JavaScript bắt đầu từ 0
+        let year = date.getFullYear();
+
+        return day + '/' + month + '/' + year + ' ' + strTime;
+    };
+});

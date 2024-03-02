@@ -39,7 +39,7 @@ travel_app.service('HotelServiceCT', function ($http) {
     this.findAllRoomTypesByFillter = function (filter) {
         return $http({
             method: 'GET',
-            url: API_HOTEL_CUSTOMER + 'findAllRoomTypesByFillter',
+                    url: API_HOTEL_CUSTOMER + 'findAllRoomTypesByFillter',
             params: filter
         });
     }

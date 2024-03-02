@@ -9,7 +9,6 @@ travel_app.controller('RoomTypeControllerAD',
 
         $scope.tourDetailId = tourDetailId;
         $scope.hotelId = hotelId;
-        $scope.tourGuideId = null;
 
         if (tourDetailId !== undefined && tourDetailId !== null && tourDetailId !== "") {
             TourDetailsServiceAD.findTourDetailById(tourDetailId).then(response => {
@@ -79,10 +78,14 @@ travel_app.controller('RoomTypeControllerAD',
             const roomTypePromises = roomTypeList.map(async (rt) => {
 
                 const bedTypes = await RoomTypeServiceServiceAD.findBedTypeNameByRoomTypeId(rt.id);
+
+                const roomUtilitiesNames = rt.roomUtilities ? rt.roomUtilities.map(u => u.roomUtilitiesName).join(", ") : "không";
+                const bedTypeNames = bedTypes.data.data ? await bedTypes.data.data.map(b => b).join(", ") : "không";
+
                 return {
                     ...rt,
-                    roomUtilitiesNames: rt.roomUtilities.map(u => u.roomUtilitiesName).join(", "),
-                    bedTypeNames: bedTypes.data.data.map(b => b).join(", "),
+                    roomUtilitiesNames: roomUtilitiesNames,
+                    bedTypeNames: bedTypeNames,
                     isChecked: false
                 };
 

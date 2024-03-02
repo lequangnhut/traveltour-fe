@@ -1,0 +1,139 @@
+.total {
+    font-style: normal !important;
+    font-weight: 100 !important;
+    font-family: "Prompt", sans-serif !important;
+    font-size: 16px !important;
+    line-height: 29.6px !important;
+    overflow-x: hidden !important;
+    background-color: var(--bs-body-bg) !important;
+    -webkit-text-size-adjust: 100% !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+.form-check-label {
+    font-size: 14px !important;
+}
+
+/* Partners Item */
+.single-partner-item .partner-img {
+    padding: 0 20px;
+    text-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+/*--==== Pagination Css ====--*/
+.gowilds-pagination li {
+    display: inline-block;
+}
+
+.gowilds-pagination li a {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 2px solid rgba(29, 35, 31, 0.1);
+    font: 500 16px "Prompt", sans-serif;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 767px) {
+    .gowilds-pagination li a {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+}
+
+.gowilds-pagination a.active, .gowilds-pagination li a:active, .gowilds-pagination li a:hover {
+    border-color: transparent;
+    background-color: #3dbd3d;
+    color: #fff;
+    text-decoration: none;
+}
+
+
+.wide {
+    width: 200px;
+    height: 50px;
+    border-radius: 50px;
+    padding: 10px
+}
+
+/*!* Single Event Item *!*/
+/*.single-event-item {*/
+/*    padding: 15px;*/
+/*    -webkit-box-shadow: 0px 7px 60px rgba(0, 0, 0, 0.07);*/
+/*    box-shadow: 0px 7px 60px rgba(0, 0, 0, 0.07);*/
+/*    border-radius: 12px;*/
+/*}*/
+
+/*.single-event-item .img-holder img {*/
+/*    width: 100%;*/
+/*    border-radius: 12px;*/
+/*}*/
+
+/*.single-event-item .content .meta span {*/
+/*    margin-bottom: 10px;*/
+/*    font-weight: 400;*/
+/*    text-transform: uppercase;*/
+/*}*/
+
+/*.single-event-item .content .meta span svg {*/
+/*    margin-right: 5px;*/
+/*}*/
+
+/*.single-event-item .content h3.title {*/
+/*    margin-bottom: 25px;*/
+/*    padding-bottom: 27px;*/
+/*    font-weight: 500;*/
+/*    border-bottom: 1px solid rgba(29, 35, 31, 0.1);*/
+/*}*/
+
+/*@media (max-width: 991px) {*/
+/*    .single-event-item .content h3.title {*/
+/*        font-size: 18px;*/
+/*        line-height: 30px;*/
+/*    }*/
+/*}*/
+
+/*.single-event-item .content p.location {*/
+/*    font-size: 18px;*/
+/*}*/
+
+/*@media (max-width: 991px) {*/
+/*    .single-event-item .content p.location {*/
+/*        font-size: 14px;*/
+/*    }*/
+/*}*/
+
+/*.skill-wrapper, .footer-newsletter-widget .footer-content form .form_control, .sidebar-widget-area .booking-form-widget .sidebar-booking-form .bk-item .nice-select, .sidebar-widget-area .booking-form-widget .sidebar-booking-form .bk-item input, .sidebar-widget-area .sidebar-widget, .single-blog-post-four .entry-content .main-btn.filled-btn:hover svg, .gw-testimonial-item-two, .destination-details-wrapper .destination-info .features-list li span, .single-place-item-three .place-content .meta .icon-btn, .single-place-item-three:hover, .single-place-item .place-content .info, .booking-form .nice-select:focus, .booking-form .form_control:focus, .booking-form-wrapper, .activity-nav-tab, .single-service-item-four .content .icon-btn, .single-service-item-four:hover, .single-service-item-three .content .meta span.rate, .single-service-item-three:hover, .single-service-item .content .icon-btn, .single-service-item, .video-popup, .single-event-item, .single-activity-item .content .meta, .single-counter-item-two .icon, .single-counter-item, .single-team-item, .fancy-icon-box-three .icon, .fancy-icon-box-two, .fancy-icon-box .icon, .single-features-list .icon-inner .icon, .single-features-item-three .content, .single-features-item .img-holder .content, .about-two_content-box .card-list .card-item, .hero-search-form, .hero-wrapper-three .hero-arrows .slick-arrow:hover, .navigation-white.header-navigation .navbar-toggler span, .header-four .header-navigation.sticky, .header-navigation.breakpoint-on .nav-menu, .header-navigation .main-menu ul > li .sub-menu, .preloader, .main-btn.filled-btn:hover svg, .main-btn i, .white-bg {*/
+/*    background-color: #fff;*/
+/*}*/
+
+/*.reviews-wrapper .reviews-inner-box .rating-value span.reviews, .hero-slider-two .slick-arrow:hover, .hero-slider-one .slick-arrow:hover, .footer-top .social-box ul.social-link li a:hover, .black-bg .single-cta-item .content h3.title, .black-bg .single-info-item .info span.title, .black-bg .footer-top .social-box ul.social-link li a:hover, .black-bg .footer-widget h4.widget-title, .sidebar-widget-area .tag-cloud-widget a:hover, .sidebar-widget-area .sidebar-banner-widget .banner-widget-content .banner-img .hover-content p, .sidebar-widget-area .sidebar-banner-widget .banner-widget-content .banner-img .hover-content h4.title, .blog-post .entry-footer .tag-links a:hover, .cat-btn, .product-details-wrapper .product-info ul.social-link li a:hover, .single-product-item .img-holder .tag span, .tour-area-nav .share-nav a:hover, .single-place-item-three:hover .place-content .meta .icon-btn, .single-place-item-two .place-img .tour-count, .booking-form-two .booking-btn:hover, .single-gallery-item .gallery-img .icon-btn, .activity-content-box ul.check-list li, .activity-nav-tab .nav-tabs li a.active, .single-service-item-four .content h3.title, .single-service-item-four:hover .content .icon-btn, .single-service-item-two .content .btn-link, .single-service-item-two .content p, .single-service-item-two .content h3.title, .single-service-item:hover .content .icon-btn, .ribbon, .gowilds-pagination li a.active, .gowilds-pagination li a:hover, .single-info-item .icon, .single-cta-item .content .icon-btn, .single-activity-item .content .main-btn svg, .single-counter-item:hover .icon, .fancy-icon-box-three:hover .text .btn-link, .fancy-icon-box-three:hover .text h5.title, .fancy-icon-box-two:hover .icon, .fancy-icon-box:hover .icon, .single-features-item-three:hover .content h6, .single-features-item-two .content h3.title, .single-features-item .img-holder .text .icon-btn, .hero-wrapper-three .hero-arrows .slick-arrow, .navigation-white.header-navigation .nav-right-item .lang-dropdown .nice-select, .navigation-white.header-navigation .main-menu ul > li .search-btn, .navigation-white.header-navigation .main-menu ul > li > a, .header-three .header-navigation .primary-menu.black-bg .nav-right-item .lang-dropdown .nice-select, .nav-right-item .search-btn, .header-navigation.breakpoint-on .nav-menu .main-menu ul li .dd-trigger, .back-to-top:hover, .back-to-top:focus, .main-btn.filled-btn.filled-white, .main-btn.filled-btn:hover, .main-btn.filled-btn svg, .main-btn.secondary-btn, .main-btn.primary-btn, .text-white p, .text-white h1, .text-white h2, .text-white h3, .text-white h4, .text-white h5, .text-white h6 {*/
+/*    color: #fff;*/
+/*}*/
+
+.container-hotel{
+    min-height: 300px;
+}
+.infoHotel {
+    position: relative;
+}
+
+.infoHotel .rating {
+    height: 130px;
+}
+
+.infoHotel .price {
+
+}
+
+
