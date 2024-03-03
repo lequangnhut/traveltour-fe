@@ -1,0 +1,91 @@
+.total {
+    font-style: normal !important;
+    font-weight: 100 !important;
+    font-family: "Prompt", sans-serif !important;
+    font-size: 16px !important;
+    line-height: 29.6px !important;
+    overflow-x: hidden !important;
+    background-color: var(--bs-body-bg) !important;
+    -webkit-text-size-adjust: 100% !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+.form-check-label {
+    font-size: 14px !important;
+}
+
+/* Partners Item */
+.single-partner-item .partner-img {
+    padding: 0 20px;
+    text-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+/*--==== Pagination Css ====--*/
+.gowilds-pagination li {
+    display: inline-block;
+}
+
+.gowilds-pagination li a {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 2px solid rgba(29, 35, 31, 0.1);
+    font: 500 16px "Prompt", sans-serif;
+    margin-bottom: 10px;
+}
+
+.gowilds-pagination li a, .gowilds-pagination li a {
+    border-color: lightgray;
+    color: lightgray;
+    text-decoration: none;
+}
+
+@media (max-width: 767px) {
+    .gowilds-pagination li a {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+}
+
+.gowilds-pagination a.active, .gowilds-pagination li a:active, .gowilds-pagination li a:hover {
+    border-color: transparent;
+    background-color: #3dbd3d;
+    color: #fff;
+    text-decoration: none;
+}
+
+
+.wide {
+    width: 200px;
+    height: 50px;
+    border-radius: 50px;
+    padding: 10px
+}
+
+.container-hotel {
+    min-height: 300px;
+}
+
+.infoHotel {
+    position: relative;
+}
+
+.infoHotel .rating {
+    height: 130px;
+}
+
+.infoHotel .price {
+
+}
+
+

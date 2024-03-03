@@ -125,7 +125,7 @@
 
             <div class="col-md-6">
                 <label for="departureDate" class="form-label">Ngày đi</label>
-                <input type="date" class="form-control" id="departureDate"
+                <input type="datetime-local" class="form-control" id="departureDate"
                        name="departureDate"
                        ng-model="tourDetail.departureDate"
                        ng-class="{ 'is-invalid': (!tourDetailForm.departureDate.$valid || !isStartDateValid()),
@@ -143,7 +143,7 @@
 
             <div class="col-md-6">
                 <label for="arrivalDate" class="form-label">Ngày về</label>
-                <input type="date" class="form-control" id="arrivalDate"
+                <input type="datetime-local" class="form-control" id="arrivalDate"
                        name="arrivalDate"
                        ng-model="tourDetail.arrivalDate"
                        ng-class="{ 'is-invalid': (!tourDetailForm.arrivalDate.$valid || !isEndDateValid()),

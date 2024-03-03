@@ -420,6 +420,8 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
                 $scope.tourDetailList = response.data.data.content;
                 $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                 $scope.totalElements = response.data.data.totalElements; // Tổng số phần tử
+
+                console.log($scope.tourDetailList)
             }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });

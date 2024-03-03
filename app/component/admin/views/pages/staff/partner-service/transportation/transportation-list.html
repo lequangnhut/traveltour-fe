@@ -1,0 +1,218 @@
+<div class="container">
+    <!--====== Products Filter ======-->
+    <div class="page-item-filter wow fadeInUp mb-4">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-md-7">
+                <h3 class="color-green fw-bold text-uppercase">dịch vụ đặt xe cho tour</h3>
+            </div>
+            <div class="col-md-5">
+                <!--====== Product Dropdown ======-->
+                <div class="product-dropdown float-md-end d-flex justify-content-end align-items-center">
+                    <span class="m-3 fw-bold">Sắp xếp</span>
+                    <select class="wide" ng-model="sortTS" ng-change="sortData('unit_price', sortTS)">
+                        <option value="" data-display="asc">Mặc định</option>
+                        <option value="asc">Giá tăng dần</option>
+                        <option value="desc">Giá giảm dần</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-xl-3 col-md-12 pt-0 px-0">
+            <div class="card border-0 w-100 pt-3">
+                <div class="single-event-item mb-30 wow fadeInUp">
+                    <div class="img-holder px-3">
+                        <img class="w-100 rounded-3" src="/assets/customers/images/event/event-1.jpg" alt="Event Image">
+                    </div>
+                    <div class="form-customer px-3 pt-5">
+                        <div class="find-item mb-3">
+                            <p class="fw-medium mb-2 ms-2">Ngân sách của bạn</p>
+                            <div class="findHotelType">
+                                <label for="rangePrice" class="form-label">Chọn ngân sách:</label>
+                                <input type="range" class="form-range" id="rangePrice" ng-model="filters.price"
+                                       min="100000"
+                                       max="20000000" step="10000">
+                                <p>{{ filters.price | number:'0' }} VND</p>
+                            </div>
+                        </div>
+                        <div class="form-customer find-item mb-3">
+                            <p class="fw-medium mb-2 ms-2">Loại phương tiện</p>
+                            <div class="findHotelType"
+                                 ng-repeat="tt in transportationTypeList | limitTo: limitTransportationType">
+                                <div class="form-check ms-3">
+                                    <input class="form-check-input" type="checkbox"
+                                           value="{{tt.transportationTypeName}}"
+                                           id="{{tt.id}}"
+                                           ng-model="tt.checked"
+                                           ng-change="ChooseFromAVarietyOfVehicles(tt.id)">
+                                    <label class="form-check-label" for="{{tt.id}}">
+                                        {{ tt.transportationTypeName }}
+                                    </label>
+                                </div>
+                            </div>
+                            <button class="btn text-green"
+                                    ng-show="transportationBrandList.length > 5 && !showMoreTransportationType"
+                                    ng-click="showMoreItemsTransportationType()">Hiển thị thêm <i
+                                    class="fa-solid fa-angle-down"></i></button>
+                            <button class="btn text-green" ng-show="showMoreTransportationType"
+                                    ng-click="showLessItemsTransportationType()">Ẩn bớt <i
+                                    class="fa-solid fa-angle-up"></i>
+                            </button>
+                        </div>
+                        <div class="form-customer find-item mb-3">
+                            <p class="fw-medium mb-2 ms-2">hãng phương tiện</p>
+                            <div class="findHotelType"
+                                 ng-repeat="tb in transportationBrandList | limitTo: limitTransportationBrand">
+                                <div class="form-check ms-3">
+                                    <input class="form-check-input" type="checkbox"
+                                           value="{{tb.transportationBrandName}}"
+                                           id="{{tb.id}}"
+                                           ng-model="tb.checked"
+                                           ng-change="ChooseFromManyCarBrands(tb.id)">
+                                    <label class="form-check-label" for="{{tb.id}}">
+                                        {{ tb.transportationBrandName }}
+                                    </label>
+                                </div>
+                            </div>
+                            <button class="btn text-green"
+                                    ng-show="transportationBrandList.length > 5 && !showMoreTransportationBrand"
+                                    ng-click="showMoreItemsTransportationBrand()">Hiển thị thêm <i
+                                    class="fa-solid fa-angle-down"></i></button>
+                            <button class="btn text-green" ng-show="showMoreTransportationBrand"
+                                    ng-click="showLessItemsTransportationBrand()">Ẩn bớt <i
+                                    class="fa-solid fa-angle-up"></i>
+                            </button>
+                        </div>
+                        <div class="find-item mb-3">
+                            <p class="fw-medium mb-2 ms-2">Xếp hạng xe</p>
+                            <div class="findHotelType">
+                                <div class="form-check ms-3" ng-repeat="rating in ratings">
+                                    <input class="form-check-input" type="radio" name="rating"
+                                           ng-model="$parent.selectedRating" ng-value="rating.id"
+                                           id="{{ 'rating-' + rating.id }}">
+                                    <label class="form-check-label"
+                                           for="{{ 'rating-' + rating.id }}">{{ rating.label }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="find-item mb-3 d-flex justify-content-center mt-3">
+                            <button type="button" class="btn btn-success" ng-click="filterAllMedia()">Lọc xe
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-md-12">
+            <div class="mb-3" ng-repeat="ts in transportationScheduleList">
+                <div class="card border-0 mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4 pt-3 ps-3 pb-3">
+                            <img src="{{ts.transportationsByTransportationId.transportationImg}}"
+                                 class="img-fluid rounded-start rounded-3" alt="...">
+                        </div>
+                        <div class="col-md-8 px-3">
+                            <div class="card-body p-3">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p class="card-text fw-medium mb-1">Phương tiện</p>
+                                        <p class="card-title fw-medium mb-1">
+                                            Hãng: {{ ts.transportationBrandsByTransportationBrandId.transportationBrandName }}</p>
+                                        <p class="card-title fw-medium mb-1">
+                                            Loại: {{ ts.transportationTypesByTransportationTypeId.transportationTypeName }}</p>
+                                        <p class="card-title mb-1">biển
+                                            số: {{ ts.transportationsByTransportationId.licensePlate }}</p>
+                                        <p class="card-title fw-medium mb-3">số chỗ
+                                            ngồi: {{ ts.transportationsByTransportationId.amountSeat }}</p>
+                                        <p class="card-text fw-medium mb-1">Chuyến đi</p>
+                                        <ul class="ps-0">
+                                            <li class="d-flex align-items-start mb-2">
+                                                <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                                <span>Đi từ <span
+                                                        class="fw-medium">{{ ts.fromLocation }}</span>  đến
+                                                <span class="fw-medium">{{ ts.toLocation }}</span></span>
+                                            </li>
+                                            <li class="d-flex align-items-start mb-2">
+                                                <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                                <span>ngày khởi hành: <span
+                                                        class="fw-medium"> {{ ts.departureTime | dateWithTimeFormat }}</span></span>
+                                            </li>
+                                            <li class="d-flex align-items-start mb-2">
+                                                <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                                <span>ngày về: <span
+                                                        class="fw-medium">{{ ts.arrivalTime | dateWithTimeFormat }}</span></span>
+                                            </li>
+                                        </ul>
+
+                                        <p class="m-2 fw-medium">
+                                            Trạng thái:
+                                            <span class="fw-bold color-green" ng-if="ts.isActive === true">
+                                                Đang hoạt động
+                                        </span>
+                                            <span class="fw-bold color-green" ng-if="ts.isActive === false">
+                                            Ngưng hoạt động
+                                        </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4 d-flex justify-content-end align-items-end">
+                                        <div class="mb-2">
+                                            <p class="fw-medium mb-0 float-end">{{ ts.unitPrice | vnCurrency }}</p>
+                                            <p class="float-end mb-3">Bao gồm phí và thuế</p>
+                                            <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/transportation-list/{{ts.id}}/transportation-payment"
+                                               class="btn btn-success float-end">Đặt xe</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="div" ng-if="roomTypes.length <= 0">
+                <div class="d-flex justify-content-center align-items-center">
+                    Không có phòng nào phù hợp với yêu cầu của bạn
+                    <sạn></sạn>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="gowilds-pagination wow fadeInUp text-center d-flex align-items-center justify-content-center">
+                        <!-- Previous Page -->
+                        <li class="m-1" ng-class="{disabled: currentPage === 0}">
+                            <a href="#" ng-click="setPage(0)"><span class="fas fa-arrow-left"></span></a>
+                        </li>
+
+                        <!-- Ellipsis at the beginning -->
+                        <li class="m-1" ng-if="currentPage > 2 && totalPages > 5">
+                                <span style="font-size: 4px">
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                </span>
+                        </li>
+
+                        <!-- Pagination Numbers -->
+                        <li class="m-1" ng-repeat="n in getPaginationRange()">
+                            <a ng-class="{active: n === currentPage}" ng-click="setPage(n)">{{ n + 1 }}</a>
+                        </li>
+
+                        <!-- Ellipsis at the end -->
+                        <li class="m-1" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                <span style="font-size: 4px">
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                </span>
+                        </li>
+
+                        <!-- Next Page -->
+                        <li class="m-1" ng-class="{disabled: currentPage === totalPages - 1}">
+                            <a href="#" ng-click="setPage(totalPages - 1)"><span class="fas fa-arrow-right"></span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

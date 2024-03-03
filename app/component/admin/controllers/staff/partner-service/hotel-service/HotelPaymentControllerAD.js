@@ -111,5 +111,4 @@ travel_app.controller('HotelPaymentControllerAD', function ($scope, $location, $
         $location.path('/admin/internal-server-error')
     }
 
-    console.log($scope.selectedRooms)
 });

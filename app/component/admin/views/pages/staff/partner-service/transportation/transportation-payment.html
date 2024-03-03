@@ -4,7 +4,8 @@
             <div class="d-flex justify-content-between align-items-center row ">
                 <div class="col mt-3">
                     <h3 class="color-green fw-bold text-uppercase mb-3">Chi tiết thanh toán</h3>
-                    <a href="#" class="text-decoration-none">< Quay lại đơn hàng</a>
+                    <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/transportation-list"
+                       class="text-decoration-none">< Quay lại đơn hàng</a>
                 </div>
             </div>
         </div>
@@ -16,62 +17,71 @@
                 <div class="card-body">
                     <h5 class="card-title">Chi tiết đơn hàng</h5>
                     <hr>
-                    <div class="row" ng-repeat="sr in selectedRooms">
-                        <div class="col-3 pe-0">
-                            <img class="rounded-1 w-100"
-                                 src="{{sr.roomTypeAvatar}}"
-                                 alt=""/>
-                        </div>
-                        <div class="col-9">
-                            <div class="row">
-                                <div class="col-9">
-                                    <p class="fw-bold mb-0">{{ infoHotel.hotelName }}</p>
-                                    <p class="mb-0">{{ infoHotel.address }}</p>
-                                    <p class="fw-bold mb-0">{{ sr.roomTypeName }}</p>
-                                </div>
-                                <div class="col-3 px-0 position-relative">
-                                    <p>{{ sr.price | vnCurrency }}</p>
-                                    <p class="position-absolute bottom-0 mb-0">Số lượng: <span
-                                            class="fw-bold">{{ sr.quantity }}</span>
-                                    </p>
-                                </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="card mb-3">
+                                <img class="img-fluid rounded-3"
+                                     ng-src="{{transportationSchedules.transportationsByTransportationId.transportationImg }}"/>
                             </div>
-                            <hr>
+                        </div>
+                    </div>
+                    <div class="mx-3">
+                        <p class="card-text fw-medium mb-1">Phương tiện</p>
+                        <p class="card-title fw-medium mb-1 ms-3">
+                            Hãng: {{ transportationSchedules.transportationBrandsByTransportationBrandId.transportationBrandName }}</p>
+                        <p class="card-title fw-medium mb-1 ms-3">
+                            Loại: {{ transportationSchedules.transportationTypesByTransportationTypeId.transportationTypeName }}</p>
+                        <p class="card-title mb-1 ms-3">biển
+                            số: {{ transportationSchedules.transportationsByTransportationId.licensePlate }}</p>
+                        <p class="card-title fw-medium mb-3 ms-3">số chỗ
+                            ngồi: {{ transportationSchedules.transportationsByTransportationId.amountSeat }}</p>
+                        <p class="card-text fw-medium mb-1 ">Chuyến đi</p>
+                        <ul class="ps-0 ms-3">
+                            <li class="d-flex align-items-start mb-2">
+                                <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                <span>Đi từ <span
+                                        class="fw-medium">{{ transportationSchedules.fromLocation }}</span>  đến
+                                                <span class="fw-medium">{{ transportationSchedules.toLocation }}</span></span>
+                            </li>
+                            <li class="d-flex align-items-start mb-2">
+                                <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                <span>ngày khởi hành: <span
+                                        class="fw-medium"> {{ transportationSchedules.departureTime | dateWithTimeFormat }}</span></span>
+                            </li>
+                            <li class="d-flex align-items-start mb-2">
+                                <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                <span>ngày về: <span
+                                        class="fw-medium">{{ transportationSchedules.arrivalTime | dateWithTimeFormat }}</span></span>
+                            </li>
+                        </ul>
 
-                            <div class="row">
-                                <div class="col-5">
-                                    <p class="mb-0">Ngày nhận phòng</p>
-                                    <p class="fw-bold mb-0" style="font-size: 13px">{{ infoHotel.departureDate }}</p>
-                                </div>
-                                <div class="col-2 d-flex justify-content-center align-items-center px-2">
-                                    <p class="fw-bold mb-0">1 đêm</p>
-                                </div>
-                                <div class="col-5">
-                                    <p class="mb-0">Ngày trả phòng</p>
-                                    <p class="fw-bold mb-0" style="font-size: 13px">{{ infoHotel.arrivalDate }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="mt-3">
+                        <p class="fw-medium">Trạng thái:
+                            <span class="fw-bold color-green" ng-if="transportationSchedules.isActive === true">
+                                                Đang hoạt động
+                                        </span>
+                            <span class="fw-bold color-green" ng-if="transportationSchedules.isActive === false">
+                                            Ngưng hoạt động
+                                        </span>
+                        </p>
                     </div>
 
-                    <div>
+                    <div class="mx-3">
                         <div class="d-flex justify-content-between">
-                            <span class="font-bold text-lg">Tổng tiền khách sạn:</span>
-                            <span class="font-bold text-lg"> {{ totalBeforeTax | vnCurrency }}</span>
+                            <span class="font-bold text-lg">Tổng tiền xe:</span>
+                            <span class="font-bold text-lg"> {{ transportationSchedules.unitPrice | vnCurrency }}</span>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <span>Thuế GTGT:</span>
-                            <span> {{ VATAmount | vnCurrency }}</span>
+                            <span>Thuế GTGT: (vé đã bao gồm thuế GTGT)</span>
+                            <span> {{ 0 | vnCurrency }}</span>
                         </div>
                         <div class="d-flex justify-content-between">
                             <span>Chiết khấu:</span>
-                            <span> {{ discountAmount | vnCurrency }}</span>
+                            <span> {{ 0 | vnCurrency }}</span>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between font-bold text-xl mt-3 fw-bold">
                             <span>Tổng tiền phải thanh toán:</span>
-                            <span> {{ total | vnCurrency }}</span>
+                            <span> {{ transportationSchedules.unitPrice | vnCurrency }}</span>
                         </div>
                     </div>
                 </div>
@@ -80,7 +90,7 @@
         <div class="col-lg-6 ps-2">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Thông tin của bạn để hoàn tất quá trình đặt phòng</h5>
+                    <h5 class="card-title">Thông tin của bạn để hoàn tất quá trình đặt vé</h5>
                     <div class="mb-3">
                         <label for="fullName" class="form-label">Họ và tên của bạn <span
                                 class="text-danger">*</span></label>
@@ -112,20 +122,20 @@
                     </div>
                     <!-- Radio buttons for Booking for -->
                     <div class="mb-3">
-                        <label class="form-label d-block mb-2">Bạn đặt phòng cho ai <span
+                        <label class="form-label d-block mb-2">Bạn đặt vé cho ai <span
                                 class="text-danger">*</span></label>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="bookingFor" id="myself" value="myself"
                                    checked>
                             <label class="form-check-label" for="myself">
-                                Tôi là khách lưu trú chính
+                                Tôi là đặt cho tôi
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="bookingFor" id="someoneElse"
                                    value="someoneElse">
                             <label class="form-check-label" for="someoneElse">
-                                Tôi đặt phòng này cho người khác
+                                Tôi đặt vé này cho người khác
                             </label>
                         </div>
                     </div>
@@ -198,13 +208,11 @@
                     <ul class="ps-0">
                         <li class="d-flex align-items-start mb-2">
                             <i class="fa-solid fa-check text-success me-2 mt-1"></i>
-                            <span>Phòng của bạn sẽ sẵn sàng để nhận trong khoảng từ <span
-                                    class="fw-bold">{{ infoHotel.departureDate }}</span>  đến <span
-                                    class="fw-bold">{{ infoHotel.arrivalDate }}</span></span>
-                        </li>
-                        <li class="d-flex align-items-start mb-2">
-                            <i class="fa-solid fa-check text-success me-2 mt-1"></i>
-                            <span>Lễ tân 24 giờ - Luôn có trực giúp mọi khi bạn cần!</span>
+                            <span>xe của bạn sẽ sẵn sàng để nhận từ ngày
+                                <span class="fw-medium">{{ transportationSchedules.departureTime | dateWithTimeFormat }}</span>
+                            đến ngày
+                                <span class="fw-medium">{{ transportationSchedules.arrivalTime | dateWithTimeFormat }}</span>
+                            </span>
                         </li>
                     </ul>
                 </div>
@@ -212,7 +220,8 @@
 
             <!-- Submit Button -->
             <div class="float-end mb-2">
-                <button ng-click="completeYourBooking()" class="btn btn-success" type="submit">Hoàn tất đặt phòng
+                <button ng-click="ConfirmCompletionOfBooking()" class="btn btn-success" type="submit">
+                    Hoàn tất đặt xe
                 </button>
             </div>
         </div>
