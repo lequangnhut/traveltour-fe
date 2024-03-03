@@ -248,7 +248,6 @@ travel_app.controller('HotelServiceControllerAD',
             if (searchTimeout) $timeout.cancel(searchTimeout);
 
             try {
-
                 const response = await HotelServiceServiceAD.getAllOrSearchHotels(
                     $scope.currentPage,
                     $scope.pageSize,
@@ -321,6 +320,10 @@ travel_app.controller('HotelServiceControllerAD',
         $scope.refreshSearch = () => {
             $scope.searchTerm = ''
             $scope.searchHotels = {}
+        }
+
+        function errorCallback() {
+            $location.path('/admin/internal-server-error')
         }
 
         $scope.getHotelServiceList();
