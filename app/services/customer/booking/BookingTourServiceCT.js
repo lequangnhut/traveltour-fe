@@ -1,4 +1,4 @@
-travel_app.service('BookingServiceCT', function ($http) {
+travel_app.service('BookingTourServiceCT', function ($http) {
 
     let API_BOOKING = BASE_API + 'book-tour/';
 
@@ -10,6 +10,14 @@ travel_app.service('BookingServiceCT', function ($http) {
                 price: totalPrice,
                 orderInfo: orderId,
             }
+        });
+    }
+
+    this.redirectZALOPay = function (paymentData) {
+        return $http({
+            method: 'POST',
+            url: BASE_API + 'zalopay/submit-payment',
+            data: paymentData
         });
     }
 

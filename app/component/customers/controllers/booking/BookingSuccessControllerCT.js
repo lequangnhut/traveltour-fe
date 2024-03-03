@@ -1,4 +1,4 @@
-travel_app.controller('BookingSuccessControllerCT', function ($scope, $location, $routeParams, $anchorScroll, BookingServiceCT, LocalStorageService) {
+travel_app.controller('BookingSuccessControllerCT', function ($scope, $location, $routeParams, $anchorScroll, BookingTourServiceCT, LocalStorageService) {
     $anchorScroll();
 
     let bookingTourId = $routeParams.orderInfo;
@@ -51,9 +51,9 @@ travel_app.controller('BookingSuccessControllerCT', function ($scope, $location,
         let transactionId = $routeParams.transactionId;
         let bookingDto = LocalStorageService.get('bookingDto');
 
-        BookingServiceCT.createBookTourVNPay(bookingDto, transactionId).then(function successCallBack(response) {
+        BookingTourServiceCT.createBookTourVNPay(bookingDto, transactionId).then(function successCallBack(response) {
             if (response.status === 200) {
-                if (transactionId !== 0) {
+                if (transactionId != 0) {
                     toastAlert('success', 'Đặt tour thành công !');
                 } else {
                     toastAlert('success', 'Thanh toán thất bại !');

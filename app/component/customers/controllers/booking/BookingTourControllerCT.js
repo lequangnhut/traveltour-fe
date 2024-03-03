@@ -1,4 +1,4 @@
-travel_app.controller('BookingTourControllerCT', function ($scope, $sce, $location, $window, $routeParams, $anchorScroll, AuthService, LocalStorageService, BookingServiceCT, GenerateCodePayService) {
+travel_app.controller('BookingTourControllerCT', function ($scope, $sce, $location, $window, $routeParams, $anchorScroll, AuthService, LocalStorageService, BookingTourServiceCT, GenerateCodePayService) {
     $anchorScroll();
 
     let user = AuthService.getUser();
@@ -167,7 +167,7 @@ travel_app.controller('BookingTourControllerCT', function ($scope, $sce, $locati
         }
 
         function confirmBookTour() {
-            BookingServiceCT.createBookTour(bookingDto).then(function successCallBack(response) {
+            BookingTourServiceCT.createBookTour(bookingDto).then(function successCallBack(response) {
                 if (response.status === 200) {
                     let bookingTicket = response.data.data.bookingToursDto;
                     LocalStorageService.set('bookingTicket', bookingTicket);
@@ -213,7 +213,7 @@ travel_app.controller('BookingTourControllerCT', function ($scope, $sce, $locati
                 bookingTourCustomersDto: $scope.bookingCustomerList
             }
 
-            BookingServiceCT.redirectVNPay(totalPrice, bookingId).then(function successCallBack(response) {
+            BookingTourServiceCT.redirectVNPay(totalPrice, bookingId).then(function successCallBack(response) {
                 if (response.status === 200) {
                     LocalStorageService.set('bookingDto', bookingDto);
                     LocalStorageService.set('bookingTicket', bookingDto.bookingToursDto);
@@ -232,7 +232,45 @@ travel_app.controller('BookingTourControllerCT', function ($scope, $sce, $locati
     }
 
     $scope.paymentZaLoPay = function () {
+        $scope.isLoading = true;
 
+        if (user !== null) {
+            $scope.bookings_tour.userId = user.id;
+        }
+
+        let ticket = $scope.ticket;
+        let email = $scope.bookings_tour.customerEmail;
+        let totalPrice = $scope.totalPrice;
+        let tourDetail = $scope.tourDetail;
+        let bookingId = GenerateCodePayService.generateCodeBooking('ZALOPAY', tourDetail.id);
+
+        $scope.bookings_tour.id = bookingId;
+        $scope.bookings_tour.capacityAdult = ticket.adults;
+        $scope.bookings_tour.capacityKid = ticket.children;
+        $scope.bookings_tour.capacityBaby = ticket.baby;
+        $scope.bookings_tour.orderTotal = totalPrice;
+        $scope.bookings_tour.paymentMethod = 2; // 2: ZALOPAY
+        $scope.bookings_tour.orderCode = GenerateCodePayService.generateCodePayment('ZALOPAY');
+
+        function confirmBookTour() {
+            let paymentData = {
+                amount: totalPrice,
+                bookingTourId: bookingId
+            }
+
+            BookingTourServiceCT.redirectZALOPay(paymentData).then(function successCallBack(response) {
+                if (response.status === 200) {
+                    $window.location.href = response.data.data;
+                    $scope.bookingCustomerList.splice(0, $scope.bookingCustomerList.length);
+                } else {
+                    $location.path('/admin/page-not-found')
+                }
+            }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+        }
+
+        confirmAlert('Bạn có chắc chắn địa chỉ email: ' + email + ' là chính xác không ?', confirmBookTour);
     }
 
     $scope.paymentMomo = function () {
