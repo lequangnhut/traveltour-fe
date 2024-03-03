@@ -21,6 +21,17 @@ travel_app.service('BookingTourServiceCT', function ($http) {
         });
     }
 
+    this.redirectMomo = function (price, bookingTourId) {
+        return $http({
+            method: 'POST',
+            url: BASE_API + 'momo/submit-payment',
+            params: {
+                price: price,
+                bookingTourId: bookingTourId,
+            }
+        });
+    }
+
     this.createBookTour = function (bookingDto) {
         return $http({
             method: 'POST',

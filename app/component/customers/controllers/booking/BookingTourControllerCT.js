@@ -197,9 +197,9 @@ travel_app.controller('BookingTourControllerCT', function ($scope, $sce, $locati
         let email = $scope.bookings_tour.customerEmail;
         let totalPrice = $scope.totalPrice;
         let tourDetail = $scope.tourDetail;
-        let bookingId = GenerateCodePayService.generateCodeBooking('VNPAY', tourDetail.id);
+        let bookingTourId = GenerateCodePayService.generateCodeBooking('VNPAY', tourDetail.id);
 
-        $scope.bookings_tour.id = bookingId;
+        $scope.bookings_tour.id = bookingTourId;
         $scope.bookings_tour.capacityAdult = ticket.adults;
         $scope.bookings_tour.capacityKid = ticket.children;
         $scope.bookings_tour.capacityBaby = ticket.baby;
@@ -213,7 +213,7 @@ travel_app.controller('BookingTourControllerCT', function ($scope, $sce, $locati
                 bookingTourCustomersDto: $scope.bookingCustomerList
             }
 
-            BookingTourServiceCT.redirectVNPay(totalPrice, bookingId).then(function successCallBack(response) {
+            BookingTourServiceCT.redirectVNPay(totalPrice, bookingTourId).then(function successCallBack(response) {
                 if (response.status === 200) {
                     LocalStorageService.set('bookingDto', bookingDto);
                     LocalStorageService.set('bookingTicket', bookingDto.bookingToursDto);
@@ -242,9 +242,9 @@ travel_app.controller('BookingTourControllerCT', function ($scope, $sce, $locati
         let email = $scope.bookings_tour.customerEmail;
         let totalPrice = $scope.totalPrice;
         let tourDetail = $scope.tourDetail;
-        let bookingId = GenerateCodePayService.generateCodeBooking('ZALOPAY', tourDetail.id);
+        let bookingTourId = GenerateCodePayService.generateCodeBooking('ZALOPAY', tourDetail.id);
 
-        $scope.bookings_tour.id = bookingId;
+        $scope.bookings_tour.id = bookingTourId;
         $scope.bookings_tour.capacityAdult = ticket.adults;
         $scope.bookings_tour.capacityKid = ticket.children;
         $scope.bookings_tour.capacityBaby = ticket.baby;
@@ -255,7 +255,7 @@ travel_app.controller('BookingTourControllerCT', function ($scope, $sce, $locati
         function confirmBookTour() {
             let paymentData = {
                 amount: totalPrice,
-                bookingTourId: bookingId
+                bookingTourId: bookingTourId
             }
 
             BookingTourServiceCT.redirectZALOPay(paymentData).then(function successCallBack(response) {
@@ -274,7 +274,48 @@ travel_app.controller('BookingTourControllerCT', function ($scope, $sce, $locati
     }
 
     $scope.paymentMomo = function () {
+        $scope.isLoading = true;
 
+        if (user !== null) {
+            $scope.bookings_tour.userId = user.id;
+        }
+
+        let ticket = $scope.ticket;
+        let email = $scope.bookings_tour.customerEmail;
+        let totalPrice = $scope.totalPrice;
+        let tourDetail = $scope.tourDetail;
+        let bookingTourId = GenerateCodePayService.generateCodeBooking('MOMO', tourDetail.id);
+
+        $scope.bookings_tour.id = bookingTourId;
+        $scope.bookings_tour.capacityAdult = ticket.adults;
+        $scope.bookings_tour.capacityKid = ticket.children;
+        $scope.bookings_tour.capacityBaby = ticket.baby;
+        $scope.bookings_tour.orderTotal = totalPrice;
+        $scope.bookings_tour.paymentMethod = 3; // 3: MOMO
+        $scope.bookings_tour.orderCode = GenerateCodePayService.generateCodePayment('MOMO');
+
+        function confirmBookTour() {
+            let bookingDto = {
+                bookingToursDto: $scope.bookings_tour,
+                bookingTourCustomersDto: $scope.bookingCustomerList
+            }
+
+            BookingTourServiceCT.redirectMomo(totalPrice, bookingTourId).then(function successCallBack(response) {
+                if (response.status === 200) {
+                    LocalStorageService.set('bookingDto', bookingDto);
+                    LocalStorageService.set('bookingTicket', bookingDto.bookingToursDto);
+
+                    $window.location.href = response.data.redirectUrl;
+                    $scope.bookingCustomerList.splice(0, $scope.bookingCustomerList.length);
+                } else {
+                    $location.path('/admin/page-not-found')
+                }
+            }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+        }
+
+        confirmAlert('Bạn có chắc chắn địa chỉ email: ' + email + ' là chính xác không ?', confirmBookTour);
     }
 
     $scope.$on('$routeChangeStart', function (event, next, current) {
