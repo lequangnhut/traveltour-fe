@@ -40,8 +40,8 @@ travel_app.controller('BookingSuccessControllerCT', function ($scope, $location,
                     $scope.submitBookingVNPay();
                 } else if (paymentMethod === 'ZALOPAY') {
                     // Xử lý thanh toán ZaloPay
-                } else if (paymentMethod === 'MOMO') {
-                    // Xử lý thanh toán MoMo
+                } else if (paymentMethod === 'MOMO' && !paymentProcessed) {
+                    $scope.submitBookingMomo();
                 }
             }
         }
@@ -53,17 +53,25 @@ travel_app.controller('BookingSuccessControllerCT', function ($scope, $location,
 
         BookingTourServiceCT.createBookTourVNPay(bookingDto, transactionId).then(function successCallBack(response) {
             if (response.status === 200) {
-                if (transactionId != 0) {
-                    toastAlert('success', 'Đặt tour thành công !');
-                } else {
-                    toastAlert('success', 'Thanh toán thất bại !');
-                }
                 LocalStorageService.set('paymentProcessed', true);
             } else {
                 $location.path('/admin/page-not-found');
             }
         }, errorCallback);
     };
+
+    $scope.submitBookingMomo = function () {
+        let transactionId = parseInt($routeParams.transactionId);
+        let bookingDto = LocalStorageService.get('bookingDto');
+
+        BookingTourServiceCT.createBookTourMomo(bookingDto, transactionId).then(function successCallBack(response) {
+            if (response.status === 200) {
+                LocalStorageService.set('paymentProcessed', true);
+            } else {
+                $location.path('/admin/page-not-found');
+            }
+        }, errorCallback);
+    }
 
     $scope.init();
 

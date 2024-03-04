@@ -677,6 +677,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/payment-policy', {
             templateUrl: 'app/component/customers/views/pages/home/payment-policy.html'
         })
+
         /**
          * Booking
          */

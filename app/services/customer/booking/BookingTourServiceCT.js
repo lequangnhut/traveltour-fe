@@ -13,14 +13,6 @@ travel_app.service('BookingTourServiceCT', function ($http) {
         });
     }
 
-    this.redirectZALOPay = function (paymentData) {
-        return $http({
-            method: 'POST',
-            url: BASE_API + 'zalopay/submit-payment',
-            data: paymentData
-        });
-    }
-
     this.redirectMomo = function (price, bookingTourId) {
         return $http({
             method: 'POST',
@@ -29,6 +21,14 @@ travel_app.service('BookingTourServiceCT', function ($http) {
                 price: price,
                 bookingTourId: bookingTourId,
             }
+        });
+    }
+
+    this.redirectZALOPay = function (paymentData) {
+        return $http({
+            method: 'POST',
+            url: BASE_API + 'zalopay/submit-payment',
+            data: paymentData
         });
     }
 
@@ -44,6 +44,14 @@ travel_app.service('BookingTourServiceCT', function ($http) {
         return $http({
             method: 'POST',
             url: API_BOOKING + 'create-book-tour-vnpay/' + transactionId,
+            data: bookingDto
+        });
+    }
+
+    this.createBookTourMomo = function (bookingDto, transactionId) {
+        return $http({
+            method: 'POST',
+            url: API_BOOKING + 'create-book-tour-momo/' + transactionId,
             data: bookingDto
         });
     }
