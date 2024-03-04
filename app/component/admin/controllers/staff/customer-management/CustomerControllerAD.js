@@ -350,7 +350,7 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
     }
 
     function hasAdminRole(roles) {
-        var adminRoles = ['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_STAFF'];
+        var adminRoles = ['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_STAFF', 'ROLE_GUIDE'];
 
         for (var i = 0; i < roles.length; i++) {
             if (adminRoles.includes(roles[i].nameRole)) {
@@ -359,4 +359,11 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
         }
         return false;
     }
+
+    if (AuthService.getUser() !== null) {
+        $scope.roles = AuthService.getUser().roles.map(role => role.nameRole);
+    }
+    $scope.hasRole = function (roleToCheck) {
+        return $scope.roles.includes(roleToCheck);
+    };
 });

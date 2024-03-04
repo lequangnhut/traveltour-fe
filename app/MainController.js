@@ -131,12 +131,19 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
      * @returns {boolean}
      */
     $scope.isAuthPage = function () {
+        const locationPath = $location.path();
         const authPaths = [
             '/sign-in',
             '/sign-up',
             '/forgot-password',
             '/login-admin'
         ];
+        // Kiểm tra đường dẫn chứa id phía sau
+        if (
+            locationPath.includes('/account/forgot-pass/')
+        ) {
+            return true;
+        }
         return authPaths.includes($location.path());
     };
 
@@ -208,7 +215,8 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
         if (
             locationPath.includes('/business/hotel/home/hotel/update/') ||
             locationPath.includes('/business/transport/home/update-transport/') ||
-            locationPath.includes('/business/visit/home/update-visit-location/')
+            locationPath.includes('/business/visit/home/update-visit-location/') ||
+            locationPath.includes('/admin/information-update/')
         ) {
             return true;
         }
@@ -244,7 +252,8 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
         if (
             locationPath.includes('/business/hotel/home/hotel/update/') ||
             locationPath.includes('/business/transport/home/update-transport/') ||
-            locationPath.includes('/business/visit/home/update-visit-location/')
+            locationPath.includes('/business/visit/home/update-visit-location/',)||
+            locationPath.includes('/admin/information-update/')
         ) {
             return {'margin': '0'};
         }
