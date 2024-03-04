@@ -5,7 +5,7 @@
         <div class="">
             <div class="d-flex align-items-center row">
                 <div class="col-lg-6">
-                    <h3 class="color-green fw-medium text-uppercase">thông tin cá nhân</h3>
+                    <h3 class="color-green fw-bold text-uppercase">thông tin cá nhân</h3>
                 </div>
             </div>
         </div>
@@ -189,9 +189,14 @@
             </div>
 
             <div class="col-12 d-flex justify-content-end mt-5">
-<!--                <button type="button" class="btn" style="margin-right: 20px">-->
-<!--                    <a class="btn" href="/admin/customer-list">Trở về</a>-->
-<!--                </button>-->
+                <button type="button" class="btn" style="margin-right: 20px"
+                        ng-if="hasRole('ROLE_AGENT_TRANSPORT') || hasRole('ROLE_AGENT_HOTEL') || hasRole('ROLE_AGENT_PLACE')">
+                    <a class="btn" href="/business/select-type">Trở về</a>
+                </button>
+                <button type="button" class="btn" style="margin-right: 20px"
+                        ng-if="!hasRole('ROLE_AGENT_TRANSPORT') || !hasRole('ROLE_AGENT_HOTEL') || !hasRole('ROLE_AGENT_PLACE')">
+                    <a class="btn" href="/admin/dashboard">Trở về</a>
+                </button>
                 <button type="submit"
                         ng-disabled="customerForm.$invalid || emailError || phoneError || cardError"
                         class="btn btn-submit fw-bold"
