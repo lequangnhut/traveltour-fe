@@ -1,7 +1,7 @@
 travel_app.service('RoomTypeServiceServiceAD', function ($http, $q) {
     let API_ROOM_TYPE_SERVICE = BASE_API + 'staff/room-type/';
 
-    this.getAllOrSearchRoomTypeByHotelId = function (page, size, sortBy, sortDir, hotelId, searchTerm) {
+    this.getAllOrSearchRoomTypeByHotelId = function (page, size, sortBy, sortDir, hotelId,checkIn, checkOut, searchTerm) {
         const deferred = $q.defer();
         $http({
             method: 'GET',
@@ -12,6 +12,8 @@ travel_app.service('RoomTypeServiceServiceAD', function ($http, $q) {
                 sortBy: sortBy || 'id',
                 sortDir: sortDir || 'asc',
                 hotelId: hotelId,
+                checkIn: checkIn,
+                checkOut: checkOut,
                 searchTerm: searchTerm || '',
             }
         }).then(deferred.resolve, deferred.reject);

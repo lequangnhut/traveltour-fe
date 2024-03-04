@@ -4,7 +4,8 @@
             <div class="d-flex justify-content-between align-items-center row ">
                 <div class="col mt-3">
                     <h3 class="color-green fw-bold text-uppercase mb-3">Chi tiết thanh toán</h3>
-                    <a href="#" class="text-decoration-none">< Quay lại đơn hàng</a>
+                    <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/hotel-list/{{hotelId}}/room-type-list"
+                       class="text-decoration-none">< Quay lại đơn hàng</a>
                 </div>
             </div>
         </div>
@@ -212,7 +213,8 @@
 
             <!-- Submit Button -->
             <div class="float-end mb-2">
-                <button ng-click="completeYourBooking()" class="btn btn-success" type="submit">Hoàn tất đặt phòng
+                <button ng-click="ConfirmationOfCompleteBooking()" class="btn btn-success" type="submit">Hoàn tất đặt
+                    phòng
                 </button>
             </div>
         </div>
