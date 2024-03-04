@@ -108,7 +108,6 @@ travel_app.controller('HotelServiceControllerAD',
                     $scope.setPage(Math.max(0, $scope.currentPage - 1));
                     return;
                 }
-                console.log(hotelResponse)
 
                 $scope.hotelServiceData(hotelResponse)
 
@@ -144,8 +143,6 @@ travel_app.controller('HotelServiceControllerAD',
                     //fill list table room type by hotel id
                     const RoomTypeByHotelByIdResponse = await RoomTypeServiceServiceAD.getAllOrSearchRoomTypeByHotelId($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, hotelId, $scope.searchTerm)
                     $scope.RoomTypeByHotelByIdList = RoomTypeByHotelByIdResponse.data.data;
-                    console.log(RoomTypeByHotelByIdResponse)
-
 
                     //fill modal hotelInfo
                     const HotelByIdResponse = await HotelServiceServiceAD.findHotelById(hotelId)
@@ -164,7 +161,7 @@ travel_app.controller('HotelServiceControllerAD',
                     };
                 }
             } catch (error) {
-                console.error("Error:", error);
+                errorCallback()
             } finally {
                 $scope.$apply(() => {
                     $scope.isLoading = false;
@@ -239,7 +236,7 @@ travel_app.controller('HotelServiceControllerAD',
                         });
                     }, 0);
                 } catch (error) {
-                    console.error("Error:", error);
+                    errorCallback()
                 }
             }, 500);
         };
@@ -276,9 +273,20 @@ travel_app.controller('HotelServiceControllerAD',
                     });
                 }, 0);
             } catch (error) {
-                console.error("Error:", error);
+                errorCallback()
             }
         };
+
+        const checkBookingDates = (departureDate, arrivalDate) => {
+            const departure = new Date(departureDate);
+            const arrival = new Date(arrivalDate);
+
+            const timeDiff = arrival.getTime() - departure.getTime();
+            const hourDiff = timeDiff / (1000 * 3600);
+
+            return hourDiff < 1;
+        };
+
 
         $scope.navigateToRoomTypeList = (tourDetailId, hotelServiceId, hotelName, address) => {
             function checkAndFocusInput(condition, inputId, message) {
@@ -295,6 +303,7 @@ travel_app.controller('HotelServiceControllerAD',
             if (checkAndFocusInput(!$scope.searchHotels.departureDate && !$scope.searchHotels.arrivalDate, 'departureDateInput', 'Vui lòng chọn ngày đi và ngày về !') ||
                 checkAndFocusInput(!$scope.searchHotels.departureDate, 'departureDateInput', 'Vui lòng chọn ngày đi !') ||
                 checkAndFocusInput(!$scope.searchHotels.arrivalDate, 'arrivalDateInput', 'Vui lòng chọn ngày về !') ||
+                checkAndFocusInput(checkBookingDates($scope.searchHotels.departureDate, $scope.searchHotels.arrivalDate), 'arrivalDateInput', 'Ngày đi phải trước ngày về! !') ||
                 checkAndFocusInput(!$scope.searchHotels.numAdults && $scope.searchHotels.numAdults <= 0, 'numAdultsInput', 'Vui lòng nhập số lượng người lớn và phải lớn hơn 0 !') ||
                 checkAndFocusInput($scope.searchHotels.numChildren < 0, 'numChildrenInput', 'Số lượng trẻ em không thể là số âm!') ||
                 checkAndFocusInput(!$scope.searchHotels.numRooms && $scope.searchHotels.numRooms <= 0, 'numRoomsInput', 'Vui lòng nhập số lượng phòng và phải lớn hơn 0 !')) {

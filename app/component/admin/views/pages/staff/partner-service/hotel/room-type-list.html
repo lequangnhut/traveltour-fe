@@ -51,7 +51,7 @@
                 <div class="row">
                     <div class="h4 col-lg-5 d-flex align-items-center h-100">
                         <div class="d-flex align-items-center">
-                            <span class="h4">Danh sách dịch vụ khách sạn cho tour</span>
+                            <span class="h4">Danh sách dịch vụ pòng của khách sạn cho tour</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end align-items-baseline col-lg-2">
@@ -136,6 +136,12 @@
                             <span class="sorting-icon" ng-bind-html="getSortIcon('capacityAdults')"></span>
                         </div>
                     </th>
+                    <th class="cursor-pointer" ng-click="sortData('availableRooms')">
+                        <div class="icon-left">
+                            Số phòng trống
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('availableRooms')"></span>
+                        </div>
+                    </th>
                     <th class="cursor-pointer" ng-click="sortData('price')">
                         <div class="icon-left">
                             Giá phòng
@@ -166,10 +172,11 @@
                     </td>
                     <td>{{ rt.capacityChildren }}</td>
                     <td>{{ rt.capacityAdults }}</td>
+                    <td>{{ rt.availableRooms }}</td>
                     <td>{{ rt.price | vnCurrency }}</td>
                     <td style="width: 105px">
                         <input type="number" class="form-control" ng-model="rt.quantity" ng-disabled="!rt.isChecked"
-                               min="1" max="999">
+                               ng-change="onQuantityChange(rt)" ng-blur="onQuantityBlur(rt)" min="1" oninput="validity.valid||(value='');">
                     </td>
                 </tr>
                 <tr ng-if="tourDetailList.length === 0">

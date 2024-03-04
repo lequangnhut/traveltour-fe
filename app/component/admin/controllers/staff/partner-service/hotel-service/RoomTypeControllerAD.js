@@ -10,11 +10,8 @@ travel_app.controller('RoomTypeControllerAD',
         $scope.tourDetailId = tourDetailId;
         $scope.hotelId = hotelId;
 
-        if (tourDetailId !== undefined && tourDetailId !== null && tourDetailId !== "") {
-            TourDetailsServiceAD.findTourDetailById(tourDetailId).then(response => {
-                $scope.tourGuideId = response.data.data.guideId;
-            })
-        }
+        let checkIn = JSON.parse(sessionStorage.getItem('infoHotel')).departureDate
+        let checkOut = JSON.parse(sessionStorage.getItem('infoHotel')).arrivalDate
 
         $scope.tourInfo = {
             tourName: null,
@@ -30,6 +27,25 @@ travel_app.controller('RoomTypeControllerAD',
         $scope.roomTypeList = [];
         $scope.currentPage = 0;
         $scope.pageSize = 5;
+
+        $scope.onQuantityChange = function (rt) {
+            rt.quantity = parseInt(rt.quantity, 10) || 0;
+
+            const availableRooms = parseInt(rt.availableRooms, 10) || 0;
+
+            if (rt.quantity > availableRooms) {
+                toastAlert('warning', 'Số lượng phòng đặt không được vượt quá số lượng phòng còn trống!');
+                rt.quantity = availableRooms; // Đặt lại rt.quantity thành số lượng phòng có sẵn
+            }
+        };
+
+
+        $scope.onQuantityBlur = function (rt) {
+            if (rt.quantity === null || rt.quantity === '' || rt.quantity < 1) {
+                rt.quantity = 1;
+            }
+        };
+
 
         $scope.setPage = (page) => {
             if (page >= 0 && page < $scope.totalPages) {
@@ -93,15 +109,13 @@ travel_app.controller('RoomTypeControllerAD',
 
             $scope.roomTypeList = await Promise.all(roomTypePromises);
             $scope.$apply()
-            console.log($scope.roomTypeList)
         };
 
 
         $scope.getRoomTypeList = async () => {
             try {
-                $scope.isLoading = true;
                 const [RoomTypeByHotelByIdResponse, tourDetailResponse] = await Promise.all([
-                    RoomTypeServiceServiceAD.getAllOrSearchRoomTypeByHotelId($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, hotelId),
+                    RoomTypeServiceServiceAD.getAllOrSearchRoomTypeByHotelId($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, hotelId, checkIn, checkOut),
                     TourDetailsServiceAD.findTourDetailById(tourDetailId)
                 ]);
 
@@ -152,7 +166,7 @@ travel_app.controller('RoomTypeControllerAD',
                 };
 
             } catch (error) {
-                console.error("Error:", error);
+                errorCallback()
             } finally {
                 $scope.$apply(() => {
                     $scope.isLoading = false;
@@ -161,17 +175,17 @@ travel_app.controller('RoomTypeControllerAD',
         }
 
         const getColumnValue = (item, field) => {
-            // Logic hiện tại của bạn đã phù hợp cho việc lấy giá trị
             switch (field) {
                 case 'roomUtilitiesNames':
-                    return item.roomUtilitiesNames.toLowerCase(); // Đảm bảo so sánh không phân biệt hoa thường
+                    return item.roomUtilitiesNames.toLowerCase();
                 case 'bedTypeNames':
-                    return item.bedTypeNames.toLowerCase(); // Đảm bảo so sánh không phân biệt hoa thường
+                    return item.bedTypeNames.toLowerCase();
+                case 'availableRooms':
+                    return item.availableRooms; // Trả về giá trị của trường "availableRooms"
                 default:
                     return item[field];
             }
         };
-
 
         $scope.customSort = function (field, dir) {
             const sortDirection = dir === 'asc' ? 1 : -1;
@@ -195,7 +209,7 @@ travel_app.controller('RoomTypeControllerAD',
         };
 
         $scope.sortData = (column) => {
-            if (column === 'roomUtilitiesNames' || column === 'bedTypeNames') {
+            if (column === 'roomUtilitiesNames' || column === 'bedTypeNames' || column === 'availableRooms') {
                 $scope.sortBy = column;
                 $scope.sortDir = ($scope.sortDir === 'asc') ? 'desc' : 'asc';
                 $scope.customSort(column, $scope.sortDir);
@@ -218,7 +232,7 @@ travel_app.controller('RoomTypeControllerAD',
 
             searchTimeout = $timeout(async () => {
                 try {
-                    const response = await RoomTypeServiceServiceAD.getAllOrSearchRoomTypeByHotelId($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, hotelId, $scope.searchTerm);
+                    const response = await RoomTypeServiceServiceAD.getAllOrSearchRoomTypeByHotelId($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, hotelId, checkIn, checkOut, $scope.searchTerm);
 
                     if (!response || !response.data || !response.data.data || !response.data.data.content) {
                         $scope.getRoomTypeList();
@@ -228,7 +242,7 @@ travel_app.controller('RoomTypeControllerAD',
 
                     $scope.roomTypeData(response)
                 } catch (error) {
-                    console.error("Error:", error);
+                    errorCallback()
                 }
 
             }, 500);
@@ -254,8 +268,11 @@ travel_app.controller('RoomTypeControllerAD',
             });
 
             sessionStorage.setItem('selectedRooms', JSON.stringify(selectedRooms));
-            sessionStorage.setItem('tourGuideId', $scope.tourGuideId);
         };
+
+        function errorCallback() {
+            $location.path('/admin/internal-server-error')
+        }
 
         $scope.getRoomTypeList();
 
