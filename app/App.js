@@ -646,7 +646,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/tour/tour.html',
             controller: 'TourController'
         })
-        .when('/tour-detail/:id', {
+        .when('/tours/tour-detail/:id', {
             templateUrl: 'app/component/customers/views/pages/tour/tour-details.html',
             controller: 'TourDetailController'
         })
@@ -681,23 +681,23 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Booking
          */
-        .when('/tour-detail/:id/booking-tour', {
+        .when('/tours/tour-detail/:id/booking-tour', {
             templateUrl: 'app/component/customers/views/pages/booking/booking.html',
             controller: 'BookingTourControllerCT'
         })
-        .when('/tour-detail/:id/booking-tour/customer-information', {
+        .when('/tours/tour-detail/:id/booking-tour/customer-information', {
             templateUrl: 'app/component/customers/views/pages/booking/booking-info-customer.html',
             controller: 'BookingTourControllerCT'
         })
-        .when('/tour-detail/:id/booking-tour/customer-information/check-information', {
+        .when('/tours/tour-detail/:id/booking-tour/customer-information/check-information', {
             templateUrl: 'app/component/customers/views/pages/booking/booking-check-info.html',
             controller: 'BookingSuccessControllerCT'
         })
-        .when('/tour-detail/:id/booking-tour/customer-information/check-information/payment-success', {
+        .when('/tours/tour-detail/:id/booking-tour/customer-information/check-information/payment-success', {
             templateUrl: 'app/component/customers/views/pages/booking/booking-check-info.html',
             controller: 'BookingSuccessControllerCT'
         })
-        .when('/tour-detail/:id/booking-tour/customer-information/check-information/payment-failure', {
+        .when('/tours/tour-detail/:id/booking-tour/customer-information/check-information/payment-failure', {
             templateUrl: 'app/component/customers/views/pages/booking/booking-check-info.html',
             controller: 'BookingSuccessControllerCT'
         })

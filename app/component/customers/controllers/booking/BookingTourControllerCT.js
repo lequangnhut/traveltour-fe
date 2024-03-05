@@ -96,7 +96,7 @@ travel_app.controller('BookingTourControllerCT', function ($scope, $sce, $locati
             centerAlert('Xác nhận !', 'Vui lòng chấp nhận điều khoản, điều kiện.', 'warning')
         } else {
             LocalStorageService.set('serviceCustomer', $scope.service);
-            $location.path('/tour-detail/' + $scope.tourDetail.id + '/booking-tour/customer-information');
+            $location.path('/tours/tour-detail/' + $scope.tourDetail.id + '/booking-tour/customer-information');
         }
     };
 
@@ -173,7 +173,7 @@ travel_app.controller('BookingTourControllerCT', function ($scope, $sce, $locati
                     LocalStorageService.set('bookingTicket', bookingTicket);
 
                     toastAlert('success', 'Đặt tour thành công !');
-                    $location.path('/tour-detail/' + tourDetail.id + '/booking-tour/customer-information/check-information');
+                    $location.path('/tours/tour-detail/' + tourDetail.id + '/booking-tour/customer-information/check-information');
                     $scope.bookingCustomerList.splice(0, $scope.bookingCustomerList.length);
                 } else {
                     $location.path('/admin/page-not-found')

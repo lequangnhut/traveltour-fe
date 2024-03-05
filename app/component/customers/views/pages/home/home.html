@@ -54,6 +54,15 @@
 <section class="places-section pb-100">
     <div ng-include="'app/component/utils/loading-component.html'"></div>
     <div class="container" ng-if="!isLoading">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-10">
+                <!--=== Section Title ===-->
+                <div class="section-title text-center mb-60 wow fadeInDown">
+                    <span class="sub-title pt-3 fs-3">TOUR NỔI BẬT</span>
+                    <h2 class="fs-2">Tour có lượt chọn nhiều nhất tại TravelTour</h2>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-xl-4 col-md-6 col-sm-12 places-column" ng-repeat="detail in tourDetail"
                  ng-if="detail.tourDetailStatus !== 2 && detail.tourDetailStatus !== 3">
@@ -72,7 +81,7 @@
                                 <li><a href="#">(4.9)</a></li>
                             </ul>
                             <h4 class="title">
-                                <a href="/tour-detail/{{detail.id}}">{{ detail.toursByTourId.tourName }}</a>
+                                <a href="/tours/tour-detail/{{detail.id}}">{{ detail.toursByTourId.tourName }}</a>
                             </h4>
                             <p class="location">
                                 <span class="fas fa-map-marker-alt"></span>
@@ -88,7 +97,7 @@
                                     {{ detail.departureDate | calculateDaysAndNights:detail.arrivalDate }}
                                 </span>
                                 <span>
-                                    <a href="/tour-detail/{{detail.id}}">Chi tiết<span
+                                    <a href="/tours/tour-detail/{{detail.id}}">Chi tiết<span
                                             class="fas fa-long-arrow-right"></span></a>
                                 </span>
                             </div>
@@ -465,8 +474,8 @@
             <div class="col-xl-8 col-lg-10">
                 <!--=== Section Title ===-->
                 <div class="section-title text-center mb-60 wow fadeInDown">
-                    <span class="sub-title">KHÁCH SẠN</span>
-                    <h2>Khách sạn được chọn nhiều nhất tại TravelTour</h2>
+                    <span class="sub-title pt-3 fs-3">KHÁCH SẠN NỔI BẬT</span>
+                    <h2 class="fs-2">Khách sạn được chọn nhiều nhất tại TravelTour</h2>
                 </div>
             </div>
         </div>

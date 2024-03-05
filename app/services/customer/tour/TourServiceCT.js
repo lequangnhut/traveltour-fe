@@ -11,4 +11,11 @@ travel_app.service('TourServiceCT', function ($http) {
             }
         });
     };
+
+    this.findAllTourType = function () {
+        return $http({
+            method: 'GET',
+            url: API_TOUR + 'find-all-tour-type'
+        });
+    }
 });

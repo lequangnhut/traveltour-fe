@@ -103,13 +103,27 @@
                     <!--====== Main Menu ======-->
                     <nav class="main-menu">
                         <ul>
-                            <li class="menu-item has-children"><a href="/home">Trang chủ</a></li>
-                            <li class="menu-item has-children"><a href="/tours">Tours</a></li>
-                            <li class="menu-item has-children"><a href="/hotel">Khách sạn</a></li>
-                            <li class="menu-item has-children"><a href="/drive-move">Di chuyển</a></li>
-                            <li class="menu-item has-children"><a href="/tourism-location">Điểm tham quan</a></li>
                             <li class="menu-item has-children">
-                                <a href="javascript:void(0)">Xem thêm
+                                <a ng-class="{ 'active': isActive('/home') }" href="/home">Trang chủ</a>
+                            </li>
+                            <li class="menu-item has-children">
+                                <a ng-class="{ 'active': isActive('/tours') }" href="/tours">Tours</a>
+                            </li>
+                            <li class="menu-item has-children">
+                                <a ng-class="{ 'active': isActive('/hotel') }" href="/hotel">Khách sạn</a>
+                            </li>
+                            <li class="menu-item has-children">
+                                <a ng-class="{ 'active': isActive('/drive-move') }" href="/drive-move">Đặt xe</a>
+                            </li>
+                            <li class="menu-item has-children">
+                                <a ng-class="{ 'active': isActive('/tourism-location') }" href="/tourism-location">
+                                    Điểm tham quan
+                                </a>
+                            </li>
+                            <li class="menu-item has-children">
+                                <a ng-class="{ 'active': isActive('/introduce') || isActive('/travel-guide') || isActive('/contact') }"
+                                   href="javascript:void(0)">
+                                    Xem thêm
                                     <span class="fas fa-angle-down"></span>
                                 </a>
                                 <ul class="sub-menu">

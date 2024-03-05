@@ -6727,7 +6727,7 @@ ul.slick-dots li.slick-active {
     color: #63ab45;
 }
 
-.text-green{
+.text-green {
     color: #63AB45;
 }
 
@@ -6735,19 +6735,19 @@ ul.slick-dots li.slick-active {
     color: #ff9800;
 }
 
-.wide{
+.wide {
     width: 200px;
     height: 50px;
     border-radius: 50px;
     padding: 10px
 }
 
-.btn-green{
+.btn-green {
     background-color: #63AB45;
     color: white;
 }
 
-.btn-green:hover{
+.btn-green:hover {
     background-color: #498434;
     color: white;
 }
@@ -6760,4 +6760,8 @@ ul.slick-dots li.slick-active {
 .btn-orange:hover {
     background-color: #fdaf65;
     color: white;
+}
+
+.main-menu ul li a.active {
+    color: #63AB45;
 }

@@ -15,7 +15,9 @@
         </div>
     </div>
 </section><!--====== End Breadcrumb Section ======-->
+
 <div ng-include="'app/component/customers/views/pages/hotel/modal/mapModal.html'"></div>
+
 <!--====== Start Events Section ======-->
 <section class="events-section pt-100 pb-100">
     <div class="container">
@@ -232,7 +234,7 @@
                 <div ng-repeat="roomType in roomTypes" ng-if="roomTypes.length > 0">
                     <div class="single-event-item mb-30 wow fadeInUp row">
                         <div class="img-holder col-xl-3 col-lg-4 p-0">
-                            <img src="{{roomType.roomTypeAvatar}}"
+                            <img ng-src="{{roomType.roomTypeAvatar}}" style="height: 170px"
                                  onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
 
                         </div>
@@ -252,7 +254,8 @@
                                              style="border-bottom: 1px solid rgba(29, 35, 31, 0.1);">
                                             <div class="location text-orange" style="font-size: 14px">
                                                 <p><span
-                                                        class="fas fa-map-marker-alt"></span> {{ roomType.hotelsByHotelId.province }} -
+                                                        class="fas fa-map-marker-alt"></span> {{ roomType.hotelsByHotelId.province }}
+                                                    -
                                                     {{ roomType.hotelsByHotelId.district }}</p>
                                                 <p>{{ roomType.hotelsByHotelId.address }}</p>
                                             </div>
@@ -354,9 +357,8 @@
                             </li>
 
                             <!-- Pagination Numbers -->
-                            <li class="m-1" ng-repeat="n in getPaginationRange()"
-                                ng-class="{active: n === filler.page}">
-                                <a class="" ng-click="setPage(n)">{{ n + 1 }}</a>
+                            <li class="m-1" ng-repeat="n in getPaginationRange()">
+                                <a ng-class="{active: n === filler.page}" ng-click="setPage(n)">{{ n + 1 }}</a>
                             </li>
 
                             <!-- Ellipsis at the end -->
@@ -380,73 +382,6 @@
     </div>
 </section><!--====== End Events Section ======-->
 
-<!--====== Start Gallery Section ======-->
-<section class="gallery-section mbm-150">
-    <div class="container-fluid">
-        <div class="slider-active-5-item wow fadeInUp">
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-1.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-1.jpg" class="icon-btn img-popup"><span
-                                class="fas fa-plus"></span></a>
-                    </div>
-                </div>
-            </div>
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-2.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-2.jpg" class="icon-btn img-popup"><span
-                                class="fas fa-plus"></span></a>
-                    </div>
-                </div>
-            </div>
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-3.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-3.jpg" class="icon-btn img-popup"><span
-                                class="fas fa-plus"></span></a>
-                    </div>
-                </div>
-            </div>
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-4.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-4.jpg" class="icon-btn img-popup"><span
-                                class="fas fa-plus"></span></a>
-                    </div>
-                </div>
-            </div>
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-5.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-5.jpg" class="icon-btn img-popup"><span
-                                class="fas fa-plus"></span></a>
-                    </div>
-                </div>
-            </div>
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-3.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-3.jpg" class="icon-btn img-popup"><span
-                                class="fas fa-plus"></span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section><!--====== End Gallery Section ======-->
 <!--====== Start Modal Section ======-->
 <div id="mapModal" class="modal fade" role="dialog">
     <div class="modal-dialog" style="max-width: 90%">

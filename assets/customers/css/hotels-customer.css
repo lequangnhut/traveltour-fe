@@ -1,6 +1,7 @@
-.container-hotel{
+.container-hotel {
     min-height: 300px;
 }
+
 .infoHotel {
     position: relative;
 }
@@ -12,18 +13,17 @@
 .infoHotel .price {
 
 }
-.mapBoxModel{
+
+.mapBoxModel {
     height: 600px;
     width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-.mapBoxModelById{
+.mapBoxModelById {
     height: 600px;
     width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
 }
-
-

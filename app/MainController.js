@@ -29,6 +29,13 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
         };
 
         /**
+         * Set active cho navbar trên header
+         */
+        $scope.isActive = function (viewLocation) {
+            return viewLocation === $location.path();
+        };
+
+        /**
          * Mở image bự hơn trong modal
          */
         $scope.openImageModal = function (imageUrl) {
@@ -252,7 +259,7 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
         if (
             locationPath.includes('/business/hotel/home/hotel/update/') ||
             locationPath.includes('/business/transport/home/update-transport/') ||
-            locationPath.includes('/business/visit/home/update-visit-location/',)||
+            locationPath.includes('/business/visit/home/update-visit-location/',) ||
             locationPath.includes('/admin/information-update/')
         ) {
             return {'margin': '0'};
@@ -280,11 +287,11 @@ travel_app.controller('MainController', function ($scope, $rootScope, $location,
         }, 500);
     });
 
-    $scope.playSuccessSound = function() {
+    $scope.playSuccessSound = function () {
         $scope.successSound.play();
     };
 
-    $scope.playErrorSound = function() {
+    $scope.playErrorSound = function () {
         $scope.errorSound.play();
     };
 });

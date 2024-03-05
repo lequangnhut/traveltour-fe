@@ -107,12 +107,14 @@ travel_app.controller('TourDetailController', function ($scope, $location, $sce,
                 }
 
                 LocalStorageService.set('dataBooking', dataBooking);
-                $location.path('/tour-detail/' + tourDetailId + '/booking-tour');
+                $location.path('/tours/tour-detail/' + tourDetailId + '/booking-tour');
             }
         }
     }
 
-    // Khởi tạo bản đồ
+    /**
+     * phương thức khởi tạo bản đồ
+     */
     $scope.initMap = function () {
         $scope.isLoading = true;
 
@@ -122,14 +124,14 @@ travel_app.controller('TourDetailController', function ($scope, $location, $sce,
 
         TourDetailsServiceAD.findTourDestinationByTourDetailById(tourDetailId).then(function (response) {
             if (response.status === 200) {
-                $scope.arrayData = response.data.data;
+                $scope.arrayDataProvince = response.data.data;
 
-                if ($scope.arrayData !== null) {
-                    $scope.arrayData.forEach(function (item) {
+                if ($scope.arrayDataProvince !== null) {
+                    $scope.arrayDataProvince.forEach(function (item) {
                         $scope.provinceName.push(item.province);
                     });
                 } else {
-                    $scope.provinceName = ['Cần Thơ'];
+                    $scope.provinceName = [];
                 }
 
                 let fromLocation = $scope.tourDetail.fromLocation;
@@ -143,73 +145,36 @@ travel_app.controller('TourDetailController', function ($scope, $location, $sce,
                     if (!error) {
                         MapBoxService.geocodeAddress(toLocation, function (error, toCoordinates) {
                             if (!error) {
-                                // Thêm tọa độ của các điểm trung gian vào danh sách địa điểm
-                                let coordinatesList = intermediatePoints.map(function (point) {
-                                    return new Promise(function (resolve, reject) {
-                                        MapBoxService.geocodeAddress(point, function (error, coordinates) {
-                                            if (!error) {
-                                                resolve(coordinates);
-                                            } else {
-                                                reject(error);
-                                            }
+                                if (intermediatePoints.length > 0) {
+                                    let coordinatesList = intermediatePoints.map(function (point) {
+                                        return new Promise(function (resolve, reject) {
+                                            MapBoxService.geocodeAddress(point, function (error, coordinates) {
+                                                if (!error) {
+                                                    resolve(coordinates);
+                                                } else {
+                                                    reject(error);
+                                                }
+                                            });
                                         });
                                     });
-                                });
 
-                                // Gộp tất cả các Promise lại thành một Promise duy nhất
-                                Promise.all(coordinatesList)
-                                    .then(function (intermediateCoordinates) {
-                                        // Tạo URL cho API định tuyến với các điểm trung gian
-                                        let waypoints = intermediateCoordinates.map(coord => `${coord[0]},${coord[1]}`).join(";");
-                                        let routeURL = `https://api.mapbox.com/directions/v5/mapbox/driving/${fromCoordinates[0]},${fromCoordinates[1]};${waypoints};${toCoordinates[0]},${toCoordinates[1]}?geometries=geojson&steps=true&access_token=${mapboxgl.accessToken}`;
+                                    Promise.all(coordinatesList)
+                                        .then(function (intermediateCoordinates) {
+                                            let waypoints = intermediateCoordinates.map(coord => `${coord[0]},${coord[1]}`).join(";");
+                                            let routeURL = `https://api.mapbox.com/directions/v5/mapbox/driving/${fromCoordinates[0]},${fromCoordinates[1]};${waypoints};${toCoordinates[0]},${toCoordinates[1]}?geometries=geojson&steps=true&access_token=${mapboxgl.accessToken}`;
 
-                                        const map = new mapboxgl.Map({
-                                            container: 'map',
-                                            style: 'mapbox://styles/mapbox/streets-v12',
-                                            center: toCoordinates,
-                                            zoom: 7
+                                            drawMap(routeURL, fromCoordinates, toCoordinates, intermediateCoordinates);
+                                        })
+                                        .catch(error => {
+                                            console.error('Lỗi khi lấy tọa độ của các điểm trung gian:', error);
                                         });
+                                } else {
+                                    let routeURL = `https://api.mapbox.com/directions/v5/mapbox/driving/${fromCoordinates[0]},${fromCoordinates[1]};${toCoordinates[0]},${toCoordinates[1]}?geometries=geojson&steps=true&access_token=${mapboxgl.accessToken}`;
 
-                                        map.on('load', () => {
-                                            // Lấy thông tin về đường đi từ dịch vụ định tuyến
-                                            fetch(routeURL)
-                                                .then(response => response.json())
-                                                .then(data => {
-                                                    // Lấy dữ liệu về đường đi
-                                                    let route = data.routes[0].geometry;
-
-                                                    // Vẽ đường đi trên bản đồ
-                                                    map.addLayer({
-                                                        'id': 'route',
-                                                        'type': 'line',
-                                                        'source': {
-                                                            'type': 'geojson',
-                                                            'data': {
-                                                                'type': 'Feature',
-                                                                'properties': {},
-                                                                'geometry': route
-                                                            }
-                                                        },
-                                                        'layout': {
-                                                            'line-join': 'round',
-                                                            'line-cap': 'round'
-                                                        },
-                                                        'paint': {
-                                                            'line-color': '#e35050',
-                                                            'line-width': 3
-                                                        }
-                                                    });
-                                                })
-                                                .catch(error => {
-                                                    console.error('Lỗi khi lấy thông tin định tuyến:', error);
-                                                });
-                                        });
-                                    })
-                                    .catch(error => {
-                                        console.error('Lỗi khi lấy tọa độ của các điểm trung gian:', error);
-                                    });
+                                    drawMap(routeURL, fromCoordinates, toCoordinates, []);
+                                }
                             } else {
-                                console.error("Lỗi khi lấy tọa độ của điểm đến:", error);
+                                console.error("Lỗi khi lấy tọa độ của điểm đi hoặc điểm đến:", error);
                             }
                         });
                     } else {
@@ -222,6 +187,109 @@ travel_app.controller('TourDetailController', function ($scope, $location, $sce,
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
+    }
+
+    /**
+     * phương thức vẽ lịch trình trên map
+     * @param routeURL
+     * @param fromCoordinates
+     * @param toCoordinates
+     * @param intermediateCoordinates
+     */
+    function drawMap(routeURL, fromCoordinates, toCoordinates, intermediateCoordinates) {
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v12',
+            center: toCoordinates,
+            zoom: 10
+        });
+
+        map.on('load', () => {
+            $scope.createMarker(fromCoordinates, map, 'start');
+            $scope.createMarker(toCoordinates, map, 'end');
+
+            if (intermediateCoordinates.length > 0) {
+                intermediateCoordinates.forEach(coord => {
+                    $scope.createMarker(coord, map, 'waypoint');
+                });
+            }
+
+            fetch(routeURL)
+                .then(response => response.json())
+                .then(data => {
+                    // Lấy dữ liệu về đường đi
+                    let route = data.routes[0].geometry;
+
+                    // Vẽ đường đi trên bản đồ
+                    map.addLayer({
+                        'id': 'route',
+                        'type': 'line',
+                        'source': {
+                            'type': 'geojson',
+                            'data': {
+                                'type': 'Feature',
+                                'properties': {},
+                                'geometry': route
+                            }
+                        },
+                        'layout': {
+                            'line-join': 'round',
+                            'line-cap': 'round'
+                        },
+                        'paint': {
+                            'line-color': '#e35050',
+                            'line-width': 3
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Lỗi khi lấy thông tin định tuyến:', error);
+                });
+        });
+    }
+
+    $scope.createMarker = function (coordinates, map, type) {
+        let popupContent;
+
+        if (type === 'start') {
+            popupContent = 'Điểm bắt đầu';
+        } else if (type === 'end') {
+            popupContent = 'Điểm kết thúc';
+        } else if (type === 'waypoint') {
+            popupContent = 'Điểm dừng chân';
+        } else {
+            popupContent = 'Điểm bắt đầu';
+        }
+
+        let popup = new mapboxgl.Popup({
+            offset: 15,
+            closeButton: true,
+            closeOnClick: false,
+            closeOnClickOutside: true,
+            maxWidth: '800px',
+            minWidth: '600px'
+        }).setHTML(popupContent);
+
+        new mapboxgl.Marker()
+            .setLngLat(coordinates)
+            .setPopup(popup)
+            .addTo(map);
+
+        const iconUrl = '/assets/customers/images/hotel/placeholder.png';
+        const el = document.createElement('div');
+        el.className = 'marker';
+        el.style.backgroundImage = `url(${iconUrl})`;
+        el.style.width = '30px';
+        el.style.height = '30px';
+        el.style.backgroundSize = '100%';
+
+        let closeButton = popup._content.querySelector('.mapboxgl-popup-close-button');
+        if (closeButton) {
+            closeButton.style.fontSize = '20px';
+            closeButton.style.width = '20px';
+            closeButton.style.height = '20px';
+            closeButton.style.lineHeight = '20px';
+        }
     }
 
     $scope.init();
@@ -240,35 +308,6 @@ travel_app.controller('TourDetailController', function ($scope, $location, $sce,
             nextArrow: '<div class="next"><i class="far fa-arrow-right"></i></div>',
             responsive: [{
                 breakpoint: 767, settings: {
-                    slidesToShow: 1
-                }
-            }]
-        });
-
-        $('.slider-active-5-item').slick({
-            dots: false,
-            arrows: false,
-            infinite: true,
-            speed: 800,
-            autoplay: true,
-            slidesToShow: 5,
-            slidesToScroll: 1,
-            prevArrow: '<div class="prev"><i class="far fa-arrow-left"></i></div>',
-            nextArrow: '<div class="next"><i class="far fa-arrow-right"></i></div>',
-            responsive: [{
-                breakpoint: 1400, settings: {
-                    slidesToShow: 4
-                }
-            }, {
-                breakpoint: 1199, settings: {
-                    slidesToShow: 3
-                }
-            }, {
-                breakpoint: 991, settings: {
-                    slidesToShow: 2
-                }
-            }, {
-                breakpoint: 575, settings: {
                     slidesToShow: 1
                 }
             }]
