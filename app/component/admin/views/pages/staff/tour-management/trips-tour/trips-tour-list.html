@@ -19,7 +19,7 @@
          ng-class="{ 'show-animation': showActivities }">
         <div class="row" style="margin: 20px 16px 20px 16px">
             <div class="mb-3" ng-repeat="tourTrips in tourTripsList">
-                <span class="fw-bold me-1">Ngày {{ tourTrips.dayInTrip }}: </span>
+<!--                <span class="fw-bold me-1">Ngày {{ tourTrips.dayInTrip }}: </span>-->
                 <div ng-bind-html="tourTrips.activityInDay"></div>
             </div>
             <div ng-if="tourTripsList.length === 0">

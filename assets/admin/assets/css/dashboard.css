@@ -9,11 +9,11 @@
 }
 
 .btn-green {
-    background: #63ab45;
-    color: #fff;
+    background-color: #63AB45;
+    color: white;
 }
 
 .btn-green:hover {
-    background: #366c1f;
-    color: #fff;
+    background-color: #498434;
+    color: white;
 }

@@ -250,15 +250,16 @@ travel_app.controller('TourDetailController', function ($scope, $location, $sce,
 
     $scope.createMarker = function (coordinates, map, type) {
         let popupContent;
+        let tourDetail = $scope.tourDetail;
 
         if (type === 'start') {
-            popupContent = 'Điểm bắt đầu';
+            popupContent = 'Điểm đi';
         } else if (type === 'end') {
-            popupContent = 'Điểm kết thúc';
+            popupContent = createPopupContent(tourDetail);
         } else if (type === 'waypoint') {
-            popupContent = 'Điểm dừng chân';
+            popupContent = 'Điểm dừng chân, tham quan';
         } else {
-            popupContent = 'Điểm bắt đầu';
+            popupContent = 'Điểm đi';
         }
 
         let popup = new mapboxgl.Popup({
@@ -293,6 +294,68 @@ travel_app.controller('TourDetailController', function ($scope, $location, $sce,
     }
 
     $scope.init();
+
+    function createPopupContent(tourDetail) {
+        return `    <div class="m-1 mb-30 row">
+                        <div class="img-holder col-xl-3 col-lg-4 p-0">
+                            <img src="${tourDetail.toursByTourId.tourImg}" style="height: 170px"
+                                 onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
+                        </div>
+                        <div class=" col-xl-9 col-lg-8">
+                            <div class="meta row">
+                                <div class="col-lg-12 ">
+                                    <div>
+                                        <span>
+                                            <i class="fa-solid fa-street-view"></i>
+                                            <a class="fw-medium">
+                                                ${tourDetail.tourTypes.tourTypeName}
+                                            </a>
+                                        </span>
+                                        <h3 class="fw-medium">
+                                            <a href="#">${tourDetail.toursByTourId.tourName}</a>
+                                        </h3>
+                                        <div class="d-flex align-items-center mb-3"
+                                             style="border-bottom: 1px solid rgba(29, 35, 31, 0.1);">
+                                            <div class="location text-orange" style="font-size: 14px">
+                                                <p>
+                                                    <span class="fas fa-map-marker-alt"></span>
+                                                    ${tourDetail.fromLocation}
+                                                    -
+                                                    ${tourDetail.toLocation}
+                                                </p>
+                                                <p>
+                                                    <i class="fa-solid fa-user-tie"></i>
+                                                    Đã đặt: ${tourDetail.bookedSeat}/${tourDetail.numberOfGuests} chổ
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="roomTypeByHotel mb-3"
+                                         style="padding-left: 10px ;border-left: 1px solid rgba(29, 35, 31, 0.1)">
+                                        <div style="font-size: 14px; line-height: 20px">
+                                            <p class="fs-7 fw-medium mb-1">Hướng dẫn viên:
+                                                ${tourDetail.usersByGuideId.fullName} - ${tourDetail.usersByGuideId.address}
+                                            </p>
+                                            <p class="fs-7 mb-1">Điểm đi:
+                                                <span class="fw-medium">${tourDetail.fromLocation}</span>
+                                            </p>
+                                            <p class="fs-7 mb-1">Điểm đến:
+                                                <span class="fw-medium">${tourDetail.toLocation}</span>
+                                            </p>
+                                            <div class="text-green">
+                                                <i class="fa-solid fa-check"></i> Xe có WIFI miễn phí
+                                            </div>
+                                            <div class="text-green">
+                                                <i class="fa-solid fa-check"></i> Miễn phí nước suối
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+    }
 
     $scope.$on('$viewContentLoaded', function () {
         $('.place-slider').slick({

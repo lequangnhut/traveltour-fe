@@ -28,6 +28,7 @@ travel_app.controller('HomeController', function ($scope, $location, $anchorScro
      * Phân trang
      */
     $scope.setPage = function (page) {
+        $anchorScroll();
         if (page >= 0 && page < $scope.totalPages) {
             $scope.currentPage = page;
             $scope.init();

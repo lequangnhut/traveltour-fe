@@ -1,4 +1,6 @@
-travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $location, $routeParams, $timeout, $http, MapBoxService, TourDetailsServiceAD, ToursServiceAD, AccountServiceAD) {
+travel_app.controller('TourDetailControllerAD', function ($anchorScroll, $scope, $sce, $q, $location, $routeParams, $timeout, $http, MapBoxService, TourDetailsServiceAD, ToursServiceAD, AccountServiceAD) {
+    $anchorScroll();
+    mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
     $scope.isLoading = true;
 
     $scope.tourDetail = {
@@ -29,6 +31,9 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
     $scope.dataProvince = [];
     $scope.provinceBreak = [];
     $scope.tourTypeList = [];
+
+    $scope.toLocationArray = [];
+    $scope.searchLocation = null;
 
     $scope.invalidPriceFormat = false;
 
@@ -394,7 +399,7 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
             }
         }
 
-        for (var i = start; i < end; i++) {
+        for (let i = start; i < end; i++) {
             range.push(i);
         }
 
@@ -420,8 +425,6 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
                 $scope.tourDetailList = response.data.data.content;
                 $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                 $scope.totalElements = response.data.data.totalElements; // Tổng số phần tử
-
-                console.log($scope.tourDetailList)
             }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
@@ -439,7 +442,136 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
         }
     };
 
-    //sắp xếp
+    /**
+     * Phương thức khởi tạo map
+     */
+    $scope.initMap = function () {
+        $scope.map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v12',
+            center: [106.6297, 10.8231],
+            zoom: 9
+        });
+
+        $scope.map.on('load', function () {
+            $scope.map.on('click', function (e) {
+                $scope.longitude = e.lngLat.lng;
+                $scope.latitude = e.lngLat.lat;
+
+                if ($scope.currentMarker) {
+                    $scope.currentMarker.remove();
+                }
+
+                $scope.toLocationArray = [$scope.longitude, $scope.latitude];
+
+                $scope.showLocationOnInput($scope.toLocationArray);
+
+                $scope.currentMarker = new mapboxgl.Marker()
+                    .setLngLat([$scope.longitude, $scope.latitude])
+                    .addTo($scope.map);
+            });
+        });
+    }
+
+    $scope.searchLocationOnMap = function () {
+        let searchQuery = encodeURIComponent($scope.searchLocation);
+
+        if (searchQuery) {
+            let apiUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchQuery}.json?access_token=${mapboxgl.accessToken}&country=VN&type=region&autocomplete=true`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.features.length > 0) {
+                        $scope.suggestedLocations = data.features.map(feature => feature.place_name);
+                        $scope.showSuggestions = true;
+                    } else {
+                        $scope.showSuggestions = false;
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi khi tìm kiếm địa điểm:', error);
+                    $scope.showSuggestions = false;
+                });
+        } else {
+            $scope.showSuggestions = false;
+            $scope.initMap();
+        }
+    }
+
+    $scope.selectLocation = function (location) {
+        $scope.searchLocation = location;
+        $scope.searchLocationOnMap();
+        $scope.showSuggestions = false;
+    }
+
+    $scope.submitSearchOnMap = function () {
+        $scope.showSuggestions = false;
+        let searchQuery = $scope.searchLocation;
+
+        if (searchQuery) {
+            if (searchQuery.length > 50) {
+                searchQuery = searchQuery.substring(0, 50);
+            }
+
+            let relatedKeywords = searchQuery.split(' ').filter(keyword => keyword.length > 2);
+            searchQuery = relatedKeywords.join(' ');
+
+            MapBoxService.geocodeAddress(searchQuery, function (error, coordinates) {
+                if (error) {
+                    console.error('Lỗi khi tìm kiếm địa điểm:', error);
+                    return;
+                }
+
+                let bbox = [
+                    [coordinates[0] - 0.01, coordinates[1] - 0.01],
+                    [coordinates[0] + 0.01, coordinates[1] + 0.01]
+                ];
+
+                $scope.map ? $scope.map.fitBounds(bbox) : $scope.initMap();
+            });
+        } else {
+            $scope.initMap();
+        }
+    }
+
+    $scope.showLocationOnInput = function (toLocation) {
+        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${toLocation[0]},${toLocation[1]}.json?access_token=${mapboxgl.accessToken}`)
+            .then(response => response.json())
+            .then(data => {
+                $scope.$apply(function () {
+                    let addressComponents = data.features[0].place_name.split(',');
+                    for (let i = addressComponents.length - 1; i >= 0; i--) {
+                        let lastPart = addressComponents[i].trim();
+                        if (!isNaN(lastPart)) {
+                            addressComponents.splice(i, 1);
+                            break;
+                        }
+                    }
+                    $scope.tourDetail.toLocation = addressComponents.join(',').trim();
+                });
+            })
+            .catch(error => {
+                console.error('Lỗi khi lấy thông tin địa chỉ:', error);
+            });
+    }
+
+    /**
+     * Phương thức hiển thị modal
+     */
+    $scope.showModalMap = function () {
+        $scope.searchLocation = "";
+        let modelMap = $('#modalMapTourDetail');
+        modelMap.modal('show');
+
+        modelMap.on('shown.bs.modal', function () {
+            $scope.initMap();
+        });
+    };
+
+    /**
+     * Sắp xếp
+     */
     $scope.sortData = function (column) {
         $scope.sortBy = column;
         $scope.sortDir = ($scope.sortDir === 'asc') ? 'desc' : 'asc';
@@ -509,7 +641,6 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
     };
 
     // Gọi hàm để tải danh sách tourType khi controller được khởi tạo
-    // $scope.loadSelectTourType();
     $scope.createTourDetailSubmit = () => {
         $scope.isLoading = true;
         let tourDetail = $scope.tourDetail;
@@ -562,7 +693,6 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
         confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdate);
     }
 
-    //delete
     /**
      * Gọi api delete tour
      */

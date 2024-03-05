@@ -141,7 +141,10 @@
                     <td>{{ tourDetail.toursByTourId.tourName }}</td>
                     <td>{{ tourDetail.numberOfGuests }}</td>
                     <td>{{ tourDetail.fromLocation }}</td>
-                    <td>{{ tourDetail.toLocation }}</td>
+                    <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="{{ tourDetail.toLocation }}">
+                        {{ tourDetail.toLocation }}
+                    </td>
                     <td>{{ tourDetail.unitPrice | vnCurrency }}</td>
                     <td ng-if="tourDetail.tourDetailStatus == 1">
                         <div class="d-flex align-items-center justify-content-center">

@@ -189,6 +189,7 @@ travel_app.controller('TourController', function ($scope, $location, $anchorScro
         if (page >= 0 && page < $scope.totalPages) {
             $scope.currentPage = page;
             $scope.init();
+            $anchorScroll();
         }
     };
 

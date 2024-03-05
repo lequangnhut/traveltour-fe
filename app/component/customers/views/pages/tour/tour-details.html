@@ -103,10 +103,10 @@
 
             <div class="row">
                 <div class="col-xl-8">
-                    <div class="place-content-wrap mb-4 pt-45 wow fadeInUp" ng-bind-html="tourDetailDescription"
+                    <div class="place-content-wrap mb-4 wow fadeInUp" ng-bind-html="tourDetailDescription"
                          style="text-align: justify; white-space: pre-line; font-family: 'Roboto',sans-serif;">
                     </div>
-                    <div class="place-content-wrap mb-4 pt-45 wow fadeInUp"
+                    <div class="place-content-wrap mb-4 wow fadeInUp"
                          ng-if="tourDetail.tourDetailDescription.length === 10">
                         Không có nội dung ghi chú.
                     </div>
@@ -150,7 +150,7 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4 col-md-6 col-12" ng-repeat="img in tourDetailImagesById">
-                                <div class="recent-place-slider m-1">
+                                <div class="recent-place-slider m-0">
                                     <!--=== Single Place Item ===-->
                                     <div class="single-place-item mb-60">
                                         <div class="place-img-detail">
@@ -509,7 +509,7 @@
                 </div>
                 <div class="col-xl-4">
                     <!--=== Sidebar Widget Area ===-->
-                    <div class="sidebar-widget-area pt-60 pl-lg-30">
+                    <div class="sidebar-widget-area pt-45 pl-lg-30">
                         <div class="sidebar-widget booking-info-widget wow fadeInUp mb-40">
                             <h4 class="widget-title">Thông tin chuyến đi</h4>
                             <ul class="info-list">
