@@ -1,4 +1,4 @@
-travel_app.controller('BookingTourControllerCT', function ($scope, $sce, $location, $window, $routeParams, $anchorScroll, AuthService, LocalStorageService, BookingTourServiceCT, GenerateCodePayService) {
+travel_app.controller('BookingTourCusController', function ($scope, $sce, $location, $window, $routeParams, $anchorScroll, AuthService, LocalStorageService, BookingTourServiceCT, GenerateCodePayService) {
     $anchorScroll();
 
     let user = AuthService.getUser();

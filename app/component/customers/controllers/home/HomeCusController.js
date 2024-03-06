@@ -1,4 +1,4 @@
-travel_app.controller('HomeController', function ($scope, $location, $anchorScroll, HomeServiceCT) {
+travel_app.controller('HomeCusController', function ($scope, $location, $anchorScroll, HomeServiceCT) {
     $anchorScroll();
 
     $scope.currentPage = 0;

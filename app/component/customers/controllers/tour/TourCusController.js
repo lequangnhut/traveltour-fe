@@ -1,4 +1,4 @@
-travel_app.controller('TourController', function ($scope, $location, $anchorScroll, TourServiceCT, TourDetailServiceCT, MapBoxService) {
+travel_app.controller('TourCusController', function ($scope, $location, $anchorScroll, TourServiceCT, TourDetailServiceCT, MapBoxService) {
     $anchorScroll();
 
     $scope.currentPage = 0;
@@ -96,8 +96,6 @@ travel_app.controller('TourController', function ($scope, $location, $anchorScro
 
             MapBoxService.geocodeAddress(tourDetail.toLocation, function (error, toCoordinates) {
                 if (!error) {
-                    console.log(toCoordinates)
-                    console.log(tourDetail.toLocation)
                     let marker = new mapboxgl.Marker(el)
                         .setLngLat(toCoordinates)
                         .setPopup(popup)

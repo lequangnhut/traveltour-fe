@@ -1,4 +1,4 @@
-travel_app.controller('BookingSuccessControllerCT', function ($scope, $location, $routeParams, $anchorScroll, BookingTourServiceCT, LocalStorageService) {
+travel_app.controller('BookingSuccessCusController', function ($scope, $location, $routeParams, $anchorScroll, BookingTourServiceCT, LocalStorageService) {
     $anchorScroll();
 
     let bookingTourId = $routeParams.orderInfo;

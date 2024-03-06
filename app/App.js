@@ -582,7 +582,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/home', {
             templateUrl: 'app/component/customers/views/pages/home/home.html',
-            controller: 'HomeController'
+            controller: 'HomeCusController'
         })
         .when('/home/see-ticket-informatione/:orderTransportId', {
             templateUrl: 'app/component/customers/views/pages/home/home.html',
@@ -628,19 +628,19 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/tours', {
             templateUrl: 'app/component/customers/views/pages/tour/tour.html',
-            controller: 'TourController'
+            controller: 'TourCusController'
         })
         .when('/tours/tour-detail/:id', {
             templateUrl: 'app/component/customers/views/pages/tour/tour-details.html',
-            controller: 'TourDetailController'
+            controller: 'TourDetailCusController'
         })
         .when('/tourism-location', {
             templateUrl: 'app/component/customers/views/pages/location/location-tour.html',
-            controller: 'LocationController'
+            controller: 'LocationCusController'
         })
-        .when('/tourism-location-detail', {
+        .when('/tourism-location/tourism-location-detail/:id', {
             templateUrl: 'app/component/customers/views/pages/location/location-tour-detail.html',
-            controller: 'LocationController'
+            controller: 'LocationDetailCusController'
         })
         .when('/hotel', {
             templateUrl: 'app/component/customers/views/pages/hotel/hotel.html',
@@ -651,15 +651,15 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'HotelDetailController'
         })
         .when('/drive-move', {
-            templateUrl: 'app/component/customers/views/pages/move/drive-move.html',
+            templateUrl: 'app/component/customers/views/pages/transport/drive-move.html',
             controller: 'DriveMoveController'
         })
-        .when('/drive-move-detail', {
-            templateUrl: 'app/component/customers/views/pages/move/drive-move-detail.html',
+        .when('/drive-move/drive-move-detail', {
+            templateUrl: 'app/component/customers/views/pages/transport/drive-move-detail.html',
             controller: 'DriveMoveController'
         })
         .when('/payment-policy', {
-            templateUrl: 'app/component/customers/views/pages/home/payment-policy.html'
+            templateUrl: 'app/component/customers/views/pages/transport/payment-policy.html'
         })
 
         /**
@@ -667,23 +667,23 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/tours/tour-detail/:id/booking-tour', {
             templateUrl: 'app/component/customers/views/pages/booking/booking.html',
-            controller: 'BookingTourControllerCT'
+            controller: 'BookingTourCusController'
         })
         .when('/tours/tour-detail/:id/booking-tour/customer-information', {
             templateUrl: 'app/component/customers/views/pages/booking/booking-info-customer.html',
-            controller: 'BookingTourControllerCT'
+            controller: 'BookingTourCusController'
         })
         .when('/tours/tour-detail/:id/booking-tour/customer-information/check-information', {
             templateUrl: 'app/component/customers/views/pages/booking/booking-check-info.html',
-            controller: 'BookingSuccessControllerCT'
+            controller: 'BookingSuccessCusController'
         })
         .when('/tours/tour-detail/:id/booking-tour/customer-information/check-information/payment-success', {
             templateUrl: 'app/component/customers/views/pages/booking/booking-check-info.html',
-            controller: 'BookingSuccessControllerCT'
+            controller: 'BookingSuccessCusController'
         })
         .when('/tours/tour-detail/:id/booking-tour/customer-information/check-information/payment-failure', {
             templateUrl: 'app/component/customers/views/pages/booking/booking-check-info.html',
-            controller: 'BookingSuccessControllerCT'
+            controller: 'BookingSuccessCusController'
         })
 
         /**

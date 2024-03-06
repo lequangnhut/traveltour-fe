@@ -450,7 +450,7 @@
                             </div>
 
                             <div ng-if="hasRole('ROLE_ADMIN')" ng-cloak>
-                                                <!-- QUẢN LÝ DOANG NGHIỆP - Header -->
+                                <!-- QUẢN LÝ DOANG NGHIỆP - Header -->
                                 <p class="navbar-vertical-label">QUẢN LÝ DOANH NGHIỆP</p>
                                 <hr class="navbar-vertical-line"/>
 
@@ -1580,6 +1580,9 @@
 <script src="app/services/customer/tour/TourServiceCT.js"></script>
 <script src="app/services/customer/tour/TourDetailServiceCT.js"></script>
 
+<!--====== Service Customer Location ======-->
+<script src="app/services/customer/location/LocationCusService.js"></script>
+
 <!--====== Service Customer Booking ======-->
 <script src="app/services/customer/booking/BookingTourServiceCT.js"></script>
 
@@ -1589,7 +1592,6 @@
 <!--====== Service Customer ======-->
 <script src="app/services/customer/HomeServiceCT.js"></script>
 <script src="app/services/customer/ForgotPwService.js"></script>
-
 
 <!--====== Controller Super Admin ======-->
 <script src="app/component/admin/controllers/auth/LoginControllerAD.js"></script>
@@ -1668,21 +1670,28 @@
 <script src="app/component/customers/controllers/auth/VerifyEmail.js"></script>
 <script src="app/component/customers/controllers/password/ForgotPwController.js"></script>
 
+<!--====== Controller Customer Tour ======-->
+<script src="app/component/customers/controllers/home/HomeCusController.js"></script>
+<script src="app/component/customers/controllers/tour/TourCusController.js"></script>
+<script src="app/component/customers/controllers/tour/TourDetailCusController.js"></script>
+
+<!--====== Controller Customer Hotel ======-->
+<script src="app/component/customers/controllers/hotel/HotelController.js"></script>
+<script src="app/component/customers/controllers/hotel/HotelDetailController.js"></script>
+
 <!--====== Controller Customer Booking ======-->
-<script src="app/component/customers/controllers/booking/BookingTourControllerCT.js"></script>
-<script src="app/component/customers/controllers/booking/BookingSuccessControllerCT.js"></script>
+<script src="app/component/customers/controllers/booking/BookingTourCusController.js"></script>
+<script src="app/component/customers/controllers/booking/BookingSuccessCusController.js"></script>
+
+<!--====== Controller Customer Location ======-->
+<script src="app/component/customers/controllers/location/LocationCusController.js"></script>
+<script src="app/component/customers/controllers/location/LocationDetailCusController.js"></script>
 
 <!--====== Controller Customer ======-->
-<script src="app/component/customers/controllers/home/HomeControllerCT.js"></script>
 <script src="app/component/customers/controllers/home/IntroduceController.js"></script>
 <script src="app/component/customers/controllers/home/TravelGuideController.js"></script>
 <script src="app/component/customers/controllers/home/ContactController.js"></script>
 <script src="app/component/customers/controllers/home/TicketController.js"></script>
-<script src="app/component/customers/controllers/tour/TourControllerCT.js"></script>
-<script src="app/component/customers/controllers/tour/TourDetailControllerCT.js"></script>
-<script src="app/component/customers/controllers/location/LocationController.js"></script>
-<script src="app/component/customers/controllers/hotel/HotelController.js"></script>
-<script src="app/component/customers/controllers/hotel/HotelDetailController.js"></script>
 <script src="app/component/customers/controllers/move/DriveMoveController.js"></script>
 <script src="app/component/customers/controllers/info/InformationController.js"></script>
 <script src="app/component/customers/controllers/password/ForgotPwController.js"></script>

@@ -1,4 +1,4 @@
-travel_app.controller('TourDetailController', function ($scope, $location, $sce, $routeParams, $anchorScroll, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailServiceCT, MapBoxService) {
+travel_app.controller('TourDetailCusController', function ($scope, $location, $sce, $routeParams, $anchorScroll, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailServiceCT, MapBoxService) {
     $anchorScroll();
 
     $scope.provinceData = [];
@@ -253,13 +253,13 @@ travel_app.controller('TourDetailController', function ($scope, $location, $sce,
         let tourDetail = $scope.tourDetail;
 
         if (type === 'start') {
-            popupContent = 'Điểm đi';
+            popupContent = 'Công ty dịch vụ lữ hành TravelTour';
         } else if (type === 'end') {
             popupContent = createPopupContent(tourDetail);
         } else if (type === 'waypoint') {
             popupContent = 'Điểm dừng chân, tham quan';
         } else {
-            popupContent = 'Điểm đi';
+            popupContent = 'Công ty dịch vụ lữ hành TravelTour';
         }
 
         let popup = new mapboxgl.Popup({
