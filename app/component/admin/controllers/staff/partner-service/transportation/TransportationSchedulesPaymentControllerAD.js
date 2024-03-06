@@ -6,7 +6,7 @@ travel_app.controller('TransportationSchedulesPaymentControllerAD',
         const tourDetailId = $routeParams.tourDetailId;
         $scope.tourDetailId = tourDetailId;
         const transportationScheduleId = $routeParams.transportationScheduleId;
-        $scope.payment = {method: ''};
+        $scope.payment = {method: '0'};
         $scope.tourGuide = {};
 
         if (tourDetailId !== undefined && tourDetailId !== null && tourDetailId !== "") {
@@ -34,13 +34,12 @@ travel_app.controller('TransportationSchedulesPaymentControllerAD',
                 orderTotal: $scope.transportationSchedules.unitPrice,
                 paymentMethod: false,
                 dateCreated: new Date(),
-                orderStatus: 1,
+                orderStatus: $scope.payment.method,
             }
-
-            console.log(orderTransportation)
 
             const dataOrderTransportation = new FormData();
             dataOrderTransportation.append("orderTransportationsDto", new Blob([JSON.stringify(orderTransportation)], {type: "application/json"}));
+            dataOrderTransportation.append("tourDetailId", tourDetailId);
 
             OrderTransportationServiceAD.createOrderTransportation(dataOrderTransportation).then(function successCallback(repo) {
                 toastAlert('success', 'Thêm mới thành công !');
@@ -56,7 +55,7 @@ travel_app.controller('TransportationSchedulesPaymentControllerAD',
             });
         }
         $scope.toggleActivities = function () {
-            $scope.showActivities = $scope.payment.method === '2';
+            $scope.showActivities = $scope.payment.method === '1';
         };
 
         function errorCallback() {

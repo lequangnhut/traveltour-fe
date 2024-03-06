@@ -176,7 +176,8 @@
                     <td>{{ rt.price | vnCurrency }}</td>
                     <td style="width: 105px">
                         <input type="number" class="form-control" ng-model="rt.quantity" ng-disabled="!rt.isChecked"
-                               ng-change="onQuantityChange(rt)" ng-blur="onQuantityBlur(rt)" min="1" oninput="validity.valid||(value='');">
+                               ng-change="onQuantityChange(rt)" ng-blur="onQuantityBlur(rt)" min="1"
+                               oninput="validity.valid||(value='');">
                     </td>
                 </tr>
                 <tr ng-if="tourDetailList.length === 0">
@@ -188,8 +189,7 @@
 
                 <div class="row">
                     <div class="col-6 d-flex justify-content-start">
-                        <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/hotel-list/{{hotelId}}/room-type-list/hotel-payment"
-                           style="background-color: #f4f7ff" class="btn"
+                        <a style="background-color: #f4f7ff" class="btn"
                            ng-click="confirmRoomSelection()"
                         >Xác nhận</a>
                     </div>

@@ -5,7 +5,7 @@ travel_app.controller('HotelPaymentControllerAD',
         const tourDetailId = $routeParams.tourDetailId;
         $scope.tourDetailId = tourDetailId;
         $scope.hotelId = $routeParams.hotelId;
-        $scope.payment = {method: ''};
+        $scope.payment = {method: '0'};
         $scope.tourGuide = {};
         $scope.orderHotel = {};
         $scope.selectedRooms = JSON.parse(sessionStorage.getItem('selectedRooms')) || [];
@@ -18,12 +18,6 @@ travel_app.controller('HotelPaymentControllerAD',
         $scope.total = calculateTotal($scope.selectedRooms);
         $scope.tourGuide = {};
 
-        // Sử dụng hàm này để format các ngày từ infoHotel
-        $scope.formatDates = function () {
-            $scope.infoHotel.departureDate = formatDateTime($scope.infoHotel.departureDate);
-            $scope.infoHotel.arrivalDate = formatDateTime($scope.infoHotel.arrivalDate);
-        };
-
         function calculateTotal(rooms) {
             $scope.totalBeforeTax = rooms.reduce((acc, room) => acc + room.price * room.quantity, 0);
             $scope.VATAmount = $scope.totalBeforeTax * ($scope.VATRate / 100);
@@ -31,28 +25,6 @@ travel_app.controller('HotelPaymentControllerAD',
 
             return $scope.totalBeforeTax + $scope.VATAmount - $scope.discountAmount;
         }
-
-
-        function formatDateTime(dateString) {
-            let date = new Date(dateString);
-            if (isNaN(date.getTime())) return dateString;
-
-            // Định dạng ngày giờ với AM/PM
-            let hours = date.getHours();
-            let minutes = date.getMinutes();
-            let ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12; // Giờ '0' sẽ được hiểu là '12'
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            let strTime = hours + ':' + minutes + ' ' + ampm;
-
-            let day = date.getDate().toString().padStart(2, '0');
-            let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Tháng trong JavaScript bắt đầu từ 0
-            let year = date.getFullYear();
-
-            return day + '/' + month + '/' + year + ' ' + strTime;
-        }
-
 
         if (tourDetailId !== undefined && tourDetailId !== null && tourDetailId !== "") {
             TourDetailsServiceAD.findTourDetailById(tourDetailId).then(async response => {
@@ -79,7 +51,7 @@ travel_app.controller('HotelPaymentControllerAD',
                 orderTotal: $scope.total,
                 paymentMethod: false,
                 dateCreated: new Date(),
-                orderStatus: 1,
+                orderStatus: $scope.payment.method,
             }
 
             $scope.isLoading = true;
@@ -87,6 +59,7 @@ travel_app.controller('HotelPaymentControllerAD',
             const dataOrderHotel = new FormData();
 
             dataOrderHotel.append("orderHotelsDto", new Blob([JSON.stringify(orderHotel)], {type: "application/json"}));
+            dataOrderHotel.append("tourDetailId", tourDetailId);
 
             OrderHotelServiceAD.createOrderHotel(dataOrderHotel).then(function successCallback(repo) {
                 let orderHotelId = repo.data.data.id;
@@ -116,10 +89,8 @@ travel_app.controller('HotelPaymentControllerAD',
         }
 
         $scope.toggleActivities = function () {
-            $scope.showActivities = $scope.payment.method === '2';
+            $scope.showActivities = $scope.payment.method === '1';
         };
-
-        $scope.formatDates();
 
         function errorCallback() {
             $location.path('/admin/internal-server-error')

@@ -8,6 +8,10 @@ travel_app.controller('HotelServiceControllerAD',
         const hotelId = $routeParams.hotelId;
         $scope.tourDetailId = tourDetailId;
 
+        const now = new Date();
+        const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
+
         $scope.hotelService = {
             id: null,
             hotelName: null,
@@ -20,7 +24,12 @@ travel_app.controller('HotelServiceControllerAD',
         };
 
         $scope.searchHotels = {
-            location: null, departureDate: null, arrivalDate: null, numAdults: null, numChildren: null, numRooms: null,
+            location: null,
+            departureDate: localDateTime(now),
+            arrivalDate: localDateTime(tomorrow),
+            numAdults: 1,
+            numChildren: null,
+            numRooms: 1,
         };
 
         $scope.tourInfo = {
@@ -75,22 +84,43 @@ travel_app.controller('HotelServiceControllerAD',
 
         $scope.getDisplayRange = () => Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
 
-        $scope.calculateAverageRoomPrice = (hotel) => {
-            const totalRoomPrice = hotel.roomTypesById.reduce((sum, roomType) => sum + roomType.price, 0);
-            const roomTypeCount = hotel.roomTypesById.length;
-            return roomTypeCount > 0 ? totalRoomPrice / roomTypeCount : 0;
+        $scope.findHotelData = () => {
+            return HotelServiceServiceAD.getAllOrSearchHotels(
+                $scope.currentPage,
+                $scope.pageSize,
+                $scope.sortBy,
+                $scope.sortDir,
+                $scope.searchTerm,
+                $scope.searchHotels.location,
+                $scope.searchHotels.departureDate,
+                $scope.searchHotels.arrivalDate,
+                $scope.searchHotels.numAdults,
+                $scope.searchHotels.numChildren,
+                $scope.searchHotels.numRooms
+            );
         };
-
-        $scope.calculateAverageRoomPrices = (hotels) => {
-            hotels.forEach(hotel => {
-                hotel.averageRoomPrice = $scope.calculateAverageRoomPrice(hotel);
-            });
+        $scope.findHotelAllData = () => {
+            return HotelServiceServiceAD.getAllOrSearchHotels(
+                $scope.currentPage,
+                $scope.pageSize,
+                $scope.sortBy,
+                $scope.sortDir,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            );
         };
 
         $scope.hotelServiceData = (response) => {
-            $scope.hotelServiceList = response.data.data.content;
-            $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-            $scope.totalElements = response.data.data.totalElements;
+            $timeout(() => {
+                $scope.hotelServiceList = response.data.data !== null ? response.data.data.content : [];
+                $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
+                $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
+            }, 0);
         };
 
 
@@ -100,7 +130,7 @@ travel_app.controller('HotelServiceControllerAD',
                     provincesResponse,
                     tourDetailResponse]
                     = await Promise.all([
-                    HotelServiceServiceAD.getAllOrSearchHotels($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir),
+                    $scope.findHotelData(),
                     $http.get('/lib/address/data.json'),
                     TourDetailsServiceAD.findTourDetailById(tourDetailId)]);
 
@@ -110,10 +140,6 @@ travel_app.controller('HotelServiceControllerAD',
                 }
 
                 $scope.hotelServiceData(hotelResponse)
-
-                await $timeout(() => {
-                    $scope.calculateAverageRoomPrices($scope.hotelServiceList);
-                }, 0);
 
                 $scope.provinces = provincesResponse.data;
 
@@ -220,20 +246,15 @@ travel_app.controller('HotelServiceControllerAD',
 
             searchTimeout = $timeout(async () => {
                 try {
-                    const response = await HotelServiceServiceAD.getAllOrSearchHotels($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm);
+                    const response = await $scope.findHotelData();
 
                     if (!response || !response.data || !response.data.data || !response.data.data.content) {
-                        $scope.getHotelServiceList();
                         toastAlert('warning', 'Không tìm thấy !');
-                        return;
                     }
 
                     $scope.hotelServiceData(response)
 
                     await $timeout(() => {
-                        $scope.hotelServiceList.forEach(hotel => {
-                            hotel.averageRoomPrice = $scope.calculateAverageRoomPrice(hotel);
-                        });
                     }, 0);
                 } catch (error) {
                     errorCallback()
@@ -241,36 +262,19 @@ travel_app.controller('HotelServiceControllerAD',
             }, 500);
         };
 
-        $scope.searchHotelServiceByLocationAndDepartureDateAndArrivalDateAndNumAdultsAndNumChildren = async () => {
+        $scope.searchHotel = async () => {
             if (searchTimeout) $timeout.cancel(searchTimeout);
 
             try {
-                const response = await HotelServiceServiceAD.getAllOrSearchHotels(
-                    $scope.currentPage,
-                    $scope.pageSize,
-                    $scope.sortBy,
-                    $scope.sortDir,
-                    '',
-                    $scope.searchHotels.location,
-                    $scope.searchHotels.departureDate,
-                    $scope.searchHotels.arrivalDate,
-                    $scope.searchHotels.numAdults,
-                    $scope.searchHotels.numChildren,
-                    $scope.searchHotels.numRooms
-                );
+                const response = await $scope.findHotelData();
 
                 if (!response || !response.data || !response.data.data || !response.data.data.content) {
-                    $scope.getHotelServiceList();
                     toastAlert('warning', 'Không tìm thấy !');
-                    return;
                 }
 
                 $scope.hotelServiceData(response)
 
                 await $timeout(() => {
-                    $scope.hotelServiceList.forEach(hotel => {
-                        hotel.averageRoomPrice = $scope.calculateAverageRoomPrice(hotel);
-                    });
                 }, 0);
             } catch (error) {
                 errorCallback()
@@ -335,6 +339,20 @@ travel_app.controller('HotelServiceControllerAD',
             $location.path('/admin/internal-server-error')
         }
 
-        $scope.getHotelServiceList();
+        function localDateTime(input) {
+            if (!input) {
+                return '';
+            }
+            const year = input.getFullYear();
+            const month = input.getMonth() + 1;
+            const day = input.getDate();
+            const hour = input.getHours();
+            const minute = input.getMinutes();
+
+            return new Date(year, month - 1, day, hour, minute);
+        }
+
+        $scope.getHotelServiceList()
+        $scope.searchHotel()
 
     });

@@ -130,9 +130,8 @@
                         <label for="paymentMethod" class="form-label">Chọn phương thức thanh toán</label>
                         <select class="form-select" id="paymentMethod" ng-model="payment.method"
                                 ng-change="toggleActivities()" required>
-                            <option value="" selected disabled>-- Chọn một phương thức --</option>
-                            <option value="1">Thanh toán sau khi trả phòng</option>
-                            <option value="2">Thanh toán qua thẻ nhân hàng</option>
+                            <option selected value="0">Thanh toán sau khi trả phòng</option>
+                            <option value="1">Thanh toán qua thẻ nhân hàng</option>
                         </select>
                     </div>
 
