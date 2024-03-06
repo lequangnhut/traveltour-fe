@@ -3,7 +3,6 @@ travel_app.controller('ChangePwController', function ($scope, $window, $routePar
     const token = $routeParams.verifyCode;
 
     $scope.init = function () {
-
         // Kiểm tra xem có token hay không
         if (token) {
             ForgotPwService.checkOldCode(token)

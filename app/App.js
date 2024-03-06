@@ -545,22 +545,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/bed-type/bed-type-update.html',
             controller: 'BedTypeControllerAD'
         })
-        .when('/admin/staff/staff-list', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/staff/staff-list.html',
-            controller: 'StaffControllerAD'
-        })
-        .when('/admin/staff/staff-list/staff-create', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/staff/staff-create.html',
-            controller: 'StaffControllerAD'
-        })
-        .when('/admin/staff/staff-list/staff-update', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/staff/staff-update.html',
-            controller: 'StaffControllerAD'
-        })
-        .when('/admin/staff/staff-list/staff-update/:id', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/staff/staff-update.html',
-            controller: 'StaffControllerAD'
-        })
         .when('/admin/agency/agency-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-list.html',
             controller: 'AgencyControllerAD'
@@ -615,9 +599,9 @@ travel_app.config(function ($routeProvider, $locationProvider) {
                 }
             }
         })
-        .when('/information/change-password', {
+        .when('/information/change-password/:id', {
             templateUrl: 'app/component/customers/views/pages/info/change-password.html',
-            controller: 'ChangePasswordController',
+            controller: 'InformationController',
             resolve: {
                 "check": function ($location, AuthService) {
                     if (!AuthService.getToken()) {

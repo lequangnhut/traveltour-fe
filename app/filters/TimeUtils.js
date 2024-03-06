@@ -169,3 +169,15 @@ travel_app.filter('dateWithTimeFormat', function () {
         return day + '/' + month + '/' + year + ' ' + strTime;
     };
 });
+
+travel_app.filter('vietnameseDate', function () {
+    return function (isoDateTime) {
+        const date = new Date(isoDateTime);
+
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+
+        return `${day}/${month}/${year}`;
+    };
+});

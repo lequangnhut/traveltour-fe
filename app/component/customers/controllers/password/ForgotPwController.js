@@ -8,6 +8,10 @@ travel_app.controller('ForgotPwController', function ($scope, $window, $routePar
 
     const token = $routeParams.token;
 
+    function errorCallback() {
+        $location.path('/admin/internal-server-error')
+    }
+
     // Hàm để lấy và hiển thị hình ảnh Captcha
     $scope.refreshCaptcha = function () {
         ForgotPwService.getCaptchaImage()
@@ -36,13 +40,14 @@ travel_app.controller('ForgotPwController', function ($scope, $window, $routePar
 
 
     $scope.submitFormForgot = function () {
+        $scope.isLoading = true;
         ForgotPwService.emailForgot($scope.users.email, $scope.users)
                     .then(function successCallback(response) {
                         $location.path("/home");
                         centerAlert('Thành công !', 'Mời người dùng kiểm tra mail !', 'success');
-                    }, function errorCallback(response) {
-                        //console.log('Lỗi khi xác nhận gmail', response);
-                    });
+                    }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
            }
 
 
