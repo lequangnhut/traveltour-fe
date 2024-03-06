@@ -76,7 +76,7 @@
                 <div class="col-xl-3 col-md-4 col-sm-6 mb-3 order-2 order-sm-3 float-end">
                     <label class="form-label"></label>
                     <button type="button" class="btn btn-primary w-100"
-                            ng-click="searchHotelServiceByLocationAndDepartureDateAndArrivalDateAndNumAdultsAndNumChildren()">
+                            ng-click="searchHotel()">
                         Tìm kiếm
                     </button>
                 </div>
@@ -163,7 +163,7 @@
                             <span class="sorting-icon" ng-bind-html="getSortIcon('location')"></span>
                         </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('averageRoomPrice')">
+                        <th class="cursor-pointer" ng-click="sortData('averageRoomPrice')">
                         <div class="icon-left">Trung bình giá
                             <span class="sorting-icon" ng-bind-html="getSortIcon('averageRoomPrice')"></span>
                         </div>

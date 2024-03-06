@@ -284,9 +284,9 @@
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
                                     <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'stay-list'}"
-                                       ng-click="setActiveNavItem('stay-list')"
-                                       href="/admin/stay-list"
+                                       ng-class="{ 'active': activeNavItem === 'accommodation-information-list'}"
+                                       ng-click="setActiveNavItem('accommodation-information-list')"
+                                       href="/admin/accommodation-information-list"
                                        role="button">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon">
@@ -1558,6 +1558,8 @@
 <script src="app/services/staff/TransportationScheduleServiceAD.js"></script>
 <script src="app/services/staff/OrderTransportationServiceAD.js"></script>
 <script src="app/services/staff/CustomerServiceAD.js"></script>
+<script src="app/services/staff/BookingTourServiceAD.js"></script>
+<script src="app/services/staff/AccommodationInformationServiceAD.js"></script>
 
 <!--====== Agent Service ======-->
 <script src="app/services/agent/TransportBrandServiceAG.js"></script>
@@ -1622,7 +1624,8 @@
 <script src="app/component/admin/controllers/staff/tour-management/TripsTourControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/partner-service/hotel-service/HotelControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/bill/BillControllerAD.js"></script>
-<script src="app/component/admin/controllers/staff/booking/BookingControllerAD.js"></script>
+<script src="app/component/admin/controllers/staff/booking/BookingTourControllerAD.js"></script>
+<script src="app/component/admin/controllers/staff/tour-service/AccommodationInformationControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/customer-management/CustomerControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/partner-service/ServiceListControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/partner-service/hotel-service/RoomTypeControllerAD.js"></script>

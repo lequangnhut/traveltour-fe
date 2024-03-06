@@ -267,7 +267,13 @@ travel_app.controller('RoomTypeControllerAD',
                 };
             });
 
+            if (selectedRooms.length === 0) {
+                toastAlert('warning', 'Vui lòng chọn ít nhất 1 phòng!')
+                return;
+            }
+
             sessionStorage.setItem('selectedRooms', JSON.stringify(selectedRooms));
+            $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/hotel-list/${hotelId}/room-type-list/hotel-payment`);
         };
 
         function errorCallback() {

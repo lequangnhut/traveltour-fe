@@ -1,16 +1,15 @@
 travel_app.controller('VisitLocationPaymentControllerAD',
     function ($scope, $sce, $routeParams, $location, $timeout, $http, VisitLocationServiceAD, CustomerServiceAD,
-              OrderVisitServiceAD, OrderVisitDetailServiceAD) {
+              OrderVisitServiceAD, OrderVisitDetailServiceAD, TourDetailsServiceAD) {
         $scope.isLoading = true;
         $scope.showActivities = false;
         const tourDetailId = $routeParams.tourDetailId;
         const visitLocationId = $routeParams.visitLocationId;
-        $scope.payment = {method: ''};
+        $scope.payment = {method: '0'};
         $scope.tourGuide = {};
         $scope.orderVisitLocation = {};
         $scope.selectedTickets = JSON.parse(sessionStorage.getItem('selectedTickets')) || [];
         $scope.infoVisitLocation = JSON.parse(sessionStorage.getItem('infoVisitLocation')) || {};
-        $scope.tourGuideId = sessionStorage.getItem('tourGuideId') || '';
         $scope.totalBeforeTax = 0;
         $scope.VATRate = 0; // 8% VAT
         $scope.discountRate = 0; // 0% Discount for now
@@ -27,10 +26,15 @@ travel_app.controller('VisitLocationPaymentControllerAD',
         }
 
 
-        if ($scope.tourGuideId) {
-            CustomerServiceAD.findCustomerById($scope.tourGuideId).then(response => {
-                $scope.tourGuide = response.data.data;
-            });
+        if (tourDetailId !== undefined && tourDetailId !== null && tourDetailId !== "") {
+            TourDetailsServiceAD.findTourDetailById(tourDetailId).then(async response => {
+                $scope.tourGuideId = response.data.data.guideId;
+                if ($scope.tourGuideId) {
+                    const guideResponse = await CustomerServiceAD.findCustomerById($scope.tourGuideId);
+                    $scope.tourGuide = guideResponse.data.data;
+                    $scope.$apply()
+                }
+            })
         }
 
         $scope.confirmCompletionOfTicketPurchase = function () {
@@ -50,12 +54,11 @@ travel_app.controller('VisitLocationPaymentControllerAD',
                 orderStatus: 1,
             }
 
-            console.log($scope.orderVisitLocation)
-
             let orderVisitLocation = $scope.orderVisitLocation;
             const dataOrderVisitLocation = new FormData();
 
             dataOrderVisitLocation.append("orderVisitsDto", new Blob([JSON.stringify(orderVisitLocation)], {type: "application/json"}));
+            dataOrderVisitLocation.append("tourDetailId", tourDetailId);
 
             OrderVisitServiceAD.createOrderVisit(dataOrderVisitLocation).then(function successCallback(repo) {
                 let orderVisitLocationId = repo.data.data.id;
@@ -83,7 +86,7 @@ travel_app.controller('VisitLocationPaymentControllerAD',
         };
 
         $scope.toggleActivities = function () {
-            $scope.showActivities = $scope.payment.method === '2';
+            $scope.showActivities = $scope.payment.method === '1';
         };
 
         function errorCallback() {

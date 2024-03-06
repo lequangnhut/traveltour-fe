@@ -39,17 +39,19 @@
                             </div>
                             <hr>
 
-                            <div class="row">
-                                <div class="col-5">
-                                    <p class="mb-0">Ngày nhận phòng</p>
-                                    <p class="fw-bold mb-0" style="font-size: 13px">{{ infoHotel.departureDate }}</p>
+                            <div class="d-flex justify-content-between">
+                                <div class="">
+                                    <p class="mb-0 d-flex justify-content-center">Ngày nhận phòng</p>
+                                    <p class="fw-bold mb-0 d-flex justify-content-center"
+                                       style="font-size: 13px">{{ (infoHotel.departureDate | date: 'dd/MM/yyyy') + ' 12-14 giờ' }}</p>
                                 </div>
                                 <div class="col-2 d-flex justify-content-center align-items-center px-2">
-                                    <p class="fw-bold mb-0">1 đêm</p>
+                                    <p class="fw-bold mb-0 text-center">{{ infoHotel.departureDate | calculateDaysAndNights:infoHotel.arrivalDate }}</p>
                                 </div>
-                                <div class="col-5">
-                                    <p class="mb-0">Ngày trả phòng</p>
-                                    <p class="fw-bold mb-0" style="font-size: 13px">{{ infoHotel.arrivalDate }}</p>
+                                <div class="pe-3">
+                                    <p class="mb-0 d-flex justify-content-center">Ngày trả phòng</p>
+                                    <p class="fw-bold mb-0 d-flex justify-content-center"
+                                       style="font-size: 13px">{{ (infoHotel.arrivalDate | date: 'dd/MM/yyyy') + ' 12 giờ' }}</p>
                                 </div>
                             </div>
                         </div>
@@ -141,9 +143,8 @@
                         <label for="paymentMethod" class="form-label">Chọn phương thức thanh toán</label>
                         <select class="form-select" id="paymentMethod" ng-model="payment.method"
                                 ng-change="toggleActivities()" required>
-                            <option value="" selected disabled>-- Chọn một phương thức --</option>
-                            <option value="1">Thanh toán sau khi trả phòng</option>
-                            <option value="2">Thanh toán qua thẻ nhân hàng</option>
+                            <option selected value="0">Thanh toán sau khi trả phòng</option>
+                            <option value="1">Thanh toán qua thẻ nhân hàng</option>
                         </select>
                     </div>
 
@@ -200,8 +201,9 @@
                         <li class="d-flex align-items-start mb-2">
                             <i class="fa-solid fa-check text-success me-2 mt-1"></i>
                             <span>Phòng của bạn sẽ sẵn sàng để nhận trong khoảng từ <span
-                                    class="fw-bold">{{ infoHotel.departureDate }}</span>  đến <span
-                                    class="fw-bold">{{ infoHotel.arrivalDate }}</span></span>
+                                    class="fw-bold">{{ infoHotel.departureDate | date: 'dd/MM/yyyy' }} 12-14 giờ</span>  đến <span
+                                    class="fw-bold">{{ infoHotel.arrivalDate | date: 'dd/MM/yyyy' }}
+                                12- giờ</span>.</span>
                         </li>
                         <li class="d-flex align-items-start mb-2">
                             <i class="fa-solid fa-check text-success me-2 mt-1"></i>

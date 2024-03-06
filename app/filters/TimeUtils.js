@@ -133,20 +133,22 @@ travel_app.filter('convertTime', function () {
 
 travel_app.filter('calculateDaysAndNights', function () {
     return function (departureDate, arrivalDate) {
-        // Chuyển đổi ngày đi và ngày về thành đối tượng Date
-        var departure = new Date(departureDate);
-        var arrival = new Date(arrivalDate);
+        const departure = new Date(departureDate);
+        const arrival = new Date(arrivalDate);
 
-        // Tính toán số milliseconds giữa hai ngày
-        var timeDifference = arrival.getTime() - departure.getTime();
+        const timeDifference = arrival.getTime() - departure.getTime();
 
-        // Tính toán số ngày và số đêm
-        var days = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-        var nights = days - 1;
+        const days = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+        const nights = days - 1;
 
-        return days + " ngày " + nights + " đêm";
+        if (days === 1) {
+            return days + " ngày";
+        } else {
+            return days + " ngày " + nights + " đêm";
+        }
     };
 });
+
 
 travel_app.filter('dateWithTimeFormat', function () {
     return function (dateString) {

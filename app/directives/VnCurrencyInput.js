@@ -39,3 +39,6 @@ travel_app.directive('vietnamCurrencyInput', ['$filter', function ($filter) {
         }
     };
 }]);
+
+
+

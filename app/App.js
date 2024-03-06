@@ -157,23 +157,14 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/staff/schedule-management/tour-customers/tour-customers-update.html',
             controller: 'TourCustomersControllerAD'
         })
-        .when('/admin/bill-list', {
-            templateUrl: 'app/component/admin/views/pages/staff/bill/bill-list.html',
-            controller: 'BillControllerAD'
-        })
-        .when('/admin/bill-list/bill-create', {
-            templateUrl: 'app/component/admin/views/pages/staff/bill/bill-create.html',
-            controller: 'BillControllerAD'
-        })
-        .when('/admin/bill-list/bill-update/:id', {
-            templateUrl: 'app/component/admin/views/pages/staff/bill/bill-update.html',
-            controller: 'BillControllerAD'
-        })
-        .when('/admin/order-visit-list', {
+        .when('/admin/booking-list', {
             templateUrl: 'app/component/admin/views/pages/staff/booking/booking-list.html',
             controller: 'BookingControllerAD'
         })
-
+        .when('/admin/accommodation-information-list', {
+            templateUrl: 'app/component/admin/views/pages/staff/tour-service/accommodation-information-list.html',
+            controller: 'AccommodationInformationControllerAD'
+        })
         /**
          * Agent
          */
