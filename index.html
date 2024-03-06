@@ -450,28 +450,7 @@
                             </div>
 
                             <div ng-if="hasRole('ROLE_ADMIN')" ng-cloak>
-                                <!-- QUẢN LÝ NHÂN VIÊN - Header -->
-                                <p class="navbar-vertical-label">QUẢN LÝ NHÂN VIÊN</p>
-                                <hr class="navbar-vertical-line"/>
-
-                                <!-- QUẢN LÝ NHÂN VIÊN - List-->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'staff-list'}"
-                                       ng-click="setActiveNavItem('staff-list')"
-                                       href="/admin/staff/staff-list"
-                                    >
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="users"></span>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Thông tin nhân viên</span>
-                                        </span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- QUẢN LÝ DOANG NGHIỆP - Header -->
+                                                <!-- QUẢN LÝ DOANG NGHIỆP - Header -->
                                 <p class="navbar-vertical-label">QUẢN LÝ DOANH NGHIỆP</p>
                                 <hr class="navbar-vertical-line"/>
 
@@ -1608,7 +1587,6 @@
 <script src="app/services/customer/hotel/HotelServiceCT.js"></script>
 
 <!--====== Service Customer ======-->
-<script src="app/services/customer/InformationServiceCT.js"></script>
 <script src="app/services/customer/HomeServiceCT.js"></script>
 <script src="app/services/customer/ForgotPwService.js"></script>
 
@@ -1707,7 +1685,6 @@
 <script src="app/component/customers/controllers/hotel/HotelDetailController.js"></script>
 <script src="app/component/customers/controllers/move/DriveMoveController.js"></script>
 <script src="app/component/customers/controllers/info/InformationController.js"></script>
-<script src="app/component/customers/controllers/info/ChangePasswordController.js"></script>
 <script src="app/component/customers/controllers/password/ForgotPwController.js"></script>
 <script src="app/component/customers/controllers/password/ChangePwController.js"></script>
 

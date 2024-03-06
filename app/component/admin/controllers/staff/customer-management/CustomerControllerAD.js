@@ -113,7 +113,7 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
                 return $scope.customer.avatar;
             }
         } else {
-            return 'https://t3.ftcdn.net/jpg/05/60/26/08/360_F_560260880_O1V3Qm2cNO5HWjN66mBh2NrlPHNHOUxW.jpg';
+            return 'https://i.imgur.com/xm5Ufr5.jpg';
         }
     };
 
@@ -177,7 +177,9 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
                         $scope.customer.birth = new Date(response.data.data.birth);
                     }, 0);
                 }
-            }, errorCallback);
+            }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
         }
     };
 
@@ -316,7 +318,7 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
             updateInfo(customerId, dataCustomer);
         } else {
             if($scope.customer.avatar === null){
-               $scope.customer.avatar = 'https://t3.ftcdn.net/jpg/05/60/26/08/360_F_560260880_O1V3Qm2cNO5HWjN66mBh2NrlPHNHOUxW.jpg'
+               $scope.customer.avatar = 'https://i.imgur.com/xm5Ufr5.jpg'
             }
             urlToFile($scope.customer.avatar, fileName, mimeType).then(file => {
                 dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
@@ -327,6 +329,7 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
     };
 
     const updateInfo = (customerId, dataCustomer) => {
+        $scope.isLoading = true;
         CustomerServiceAD.updateCustomer(customerId, dataCustomer).then(function successCallback(response) {
             if (response.status === 200) {
                 toastAlert('success', 'Cập nhật thành công !');

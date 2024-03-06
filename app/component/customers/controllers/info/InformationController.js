@@ -1,13 +1,15 @@
-travel_app.controller("InformationController", function ($scope, $location, $routeParams, $timeout, $http, CustomerInfoServiceCT, AuthService) {
-    $scope.selectedImageSrc = null;
-    $scope.phoneError = false;
-
+travel_app.controller("InformationController", function ($scope, $location, $window, $routeParams, $timeout, $rootScope, $http, CustomerServiceAD, LocalStorageService, AuthService) {
     $scope.isLoading = true;
 
     const fileName = "default.jpg";
     const mimeType = "image/jpeg";
 
+    let checkOldPass = '';
+    let checkNewPass = '';
+
     $scope.hasImage = false;
+
+    $scope.genderOptions = [{label: 'Nữ', value: 1}, {label: 'Nam', value: 2}, {label: 'Khác', value: 3}];
 
     $scope.customer = {
         avatar: null,
@@ -22,33 +24,19 @@ travel_app.controller("InformationController", function ($scope, $location, $rou
         isActive: null
     }
 
-    $scope.customerUpdate = {
-        avatar: [],
-        email: null,
-        password: null,
-        gender: null,
-        fullName: null,
-        birth: null,
-        address: null,
-        citizenCard: null,
-        phone: null,
-        isActive: null
+    $scope.passUpdate = {
+        newPass: null,
+        confirmPass: null
     }
 
-
-    $scope.customerList = [];
-    $scope.currentPage = 0; // Trang hiện tại
-    $scope.pageSize = 5; // Số lượng tours trên mỗi trang
-
-    let searchTimeout;
-    let customerId = $routeParams.id;
+    let userId = $routeParams.id;
 
     $scope.emailError = false;
     $scope.phoneError = false;
     $scope.cardError = false;
     $scope.invalidBirth = false;
 
-    //==================================================================================================
+    /** Hàm trả trang lỗi*/
     function errorCallback() {
         $location.path('/admin/internal-server-error')
     }
@@ -57,12 +45,15 @@ travel_app.controller("InformationController", function ($scope, $location, $rou
      * Phương thức hiển thị modal
      */
     $scope.showModalChangeProfile = function (id) {
-        if (!$scope.customerUpdate) {
+        if (!$scope.customer) {
             console.error("Error: $scope.agent is not defined or null");
             return;
         }
         fillModalWithData(id);
         $('#change-profile').modal('show');
+    };
+    $scope.showGender = function () {
+        console.log($scope.customer.gender)
     };
 
     $scope.showModalChangePhoneNumber = function (id) {
@@ -84,90 +75,128 @@ travel_app.controller("InformationController", function ($scope, $location, $rou
     };
     //============================================================================================================
 
-
-    /**
-     * @message Check duplicate phone
-     */
-    $scope.checkDuplicatePhone = function () {
-        AuthService.checkExistPhone($scope.customerUpdate.phone).then(function successCallback(response) {
-            $scope.phoneError = response.data.exists;
-        });
-    };
-    //============================================================================================================
-
+    /** Lấy ra thông tin Customer theo đường dẫn */
     $scope.getCustomer = function () {
-        if (customerId !== undefined && customerId !== null && customerId !== "") {
-            CustomerInfoServiceCT.findCustomerById(customerId).then(function successCallback(response) {
+        if (userId !== undefined && userId !== null && userId !== "") {
+            CustomerServiceAD.findCustomerById(userId).then(function successCallback(response) {
                 if (response.status === 200) {
                     $timeout(function () {
                         $scope.customer = response.data.data;
+                        console.log(response)
+                        $rootScope.phonenow = response.data.data.phone;
+                        $rootScope.cardnow = response.data.data.citizenCard;
                         $scope.customer.birth = new Date(response.data.data.birth);
-                        $scope.customerUpdate = $scope.customer
-                        $scope.users = response.data.data;
-                        $scope.users.birth = new Date(response.data.data.birth);
                     }, 0);
                 }
+            }, errorCallback).finally(function () {
+                $scope.isLoading = false;
             });
         }
     };
     $scope.getCustomer();
 
-
-    function fillModalWithData(id) {
-        if (id !== undefined && id !== null && id !== "") {
-            CustomerInfoServiceCT.findCustomerById(id).then(function successCallback(response) {
-                if (response.status === 200) {
-                    $timeout(function () {
-                        $scope.customerUpdate = response.data.data;
-                        $scope.customerUpdate.birth = new Date(response.data.data.birth);
-                    }, 0);
+    /**
+     * Kiểm tra thông tin đầu vào
+     */
+    $scope.checkPhoneCustomer = function () {
+        if($scope.customer.phone == $rootScope.phonenow){
+            $scope.phoneError = false;
+            return;
+        }
+        AuthService.checkExistPhone($scope.customer.phone)
+            .then(function successCallback(response) {
+                if (response.status === 200){
+                    $scope.phoneError = response.data.exists;
+                }else{
+                    $scope.phoneError = response.data.exists;
                 }
             });
-        }
-    }
-
-    function fillModalPhoneWithData(id) {
-        if (id !== undefined && id !== null && id !== "") {
-            CustomerInfoServiceCT.findCustomerById(id).then(function successCallback(response) {
-                if (response.status === 200) {
-                    $timeout(function () {
-                        $scope.customerUpdate = response.data.data;
-                    }, 0);
-                }
-            });
-        }
-    }
-
-    //==================================================================================================
-
-    //Modal update
-
-    $scope.updateBasicProfile = () => {
-    }
-
-    $scope.getCurrentImageSource = function () {
-        if ($scope.customer.avatar && typeof $scope.customer.avatar === 'string' && $scope.customer.avatar.startsWith('http')) {
-            $scope.tourImgNoCloud = $scope.customer.avatar;
-            return $scope.customer.avatar;
-        } else if ($scope.customer.avatar && typeof $scope.customer.avatar === 'string') {
-            return $scope.customer.avatar;
-        }
     };
 
-    $scope.uploadTourImage = function (file) {
+    $scope.checkCardCustomer = function () {
+        if($scope.customer.citizenCard == $rootScope.cardnow){
+            $scope.cardError = false;
+            return;
+        }
+        AuthService.checkExistCard($scope.customer.citizenCard).then(function successCallback(response) {
+            $scope.cardError = response.data.exists;
+        });
+    };
+
+    $scope.checkBirth = function () {
+        let birthDate = new Date($scope.customer.birth);
+        let today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        let monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        $scope.invalidBirth = age < 16;
+    };
+
+    $scope.isBirthInvalid = function () {
+        return $scope.invalidBirth; // Sử dụng biến mới để kiểm tra tuổi
+    };
+
+    $scope.isBirthValid = function () {
+        return !$scope.invalidBirth && $scope.customer.birth;
+    };
+
+    //============================================================================================================
+    /** Fill thông tin lên form modal thông tin cơ bản */
+    function fillModalWithData(id) {
+        if (id !== undefined && id !== null && id !== "") {
+            CustomerServiceAD.findCustomerById(id).then(function successCallback(response) {
+                if (response.status === 200) {
+                    $timeout(function () {
+                        $scope.customer = response.data.data;
+                        $scope.customer.birth = new Date(response.data.data.birth);
+                    }, 0);
+                }
+            });
+        }
+    }
+
+    /** Fill thông tin lên form modal số điện thoại */
+    function fillModalPhoneWithData(id) {
+        if (id !== undefined && id !== null && id !== "") {
+            CustomerServiceAD.findCustomerById(id).then(function successCallback(response) {
+                if (response.status === 200) {
+                    $timeout(function () {
+                        $scope.customer.phone = response.data.data.phone;
+                    }, 0);
+                }
+            });
+        }
+    }
+    //==================================================================================================
+    /** Các function xử lý hình ảnh */
+    $scope.uploadCustomerAvatar = function (file) {
         if (file && !file.$error) {
-            var reader = new FileReader();
+            let reader = new FileReader();
 
             reader.onload = function (e) {
                 $scope.customer.avatar = e.target.result;
-                $scope.tourImgNoCloud = file;
+                $scope.customerAvatarNoCloud = file;
                 $scope.hasImage = true; // Đánh dấu là đã có ảnh
                 $scope.$apply();
             };
 
             reader.readAsDataURL(file);
         }
+    };
 
+    $scope.getCurrentAvatarSource = function () {
+        if ($scope.customer.avatar && typeof $scope.customer.avatar === 'string') {
+            if ($scope.customer.avatar.startsWith('http')) {
+                $scope.customerAvatarNoCloud = $scope.customer.avatar;
+                return $scope.customer.avatar;
+            } else {
+                return $scope.customer.avatar;
+            }
+        } else {
+            return 'https://i.imgur.com/xm5Ufr5.jpg';
+        }
     };
 
     function urlToFile(url, fileName, mimeType) {
@@ -176,37 +205,96 @@ travel_app.controller("InformationController", function ($scope, $location, $rou
             .then(blob => new File([blob], fileName, {type: mimeType}));
     }
 
-    //form update
-    $scope.updateTourSubmit = () => {
-        const dataTour = new FormData();
+    //Modal update
+
+    function confirmUpdate() {
+        const dataCustomer = new FormData();
         $scope.isLoading = true;
-        if ($scope.customerUpdate.avatarUpdate) {
-            dataTour.append('avatarUpdate', $scope.customerUpdate.avatarUpdate, $scope.customerUpdate.avatarUpdate.name);
-        } else {
-            var emptyImageBlob = new Blob([''], { type: "image/png" });
-            dataTour.append('avatarUpdate', emptyImageBlob, 'empty-image.png');
-        }
         if ($scope.hasImage) {
-            dataTour.append("usersDto", new Blob([JSON.stringify($scope.customerUpdate)], {type: "application/json"}));
-            updateTour(customerId, dataTour);
+            dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
+            dataCustomer.append("customerAvatar", $scope.customerAvatarNoCloud);
+            updateInfo(userId, dataCustomer);
         } else {
-            urlToFile($scope.customerUpdate.avatar, fileName, mimeType).then(file => {
-                dataTour.append("usersDto", new Blob([JSON.stringify($scope.customerUpdate)], {type: "application/json"}));
-                updateTour(customerId, dataTour);
+            if($scope.customer.avatar === null){
+                $scope.customer.avatar = 'https://t3.ftcdn.net/jpg/05/60/26/08/360_F_560260880_O1V3Qm2cNO5HWjN66mBh2NrlPHNHOUxW.jpg'
+            }
+            urlToFile($scope.customer.avatar, fileName, mimeType).then(file => {
+                dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
+                dataCustomer.append("customerAvatar", file);
+                updateInfo(userId, dataCustomer);
             }, errorCallback);
         }
-
     };
 
-
-    function updateTour(customerId, dataTour) {
-        CustomerInfoServiceCT.updateTour(customerId, dataTour).then(function successCallback() {
-            $scope.isLoading = true;
-            toastAlert('success', 'Cập nhật thành công !');
-            $scope.getCustomer();
-            $scope.customerUpdate = null;
+    const updateInfo = (userId, dataCustomer) => {
+        $scope.isLoading = true;
+        CustomerServiceAD.updateCustomer(userId, dataCustomer).then(function successCallback(response) {
+            if (response.status === 200) {
+                toastAlert('success', 'Cập nhật thành công !');
+                LocalStorageService.set('user', response.data.data);
+                $window.location.href = '/information/' + userId;
+            } else {
+                $location.path('/admin/page-not-found');
+            }
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
     }
+    $scope.updateInfoSubmit = function () {
+        confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdate);
+    }
+
+    const confirmUpdatePhone = () => {
+        $scope.isLoading = true;
+        CustomerServiceAD.updatePhone($scope.customer.id, $scope.customer.phone).then(function successCallback(response) {
+            if (response.status === 200) {
+                toastAlert('success', 'Cập nhật thành công !');
+                LocalStorageService.set('user', response.data.data);
+                $window.location.href = '/information/' + $scope.customer.id;
+
+            } else {
+                $location.path('/admin/page-not-found');
+            }
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
+    }
+
+
+    $scope.updatePhone = function () {
+        confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdatePhone);
+    }
+
+    $scope.checkPasswordMatch = function () {
+        checkOldPass = $scope.currentPass;
+        checkNewPass = $scope.passUpdate.newPass;
+
+        // Kiểm tra mật khẩu mới có trùng với mật khẩu hiện tại hay không
+        $scope.passwordMatchError = (checkNewPass === checkOldPass);
+
+        // Kiểm tra mật khẩu hiện tại có chính xác hay không
+        CustomerServiceAD.checkCorrectCurrentPass($scope.customer.id, checkOldPass).then(function successCallback(response) {
+            $scope.currentPassError = response.data.exists;
+        });
+    };
+
+    const confirmUpdatePass = () => {
+        $scope.isLoading = true;
+        CustomerServiceAD.updatePass($scope.customer.id, $scope.passUpdate).then(function successCallback(response) {
+            if (response.status === 200) {
+                toastAlert('success', 'Cập nhật thành công !');
+                $location.path("/sign-in");
+            } else {
+                $location.path('/admin/page-not-found');
+            }
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
+    }
+
+
+    $scope.submit_changePass = function () {
+        confirmAlert('Bạn có chắc chắn muốn đổi mật khẩu ?', confirmUpdatePass);
+    }
+
 })

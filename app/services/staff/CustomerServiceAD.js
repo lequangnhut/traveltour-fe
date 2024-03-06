@@ -64,4 +64,28 @@ travel_app.service('CustomerServiceAD', function ($http, $q) {
         });
         return deferred.promise;
     };
+
+    /** Từ đây của thuynhdpc04763 */
+    this.updatePhone = function (id, phone) {
+        return $http({
+            method: 'PUT',
+            url: API_CUSTOMER + 'update-customer-phone/' + id + '&' + phone
+        })
+    };
+
+    this.checkCorrectCurrentPass = function (id, currentPass) {
+        return $http({
+            method: 'GET',
+            url: API_CUSTOMER + 'check-current-password/' + id + '&' + currentPass,
+            param: 'currentPass' + currentPass
+        })
+    }
+
+    this.updatePass = function (id, data) {
+        return $http({
+            method: 'PUT',
+            url: API_CUSTOMER + 'update-pass/' + id ,
+            data: data
+        })
+    };
 });
