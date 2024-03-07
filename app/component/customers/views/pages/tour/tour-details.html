@@ -103,39 +103,57 @@
 
             <div class="row">
                 <div class="col-xl-8">
-                    <div class="place-content-wrap mb-4 wow fadeInUp" ng-bind-html="tourDetailDescription"
-                         style="text-align: justify; white-space: pre-line; font-family: 'Roboto',sans-serif;">
-                    </div>
-                    <div class="place-content-wrap mb-4 wow fadeInUp"
-                         ng-if="tourDetail.tourDetailDescription.length === 10">
-                        Không có nội dung ghi chú.
-                    </div>
-                    <!--=== Days Area ===-->
-                    <div class="days-area mb-55 wow fadeInUp">
-                        <div class="section-title mb-3">
-                            <h3>Lịch trình hoạt động - di chuyển của chuyến đi</h3>
+                    <nav class="pt-45">
+                        <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                            <button class="nav-link active fw-medium text-green" id="nav-home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                                    aria-selected="true">Thông tin tour
+                            </button>
+                            <button class="nav-link fw-medium text-green" id="tab-map" data-bs-toggle="tab"
+                                    data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
+                                    aria-selected="false" ng-click="changeTab('mapTab')">Lịch trình của tour
+                            </button>
                         </div>
-                        <div class="tab-content">
-                            <div class="tab-pane fade show active" ng-repeat="trip in tourTrips">
-                                <div class="content-box">
-                                    <p ng-bind-html="trip.activityInDay"></p>
-                                </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade active show" id="nav-home" role="tabpanel"
+                             aria-labelledby="nav-home-tab">
+                            <div class="place-content-wrap mb-4 wow fadeInUp" ng-bind-html="tourDetailDescription"
+                                 style="text-align: justify; white-space: pre-line; font-family: 'Roboto',sans-serif;">
                             </div>
-                            <div class="tab-pane fade show active" ng-if="tourTrips === null">
-                                <div class="content-box text-center">
-                                    <p class="fw-medium">Không có dữ liệu lịch trình hoạt động...</p>
-                                </div>
+                            <div class="place-content-wrap mb-4 wow fadeInUp"
+                                 ng-if="tourDetail.tourDetailDescription.length === 10">
+                                Không có nội dung ghi chú.
                             </div>
                         </div>
+
+                        <div class="tab-pane face" id="nav-profile" role="tabpanel" aria-labelledby="tab-map">
+                            <!--=== Map Box ===-->
+                            <div class="map-box mb-30 wow fadeInUp">
+                                <div id="map" resize-map style="width: 100%; height: 500px;"></div>
+                            </div>
+
+                            <!--=== Days Area ===-->
+                            <div class="days-area mb-55">
+                                <div class="section-title mb-3">
+                                    <h3>Lịch trình hoạt động - di chuyển của chuyến đi</h3>
+                                </div>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" ng-repeat="trip in tourTrips">
+                                        <div class="content-box">
+                                            <p ng-bind-html="trip.activityInDay"></p>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade show active" ng-if="tourTrips === null">
+                                        <div class="content-box text-center">
+                                            <p class="fw-medium">Không có dữ liệu lịch trình hoạt động...</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!--=== Days Area ===-->
+                        </div>
                     </div>
-                    <!--=== Map Box ===-->
-                    <div class="map-box mb-60 wow fadeInUp">
-                        <div id="map" style="height: 500px;"></div>
-                    </div>
-                    <!--=== Calendar Box ===-->
-                    <div class="calendar-wrapper wow fadeInUp">
-                        <div class="calendar-container mb-45"></div>
-                    </div>
+
                     <!--=== Releted Tour Place ===-->
                     <div class="related-tour-place wow fadeInUp">
                         <div class="row">
@@ -220,7 +238,8 @@
                             <li>
                                 <div class="comment">
                                     <div class="comment-avatar">
-                                        <img src="/assets/customers/images/place/comment-1.jpg" alt="comment author">
+                                        <img src="/assets/customers/images/place/comment-1.jpg"
+                                             alt="comment author">
                                     </div>
                                     <div class="comment-wrap">
                                         <div class="comment-author-content">
@@ -272,7 +291,8 @@
                                                     <span><span class="fas fa-star"></span></span>
                                                 </li>
                                             </ul>
-                                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
+                                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui
+                                                blanditiis
                                                 praesentium voluptatum deleniti atque corrupti quos dolores et quas
                                                 molestias excepture</p>
                                             <a href="#" class="btn-link">Trả lời
@@ -338,8 +358,10 @@
                                                             <span><span class="fas fa-star"></span></span>
                                                         </li>
                                                     </ul>
-                                                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                                                        blanditiis praesentium voluptatum deleniti atque corrupti quos
+                                                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus
+                                                        qui
+                                                        blanditiis praesentium voluptatum deleniti atque corrupti
+                                                        quos
                                                         dolores et quas molestias excepture</p>
                                                     <a href="#" class="btn-link">Trả lời
                                                         <span class="fas fa-angle-double-right"></span>
@@ -355,7 +377,8 @@
                             <li>
                                 <div class="comment">
                                     <div class="comment-avatar">
-                                        <img src="/assets/customers/images/place/comment-3.jpg" alt="comment author">
+                                        <img src="/assets/customers/images/place/comment-3.jpg"
+                                             alt="comment author">
                                     </div>
                                     <div class="comment-wrap">
                                         <div class="comment-author-content">
@@ -407,7 +430,8 @@
                                                     <span><span class="fas fa-star"></span></span>
                                                 </li>
                                             </ul>
-                                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
+                                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui
+                                                blanditiis
                                                 praesentium voluptatum deleniti atque corrupti quos dolores et quas
                                                 molestias excepture</p>
                                             <a href="#" class="btn-link">Trả lời
@@ -598,7 +622,8 @@
                                         </div>
                                     </div>
                                     <div class="booking-item">
-                                        <label>Trẻ em (13-17 tuổi) {{ tourDetail.unitPrice * 0.3 | vnCurrency }}</label>
+                                        <label>Trẻ em (13-17
+                                            tuổi) {{ tourDetail.unitPrice * 0.3 | vnCurrency }}</label>
                                         <div class="bk-item booking-user">
                                             <span class="fas fa-user"></span>
                                             <select class="wide-select"
@@ -645,9 +670,11 @@
                                             ng-if="tourDetail.bookedSeat !== tourDetail.numberOfGuests"
                                     >
                                         Đặt tour ngay
-                                        <svg class="svg-inline--fa fa-paper-plane" aria-hidden="true" focusable="false"
+                                        <svg class="svg-inline--fa fa-paper-plane" aria-hidden="true"
+                                             focusable="false"
                                              data-prefix="fas" data-icon="paper-plane" role="img"
-                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 512" data-fa-i2svg="">
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 512"
+                                             data-fa-i2svg="">
                                             <path fill="currentColor"
                                                   d="M511.6 36.86l-64 415.1c-1.5 9.734-7.375 18.22-15.97 23.05c-4.844 2.719-10.27 4.097-15.68 4.097c-4.188 0-8.319-.8154-12.29-2.472l-122.6-51.1l-50.86 76.29C226.3 508.5 219.8 512 212.8 512C201.3 512 192 502.7 192 491.2v-96.18c0-7.115 2.372-14.03 6.742-19.64L416 96l-293.7 264.3L19.69 317.5C8.438 312.8 .8125 302.2 .0625 289.1s5.469-23.72 16.06-29.77l448-255.1c10.69-6.109 23.88-5.547 34 1.406S513.5 24.72 511.6 36.86z"></path>
                                         </svg>
@@ -663,10 +690,10 @@
 
                         <!--=== Recent Place Widget ===-->
                         <div class="sidebar-widget recent-place-widget mb-40 wow fadeInUp">
-                            <h4 class="widget-title">Last Minute Deals</h4>
+                            <h4 class="widget-title">Top 5 tour nổi bật</h4>
                             <ul class="recent-place-list">
-                                <li class="place-thumbnail-content">
-                                    <img src="/assets/customers/images/place/thumb-1.jpg" alt="post thumb">
+                                <li class="place-thumbnail-content" ng-repeat="trend in tourTrendData">
+                                    <img ng-src="{{ trend.tourImg }}" alt="post thumb" src="">
                                     <div class="place-content">
                                         <ul class="ratings">
                                             <li><span class="fas fa-star"></span></li>
@@ -675,59 +702,15 @@
                                             <li><span class="fas fa-star"></span></li>
                                             <li><span class="fas fa-star"></span></li>
                                         </ul>
-                                        <h5><a href="tour-details.html">Infinity Pool Nears
-                                            Beach</a></h5>
-                                        <span class="price"><span class="text">From :</span><span
-                                                class="currency">$</span>45.23</span>
-                                    </div>
-                                </li>
-                                <li class="place-thumbnail-content">
-                                    <img src="/assets/customers/images/place/thumb-2.jpg" alt="post thumb">
-                                    <div class="place-content">
-                                        <ul class="ratings">
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star-half-alt"></span></li>
-                                        </ul>
-                                        <h5><a href="tour-details.html">Infinity Pool Nears
-                                            Beach</a></h5>
-                                        <span class="price"><span class="text">From :</span><span
-                                                class="currency">$</span>45.23</span>
-                                    </div>
-                                </li>
-                                <li class="place-thumbnail-content">
-                                    <img src="/assets/customers/images/place/thumb-3.jpg" alt="post thumb">
-                                    <div class="place-content">
-                                        <ul class="ratings">
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                            <li><span class="fas fa-star"></span></li>
-                                        </ul>
-                                        <h5><a href="tour-details.html">Infinity Pool Nears
-                                            Beach</a></h5>
-                                        <span class="price"><span class="text">From :</span><span
-                                                class="currency">$</span>45.23</span>
+                                        <h5><a href="/home">{{ trend.tourName }}</a>
+                                        </h5>
+                                        <span class="price">
+                                            <span class="text m-0">Chỉ từ:</span>
+                                            <span class="currency">{{ trend.unitPrice | vnCurrency }}</span>
+                                        </span>
                                     </div>
                                 </li>
                             </ul>
-                        </div>
-                        <!--=== Banner Widget ===-->
-                        <div class="sidebar-widget sidebar-banner-widget wow fadeInUp mb-40">
-                            <div class="banner-widget-content">
-                                <div class="banner-img">
-                                    <img src="/assets/customers/images/blog/banner-1.jpg" alt="Post Banner">
-                                    <div class="hover-overlay">
-                                        <div class="hover-content">
-                                            <h4 class="title"><a href="#">Swimming Pool</a></h4>
-                                            <p><span class="fas fa-map-marker-alt"></span>Marrakesh, Morocco</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -735,3 +718,32 @@
         </div>
     </div>
 </section><!--====== End Place Details Section ======-->
+
+<!--====== Start CTA Section ======-->
+<section class="cta-bg overlay bg_cover pt-150 pb-150"
+         style="background-image: url(/assets/customers/images/bg/cta-bg2.jpg);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-xl-7 col-lg-8">
+                <!--=== CTA Content Box ===-->
+                <div class="cta-content-box text-white wow fadeInLeft">
+                    <h2 class="mb-35">Bạn đã sẵn sàng cho chuyến du lịch của mình!</h2>
+                    <a href="" class="main-btn primary-btn">Để Lại thông tin
+                        <svg class="svg-inline--fa fa-paper-plane" aria-hidden="true" focusable="false"
+                             data-prefix="fas" data-icon="paper-plane" role="img"
+                             xmlns="http://www.w3.org/2000/svg" viewBox="-50 -23 680 520" data-fa-i2svg="">
+                            <path fill="currentColor"
+                                  d="M511.6 36.86l-64 415.1c-1.5 9.734-7.375 18.22-15.97 23.05c-4.844 2.719-10.27 4.097-15.68 4.097c-4.188 0-8.319-.8154-12.29-2.472l-122.6-51.1l-50.86 76.29C226.3 508.5 219.8 512 212.8 512C201.3 512 192 502.7 192 491.2v-96.18c0-7.115 2.372-14.03 6.742-19.64L416 96l-293.7 264.3L19.69 317.5C8.438 312.8 .8125 302.2 .0625 289.1s5.469-23.72 16.06-29.77l448-255.1c10.69-6.109 23.88-5.547 34 1.406S513.5 24.72 511.6 36.86z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-5 col-lg-4">
+                <div class="play-box text-lg-end text-center wow fadeInRight">
+                    <a href="https://www.youtube.com/watch?v=ibuUmMhD2Pg" class="video-popup"><span
+                            class="fas fa-play"></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--====== End CTA Section ======-->

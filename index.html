@@ -1514,8 +1514,9 @@
 <script src="app/directives/FormatTime.js"></script>
 <script src="app/directives/ckEditor.js"></script>
 <script src="/app/directives/PaymentMethod.js"></script>
+<script src="/app/directives/ResizeMap.js"></script>
 
-<!--====== Service ======-->
+<!--====== Service Utils ======-->
 <script src="app/services/auth/AuthService.js"></script>
 <script src="app/services/utils/NotificationService.js"></script>
 <script src="app/services/utils/LocalStorageService.js"></script>
@@ -1579,20 +1580,23 @@
 <script src="app/services/agent/RoomImagesService.js"></script>
 
 <!--====== Service Customer Tour ======-->
-<script src="app/services/customer/tour/TourServiceCT.js"></script>
-<script src="app/services/customer/tour/TourDetailServiceCT.js"></script>
+<script src="app/services/customer/tour/TourCusService.js"></script>
+<script src="app/services/customer/tour/TourDetailCusService.js"></script>
 
 <!--====== Service Customer Location ======-->
 <script src="app/services/customer/location/LocationCusService.js"></script>
 
 <!--====== Service Customer Booking ======-->
-<script src="app/services/customer/booking/BookingTourServiceCT.js"></script>
+<script src="app/services/customer/booking/BookingTourCusService.js"></script>
 
 <!--====== Service Customer Hotels ======-->
 <script src="app/services/customer/hotel/HotelServiceCT.js"></script>
 
+<!--====== Service Customer Transport ======-->
+<script src="app/services/customer/transport/TransportCusService.js"></script>
+
 <!--====== Service Customer ======-->
-<script src="app/services/customer/HomeServiceCT.js"></script>
+<script src="app/services/customer/home/HomeCusService.js"></script>
 <script src="app/services/customer/ForgotPwService.js"></script>
 
 <!--====== Controller Super Admin ======-->
@@ -1682,6 +1686,10 @@
 <script src="app/component/customers/controllers/hotel/HotelController.js"></script>
 <script src="app/component/customers/controllers/hotel/HotelDetailController.js"></script>
 
+<!--====== Controller Customer Transport ======-->
+<script src="app/component/customers/controllers/transport/TransportCusController.js"></script>
+<script src="app/component/customers/controllers/transport/TransportDetailCusController.js"></script>
+
 <!--====== Controller Customer Booking ======-->
 <script src="app/component/customers/controllers/booking/BookingTourCusController.js"></script>
 <script src="app/component/customers/controllers/booking/BookingSuccessCusController.js"></script>
@@ -1695,7 +1703,6 @@
 <script src="app/component/customers/controllers/home/TravelGuideController.js"></script>
 <script src="app/component/customers/controllers/home/ContactController.js"></script>
 <script src="app/component/customers/controllers/home/TicketController.js"></script>
-<script src="app/component/customers/controllers/move/DriveMoveController.js"></script>
 <script src="app/component/customers/controllers/info/InformationController.js"></script>
 <script src="app/component/customers/controllers/password/ForgotPwController.js"></script>
 <script src="app/component/customers/controllers/password/ChangePwController.js"></script>

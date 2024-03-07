@@ -714,6 +714,15 @@ button {
 }
 
 /*====== Start Preloader css ======*/
+.preloader .bg {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100vh;
+    background: #fff;
+    opacity: .7;
+}
+
 .preloader {
     bottom: 0;
     height: 100vh;

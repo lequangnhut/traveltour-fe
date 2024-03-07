@@ -19,75 +19,105 @@
 <!--====== Start Blog Section ======-->
 <section class="blog-list-section pt-100 pb-70">
     <div class="container">
+        <!--====== Products Filter ======-->
+        <div class="page-item-filter mb-40 wow fadeInUp">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-7 d-flex align-items-center">
+                    <div class="show-text">
+                        <h3>Booking địa điểm tham quan</h3>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <!--====== Product Dropdown ======-->
+                    <div class="product-dropdown float-md-end d-flex justify-content-end align-items-center">
+                        <span class="m-3 fw-medium">Sắp xếp</span>
+                        <select class="wide" ng-model="filler.sort" ng-change="findAllRoomTypesByFillerClick()">
+                            <option value="">Mặc định</option>
+                            <option value="01">Giá tăng dần</option>
+                            <option value="02">Giá giảm dần</option>
+                            <option value="03">Đánh giá tốt nhất</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-xl-9">
-                <!--=== Blog List Wrapper ===-->
-                <div class="blog-list-wrapper">
-                    <!--=== Single Blog Post ===-->
-                    <div class="single-blog-post-four mb-30 wow fadeInDown" ng-repeat="location in visitLocation">
-                        <div class="post-thumbnail">
-                            <img ng-src="{{ location.visitLocationImage }}" style="height: 300px" alt="Post Image">
-                        </div>
-                        <div class="entry-content">
-                            <h6 class="post-meta">
-                                <span>{{ location.agenciesByAgenciesId.nameAgency }}</span>
-                            </h6>
-                            <h3 class="title">
-                                <a href="/tourism-location/tourism-location-detail/{{location.id}}">
-                                    {{ location.visitLocationName }}
-                                </a>
-                            </h3>
-                            <div class="post-meta" ng-repeat="ticket in location.visitLocationTicketsById">
+                <div ng-include="'app/component/utils/loading-component.html'"></div>
+                <div ng-if="!isLoading">
+                    <!--=== Blog List Wrapper ===-->
+                    <div class="blog-list-wrapper">
+                        <!--=== Single Blog Post ===-->
+                        <div class="single-blog-post-four mb-30 wow fadeInDown" ng-repeat="location in visitLocation">
+                            <div class="post-thumbnail">
+                                <img ng-src="{{ location.visitLocationImage }}" style="height: 300px" alt="Post Image">
+                            </div>
+                            <div class="entry-content">
+                                <h6 class="post-meta">
+                                    <span>{{ location.agenciesByAgenciesId.nameAgency }}</span>
+                                </h6>
+                                <h3 class="title">
+                                    <a href="/tourism-location/tourism-location-detail/{{location.id}}">
+                                        {{ location.visitLocationName }}
+                                    </a>
+                                </h3>
+                                <div class="post-meta" ng-repeat="ticket in location.visitLocationTicketsById">
                                 <span>
                                     <i class="fa-solid fa-check text-green"></i>
                                     {{ ticket.ticketTypeName }}
                                     <span ng-if="!ticket.unitPrice"></span>
                                     <span ng-if="ticket.unitPrice">- {{ ticket.unitPrice | vnCurrency }}</span>
                                 </span>
+                                </div>
+                                <a href="/tourism-location/tourism-location-detail/{{location.id}}"
+                                   class="main-btn filled-btn"
+                                >
+                                    Xem chi tiết
+                                    <svg class="svg-inline--fa fa-paper-plane" aria-hidden="true" focusable="false"
+                                         data-prefix="fas" data-icon="paper-plane" role="img"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="-50 -23 680 520" data-fa-i2svg="">
+                                        <path fill="currentColor"
+                                              d="M511.6 36.86l-64 415.1c-1.5 9.734-7.375 18.22-15.97 23.05c-4.844 2.719-10.27 4.097-15.68 4.097c-4.188 0-8.319-.8154-12.29-2.472l-122.6-51.1l-50.86 76.29C226.3 508.5 219.8 512 212.8 512C201.3 512 192 502.7 192 491.2v-96.18c0-7.115 2.372-14.03 6.742-19.64L416 96l-293.7 264.3L19.69 317.5C8.438 312.8 .8125 302.2 .0625 289.1s5.469-23.72 16.06-29.77l448-255.1c10.69-6.109 23.88-5.547 34 1.406S513.5 24.72 511.6 36.86z"></path>
+                                    </svg>
+                                </a>
                             </div>
-                            <a href="/tourism-location/tourism-location-detail/{{location.id}}"
-                               class="main-btn filled-btn"
-                            >
-                                Xem chi tiết
-                                <svg class="svg-inline--fa fa-paper-plane" aria-hidden="true" focusable="false"
-                                     data-prefix="fas" data-icon="paper-plane" role="img"
-                                     xmlns="http://www.w3.org/2000/svg" viewBox="-50 -23 680 520" data-fa-i2svg="">
-                                    <path fill="currentColor"
-                                          d="M511.6 36.86l-64 415.1c-1.5 9.734-7.375 18.22-15.97 23.05c-4.844 2.719-10.27 4.097-15.68 4.097c-4.188 0-8.319-.8154-12.29-2.472l-122.6-51.1l-50.86 76.29C226.3 508.5 219.8 512 212.8 512C201.3 512 192 502.7 192 491.2v-96.18c0-7.115 2.372-14.03 6.742-19.64L416 96l-293.7 264.3L19.69 317.5C8.438 312.8 .8125 302.2 .0625 289.1s5.469-23.72 16.06-29.77l448-255.1c10.69-6.109 23.88-5.547 34 1.406S513.5 24.72 511.6 36.86z"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div><!--=== Single Blog Post ===-->
+                        </div><!--=== Single Blog Post ===-->
+                    </div>
+
+                    <!--=== Pagination ===-->
+                    <ul class="gowilds-pagination wow fadeInDown mt-60 mb-30 d-flex align-items-center justify-content-center">
+                        <li class="m-1">
+                            <button class="bg-white" ng-click="setPage(0)" ng-disabled="currentPage === 0">
+                                <a class="cursor-pointer">
+                                    <span class="fas fa-arrow-left"></span>
+                                </a>
+                            </button>
+                        </li>
+
+                        <li class="m-1" ng-if="currentPage > 2 && totalPages > 5">
+                            <a>...</a>
+                        </li>
+
+                        <li ng-repeat="n in getPaginationRange()" class="m-1">
+                            <a href="#" ng-class="{active: n === currentPage}" ng-click="setPage(n)">{{ n + 1 }}</a>
+                        </li>
+
+                        <!-- Ellipsis at the end -->
+                        <li class="m-1" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                            <a>...</a>
+                        </li>
+
+                        <li class="m-1">
+                            <button class="bg-white" ng-click="setPage(totalPages - 1)"
+                                    ng-disabled="currentPage === totalPages - 1">
+                                <a class="cursor-pointer">
+                                    <span class="fas fa-arrow-right"></span>
+                                </a>
+                            </button>
+                        </li>
+                    </ul>
                 </div>
-
-                <!--=== Pagination ===-->
-                <ul class="gowilds-pagination wow fadeInDown mt-60 mb-30 d-flex align-items-center justify-content-center">
-                    <li>
-                        <a href="#" ng-class="{disabled: currentPage === 0}" ng-click="setPage(0)">
-                            <span class="fas fa-arrow-left"></span>
-                        </a>
-                    </li>
-
-                    <li ng-if="currentPage > 2 && totalPages > 5">
-                        <a>...</a>
-                    </li>
-
-                    <li ng-repeat="n in getPaginationRange()" class="mx-1">
-                        <a href="#" ng-class="{active: n === currentPage}" ng-click="setPage(n)">{{ n + 1 }}</a>
-                    </li>
-
-                    <!-- Ellipsis at the end -->
-                    <li ng-if="currentPage < totalPages - 3 && totalPages > 5">
-                        <a>...</a>
-                    </li>
-
-                    <li>
-                        <a ng-class="{disabled: currentPage === totalPages - 1}"
-                           ng-click="setPage(totalPages - 1)">
-                            <span class="fas fa-arrow-right"></span>
-                        </a>
-                    </li>
-                </ul>
             </div>
 
             <div class="col-xl-3 col-md-12">

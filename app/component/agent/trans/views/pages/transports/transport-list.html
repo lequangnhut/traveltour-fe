@@ -219,7 +219,7 @@
                                 </div>
                                 <div class="card-body p-3">
                                     <p class="m-2 fw-medium">Mã nhà xe: <span
-                                            class="fw-normal">{{ transportBrand.id }}</span></p>
+                                            class="fw-medium">{{ transportBrand.id }}</span></p>
                                     <p class="m-2 fw-medium">Loại Tour: <span
                                             class="fw-normal">{{ transportBrand.transportationBrandName }}</span></p>
                                     <p class="m-2 fw-medium">Ngày tạo: <span
@@ -230,11 +230,11 @@
                                     </p>
                                     <p class="m-2 fw-medium">
                                         Trạng thái:
-                                        <span class="fw-normal color-green"
+                                        <span class="fw-medium color-green"
                                               ng-if="transportBrand.isActive === true">
                                                 Đang hoạt động
                                         </span>
-                                        <span class="fw-normal color-green"
+                                        <span class="fw-medium color-green"
                                               ng-if="transportBrand.isActive === false">
                                                 Ngưng hoạt động
                                         </span>
@@ -255,20 +255,20 @@
                                 </div>
                                 <div class="card-body p-3">
                                     <p class="m-2 fw-medium">Mã xe khách: <span
-                                            class="fw-normal">{{ transportation.id }}</span></p>
+                                            class="fw-medium">{{ transportation.id }}</span></p>
                                     <p class="m-2 fw-medium">Biển số xe: <span
-                                            class="fw-normal">{{ transportation.licensePlate }}</span></p>
+                                            class="fw-medium">{{ transportation.licensePlate }}</span></p>
                                     <p class="m-2 fw-medium">Số ghế ngồi: <span
-                                            class="fw-normal">{{ transportation.amountSeat }} Chổ</span></p>
+                                            class="fw-medium">{{ transportation.amountSeat }} Chổ</span></p>
                                     <p class="m-2 fw-medium">Loại xe: <span
                                             class="fw-normal">{{ transportType.transportationTypeName }}</span></p>
                                     <p class="m-2 fw-medium">
                                         Trạng thái:
-                                        <span class="fw-normal color-green"
+                                        <span class="fw-medium color-green"
                                               ng-if="transportation.isActive === true">
                                                 Đang hoạt động
                                         </span>
-                                        <span class="fw-normal color-green"
+                                        <span class="fw-medium color-green"
                                               ng-if="transportation.isActive === false">
                                                 Ngưng hoạt động
                                         </span>
@@ -309,7 +309,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-dismiss="modal"
-                        ng-click="deleteTourDetail(tourDetail.id)">Xóa
+                        ng-click="deleteTrans(transportation.id, transportation.licensePlate)">Xóa
                 </button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
             </div>

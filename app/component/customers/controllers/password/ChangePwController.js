@@ -1,5 +1,4 @@
-travel_app.controller('ChangePwController', function ($scope, $window, $routeParams, $location, $anchorScroll, ForgotPwService) {
-
+travel_app.controller('ChangePwController', function ($scope, $window, $routeParams, $location, ForgotPwService) {
     const token = $routeParams.verifyCode;
 
     $scope.init = function () {
@@ -7,9 +6,9 @@ travel_app.controller('ChangePwController', function ($scope, $window, $routePar
         if (token) {
             ForgotPwService.checkOldCode(token)
                 .then(function successCallback(response) {
-                    if(response.data.status === "200"){
+                    if (response.data.status === "200") {
 
-                    }else{
+                    } else {
                         $location.path('/account/forgot-pass');
                     }
                 })

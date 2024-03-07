@@ -1,6 +1,5 @@
-travel_app.controller('LocationCusController', function ($scope, $anchorScroll, $location, MapBoxService, LocationCusService) {
+travel_app.controller('LocationCusController', function ($scope, $location, MapBoxService, LocationCusService) {
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
-    $anchorScroll();
 
     $scope.currentPage = 0;
     $scope.pageSize = 10;
@@ -46,9 +45,7 @@ travel_app.controller('LocationCusController', function ($scope, $anchorScroll, 
             } else {
                 $location.path('/admin/page-not-found');
             }
-        }, errorCallback).finally(function () {
-            $scope.isLoading = false;
-        });
+        }, errorCallback);
 
         /**
          * Phương thức mở model
@@ -89,16 +86,17 @@ travel_app.controller('LocationCusController', function ($scope, $anchorScroll, 
          */
         $scope.addMarkerLocation = function (visitLocation) {
             $scope.removeMarkerLocation()
-            var bounds = new mapboxgl.LngLatBounds();
+            let bounds = new mapboxgl.LngLatBounds();
 
             for (const location of visitLocation) {
                 let address = location.province + ', ' + location.district + ', ' + location.ward + ', ' + location.address;
-                let iconUrl = '/assets/customers/images/hotel/placeholder.png';
+
+                let iconUrl = '/assets/customers/images/icon/maker.png';
                 let el = document.createElement('div');
                 el.className = 'marker';
                 el.style.backgroundImage = `url(${iconUrl})`;
-                el.style.width = '30px';
-                el.style.height = '30px';
+                el.style.width = '40px';
+                el.style.height = '40px';
                 el.style.backgroundSize = '100%';
 
                 let popupContent = createPopupContent(location);
@@ -119,8 +117,6 @@ travel_app.controller('LocationCusController', function ($scope, $anchorScroll, 
                             .setPopup(popup)
                             .addTo($scope.map);
 
-                        bounds.extend(addressCoordinates);
-
                         let closeButton = popup._content.querySelector('.mapboxgl-popup-close-button');
                         if (closeButton) {
                             closeButton.style.fontSize = '30px';
@@ -130,6 +126,9 @@ travel_app.controller('LocationCusController', function ($scope, $anchorScroll, 
                         }
 
                         $scope.markers.push(marker);
+
+                        bounds.extend(addressCoordinates);
+                        $scope.map.fitBounds(bounds, {padding: 20});
                     } else {
                         console.error("Lỗi khi lấy tọa độ của điểm đến:", error);
                     }
@@ -157,7 +156,6 @@ travel_app.controller('LocationCusController', function ($scope, $anchorScroll, 
         if (page >= 0 && page < $scope.totalPages) {
             $scope.currentPage = page;
             $scope.init();
-            $anchorScroll();
         }
     };
 

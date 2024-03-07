@@ -1,6 +1,4 @@
-travel_app.controller('ForgotPwController', function ($scope, $window, $routeParams, $location, $anchorScroll, ForgotPwService) {
-    //$anchorScroll();
-
+travel_app.controller('ForgotPwController', function ($scope, $window, $routeParams, $location, ForgotPwService) {
     $scope.email = null;
     $scope.captchaImage = '';
     $scope.emailError = false;

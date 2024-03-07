@@ -1,6 +1,4 @@
-travel_app.controller('HotelDetailController', function ($scope, $anchorScroll) {
-    $anchorScroll();
-
+travel_app.controller('HotelDetailController', function ($scope) {
     $scope.$on('$routeChangeSuccess', function () {
         $('.slider-active-5-item').slick({
             dots: false,

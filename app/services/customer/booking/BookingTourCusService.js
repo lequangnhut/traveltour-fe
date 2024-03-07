@@ -1,24 +1,24 @@
-travel_app.service('BookingTourServiceCT', function ($http) {
+travel_app.service('BookingTourCusService', function ($http) {
 
     let API_BOOKING = BASE_API + 'book-tour/';
 
-    this.redirectVNPay = function (totalPrice, orderId) {
+    this.redirectVNPay = function (tourDetailId, orderId) {
         return $http({
             method: 'POST',
             url: BASE_API + 'vnpay/submit-payment',
             params: {
-                price: totalPrice,
+                tourDetailId: tourDetailId,
                 orderInfo: orderId,
             }
         });
     }
 
-    this.redirectMomo = function (price, bookingTourId) {
+    this.redirectMomo = function (tourDetailId, bookingTourId) {
         return $http({
             method: 'POST',
             url: BASE_API + 'momo/submit-payment',
             params: {
-                price: price,
+                tourDetailId: tourDetailId,
                 bookingTourId: bookingTourId,
             }
         });

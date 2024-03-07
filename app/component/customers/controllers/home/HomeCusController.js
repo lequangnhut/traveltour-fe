@@ -1,6 +1,4 @@
-travel_app.controller('HomeCusController', function ($scope, $location, $anchorScroll, HomeServiceCT) {
-    $anchorScroll();
-
+travel_app.controller('HomeCusController', function ($scope, $location, HomeCusService) {
     $scope.currentPage = 0;
     $scope.pageSize = 9;
 
@@ -11,7 +9,7 @@ travel_app.controller('HomeCusController', function ($scope, $location, $anchorS
     $scope.init = function () {
         $scope.isLoading = true;
 
-        HomeServiceCT.findAllTourDetailCustomer($scope.currentPage, $scope.pageSize).then(function (response) {
+        HomeCusService.findAllTourDetailCustomer($scope.currentPage, $scope.pageSize).then(function (response) {
             if (response.status === 200) {
                 $scope.tourDetail = response.data.data.content;
                 $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
@@ -28,7 +26,6 @@ travel_app.controller('HomeCusController', function ($scope, $location, $anchorS
      * Phân trang
      */
     $scope.setPage = function (page) {
-        $anchorScroll();
         if (page >= 0 && page < $scope.totalPages) {
             $scope.currentPage = page;
             $scope.init();

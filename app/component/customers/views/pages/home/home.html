@@ -58,8 +58,8 @@
             <div class="col-xl-8 col-lg-10">
                 <!--=== Section Title ===-->
                 <div class="section-title text-center mb-60 wow fadeInDown">
-                    <span class="sub-title pt-3 fs-3">TOUR NỔI BẬT</span>
-                    <h2 class="fs-2">Tour có lượt chọn nhiều nhất tại TravelTour</h2>
+                    <span class="sub-title pt-3 fs-3">TOUR MỚI NHẤT</span>
+                    <h2 class="fs-2">Tour có lượt chọn và tạo nhiều nhất tại TravelTour</h2>
                 </div>
             </div>
         </div>
@@ -85,7 +85,7 @@
                             </h4>
                             <p class="location">
                                 <span class="fas fa-map-marker-alt"></span>
-                                {{ detail.fromLocation }} - {{ detail.toLocation }}
+                                {{ detail.toLocation }}
                             </p>
                             <p class="price">
                                 <span class="far fa-money-bill-alt"></span>
@@ -111,9 +111,11 @@
                 <!--=== Gowilds Pagination ===-->
                 <ul class="gowilds-pagination wow fadeInUp text-center d-flex align-items-center justify-content-center">
                     <li>
-                        <a href="#" ng-class="{disabled: currentPage === 0}" ng-click="setPage(0)">
-                            <span class="fas fa-arrow-left"></span>
-                        </a>
+                        <button class="bg-white" ng-click="setPage(0)" ng-disabled="currentPage === 0">
+                            <a class="cursor-pointer">
+                                <span class="fas fa-arrow-left"></span>
+                            </a>
+                        </button>
                     </li>
 
                     <li ng-if="currentPage > 2 && totalPages > 5">
@@ -130,9 +132,12 @@
                     </li>
 
                     <li>
-                        <a ng-class="{disabled: currentPage === totalPages - 1}" ng-click="setPage(totalPages - 1)">
-                            <span class="fas fa-arrow-right"></span>
-                        </a>
+                        <button class="bg-white" ng-click="setPage(totalPages - 1)"
+                                ng-disabled="currentPage === totalPages - 1">
+                            <a class="cursor-pointer">
+                                <span class="fas fa-arrow-right"></span>
+                            </a>
+                        </button>
                     </li>
                 </ul>
             </div>

@@ -1,4 +1,4 @@
-travel_app.service('TourServiceCT', function ($http) {
+travel_app.service('TourCusService', function ($http) {
     let API_TOUR = BASE_API + 'customer/tour/';
 
     this.findAllTourDetailCustomer = function (page, size) {

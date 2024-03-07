@@ -642,15 +642,15 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'HotelDetailController'
         })
         .when('/drive-move', {
-            templateUrl: 'app/component/customers/views/pages/transport/drive-move.html',
-            controller: 'DriveMoveController'
+            templateUrl: 'app/component/customers/views/pages/transport/transport.html',
+            controller: 'TransportCusController'
         })
-        .when('/drive-move/drive-move-detail', {
-            templateUrl: 'app/component/customers/views/pages/transport/drive-move-detail.html',
-            controller: 'DriveMoveController'
+        .when('/drive-move/drive-transport-detail/:brandId', {
+            templateUrl: 'app/component/customers/views/pages/transport/transport-detail.html',
+            controller: 'TransportDetailCusController'
         })
         .when('/payment-policy', {
-            templateUrl: 'app/component/customers/views/pages/transport/payment-policy.html'
+            templateUrl: 'app/component/customers/views/pages/home/payment-policy.html'
         })
 
         /**

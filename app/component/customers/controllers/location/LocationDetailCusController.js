@@ -1,6 +1,4 @@
-travel_app.controller('LocationDetailCusController', function ($scope, $anchorScroll, $location, LocationCusService) {
-    $anchorScroll();
-
+travel_app.controller('LocationDetailCusController', function ($scope, $location, LocationCusService) {
     function errorCallback() {
         $location.path('/admin/internal-server-error')
     }

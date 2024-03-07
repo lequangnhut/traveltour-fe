@@ -1,8 +1,7 @@
-travel_app.controller('BookingSuccessCusController', function ($scope, $location, $routeParams, $anchorScroll, BookingTourServiceCT, LocalStorageService) {
-    $anchorScroll();
-
+travel_app.controller('BookingSuccessCusController', function ($scope, $location, $routeParams, BookingTourCusService, LocalStorageService) {
     let bookingTourId = $routeParams.orderInfo;
     $scope.transactionId = $routeParams.transactionId;
+    $scope.totalPrice = $routeParams.totalPrice;
 
     function errorCallback() {
         $location.path('/admin/internal-server-error')
@@ -19,7 +18,6 @@ travel_app.controller('BookingSuccessCusController', function ($scope, $location
         }
 
         $scope.ticket = LocalStorageService.get('dataBooking').ticket;
-        $scope.totalPrice = LocalStorageService.get('dataBooking').totalPrice;
         $scope.tourDetail = LocalStorageService.get('dataBooking').tourDetail;
         $scope.provinceName = LocalStorageService.get('dataBooking').provinceName;
         $scope.bookingTicket = LocalStorageService.get('bookingTicket');
@@ -51,7 +49,7 @@ travel_app.controller('BookingSuccessCusController', function ($scope, $location
         let transactionId = $routeParams.transactionId;
         let bookingDto = LocalStorageService.get('bookingDto');
 
-        BookingTourServiceCT.createBookTourVNPay(bookingDto, transactionId).then(function successCallBack(response) {
+        BookingTourCusService.createBookTourVNPay(bookingDto, transactionId).then(function successCallBack(response) {
             if (response.status === 200) {
                 LocalStorageService.set('paymentProcessed', true);
             } else {
@@ -64,7 +62,7 @@ travel_app.controller('BookingSuccessCusController', function ($scope, $location
         let transactionId = parseInt($routeParams.transactionId);
         let bookingDto = LocalStorageService.get('bookingDto');
 
-        BookingTourServiceCT.createBookTourMomo(bookingDto, transactionId).then(function successCallBack(response) {
+        BookingTourCusService.createBookTourMomo(bookingDto, transactionId).then(function successCallBack(response) {
             if (response.status === 200) {
                 LocalStorageService.set('paymentProcessed', true);
             } else {

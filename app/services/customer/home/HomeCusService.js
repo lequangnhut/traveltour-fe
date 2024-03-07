@@ -1,4 +1,4 @@
-travel_app.service('HomeServiceCT', function ($http) {
+travel_app.service('HomeCusService', function ($http) {
     let API_HOME = BASE_API + 'customer/tour/';
 
     this.findAllTourDetailCustomer = function (page, size) {

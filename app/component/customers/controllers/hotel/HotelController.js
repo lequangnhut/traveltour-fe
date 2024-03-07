@@ -1,7 +1,5 @@
-travel_app.controller('HotelCustomerController', function ($scope, $location, $window, $anchorScroll, HotelServiceCT, RoomTypeService) {
+travel_app.controller('HotelCustomerController', function ($scope, $location, $window, HotelServiceCT, RoomTypeService) {
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
-
-    $anchorScroll();
 
     $scope.showMoreHotelType = false;
     $scope.limitHotelType = 5;
@@ -19,7 +17,7 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
 
     $scope.hotelTypeMap = {};
 
-    $scope.markers= [];
+    $scope.markers = [];
     $scope.markersById = [];
 
     $scope.filler = {
@@ -167,12 +165,12 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         var maxOffset = 0.001; // Độ lệch tối đa
 
         for (const roomType of roomTypes) {
-            const iconUrl = '/assets/customers/images/hotel/placeholder.png';
+            let iconUrl = '/assets/customers/images/icon/maker.png';
             const el = document.createElement('div');
             el.className = 'marker';
             el.style.backgroundImage = `url(${iconUrl})`;
-            el.style.width = '30px';
-            el.style.height = '30px';
+            el.style.width = '40px';
+            el.style.height = '40px';
             el.style.backgroundSize = '100%';
 
             var popupContent = createPopupContent(roomType);
@@ -225,16 +223,16 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
      * Phương thức xóa marker trên bản đồ dựa vào id phòng khách sạn
      * @param roomType Thông tin phòng khách sạn
      */
-    $scope.addMarkersById = function(roomType) {
+    $scope.addMarkersById = function (roomType) {
         $scope.removeMarkersById();
         var bounds = new mapboxgl.LngLatBounds(); // Khởi tạo bounds
 
-        const iconUrl = '/assets/customers/images/hotel/placeholder.png';
+        let iconUrl = '/assets/customers/images/icon/maker.png';
         const el = document.createElement('div');
         el.className = 'marker';
         el.style.backgroundImage = `url(${iconUrl})`;
-        el.style.width = '30px';
-        el.style.height = '30px';
+        el.style.width = '40px';
+        el.style.height = '40px';
         el.style.backgroundSize = '100%';
 
         var popupContent = createPopupContent(roomType);
@@ -264,16 +262,16 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         $scope.markersById.push(marker);
 
         bounds.extend([roomType.hotelsByHotelId.longitude, roomType.hotelsByHotelId.latitude]);
-        $scope.mapById.fitBounds(bounds, { padding: 20 });
+        $scope.mapById.fitBounds(bounds, {padding: 20});
     };
 
 
     /**
      * Phương thức xóa marker trên bản đồ
      */
-    $scope.removeMarkers = function() {
+    $scope.removeMarkers = function () {
         if ($scope.markers.length > 0) {
-            $scope.markers.forEach(function(marker) {
+            $scope.markers.forEach(function (marker) {
                 marker.remove();
             });
             $scope.markers = [];
@@ -283,9 +281,9 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
     /**
      * Phương thức xóa marker trên bản đồ dựa vào id phòng khách sạn
      */
-    $scope.removeMarkersById = function() {
+    $scope.removeMarkersById = function () {
         if ($scope.markersById.length > 0) {
-            $scope.markersById.forEach(function(marker) {
+            $scope.markersById.forEach(function (marker) {
                 marker.remove();
             });
             $scope.markersById = [];
@@ -297,8 +295,8 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
      * @param price
      * @returns {string}
      */
-    $scope.formatPrice = function(price) {
-        var formattedPrice = price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    $scope.formatPrice = function (price) {
+        var formattedPrice = price.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
         formattedPrice = formattedPrice.replace('₫', '');
 
         return formattedPrice;
@@ -481,8 +479,9 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
     /**
      * Phương thức tìm kiếm loại phòng qua các điều kiện lọc
      */
+    $scope.isLoading = true;
+
     HotelServiceCT.findAllRoomTypesByFillter($scope.filler).then(function successCallback(response) {
-        $scope.loading = true;
         if (response.status === 200) {
             $scope.roomTypes = response.data.data;
             $scope.totalPages = Math.ceil(response.data.totalPages / $scope.filler.size);
@@ -490,7 +489,7 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
             $location.path('/admin/internal-server-error');
         }
     }).finally(function () {
-        $scope.loading = false;
+        $scope.isLoading = false;
     });
 
     /**
@@ -541,6 +540,8 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
      * Phương thức tìm kiếm khách sạn dựa vào thông tin filler khi click tìm kiếm
      */
     $scope.findAllRoomTypesByFillerClick = function () {
+        $scope.isLoading = true
+
         HotelServiceCT.findAllRoomTypesByFillter($scope.filler).then(function successCallback(response) {
             if (response.status === 200) {
                 $scope.roomTypes = response.data.data;
@@ -550,6 +551,8 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
             } else {
                 $location.path('/admin/internal-server-error');
             }
+        }).finally(function () {
+            $scope.isLoading = false
         })
     }
     $scope.findAllRoomTypesByFillerClick()
@@ -716,9 +719,9 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
                                              style="border-bottom: 1px solid rgba(29, 35, 31, 0.1);">
                                             <div class="location text-orange" style="font-size: 14px">
                                                 <p><span
-                                                        class="fas fa-map-marker-alt"></span> ${ roomType.hotelsByHotelId.province } -
-                                                    ${ roomType.hotelsByHotelId.district }</p>
-                                                <p>${ roomType.hotelsByHotelId.address }</p>
+                                                        class="fas fa-map-marker-alt"></span> ${roomType.hotelsByHotelId.province} -
+                                                    ${roomType.hotelsByHotelId.district}</p>
+                                                <p>${roomType.hotelsByHotelId.address}</p>
                                             </div>
                                             <a href="#" class="btn text-green" style="font-size: 14px"
                                                ng-click="showMapModalByIdHotel(roomType.id)">

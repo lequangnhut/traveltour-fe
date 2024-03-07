@@ -1,6 +1,4 @@
-travel_app.controller('TourCusController', function ($scope, $location, $anchorScroll, TourServiceCT, TourDetailServiceCT, MapBoxService) {
-    $anchorScroll();
-
+travel_app.controller('TourCusController', function ($scope, $location, TourCusService, TourDetailCusService, MapBoxService) {
     $scope.currentPage = 0;
     $scope.pageSize = 9;
 
@@ -24,7 +22,7 @@ travel_app.controller('TourCusController', function ($scope, $location, $anchorS
     $scope.init = function () {
         $scope.isLoading = true;
 
-        TourServiceCT.findAllTourDetailCustomer($scope.currentPage, $scope.pageSize).then(function (response) {
+        TourCusService.findAllTourDetailCustomer($scope.currentPage, $scope.pageSize).then(function (response) {
             if (response.status === 200) {
                 $scope.tourDetail = response.data.data.content;
 
@@ -44,15 +42,13 @@ travel_app.controller('TourCusController', function ($scope, $location, $anchorS
             $scope.isLoading = false;
         });
 
-        TourServiceCT.findAllTourType().then(function (response) {
+        TourCusService.findAllTourType().then(function (response) {
             if (response.status === 200) {
                 $scope.tourType = response.data.data;
             } else {
                 $location.path('/admin/page-not-found')
             }
-        }, errorCallback).finally(function () {
-            $scope.isLoading = false;
-        });
+        }, errorCallback);
 
         $scope.modelMap();
     }
@@ -75,12 +71,12 @@ travel_app.controller('TourCusController', function ($scope, $location, $anchorS
         $scope.addMarkersTour = function (tourDetail) {
             let bounds = new mapboxgl.LngLatBounds();
 
-            let iconUrl = '/assets/customers/images/hotel/placeholder.png';
+            let iconUrl = '/assets/customers/images/icon/maker.png';
             let el = document.createElement('div');
             el.className = 'marker';
             el.style.backgroundImage = `url(${iconUrl})`;
-            el.style.width = '30px';
-            el.style.height = '30px';
+            el.style.width = '40px';
+            el.style.height = '40px';
             el.style.backgroundSize = '100%';
 
             let popupContent = createPopupContent(tourDetail);
@@ -140,7 +136,7 @@ travel_app.controller('TourCusController', function ($scope, $location, $anchorS
             let modelMap = $('#modelMap');
             modelMap.modal('show');
 
-            TourDetailServiceCT.findByTourDetailId(tourDetailId).then(function (response) {
+            TourDetailCusService.findByTourDetailId(tourDetailId).then(function (response) {
                 if (response.status === 200) {
                     modelMap.on('shown.bs.modal', function () {
                         let tourDetailById = response.data.data;
@@ -187,7 +183,6 @@ travel_app.controller('TourCusController', function ($scope, $location, $anchorS
         if (page >= 0 && page < $scope.totalPages) {
             $scope.currentPage = page;
             $scope.init();
-            $anchorScroll();
         }
     };
 

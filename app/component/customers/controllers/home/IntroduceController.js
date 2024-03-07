@@ -1,6 +1,4 @@
-travel_app.controller('IntroduceController', function ($scope, $anchorScroll) {
-    $anchorScroll();
-
+travel_app.controller('IntroduceController', function ($scope) {
     $scope.$on('$routeChangeSuccess', function () {
         $('.testimonial-slider-one').slick({
             dots: false,

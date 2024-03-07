@@ -1,6 +1,6 @@
-travel_app.controller('TourDetailControllerAD', function ($anchorScroll, $scope, $sce, $q, $location, $routeParams, $timeout, $http, MapBoxService, TourDetailsServiceAD, ToursServiceAD, AccountServiceAD) {
-    $anchorScroll();
+travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $location, $routeParams, $timeout, $http, MapBoxService, TourDetailsServiceAD, ToursServiceAD, AccountServiceAD) {
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
+
     $scope.isLoading = true;
 
     $scope.tourDetail = {

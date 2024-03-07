@@ -1,14 +1,14 @@
 <!--====== Start Breadcrumb Section ======-->
 <section class="page-banner overlay pt-170 pb-170 bg_cover"
-         style="background-image: url(/assets/customers/images/bg/banner-tour.jpeg);">
+         style="background-image: url(/assets/customers/images/bg/banner-transport.jpg);">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="page-banner-content text-center text-white">
-                    <h1 class="page-title">Booking Tours</h1>
+                    <h1 class="page-title">Phương Tiện Di Chuyển</h1>
                     <ul class="breadcrumb-link text-white">
                         <li><a href="/home">Trang chủ</a></li>
-                        <li class="active">Booking tour</li>
+                        <li class="active">Phương tiện di chuyển</li>
                     </ul>
                 </div>
             </div>
@@ -21,11 +21,11 @@
     <div class="container">
         <!--====== Products Filter ======-->
         <div class="page-item-filter mb-40 wow fadeInUp">
-            <div class="row align-items-center justify-content-center">
+            <div class="row d-flex justify-content-center">
                 <div class="col-md-7 d-flex align-items-center">
                     <!--====== Show Text ======-->
                     <div class="show-text">
-                        <h3>Trải nghiệm những chuyến đi</h3>
+                        <h3>Đặt vé Xe Khách</h3>
                     </div>
                 </div>
                 <div class="col-md-5">
@@ -52,7 +52,7 @@
                         <button type="button"
                                 style="position: absolute;width: 200px; top: 50%; left: 50%; transform: translate(-50%, -50%);"
                                 class="btn btn-green" data-toggle="modal" data-target="#mapModal"
-                                ng-click="showMapModal()">Hiển thị trên Bản Đồ
+                                ng-click="openModalAllTransport()">Hiển thị trên Bản Đồ
                         </button>
                     </div>
                     <div class="content">
@@ -65,31 +65,6 @@
                                        max="30000000" step="100000">
                                 <p>{{ filler.priceFilter | number:0 }} VND</p>
                             </div>
-                        </div>
-
-                        <div class="find-item mb-3">
-                            <p class="fw-medium">Loại tour</p>
-                            <div class="findHotelType" ng-repeat="type in tourType | limitTo: limitTourType">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="{{type.id}}"
-                                           ng-model="hotelType.checked"
-                                           id="{{type.tourTypeName}}"
-                                           ng-change="">
-                                    <label class="form-check-label" for="{{type.tourTypeName}}">
-                                        {{ type.tourTypeName }}
-                                    </label>
-                                </div>
-                            </div>
-                            <button class="btn text-green"
-                                    ng-show="tourType.length > 5 && !showMoreTourType"
-                                    ng-click="showMoreItemsTourType()">Hiển thị thêm
-                                <i class="fa-solid fa-angle-down"></i>
-                            </button>
-                            <button class="btn text-green"
-                                    ng-show="showMoreTourType"
-                                    ng-click="showLessItemsTourType()">Ẩn bớt
-                                <i class="fa-solid fa-angle-up"></i>
-                            </button>
                         </div>
 
                         <div class="find-item mb-3">
@@ -111,7 +86,7 @@
                         </div>
                         <div class="find-item mb-3 d-flex justify-content-center mt-3">
                             <button class="btn btn-green" ng-click="">
-                                Lọc tour
+                                Lọc xe
                             </button>
                         </div>
                     </div>
@@ -148,7 +123,7 @@
                         </div>
                         <div class="d-flex justify-content-end mt-3">
                             <button type="button" class="btn btn-green" ng-click=""><i
-                                    class="fa-solid fa-magnifying-glass"></i> Tìm tour
+                                    class="fa-solid fa-magnifying-glass"></i> Tìm chuyến xe
                             </button>
                         </div>
                     </div>
@@ -156,10 +131,10 @@
 
                 <div ng-include="'app/component/utils/loading-component.html'"></div>
                 <div ng-if="!isLoading">
-                    <div ng-repeat="tour in tourDetail" ng-if="tourDetail.length > 0">
+                    <div ng-repeat="brand in transportBrand" ng-if="transportBrand.length > 0">
                         <div class="single-event-item mb-30 wow fadeInUp row">
                             <div class="img-holder col-xl-3 col-lg-4 p-0">
-                                <img ng-src="{{tour.toursByTourId.tourImg}}" style="height: 170px"
+                                <img ng-src="{{ brand.transportationBrandImg }}" style="height: 170px"
                                      onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
 
                             </div>
@@ -168,27 +143,31 @@
                                     <div class="col-lg-8 container-hotel">
                                         <div>
                                         <span>
-                                            <i class="fa-solid fa-street-view"></i>
+                                            <i class="fa-solid fa-bus"></i>
                                             <a class="fw-medium">
-                                                {{ tour.tourTypes.tourTypeName }}
+                                                {{ brand.agenciesByAgenciesId.nameAgency }}
                                             </a>
                                         </span>
                                             <h3 class="fw-medium">
-                                                <a href="#">{{ tour.toursByTourId.tourName }}</a>
+                                                <a href="#">{{ brand.transportationBrandName }}</a>
                                             </h3>
                                             <div class="d-flex align-items-center mb-3"
                                                  style="border-bottom: 1px solid rgba(29, 35, 31, 0.1);">
                                                 <div class="location text-orange" style="font-size: 14px">
                                                     <p>
-                                                        <i class="fa-solid fa-user-tie"></i>
-                                                        Đã đặt: {{ tour.bookedSeat }}/{{ tour.numberOfGuests }} chổ
+                                                        <i class="fa-solid fa-earth-americas"></i>
+                                                        Website: {{ brand.agenciesByAgenciesId.urlWebsite }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="fa-solid fa-phone"></i>
+                                                        Số điện thoại: {{ brand.agenciesByAgenciesId.phone }}
                                                     </p>
                                                 </div>
 
                                                 <a href="#"
                                                    class="btn text-green"
                                                    style="font-size: 14px"
-                                                   ng-click="showMapModalByTourId(tour.id)"
+                                                   ng-click="openModalTransport(brand.id)"
                                                 >
                                                     Xem trên bản đồ
                                                 </a>
@@ -198,37 +177,21 @@
                                         <div class="roomTypeByHotel mb-3"
                                              style="padding-left: 10px ;border-left: 1px solid rgba(29, 35, 31, 0.1)">
                                             <div style="font-size: 14px; line-height: 20px">
-                                                <p class="fs-7 fw-medium mb-1">Hướng dẫn viên:
-                                                    {{ tour.usersByGuideId.fullName }}
-                                                    - {{ tour.usersByGuideId.address }}
-                                                </p>
-                                                <p class="fs-7 mb-1">Điểm đi:
-                                                    <span class="fw-medium">{{ tour.fromLocation }}</span>
-                                                </p>
-                                                <p class="fs-7 mb-1">Điểm đến:
-                                                    <span class="fw-medium">{{ tour.toLocation }}</span>
-                                                </p>
-                                                <p class="fs-7 mb-1">Dự kiến đi trong:
-                                                    {{ tour.departureDate | calculateDaysAndNights:tour.arrivalDate }}
+                                                <p class="mb-3">
+                                                    <span class="fas fa-map-marker-alt text-green"></span>
+                                                    {{ brand.agenciesByAgenciesId.address }}
+                                                    -
+                                                    {{ brand.agenciesByAgenciesId.ward }}
+                                                    <br>
+                                                    {{ brand.agenciesByAgenciesId.district }}
+                                                    -
+                                                    {{ brand.agenciesByAgenciesId.province }}
                                                 </p>
                                                 <div class="text-green">
                                                     <i class="fa-solid fa-check"></i> Xe có WIFI miễn phí
                                                 </div>
                                                 <div class="text-green">
-                                                    <i class="fa-solid fa-check"></i> Miễn phí nước suối
-                                                </div>
-
-                                                <div class="text-danger mt-3 fw-medium"
-                                                     ng-if="tour.numberOfGuests - tour.bookedSeat <= 5 && tour.bookedSeat !== tour.numberOfGuests"
-                                                >
-                                                    <i class="fa-solid fa-exclamation"></i>
-                                                    Chỉ còn {{ tour.numberOfGuests - tour.bookedSeat }} vé với giá này
-                                                    trên trang của TravelTour.
-                                                </div>
-                                                <div class="text-danger mt-3 fw-medium"
-                                                     ng-if="tour.bookedSeat === tour.numberOfGuests">
-                                                    <i class="fa-solid fa-exclamation"></i>
-                                                    Tour này đã hết vé, Nhưng bạn có thể chọn tour của TravelTour.
+                                                    <i class="fa-solid fa-check"></i> Không cần thanh toán trước
                                                 </div>
                                             </div>
                                         </div>
@@ -253,15 +216,7 @@
                                             </div>
                                             <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
                                                 <div class="box">
-                                                    <div class="fw-medium text-end" style="font-size: 20px">
-                                                        <span class="fs-6">Giá chỉ từ:</span>
-                                                        <br>
-                                                        {{ tour.unitPrice | number:0 }} VND
-                                                    </div>
-                                                    <p class="fs-7 float-end">
-                                                        {{ tour.departureDate | calculateDaysAndNights:tour.arrivalDate }}
-                                                    </p>
-                                                    <a href="/tours/tour-detail/{{ tour.id }}"
+                                                    <a href="/drive-move/drive-transport-detail/{{ brand.id }}"
                                                        class="btn btn-green w-100 mt-3">
                                                         Xem chi tiết
                                                     </a>
@@ -273,11 +228,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="div" ng-if="tourDetail.length <= 0">
+                    <div class="div" ng-if="transportBrand.length <= 0">
                         <div class="d-flex justify-content-center align-items-center">
-                            Không có tour nào phù hợp với yêu cầu của bạn
+                            Không có chuyến xe nào phù hợp với yêu cầu của bạn
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-lg-12">
                             <!--=== Gowilds Pagination ===-->
@@ -350,20 +306,39 @@
     </div>
 </section><!--====== End CTA Section ======-->
 
-<!--Modal hiển thị điểm đến trên bản đồ-->
-<div class="modal fade" id="modelMap" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!--====== Modal hiển thị vị trí từng điểm ======-->
+<div class="modal fade" id="modalMapTransport" tabindex="-1" aria-labelledby="modalMapTransportLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalLabelMap">Bản đồ</h5>
-                <button type="button" class="btn-close" ng-click="hideModel()"></button>
+                <h5 class="modal-title" id="modalMapTransportLabel">Bản đồ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div id="map" class="col-12" style="height: 500px"></div>
+            <div class="modal-body row">
+                <div id="mapTransport" class="col-12" style="height: 500px"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" ng-click="hideModel()">Thoát</button>
+                <button type="button" class="btn btn-green" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--====== Modal hiển thị vị trí từng điểm ======-->
+<div class="modal fade" id="modalMapAllTransport" tabindex="-1" aria-labelledby="modalMapAllTransportLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalMapAllTransportLabel">Bản đồ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body row">
+                <div id="mapAllTransport" class="col-12" style="height: 500px"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-green" data-bs-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>
