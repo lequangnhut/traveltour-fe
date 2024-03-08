@@ -19,7 +19,11 @@
          ng-class="{ 'show-animation': showActivities }">
         <div class="row" style="margin: 20px 16px 20px 16px">
             <div class="mb-3" ng-repeat="tourTrips in tourTripsList">
-<!--                <span class="fw-bold me-1">Ngày {{ tourTrips.dayInTrip }}: </span>-->
+                <span class="fw-bold fs-1 text-warning me-1">Ngày {{ tourTrips.dayInTrip }} - vào lúc {{ tourTrips.timeGo }}</span>
+                <div class="fw-medium">
+                    <i class="fa-solid fa-location-dot text-green"></i>
+                    <span class="fw-bold">{{ tourTrips.placeAddress }}</span>
+                </div>
                 <div ng-bind-html="tourTrips.activityInDay"></div>
             </div>
             <div ng-if="tourTripsList.length === 0">
@@ -117,8 +121,33 @@
                 <tr class="bg-light">
                     <th>#</th>
                     <th class="cursor-pointer" ng-click="sortData('dayInTrip')">
-                        <div class="icon-left">Kế hoạch các ngày
+                        <div class="icon-left">Ngày
                             <span class="sorting-icon" ng-bind-html="getSortIcon('dayInTrip')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('transportationTypeName')">
+                        <div class="icon-left">Phương tiện
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('transportationTypeName')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('placeName')">
+                        <div class="icon-left">Điểm đi
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('placeName')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('placeAddress')">
+                        <div class="icon-left">Địa chỉ
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('placeAddress')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('timeGo')">
+                        <div class="icon-left">Giờ đi
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('timeGo')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('placeCost')">
+                        <div class="icon-left">Giá tiền
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('placeCost')"></span>
                         </div>
                     </th>
                     <th style="width: 200px">Thao tác</th>
@@ -127,7 +156,15 @@
                 <tbody>
                 <tr ng-repeat="tourTrips in tourTripsList">
                     <td>{{ $index + 1 }}</td>
-                    <td>Ngày thứ {{ tourTrips.dayInTrip }}</td>
+                    <td>Ngày {{ tourTrips.dayInTrip }}</td>
+                    <td>{{ tourTrips.transportationTypesByTransportationTypeId.transportationTypeName }}</td>
+                    <td>{{ tourTrips.placeName }}</td>
+                    <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="{{ tourTrips.placeAddress }}">
+                        {{ tourTrips.placeAddress }}
+                    </td>
+                    <td>{{ tourTrips.timeGo }}</td>
+                    <td>{{ tourTrips.placeCost | vnCurrency }}</td>
                     <td class="d-flex align-items-center justify-content-center">
                         <a href="/admin/detail-tour-list/trips-tour-list/trips-tour-update/{{tourTrips.id}}"
                            role="button" class="fs-1 btn text-warning px-2">
@@ -140,7 +177,7 @@
                     </td>
                 </tr>
                 <tr ng-if="tourTripsList.length === 0">
-                    <td colspan="4">Trang này không có dữ liệu.</td>
+                    <td colspan="8">Trang này không có dữ liệu.</td>
                 </tr>
                 </tbody>
             </table>

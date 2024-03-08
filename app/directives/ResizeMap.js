@@ -6,8 +6,8 @@ travel_app.directive('resizeMap', function () {
                 // Kiểm tra xem tab nào được chuyển đổi
                 if (data.tabName === 'mapTab') {
                     // Gọi phương thức resize của bản đồ
-                    if (scope.map) {
-                        scope.map.resize();
+                    if (scope.mapTrips) {
+                        scope.mapTrips.resize();
                     }
                 }
             });

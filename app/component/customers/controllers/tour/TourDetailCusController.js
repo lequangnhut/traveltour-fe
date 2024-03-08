@@ -1,5 +1,10 @@
 travel_app.controller('TourDetailCusController',
     function ($scope, $location, $sce, $routeParams, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailCusService, MapBoxService) {
+        mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
+
+        $scope.markerTrips = [];
+        $scope.coordinateTrips = [];
+
         $scope.provinceData = [];
 
         $scope.tourDetail = {
@@ -50,7 +55,7 @@ travel_app.controller('TourDetailCusController',
 
                     $scope.tourDetail.numberOfDays = Math.ceil((arrivalDate - departureDate) / (1000 * 60 * 60 * 24));
 
-                    $scope.initMap();
+                    $scope.initMapSchedules();
                     $scope.updateTotalPrice();
                 } else {
                     $location.path('/admin/page-not-found')
@@ -81,11 +86,8 @@ travel_app.controller('TourDetailCusController',
                 if (response.status === 200) {
                     $scope.tourTrips = response.data.data;
 
-                    if ($scope.tourTrips !== null) {
-                        for (let i = 0; i < $scope.tourTrips.length; i++) {
-                            $scope.tourTrips[i].activityInDay = $sce.trustAsHtml($scope.tourTrips[i].activityInDay);
-                        }
-                    }
+                    $scope.initMapTrips();
+                    $scope.createMarkerTrips($scope.tourTrips);
                 } else {
                     $location.path('/admin/page-not-found')
                 }
@@ -93,6 +95,9 @@ travel_app.controller('TourDetailCusController',
                 $scope.isLoading = false;
             });
 
+            /**
+             * phương thức update giá khi người dùng chọn số lượng
+             */
             $scope.updateTotalPrice = function () {
                 let unitPrice = $scope.tourDetail.unitPrice;
                 let amountAdults = $scope.ticket.adults;
@@ -103,6 +108,10 @@ travel_app.controller('TourDetailCusController',
                 $scope.isExceedGuestLimit();
             };
 
+            /**
+             * phương thức kiểm tra vé
+             * @returns {boolean}
+             */
             $scope.isExceedGuestLimit = function () {
                 let numberOfGuest = $scope.tourDetail.numberOfGuests;
                 let bookSeat = $scope.tourDetail.bookedSeat;
@@ -111,6 +120,154 @@ travel_app.controller('TourDetailCusController',
                 return totalAmountTicket + bookSeat + 1 > numberOfGuest;
             }
 
+            /**
+             * phương thức khởi tạo bản đồ
+             */
+            $scope.initMapTrips = function () {
+                $scope.mapTrips = new mapboxgl.Map({
+                    container: 'map-trips',
+                    style: 'mapbox://styles/mapbox/streets-v12',
+                    center: [106.6297, 10.8231],
+                    zoom: 9
+                });
+            }
+
+            /**
+             * phương thức zoom vị trí trên bản đồ
+             * @param placeAddress
+             */
+            $scope.zoomLocation = function (placeAddress) {
+                let bounds = new mapboxgl.LngLatBounds();
+
+                MapBoxService.geocodeAddress(placeAddress, function (error, placeAddressCoordinates) {
+                    if (!error) {
+                        bounds.extend(placeAddressCoordinates);
+                        $scope.mapTrips.fitBounds(bounds, {padding: 20});
+                    }
+                });
+            }
+
+            /**
+             * Phương thức thêm marker tour trip trên bản đồ
+             */
+            $scope.createMarkerTrips = function (tourTrips) {
+                $scope.removeMarkerTrips();
+                let bounds = new mapboxgl.LngLatBounds();
+
+                for (const trip of tourTrips) {
+                    let placeAddress = trip.placeAddress;
+                    let placeImage = trip.placeImage;
+                    let dayInTrip = trip.dayInTrip;
+
+                    let elMarkerNot = document.createElement('a');
+                    elMarkerNot.className = 'markerNot';
+                    elMarkerNot.href = `SCROLL_${trip.id}`
+                    elMarkerNot.style.backgroundImage = `url(${placeImage})`;
+                    elMarkerNot.style.width = '50px';
+                    elMarkerNot.style.height = '50px';
+                    elMarkerNot.style.borderRadius = '50%';
+                    elMarkerNot.style.backgroundSize = '100%';
+                    elMarkerNot.style.border = '3px solid #ff9800';
+
+                    elMarkerNot.addEventListener('click', function (event) {
+                        event.preventDefault();
+
+                        let tripId = this.getAttribute('href');
+                        let element = document.getElementById(tripId);
+                        if (element) {
+                            element.scrollIntoView({behavior: 'smooth', block: 'center'});
+                        }
+                    });
+
+                    let elMarkerTrip = document.createElement('div');
+                    elMarkerTrip.className = 'markerTrip';
+                    elMarkerTrip.style.position = 'relative';
+                    elMarkerTrip.style.width = '20px';
+                    elMarkerTrip.style.height = '20px';
+                    elMarkerTrip.style.top = '-10px';
+                    elMarkerTrip.style.right = '-30px';
+                    elMarkerTrip.style.borderRadius = '50%';
+                    elMarkerTrip.style.background = '#ff9800';
+                    elMarkerTrip.style.textAlign = 'center';
+                    elMarkerTrip.style.color = 'white';
+                    elMarkerTrip.innerText = `${dayInTrip}`;
+                    elMarkerNot.appendChild(elMarkerTrip);
+
+                    MapBoxService.geocodeAddress(placeAddress, function (error, placeAddressCoordinates) {
+                        if (!error) {
+                            let marker = new mapboxgl.Marker(elMarkerNot)
+                                .setLngLat(placeAddressCoordinates)
+                                .addTo($scope.mapTrips);
+
+                            $scope.markerTrips.push(marker);
+                            $scope.coordinateTrips.push(placeAddressCoordinates);
+
+                            bounds.extend(placeAddressCoordinates);
+                            $scope.mapTrips.fitBounds(bounds, {padding: 20});
+                        }
+                    });
+                }
+
+                $scope.mapTrips.on('style.load', function () {
+                    let waypoints = ''; // Chuỗi để lưu trữ các tọa độ trung gian
+
+                    $scope.coordinateTrips.forEach(function (coordinate, index) {
+                        waypoints += `${coordinate[0]},${coordinate[1]}`;
+                        if (index < $scope.coordinateTrips.length - 1) {
+                            waypoints += ';'; // Thêm dấu chấm phẩy giữa các tọa độ, trừ tọa độ cuối cùng
+                        }
+                    });
+
+                    let routeURL = `https://api.mapbox.com/directions/v5/mapbox/driving/${waypoints}?geometries=geojson&steps=true&access_token=${mapboxgl.accessToken}`;
+
+                    fetch(routeURL)
+                        .then(response => response.json())
+                        .then(data => {
+                            // Lấy dữ liệu về đường đi
+                            let route = data.routes[0].geometry;
+
+                            $scope.mapTrips.addLayer({
+                                'id': 'route',
+                                'type': 'line',
+                                'source': {
+                                    'type': 'geojson',
+                                    'data': {
+                                        'type': 'Feature',
+                                        'properties': {},
+                                        'geometry': route
+                                    }
+                                },
+                                'layout': {
+                                    'line-join': 'round',
+                                    'line-cap': 'round'
+                                },
+                                'paint': {
+                                    'line-color': '#e35050',
+                                    'line-width': 3
+                                }
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Lỗi khi lấy thông tin định tuyến:', error);
+                        });
+                });
+            }
+
+            /**
+             * Phương thức xóa marker tour trip trên bản đồ
+             */
+            $scope.removeMarkerTrips = function () {
+                if ($scope.markerTrips.length > 0) {
+                    $scope.markerTrips.forEach(function (marker) {
+                        marker.remove();
+                    });
+                    $scope.markerTrips = [];
+                }
+            };
+
+            /**
+             * phương thức gửi booking cho server
+             */
             $scope.submitBooking = function () {
                 let numberOfGuest = $scope.tourDetail.numberOfGuests;
                 let bookSeat = $scope.tourDetail.bookedSeat;
@@ -134,9 +291,9 @@ travel_app.controller('TourDetailCusController',
         }
 
         /**
-         * phương thức khởi tạo bản đồ
+         * phương thức khởi tạo bản đồ vẽ lịch trình
          */
-        $scope.initMap = function () {
+        $scope.initMapSchedules = function () {
             $scope.isLoading = true;
 
             $scope.provinceName = [];
@@ -158,8 +315,6 @@ travel_app.controller('TourDetailCusController',
                     let fromLocation = $scope.tourDetail.fromLocation;
                     let toLocation = $scope.tourDetail.toLocation;
                     let intermediatePoints = $scope.provinceName;
-
-                    mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
                     // Lấy tọa độ từ tên địa chỉ cho cả điểm đi và điểm đến
                     MapBoxService.geocodeAddress(fromLocation, function (error, fromCoordinates) {
@@ -219,19 +374,19 @@ travel_app.controller('TourDetailCusController',
          */
         function drawMap(routeURL, fromCoordinates, toCoordinates, intermediateCoordinates) {
             const map = $scope.map = new mapboxgl.Map({
-                container: 'map',
+                container: 'map-schedules',
                 style: 'mapbox://styles/mapbox/streets-v12',
                 center: toCoordinates,
                 zoom: 10
             });
 
             map.on('load', () => {
-                $scope.createMarker(fromCoordinates, map, 'start');
-                $scope.createMarker(toCoordinates, map, 'end');
+                $scope.createMarkerSchedules(fromCoordinates, map, 'start');
+                $scope.createMarkerSchedules(toCoordinates, map, 'end');
 
                 if (intermediateCoordinates.length > 0) {
                     intermediateCoordinates.forEach(coord => {
-                        $scope.createMarker(coord, map, 'waypoint');
+                        $scope.createMarkerSchedules(coord, map, 'waypoint');
                     });
                 }
 
@@ -269,7 +424,13 @@ travel_app.controller('TourDetailCusController',
             });
         }
 
-        $scope.createMarker = function (coordinates, map, type) {
+        /**
+         * phương thức tạo marker trên bản đồ
+         * @param coordinates
+         * @param map
+         * @param type
+         */
+        $scope.createMarkerSchedules = function (coordinates, map, type) {
             let popupContent;
             let tourDetail = $scope.tourDetail;
 

@@ -15,7 +15,7 @@ travel_app.controller("RoomTypeInfoRoomEditController", function($scope, $locati
     }
 
     $scope.editInfoRoom.checkinTime = null;
-    $scope.editInfoRoom.checkoutTime = null,
+    $scope.editInfoRoom.checkoutTime = null;
     $scope.id = $routeParams.id;
 
     function errorCallback(error) {

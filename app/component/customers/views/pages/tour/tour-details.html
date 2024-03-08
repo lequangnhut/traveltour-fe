@@ -118,6 +118,7 @@
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade active show" id="nav-home" role="tabpanel"
                              aria-labelledby="nav-home-tab">
+
                             <div class="place-content-wrap mb-4 wow fadeInUp" ng-bind-html="tourDetailDescription"
                                  style="text-align: justify; white-space: pre-line; font-family: 'Roboto',sans-serif;">
                             </div>
@@ -125,58 +126,113 @@
                                  ng-if="tourDetail.tourDetailDescription.length === 10">
                                 Không có nội dung ghi chú.
                             </div>
+
+                            <!--=== Map Box ===-->
+                            <div class="map-box mb-40">
+                                <div id="map-schedules" class="rounded-3" style="width: 100%; height: 500px;"></div>
+                            </div><!--=== Map Box ===-->
                         </div>
 
                         <div class="tab-pane face" id="nav-profile" role="tabpanel" aria-labelledby="tab-map">
-                            <!--=== Map Box ===-->
-                            <div class="map-box mb-30 wow fadeInUp">
-                                <div id="map" resize-map style="width: 100%; height: 500px;"></div>
+                            <div class="section-title mb-3">
+                                <h3>Lịch trình hoạt động - di chuyển của chuyến đi</h3>
                             </div>
 
                             <!--=== Days Area ===-->
                             <div class="days-area mb-55">
-                                <div class="section-title mb-3">
-                                    <h3>Lịch trình hoạt động - di chuyển của chuyến đi</h3>
-                                </div>
                                 <div class="tab-content">
-                                    <div class="tab-pane fade show active" ng-repeat="trip in tourTrips">
-                                        <div class="content-box">
-                                            <p ng-bind-html="trip.activityInDay"></p>
+                                    <div class="tour-trips-list">
+                                        <div class="tour-trips-header btn-green p-2 rounded-top-3">
+                                            <h5 class="text-white m-1 ms-2">
+                                                <i class="fa-regular fa-calendar-days"></i>
+                                                Xem lịch trình tham quan của tour
+                                            </h5>
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade show active" ng-if="tourTrips === null">
-                                        <div class="content-box text-center">
-                                            <p class="fw-medium">Không có dữ liệu lịch trình hoạt động...</p>
-                                        </div>
+
+                                        <!--=== Map Box ===-->
+                                        <div class="map-box mb-40">
+                                            <div id="map-trips" class="rounded-bottom-3" resize-map
+                                                 style="width: 100%; height: 500px;"></div>
+                                        </div><!--=== Map Box ===-->
+
+                                        <!--content-->
+                                        <div class="tour-chips-item mb-5" ng-repeat="trip in tourTrips">
+                                            <div class="row" id="SCROLL_{{ trip.id }}">
+                                                <div class="col-sm-3 text-center ">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <a href="javascript:void(0)" ng-click="zoomLocation(trip.placeAddress)">
+                                                            <div class="border-solid-border">
+                                                                <img ng-src="{{ trip.placeImage }}"
+                                                                     class="img-fluid"
+                                                                     alt="Place Image">
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="time text-center mt-3">
+                                                        <h5 class="text-orange">{{ trip.timeGo }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <div class="tour-trips-item-content">
+                                                        <div class="h4 text-orange">{{ trip.placeName }}</div>
+                                                        <div class="fw-medium">
+                                                            <i class="fa-solid fa-location-dot"></i>
+                                                            {{ trip.placeAddress }}
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <p>
+                                                                {{ trip.activityInDay }}
+                                                            </p>
+                                                        </div>
+                                                        <div class="tour-trips-item-footer">
+                                                            <div class="row">
+                                                                <div class="fw-medium col-sm-4 text-center">
+                                                                    <i class="fa-solid fa-taxi"></i>
+                                                                    <span>Xe khách</span>
+                                                                </div>
+                                                                <div class="fw-medium col-sm-4 text-center">
+                                                                    <i class="fa-solid fa-turn-down"></i>
+                                                                    <span>8,3 Km</span>
+                                                                </div>
+                                                                <div class="fw-medium col-sm-4 text-center">
+                                                                    <i class="fa-solid fa-tag"></i>
+                                                                    <span>{{ trip.placeCost | vnCurrency }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!--content-->
                                     </div>
                                 </div>
                             </div><!--=== Days Area ===-->
-                        </div>
-                    </div>
 
-                    <!--=== Releted Tour Place ===-->
-                    <div class="related-tour-place wow fadeInUp">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="section-title mb-35">
-                                    <h3>Hình ảnh về chuyến đi</h3>
+                            <!--=== Releted Tour Place ===-->
+                            <div class="related-tour-place wow fadeInUp">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="section-title mb-35">
+                                            <h3>Hình ảnh về chuyến đi</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="place-arrows mb-35"></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="place-arrows mb-35"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6 col-12" ng-repeat="img in tourDetailImagesById">
-                                <div class="recent-place-slider m-0">
-                                    <!--=== Single Place Item ===-->
-                                    <div class="single-place-item mb-60">
-                                        <div class="place-img-detail">
-                                            <img src="{{ img.tourDetailImg }}" alt="Place Image">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-6 col-12" ng-repeat="img in tourDetailImagesById">
+                                        <div class="recent-place-slider m-0">
+                                            <!--=== Single Place Item ===-->
+                                            <div class="single-place-item mb-60">
+                                                <div class="place-img-detail">
+                                                    <img src="{{ img.tourDetailImg }}" alt="Place Image">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div><!--=== Releted Tour Place ===-->
                         </div>
                     </div>
 

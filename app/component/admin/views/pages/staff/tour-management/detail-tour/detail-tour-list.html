@@ -58,7 +58,7 @@
                         <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-center align-items-center">
                                 <!-- Previous Page -->
-                                <li class="page-item" ng-class="{disabled: currentPage === 0}">
+                                <li class="page-item cursor-pointer" ng-class="{disabled: currentPage === 0}">
                                     <a class="page-link" ng-click="setPage(0)">
                                         <i class="fa-solid fa-angles-left"></i>
                                     </a>
@@ -70,7 +70,7 @@
                                 </li>
 
                                 <!-- Pagination Numbers -->
-                                <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
                                     ng-class="{active: n === currentPage}">
                                     <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
                                 </li>
@@ -81,7 +81,7 @@
                                 </li>
 
                                 <!-- Next Page -->
-                                <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}">
+                                <li class="page-item cursor-pointer" ng-class="{disabled: currentPage === totalPages - 1}">
                                     <a class="page-link" ng-click="setPage(totalPages - 1)">
                                         <i class="fa-solid fa-angles-right"></i>
                                     </a>
@@ -171,16 +171,19 @@
                         </div>
                     </td>
                     <td class="d-flex align-items-center justify-content-center">
-                        <button class="fs-1 btn text-info px-2" ng-click="openModal(tourDetail.id)">
+                        <button class="fs-1 btn text-info px-2"
+                                ng-click="openModal(tourDetail.id)"
+                                title="Xem thông tin tour"
+                        >
                             <i class="fa-regular fa-eye"></i>
                         </button>
-                        <a href="/admin/detail-tour-list/{{tourDetail.id}}/service-list"
-                           role="button" class="fs-1 btn text-warning px-2">
-                            <i class="fa-solid fa-gear"></i>
-                        </a>
                         <a href="/admin/detail-tour-list/trips-tour-list/{{tourDetail.id}}"
-                           role="button" class="fs-1 btn text-primary px-2">
+                           role="button" class="fs-1 btn text-primary px-2" title="Lịch trình tour">
                             <i class="fa-solid fa-calendar-days"></i>
+                        </a>
+                        <a href="/admin/detail-tour-list/{{tourDetail.id}}/service-list"
+                           role="button" class="fs-1 btn text-warning px-2" title="Dịch vụ theo tour">
+                            <i class="fa-solid fa-gear"></i>
                         </a>
                     </td>
                 </tr>
@@ -313,8 +316,9 @@
                                             class="fw-bold">{{ tourDetail.fromLocation }}</span></p>
                                     <p class="m-2 fw-medium">Điểm đến: <span
                                             class="fw-bold">{{ tourDetail.toLocation }}</span></p>
-                                    <p class="m-2 fw-medium">Dự kiến khoảng: <span id="expectedKm"
-                                                                                   class="fw-bold"></span></p>
+                                    <p class="m-2 fw-medium">Dự kiến khoảng:
+                                        <span id="expectedKm" class="fw-bold"></span>
+                                    </p>
                                     <p class="m-2 fw-medium">Đã đặt:
                                         <span class="fw-normal" ng-if="tourDetail.bookedSeat === 0">
                                             Tour đang trống

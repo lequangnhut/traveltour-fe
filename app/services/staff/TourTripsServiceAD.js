@@ -47,11 +47,11 @@ travel_app.service('TourTripsServiceAD', function ($http, $q) {
         });
     };
 
-    this.updateTrips = function (id, data) {
+    this.updateTrips = function (id, data, timeGo) {
         const deferred = $q.defer();
         $http({
             method: 'PUT',
-            url: API_TOUR_TRIPS + 'update-tourTrips/' + id,
+            url: API_TOUR_TRIPS + 'update-tourTrips/' + id + '?timeGo=' + timeGo,
             data: data,
             headers: {'Content-Type': undefined},
             transformRequest: angular.identity

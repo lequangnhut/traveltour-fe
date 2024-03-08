@@ -6774,3 +6774,22 @@ ul.slick-dots li.slick-active {
 .main-menu ul li a.active {
     color: #63AB45;
 }
+
+/*limit text span*/
+span.limit-text {
+    display: inline-block;
+    max-width: 200px; /* Điều chỉnh kích thước tối đa của phần tử */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+span.limit-text:hover {
+    white-space: normal;
+    z-index: 9999;
+    background-color: #fff; /* Điều chỉnh màu nền cho title */
+    position: absolute;
+    border: 1px solid #ccc; /* Điều chỉnh viền cho title */
+    padding: 5px; /* Điều chỉnh padding cho title */
+    border-radius: 5px; /* Điều chỉnh góc cong cho title */
+}

@@ -1,0 +1,109 @@
+
+.tour-chips-item {
+    height: auto; /* Bỏ giới hạn chiều cao cứng */
+    font-size: 14px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    overflow: hidden; /* Ngăn chặn nội dung tràn ra khỏi phần tử */
+}
+
+.tour-trips-item-content {
+    max-height: 260px; /* Giới hạn chiều cao của phần nội dung */
+    overflow: hidden; /* Ngăn chặn nội dung tràn ra khỏi phần tử */
+}
+
+
+.border-solid-border {
+    text-align: center;
+    width: 180px;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 50%;
+
+}
+
+.border-solid-border > img {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    border: 2px dashed #ff9800;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.tour-trips-item-content p {
+    max-height: 130px;
+    overflow-y: auto;
+    position: relative;
+    margin-right: 10px;
+    line-height: 18px;
+
+}
+
+.tour-trips-item-content p::after {
+    content: '...';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: white;
+    padding: 0 5px;
+}
+
+.tour-trips-item-content p::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tour-trips-item-content p::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.tour-trips-item-content p::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.tour-trips-item-content p::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.tour-trips-item-footer {
+    margin-top: 5px;
+    border-radius: 8px;
+    height: 50px;
+    background: #F5F7FA;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.tour-trips-item-footer .row .fw-medium {
+    line-height: 50px;
+}
+
+.tour-chips-item:nth-child(odd) .col-sm-3 {
+    order: 2;
+}
+
+.tour-chips-item:nth-child(odd) .col-sm-9 {
+    order: 1;
+}
+
+.tour-chips-item {
+    display: flex;
+    flex-direction: column; /* Hiển thị các phần tử con theo chiều dọc */
+}
+
+.col-sm-3 {
+    flex: 0 0 auto; /* Không co giãn phần tử này */
+}
+
+.col-sm-9 {
+    flex: 1; /* Co giãn phần tử này để lấp đầy không gian còn trống */
+}
+
+@media screen and (max-width: 576px) {
+    .tour-chips-item:nth-child(odd) .col-sm-3,
+    .tour-chips-item:nth-child(odd) .col-sm-9 {
+        order: initial; /* Đặt lại giá trị order về giá trị mặc định */
+    }
+}
