@@ -30,7 +30,24 @@
                 </small>
             </div>
 
-            <div class="col-6">
+            <div class="col-3">
+                <label class="form-label">Ngày đi</label>
+                <input type="text"
+                       class="form-control"
+                       name="dayInTrip"
+                       ng-model="tourTrips.dayInTrip"
+                       ng-class="{ 'is-invalid': tourTripsForm.dayInTrip.$touched && tourTripsForm.dayInTrip.$error.required,
+                                    'is-valid': tourTripsForm.dayInTrip.$touched && tourTripsForm.dayInTrip.$valid}"
+                       placeholder="VD: 1 | 2 | 3"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="tourTripsForm.dayInTrip.$touched && tourTripsForm.dayInTrip.$error.required">
+                    Vui lòng nhập dữ liệu cho trường này !
+                </small>
+            </div>
+
+            <div class="col-3">
                 <label class="form-label">Loại phương tiện</label>
                 <select class="form-select"
                         name="transportationTypeId"

@@ -1,7 +1,7 @@
 travel_app.controller('VisitControllerAG', function ($scope, $timeout, $sce, $location, $routeParams, LocalStorageService, VisitLocationTicketServiceAG) {
     let searchTimeout;
     let visitTicketId = $routeParams.id;
-    let brandId = LocalStorageService.get('brandId');
+    let visitLocationId = LocalStorageService.get('brandId');
 
     $scope.isLoading = true;
 
@@ -12,7 +12,7 @@ travel_app.controller('VisitControllerAG', function ($scope, $timeout, $sce, $lo
 
     $scope.visitTicket = {
         id: null,
-        visitLocationId: null,
+        visitLocationId: visitLocationId,
         ticketTypeName: null,
         unitPrice: null
     }
@@ -22,15 +22,13 @@ travel_app.controller('VisitControllerAG', function ($scope, $timeout, $sce, $lo
     }
 
     $scope.init = function () {
-        VisitLocationTicketServiceAG.findAllVisitTicket(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function successCallback(response) {
+        VisitLocationTicketServiceAG.findAllVisitTicket(visitLocationId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function successCallback(response) {
             if (response.status === 200) {
                 $scope.visitTicketData = response.data.content;
                 $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
                 $scope.totalElements = response.data.totalElements;
 
-                response.data.content.forEach(visitLocations => {
-                    $scope.findVisitLocationName(visitLocations.visitLocationId);
-                });
+                $scope.findVisitLocationName(visitLocationId);
             }
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
@@ -43,7 +41,7 @@ travel_app.controller('VisitControllerAG', function ($scope, $timeout, $sce, $lo
             if (searchTimeout) $timeout.cancel(searchTimeout);
 
             searchTimeout = $timeout(function () {
-                VisitLocationTicketServiceAG.findAllVisitTicket(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
+                VisitLocationTicketServiceAG.findAllVisitTicket(visitLocationId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
                     .then(function (response) {
                         $scope.visitTicketData = response.data.content;
                         $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
@@ -153,7 +151,6 @@ travel_app.controller('VisitControllerAG', function ($scope, $timeout, $sce, $lo
 
     $scope.createVisitTicket = function () {
         $scope.isLoading = true;
-        $scope.visitTicket.visitLocationId = $scope.visitLocations.id;
         let dataTicket = $scope.visitTicket;
 
         VisitLocationTicketServiceAG.create(dataTicket).then(function () {
@@ -165,7 +162,6 @@ travel_app.controller('VisitControllerAG', function ($scope, $timeout, $sce, $lo
     };
 
     $scope.updateVisitTicket = function () {
-        $scope.visitTicket.visitLocationId = $scope.visitLocations.id;
         let dataTicket = $scope.visitTicket;
 
         function confirmUpdate() {
@@ -183,7 +179,6 @@ travel_app.controller('VisitControllerAG', function ($scope, $timeout, $sce, $lo
     };
 
     $scope.deleteVisitTicket = function (visitTicketId, locationName) {
-
         function confirmDelete() {
             $scope.isLoading = true;
 

@@ -6771,6 +6771,10 @@ ul.slick-dots li.slick-active {
     color: white;
 }
 
+.bg-green {
+    background-color: #63AB45;
+}
+
 .main-menu ul li a.active {
     color: #63AB45;
 }

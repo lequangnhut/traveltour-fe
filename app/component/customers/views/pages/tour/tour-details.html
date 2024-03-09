@@ -142,10 +142,13 @@
                             <div class="days-area mb-55">
                                 <div class="tab-content">
                                     <div class="tour-trips-list">
-                                        <div class="tour-trips-header btn-green p-2 rounded-top-3">
-                                            <h5 class="text-white m-1 ms-2">
-                                                <i class="fa-regular fa-calendar-days"></i>
-                                                Xem lịch trình tham quan của tour
+                                        <div class="tour-trips-header p-2 bg-green rounded-top-3 d-flex">
+                                            <h5 class="text-white m-1 ms-4 fs-6" ng-repeat="day in dayInTrip">
+                                                <a href="javascript:void(0)"
+                                                   ng-click="changeLocationOnMap(day.dayTrip)">
+                                                    <i class="fa-regular fa-calendar-days"></i>
+                                                    Ngày {{ day.dayTrip }}
+                                                </a>
                                             </h5>
                                         </div>
 
@@ -160,7 +163,8 @@
                                             <div class="row" id="SCROLL_{{ trip.id }}">
                                                 <div class="col-sm-3 text-center ">
                                                     <div class="d-flex justify-content-center align-items-center">
-                                                        <a href="javascript:void(0)" ng-click="zoomLocation(trip.placeAddress)">
+                                                        <a href="javascript:void(0)"
+                                                           ng-click="zoomLocation(trip.placeAddress)">
                                                             <div class="border-solid-border">
                                                                 <img ng-src="{{ trip.placeImage }}"
                                                                      class="img-fluid"

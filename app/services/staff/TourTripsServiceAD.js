@@ -5,7 +5,7 @@ travel_app.service('TourTripsServiceAD', function ($http, $q) {
         const deferred = $q.defer();
         $http({
             method: 'GET',
-            url: API_TOUR_TRIPS + 'find-all-tourTrips/' + tourId,
+            url: API_TOUR_TRIPS + 'find-all-tourTrips',
             params: {
                 page: page || 0,
                 size: size || 10,
@@ -21,7 +21,7 @@ travel_app.service('TourTripsServiceAD', function ($http, $q) {
         const deferred = $q.defer();
         $http({
             method: 'GET',
-            url: API_TOUR_TRIPS + 'find-tourTrips-by-tourId/' + tourId,
+            url: API_TOUR_TRIPS + 'find-tourTrips-by-tourId',
             params: {tourId: tourId || 'null'}
 
         }).then(deferred.resolve, deferred.reject);
@@ -33,6 +33,18 @@ travel_app.service('TourTripsServiceAD', function ($http, $q) {
         $http({
             method: 'GET',
             url: API_TOUR_TRIPS + 'find-by-id/' + id
+        }).then(deferred.resolve, deferred.reject);
+        return deferred.promise;
+    };
+
+    this.findTripsByDayInTrip = function (dayInTrip) {
+        const deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: API_TOUR_TRIPS + 'find-tourTrips-dayInTrip',
+            params: {
+                dayInTrip: dayInTrip || 1
+            }
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
     };

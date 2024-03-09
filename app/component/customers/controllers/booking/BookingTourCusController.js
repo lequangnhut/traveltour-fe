@@ -143,7 +143,11 @@ travel_app.controller('BookingTourCusController',
         // ======= Từ chổ này viết hàm để gọi vào submitBooking =======
         $scope.paymentTravel = function () {
             if (user !== null) {
-                $scope.bookings_tour.userId = user.id;
+                if (user.roles.some(role => role.nameRole === 'ROLE_CUSTOMER')) {
+                    $scope.bookings_tour.userId = user.id;
+                } else {
+                    LocalStorageService.remove('user');
+                }
             }
 
             let ticket = $scope.ticket;
@@ -188,7 +192,11 @@ travel_app.controller('BookingTourCusController',
 
         $scope.paymentVNPay = function () {
             if (user !== null) {
-                $scope.bookings_tour.userId = user.id;
+                if (user.roles.some(role => role.nameRole === 'ROLE_CUSTOMER')) {
+                    $scope.bookings_tour.userId = user.id;
+                } else {
+                    LocalStorageService.remove('user');
+                }
             }
 
             let ticket = $scope.ticket;
@@ -233,7 +241,11 @@ travel_app.controller('BookingTourCusController',
 
         $scope.paymentZaLoPay = function () {
             if (user !== null) {
-                $scope.bookings_tour.userId = user.id;
+                if (user.roles.some(role => role.nameRole === 'ROLE_CUSTOMER')) {
+                    $scope.bookings_tour.userId = user.id;
+                } else {
+                    LocalStorageService.remove('user');
+                }
             }
 
             let ticket = $scope.ticket;
@@ -275,7 +287,11 @@ travel_app.controller('BookingTourCusController',
 
         $scope.paymentMomo = function () {
             if (user !== null) {
-                $scope.bookings_tour.userId = user.id;
+                if (user.roles.some(role => role.nameRole === 'ROLE_CUSTOMER')) {
+                    $scope.bookings_tour.userId = user.id;
+                } else {
+                    LocalStorageService.remove('user');
+                }
             }
 
             let ticket = $scope.ticket;

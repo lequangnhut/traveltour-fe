@@ -82,19 +82,6 @@ travel_app.controller('TourDetailCusController',
                 $scope.isLoading = false;
             });
 
-            TourTripsServiceAD.getTripsByTourId(tourDetailId).then(function (response) {
-                if (response.status === 200) {
-                    $scope.tourTrips = response.data.data;
-
-                    $scope.initMapTrips();
-                    $scope.createMarkerTrips($scope.tourTrips);
-                } else {
-                    $location.path('/admin/page-not-found')
-                }
-            }, errorCallback).finally(function () {
-                $scope.isLoading = false;
-            });
-
             /**
              * phương thức update giá khi người dùng chọn số lượng
              */
@@ -133,11 +120,56 @@ travel_app.controller('TourDetailCusController',
             }
 
             /**
+             * phương lấy tất cả tour trip ra theo ngày 1
+             */
+            TourTripsServiceAD.getTripsByTourId(tourDetailId).then(function (response) {
+                if (response.status === 200) {
+                    $scope.tourTrips = response.data.data.tourTrips;
+                    $scope.dayInTrip = response.data.data.dayInTrip.map(function (item) {
+                        return {
+                            dayTrip: item
+                        };
+                    });
+
+                    $scope.initMapTrips();
+                    $scope.createMarkerTrips($scope.tourTrips);
+                } else {
+                    $location.path('/admin/page-not-found')
+                }
+            }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+
+            /**
+             * phương thức thay đổi ngày và điểm đi trên bản đồ
+             * @param dayInTrip
+             */
+            $scope.changeLocationOnMap = function (dayInTrip) {
+                TourTripsServiceAD.findTripsByDayInTrip(dayInTrip).then(function (response) {
+                    if (response.status === 200) {
+                        $scope.tourTrips = response.data.data;
+
+                        $scope.initMapTrips();
+                        $scope.createMarkerTrips($scope.tourTrips);
+                    } else {
+                        $location.path('/admin/page-not-found')
+                    }
+                }, errorCallback).finally(function () {
+                    $scope.isLoading = false;
+                });
+            }
+
+            /**
              * phương thức zoom vị trí trên bản đồ
              * @param placeAddress
              */
             $scope.zoomLocation = function (placeAddress) {
                 let bounds = new mapboxgl.LngLatBounds();
+
+                let element = document.getElementById('map-trips');
+                if (element) {
+                    element.scrollIntoView({behavior: 'smooth', block: 'center'});
+                }
 
                 MapBoxService.geocodeAddress(placeAddress, function (error, placeAddressCoordinates) {
                     if (!error) {
@@ -154,10 +186,11 @@ travel_app.controller('TourDetailCusController',
                 $scope.removeMarkerTrips();
                 let bounds = new mapboxgl.LngLatBounds();
 
+                let count = 1;
+
                 for (const trip of tourTrips) {
                     let placeAddress = trip.placeAddress;
                     let placeImage = trip.placeImage;
-                    let dayInTrip = trip.dayInTrip;
 
                     let elMarkerNot = document.createElement('a');
                     elMarkerNot.className = 'markerNot';
@@ -190,8 +223,10 @@ travel_app.controller('TourDetailCusController',
                     elMarkerTrip.style.background = '#ff9800';
                     elMarkerTrip.style.textAlign = 'center';
                     elMarkerTrip.style.color = 'white';
-                    elMarkerTrip.innerText = `${dayInTrip}`;
+                    elMarkerTrip.innerText = `${count}`;
                     elMarkerNot.appendChild(elMarkerTrip);
+
+                    count++;
 
                     MapBoxService.geocodeAddress(placeAddress, function (error, placeAddressCoordinates) {
                         if (!error) {
@@ -227,7 +262,7 @@ travel_app.controller('TourDetailCusController',
                             let route = data.routes[0].geometry;
 
                             $scope.mapTrips.addLayer({
-                                'id': 'route',
+                                'id': 'map-line',
                                 'type': 'line',
                                 'source': {
                                     'type': 'geojson',
@@ -252,6 +287,19 @@ travel_app.controller('TourDetailCusController',
                         });
                 });
             }
+
+            /**
+             * Phương thức xóa toàn bộ đường dẫn vẽ trên bản đồ
+             */
+            $scope.removeMapLayer = function () {
+                if ($scope.mapTrips.getLayer('map-line')) {
+                    $scope.mapTrips.removeLayer('map-line');
+                    $scope.mapTrips.removeSource('map-line');
+                } else {
+                    console.error('Layer "map-line" does not exist in the map.');
+                }
+            }
+
 
             /**
              * Phương thức xóa marker tour trip trên bản đồ

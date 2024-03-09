@@ -89,7 +89,8 @@ travel_app.controller('LocationCusController', function ($scope, $location, MapB
             let bounds = new mapboxgl.LngLatBounds();
 
             for (const location of visitLocation) {
-                let address = location.province + ', ' + location.district + ', ' + location.ward + ', ' + location.address;
+                let address = location.address + ', ' + location.ward + ', ' + location.district + ', ' + location.province;
+                console.log(address)
 
                 let iconUrl = '/assets/customers/images/icon/maker.png';
                 let el = document.createElement('div');

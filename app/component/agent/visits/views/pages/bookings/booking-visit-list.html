@@ -141,7 +141,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="oVisit in orderVisitData">
+                <tr ng-repeat="oVisit in orderVisit">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ visitLocations.visitLocationName }}</td>
                     <td>{{ oVisit.customerName }}</td>
@@ -172,7 +172,7 @@
                         </a>
                     </td>
                 </tr>
-                <tr ng-if="orderVisitData.length === 0">
+                <tr ng-if="orderVisit.length === 0">
                     <td colspan="9">Trang này không có dữ liệu.</td>
                 </tr>
                 </tbody>

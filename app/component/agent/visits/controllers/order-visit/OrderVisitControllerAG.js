@@ -1,7 +1,7 @@
 travel_app.controller('OrderVisitControllerAG', function ($scope, $timeout, $filter, $sce, $location, $routeParams, OrderVisitServiceAG, LocalStorageService) {
     let searchTimeout;
     let orderVisitId = $routeParams.id;
-    let brandId = LocalStorageService.get('brandId');
+    let visitLocationId = LocalStorageService.get('brandId');
     let userId = $scope.user.id;
 
     $scope.isLoading = true;
@@ -30,7 +30,7 @@ travel_app.controller('OrderVisitControllerAG', function ($scope, $timeout, $fil
     $scope.orderVisit = {
         id: null,
         userId: userId,
-        visitLocationId: null,
+        visitLocationId: visitLocationId,
         customerName: null,
         customerCitizenCard: null,
         customerPhone: null,
@@ -52,9 +52,9 @@ travel_app.controller('OrderVisitControllerAG', function ($scope, $timeout, $fil
     }
 
     $scope.init = function () {
-        OrderVisitServiceAG.findAllOrderVisit(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function successCallback(response) {
+        OrderVisitServiceAG.findAllOrderVisit(visitLocationId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function successCallback(response) {
             if (response.status === 200) {
-                $scope.orderVisitData = response.data.content;
+                $scope.orderVisit = response.data.content;
                 $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
                 $scope.totalElements = response.data.totalElements;
 
@@ -73,7 +73,7 @@ travel_app.controller('OrderVisitControllerAG', function ($scope, $timeout, $fil
             if (searchTimeout) $timeout.cancel(searchTimeout);
 
             searchTimeout = $timeout(function () {
-                OrderVisitServiceAG.findAllOrderVisit(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
+                OrderVisitServiceAG.findAllOrderVisit(visitLocationId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
                     .then(function (response) {
                         $scope.visitTicketData = response.data.content;
                         $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
@@ -88,7 +88,7 @@ travel_app.controller('OrderVisitControllerAG', function ($scope, $timeout, $fil
          * Tìm visitLocation bằng brandId
          * @param brandId
          */
-        OrderVisitServiceAG.findAllVisitLocation(brandId).then(function (response) {
+        OrderVisitServiceAG.findAllVisitLocation(visitLocationId).then(function (response) {
             if (response.status === 200) {
                 $scope.visitLocationSelect = response.data.data;
             } else {
@@ -174,7 +174,7 @@ travel_app.controller('OrderVisitControllerAG', function ($scope, $timeout, $fil
             }
 
             if (!$scope.ticketTypes[ticketType]) {
-                const quantityKey = 'capacity' + ticketType.charAt(0).toUpperCase() + ticketType.slice(1);
+                let quantityKey = 'capacity' + ticketType.charAt(0).toUpperCase() + ticketType.slice(1);
                 $scope.orderVisit[quantityKey] = null;
                 $scope.unitPrice[ticketType] = null;
                 $scope.calculateTotalAmount();
@@ -183,11 +183,11 @@ travel_app.controller('OrderVisitControllerAG', function ($scope, $timeout, $fil
 
         $scope.calculateTotalAmount = function () {
             if (!$scope.ticketTypes.free) {
-                const quantityAdult = $scope.orderVisit.capacityAdult || 0;
-                const quantityChild = $scope.orderVisit.capacityKid || 0;
+                let quantityAdult = $scope.orderVisit.capacityAdult || 0;
+                let quantityChild = $scope.orderVisit.capacityKid || 0;
 
-                const priceAdult = $scope.intoPrice.adult || 0;
-                const priceChild = $scope.intoPrice.child || 0;
+                let priceAdult = $scope.intoPrice.adult || 0;
+                let priceChild = $scope.intoPrice.child || 0;
 
                 $scope.orderVisit.orderTotal = $scope.formatPrice((quantityAdult * priceAdult) + (quantityChild * priceChild));
             }
@@ -325,6 +325,7 @@ travel_app.controller('OrderVisitControllerAG', function ($scope, $timeout, $fil
     $scope.updateOrderVisit = function () {
         function confirmUpdate() {
             $scope.isLoading = true;
+            $scope.orderVisit.orderTotal = $scope.replacePrice($scope.orderVisit.orderTotal);
             $scope.orderVisit.visitLocationId = $scope.visitLocationSelect[0].id;
             let dataOrderVisit = $scope.orderVisit;
 
