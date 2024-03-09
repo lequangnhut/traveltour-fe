@@ -1,7 +1,7 @@
 travel_app.service('BookingTourServiceAD', function ($http, $q) {
     let API = BASE_API + 'staff/booking-tour/';
 
-    this.getAll = function (page, size, sortBy, sortDir, searchTerm) {
+    this.getAll = function (page, size, sortBy, sortDir, orderStatus, searchTerm) {
         const deferred = $q.defer();
         $http({
             method: 'GET',
@@ -11,6 +11,7 @@ travel_app.service('BookingTourServiceAD', function ($http, $q) {
                 size: size || 10,
                 sortBy: sortBy || 'id',
                 sortDir: sortDir || 'asc',
+                orderStatus: orderStatus || 0,
                 searchTerm: searchTerm || ''
             }
         }).then(deferred.resolve, deferred.reject);

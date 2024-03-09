@@ -49,7 +49,7 @@ travel_app.controller('VisitLocationPaymentControllerAD',
                 capacityKid: $scope.infoVisitLocation.capacityKid,
                 checkIn: $scope.infoVisitLocation.checkIn,
                 orderTotal: $scope.total,
-                paymentMethod: false,
+                paymentMethod: $scope.payment.method !== '0',
                 dateCreated: new Date(),
                 orderStatus: 1,
             }

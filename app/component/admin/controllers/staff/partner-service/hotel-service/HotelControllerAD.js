@@ -25,8 +25,8 @@ travel_app.controller('HotelServiceControllerAD',
 
         $scope.searchHotels = {
             location: null,
-            departureDate: localDateTime(now),
-            arrivalDate: localDateTime(tomorrow),
+            departureDate: now,
+            arrivalDate: tomorrow,
             numAdults: 1,
             numChildren: null,
             numRooms: 1,
@@ -99,21 +99,6 @@ travel_app.controller('HotelServiceControllerAD',
                 $scope.searchHotels.numRooms
             );
         };
-        $scope.findHotelAllData = () => {
-            return HotelServiceServiceAD.getAllOrSearchHotels(
-                $scope.currentPage,
-                $scope.pageSize,
-                $scope.sortBy,
-                $scope.sortDir,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            );
-        };
 
         $scope.hotelServiceData = (response) => {
             $timeout(() => {
@@ -122,7 +107,6 @@ travel_app.controller('HotelServiceControllerAD',
                 $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
             }, 0);
         };
-
 
         $scope.getHotelServiceList = async () => {
             try {
@@ -242,6 +226,7 @@ travel_app.controller('HotelServiceControllerAD',
         };
 
         $scope.searchHotelServiceByKey = async () => {
+            $scope.setPage(Math.max(0, $scope.currentPage - 1));
             if (searchTimeout) $timeout.cancel(searchTimeout);
 
             searchTimeout = $timeout(async () => {
@@ -266,6 +251,17 @@ travel_app.controller('HotelServiceControllerAD',
             if (searchTimeout) $timeout.cancel(searchTimeout);
 
             try {
+
+                if (checkAndFocusInput(!$scope.searchHotels.departureDate && !$scope.searchHotels.arrivalDate, 'departureDateInput', 'Vui lòng chọn ngày đi và ngày về !') ||
+                    checkAndFocusInput(!$scope.searchHotels.departureDate, 'departureDateInput', 'Vui lòng chọn ngày đi !') ||
+                    checkAndFocusInput(!$scope.searchHotels.arrivalDate, 'arrivalDateInput', 'Vui lòng chọn ngày về !') ||
+                    checkAndFocusInput(checkBookingDates($scope.searchHotels.departureDate, $scope.searchHotels.arrivalDate), 'arrivalDateInput', 'Ngày đi phải trước ngày về! !') ||
+                    checkAndFocusInput(!$scope.searchHotels.numAdults && $scope.searchHotels.numAdults <= 0, 'numAdultsInput', 'Vui lòng nhập số lượng người lớn và phải lớn hơn 0 !') ||
+                    checkAndFocusInput($scope.searchHotels.numChildren < 0, 'numChildrenInput', 'Số lượng trẻ em không thể là số âm!') ||
+                    checkAndFocusInput(!$scope.searchHotels.numRooms && $scope.searchHotels.numRooms <= 0, 'numRoomsInput', 'Vui lòng nhập số lượng phòng và phải lớn hơn 0 !')) {
+                    return;
+                }
+
                 const response = await $scope.findHotelData();
 
                 if (!response || !response.data || !response.data.data || !response.data.data.content) {
@@ -281,6 +277,17 @@ travel_app.controller('HotelServiceControllerAD',
             }
         };
 
+        const checkAndFocusInput = (condition, inputId, message) => {
+            if (condition) {
+                $timeout(() => {
+                    document.getElementById(inputId).focus();
+                }, 0);
+                toastAlert('warning', message);
+                return true;
+            }
+            return false;
+        }
+
         const checkBookingDates = (departureDate, arrivalDate) => {
             const departure = new Date(departureDate);
             const arrival = new Date(arrivalDate);
@@ -293,16 +300,6 @@ travel_app.controller('HotelServiceControllerAD',
 
 
         $scope.navigateToRoomTypeList = (tourDetailId, hotelServiceId, hotelName, address) => {
-            function checkAndFocusInput(condition, inputId, message) {
-                if (condition) {
-                    $timeout(() => {
-                        document.getElementById(inputId).focus();
-                    }, 0);
-                    toastAlert('warning', message);
-                    return true;
-                }
-                return false;
-            }
 
             if (checkAndFocusInput(!$scope.searchHotels.departureDate && !$scope.searchHotels.arrivalDate, 'departureDateInput', 'Vui lòng chọn ngày đi và ngày về !') ||
                 checkAndFocusInput(!$scope.searchHotels.departureDate, 'departureDateInput', 'Vui lòng chọn ngày đi !') ||
@@ -337,19 +334,6 @@ travel_app.controller('HotelServiceControllerAD',
 
         function errorCallback() {
             $location.path('/admin/internal-server-error')
-        }
-
-        function localDateTime(input) {
-            if (!input) {
-                return '';
-            }
-            const year = input.getFullYear();
-            const month = input.getMonth() + 1;
-            const day = input.getDate();
-            const hour = input.getHours();
-            const minute = input.getMinutes();
-
-            return new Date(year, month - 1, day, hour, minute);
         }
 
         $scope.getHotelServiceList()

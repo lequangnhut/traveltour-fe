@@ -32,7 +32,7 @@ travel_app.controller('TransportationSchedulesPaymentControllerAD',
                 customerEmail: $scope.tourGuide.email,
                 amountTicket: $scope.transportationSchedules.bookedSeat,
                 orderTotal: $scope.transportationSchedules.unitPrice,
-                paymentMethod: false,
+                paymentMethod: $scope.payment.method !== '0',
                 dateCreated: new Date(),
                 orderStatus: $scope.payment.method,
             }

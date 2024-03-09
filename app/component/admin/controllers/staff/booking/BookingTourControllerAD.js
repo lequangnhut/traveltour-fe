@@ -7,11 +7,18 @@ travel_app.controller('BookingControllerAD',
         $scope.bookingTourList = [];
         $scope.currentPage = 0;
         $scope.pageSize = 5;
+        $scope.currentTab = 'pending';
+        $scope.orderStatus = 0;
 
         function errorCallback() {
             $location.path('/admin/internal-server-error')
         }
 
+        $scope.changeTab = (tab, status) => {
+            $scope.currentTab = tab;
+            $scope.orderStatus = status;
+            $scope.getTourBookingList();
+        };
 
         //phân trang
         $scope.setPage = function (page) {
@@ -56,7 +63,7 @@ travel_app.controller('BookingControllerAD',
         };
 
         $scope.getTourBookingList = function () {
-            BookingTourServiceAD.getAll($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
+            BookingTourServiceAD.getAll($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.orderStatus)
                 .then(function (response) {
                     if (response.data.data === null || response.data.data.content.length === 0) {
                         $scope.setPage(Math.max(0, $scope.currentPage - 1));
