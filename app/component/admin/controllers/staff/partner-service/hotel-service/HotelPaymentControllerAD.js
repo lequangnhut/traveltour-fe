@@ -49,7 +49,7 @@ travel_app.controller('HotelPaymentControllerAD',
                 checkIn: JSON.parse(sessionStorage.getItem('infoHotel')).departureDate,
                 checkOut: JSON.parse(sessionStorage.getItem('infoHotel')).arrivalDate,
                 orderTotal: $scope.total,
-                paymentMethod: false,
+                paymentMethod: $scope.payment.method !== '0',
                 dateCreated: new Date(),
                 orderStatus: $scope.payment.method,
             }

@@ -50,12 +50,12 @@
                 <div class="col-xl-3 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
                     <label class="form-label">Ngày đi <span class="text-danger">*</span></label>
                     <input id="departureDateInput" class="form-control" ng-model="searchHotels.departureDate"
-                           type="datetime-local"/>
+                           type="date"/>
                 </div>
                 <div class="col-xl-3 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
                     <label class="form-label">Ngày về <span class="text-danger">*</span></label>
                     <input id="arrivalDateInput" class="form-control" ng-model="searchHotels.arrivalDate"
-                           type="datetime-local"/>
+                           type="date"/>
                 </div>
                 <div class="col-xl-3 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
                     <label class="form-label">Người lớn <span class="text-danger">*</span></label>
@@ -163,7 +163,7 @@
                             <span class="sorting-icon" ng-bind-html="getSortIcon('location')"></span>
                         </div>
                     </th>
-                        <th class="cursor-pointer" ng-click="sortData('averageRoomPrice')">
+                    <th class="cursor-pointer" ng-click="sortData('averageRoomPrice')">
                         <div class="icon-left">Trung bình giá
                             <span class="sorting-icon" ng-bind-html="getSortIcon('averageRoomPrice')"></span>
                         </div>
@@ -181,14 +181,14 @@
                     </td>
                     <td>{{ hotelService.phone }}</td>
                     <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="{{ hotelService.ward + ', ' + hotelService.district + ', ' + hotelService.province }}">
-                        {{ hotelService.ward + ', ' + hotelService.district + ', ' + hotelService.province }}
+                        title="{{ hotelService.location }}">
+                        {{ hotelService.location }}
                     </td>
                     <td>{{ hotelService.averageRoomPrice | vnCurrency }}</td>
                     <td class="d-flex align-items-center justify-content-center">
                         <a role="button" class="fs-1 btn text-primary px-2"
                            ng-click="navigateToRoomTypeList(tourDetailId,hotelService.id,
-                            hotelService.hotelName,hotelService.ward + ', ' + hotelService.district + ', ' + hotelService.province)">
+                            hotelService.location)">
                             <i class="fa-regular fa-square-plus"></i>
                         </a>
                     </td>

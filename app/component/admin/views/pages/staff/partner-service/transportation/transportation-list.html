@@ -169,13 +169,12 @@
                     </div>
                 </div>
             </div>
-            <div class="div" ng-if="roomTypes.length <= 0">
-                <div class="d-flex justify-content-center align-items-center">
-                    Không có phòng nào phù hợp với yêu cầu của bạn
-                    <sạn></sạn>
+            <div class="div" ng-if="transportationScheduleList.length <= 0">
+                <div class="d-flex justify-content-center align-items-center mt-3">
+                    Không có chuyến xe nào phù hợp với yêu cầu của bạn
                 </div>
             </div>
-            <div class="row">
+            <div class="row" ng-if="transportationScheduleList.length > 0">
                 <div class="col-lg-12">
                     <ul class="gowilds-pagination wow fadeInUp text-center d-flex align-items-center justify-content-center">
                         <!-- Previous Page -->
