@@ -7,6 +7,8 @@ travel_app.controller('TourDetailCusController',
 
         $scope.provinceData = [];
 
+        $scope.mapLineLayerId = null;
+
         $scope.tourDetail = {
             tourDetailId: null,
             guideId: null,
@@ -145,7 +147,9 @@ travel_app.controller('TourDetailCusController',
              * @param dayInTrip
              */
             $scope.changeLocationOnMap = function (dayInTrip) {
-                TourTripsServiceAD.findTripsByDayInTrip(dayInTrip).then(function (response) {
+                $scope.removeMapLayer();
+
+                TourTripsServiceAD.findTripsByDayInTrip(dayInTrip, tourDetailId).then(function (response) {
                     if (response.status === 200) {
                         $scope.tourTrips = response.data.data;
 
@@ -261,8 +265,10 @@ travel_app.controller('TourDetailCusController',
                             // Lấy dữ liệu về đường đi
                             let route = data.routes[0].geometry;
 
+                            $scope.mapLineLayerId = 'map-line-' + new Date().getTime();
+
                             $scope.mapTrips.addLayer({
-                                'id': 'map-line',
+                                'id': $scope.mapLineLayerId,
                                 'type': 'line',
                                 'source': {
                                     'type': 'geojson',
@@ -292,14 +298,15 @@ travel_app.controller('TourDetailCusController',
              * Phương thức xóa toàn bộ đường dẫn vẽ trên bản đồ
              */
             $scope.removeMapLayer = function () {
-                if ($scope.mapTrips.getLayer('map-line')) {
-                    $scope.mapTrips.removeLayer('map-line');
-                    $scope.mapTrips.removeSource('map-line');
+                let mapLineLayerId = $scope.mapLineLayerId;
+
+                if (mapLineLayerId && $scope.mapTrips.getLayer(mapLineLayerId)) {
+                    $scope.mapTrips.removeLayer(mapLineLayerId);
+                    $scope.mapTrips.removeSource(mapLineLayerId);
                 } else {
-                    console.error('Layer "map-line" does not exist in the map.');
+                    console.log("cc")
                 }
             }
-
 
             /**
              * Phương thức xóa marker tour trip trên bản đồ

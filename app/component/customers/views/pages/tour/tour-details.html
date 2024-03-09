@@ -144,11 +144,14 @@
                                     <div class="tour-trips-list">
                                         <div class="tour-trips-header p-2 bg-green rounded-top-3 d-flex">
                                             <h5 class="text-white m-1 ms-4 fs-6" ng-repeat="day in dayInTrip">
-                                                <a href="javascript:void(0)"
+                                                <a href="javascript:void(0)" ng-if="dayInTrip.length !== 0"
                                                    ng-click="changeLocationOnMap(day.dayTrip)">
                                                     <i class="fa-regular fa-calendar-days"></i>
                                                     Ngày {{ day.dayTrip }}
                                                 </a>
+                                            </h5>
+                                            <h5 class="text-white m-1 ms-4 fs-6" ng-if="dayInTrip.length === 0">
+                                                Không có ngày dự kiến cho lịch trình
                                             </h5>
                                         </div>
 
@@ -192,7 +195,7 @@
                                                             <div class="row">
                                                                 <div class="fw-medium col-sm-4 text-center">
                                                                     <i class="fa-solid fa-taxi"></i>
-                                                                    <span>Xe khách</span>
+                                                                    <span>{{ trip.transportationTypesByTransportationTypeId.transportationTypeName }}</span>
                                                                 </div>
                                                                 <div class="fw-medium col-sm-4 text-center">
                                                                     <i class="fa-solid fa-turn-down"></i>
@@ -200,7 +203,12 @@
                                                                 </div>
                                                                 <div class="fw-medium col-sm-4 text-center">
                                                                     <i class="fa-solid fa-tag"></i>
-                                                                    <span>{{ trip.placeCost | vnCurrency }}</span>
+                                                                    <span ng-if="trip.placeCost === 0">
+                                                                        Miễn phí
+                                                                    </span>
+                                                                    <span ng-if="trip.placeCost !== 0">
+                                                                        {{ trip.placeCost | vnCurrency }}
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </div>

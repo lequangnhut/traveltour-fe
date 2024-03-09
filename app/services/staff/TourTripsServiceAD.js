@@ -37,13 +37,14 @@ travel_app.service('TourTripsServiceAD', function ($http, $q) {
         return deferred.promise;
     };
 
-    this.findTripsByDayInTrip = function (dayInTrip) {
+    this.findTripsByDayInTrip = function (dayInTrip, tourDetailId) {
         const deferred = $q.defer();
         $http({
             method: 'GET',
             url: API_TOUR_TRIPS + 'find-tourTrips-dayInTrip',
             params: {
-                dayInTrip: dayInTrip || 1
+                dayInTrip: dayInTrip || 1,
+                tourDetailId: tourDetailId || 1,
             }
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
