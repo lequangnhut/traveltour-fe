@@ -48,7 +48,9 @@
                                 class="form-select"
                                 name="bedTypeId"
                                 ng-model="roomTypes.bedTypeId"
-                                ng-class="{ 'is-invalid': addRoomTypeName.bedTypeId.$invalid && addRoomTypeName.bedTypeId.$touched, 'is-valid': addRoomTypeName.bedTypeId.$valid && addRoomTypeName.bedTypeId.$touched }"
+                                ng-class="{
+                                'is-invalid': addRoomTypeName.bedTypeId.$invalid && addRoomTypeName.bedTypeId.$touched,
+                                'is-valid': addRoomTypeName.bedTypeId.$valid && addRoomTypeName.bedTypeId.$touched }"
                                 ng-options="bedType.id as bedType.bedTypeName for bedType in bedTypeList"
                                 required
                         >
@@ -235,11 +237,11 @@
                                 <div class="form-check">
                                     <input class="form-check-input"
                                            type="checkbox"
-                                           id="{{checkbox.id}}"
+                                           id="{{checkbox.label}}"
                                            ng-model="checkbox.checked"
                                            ng-change="updateCheckboxCount()"
                                     >
-                                    <label class="form-check-label" for="{{checkbox.id}}">
+                                    <label class="form-check-label" for="{{checkbox.label}}">
                                         {{checkbox.label}}
                                     </label>
                                 </div>
@@ -263,10 +265,11 @@
                                 <div class="form-check">
                                     <input class="form-check-input"
                                            type="checkbox"
+                                           id="breakfastIncluded"
                                            ng-model="roomTypes.breakfastIncluded"
                                            ng-change="updateCheckboxCount()"
                                     >
-                                    <label class="form-check-label" for="{{checkbox.id}}">
+                                    <label class="form-check-label" for="breakfastIncluded">
                                         Miễn phí ăn sáng
                                     </label>
                                 </div>
@@ -275,10 +278,11 @@
                                 <div class="form-check">
                                     <input class="form-check-input"
                                            type="checkbox"
+                                           id="freeCancellation"
                                            ng-model="roomTypes.freeCancellation"
                                            ng-change="updateCheckboxCount()"
                                     >
-                                    <label class="form-check-label" for="{{checkbox.id}}">
+                                    <label class="form-check-label" for="freeCancellation">
                                         Miễn phí hủy phòng
                                     </label>
                                 </div>

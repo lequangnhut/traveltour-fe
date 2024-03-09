@@ -6779,6 +6779,11 @@ ul.slick-dots li.slick-active {
     color: #63AB45;
 }
 
+.bg-green{
+    background-color: #63AB45;
+    color: white;
+}
+
 /*limit text span*/
 span.limit-text {
     display: inline-block;

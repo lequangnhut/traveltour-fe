@@ -66,17 +66,87 @@ travel_app.service('HotelServiceAG', function ($http) {
         });
     };
 
-    /**
-     * Thêm thông tin khách sạn mới
-     * @param dataHotels dữ liệu thông tin khách sạn
-     * @returns {*}
-     */
-    this.registerHotels = function (dataHotels) {
+
+    this.registerHotels = function (
+        hotels, roomType,
+        selectedPlaceUtilitiesHotel,
+        selectedRoomTypeUtilities,
+        checkinTime, checkoutTime, bedTypeId,
+        avatarHotel, roomTypeAvatar, listRoomTypeImg) {
+        var emptyImageBlob = new Blob([''], {type: "image/png"});
+
+        hotels.province = hotels.provinceName;
+        hotels.district = hotels.districtName;
+        hotels.ward = hotels.wardName;
+
+        var hotelsData = {
+            hotelName: hotels.hotelName,
+            urlWebsite: hotels.urlWebsite,
+            phone: hotels.phone,
+            amountRoom: hotels.amountRoom,
+            floorNumber: hotels.floorNumber,
+            province: hotels.province,
+            district: hotels.district,
+            ward: hotels.ward,
+            address: hotels.address,
+            isActive: hotels.isActive,
+            agenciesId: hotels.agencyId,
+            hotelTypeId: hotels.hotelType,
+        }
+
+        var roomTypesData = {
+            roomTypeName: roomType.roomTypeName,
+            capacityAdults: roomType.capacityAdults,
+            capacityChildren: roomType.capacityChildren,
+            amountRoom: roomType.amountRoom,
+            price: roomType.price,
+            breakfastIncluded: roomType.breakfastIncluded,
+            freeCancellation: roomType.freeCancellation,
+            roomTypeDescription: roomType.roomTypeDescription,
+        }
+
+
+        var formData = new FormData();
+
+        // Ảnh khách sạn
+        if (avatarHotel && avatarHotel.length > 0) {
+            formData.append('avatarHotel', avatarHotel[0], avatarHotel[0].name);
+        } else {
+            formData.append('avatarHotel', emptyImageBlob, 'empty-image.png');
+        }
+
+        // Ảnh loại phòng
+        if (roomTypeAvatar && roomTypeAvatar.length > 0) {
+            formData.append('roomTypeAvatar', roomTypeAvatar[0], roomTypeAvatar[0].name);
+        } else {
+            formData.append('roomTypeAvatar', emptyImageBlob, 'empty-image.png');
+        }
+
+        // Danh sách các ảnh phòng
+        if (listRoomTypeImg && listRoomTypeImg.length > 0) {
+            for (var i = 0; i < listRoomTypeImg.length; i++) {
+                formData.append('listRoomTypeImg', listRoomTypeImg[i], listRoomTypeImg[i].name);
+            }
+        } else {
+            var emptyListImageBlob = new Blob([''], {type: "image/png"});
+            formData.append('listRoomTypeImg', emptyListImageBlob, 'empty-image.png');
+        }
+
+
+        formData.append('hotels', new Blob([JSON.stringify(hotelsData)], {type: "application/json"}));
+        formData.append('roomType', new Blob([JSON.stringify(roomTypesData)], {type: "application/json"}));
+        formData.append('checkinTime', checkinTime);
+        formData.append('checkoutTime', checkoutTime);
+        formData.append('bedTypeId', bedTypeId);
+        formData.append('placeUtilities', new Blob([JSON.stringify(selectedPlaceUtilitiesHotel)], {type: "application/json"}));
+        formData.append('roomTypeUtilities', new Blob([JSON.stringify(selectedRoomTypeUtilities)], {type: "application/json"}));
+
         return $http({
             method: 'POST',
             url: API_HOTELS + 'register-hotels',
             headers: {'Content-Type': undefined},
-            data: dataHotels
+            data: formData,
+            transformRequest: angular.identity,
         });
     };
 
@@ -107,7 +177,7 @@ travel_app.service('HotelServiceAG', function ($http) {
         });
     }
 
-    this.getHotelByIdHotels = function (id)   {
+    this.getHotelByIdHotels = function (id) {
         return $http({
             method: "GET",
             url: API_HOTELS + "findByHotelId/" + id,
@@ -128,7 +198,7 @@ travel_app.service('HotelServiceAG', function ($http) {
         if (hotelAvatarUpdated && hotelAvatarUpdated.length > 0) {
             formData.append('hotelAvatarUpdated', hotelAvatarUpdated[0], hotelAvatarUpdated[0].name);
         } else {
-            var emptyImageBlob = new Blob([''], { type: "image/png" });
+            var emptyImageBlob = new Blob([''], {type: "image/png"});
             formData.append('hotelAvatarUpdated', emptyImageBlob, 'empty-image.png');
         }
 

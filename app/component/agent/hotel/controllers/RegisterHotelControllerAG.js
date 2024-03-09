@@ -1,4 +1,8 @@
-travel_app.controller("RegisterHotelControllerAG", function ($scope, $http, $location, AuthService, HotelServiceAG, AgenciesServiceAG) {
+travel_app.controller("RegisterHotelControllerAG", function (
+    $scope, $http, $location,
+    AuthService, HotelTypeService, RoomUtilitiesService, PlaceUtilitiesService,
+    HotelServiceAG, AgenciesServiceAG, BedTypeService, FormatDateService) {
+    let user = $scope.user;
     $scope.currentStep = 1;
     $scope.phoneError = null;
     $scope.checkboxChecked = false;
@@ -15,272 +19,374 @@ travel_app.controller("RegisterHotelControllerAG", function ($scope, $http, $loc
         }
     };
 
-    function errorCallback() {
-        $location.path('/admin/internal-server-error')
-    }
-
-    $scope.address = {
-        province: null, district: null, ward: null
-    }
-
     $scope.hotels = {
         hotelName: null,
-        urlWebsite: null,
         phone: null,
-        amountRoom: null,
-        floorNumber: null,
+        urlWebsite: null,
         province: null,
         district: null,
         ward: null,
         address: null,
-        hotelAvatar: null,
-        hotelTypeId: null,
+        provinceName: null,
+        districtName: null,
+        wardName: null,
+        floorNumber: null,
         avatarHotel: null,
-        agenciesId: null
+        hotelType: null,
+        agencyId: null
     };
 
-    $scope.rooms = {
+    $scope.hotelTypes = null
+    $scope.provinces = [];
+    $scope.districts = [];
+    $scope.wards = [];
+    $scope.checkboxCountHotels = 1;
+    $scope.checkboxHotel = []
+
+    $scope.roomTypes = {
+        id: null,
         roomTypeName: null,
-        roomTypeAvatar: null,
         hotelId: null,
         capacityAdults: null,
         capacityChildren: null,
+        bedTypeId: null,
         amountRoom: null,
         price: null,
+        isActive: null,
+        isDeleted: null,
+        breakfastIncluded: false,
+        freeCancellation: false,
+        checkinTime: null,
+        checkoutTime: null,
+        roomTypeAvatar: null,
         roomTypeDescription: null,
-        roomTypeImage: null
+        roomImagesById: [],
+        roomUtilities: [],
+        roomBedsById: [],
+        listRoomTypeImg: []
     }
 
+    $scope.checkboxCountRoomType = 1;
+    $scope.isImageSelected = false;
+    $scope.isListImageSelected = false;
+    $scope.checkboxRoomType = []
 
-    $scope.init = function () {
-        let user = $scope.user;
+    $scope.pageLoaded = false;
 
-        if (user !== undefined && user !== null && user !== "") {
-            AgenciesServiceAG.findByUserId(user.id).then(function successCallback(response) {
-                let agencyId = $scope.hotels.agenciesId = response.data.id;
-
-                HotelServiceAG.findAllByAgencyId(agencyId).then(function successCallback(response) {
-                    let hotel = response.data;
-
-                    if (hotel.length === 1) {
-                        HotelServiceAG.findByAgencyId(agencyId).then(function successCallback(response) {
-                            $scope.hotels = response.data;
-                        }, errorCallback);
-                    }
-                }, errorCallback);
-            }, errorCallback);
-        }
-
-        /**
-         * @message Check duplicate phone
-         */
-        $scope.checkDuplicatePhone = function () {
-            AuthService.checkExistPhone($scope.hotels.phone).then(function successCallback(response) {
-                $scope.phoneError = response.data.exists;
-            }, errorCallback);
-        };
-        /**
-         * API lấy dữ liệu tỉnh thành và fill dữ liệu lên select
-         */
-        $http.get('/lib/address/data.json').then(function (response) {
-            $scope.provinces = response.data;
-        }, errorCallback);
-
-        $scope.onProvinceChange = function () {
-            var selectedProvince = $scope.provinces.find(p => p.Id === $scope.address.province);
-            if (selectedProvince) {
-                $scope.hotels.province = selectedProvince.Name;
-            }
-
-            $scope.districts = selectedProvince ? selectedProvince.Districts : [];
-            $scope.hotels.district = null;
-            $scope.hotels.ward = null;
-        };
-
-        $scope.onDistrictChange = function () {
-            var selectedDistrict = $scope.districts.find(d => d.Id === $scope.address.district);
-            if (selectedDistrict) {
-                $scope.hotels.district = selectedDistrict.Name;
-            }
-
-            $scope.wards = selectedDistrict ? selectedDistrict.Wards : [];
-            $scope.hotels.ward = null;
-        };
-
-        $scope.onWardChange = function () {
-            var selectedWard = $scope.wards.find(w => w.Id === $scope.address.ward);
-            if (selectedWard) {
-                $scope.hotels.ward = selectedWard.Name;
-            }
-        };
-
-        /**
-         * Danh sách loại phòng
-         */
-        HotelServiceAG.getListHotelType().then(function (response) {
-            try {
-                if (response.status === 404) {
-                    // Xử lý khi không tìm thấy
-                } else if (response.status === 200) {
-                    $scope.hotelTypes = response.data.data;
-                } else {
-                    // Xử lý trường hợp khác
-                }
-            } catch (e) {
-                // Xử lý exception nếu cần
-            }
-        });
-
-        /**
-         * Danh sách loại giường
-         */
-        HotelServiceAG.findListBedType().then(function (response) {
-            try {
-                if (response.status === 404) {
-                    // Xử lý khi không tìm thấy
-                } else if (response.status === 200) {
-                    $scope.bedTypes = response.data.data;
-                } else {
-                    // Xử lý trường hợp khác
-                }
-            } catch (e) {
-                // Xử lý exception nếu cần
-            }
-        });
-
-        /**
-         * Danh sách các checkbox vị trí tiện ích khách sạn
-         * @type {[{checked: boolean, id: string, label: string},{checked: boolean, id: string, label: string}]}
-         */
-        HotelServiceAG.getListPlaceUtilities().then(function (response) {
-            try {
-                if (response.status === 404) {
-                    // Xử lý khi không tìm thấy
-                } else if (response.status === 200) {
-                    $scope.placeUtilitiesList = response.data.data.map(function (item) {
-                        return {id: item.id, label: item.placeUtilitiesName, checked: false};
-                    });
-                } else {
-                    // Xử lý trường hợp khác
-                }
-            } catch (e) {
-                // Xử lý exception nếu cần
-            }
-        });
-
-        /**
-         * Danh sách các checkbox vị trí tiện ích phòng
-         */
-        HotelServiceAG.getListRoomUtilities().then(function (response) {
-            try {
-                if (response.status === 404) {
-                    // Xử lý khi không tìm thấy
-                } else if (response.status === 200) {
-                    $scope.roomUtilitiesList = response.data.data.map(function (item) {
-                        return {id: item.id, label: item.roomUtilitiesName, checked: false};
-                    });
-                } else {
-                    // Xử lý trường hợp khác
-                }
-            } catch (e) {
-                // Xử lý exception nếu cần
-            }
-        });
-
-        $scope.updatePlaceUtilities = function () {
-            $scope.selectedPlaceUtilitiesIds = [];
-
-            angular.forEach($scope.placeUtilitiesList, function (placeUtilities) {
-                if (placeUtilities.isSelected) {
-                    $scope.selectedPlaceUtilitiesIds.push(placeUtilities.id);
-                }
-            });
-            $scope.placeUtilitiesCheck = $scope.selectedPlaceUtilitiesIds.length > 0 ? 1 : 0;
-        };
-
-        $scope.updateRoomUtilities = function () {
-            $scope.selectedRoomUtilitiesIds = [];
-
-            angular.forEach($scope.roomUtilitiesList, function (roomUtilities) {
-                if (roomUtilities.isSelected) {
-                    $scope.selectedRoomUtilitiesIds.push(roomUtilities.id);
-                }
-            });
-            $scope.roomUtilitiesCheck = $scope.selectedRoomUtilitiesIds.length > 0 ? 1 : 0;
-        };
-
-        /**
-         * Upload hình ảnh và lưu vào biến hotelAvatar
-         * @param file
-         */
-        $scope.uploadAvatarImages = function (file) {
-            if (file && !file.$error) {
-                $scope.hotels.hotelAvatar = file;
-            }
-        };
-
-        /**
-         * Bắt lỗi ảnh phòng khách sạn
-         */
-        $scope.uploadRoomTypeImages = function (files) {
-            const maxImages = 30;
-
-            if (!$scope.rooms.roomTypeImage) {
-                $scope.rooms.roomTypeImage = [];
-            }
-
-            if ($scope.rooms.roomTypeImage.length + files.length >= maxImages) {
-                centerAlert('Không hợp lệ', "Bạn chỉ có thể chọn tối đa " + maxImages + " hình ảnh.", 'warning');
-                $scope.rooms.roomTypeImage.clear();
-                return;
-            }
-
-            angular.forEach(files, function (file) {
-                if (file && !file.$error) {
-                    $scope.rooms.roomTypeImage.push(file);
-                }
-            });
-        };
-
-        /**
-         * Upload hình ảnh và lưu vào biến roomTypeAvatar
-         * @param file
-         */
-        $scope.uploadAvatarRooms = function (file) {
-            if (file && !file.$error) {
-                $scope.rooms.roomTypeAvatar = file;
-            }
-        };
+    function errorCallback(error) {
+        toastAlert('error', "Máy chủ không tồn tại !");
     }
 
-    /**
-     * Submit dữ liệu gửi lên api
-     */
-    $scope.submitRegisterHotel = function () {
-        $scope.isLoading = true;
-        const formData = new FormData();
-
-        const dataHotelRoom = {
-            hotelsDto: $scope.hotels,
-            roomTypesDto: $scope.rooms,
-            selectedPlaceUtilitiesIds: $scope.selectedPlaceUtilitiesIds,
-            selectedRoomUtilitiesIds: $scope.selectedRoomUtilitiesIds,
-        }
-
-        formData.append('dataHotelRoom', new Blob([JSON.stringify(dataHotelRoom)], {type: 'application/json'}));
-        angular.forEach($scope.rooms.roomTypeImage, function (file) {
-            formData.append('roomTypeImage', file);
-        });
-        formData.append('hotelAvatar', $scope.hotels.hotelAvatar);
-        formData.append('roomTypeAvatar', $scope.rooms.roomTypeAvatar);
-
-        HotelServiceAG.registerHotels(formData).then(function () {
-            centerAlert('Thành công !', 'Thông tin khách sạn đã được cập nhật thành công.', 'success');
-            $location.path('/business/select-type');
-        }, errorCallback).finally(function () {
-            $scope.isLoading = false;
-        });
+    $scope.selectHotelType = function () {
     };
 
+    $scope.currentMarker = null;
+    $scope.longitude = null;
+    $scope.latitude = null;
+
+    /**
+     * Lấy danh sách danh sách loại phòng
+     */
+    HotelTypeService.getListHotelType().then(function (response) {
+        if (response.data.status === '200') {
+            $scope.hotelTypes = response.data.data;
+        }
+    });
+
+    /**
+     * API lấy dữ liệu địa chỉ trong file data.json
+     */
+    $http.get('/lib/address/data.json').then(function (response) {
+        $scope.provinces = response.data;
+    });
+
+    /**
+     * lấy thông tin cho thông tin tỉnh thành
+     * */
+    $scope.onProvinceChange = function () {
+        var selectedProvince = $scope.provinces.find(p => p.Id === $scope.hotels.province);
+        if (selectedProvince) {
+            $scope.hotels.provinceName = selectedProvince.Name;
+        }
+
+        $scope.districts = selectedProvince ? selectedProvince.Districts : [];
+        $scope.hotels.district = null;
+        $scope.hotels.ward = null;
+    };
+
+    /**
+     * Lấy thông tin huyện nếu tỉnh đã được chọn
+     */
+    $scope.onDistrictChange = function () {
+        var selectedDistrict = $scope.districts.find(d => d.Id === $scope.hotels.district);
+        if (selectedDistrict) {
+            $scope.hotels.districtName = selectedDistrict.Name;
+        }
+
+        $scope.wards = selectedDistrict ? selectedDistrict.Wards : [];
+        $scope.hotels.ward = null;
+        $scope.hotels.wardName = null;
+    };
+
+    /**
+     * Lấy dữ liệu của xã nếu huyện đã được chọn
+     */
+    $scope.onWardChange = function () {
+        var selectedWard = $scope.wards.find(w => w.Id === $scope.hotels.ward);
+        if (selectedWard) {
+            $scope.hotels.wardName = selectedWard.Name;
+        }
+
+    };
+
+    /**
+     * Băt lỗi hình ảnh đại diện khách sạn
+     */
+    $scope.validateAvataHotel = function (file) {
+        var maxImages = 1;
+
+        if ($scope.hotels.avatarHotel && $scope.hotels.avatarHotel.length > maxImages) {
+            $scope.register_hotels.avataHotel.$setValidity('maxImages', false);
+        } else {
+            $scope.register_hotels.avataHotel.$setValidity('maxImages', true);
+        }
+
+        if (file.size > 10 * 1024 * 1024) { // Chuyển đổi kích thước từ MB sang byte và kiểm tra
+            $scope.register_hotels.avataHotel.$error.maxSize = true;
+        } else {
+            delete $scope.register_hotels.avataHotel.$error.maxSize;
+        }
+
+    };
+
+    /**
+     * Phương thức kiểm tra xem đã chọn vị trí trên bản đồ chưa
+     * @returns {boolean}
+     */
+    $scope.isLocationSelected = function () {
+        return !($scope.longitude && $scope.latitude);
+    };
+
+    /**
+     * Danh sách các tiện ích khách sạn
+     */
+    PlaceUtilitiesService.getListPlaceUtilities().then(function (response) {
+        $scope.checkboxHotel == null;
+
+        try {
+            if (response.status === 404) {
+                $scope.showErrorListPlaceMessage = "Không tìm thấy dữ liệu vui lòng thử lại"
+            } else if (response.status === 200) {
+                $scope.checkboxHotel = response.data.data.map(function (item) {
+                    return {id: item.id, label: item.placeUtilitiesName, checked: false};
+                });
+
+
+            } else {
+                $scope.showErrorListPlaceMessage = "Không tìm thấy dữ liệu vui lòng thử lại"
+            }
+        } catch (e) {
+            $scope.showErrorListPlaceMessage = "Không tìm thấy dữ liệu vui lòng thử lại"
+        }
+    });
+
+    /**
+     * Cập nhật số lượng checkbox
+     */
+    $scope.updateCheckboxCountHotel = function () {
+        $scope.checkboxCountHotels = $scope.checkboxHotel.filter(function (checkbox) {
+            return checkbox.checked;
+        }).length;
+    };
+
+    /**
+     * Kiểm tra nếu như chưa lựa chọn dịch vụ thì tắt nút di
+     * @returns {*}
+     */
+    $scope.noCheckboxSelectedHotel = function () {
+        return $scope.checkboxCountHotels <= 0;
+    };
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
+
+    /**
+     * Tạo bản đồ
+     */
+    $scope.map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [105.8342, 21.0278],
+        zoom: 5
+    });
+
+    /**
+     * Xử lí sự kiện chọn vị trí trên bản đồ
+     */
+    $scope.map.on('load', function () {
+        $scope.map.on('click', function (e) {
+            $scope.longitude = e.lngLat.lng;
+            $scope.latitude = e.lngLat.lat;
+
+            if ($scope.currentMarker) {
+                $scope.currentMarker.remove();
+            }
+
+            $scope.currentMarker = new mapboxgl.Marker()
+                .setLngLat([$scope.longitude, $scope.latitude])
+                .addTo($scope.map);
+        });
+    });
+
+    AgenciesServiceAG.findByUserId(user.id).then(function successCallback(response) {
+        $scope.hotels.agencyId = response.data.id;
+    })
+
+    /**
+     * Phương thức bắt lỗi ảnh đại diện khách sạn
+     */
+    $scope.validateRoomTypeAvatar = function () {
+        var maxImages = 1;
+
+        if ($scope.roomTypes.roomTypeAvatar && $scope.roomTypes.roomTypeAvatar.length > maxImages) {
+            $scope.register_roomType.roomTypeAvatar.$setValidity('maxImages', false);
+        } else {
+            $scope.register_roomType.roomTypeAvatar.$setValidity('maxImages', true);
+        }
+        $scope.isImageSelected = !!$scope.roomTypes.roomTypeAvatar;
+    };
+
+    /**
+     * Phương thức bắt lỗi danh sách hình ảnh
+     */
+    $scope.validateListRoomTypeImg = function () {
+        var maxImages = 30;
+
+        if ($scope.roomTypes.listRoomTypeImg && $scope.roomTypes.listRoomTypeImg.length > maxImages) {
+            $scope.register_roomType.listRoomTypeImg.$setValidity('maxImages', false);
+        } else {
+            $scope.register_roomType.listRoomTypeImg.$setValidity('maxImages', true);
+        }
+        $scope.isListImageSelected = !!$scope.roomTypes.listRoomTypeImg;
+    };
+
+    /**
+     * Danh sách các tiện ích phòng khách sạn
+     */
+    RoomUtilitiesService.getAllRoomUtilities().then(function (response) {
+        $scope.isLoading = true;
+        $scope.checkboxes == null;
+        try {
+            if (response.status === 404) {
+                $scope.showErrorListPlaceMessage = "Không tìm thấy dữ liệu vui lòng thử lại"
+            } else if (response.status === 200) {
+                $scope.checkboxRoomType = response.data.data.map(function (item) {
+                    return {id: item.id, label: item.roomUtilitiesName, checked: false};
+                });
+
+
+            } else {
+                $scope.showErrorListPlaceMessage = "Không tìm thấy dữ liệu vui lòng thử lại"
+            }
+        } catch (e) {
+            $scope.showErrorListPlaceMessage = "Không tìm thấy dữ liệu vui lòng thử lại"
+        }
+    }, errorCallback).finally(function () {
+        $scope.isLoading = false;
+    });
+
+    /**
+     * Phương thức lấy toàn bộ danh sách loại giường khách sạn
+     */
+    BedTypeService.getAllBedTypes().then(function (response) {
+        $scope.isLoading = true;
+        if (response.data.status === "200") {
+            $scope.bedTypeList = response.data.data
+        } else if (response.data.status === "404") {
+            $scope.errorBedTypeList = response.data.message
+        }
+    }, errorCallback).finally(function () {
+        $scope.isLoading = false;
+    });
+
+    /**
+     * Phương thức kiểm tra số lượng checkbox
+     */
+    $scope.updateCheckboxCountRoomType = function () {
+        $scope.checkboxCountRoomType = $scope.checkboxRoomType.filter(function (checkbox) {
+            return checkbox.checked;
+        }).length;
+        $scope.pageLoaded = true;
+        console.log($scope.pageLoaded)
+    };
+
+    /**
+     * Kiểm tra nếu như chưa lựa chọn dịch vụ thì tắt nút di
+     * @returns {*}
+     */
+    $scope.noCheckboxSelectedRoomType = function () {
+        return $scope.checkboxCountRoomType <= 0;
+    };
+
+
+    /**
+     * Upload hình ảnh và lưu vào biến business_images
+     * @param file
+     */
+    $scope.uploadBusinessImage = function (file) {
+        if (file && !file.$error) {
+            $scope.agent.business_images = file;
+        }
+    };
+
+    $scope.registerHotel = function () {
+        $scope.isLoading = true;
+        var selectedPlaceUtilitiesHotel = $scope.checkboxHotel
+            .filter(function (checkbox) {
+                return checkbox.checked;
+            })
+            .map(function (checkbox) {
+                return checkbox.id;
+            });
+
+        var selectedRoomTypeUtilities = $scope.checkboxRoomType
+            .filter(function (checkbox) {
+                return checkbox.checked;
+            })
+            .map(function (checkbox) {
+                return checkbox.id;
+            });
+
+        console.log($scope.hotels)
+        console.log($scope.roomTypes)
+        console.log(selectedPlaceUtilitiesHotel)
+        console.log(selectedRoomTypeUtilities)
+        console.log(FormatDateService.formatDate($scope.roomTypes.checkinTime))
+        console.log(FormatDateService.formatDate($scope.roomTypes.checkoutTime))
+        console.log($scope.roomTypes.bedTypeId)
+
+        HotelServiceAG.registerHotels(
+            $scope.hotels,
+            $scope.roomTypes,
+            selectedPlaceUtilitiesHotel,
+            selectedRoomTypeUtilities,
+            FormatDateService.formatDate($scope.roomTypes.checkinTime),
+            FormatDateService.formatDate($scope.roomTypes.checkoutTime),
+            $scope.roomTypes.bedTypeId,
+            $scope.hotels.avatarHotel,
+            $scope.roomTypes.roomTypeAvatar,
+            $scope.roomTypes.listRoomTypeImg
+        ).then(function (response) {
+            if (response.status === 200) {
+                toastAlert('success', "Đăng ký khách sạn thành công !");
+                $location.path('/business/hotel/home')
+            } else {
+                toastAlert('error', "Đăng ký khách sạn thất bại !");
+            }
+        }).finally(function () {
+            $scope.isLoading = false;
+        })
+    }
+
+    console.log($scope.pageLoaded);
     $scope.init();
 })

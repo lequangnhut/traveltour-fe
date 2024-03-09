@@ -1,5 +1,7 @@
-travel_app.controller('HotelCustomerController', function ($scope, $location, $window, HotelServiceCT, RoomTypeService) {
+travel_app.controller('HotelCustomerController', function ($scope, $location, $window, $anchorScroll, HotelServiceCT, RoomTypeService) {
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
+
+    $anchorScroll();
 
     $scope.showMoreHotelType = false;
     $scope.limitHotelType = 5;
@@ -30,10 +32,11 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         roomBedsIdListFilter: [],
         amountRoomFilter: null,
         locationFilter: null,
-        capacityAdultsFilter: null,
-        capacityChildrenFilter: null,
+        capacityAdultsFilter: 2,
+        capacityChildrenFilter: 0,
         checkInDateFiller: new Date(),
         checkOutDateFiller: new Date(),
+        hotelIdFilter: null,
         page: 0,
         size: 10,
         sort: null
@@ -67,6 +70,53 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         checkoutTime: null,
         roomTypeAvatar: null,
         roomTypeDescription: null,
+        roomImagesById: [],
+        roomUtilities: [],
+        roomBedsById: {},
+        listRoomTypeImg: [],
+        hotelsByHotelId: {
+            id: null,
+            hotelName: null,
+            phoneNumber: null,
+            website: null,
+            province: null,
+            district: null,
+            ward: null,
+            address: null,
+            provinceName: null,
+            districtName: null,
+            wardName: null,
+            floorNumber: null,
+            avatarHotel: null,
+            hotelType: null,
+            agencyId: null,
+            longitude: null,
+            latitude: null,
+            hotelTypesByHotelTypeId: {
+                id: null, hotelTypeName: null, hotelsById: null,
+            },
+
+        },
+    }
+
+    $scope.roomTypeViewed = {
+        id: null,
+        roomTypeName: null,
+        hotelId: null,
+        capacityAdults: null,
+        capacityChildren: null,
+        bedTypeId: null,
+        amountRoom: null,
+        price: null,
+        isActive: null,
+        isDeleted: null,
+        breakfastIncluded: false,
+        freeCancellation: false,
+        checkinTime: null,
+        checkoutTime: null,
+        roomTypeAvatar: null,
+        roomTypeDescription: null,
+        lastUpdated: null,
         roomImagesById: [],
         roomUtilities: [],
         roomBedsById: {},
@@ -165,12 +215,12 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         var maxOffset = 0.001; // Độ lệch tối đa
 
         for (const roomType of roomTypes) {
-            let iconUrl = '/assets/customers/images/icon/maker.png';
+            const iconUrl = '/assets/customers/images/hotel/placeholder.png';
             const el = document.createElement('div');
             el.className = 'marker';
             el.style.backgroundImage = `url(${iconUrl})`;
-            el.style.width = '40px';
-            el.style.height = '40px';
+            el.style.width = '30px';
+            el.style.height = '30px';
             el.style.backgroundSize = '100%';
 
             var popupContent = createPopupContent(roomType);
@@ -227,12 +277,12 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         $scope.removeMarkersById();
         var bounds = new mapboxgl.LngLatBounds(); // Khởi tạo bounds
 
-        let iconUrl = '/assets/customers/images/icon/maker.png';
+        const iconUrl = '/assets/customers/images/hotel/placeholder.png';
         const el = document.createElement('div');
         el.className = 'marker';
         el.style.backgroundImage = `url(${iconUrl})`;
-        el.style.width = '40px';
-        el.style.height = '40px';
+        el.style.width = '30px';
+        el.style.height = '30px';
         el.style.backgroundSize = '100%';
 
         var popupContent = createPopupContent(roomType);
@@ -479,17 +529,18 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
     /**
      * Phương thức tìm kiếm loại phòng qua các điều kiện lọc
      */
-    $scope.isLoading = true;
-
     HotelServiceCT.findAllRoomTypesByFillter($scope.filler).then(function successCallback(response) {
+        $scope.loading = true;
         if (response.status === 200) {
             $scope.roomTypes = response.data.data;
+            $scope.countSize = response.data.totalPages;
             $scope.totalPages = Math.ceil(response.data.totalPages / $scope.filler.size);
+            $scope.encryptedData = btoa(JSON.stringify($scope.filler));
         } else {
             $location.path('/admin/internal-server-error');
         }
     }).finally(function () {
-        $scope.isLoading = false;
+        $scope.loading = false;
     });
 
     /**
@@ -540,19 +591,17 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
      * Phương thức tìm kiếm khách sạn dựa vào thông tin filler khi click tìm kiếm
      */
     $scope.findAllRoomTypesByFillerClick = function () {
-        $scope.isLoading = true
-
         HotelServiceCT.findAllRoomTypesByFillter($scope.filler).then(function successCallback(response) {
             if (response.status === 200) {
                 $scope.roomTypes = response.data.data;
                 $scope.totalPages = Math.ceil(response.data.totalPages / $scope.filler.size);
+                $scope.countSize = response.data.totalPages;
                 $scope.daysBetween = Math.floor(($scope.filler.checkOutDateFiller - $scope.filler.checkInDateFiller) / (1000 * 60 * 60 * 24));
                 $scope.addMarkers($scope.roomTypes);
+                $scope.encryptedData = btoa(JSON.stringify($scope.filler));
             } else {
                 $location.path('/admin/internal-server-error');
             }
-        }).finally(function () {
-            $scope.isLoading = false
         })
     }
     $scope.findAllRoomTypesByFillerClick()
@@ -626,7 +675,6 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         $scope.getPaginationRange()
         if ($scope.filler.page < $scope.totalPages && $scope.filler.page > 0) {
             $scope.findAllRoomTypesByFillerClick();
-            console.log($scope.filler.page)
         } else if ($scope.filler.page === $scope.totalPages) {
             $scope.filler.page = $scope.totalPages - 1;
             $scope.findAllRoomTypesByFillerClick();
@@ -789,7 +837,7 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
                                                     VND
                                                 </div>
                                                 <p class="fs-7 float-end"> ${$scope.daysBetween} Đêm </p>
-                                                <a href="/hotel/hotel-detail" class="btn btn-green w-100 mt-3">
+                                                <a href="#" id="closeModelMap" class="btn btn-green w-100 mt-3">
                                                     Xem chi tiết
                                                 </a>
                                             </div>
@@ -801,5 +849,47 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
                     </div>
         `;
     }
+
+    $(document).on('click', '#closeModelMap', function() {
+        $('#mapModal').modal('hide');
+    });
+
+
+    /**
+     * Phương thức xem chi tiết phòng khách sạn và lưu lịch sử xem của khách hàng
+     * @param roomType khách sạn
+     */
+    $scope.hotelDetailsById = function (roomType) {
+        $scope.roomTypeViewed = JSON.parse($window.localStorage.getItem('historyWatchHotels')) || [];
+
+        var existingIndex = $scope.roomTypeViewed.findIndex(function (item) {
+            return item.roomTypeId.id === roomType.id;
+        });
+
+        if (existingIndex !== -1) {
+            $scope.roomTypeViewed[existingIndex].lastUpdated = new Date();
+        } else {
+            $scope.roomTypeViewed.push({
+                roomTypeId: roomType,
+                lastUpdated: new Date()
+            });
+        }
+
+        $scope.roomTypeViewed.sort(function (a, b) {
+            return new Date(b.lastUpdated) - new Date(a.lastUpdated);
+        });
+
+        if ($scope.roomTypeViewed.length > 10) {
+            $scope.roomTypeViewed.splice(10, $scope.roomTypeViewed.length - 10);
+        }
+
+        $window.localStorage.setItem('historyWatchHotels', JSON.stringify($scope.roomTypeViewed));
+
+        $scope.filler.hotelIdFilter = roomType.hotelsByHotelId.id;
+
+        $scope.encryptedData = btoa(JSON.stringify($scope.filler));
+        $location.path('/hotel/hotel-detail/' + $scope.encryptedData);
+    }
+
 
 });
