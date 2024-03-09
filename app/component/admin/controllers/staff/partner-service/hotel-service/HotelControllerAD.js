@@ -140,7 +140,7 @@ travel_app.controller('HotelServiceControllerAD',
                     numberOfGuests: tourDetail.numberOfGuests
                 };
 
-                let tourTripsList = tourTripsResponse.data.data;
+                let tourTripsList = tourTripsResponse.data.data.tourTrips;
 
                 tourTripsList.forEach(function (tourTrips) {
                     tourTrips.activityInDay = $sce.trustAsHtml(tourTrips.activityInDay);
@@ -171,6 +171,7 @@ travel_app.controller('HotelServiceControllerAD',
                     };
                 }
             } catch (error) {
+                console.log(error)
                 errorCallback()
             } finally {
                 $scope.$apply(() => {

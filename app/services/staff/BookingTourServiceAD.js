@@ -12,7 +12,7 @@ travel_app.service('BookingTourServiceAD', function ($http, $q) {
                 sortBy: sortBy || 'id',
                 sortDir: sortDir || 'asc',
                 orderStatus: orderStatus || 0,
-                searchTerm: searchTerm || ''
+                searchTerm: searchTerm || null
             }
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;

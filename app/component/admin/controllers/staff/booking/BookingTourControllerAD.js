@@ -72,8 +72,6 @@ travel_app.controller('BookingControllerAD',
                     $scope.bookingTourList = response.data.data.content;
                     $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                     $scope.totalElements = response.data.data.totalElements;
-
-                    console.log($scope.bookingTourList)
                 }, errorCallback).finally(function () {
                 $scope.isLoading = false;
             });
@@ -100,11 +98,16 @@ travel_app.controller('BookingControllerAD',
 
         //tìm kiếm
         $scope.searchBookingTour = function () {
+            $scope.setPage(Math.max(0, $scope.currentPage - 1));
             if (searchTimeout) $timeout.cancel(searchTimeout);
 
             searchTimeout = $timeout(function () {
-                BookingTourServiceAD.getAll($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
+                BookingTourServiceAD.getAll($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.orderStatus, $scope.searchTerm)
                     .then(function (response) {
+                        if (response.data.data === null || response.data.data.content.length === 0) {
+                            toastAlert('warning', 'Không tìm thấy !');
+                            return
+                        }
                         $scope.bookingTourList = response.data.data.content;
                         $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                         $scope.totalElements = response.data.data.totalElements;
@@ -134,11 +137,19 @@ travel_app.controller('BookingControllerAD',
             $scope.bookingTour = data;
         }
 
+        $scope.openModalCancelTransaction = function (data) {
+            $('#modal-cancel-transaction').modal('show');
+            $scope.bookingTour = data;
+        }
+
         /**
          * Phương thức đóng modal
          */
         $scope.closeModal = function () {
             $('#modal-tour-detail').modal('hide');
+        };
+        $scope.closeModal = function () {
+            $('#modal-cancel-transaction').modal('hide');
         };
 
     });

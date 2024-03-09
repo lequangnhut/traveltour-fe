@@ -164,8 +164,7 @@ travel_app.controller('AccommodationInformationControllerAD',
                             }
                         });
 
-                        let groupedRoomsArray = Object.values(groupedRooms);
-                        $scope.orderHotelDetailList = groupedRoomsArray;
+                        $scope.orderHotelDetailList = Object.values(groupedRooms);
                     }
                 }, errorCallback);
 
