@@ -150,6 +150,8 @@ travel_app.filter('calculateDaysAndNights', function () {
 });
 
 
+
+
 travel_app.filter('dateWithTimeFormat', function () {
     return function (dateString) {
         let date = new Date(dateString);

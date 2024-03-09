@@ -637,9 +637,13 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/hotel/hotel.html',
             controller: 'HotelCustomerController'
         })
-        .when('/hotel/hotel-detail', {
+        .when('/hotel/hotel-detail/:encryptedData', {
             templateUrl: 'app/component/customers/views/pages/hotel/hotel-detail.html',
             controller: 'HotelDetailController'
+        })
+        .when('/hotel/hotel-details/payment', {
+            templateUrl: 'app/component/customers/views/pages/hotel/payment-hotel.html',
+            controller: 'PaymentHotelController'
         })
         .when('/drive-move', {
             templateUrl: 'app/component/customers/views/pages/transport/transport.html',
