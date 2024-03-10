@@ -1215,7 +1215,7 @@
                             <span data-feather="bell" style="height:20px;width:20px;color:#B197FC;"></span>
                             <sup>
                                 <i class="fa-solid fa-circle fa-rotate-90 fa-2xs"
-                                   style="color: #fe3939;" ng-if="showNotification"></i>
+                                   style="color: #fe3939;" ng-if="showNotification===true"></i>
                             </sup>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end notification-dropdown-menu py-0 shadow border border-300 navbar-dropdown-caret"
@@ -1606,6 +1606,7 @@
 <!--====== Service Customer ======-->
 <script src="app/services/customer/home/HomeCusService.js"></script>
 <script src="app/services/customer/ForgotPwService.js"></script>
+<script src="app/services/customer/UpdateStatusService.js"></script>
 
 <!--====== Controller Super Admin ======-->
 <script src="app/component/admin/controllers/auth/LoginControllerAD.js"></script>

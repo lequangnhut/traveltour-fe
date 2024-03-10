@@ -1,5 +1,5 @@
 travel_app.controller('MainController',
-    function ($scope, $rootScope, $location, $window, $timeout, AuthService, AgenciesServiceAG, HotelServiceAG, TransportBrandServiceAG, VisitLocationServiceAG, LocalStorageService, NotificationService) {
+    function ($scope, $rootScope, $location, $window, $timeout, AuthService, AgenciesServiceAG, HotelServiceAG, TransportBrandServiceAG, VisitLocationServiceAG, LocalStorageService, NotificationService, UpdateStatusService) {
         $scope.selectedRole = LocalStorageService.get('selectedRole') || null;
         $scope.activeNavItem = LocalStorageService.get('activeNavItem') || null;
 
@@ -205,7 +205,6 @@ travel_app.controller('MainController',
                 '/business/register-transports',
                 '/business/register-visit',
                 '/business/register-business',
-                'business/register-hotel',
                 '/business/register-business-success',
                 '/business/select-type',
                 '/business/hotel/home',
@@ -295,4 +294,33 @@ travel_app.controller('MainController',
         $scope.playErrorSound = function () {
             $scope.errorSound.play();
         };
+
+
+        /** Hàm cập nhật để vô hiệu hóa mã OTP đổi mật khẩu */
+        $scope.updatePassEvent = function () {
+            UpdateStatusService.updateOtpStatus().then(function () {
+            }).catch(function (error) {
+                console.error(error);
+            });
+        };
+        /** Hàm cập nhật để thay đổi trạng thái tour details */
+        $scope.updateTourEvent = function () {
+            UpdateStatusService.updateTourDetailsStatus().then(function () {
+            }).catch(function (error) {
+                console.error(error);
+            });
+        };
+        /** Hàm cập nhật để thay đổi trạng thái transportation schedules */
+        $scope.updateScheduleEvent = function () {
+            UpdateStatusService.updateSchedulesStatus().then(function () {
+            }).catch(function (error) {
+                console.error(error);
+            });
+        };
+
+        setInterval(function () {
+            $scope.updatePassEvent();
+            $scope.updateTourEvent();
+            $scope.updateScheduleEvent();
+        }, 1000);
     });
