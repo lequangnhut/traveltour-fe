@@ -1,0 +1,50 @@
+.container-transport {
+    min-height: 200px;
+}
+
+.info-transport {
+    position: relative;
+}
+
+.info-transport .rating {
+    height: 130px;
+}
+
+.transport-card-item .content {
+    padding: 10px 0 5px;
+}
+
+.notification-tag .tag {
+    display: inline-block;
+    position: relative;
+    margin-right: 24px;
+    padding: 0 15px;
+}
+
+.notification-tag .tag::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 16px solid transparent;
+    border-bottom: 13px solid transparent;
+    border-left: 15px solid currentcolor;
+    position: absolute;
+    top: 0;
+    right: -15px
+}
+
+.notification-tag .tag span {
+    color: white;
+    font-size: 16px;
+}
+
+.content-discount {
+    align-items: center;
+    border: 1px solid #27ae60;
+    border-radius: 4px;
+    display: flex;
+    font-size: 12px;
+    height: 35px;
+    padding: 4px 8px;
+    color: #484848;
+}
