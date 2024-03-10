@@ -72,6 +72,8 @@ travel_app.service("RoomTypeService", function($http, $q) {
      * @param roomTypeAvatarData ảnh đại diện khách sạn
      * @param listRoomTypeImg danh sách hình ảnh khách sạn
      * @param selectedCheckboxValues danh sách dịch vụ phòng
+     * @param checkinTime thời gian nhận phòng
+     * @param checkoutTime thời gian trả phòng
      * @returns {*}
      */
     this.saveRoomType = function (roomTypes, roomTypeAvatarData, listRoomTypeImg, selectedCheckboxValues, checkinTime, checkoutTime) {

@@ -1,0 +1,347 @@
+<div class="container mt-5">
+    <div class="header-control mb-3">
+        <div class="header-control-center">
+            <div class="d-flex justify-content-between align-items-center row ">
+                <div class="col mt-3">
+                    <h3 class="color-green fw-bold text-uppercase mb-3">Thông tin thanh toán</h3>
+                    <a href="#" class="text-decoration-none"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 pe-2">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Thông tin phòng của bạn</h5>
+                    <hr>
+                    <div class="row" ng-repeat="roomType in roomTypes" style="font-size: 12px">
+                        <div class="col-3 pe-0">
+                            <img class="rounded-1 w-100"
+                                 src="{{roomType.roomTypeAvatar}}"
+                                 alt=""/>
+                        </div>
+                        <div class="col-9">
+                            <div class="row">
+                                <div class="col-7" style="line-height: 18px">
+                                    <p class="fw-bold mb-0">{{ roomType.roomTypeName }}</p>
+                                    <p class="mb-0">{{ roomType.hotelsByHotelId.address }}</p>
+                                    <p class="fw-bold mb-0">{{ getRoomBedsName(roomType.roomBedsById[0].bedTypeId) }}</p>
+                                </div>
+                                <div class="col-5 px-2" style="line-height: 18px">
+                                    <p class="fw-bold float-end text-orange">{{ roomType.price * roomType.amountRoomSelected | removeCurrencySymbol }}
+                                        VND</p>
+                                    <p class="float-end">{{ roomType.amountRoomSelected }} phòng</p>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-5" style="line-height: 18px">
+                                    <p class="">Ngày nhận phòng</p>
+                                    <p class="fw-bold" style="font-size: 13px" date-time-formatter
+                                       date-time-string="filler.checkInDateFiller"></p>
+                                    <p>lúc <span class="fw-bold">{{ roomType.checkinTime | convertTime }}</span> giờ</p>
+                                </div>
+                                <div class="col-2 d-flex justify-content-center align-items-center px-2">
+                                    <p class="fw-bold">1 đêm</p>
+                                </div>
+                                <div class="col-5" style="line-height: 18px">
+                                    <p class=" float-end">Ngày trả phòng</p>
+                                    <p class="fw-bold  float-end" style="font-size: 13px" date-time-formatter
+                                       date-time-string="filler.checkOutDateFiller"></p>
+                                    <p class=" float-end">lúc <span
+                                            class="fw-bold">{{ roomType.checkoutTime | convertTime }}</span> giờ</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="mt-3">
+                    </div>
+
+                    <div>
+                        <div class="d-flex justify-content-between">
+                            <span class="font-bold text-lg">Tổng tiền khách sạn:</span>
+                            <span class="font-bold text-lg"> {{ totalPrice | removeCurrencySymbol }} VND</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Giảm giá:</span>
+                            <span> {{ 0 | removeCurrencySymbol }} VND</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between font-bold text-xl mt-3 fw-medium"
+                             style="font-size: 18px">
+                            <span>Tổng tiền phải trả:</span>
+                            <span> {{ totalPrice | removeCurrencySymbol }} VND</span>
+                        </div>
+                        <p class="float-end">Đã bao gồm thuế và phí</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Chi phí hủy phòng là bao nhiêu?</h5>
+                    <div class="" ng-if="roomType.freeCancellation === true">
+                        Hiện tại bạn có thể hủy phòng miễn phí trước 10 ngày (<span
+                            class="text-green">{{ freeCancelDate | date:'dd-MM-yyyy' }}</span>).
+                        Sau ngày này, nếu bạn không có mặt hoặc hủy phòng bạn sẽ phải trả phí hủy phòng tùy thuộc vào số
+                        ngày đến của bạn.
+                    </div>
+
+                    <hr>
+                    <div class="float-end fw-bold">Nếu hủy bạn sẽ phải thanh
+                        toán: {{ totalPriceAfterCancellation | removeCurrencySymbol }} VND
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-8 ps-2">
+            <form  name="paymentForm">
+                <div class="card mb-3">
+                    <div class="card-header bg-green d-flex align-items-center">
+                        <h5 class="card-title">Nhập thông tin của bạn để hoàn tất quá trình đặt phòng</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="customerName" class="form-label fw-medium">Họ và tên của bạn <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control"
+                                   id="customerName"
+                                   name="customerName"
+                                   ng-model="paymentHotelCustomer.customerName"
+                                   ng-class="{ 'is-invalid': paymentForm.customerName.$invalid && paymentForm.customerName.$touched,
+                                            'is-valid': paymentForm.customerName.$valid && paymentForm.customerName.$touched }"
+                                   required>
+                            <small class="text-danger"
+                                   ng-show="paymentForm.customerName.$touched && paymentForm.customerName.$error.required">
+                                Vui lòng nhập tên của bạn !
+                            </small>
+                        </div>
+                        <!-- Form Row 2 for Email -->
+                        <div class="mb-3">
+                            <label for="customerEmail" class="form-label fw-medium">Email của bạn <span
+                                    class="text-danger">*</span></label>
+                            <input type="email" class="form-control"
+                                   id="customerEmail"
+                                   name="customerEmail"
+                                   ng-model="paymentHotelCustomer.customerEmail"
+                                   ng-class="{ 'is-invalid': paymentForm.customerEmail.$invalid && paymentForm.customerEmail.$touched,
+                                            'is-valid': paymentForm.customerEmail.$valid && paymentForm.customerEmail.$touched }"
+                                   required>
+                            <small class="text-danger"
+                                   ng-show="paymentForm.customerEmail.$touched && paymentForm.customerEmail.$error.required">
+                                Vui lòng nhập email của bạn !
+                            </small>
+                        </div>
+                        <!-- Form Row 3 for Phone Number -->
+                        <div class="mb-3">
+                            <label for="customerPhone" class="form-label fw-medium">Số điện thoại của bạn <span
+                                    class="text-danger">*</span></label>
+                            <input type="tel" class="form-control"
+                                   id="customerPhone"
+                                   name="customerPhone"
+                                   ng-model="paymentHotelCustomer.customerPhone"
+                                   ng-class="{ 'is-invalid': paymentForm.customerPhone.$invalid && paymentForm.customerPhone.$touched,
+                                            'is-valid': paymentForm.customerPhone.$valid && paymentForm.customerPhone.$touched }"
+                                   required>
+                            <small class="text-danger"
+                                   ng-show="paymentForm.customerPhone.$touched && paymentForm.customerPhone.$error.required">
+                                Vui lòng nhập số điện thoại của bạn!
+                            </small>
+                        </div>
+                        <!-- Form Row 3 for Phone Number -->
+                        <div class="mb-3">
+                            <label for="customerCitizenCard" class="form-label fw-medium">Số căn cước của bạn <span
+                                    class="text-danger">*</span></label>
+                            <input type="tel" class="form-control"
+                                   id="customerCitizenCard"
+                                   name="customerCitizenCard"
+                                   ng-model="paymentHotelCustomer.customerCitizenCard"
+                                   ng-class="{ 'is-invalid': paymentForm.customerCitizenCard.$invalid && paymentForm.customerCitizenCard.$touched,
+                                            'is-valid': paymentForm.customerCitizenCard.$valid && paymentForm.customerCitizenCard.$touched }"
+                                   required>
+                            <small class="text-danger"
+                                   ng-show="paymentForm.customerCitizenCard.$touched && paymentForm.customerCitizenCard.$error.required">
+                                Vui lòng nhập số căn cước của bạn!
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header bg-green d-flex align-items-center">
+                        <h5 class="card-title">Nhập thông tin các phòng mà bạn chọn</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Payment Information Section -->
+                        <div class="card mb-3" ng-repeat="roomType in roomTypes">
+                            <div class="card-body">
+                                <div class="hotelName mb-3">
+                                    <div class="row">
+                                        <div class="col-3 pe-0">
+                                            <img class="rounded-1 w-100"
+                                                 src="{{roomType.hotelsByHotelId.hotelAvatar}}"
+                                                 alt=""/>
+                                        </div>
+                                        <div class="col-9">
+                                            <h5 class="card-title fw-bold">{{ roomType.roomTypeName }}</h5>
+                                            <p class="mb-0 text-orange">
+                                                <span class="fas fa-map-marker-alt"></span>
+                                                {{ roomType.hotelsByHotelId.province }}
+                                                + {{ roomType.hotelsByHotelId.district }}
+                                                + {{ roomType.hotelsByHotelId.address }}
+                                            </p>
+                                            <p class="mb-0"><i
+                                                    class="fa-solid fa-phone"></i> {{ roomType.hotelsByHotelId.phone | phoneNumber }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="" style="font-size: 14px">
+                                    <p class="text-green fw-medium" ng-if="roomType.breakfastIncluded == true"><i
+                                            class="fa-solid fa-check"></i>
+                                        Giá đã bao gồm phí ăn sáng</p>
+                                    <p class="text-green fw-medium" ng-if="roomType.freeCancellation == true"><i
+                                            class="fa-solid fa-check"></i>
+                                        Bạn có thể hủy phòng trước ngày {{ freeCancelDate | date:'dd-MM-yyyy' }} vậy nên
+                                        hãy cân
+                                        nhắc
+                                        với mức giá tốt hôm nay</p>
+                                    <p class="">Số lượng khách tối đa của phòng: {{ roomType.capacityAdults }} người lớn
+                                        và {{ roomType.capacityChildren }} trẻ em</p>
+                                    <p class="">Dịch vụ mà phòng đang có:
+                                        <span class="text-black" ng-repeat="roomUtitlities in roomType.roomUtilities">
+                            <span class="btn-green mx-2"
+                                  style="padding: 0 10px 0 10px; border-radius: 4px">{{ roomUtitlities.roomUtilitiesName }}</span>
+                        </span>
+
+                                    </p>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="customerOrderDetailsName{{$index}}" class="form-label fw-medium">Họ và tên
+                                                của bạn
+                                                <span
+                                                        class="text-danger">*</span></label>
+                                            <input type="text" class="form-control"
+                                                   id="customerOrderDetailsName{{$index}}"
+                                                   name="customerOrderDetailsName{{$index}}"
+                                                   ng-model="roomType.paymentHotelCustomer.customerName"
+                                                   ng-class="{ 'is-invalid': paymentForm['customerOrderDetailsName' + $index].$invalid && paymentForm['customerOrderDetailsName' + $index].$touched,
+                   'is-valid': paymentForm['customerOrderDetailsName' + $index].$valid && paymentForm['customerOrderDetailsName' + $index].$touched }"
+                                                   required>
+                                            <small class="text-danger"
+                                                   ng-show="paymentForm['customerOrderDetailsName' + $index].$touched && paymentForm['customerOrderDetailsName' + $index].$error.required">
+                                                Vui lòng nhập tên người nhận phòng!
+                                            </small>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="customerEmailOrder" class="form-label fw-medium">Email khách lưu
+                                            trú</label>
+                                        <input type="email" class="form-control"
+                                               ng-model="roomType.paymentHotelCustomer.customerEmail"
+                                               id="customerEmailOrder">
+                                        <p style="font-size: 14px">Email này để chúng tôi gửi gmail xác nhận đặt phòng
+                                            cho quý khách
+                                            <span
+                                                    class="fw-medium"> (Không bắt buộc)</span></p>
+                                        <div class="invalid-feedback">
+                                            Vui lòng nhập email của khách.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Information Section -->
+                <div class="card mb-3">
+                    <div class="card-header bg-green d-flex align-items-center">
+                        <h5 class="card-title m-0">Phương thức thanh toán</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-12">
+                            <label for="paymentMethod" class="form-label">Chọn phương thức thanh toán</label>
+                            <select id="paymentMethod"
+                                    class="form-select"
+                                    name="paymentMethod"
+                                    ng-model="paymentHotelCustomer.paymentMethod"
+                                    ng-class="{
+                                    'is-invalid': paymentForm.paymentMethod.$invalid && paymentForm.paymentMethod.$touched,
+                                    'is-valid': paymentForm.paymentMethod.$valid && paymentForm.paymentMethod.$touched }"
+                                    ng-options="paymentMethod.name as paymentMethod.description for paymentMethod in paymentMethods"
+                                    required
+                            >
+                                <option selected>Chọn loại giường ...</option>
+                            </select>
+                            <small class="text-danger"
+                                   ng-show="paymentForm.paymentMethod.$touched && paymentForm.paymentMethod.$error.required">
+                                Vui lòng chọn phương thức thanh toán!
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delivery Time Section -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Yêu cầu đặc biệt</h5>
+                        <p class="mb-4">Các yêu cầu đặc biệt không đảm bảo sẽ được đáp ứng – tuy nhiên, chỗ nghỉ sẽ cố
+                            gắng
+                            hết sức để
+                            thực hiện. Bạn luôn có thể gửi yêu cầu đặc biệt sau khi hoàn tất đặt phòng của mình! </p>
+                        <label for="specialRequest" class="form-label fw-medium">Yêu cầu đặc biệt của bạn</label>
+                        <textarea class="form-control" id="specialRequest" ng-model="paymentHotelCustomer.orderNote" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <!-- Delivery Time Section -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Thời gian đến của bạn</h5>
+                        <ul class="ps-0">
+                            <li class="d-flex align-items-start mb-2">
+                                <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                <span>Phòng của bạn sẽ sẵn sàng để nhận trong khoảng từ 12:00 đến 23:30 vui lòng xem thông tin phòng của bạn để biết chi tiết hơn thời gian nhận phòng</span>
+                            </li>
+                            <li class="d-flex align-items-start mb-2">
+                                <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                <span>Lễ tân 24 giờ - Luôn có trực giúp mọi khi bạn cần!</span>
+                            </li>
+                            <li class="d-flex align-items-start">
+                                <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                <span>Bạn có thể hủy phòng trước 10 ngày tính từ ngày nhận phòng {{ freeCancelDate | date:'dd-MM-yyyy' }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="div mt-3">
+                    <!-- Submit Button -->
+                    <div class="mb-3 w-100 d-flex justify-content-end">
+                        <button type="submit"
+                                ng-disabled="paymentForm.$invalid"
+                                ng-click="submitPaymentHotel(paymentHotelCustomer.paymentMethod)"
+                                class="btn btn-green">Hoàn tất đặt
+                            phòng
+                        </button>
+                    </div>
+                    <div class="mb-3 w-100 d-flex justify-content-end">
+                        <p class="">Vui lòng kiểm tra lại thông tin phòng trước khi nhấn nút hoàn tất đặt phòng</p>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+

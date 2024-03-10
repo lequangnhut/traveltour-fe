@@ -1,4 +1,4 @@
-travel_app.controller("HotelInformationAddController", function ($scope, $http, $location, HotelServiceAG, PlaceUtilitiesService, HotelTypeService, AgenciesServiceAG) {
+travel_app.controller("HotelInformationAddController", function ($scope, $http, $location,  $window, HotelServiceAG, PlaceUtilitiesService, HotelTypeService, AgenciesServiceAG) {
     $scope.company = {
         hotelName: null,
         phoneNumber: null,
@@ -24,6 +24,7 @@ travel_app.controller("HotelInformationAddController", function ($scope, $http, 
     $scope.provinces = [];
     $scope.districts = [];
     $scope.wards = [];
+    $scope.checkboxCount = 0;
 
     $scope.selectHotelType = function () {
     };
@@ -40,8 +41,6 @@ travel_app.controller("HotelInformationAddController", function ($scope, $http, 
             $scope.hotelTypes = response.data.data;
         }
     });
-
-
 
     /**
      * API lấy dữ liệu địa chỉ trong file data.json
@@ -102,8 +101,11 @@ travel_app.controller("HotelInformationAddController", function ($scope, $http, 
         }
     };
 
+    /**
+     * Phương thức kiểm tra xem đã chọn vị trí trên bản đồ chưa
+     * @returns {boolean}
+     */
     $scope.isLocationSelected = function() {
-        console.log(!($scope.longitude && $scope.latitude));
         return !($scope.longitude && $scope.latitude);
     };
 
@@ -129,8 +131,6 @@ travel_app.controller("HotelInformationAddController", function ($scope, $http, 
             $scope.showErrorListPlaceMessage = "Không tìm thấy dữ liệu vui lòng thử lại"
         }
     });
-
-    $scope.checkboxCount = 0;
 
     /**
      * Kiểm tra nếu như chưa lựa chọn dịch vụ thì tắt nút di
@@ -169,12 +169,15 @@ travel_app.controller("HotelInformationAddController", function ($scope, $http, 
                 .addTo($scope.map);
         });
     });
+
+    /**
+     * Cập nhật số lượng checkbox
+     */
     $scope.updateCheckboxCount = function () {
         $scope.checkboxCount = $scope.checkboxes.filter(function (checkbox) {
             return checkbox.checked;
         }).length;
     };
-
 
     let user = $scope.user;
     $scope.createHotel = function () {
@@ -210,5 +213,4 @@ travel_app.controller("HotelInformationAddController", function ($scope, $http, 
             });
         }
     };
-
 })

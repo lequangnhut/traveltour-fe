@@ -15,4 +15,26 @@ travel_app.directive('formatTime', function ($filter) {
             });
         }
     };
+})
+
+travel_app.directive('dateTimeFormatter', function() {
+    return {
+        restrict: 'A',
+        scope: {
+            dateTimeString: '='
+        },
+        link: function(scope, element, attrs) {
+            scope.$watch('dateTimeString', function(newValue, oldValue) {
+                if (newValue) {
+                    var dateTime = new Date(newValue);
+                    var day = dateTime.getDate();
+                    var month = dateTime.getMonth() + 1;
+                    var year = dateTime.getFullYear();
+
+                    var formattedDate = day + "/" + month + "/" + year;
+                    element.text(formattedDate);
+                }
+            });
+        }
+    };
 });

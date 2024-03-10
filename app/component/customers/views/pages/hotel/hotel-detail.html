@@ -2,7 +2,7 @@
 <section class="blog-details-section pt-100 pb-70">
     <div class="container">
         <div class="row">
-            <div class="col-xl-8">
+            <div class="col-xl-9">
                 <!--=== Blog Details Wrapper ===-->
                 <div class="blog-details-wrapper pr-lg-50">
                     <div class="blog-post mb-60 wow fadeInUp">
@@ -16,34 +16,182 @@
                         </div>
                         <div class="main-post">
                             <div class="entry-content">
-                                <h3 class="title">50 Resources And Tools To Turbocharge Amazon
-                                    Product Scraper Copywriting Skills</h3>
-                                <p>Sit amet consectetur adipiscing elit. Phasellus viverra justo, orci, interdum purus
-                                    purus vitae vulputate nec
-                                    Vel nunc vivamus felis sit est, mus aliquam massa volutpat. Consectetur scelerisque
-                                    tincidunt vulputate quis.
-                                    Metus eu, nisi nibh et adipiscing natoque tincidunt. Sed morbi arcu integer
-                                    vestibulum scelerisque tincidunt
-                                    mauris. Lectus molestie vestibulum ac, nec. Nisl rutrum cras dictum lectus molestie
-                                    leoenim sapien aenean
-                                    lectus. Platea enim nunc feugiat mauris, ut in volutpat nunc. Nulla sit rhoncus
-                                    consequat malesuada magna diam tempor mauris proin vulputate tortorpurus nunc
-                                    elementum quam pharetra mauris Habitant massa turpis nunc eu. Aliquet at velit etiam
-                                    turpis a arcu consectetur sed.</p>
-                                <h4>Build Camping Easily</h4>
-                                <p>Metus eu, nisi nibh et adipiscing natoque tincidunt. Sed morbi arcu integer
-                                    vestibulum scelerisque tincidunt
-                                    mauris. Lectus molestie vestibulum ac, nec. Nisl rutrum cras dictum lectus molestie
-                                    leoenim sapien aenean
-                                    lectus. Platea enim nunc feugiat mauris, ut in volutpat nunc. Nulla sit rhoncus
-                                    consequat</p>
-                                <blockquote class="block-quote">
-                                    <img src="/assets/customers/images/blog/quote.png" alt="quote image">
-                                    <h3>Handling Mounting And Unmounting Given
-                                        Navigation Routes In React Native</h3>
-                                    <span>Johnny M. Martin</span>
+                                <h3 class="title">{{ roomTypes[0].hotelsByHotelId.hotelName }}</h3>
+                                <p>{{ roomTypes[0].hotelsByHotelId.hotelDescription }}</p>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="sidebar-widget category-widget mb-30 wow fadeInUp">
+                                            <div class="h5">Các tiện nghi của khách sạn</div>
+                                            <div ng-repeat="roomUtilitiesHotels in roomTypes[0].hotelsByHotelId.placeUtilities">
+                                                <ul class="category-nav">
+                                                    <li><a href="#">{{ roomUtilitiesHotels.placeUtilitiesName }}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 w-100">
+                                    <div class="row single-event-item" style="font-size: 13px">
+                                        <div class="col-md-4">
+                                            <label for="checkInDateFiller" class="form-label">Ngày nhận phòng</label>
+                                            <input type="date" class="form-control" id="checkInDateFiller"
+                                                   ng-model="filler.checkInDateFiller" ng-change="validateDates()">
+                                            <span class="text-danger" ng-if="errorCheckInDateFiller">
+                                {{ errorCheckInDateFiller }}
+                            </span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="checkOutDateFiller" class="form-label">Ngày trả phòng</label>
+                                            <input type="date" class="form-control" id="checkOutDateFiller"
+                                                   ng-model="filler.checkOutDateFiller" ng-change="validateDates()">
+                                            <span class="text-danger" ng-if="errorCheckOutDateFiller">
+                                {{ errorCheckOutDateFiller }}
+                            </span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="capacityAdultsFilter" class="form-label">Số người lớn</label>
+                                            <input type="number" class="form-control" id="capacityAdultsFilter"
+                                                   ng-model="filler.capacityAdultsFilter">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="capacityChildrenFilter" class="form-label">Số trẻ em</label>
+                                            <input type="number" class="form-control" id="capacityChildrenFilter"
+                                                   ng-model="filler.capacityChildrenFilter">
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-3">
+                                            <button type="button" class="btn btn-green"
+                                                    ng-click="searchRoomTypes()"><i
+                                                    class="fa-solid fa-magnifying-glass"></i> Tìm khách sạn
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <blockquote>
+                                    <table class="table" style="font-size: 12px">
+                                        <thead>
+                                        <tr class="btn-green">
+                                            <td>Loại chỗ nghỉ</td>
+                                            <td>Số lượng khách</td>
+                                            <td>Giá hôm nay</td>
+                                            <td>Các lựa chọn</td>
+                                            <td>Chọn phòng</td>
+                                            <td></td>
+                                        </tr>
+                                        </thead>
+                                        <tbody ng-repeat="roomType in roomTypes">
+                                        <tr>
+                                            <td>
+                                                <div class="h5">{{ roomType.roomTypeName }}</div>
+                                                <div>Loại
+                                                    giường: {{ getRoomBedsName(roomType.roomBedsById[0].bedTypeId) }}
+                                                </div>
+                                                <div ng-if="roomType.amountRoom <= 10 && roomType.amountRoom > 0"
+                                                     class="text-danger fw-medium">
+                                                    <i class="fa-solid fa-exclamation"></i> Chỉ
+                                                    còn {{ roomType.amountRoom }} phòng với giá này trên trang của chúng
+                                                    tôi
+                                                </div>
+                                                <div ng-if="roomType.amountRoom === 0"
+                                                     class="text-danger fw-medium">
+                                                    <i class="fa-solid fa-exclamation"></i> Phòng này đã hết, Nhưng bạn
+                                                    có
+                                                    thể chọn phòng khác của khách sạn
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>{{ filler.capacityAdultsFilter }} người lớn</div>
+                                                <div>{{ filler.capacityChildrenFilter }} trẻ em</div>
+                                            </td>
+                                            <td>
+                                                <div class="h6"
+                                                     style="width: 150px">{{ roomType.price | removeCurrencySymbol }}
+                                                    VND
+                                                </div>
+                                                <div>Đã bao gồm thuế và phí</div>
+                                            </td>
+                                            <td>
+                                                <div ng-if="roomType.breakfastIncluded" class="text-green">
+                                                    <i class="fa-solid fa-check"></i> Miễn phí ăn sáng
+                                                </div>
+                                                <div ng-if="roomType.freeCancellation" class="text-green">
+                                                    <i class="fa-solid fa-check"></i> Miễn phí hủy phòng
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <select class="form-select" aria-label="selectAmountRoom"
+                                                        style="font-size: 13px; width: 60px"
+                                                        ng-model="roomType.amountRoomSelected"
+                                                        ng-change="selectedRoomType(roomType.amountRoomSelected, roomType)"
+                                                        ng-options="room as room + '' + ' (' + (room * roomType.price | removeCurrencySymbol) + ' VND)' for room in generateRoomNumbers(roomType.amountRoom)">
+                                                    <option value="">0</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </blockquote>
                             </div>
+                        </div>
+                        <div class="cart mt-5" ng-if="roomTypeSelected.length > 0 ">
+                            <div class="h5">Khách sạn bạn đã chọn</div>
+                            <table class="table" style="font-size: 12px">
+                                <thead>
+                                <tr class="btn-green">
+                                    <td>Loại chỗ nghỉ</td>
+                                    <td>Số lượng</td>
+                                    <td>Đơn giá</td>
+                                    <td>Dịch vụ của bạn</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="roomType in roomTypeSelected">
+                                    <th class="d-flex">
+                                        <img src="{{roomType.roomTypeAvatar}}" class="img-fluid" width="100"
+                                             onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
+                                        <div style="margin-left: 10px">
+                                            <div class="h5">{{ roomType.roomTypeName }}</div>
+                                            <p class="fw-light">{{ getRoomBedsName(roomType.roomBedsById[0].bedTypeId) }}</p>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div>
+                                            {{ roomType.amountRoomSelected }} phòng
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="h6">{{ roomType.amountRoomSelected * roomType.price | removeCurrencySymbol }}
+                                            VND
+                                        </div>
+                                        <span>Đã bao gồm thuế và phí</span>
+                                    </td>
+                                    <td>
+                                        <div ng-if="roomType.breakfastIncluded" class="text-green">
+                                            <i class="fa-solid fa-check"></i> Miễn phí ăn sáng
+                                        </div>
+                                        <div ng-if="roomType.freeCancellation" class="text-green">
+                                            <i class="fa-solid fa-check"></i> Miễn phí hủy phòng
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1" class="text-end">
+                                        <div class="">Miễn phí hủy phòng trước ngày</div>
+                                    </td>
+                                    <td colspan="2" class="text-end">
+                                        <div class="h6">Tổng
+                                            tiền: {{ totalAmountRoomSelected() | removeCurrencySymbol }} VND
+                                        </div>
+                                        <div class="h6">{{ roomTypeSelected[0].hotelsByHotelId.freeCancellationDate | date: 'dd/MM/yyyy' }}</div>
+                                    <td colspan="1" class="text-end">
+                                        <a class="btn btn-green" href="/hotel/hotel-details/payment" ng-click="paymentHotelNow()">Thanh toán ngay</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                         <div class="entry-footer wow fadeInUp">
                             <div class="tag-links">
@@ -200,7 +348,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4">
+            <div class="col-xl-3">
                 <div class="sidebar-widget-area">
                     <!--=== Category Widget ===-->
                     <div class="sidebar-widget category-widget mb-30 wow fadeInUp">
@@ -215,32 +363,24 @@
                     </div>
                     <!--=== Recent Post Widget ===-->
                     <div class="sidebar-widget recent-post-widget mb-40 wow fadeInUp">
-                        <h4 class="widget-title">Recent News</h4>
+                        <h4 class="widget-title">Khách sạn vừa xem</h4>
                         <ul class="recent-post-list">
-                            <li class="post-thumbnail-content">
-                                <img src="/assets/customers/images/blog/post-thumb-1.jpg" alt="post thumb">
+                            <li class="post-thumbnail-content" ng-repeat="roomType in roomTypeViewed"
+                                ng-if="roomTypeViewed.length >= 0">
+                                <img src="{{roomType.roomTypeId.roomTypeAvatar}}" class="img-fluid object-fit-cover"
+                                     style="max-width: 80px; max-height: 80px"
+                                     onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
                                 <div class="post-title-date">
-                                    <h5><a href="">Quality Assurance
-                                        Requirements Web
-                                        Dev Risk Manage</a></h5>
-                                    <span class="posted-on"><span class="fas fa-calendar-alt"></span><a href="#">November 23,2022</a></span>
+                                    <p>{{ getHotelTypeName(roomType.roomTypeId.hotelsByHotelId.hotelTypeId) }}</p>
+                                    <h5><a href="">{{ roomType.roomTypeId.hotelsByHotelId.hotelName }}</a></h5>
+                                    <p>{{ roomType.roomTypeId.roomTypeName }}</p>
+                                    <span class="posted-on"><span class="fas fa-calendar-alt"></span><a
+                                            href="#">{{ roomType.lastUpdated | timeAgo }}</a></span>
                                 </div>
                             </li>
-                            <li class="post-thumbnail-content">
-                                <img src="/assets/customers/images/blog/post-thumb-2.jpg" alt="post thumb">
-                                <div class="post-title-date">
-                                    <h5><a href="">Deep Div Wonder
-                                        World Of Displaem
-                                        Filtering</a></h5>
-                                    <span class="posted-on"><span class="fas fa-calendar-alt"></span><a href="#">November 23,2022</a></span>
-                                </div>
-                            </li>
-                            <li class="post-thumbnail-content">
-                                <img src="/assets/customers/images/blog/post-thumb-3.jpg" alt="post thumb">
-                                <div class="post-title-date">
-                                    <h5><a href="">Handling Mountin mountin Naviation
-                                        Routes In Native</a></h5>
-                                    <span class="posted-on"><span class="fas fa-calendar-alt"></span><a href="#">November 23,2022</a></span>
+                            <li class="post-thumbnail-content" ng-if="roomTypeViewed.length === 0">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <p>Không có khách sạn nào được xem gần đây</p>
                                 </div>
                             </li>
                         </ul>
