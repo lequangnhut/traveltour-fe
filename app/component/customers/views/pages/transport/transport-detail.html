@@ -40,31 +40,34 @@
                                      style="padding-left: 10px ;border-left: 1px solid rgba(29, 35, 31, 0.1)">
                                     <div style="font-size: 14px; line-height: 20px">
                                         <div class="from-to d-flex">
-                                            <svg class="TicketPC__LocationRouteSVG-sc-1mxgwjh-4 eKNjJr"
-                                                 xmlns="http://www.w3.org/2000/svg" width="14" height="74"
-                                                 viewBox="0 0 14 74">
-                                                <path fill="none" stroke="#787878" stroke-linecap="round"
-                                                      stroke-width="2" stroke-dasharray="0 7" d="M7 13.5v46"></path>
-                                                <g fill="none" stroke="#484848" stroke-width="3">
-                                                    <circle cx="7" cy="7" r="7" stroke="none"></circle>
-                                                    <circle cx="7" cy="7" r="5.5"></circle>
-                                                </g>
-                                                <path d="M7 58a5.953 5.953 0 0 0-6 5.891 5.657 5.657 0 0 0 .525 2.4 37.124 37.124 0 0 0 5.222 7.591.338.338 0 0 0 .506 0 37.142 37.142 0 0 0 5.222-7.582A5.655 5.655 0 0 0 13 63.9 5.953 5.953 0 0 0 7 58zm0 8.95a3.092 3.092 0 0 1-3.117-3.06 3.117 3.117 0 0 1 6.234 0A3.092 3.092 0 0 1 7 66.95z"
-                                                      fill="#787878"></path>
-                                            </svg>
-                                            <div class="from-to-content">
-                                                <div class=" from">
-                                                    <div class="hour fw-bold">23:15</div>
-                                                    <div class="place">• Vp. Quận 1</div>
+                                            <div class="">
+                                                <svg class="TicketPC__LocationRouteSVG-sc-1mxgwjh-4 eKNjJr"
+                                                     xmlns="http://www.w3.org/2000/svg" width="14" height="74"
+                                                     viewBox="0 0 14 74">
+                                                    <path fill="none" stroke="#787878" stroke-linecap="round"
+                                                          stroke-width="2" stroke-dasharray="0 7" d="M7 13.5v46"></path>
+                                                    <g fill="none" stroke="#484848" stroke-width="3">
+                                                        <circle cx="7" cy="7" r="7" stroke="none"></circle>
+                                                        <circle cx="7" cy="7" r="5.5"></circle>
+                                                    </g>
+                                                    <path d="M7 58a5.953 5.953 0 0 0-6 5.891 5.657 5.657 0 0 0 .525 2.4 37.124 37.124 0 0 0 5.222 7.591.338.338 0 0 0 .506 0 37.142 37.142 0 0 0 5.222-7.582A5.655 5.655 0 0 0 13 63.9 5.953 5.953 0 0 0 7 58zm0 8.95a3.092 3.092 0 0 1-3.117-3.06 3.117 3.117 0 0 1 6.234 0A3.092 3.092 0 0 1 7 66.95z"
+                                                          fill="#787878"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="from-to-content" style="padding: 0 0 0 8px">
+                                                <div class="from d-flex " style="padding: 0 0 8px 0 ">
+                                                    <div class="hour mx-1 fw-bold fs-5">19:00</div>
+                                                    <div class="place">• Hà Nội</div>
                                                 </div>
-                                                <div class="duration">7h</div>
-                                                <div class=" to">
-                                                    <div class="hour">06:15</div>
-                                                    <div class="place">• Vp. Nha Trang</div>
+                                                <div class="duration">1h30m</div>
+                                                <div class="content to d-flex">
+                                                    <div class="hour mx-1 fw-bold fs-5">20:30</div>
+                                                    <div class="place">• Hải Phòng</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <b class="text-uppercase text-green fw-medium mt-5">Không phải thanh toán trước</b>
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -85,15 +88,38 @@
                                     </div>
                                     <div class="price d-flex justify-content-end bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
                                         <div class="box">
+                                            <p>Còn lại 10 chỗ trống</p>
                                             <a href="/drive-move/drive-transport-detail/{{ brand.id }}"
-                                               class="btn btn-green w-100 mt-3">
+                                               class="btn btn-green w-100">
                                                 Chọn nhà xe
                                             </a>
+                                            <div class="d-flex align-items-center justify-content-end mt-3 text-green">
+                                                <span class="mx-2" ng-click="toggleTransportInfoNav()">Xem chi tiết</span> <i
+                                                    class="fa-solid fa-angle-down"></i></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="mb-3" ng-show="showTransportInfoNav">
+                        <div class="transport-info-nav">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" ng-click="changeTab('pending')">Thông tin xe</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" ng-click="changeTab('cancelled')">Gì gì đó</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" ng-show="currentTab === 'pending'">
+                                    hihi
+                                </div>
+                                <div class="tab-pane fade" ng-show="currentTab === 'cancelled'">
+                                    haha
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>
