@@ -25,17 +25,6 @@ travel_app.service('AuthService', function ($http, $window) {
     };
 
     /**
-     * @message Login with Google
-     */
-    this.loginWithGoogle = function () {
-        return $http({
-            method: 'GET',
-            url: 'http://localhost:8080/oauth2/authorization/google',
-            withCredentials: true
-        });
-    };
-
-    /**
      * @message API check token login with JWT
      */
     this.checkToken = function (token) {
@@ -49,6 +38,16 @@ travel_app.service('AuthService', function ($http, $window) {
             headers: {
                 'Authorization': jwtToken
             }
+        });
+    };
+
+    /**
+     * @message API find user login google
+     */
+    this.userLoginGoogle = function () {
+        return $http({
+            method: 'GET',
+            url: API_AUTH + 'login-google-get-user'
         });
     };
 

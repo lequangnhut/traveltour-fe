@@ -1,7 +1,5 @@
-travel_app.controller('HotelCustomerController', function ($scope, $location, $window, $anchorScroll, HotelServiceCT, RoomTypeService) {
+travel_app.controller('HotelCustomerController', function ($scope, $location, $window, HotelServiceCT, RoomTypeService) {
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
-
-    $anchorScroll();
 
     $scope.showMoreHotelType = false;
     $scope.limitHotelType = 5;
@@ -850,7 +848,7 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         `;
     }
 
-    $(document).on('click', '#closeModelMap', function() {
+    $(document).on('click', '#closeModelMap', function () {
         $('#mapModal').modal('hide');
     });
 

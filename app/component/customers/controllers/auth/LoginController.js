@@ -66,8 +66,6 @@ travel_app.controller('LoginController', function ($scope, $location, $window, $
     };
 
     $scope.loginGoogle = function () {
-        AuthService.loginWithGoogle().then(function successCallback() {
-            console.log('cc')
-        });
+        $window.location.href = BASE_API + 'auth/login/google';
     }
 });

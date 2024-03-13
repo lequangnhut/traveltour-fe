@@ -1,4 +1,4 @@
-travel_app.controller('HomeCusController', function ($scope, $location, HomeCusService) {
+travel_app.controller('HomeCusController', function ($scope, $window, $location, HomeCusService, AuthService, NotificationService) {
     $scope.currentPage = 0;
     $scope.pageSize = 9;
 
@@ -20,6 +20,23 @@ travel_app.controller('HomeCusController', function ($scope, $location, HomeCusS
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
+
+        AuthService.userLoginGoogle().then(function (response) {
+            if (response.status === 200) {
+                let user = response.data.data;
+                let roles = response.data.data.roles;
+
+                for (let i = 0; i < roles.length; i++) {
+                    if (roles[i].nameRole !== 'ROLE_CUSTOMER') {
+                        toastAlert('warning', 'Không đủ quyền truy cập !');
+                    } else {
+                        AuthService.setAuthData('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuaHV0LnRoYW50aGllbjE3QGdtYWlsLmNvbSIsInJvbGVzIjpbIlJPTEVfQ1VTVE9NRVIiXSwiaWF0IjoxNzEwMjg2NDMzLCJleHAiOjE3MTAzMjI0MzN9.WlVSDbXUTzhszu_K8KOzsAMikSb7tzMCSg3Qu0JvXpI', user);
+                        $window.location.href = '/home';
+                        NotificationService.setNotification('success', 'Đăng nhập thành công !');
+                    }
+                }
+            }
+        }, errorCallback);
     }
 
     /**
