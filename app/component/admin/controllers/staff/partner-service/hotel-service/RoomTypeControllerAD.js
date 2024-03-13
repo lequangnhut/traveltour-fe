@@ -28,7 +28,7 @@ travel_app.controller('RoomTypeControllerAD',
         $scope.currentPage = 0;
         $scope.pageSize = 5;
 
-        $scope.onQuantityChange = function (rt) {
+        $scope.onQuantityChange = (rt) => {
             rt.quantity = parseInt(rt.quantity, 10) || 0;
 
             const availableRooms = parseInt(rt.availableRooms, 10) || 0;
@@ -40,7 +40,7 @@ travel_app.controller('RoomTypeControllerAD',
         };
 
 
-        $scope.onQuantityBlur = function (rt) {
+        $scope.onQuantityBlur = (rt) => {
             if (rt.quantity === null || rt.quantity === '' || rt.quantity < 1) {
                 rt.quantity = 1;
             }
@@ -86,10 +86,10 @@ travel_app.controller('RoomTypeControllerAD',
 
         $scope.getDisplayRange = () => Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
 
-        $scope.roomTypeData = async (response) => {
-            let roomTypeList = response.data.data.content;
-            $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-            $scope.totalElements = response.data.data.totalElements;
+        const roomTypeData = async (response) => {
+            let roomTypeList = response.data.data !== null ? response.data.data.content : [];
+            $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
+            $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
 
             const roomTypePromises = roomTypeList.map(async (rt) => {
 
@@ -124,7 +124,7 @@ travel_app.controller('RoomTypeControllerAD',
                     return;
                 }
 
-                $scope.roomTypeData(RoomTypeByHotelByIdResponse);
+                roomTypeData(RoomTypeByHotelByIdResponse);
 
                 //fill modal tour info and tour trips
                 let tourDetail = tourDetailResponse.data.data;
@@ -140,9 +140,9 @@ travel_app.controller('RoomTypeControllerAD',
                     numberOfGuests: tourDetail.numberOfGuests
                 };
 
-                let tourTripsList = tourTripsResponse.data.data;
+                let tourTripsList = tourTripsResponse.data.data.tourTrips;
 
-                tourTripsList.forEach(function (tourTrips) {
+                tourTripsList.forEach((tourTrips) => {
                     tourTrips.activityInDay = $sce.trustAsHtml(tourTrips.activityInDay);
                 });
 
@@ -187,7 +187,7 @@ travel_app.controller('RoomTypeControllerAD',
             }
         };
 
-        $scope.customSort = function (field, dir) {
+        $scope.customSort = (field, dir) => {
             const sortDirection = dir === 'asc' ? 1 : -1;
 
             $scope.roomTypeList.sort((a, b) => {
@@ -240,7 +240,7 @@ travel_app.controller('RoomTypeControllerAD',
                         return;
                     }
 
-                    $scope.roomTypeData(response)
+                    roomTypeData(response);
                 } catch (error) {
                     errorCallback()
                 }
@@ -248,7 +248,7 @@ travel_app.controller('RoomTypeControllerAD',
             }, 500);
         };
 
-        $scope.onCheckChanged = function (room) {
+        $scope.onCheckChanged = (room) => {
             if (room.isChecked) {
                 room.quantity = 1;
             } else {
@@ -257,10 +257,10 @@ travel_app.controller('RoomTypeControllerAD',
         };
 
 
-        $scope.confirmRoomSelection = function () {
-            let selectedRooms = $scope.roomTypeList.filter(function (room) {
+        $scope.confirmRoomSelection = () => {
+            let selectedRooms = $scope.roomTypeList.filter((room) => {
                 return room.isChecked; // Lọc ra những phòng đã được chọn
-            }).map(function (room) {
+            }).map((room) => {
                 return {
                     ...room,
                     quantity: room.quantity
@@ -276,7 +276,7 @@ travel_app.controller('RoomTypeControllerAD',
             $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/hotel-list/${hotelId}/room-type-list/hotel-payment`);
         };
 
-        function errorCallback() {
+        const errorCallback = () => {
             $location.path('/admin/internal-server-error')
         }
 

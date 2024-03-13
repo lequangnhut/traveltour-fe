@@ -3,6 +3,7 @@ travel_app.controller('HotelServiceControllerAD',
               TourDetailsServiceAD, ToursServiceAD, TourTripsServiceAD, HotelTypeServiceServiceAD,
               RoomTypeServiceServiceAD) {
         $scope.isLoading = true;
+        let currentDate = new Date();
 
         const tourDetailId = $routeParams.tourDetailId;
         const hotelId = $routeParams.hotelId;
@@ -100,7 +101,7 @@ travel_app.controller('HotelServiceControllerAD',
             );
         };
 
-        $scope.hotelServiceData = (response) => {
+        const hotelServiceData = (response) => {
             $timeout(() => {
                 $scope.hotelServiceList = response.data.data !== null ? response.data.data.content : [];
                 $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
@@ -123,7 +124,7 @@ travel_app.controller('HotelServiceControllerAD',
                     return;
                 }
 
-                $scope.hotelServiceData(hotelResponse)
+                hotelServiceData(hotelResponse)
 
                 $scope.provinces = provincesResponse.data;
 
@@ -142,7 +143,7 @@ travel_app.controller('HotelServiceControllerAD',
 
                 let tourTripsList = tourTripsResponse.data.data.tourTrips;
 
-                tourTripsList.forEach(function (tourTrips) {
+                tourTripsList.forEach((tourTrips) => {
                     tourTrips.activityInDay = $sce.trustAsHtml(tourTrips.activityInDay);
                 });
 
@@ -193,7 +194,7 @@ travel_app.controller('HotelServiceControllerAD',
             }
         };
 
-        $scope.customSort = function (field, dir) {
+        $scope.customSort = (field, dir) => {
             const sortDirection = dir === 'asc' ? 1 : -1;
 
             $scope.hotelServiceList.sort((a, b) => {
@@ -227,8 +228,8 @@ travel_app.controller('HotelServiceControllerAD',
         };
 
         $scope.searchHotelServiceByKey = async () => {
-            $scope.setPage(Math.max(0, $scope.currentPage - 1));
             if (searchTimeout) $timeout.cancel(searchTimeout);
+            $scope.setPage(0);
 
             searchTimeout = $timeout(async () => {
                 try {
@@ -238,7 +239,7 @@ travel_app.controller('HotelServiceControllerAD',
                         toastAlert('warning', 'Không tìm thấy !');
                     }
 
-                    $scope.hotelServiceData(response)
+                    hotelServiceData(response);
 
                     await $timeout(() => {
                     }, 0);
@@ -250,16 +251,17 @@ travel_app.controller('HotelServiceControllerAD',
 
         $scope.searchHotel = async () => {
             if (searchTimeout) $timeout.cancel(searchTimeout);
-
+            $scope.setPage(0);
             try {
 
-                if (checkAndFocusInput(!$scope.searchHotels.departureDate && !$scope.searchHotels.arrivalDate, 'departureDateInput', 'Vui lòng chọn ngày đi và ngày về !') ||
-                    checkAndFocusInput(!$scope.searchHotels.departureDate, 'departureDateInput', 'Vui lòng chọn ngày đi !') ||
-                    checkAndFocusInput(!$scope.searchHotels.arrivalDate, 'arrivalDateInput', 'Vui lòng chọn ngày về !') ||
-                    checkAndFocusInput(checkBookingDates($scope.searchHotels.departureDate, $scope.searchHotels.arrivalDate), 'arrivalDateInput', 'Ngày đi phải trước ngày về! !') ||
-                    checkAndFocusInput(!$scope.searchHotels.numAdults && $scope.searchHotels.numAdults <= 0, 'numAdultsInput', 'Vui lòng nhập số lượng người lớn và phải lớn hơn 0 !') ||
+                if (checkAndFocusInput(!$scope.searchHotels.departureDate && !$scope.searchHotels.arrivalDate, 'departureDateInput', 'Vui lòng chọn ngày đi và ngày về!') ||
+                    checkAndFocusInput(!$scope.searchHotels.departureDate, 'departureDateInput', 'Vui lòng chọn ngày đi!') ||
+                    checkAndFocusInput(!$scope.searchHotels.arrivalDate, 'arrivalDateInput', 'Vui lòng chọn ngày về!') ||
+                    checkAndFocusInput($scope.searchHotels.departureDate < currentDate || $scope.searchHotels.arrivalDate < currentDate, 'departureDateInput', 'Ngày đi và ngày về phải lớn hơn ngày hiện tại!') ||
+                    checkAndFocusInput(checkBookingDates($scope.searchHotels.departureDate, $scope.searchHotels.arrivalDate), 'arrivalDateInput', 'Ngày đi phải trước ngày về!') ||
+                    checkAndFocusInput(!$scope.searchHotels.numAdults || $scope.searchHotels.numAdults <= 0, 'numAdultsInput', 'Vui lòng nhập số lượng người lớn và phải lớn hơn 0!') ||
                     checkAndFocusInput($scope.searchHotels.numChildren < 0, 'numChildrenInput', 'Số lượng trẻ em không thể là số âm!') ||
-                    checkAndFocusInput(!$scope.searchHotels.numRooms && $scope.searchHotels.numRooms <= 0, 'numRoomsInput', 'Vui lòng nhập số lượng phòng và phải lớn hơn 0 !')) {
+                    checkAndFocusInput(!$scope.searchHotels.numRooms || $scope.searchHotels.numRooms <= 0, 'numRoomsInput', 'Vui lòng nhập số lượng phòng và phải lớn hơn 0!')) {
                     return;
                 }
 
@@ -269,7 +271,7 @@ travel_app.controller('HotelServiceControllerAD',
                     toastAlert('warning', 'Không tìm thấy !');
                 }
 
-                $scope.hotelServiceData(response)
+                hotelServiceData(response);
 
                 await $timeout(() => {
                 }, 0);
@@ -302,13 +304,14 @@ travel_app.controller('HotelServiceControllerAD',
 
         $scope.navigateToRoomTypeList = (tourDetailId, hotelServiceId, hotelName, address) => {
 
-            if (checkAndFocusInput(!$scope.searchHotels.departureDate && !$scope.searchHotels.arrivalDate, 'departureDateInput', 'Vui lòng chọn ngày đi và ngày về !') ||
-                checkAndFocusInput(!$scope.searchHotels.departureDate, 'departureDateInput', 'Vui lòng chọn ngày đi !') ||
-                checkAndFocusInput(!$scope.searchHotels.arrivalDate, 'arrivalDateInput', 'Vui lòng chọn ngày về !') ||
-                checkAndFocusInput(checkBookingDates($scope.searchHotels.departureDate, $scope.searchHotels.arrivalDate), 'arrivalDateInput', 'Ngày đi phải trước ngày về! !') ||
-                checkAndFocusInput(!$scope.searchHotels.numAdults && $scope.searchHotels.numAdults <= 0, 'numAdultsInput', 'Vui lòng nhập số lượng người lớn và phải lớn hơn 0 !') ||
+            if (checkAndFocusInput(!$scope.searchHotels.departureDate && !$scope.searchHotels.arrivalDate, 'departureDateInput', 'Vui lòng chọn ngày đi và ngày về!') ||
+                checkAndFocusInput(!$scope.searchHotels.departureDate, 'departureDateInput', 'Vui lòng chọn ngày đi!') ||
+                checkAndFocusInput(!$scope.searchHotels.arrivalDate, 'arrivalDateInput', 'Vui lòng chọn ngày về!') ||
+                checkAndFocusInput($scope.searchHotels.departureDate < currentDate || $scope.searchHotels.arrivalDate < currentDate, 'departureDateInput', 'Ngày đi và ngày về phải lớn hơn ngày hiện tại!') ||
+                checkAndFocusInput(checkBookingDates($scope.searchHotels.departureDate, $scope.searchHotels.arrivalDate), 'arrivalDateInput', 'Ngày đi phải trước ngày về!') ||
+                checkAndFocusInput(!$scope.searchHotels.numAdults || $scope.searchHotels.numAdults <= 0, 'numAdultsInput', 'Vui lòng nhập số lượng người lớn và phải lớn hơn 0!') ||
                 checkAndFocusInput($scope.searchHotels.numChildren < 0, 'numChildrenInput', 'Số lượng trẻ em không thể là số âm!') ||
-                checkAndFocusInput(!$scope.searchHotels.numRooms && $scope.searchHotels.numRooms <= 0, 'numRoomsInput', 'Vui lòng nhập số lượng phòng và phải lớn hơn 0 !')) {
+                checkAndFocusInput(!$scope.searchHotels.numRooms || $scope.searchHotels.numRooms <= 0, 'numRoomsInput', 'Vui lòng nhập số lượng phòng và phải lớn hơn 0!')) {
                 return;
             }
 
@@ -333,7 +336,7 @@ travel_app.controller('HotelServiceControllerAD',
             $scope.searchHotels = {}
         }
 
-        function errorCallback() {
+        const errorCallback = () => {
             $location.path('/admin/internal-server-error')
         }
 

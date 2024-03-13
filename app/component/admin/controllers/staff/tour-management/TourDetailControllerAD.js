@@ -39,15 +39,15 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
 
     $scope.provinceDestination = [{type: 'select', hasData: false}];
 
-    function errorCallback() {
+    const errorCallback = () => {
         $location.path('/admin/internal-server-error')
     }
 
-    $scope.setTouched = function () {
+    $scope.setTouched = () => {
         $scope.activityInDayTouched = true;
     };
 
-    $scope.isActive = function () {
+    $scope.isActive = () => {
         return $scope.activityInDayTouched &&
             ($scope.tourDetail.tourDetailDescription === null ||
                 $scope.tourDetail.tourDetailDescription === undefined ||
@@ -57,7 +57,7 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
     /**
      * Phương thức mở modal
      */
-    $scope.openModal = function (tourDetailId) {
+    $scope.openModal = (tourDetailId) => {
         $('#modal-tour-detail').modal('show');
         $scope.provinceDestination = [{type: 'select', hasData: false}];
         $scope.provinceBreak = [];
@@ -66,12 +66,12 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
 
         TourDetailsServiceAD.findTourDestinationByTourDetailById(tourDetailId).then(response => {
             if (response.status === 200) {
-                $timeout(function () {
+                $timeout(() => {
                     $scope.tourDestination = response.data.data;
 
                     if ($scope.tourDestination != null) {
-                        $scope.tourDestination.forEach(function (destination) {
-                            let existingCity = $scope.provinces.find(function (city) {
+                        $scope.tourDestination.forEach((destination) => {
+                            let existingCity = $scope.provinces.find((city) => {
                                 return city.Name === destination.province;
                             });
 
@@ -87,7 +87,7 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
         TourDetailsServiceAD.findTourDetailById(tourDetailId)
             .then(response => {
                 if (response.status === 200) {
-                    $timeout(function () {
+                    $timeout(() => {
                         $scope.tourDetail = response.data.data;
                         $scope.tourDetailImage = response.data.data.tourDetailImagesById;
                         $scope.tourDetail.departureDate = new Date(response.data.data.departureDate);
@@ -97,13 +97,13 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
                         let toLocation = $scope.tourDetail.toLocation;
 
                         MapBoxService.geocodeAddressGetKilometer(fromLocation)
-                            .then(function (fromCoords) {
-                                return MapBoxService.geocodeAddressGetKilometer(toLocation).then(function (toCoords) {
+                            .then((fromCoords) => {
+                                return MapBoxService.geocodeAddressGetKilometer(toLocation).then((toCoords) => {
                                     const distance = $scope.calculateDistance(fromCoords, toCoords);
                                     document.getElementById("expectedKm").innerText = distance + ' Km (Kilometer)';
                                 });
                             })
-                            .catch(function (error) {
+                            .catch((error) => {
                                 console.error("Lỗi khi tính toán khoảng cách:", error);
                             });
 
@@ -117,22 +117,22 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
     /**
      * Phương thức đóng modal
      */
-    $scope.closeModal = function () {
+    $scope.closeModal = () => {
         $('#modal-tour-detail').modal('hide');
     };
 
-    function getProvincesFromAPI() {
+    const getProvincesFromAPI = () => {
         return $http.get('/lib/address/data.json')
-            .then(function (response) {
+            .then((response) => {
                 return response.data;
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.error("Lỗi khi lấy danh sách tỉnh thành từ API:", error);
                 return [];
             });
     }
 
-    $scope.getProvinceBelow10KmAlongRoute = function (fromLocation, toLocation) {
+    $scope.getProvinceBelow10KmAlongRoute = (fromLocation, toLocation) => {
         $scope.isLoading = true;
 
         let provincesWithin10Km = [];
@@ -140,71 +140,71 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
         let idCounter = 1;
 
         MapBoxService.geocodeAddressGetKilometer(fromLocation)
-            .then(function (fromCoords) {
+            .then((fromCoords) => {
                 MapBoxService.geocodeAddressGetKilometer(toLocation)
-                    .then(function (toCoords) {
+                    .then((toCoords) => {
                         MapBoxService.getRoutePoints(fromCoords, toCoords)
-                            .then(function (routePoints) {
-                                routePoints.forEach(function (point) {
+                            .then((routePoints) => {
+                                routePoints.forEach((point) => {
                                     getProvincesWithin10Km(point)
-                                        .then(function (provinces) {
+                                        .then((provinces) => {
                                             provincesWithin10Km = provincesWithin10Km.concat(provinces);
 
-                                            provinces.forEach(function (province) {
+                                            provinces.forEach((province) => {
                                                 if (!uniqueProvinces.includes(province)) {
                                                     uniqueProvinces.push(province);
                                                 }
                                             });
 
-                                            provinces.forEach(function (province) {
-                                                if (!uniqueProvinces.find(function (item) {
+                                            provinces.forEach((province) => {
+                                                if (!uniqueProvinces.find((item) => {
                                                     return item.Name === province
                                                 })) {
                                                     uniqueProvinces.push({id: idCounter++, Name: province});
                                                 }
                                             });
 
-                                            $scope.filteredProvinces = uniqueProvinces.filter(function (item) {
+                                            $scope.filteredProvinces = uniqueProvinces.filter((item) => {
                                                 return typeof item === 'object' && item.hasOwnProperty('id') && item.hasOwnProperty('Name') &&
                                                     item.Name !== fromLocation && item.Name !== toLocation;
                                             });
                                         })
-                                        .catch(function (error) {
+                                        .catch((error) => {
                                             console.error("Lỗi khi kiểm tra tỉnh thành:", error);
                                         });
                                 });
 
-                                provincesWithin10Km = provincesWithin10Km.filter(function (province, index, self) {
-                                    return index === self.findIndex(function (p) {
+                                provincesWithin10Km = provincesWithin10Km.filter((province, index, self) => {
+                                    return index === self.findIndex((p) => {
                                         return p.id === province.id;
                                     });
                                 });
                             })
-                            .catch(function (error) {
+                            .catch((error) => {
                                 console.error("Lỗi khi lấy điểm trên lộ trình:", error);
                             });
                     })
-                    .catch(function (error) {
+                    .catch((error) => {
                         console.error("Lỗi khi lấy tọa độ điểm đến:", error);
                     });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.error("Lỗi khi lấy tọa độ điểm đi:", error);
             });
     }
 
-    function getProvincesWithin10Km(point) {
-        return $q(function (resolve, reject) {
+    const getProvincesWithin10Km = (point) => {
+        return $q((resolve, reject) => {
             if (!point || typeof point.lat === 'undefined' || typeof point.lng === 'undefined') {
                 reject(new Error("Điểm không hợp lệ"));
                 return;
             }
 
             getProvincesFromAPI()
-                .then(function (provinces) {
-                    let promises = provinces.map(function (province) {
+                .then((provinces) => {
+                    let promises = provinces.map((province) => {
                         return MapBoxService.geocodeAddressGetKilometer(province.Name)
-                            .then(function (fromCoords) {
+                            .then((fromCoords) => {
                                 const distanceToProvince = $scope.calculateDistance(point, fromCoords);
                                 if (distanceToProvince <= 10) {
                                     return province.Name;
@@ -212,34 +212,34 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
                                     return null;
                                 }
                             })
-                            .catch(function (error) {
+                            .catch((error) => {
                                 console.error("Lỗi tên tỉnh thành:", error);
                                 return null;
                             });
                     });
 
                     $q.all(promises)
-                        .then(function (provinceNames) {
-                            provinceNames = provinceNames.filter(function (name) {
+                        .then((provinceNames) => {
+                            provinceNames = provinceNames.filter((name) => {
                                 return name !== null;
                             });
                             resolve(provinceNames);
                         })
-                        .catch(function (error) {
+                        .catch((error) => {
                             reject(error);
                         })
-                        .then(function () {
+                        .then(() => {
                             $scope.isLoading = false;
                         });
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     reject(error);
                     $scope.isLoading = false;
                 });
         });
     }
 
-    $scope.calculateDistance = function (coords1, coords2) {
+    $scope.calculateDistance = (coords1, coords2) => {
         const R = 6371;
         const lat1 = coords1.lat * Math.PI / 180;
         const lat2 = coords2.lat * Math.PI / 180;
@@ -259,8 +259,8 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
      * Thêm địa chỉ tham quan vào trong lịch trình của tour
      * @param index
      */
-    $scope.addOrRemoveSelectItem = function (index) {
-        let selectedCount = $scope.provinceDestination.filter(function (item) {
+    $scope.addOrRemoveSelectItem = (index) => {
+        let selectedCount = $scope.provinceDestination.filter((item) => {
             return item.hasData;
         }).length;
 
@@ -276,10 +276,10 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
         }
     };
 
-    $scope.getProvinceDestination = function () {
+    $scope.getProvinceDestination = () => {
         let selectedValues = [];
 
-        $scope.provinceDestination.forEach(function (item) {
+        $scope.provinceDestination.forEach((item) => {
             if (item.type === 'select' && item.value) {
                 selectedValues.push(item.value);
             }
@@ -293,7 +293,7 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
      * Upload hình ảnh và lưu vào biến transportTypeImg
      * @param file
      */
-    $scope.uploadTourDetailImg = function (file) {
+    $scope.uploadTourDetailImg = (file) => {
         if (file && !file.$error) {
             $scope.tourDetail.tourDetailImage = file;
         }
@@ -303,14 +303,14 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
      * Hàm kiểm tra sự trùng lặp giữa điểm đi và điểm đến
      * @returns {boolean}
      */
-    function hasDuplicateSelection() {
+    const hasDuplicateSelection = () => {
         return $scope.tourDetail.fromLocation === $scope.tourDetail.toLocation;
     }
 
     /**
      * Hàm kiểm tra sự trùng lặp giữa điểm đi và điểm đến
      */
-    $scope.updateToLocation = function () {
+    $scope.updateToLocation = () => {
         if (hasDuplicateSelection()) {
             $scope.tourDetail.toLocation = null;
             $scope.toLocationError = true;
@@ -318,20 +318,20 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
             $scope.toLocationError = false;
         }
 
-        $scope.filteredProvinces = $scope.provinces.filter(function (city) {
+        $scope.filteredProvinces = $scope.provinces.filter((city) => {
             return city.Name !== $scope.tourDetail.fromLocation;
         });
     };
 
     // Hàm kiểm tra ngày bắt đầu có hợp lệ
-    $scope.isStartDateValid = function () {
+    $scope.isStartDateValid = () => {
         if ($scope.tourDetail.departureDate && $scope.tourDetail.arrivalDate) {
             return new Date($scope.tourDetail.departureDate) <= new Date($scope.tourDetail.arrivalDate);
         }
         return true; // Mặc định là hợp lệ nếu một trong hai ngày không được chọn
     };
 
-    $scope.isEndDateValid = function () {
+    $scope.isEndDateValid = () => {
         if ($scope.tourDetail.arrivalDate && $scope.tourDetail.departureDate) {
             return new Date($scope.tourDetail.arrivalDate) >= new Date($scope.tourDetail.departureDate);
         }
@@ -339,23 +339,23 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
     };
 
 
-    $scope.isNumberOfGuestsValid = function () {
+    $scope.isNumberOfGuestsValid = () => {
         return $scope.tourDetail.numberOfGuests >= 16 && $scope.tourDetail.numberOfGuests <= 50; // Số lượng khách phải lớn hơn 0
     };
 
-    $scope.MinimumNumberOfGuestsValid = function () {
+    $scope.MinimumNumberOfGuestsValid = () => {
         return $scope.tourDetail.minimumNumberOfGuests >= 1 && $scope.tourDetail.minimumNumberOfGuests <= 16;
     };
 
-    function isPriceValid(price) {
+    const isPriceValid = (price) => {
         return price > 0;
     }
 
-    $scope.isPriceValid = function () {
+    $scope.isPriceValid = () => {
         return isPriceValid($scope.tourDetail.unitPrice);
     }
 
-    $scope.onPriceKeyPress = function (event) {
+    $scope.onPriceKeyPress = (event) => {
         let inputValue = event.key;
 
         if (/^[0-9]+$/.test(inputValue)) {
@@ -366,21 +366,21 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
         }
     };
 
-    $scope.checkPriceFormat = function () {
+    $scope.checkPriceFormat = () => {
         // Kiểm tra xem giá có đúng định dạng số không
         $scope.invalidPriceFormat = !/^[0-9]*$/.test($scope.tourDetail.unitPrice);
     };
 
 
     //phân trang
-    $scope.setPage = function (page) {
+    $scope.setPage = (page) => {
         if (page >= 0 && page < $scope.totalPages) {
             $scope.currentPage = page;
             $scope.getTourDetailList();
         }
     };
 
-    $scope.getPaginationRange = function () {
+    $scope.getPaginationRange = () => {
         var range = [];
         var start, end;
 
@@ -406,33 +406,33 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
         return range;
     };
 
-    $scope.pageSizeChanged = function () {
+    $scope.pageSizeChanged = () => {
         $scope.currentPage = 0; // Đặt lại về trang đầu tiên
         $scope.getTourDetailList(); // Tải lại dữ liệu với kích thước trang mới
     };
 
-    $scope.getDisplayRange = function () {
+    $scope.getDisplayRange = () => {
         return Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
     };
 
-    $scope.getTourDetailList = function () {
+    const tourDetailData = (response) => {
+        $scope.tourDetailList = response.data.data !== null ? response.data.data.content : [];
+        $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
+        $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
+    };
+
+    $scope.getTourDetailList = () => {
         TourDetailsServiceAD.findAllTourDetails($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
-            .then(function (response) {
-                if (response.data.data === null || response.data.data.content.length === 0) {
-                    $scope.setPage(Math.max(0, $scope.currentPage - 1));
-                    return
-                }
-                $scope.tourDetailList = response.data.data.content;
-                $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                $scope.totalElements = response.data.data.totalElements; // Tổng số phần tử
-            }, errorCallback).finally(function () {
+            .then((response) => {
+                tourDetailData(response);
+            }, errorCallback).finally(() => {
             $scope.isLoading = false;
         });
 
         if (tourDetailId !== undefined && tourDetailId !== null && tourDetailId !== "") {
             TourDetailsServiceAD.findTourDetailById(tourDetailId).then(response => {
                 if (response.status === 200) {
-                    $timeout(function () {
+                    $timeout(() => {
                         $scope.tourDetail = response.data.data;
                         $scope.tourDetail.departureDate = new Date(response.data.data.departureDate);
                         $scope.tourDetail.arrivalDate = new Date(response.data.data.arrivalDate);
@@ -445,7 +445,7 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
     /**
      * Phương thức khởi tạo map
      */
-    $scope.initMap = function () {
+    $scope.initMap = () => {
         $scope.map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/mapbox/streets-v12',
@@ -453,8 +453,8 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
             zoom: 9
         });
 
-        $scope.map.on('load', function () {
-            $scope.map.on('click', function (e) {
+        $scope.map.on('load', () => {
+            $scope.map.on('click', (e) => {
                 $scope.longitude = e.lngLat.lng;
                 $scope.latitude = e.lngLat.lat;
 
@@ -473,7 +473,7 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
         });
     }
 
-    $scope.searchLocationOnMap = function () {
+    $scope.searchLocationOnMap = () => {
         let searchQuery = encodeURIComponent($scope.searchLocation);
 
         if (searchQuery) {
@@ -499,13 +499,13 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
         }
     }
 
-    $scope.selectLocation = function (location) {
+    $scope.selectLocation = (location) => {
         $scope.searchLocation = location;
         $scope.searchLocationOnMap();
         $scope.showSuggestions = false;
     }
 
-    $scope.submitSearchOnMap = function () {
+    $scope.submitSearchOnMap = () => {
         $scope.showSuggestions = false;
         let searchQuery = $scope.searchLocation;
 
@@ -517,7 +517,7 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
             let relatedKeywords = searchQuery.split(' ').filter(keyword => keyword.length > 2);
             searchQuery = relatedKeywords.join(' ');
 
-            MapBoxService.geocodeAddress(searchQuery, function (error, coordinates) {
+            MapBoxService.geocodeAddress(searchQuery, (error, coordinates) => {
                 if (error) {
                     console.error('Lỗi khi tìm kiếm địa điểm:', error);
                     return;
@@ -535,11 +535,11 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
         }
     }
 
-    $scope.showLocationOnInput = function (toLocation) {
+    $scope.showLocationOnInput = (toLocation) => {
         fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${toLocation[0]},${toLocation[1]}.json?access_token=${mapboxgl.accessToken}`)
             .then(response => response.json())
             .then(data => {
-                $scope.$apply(function () {
+                $scope.$apply(() => {
                     let addressComponents = data.features[0].place_name.split(',');
                     for (let i = addressComponents.length - 1; i >= 0; i--) {
                         let lastPart = addressComponents[i].trim();
@@ -559,12 +559,12 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
     /**
      * Phương thức hiển thị modal
      */
-    $scope.showModalMap = function () {
+    $scope.showModalMap = () => {
         $scope.searchLocation = "";
         let modelMap = $('#modalMapTourDetail');
         modelMap.modal('show');
 
-        modelMap.on('shown.bs.modal', function () {
+        modelMap.on('shown.bs.modal', () => {
             $scope.initMap();
         });
     };
@@ -572,13 +572,13 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
     /**
      * Sắp xếp
      */
-    $scope.sortData = function (column) {
+    $scope.sortData = (column) => {
         $scope.sortBy = column;
         $scope.sortDir = ($scope.sortDir === 'asc') ? 'desc' : 'asc';
         $scope.getTourDetailList();
     };
 
-    $scope.getSortIcon = function (column) {
+    $scope.getSortIcon = (column) => {
         if ($scope.sortBy === column) {
             if ($scope.sortDir === 'asc') {
                 return $sce.trustAsHtml('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M182.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg>');
@@ -591,15 +591,14 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
 
 
     //tìm kiếm
-    $scope.searchTourDetail = function () {
+    $scope.searchTourDetail = () => {
         if (searchTimeout) $timeout.cancel(searchTimeout);
+        $scope.setPage(0);
 
-        searchTimeout = $timeout(function () {
+        searchTimeout = $timeout(() => {
             TourDetailsServiceAD.findAllTourDetails($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
-                .then(function (response) {
-                    $scope.tourDetailList = response.data.data.content;
-                    $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                    $scope.totalElements = response.data.data.totalElements;
+                .then((response) => {
+                    tourDetailData(response);
                 }, errorCallback);
         }, 500); // 500ms debounce
     };
@@ -609,20 +608,20 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
     /*==============================================================================*/
 
     //fill form input
-    $scope.loadTourDetailForm = function () {
-        ToursServiceAD.findAllToursSelect().then(function (response) {
+    $scope.loadTourDetailForm = () => {
+        ToursServiceAD.findAllToursSelect().then((response) => {
             $scope.tourBasicList = response.data.data;
         }, errorCallback);
 
-        AccountServiceAD.findUsersByRolesIsGuild().then(function successCallback(response) {
+        AccountServiceAD.findUsersByRolesIsGuild().then((response) => {
             $scope.UsersByRolesIsGuildSelect = response.data.data;
         }, errorCallback);
 
-        $http.get('/lib/address/data.json').then(function (response) {
+        $http.get('/lib/address/data.json').then((response) => {
             $scope.provinces = response.data;
         }, errorCallback);
 
-        $scope.onProvinceChange = function (locationType) {
+        $scope.onProvinceChange = (locationType) => {
             let selectedProvince = $scope.provinces.find(p => p.Id === $scope.tourDetail[locationType]);
             if (selectedProvince) {
                 $scope.tourDetail[locationType] = selectedProvince.Name;
@@ -633,9 +632,9 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
     $scope.loadTourDetailForm()
 
     //form create
-    $scope.loadSelectTourType = function () {
+    $scope.loadSelectTourType = () => {
         ToursTypeServiceAD.getAllTourTypes()
-            .then(function (response) {
+            .then((response) => {
                 $scope.tourTypeList = response.data;
             }, errorCallback);
     };
@@ -649,56 +648,56 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
         const dataTourDetail = new FormData();
 
         dataTourDetail.append("tourDetailsDto", new Blob([JSON.stringify(tourDetail)], {type: "application/json"}));
-        angular.forEach(tourDetailImage, function (file) {
+        angular.forEach(tourDetailImage, (file) => {
             dataTourDetail.append('tourDetailImage', file);
         });
 
-        TourDetailsServiceAD.createTourDetail(dataTourDetail).then(function successCallback() {
+        TourDetailsServiceAD.createTourDetail(dataTourDetail).then(() => {
             toastAlert('success', 'Thêm mới thành công !');
             $location.path('/admin/detail-tour-list');
-        }, errorCallback).finally(function () {
+        }, errorCallback).finally(() => {
             $scope.isLoading = false;
         });
     };
 
-    $scope.createTourDestinationSubmit = function () {
+    $scope.createTourDestinationSubmit = () => {
         $scope.isLoading = true;
         let tourDetailId = $scope.tourDetail.id
         let dataProvince = $scope.dataProvince;
 
-        TourDetailsServiceAD.createTourDestination(dataProvince, tourDetailId).then(function successCallback() {
+        TourDetailsServiceAD.createTourDestination(dataProvince, tourDetailId).then(() => {
             centerAlert('Thành công !', 'Cập nhật lịch trình tham quan thành công !', 'success');
             $('#modal-tour-detail').modal('hide');
-        }, errorCallback).finally(function () {
+        }, errorCallback).finally(() => {
             $scope.isLoading = false;
         });
     }
 
     //form update
-    function confirmUpdate() {
+    const confirmUpdate = () => {
         const dataTourDetail = new FormData();
         $scope.isLoading = true;
 
         dataTourDetail.append("tourDetailsDto", new Blob([JSON.stringify($scope.tourDetail)], {type: "application/json"}));
 
-        TourDetailsServiceAD.updateTourDetail(tourDetailId, dataTourDetail).then(function successCallback() {
+        TourDetailsServiceAD.updateTourDetail(tourDetailId, dataTourDetail).then(() => {
             toastAlert('success', 'Cập nhật thành công !');
             $location.path('/admin/detail-tour-list');
-        }, errorCallback).finally(function () {
+        }, errorCallback).finally(() => {
             $scope.isLoading = false;
         });
     }
 
-    $scope.updateTourDetail = function () {
+    $scope.updateTourDetail = () => {
         confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdate);
     }
 
     /**
      * Gọi api delete tour
      */
-    $scope.deleteTourDetail = function (tourDetailId) {
-        function confirmDeleteTour() {
-            TourDetailsServiceAD.deactivateTourDetail(tourDetailId).then(function successCallback() {
+    $scope.deleteTourDetail = (tourDetailId) => {
+        const confirmDeleteTour = () => {
+            TourDetailsServiceAD.deactivateTourDetail(tourDetailId).then(() => {
                 toastAlert('success', 'Xóa tour thành công !');
                 $('#modal-tour-detail').modal('hide');
                 $scope.getTourDetailList();

@@ -28,29 +28,29 @@ travel_app.controller('TripsTourControllerAD',
 
         $scope.showActivities = false;
 
-        function errorCallback() {
+        const errorCallback = () => {
             $location.path('/admin/internal-server-error')
         }
 
-        $scope.setTouched = function () {
+        $scope.setTouched = () => {
             $scope.activityInDayTouched = true;
         };
 
-        $scope.isActive = function () {
+        $scope.isActive = () => {
             return $scope.activityInDayTouched && ($scope.tourTrips.activityInDay === null || $scope.tourTrips.activityInDay === undefined || $scope.tourTrips.activityInDay === '');
         };
 
-        $scope.canSubmit = function () {
+        $scope.canSubmit = () => {
             return $scope.activityInDayTouched && !$scope.isActive();
         };
 
-        $scope.toggleActivities = function () {
+        $scope.toggleActivities = () => {
             $scope.showActivities = !$scope.showActivities;
         };
 
-        $scope.init = function () {
+        $scope.init = () => {
             TourTripsServiceAD.getAllTrips($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, tourDetailId)
-                .then(function (response) {
+                .then((response) => {
                     if (response.data.data === null || response.data.data.content.length === 0) {
                         $scope.setPage(Math.max(0, $scope.currentPage - 1));
                         return
@@ -59,14 +59,14 @@ travel_app.controller('TripsTourControllerAD',
                     $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                     $scope.totalElements = response.data.data.totalElements; // Tổng số phần tử
 
-                    $scope.tourTripsList.forEach(function (tourTrips) {
+                    $scope.tourTripsList.forEach((tourTrips) => {
                         tourTrips.activityInDay = $sce.trustAsHtml(tourTrips.activityInDay);
                     });
-                }, errorCallback).finally(function () {
+                }, errorCallback).finally(() => {
                 $scope.isLoading = false;
             });
 
-            TransportationTypeServiceAD.getAllTransportationTypes().then(function (response) {
+            TransportationTypeServiceAD.getAllTransportationTypes().then((response) => {
                 if (response.status === 200) {
                     $scope.transportationType = response.data.data;
                 } else {
@@ -75,9 +75,9 @@ travel_app.controller('TripsTourControllerAD',
             }, errorCallback);
 
             if (tourTripsId !== undefined && tourTripsId !== null && tourTripsId !== "") {
-                TourTripsServiceAD.findTripsById(tourTripsId).then(function successCallback(response) {
+                TourTripsServiceAD.findTripsById(tourTripsId).then((response) => {
                     if (response.status === 200) {
-                        $timeout(function () {
+                        $timeout(() => {
                             $scope.tourTrips = response.data.data;
                             let timeComponents = $scope.tourTrips.timeGo.split(':');
                             let timeArray = [parseInt(timeComponents[0]), parseInt(timeComponents[1])];
@@ -87,7 +87,7 @@ travel_app.controller('TripsTourControllerAD',
                 }, errorCallback);
             }
             if (tourDetailId !== undefined && tourTripsId !== null && tourTripsId !== "") {
-                TourDetailsServiceAD.findTourDetailById(tourDetailId).then(function successCallback(response) {
+                TourDetailsServiceAD.findTourDetailById(tourDetailId).then((response) => {
                     $scope.tourName = response.data.data.toursByTourId.tourName;
                 }, errorCallback);
             }
@@ -95,12 +95,12 @@ travel_app.controller('TripsTourControllerAD',
             /**
              * Phương thức hiển thị modal
              */
-            $scope.showModalMapTourTrips = function () {
+            $scope.showModalMapTourTrips = () => {
                 $scope.searchLocation = "";
                 let modelMap = $('#modalMapTourTrip');
                 modelMap.modal('show');
 
-                modelMap.on('shown.bs.modal', function () {
+                modelMap.on('shown.bs.modal', () => {
                     $scope.initMap();
                 });
             };
@@ -108,7 +108,7 @@ travel_app.controller('TripsTourControllerAD',
             /**
              * Phương thức khởi tạo map
              */
-            $scope.initMap = function () {
+            $scope.initMap = () => {
                 $scope.map = new mapboxgl.Map({
                     container: 'map',
                     style: 'mapbox://styles/mapbox/streets-v12',
@@ -116,8 +116,8 @@ travel_app.controller('TripsTourControllerAD',
                     zoom: 10
                 });
 
-                $scope.map.on('load', function () {
-                    $scope.map.on('click', function (e) {
+                $scope.map.on('load', () => {
+                    $scope.map.on('click', (e) => {
                         $scope.longitude = e.lngLat.lng;
                         $scope.latitude = e.lngLat.lat;
 
@@ -140,7 +140,7 @@ travel_app.controller('TripsTourControllerAD',
              * chọn dữ liệu trên form
              * @param location
              */
-            $scope.selectLocationTourTrips = function (location) {
+            $scope.selectLocationTourTrips = (location) => {
                 $scope.searchLocation = location;
                 $scope.searchLocationOnMapTourTrips();
                 $scope.showSuggestions = false;
@@ -149,7 +149,7 @@ travel_app.controller('TripsTourControllerAD',
             /**
              * tìm kiếm vị trí trên bản đồ
              */
-            $scope.searchLocationOnMapTourTrips = function () {
+            $scope.searchLocationOnMapTourTrips = () => {
                 let searchQuery = encodeURIComponent($scope.searchLocation);
 
                 if (searchQuery) {
@@ -178,7 +178,7 @@ travel_app.controller('TripsTourControllerAD',
             /**
              * submit dữ liệu tìm kiếm
              */
-            $scope.submitSearchOnMapTourTrips = function () {
+            $scope.submitSearchOnMapTourTrips = () => {
                 $scope.showSuggestions = false;
                 let searchQuery = $scope.searchLocation;
 
@@ -190,7 +190,7 @@ travel_app.controller('TripsTourControllerAD',
                     let relatedKeywords = searchQuery.split(' ').filter(keyword => keyword.length > 2);
                     searchQuery = relatedKeywords.join(' ');
 
-                    MapBoxService.geocodeAddress(searchQuery, function (error, coordinates) {
+                    MapBoxService.geocodeAddress(searchQuery, (error, coordinates) => {
                         if (error) {
                             console.error('Lỗi khi tìm kiếm địa điểm:', error);
                             return;
@@ -212,11 +212,11 @@ travel_app.controller('TripsTourControllerAD',
              * nhập dữ liệu vào ô input
              * @param toLocation
              */
-            $scope.showLocationOnInput = function (toLocation) {
+            $scope.showLocationOnInput = (toLocation) => {
                 fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${toLocation[0]},${toLocation[1]}.json?access_token=${mapboxgl.accessToken}`)
                     .then(response => response.json())
                     .then(data => {
-                        $scope.$apply(function () {
+                        $scope.$apply(() => {
                             let addressComponents = data.features[0].place_name.split(',');
                             for (let i = addressComponents.length - 1; i >= 0; i--) {
                                 let lastPart = addressComponents[i].trim();
@@ -237,14 +237,14 @@ travel_app.controller('TripsTourControllerAD',
              * Phân trang
              * @param page
              */
-            $scope.setPage = function (page) {
+            $scope.setPage = (page) => {
                 if (page >= 0 && page < $scope.totalPages) {
                     $scope.currentPage = page;
                     $scope.init();
                 }
             };
 
-            $scope.getPaginationRange = function () {
+            $scope.getPaginationRange = () => {
                 let range = [];
                 let start, end;
 
@@ -270,12 +270,12 @@ travel_app.controller('TripsTourControllerAD',
                 return range;
             };
 
-            $scope.pageSizeChanged = function () {
+            $scope.pageSizeChanged = () => {
                 $scope.currentPage = 0; // Đặt lại về trang đầu tiên
                 $scope.init(); // Tải lại dữ liệu với kích thước trang mới
             };
 
-            $scope.getDisplayRange = function () {
+            $scope.getDisplayRange = () => {
                 return Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
             };
 
@@ -283,13 +283,13 @@ travel_app.controller('TripsTourControllerAD',
              * Sắp xếp
              * @param column
              */
-            $scope.sortData = function (column) {
+            $scope.sortData = (column) => {
                 $scope.sortBy = column;
                 $scope.sortDir = ($scope.sortDir === 'asc') ? 'desc' : 'asc';
                 $scope.init();
             };
 
-            $scope.getSortIcon = function (column) {
+            $scope.getSortIcon = (column) => {
                 if ($scope.sortBy === column) {
                     if ($scope.sortDir === 'asc') {
                         return $sce.trustAsHtml('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M182.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg>');
@@ -304,7 +304,7 @@ travel_app.controller('TripsTourControllerAD',
              * Upload hình ảnh và lưu vào biến placeImage
              * @param file
              */
-            $scope.updatePlaceImage = function (file) {
+            $scope.updatePlaceImage = (file) => {
                 if (file && !file.$error) {
                     $scope.tourTrips.placeImage = file;
                 }
@@ -322,10 +322,10 @@ travel_app.controller('TripsTourControllerAD',
             dataTourTrips.append('placeImage', $scope.tourTrips.placeImage);
             dataTourTrips.append('timeGo', $scope.tourTrips.timeGo);
 
-            TourTripsServiceAD.createTrips(dataTourTrips).then(function successCallback() {
+            TourTripsServiceAD.createTrips(dataTourTrips).then(() => {
                 toastAlert('success', 'Thêm mới thành công !');
                 $location.path('/admin/detail-tour-list/trips-tour-list/' + $scope.tourTrips.tourDetailId);
-            }, errorCallback).finally(function () {
+            }, errorCallback).finally(() => {
                 $scope.isLoading = false;
             });
         };
@@ -334,7 +334,7 @@ travel_app.controller('TripsTourControllerAD',
          * API update
          */
         $scope.updateTourTripsSubmit = () => {
-            function confirmUpdate() {
+            const confirmUpdate = () => {
                 $scope.isLoading = true;
                 let dataTourTrips = new FormData();
                 let timeGo = FormatDateService.formatDate($scope.tourTrips.timeGo);
@@ -342,10 +342,10 @@ travel_app.controller('TripsTourControllerAD',
                 dataTourTrips.append("tourTripsDto", new Blob([JSON.stringify($scope.tourTrips)], {type: "application/json"}));
                 dataTourTrips.append('placeImage', $scope.tourTrips.placeImage);
 
-                TourTripsServiceAD.updateTrips(tourTripsId, dataTourTrips, timeGo).then(function successCallback() {
+                TourTripsServiceAD.updateTrips(tourTripsId, dataTourTrips, timeGo).then(() => {
                     toastAlert('success', 'Cập nhật thành công !');
                     $location.path('/admin/detail-tour-list/trips-tour-list/' + $scope.tourTrips.tourDetailId);
-                }, errorCallback).finally(function () {
+                }, errorCallback).finally(() => {
                     $scope.isLoading = false;
                 });
             }
@@ -356,9 +356,9 @@ travel_app.controller('TripsTourControllerAD',
         /**
          * API delete
          */
-        $scope.deleteTourTrips = function (tourTripsId) {
-            function confirmDeleteTour() {
-                TourTripsServiceAD.deactivateTrips(tourTripsId).then(function successCallback() {
+        $scope.deleteTourTrips = (tourTripsId) => {
+            const confirmDeleteTour = () => {
+                TourTripsServiceAD.deactivateTrips(tourTripsId).then(() => {
                     toastAlert('success', 'Xóa kế hoạch thành công !');
                     $scope.init();
                 }, errorCallback);

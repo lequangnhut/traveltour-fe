@@ -82,11 +82,10 @@ travel_app.controller('TransportationSchedulesControllerAD',
         //end page
 
         //data
-        $scope.transportationData = (response) => {
-            $scope.transportationScheduleList = response.data.data.content;
-            $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-            $scope.totalElements = response.data.data.totalElements;
-            console.log($scope.transportationScheduleList)
+        const transportationData = (response) => {
+            $scope.transportationScheduleList = response.data.data !== null ? response.data.data.content : [];
+            $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
+            $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
         };
 
         $scope.getTransportationSchedule = async () => {
@@ -104,7 +103,7 @@ travel_app.controller('TransportationSchedulesControllerAD',
                 $scope.transportationBrandList = transportationBrandResponse.data.data;
                 $scope.transportationTypeList = TransportationTypeResponse.data.data;
 
-                $scope.transportationData(TransportationScheduleResponse)
+                transportationData(TransportationScheduleResponse);
 
                 $scope.provinces = provincesResponse.data;
 
@@ -117,29 +116,40 @@ travel_app.controller('TransportationSchedulesControllerAD',
             }
         }
 
+        $scope.bookACar = (data) => {
+            if (data.orderTransportationsById.length > 0) {
+                toastAlert('warning', 'Xe đã được đặt!')
+                return
+            } else if (data.isStatus === 1) {
+                toastAlert('warning', 'Xe đã ngừng hoạt động!')
+                return;
+            }
+            $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/transportation-list/${data.id}/transportation-payment`)
+        }
+
         //show tiện ích
-        $scope.showMoreItemsTransportationBrand = function () {
+        $scope.showMoreItemsTransportationBrand = () => {
             $scope.limitTransportationBrand = $scope.transportationBrandList.length;
             $scope.showMoreTransportationBrand = true;
         };
 
-        $scope.showLessItemsTransportationBrand = function () {
+        $scope.showLessItemsTransportationBrand = () => {
             $scope.limitTransportationBrand = 5;
             $scope.showMoreTransportationBrand = false;
         };
 
-        $scope.showMoreItemsTransportationType = function () {
+        $scope.showMoreItemsTransportationType = () => {
             $scope.limitTransportationType = $scope.transportationTypeList.length;
             $scope.showMoreTransportationType = true;
         };
 
-        $scope.showLessItemsTransportationType = function () {
+        $scope.showLessItemsTransportationType = () => {
             $scope.limitTransportationType = 5;
             $scope.showMoreTransportationType = false;
         };
 
         //sắp xếp
-        $scope.sortData = function (column, sortDir) {
+        $scope.sortData = (column, sortDir) => {
 
             if (!sortDir) {
                 $scope.sortBy = "id";
@@ -154,7 +164,7 @@ travel_app.controller('TransportationSchedulesControllerAD',
 
 
         //thêm danh sách lọc
-        $scope.ChooseFromAVarietyOfVehicles = function (id) {
+        $scope.ChooseFromAVarietyOfVehicles = (id) => {
             let index = $scope.filters.mediaTypeList.indexOf(id);
             if (index === -1) {
                 $scope.filters.mediaTypeList.push(id);
@@ -163,7 +173,7 @@ travel_app.controller('TransportationSchedulesControllerAD',
             }
         };
 
-        $scope.ChooseFromManyCarBrands = function (id) {
+        $scope.ChooseFromManyCarBrands = (id) => {
             let index = $scope.filters.listOfVehicleManufacturers.indexOf(id);
             if (index === -1) {
                 $scope.filters.listOfVehicleManufacturers.push(id);
@@ -172,20 +182,20 @@ travel_app.controller('TransportationSchedulesControllerAD',
             }
         };
 
-        $scope.filterAllMedia = function () {
+        $scope.filterAllMedia = () => {
             TransportationScheduleServiceAD.getAllTransportationSchedules($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.transportationSearch, $scope.filters)
-                .then(function successCallback(response) {
+                .then((response) => {
                     console.log(response)
-                    $scope.transportationData(response)
+                    transportationData(response);
                     if (response.data.status === '204') {
                         toastAlert('warning', 'Không tìm thấy dữ liệu !');
                     }
-                }, errorCallback).finally(function () {
+                }, errorCallback).finally(() => {
                 $scope.isLoading = false;
             });
         }
 
-        function errorCallback() {
+        const errorCallback = () => {
             $location.path('/admin/internal-server-error')
         }
 

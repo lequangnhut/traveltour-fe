@@ -3,7 +3,7 @@
         <div class="header-control-center">
             <div class="d-flex justify-content-between align-items-center row ">
                 <div class="col-xl-12 mt-3">
-                    <h3 class="color-green fw-bold text-uppercase">Danh sách thông tin lưu trú</h3>
+                    <h3 class="color-green fw-bold text-uppercase">Danh sách thông tin phương tiện</h3>
                 </div>
             </div>
         </div>
@@ -23,9 +23,9 @@
                 </div>
                 <div class="col-xl-4 col-md-6 d-flex align-items-center justify-content-end">
                     <select class="form-select" aria-label="Default select example"
-                            ng-model="orderHotelStatus"
-                            ng-init="orderHotelStatus='1'"
-                            ng-change="orderHotelChanged()"
+                            ng-model="orderStatus"
+                            ng-init="orderStatus='1'"
+                            ng-change="orderTransportationSchedulesChanged()"
                     >
                         <option value="1">Đã thanh toán</option>
                         <option value="0">Chờ thanh toán</option>
@@ -36,7 +36,7 @@
                     <select class="form-select" aria-label="Default select example"
                             ng-model="tourDetailId"
                             ng-init="tourDetailId=''"
-                            ng-change="orderHotelChanged()">
+                            ng-change="orderTransportationSchedulesChanged()">
                         <option value="">Chọn tour bạn muốn xem</option>
                         <option ng-repeat="tourDetail in tourDetails" value="{{tourDetail.id}}">
                             {{ tourDetail.id + ' - ' + tourDetail.toursByTourId.tourName + ' - ' + (tourDetail.departureDate | date:'dd/MM/yyyy') }}
@@ -53,9 +53,9 @@
         <div class="card table-responsive table-customer">
             <div class="card-header ">
                 <div class="row">
-                    <div class="h4 col-lg-5 d-flex align-items-center h-100">
+                    <div class="h4 col-lg-5 d-flex align-items-center btsl-100">
                         <div class="d-flex align-items-center">
-                            <span class="h4">Danh sách thông tin lưu trú</span>
+                            <span class="h4">Danh sách thông tin phương tiện</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end align-items-baseline col-lg-2">
@@ -68,8 +68,8 @@
                             <option value="15">15</option>
                         </select>
                     </div>
-                    <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
-                        <nav aria-label="Page navigation" ng-if="bookingTourHotelList.length !== 0">
+                    <div class="d-flex align-items-center justify-content-end btsl-100 col-lg-5">
+                        <nav aria-label="Page navigation" ng-if="bookingTourTransportationSchedulesList.length !== 0">
                             <ul class="pagination justify-content-center align-items-center">
                                 <!-- Previous Page -->
                                 <li class="page-item" ng-class="{disabled: currentPage === 0}">
@@ -115,44 +115,56 @@
                             <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('hotelName')">
-                        <div class="icon-left">Tên khách sạn
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('hotelName')"></span>
+                    <th class="cursor-pointer" ng-click="sortData('fromLocation')">
+                        <div class="icon-left">Địa đi
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('fromLocation  ')"></span>
                         </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('phone')">
-                        <div class="icon-left">Số điện thoại
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('phone')"></span>
+                    <th class="cursor-pointer" ng-click="sortData('toLocation')">
+                        <div class="icon-left">Địa đến
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('toLocation  ')"></span>
                         </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('province')">
-                        <div class="icon-left">Địa điểm
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('province  ')"></span>
+                    <th class="cursor-pointer" ng-click="sortData('licensePlate')">
+                        <div class="icon-left">Biển số xe
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('licensePlate')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('bookedSeat')">
+                        <div class="icon-left">chỗ đã đặt
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('bookedSeat')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('unitPrice')">
+                        <div class="icon-left">Giá
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('unitPrice')"></span>
                         </div>
                     </th>
                     <th>Thao tác</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="h in bookingTourHotelList">
+                <tr ng-repeat="btsl in bookingTourTransportationSchedulesList">
                     <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
-                    <td>{{ h.id }}</td>
+                    <td>{{ btsl.id }}</td>
                     <td class=ext-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="{{ h.hotelName }}">
-                        {{ h.hotelName }}
+                        title="{{ btsl.fromLocation }}">
+                        {{ btsl.fromLocation }}
                     </td>
-                    <td>{{ h.phone }}</td>
-                    <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="{{ h.ward + ', ' + h.district + ', ' +  h.province }}">
-                        {{ h.ward + ', ' + h.district + ', ' + h.province }}
+                    <td class=ext-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="{{ btsl.toLocation }}">
+                        {{ btsl.toLocation }}
                     </td>
+                    <td>{{ btsl.transportationsByTransportationId.licensePlate }}</td>
+                    <td>{{ btsl.bookedSeat }}</td>
+                    <td>{{ btsl.unitPrice }}</td>
                     <td class="d-flex align-items-center justify-content-center">
-                        <button class="fs-1 btn text-info px-2" ng-click="openModal(h.id)">
+                        <button class="fs-1 btn text-info px-2" ng-click="openModal(btsl)">
                             <i class="fa-regular fa-eye"></i>
                         </button>
                     </td>
                 </tr>
-                <tr ng-if="bookingTourHotelList.length === 0">
+                <tr ng-if="bookingTourTransportationSchedulesList.length === 0">
                     <td colspan="14">Trang này không có dữ liệu.</td>
                 </tr>
                 </tbody>
@@ -167,7 +179,8 @@
 </div>
 
 <!--modal-->
-<div class="modal fade" id="modal-order-hotel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="modal-order-transportation-schedule" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
@@ -178,82 +191,91 @@
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-7 pe-2 scroll-hidden" style="max-height: 600px;">
+                        <div class="col-lg-6 pe-2 scroll-hidden" style="max-height: 600px;">
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <h5 class="card-title">Chi tiết đơn hàng</h5>
                                     <hr>
-                                    <div class="row" ng-repeat="ohd in orderHotelDetailList">
-                                        <div class="col-3 pe-0">
-                                            <img class="rounded-1 w-100"
-                                                 src="{{ohd.roomTypeAvatar}}"
-                                                 alt=""/>
+                                    <div class="row g-0">
+                                        <div class="col-12 pt-3">
+                                            <img src="{{transportationSchedule.transportationsByTransportationId.transportationImg}}"
+                                                 class="img-fluid rounded-start rounded-3" alt="...">
                                         </div>
-                                        <div class="col-9">
-                                            <p class="mb-0">
-                                                <span class="fw-bold">{{ ohd.roomTypeName }}</span>
-                                                <span>({{ ohd.unitPrice }}) x </span>
-                                                <span class="fw-bold">{{ ohd.totalAmount }}</span>
-                                                <span class="fw-bold float-end">{{ ohd.totalPrice | vnCurrency }}</span>
-                                            </p>
-                                            <hr>
+                                        <div class="col-12">
+                                            <div class="card-body pt-5">
+                                                <p class="card-text fw-medium mb-1">Phương tiện</p>
+                                                <p class="card-title fw-medium mb-1">
+                                                    Hãng: {{ transportationSchedule.transportationBrandsByTransportationBrandId.transportationBrandName }}</p>
+                                                <p class="card-title fw-medium mb-1">
+                                                    Loại: {{ transportationSchedule.transportationTypesByTransportationTypeId.transportationTypeName }}</p>
+                                                <p class="card-title mb-1">biển
+                                                    số: {{ transportationSchedule.transportationsByTransportationId.licensePlate }}</p>
+                                                <p class="card-title fw-medium mb-3">số chỗ
+                                                    ngồi: {{ transportationSchedule.transportationsByTransportationId.amountSeat }}</p>
+                                                <p class="card-text fw-medium mb-1">Chuyến đi</p>
+                                                <ul class="ps-0">
+                                                    <li class="d-flex align-items-start mb-2">
+                                                        <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                                        <span>Đi từ <span
+                                                                class="fw-medium">{{ transportationSchedule.fromLocation }}</span>  đến
+                                                                        <span class="fw-medium">{{ transportationSchedule.toLocation }}</span></span>
+                                                    </li>
+                                                    <li class="d-flex align-items-start mb-2">
+                                                        <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                                        <span>ngày khởi hành: <span
+                                                                class="fw-medium"> {{ transportationSchedule.departureTime | dateWithTimeFormat }}</span></span>
+                                                    </li>
+                                                    <li class="d-flex align-items-start mb-2">
+                                                        <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                                        <span>ngày về: <span
+                                                                class="fw-medium">{{ transportationSchedule.arrivalTime | dateWithTimeFormat }}</span></span>
+                                                    </li>
+                                                </ul>
 
-                                            <div class="d-flex justify-content-between">
-                                                <div class="">
-                                                    <p class="mb-0 d-flex justify-content-center">Ngày nhận phòng</p>
-                                                    <p class="fw-bold mb-0 d-flex justify-content-center"
-                                                       style="font-size: 13px">{{ (ohd.checkIn | date: 'dd/MM/yyyy') + ' 12-14 giờ' }}</p>
-                                                </div>
-                                                <div class="col-2 d-flex justify-content-center align-items-center px-2">
-                                                    <p class="fw-bold mb-0 text-center">{{ ohd.checkIn | calculateDaysAndNights:ohd.checkOut }}</p>
-                                                </div>
-                                                <div class="pe-3">
-                                                    <p class="mb-0 d-flex justify-content-center">Ngày trả phòng</p>
-                                                    <p class="fw-bold mb-0 d-flex justify-content-center"
-                                                       style="font-size: 13px">{{ (ohd.checkOut | date: 'dd/MM/yyyy') + ' 12 giờ' }}</p>
-                                                </div>
+                                                <p class="m-2 fw-medium">
+                                                    Trạng thái:
+                                                    <span class="fw-bold color-green"
+                                                          ng-if="transportationSchedule.isStatus === 0">
+                                                                    Đang hoạt động
+                                                            </span>
+                                                    <span class="fw-bold color-danger"
+                                                          ng-if="transportationSchedule.isStatus === 1">
+                                                                Ngưng hoạt động
+                                                            </span>
+                                                </p>
                                             </div>
                                         </div>
-                                        <hr ng-if="!$last" class="mt-3">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-5 ps-2">
+                        <div class="col-lg-6 ps-2">
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <h5 class="card-title">Thông tin người đặt</h5>
                                     <div class="mb-3">
                                         <label for="fullName" class="form-label">Họ và tên của bạn <span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" ng-model="tourGuide.fullName"
+                                        <input type="text" class="form-control" ng-model="tourGuide.customerName"
                                                id="fullName"
                                                placeholder="Nguyễn Văn A" required>
-                                        <div class="invalid-feedback">
-                                            Vui lòng nhập họ của bạn.
-                                        </div>
                                     </div>
                                     <!-- Form Row 2 for Email -->
                                     <div class="mb-3">
                                         <label for="email" class="form-label">email của bạn <span
                                                 class="text-danger">*</span></label>
-                                        <input type="email" class="form-control" ng-model="tourGuide.email" id="email"
+                                        <input type="email" class="form-control" ng-model="tourGuide.customerEmail"
+                                               id="email"
                                                placeholder="example@gmail.com" required>
-                                        <div class="invalid-feedback">
-                                            Vui lòng nhập email của bạn.
-                                        </div>
                                     </div>
                                     <!-- Form Row 3 for Phone Number -->
                                     <div class="mb-3">
                                         <label for="phoneNumber" class="form-label">số điện thoại của bạn <span
                                                 class="text-danger">*</span></label>
-                                        <input type="tel" class="form-control" ng-model="tourGuide.phone"
+                                        <input type="tel" class="form-control" ng-model="tourGuide.customerPhone"
                                                id="phoneNumber"
                                                placeholder="0375780079"
                                                required>
-                                        <div class="invalid-feedback">
-                                            Vui lòng nhập số điện thoại của bạn.
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -287,14 +309,14 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-if="tourGuide.orderStatus == 0"
+                <button type="button" class="btn btn-green" data-dismiss="modal" ng-if="tourGuide.orderStatus == 0"
                         ng-click="openModalPay()">Thanh toán
                 </button>
                 <button type="button" class="btn btn-green" data-dismiss="modal" ng-if="tourGuide.orderStatus == 2"
-                        ng-click="restoreBookingTourHotel()">Khôi phục đơn
+                        ng-click="restoreBookingTourTransportationSchedules(transportationSchedule.id)">Khôi phục đơn
                 </button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal" ng-if="tourGuide.orderStatus != 2"
-                        ng-click="deactivateBookingTourHotel()">Hủy đơn
+                        ng-click="deactivateBookingTourTransportationSchedules(transportationSchedule.id)">Hủy đơn
                 </button>
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Thoát</button>
             </div>

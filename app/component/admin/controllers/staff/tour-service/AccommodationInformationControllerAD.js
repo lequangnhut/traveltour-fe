@@ -8,19 +8,19 @@ travel_app.controller('AccommodationInformationControllerAD',
         $scope.currentPage = 0;
         $scope.pageSize = 5;
 
-        function errorCallback() {
+        const errorCallback=() => {
             $location.path('/admin/internal-server-error')
         }
 
         //phân trang
-        $scope.setPage = function (page) {
+        $scope.setPage =  (page)=> {
             if (page >= 0 && page < $scope.totalPages) {
                 $scope.currentPage = page;
                 $scope.getBookingTourHotelList();
             }
         };
 
-        $scope.getPaginationRange = function () {
+        $scope.getPaginationRange = () => {
             let range = [];
             let start, end;
 
@@ -43,12 +43,12 @@ travel_app.controller('AccommodationInformationControllerAD',
             return range;
         };
 
-        $scope.pageSizeChanged = function () {
+        $scope.pageSizeChanged = () => {
             $scope.currentPage = 0;
             $scope.getBookingTourHotelList();
         };
 
-        $scope.getDisplayRange = function () {
+        $scope.getDisplayRange = () => {
             return Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
         };
 
@@ -58,24 +58,24 @@ travel_app.controller('AccommodationInformationControllerAD',
             $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
         };
 
-        $scope.getBookingTourHotelList = function () {
+        $scope.getBookingTourHotelList = () => {
             $scope.isLoading = true;
             AccommodationInformationServiceAD.getAllByInfo($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.tourDetailId, $scope.orderHotelStatus, $scope.searchTerm)
-                .then(function (response) {
+                .then( (response)=> {
                     $scope.bookingTourHotelData(response)
-                }, errorCallback).finally(function () {
+                }, errorCallback).finally(() => {
                 $scope.isLoading = false;
             });
         };
 
         //sắp xếp
-        $scope.sortData = function (column) {
+        $scope.sortData =  (column)=> {
             $scope.sortBy = column;
             $scope.sortDir = ($scope.sortDir === 'asc') ? 'desc' : 'asc';
             $scope.getBookingTourHotelList();
         };
 
-        $scope.getSortIcon = function (column) {
+        $scope.getSortIcon =  (column) => {
             if ($scope.sortBy === column) {
                 if ($scope.sortDir === 'asc') {
                     return $sce.trustAsHtml('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M182.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg>');
@@ -87,31 +87,43 @@ travel_app.controller('AccommodationInformationControllerAD',
         };
 
         //tìm kiếm
-        $scope.searchBookingTour = function () {
+        $scope.searchBookingTour = () => {
             if (searchTimeout) $timeout.cancel(searchTimeout);
 
-            searchTimeout = $timeout(function () {
+            searchTimeout = $timeout(() => {
                 AccommodationInformationServiceAD.getAllByInfo($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.tourDetailId, $scope.orderHotelStatus, $scope.searchTerm)
-                    .then(function (response) {
+                    .then( (response) => {
                         $scope.bookingTourHotelData(response)
                     }, errorCallback);
             }, 500);
         };
 
-        $scope.orderHotelChanged = function () {
+        $scope.orderHotelChanged = () => {
             $scope.getBookingTourHotelList();
         };
 
-        $scope.deactivateBookingTourHotel = function () {
-            function confirm() {
-                AccommodationInformationServiceAD.deactivate($scope.tourDetailId, $scope.hotelId).then(function successCallback() {
+        $scope.deactivateBookingTourHotel = () => {
+            const confirm=() => {
+                AccommodationInformationServiceAD.deactivate($scope.tourDetailId, $scope.hotelId).then( () => {
                     toastAlert('success', 'Hủy thành công !');
-                    $('#modal-tour-detail').modal('hide');
+                    $scope.closeModal();
                     $scope.getBookingTourHotelList();
                 }, errorCallback);
             }
 
-            confirmAlert('Bạn có chắc chắn muốn hủy không ?', confirm);
+            confirmAlert('Bạn có chắc chắn muốn hủy đơn này không ?', confirm);
+        }
+
+        $scope.restoreBookingTourHotel = () => {
+            const confirm= () => {
+                AccommodationInformationServiceAD.restore($scope.tourDetailId, $scope.hotelId).then(() => {
+                    toastAlert('success', 'Khôi phục thành công !');
+                    $scope.closeModal();
+                    $scope.getBookingTourHotelList();
+                }, errorCallback);
+            }
+
+            confirmAlert('Bạn có chắc chắn muốn khôi phục đơn này không ?', confirm);
         }
 
         $scope.getBookingTourHotelList();
@@ -119,7 +131,7 @@ travel_app.controller('AccommodationInformationControllerAD',
         /**
          * Phương thức mở modal
          */
-        $scope.openModal = function (hotelId) {
+        $scope.openModal =  (hotelId)=>  {
             $('#modal-order-hotel').modal('show');
 
             $scope.hotelId = hotelId;
@@ -170,7 +182,7 @@ travel_app.controller('AccommodationInformationControllerAD',
 
         }
 
-        $scope.openModalPay = function () {
+        $scope.openModalPay = () => {
             $scope.closeModal()
             $('#modal-pay').modal('show');
         }
@@ -178,18 +190,19 @@ travel_app.controller('AccommodationInformationControllerAD',
         /**
          * Phương thức đóng modal
          */
-        $scope.closeModal = function () {
+        $scope.closeModal = () => {
             $('#modal-order-hotel').modal('hide');
         };
-        $scope.closeModalPay = function () {
+
+        $scope.closeModalPay = () => {
             $('#modal-pay').modal('hide');
         };
 
         $scope.selectTourDetailId = () => {
             $scope.isLoading = true;
-            TourDetailsServiceAD.findAllTourDetails().then(function (response) {
+            TourDetailsServiceAD.findAllTourDetails().then( (response) => {
                 $scope.tourDetails = response.data.data.content
-            }, errorCallback).finally(function () {
+            }, errorCallback).finally( () => {
                 $scope.isLoading = false;
             });
         }

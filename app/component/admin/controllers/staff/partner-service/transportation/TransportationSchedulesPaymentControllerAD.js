@@ -22,7 +22,7 @@ travel_app.controller('TransportationSchedulesPaymentControllerAD',
             })
         }
 
-        const Confirm = function () {
+        const Confirm = () => {
             let orderTransportation = {
                 userId: $scope.tourGuide.id,
                 transportationScheduleId: transportationScheduleId,
@@ -41,24 +41,24 @@ travel_app.controller('TransportationSchedulesPaymentControllerAD',
             dataOrderTransportation.append("orderTransportationsDto", new Blob([JSON.stringify(orderTransportation)], {type: "application/json"}));
             dataOrderTransportation.append("tourDetailId", tourDetailId);
 
-            OrderTransportationServiceAD.createOrderTransportation(dataOrderTransportation).then(function successCallback(repo) {
+            OrderTransportationServiceAD.createOrderTransportation(dataOrderTransportation).then((repo) => {
                 toastAlert('success', 'Thêm mới thành công !');
                 $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/transportation-list`);
-            }, errorCallback).finally(function () {
+            }, errorCallback).finally(() => {
                 $scope.isLoading = false;
             });
         };
 
         $scope.ConfirmCompletionOfBooking = () => {
-            confirmAlert('Bạn có chắc chắn muốn đặt xe không ?', function () {
+            confirmAlert('Bạn có chắc chắn muốn đặt xe không ?', () => {
                 Confirm()
             });
         }
-        $scope.toggleActivities = function () {
+        $scope.toggleActivities = () => {
             $scope.showActivities = $scope.payment.method === '1';
         };
 
-        function errorCallback() {
+        const errorCallback = () => {
             $location.path('/admin/internal-server-error')
         }
     });

@@ -85,6 +85,7 @@
         <link href="/node_modules/mapbox-gl/dist/mapbox-gl.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/transportation.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/scroll-hidden.css" type="text/css" rel="stylesheet">
+        <link href="/assets/admin/assets/css/payment.css" type="text/css" rel="stylesheet">
 
         <script src="/assets/admin/assets/vendors/popper/popper.min.js"></script>
         <script src="/assets/admin/assets/vendors/bootstrap/bootstrap.min.js"></script>
@@ -307,9 +308,9 @@
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
                                     <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'vehicle-list'}"
-                                       ng-click="setActiveNavItem('vehicle-list')"
-                                       href="/admin/vehicle-list"
+                                       ng-class="{ 'active': activeNavItem === 'transportation-information-list'}"
+                                       ng-click="setActiveNavItem('transportation-information-list')"
+                                       href="/admin/transportation-information-list"
                                        role="button">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon">
@@ -1567,6 +1568,7 @@
 <script src="app/services/staff/CustomerServiceAD.js"></script>
 <script src="app/services/staff/BookingTourServiceAD.js"></script>
 <script src="app/services/staff/AccommodationInformationServiceAD.js"></script>
+<script src="app/services/staff/TransportationInformationServiceAD.js"></script>
 
 <!--====== Agent Service ======-->
 <script src="app/services/agent/TransportBrandServiceAG.js"></script>
@@ -1640,6 +1642,7 @@
 <script src="app/component/admin/controllers/staff/bill/BillControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/booking/BookingTourControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/tour-service/AccommodationInformationControllerAD.js"></script>
+<script src="app/component/admin/controllers/staff/tour-service/TransportationInformationControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/customer-management/CustomerControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/partner-service/ServiceListControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/partner-service/hotel-service/RoomTypeControllerAD.js"></script>

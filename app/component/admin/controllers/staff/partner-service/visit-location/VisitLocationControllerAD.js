@@ -19,7 +19,7 @@ travel_app.controller('VisitLocationControllerAD',
             })
         }
 
-        $scope.toggleDetails = function (visitLocation) {
+        $scope.toggleDetails = (visitLocation) => {
             visitLocation.showDetails = !visitLocation.showDetails;
         };
 
@@ -61,10 +61,10 @@ travel_app.controller('VisitLocationControllerAD',
         $scope.getDisplayRange = () => Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
 
 
-        $scope.visitLocationData = (response) => {
-            $scope.visitLocationList = response.data.data.content;
-            $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-            $scope.totalElements = response.data.data.totalElements;
+        const visitLocationData = (response) => {
+            $scope.visitLocationList = response.data.data !== null ? response.data.data.content : [];
+            $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
+            $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
         };
 
         $scope.getVisitLocationList = async () => {
@@ -80,7 +80,7 @@ travel_app.controller('VisitLocationControllerAD',
                     return;
                 }
 
-                $scope.visitLocationData(visitLocationResponse)
+                visitLocationData(visitLocationResponse)
 
                 $scope.provinces = provincesResponse.data;
 
@@ -93,7 +93,7 @@ travel_app.controller('VisitLocationControllerAD',
             }
         }
 
-        $scope.sortData = function (column) {
+        $scope.sortData = (column) => {
             $scope.sortBy = column;
             $scope.sortDir = ($scope.sortBy === column && $scope.sortDir === 'asc') ? 'desc' : 'asc';
             $scope.getVisitLocationList();
@@ -108,6 +108,7 @@ travel_app.controller('VisitLocationControllerAD',
 
         $scope.searchVisitLocationByKey = async () => {
             if (searchTimeout) $timeout.cancel(searchTimeout);
+            $scope.setPage(0);
 
             searchTimeout = $timeout(async () => {
                 try {
@@ -120,7 +121,7 @@ travel_app.controller('VisitLocationControllerAD',
                     }
 
                     await $timeout(() => {
-                        $scope.visitLocationData(response)
+                        visitLocationData(response)
                     }, 0);
 
                 } catch (error) {
@@ -131,6 +132,7 @@ travel_app.controller('VisitLocationControllerAD',
 
         $scope.searchVisitLocationByLocation = async () => {
             if (searchTimeout) $timeout.cancel(searchTimeout);
+            $scope.setPage(0);
 
             try {
                 const response = await VisitLocationServiceAD.getAllOrSearchVisitLocation(
@@ -149,7 +151,7 @@ travel_app.controller('VisitLocationControllerAD',
                 }
 
                 await $timeout(() => {
-                    $scope.visitLocationData(response)
+                    visitLocationData(response)
                 }, 0);
             } catch (error) {
                 console.error("Error:", error);
@@ -165,7 +167,7 @@ travel_app.controller('VisitLocationControllerAD',
         /**
          * Mở image bự hơn trong modal
          */
-        $scope.openImageModal = function (imageUrl) {
+        $scope.openImageModal = (imageUrl) => {
             document.getElementById('modalImage').src = imageUrl;
             $('#imageModal').modal('show');
         };
@@ -173,7 +175,7 @@ travel_app.controller('VisitLocationControllerAD',
         /**
          *  mở thêm modal thêm vé
          */
-        $scope.openModal = function (visitLocation) {
+        $scope.openModal = (visitLocation) => {
             $('#modal-tour-detail').modal('show');
             $scope.visitLocationModal = visitLocation;
             if (!visitLocation) return;
@@ -185,9 +187,9 @@ travel_app.controller('VisitLocationControllerAD',
             let childTicketCount = 0;
             let adultTicketCount = 0;
 
-            let selectedTickets = $scope.visitLocationModal.visitLocationTicketsById.filter(function (ticket) {
+            let selectedTickets = $scope.visitLocationModal.visitLocationTicketsById.filter((ticket) => {
                 return ticket.isChecked; // Lọc ra những phòng đã được chọn
-            }).map(function (ticket) {
+            }).map((ticket) => {
                 if (ticket.ticketTypeName === "Vé trẻ em") {
                     childTicketCount += ticket.quantity;
                 } else {
@@ -216,7 +218,7 @@ travel_app.controller('VisitLocationControllerAD',
             }, 0);
         };
 
-        $scope.onCheckChanged = function (ticket) {
+        $scope.onCheckChanged = (ticket) => {
             if (ticket.isChecked) {
                 ticket.quantity = 1;
             } else {
@@ -224,9 +226,11 @@ travel_app.controller('VisitLocationControllerAD',
             }
         };
 
-        $scope.bookTickets = function (visitLocationId) {
+        $scope.bookTickets = (visitLocationId) => {
+            let currentDateMinus1Minutes = new Date();
+            currentDateMinus1Minutes.setMinutes(currentDateMinus1Minutes.getMinutes() - 1);
 
-            let selectedTickets = $scope.visitLocationModal.visitLocationTicketsById.filter(function (ticket) {
+            let selectedTickets = $scope.visitLocationModal.visitLocationTicketsById.filter((ticket) => {
                 return ticket.isChecked;
             });
 
@@ -236,15 +240,18 @@ travel_app.controller('VisitLocationControllerAD',
             } else if (!$scope.departureDate) {
                 toastAlert('warning', 'Vui lòng chọn ngày đi !');
                 return;
+            } else if ($scope.departureDate < currentDateMinus1Minutes) {
+                toastAlert('warning', 'Ngày đi không được nhỏ hơn ngày hiện tại!');
+                return;
             }
 
-            confirmAlert('Bạn có chắc chắn muốn đặt vé không ?', function () {
+            confirmAlert('Bạn có chắc chắn muốn đặt vé không ?', () => {
                 $('#modal-tour-detail').modal('hide');
                 ConfirmTicketSelection(visitLocationId);
             });
         };
 
-        function errorCallback() {
+        const errorCallback = () => {
             $location.path('/admin/internal-server-error')
         }
 
