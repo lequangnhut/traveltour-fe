@@ -22,12 +22,10 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location
 
     let tourId = $routeParams.id;
 
-    //================================================================
-
     // Khai báo biến để lưu danh sách tourType
     $scope.tourTypeList = [];
 
-    function errorCallback() {
+    const errorCallback = () => {
         $location.path('/admin/internal-server-error')
     }
 
@@ -35,11 +33,11 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location
      * Tải lên hình ảnh tour và lưu vào biến tourBasic.tourImg
      * @param file
      */
-    $scope.uploadTourImage = function (file) {
+    $scope.uploadTourImage = (file) => {
         if (file && !file.$error) {
-            var reader = new FileReader();
+            let reader = new FileReader();
 
-            reader.onload = function (e) {
+            reader.onload = (e) => {
                 $scope.tourBasic.tourImg = e.target.result;
                 $scope.tourImgNoCloud = file;
                 $scope.hasImage = true; // Đánh dấu là đã có ảnh
@@ -50,7 +48,7 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location
         }
     };
 
-    $scope.getCurrentImageSource = function () {
+    $scope.getCurrentImageSource = () => {
         if ($scope.tourBasic.tourImg && typeof $scope.tourBasic.tourImg === 'string' && $scope.tourBasic.tourImg.startsWith('http')) {
             $scope.tourImgNoCloud = $scope.tourBasic.tourImg;
             return $scope.tourBasic.tourImg;
@@ -59,78 +57,75 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location
         }
     };
 
-    $scope.loadTourTypeName = function (tourId) {
+    $scope.loadTourTypeName = (tourId) => {
         if (!$scope.tourTypeNames[tourId]) {
             ToursTypeServiceAD.findTourTypeById(tourId)
-                .then(function (response) {
+                .then((response) => {
                     $scope.tourTypeNames[tourId] = response.data.tourTypeName;
                 }, errorCallback);
         }
     };
 
 
-    $scope.setPage = function (page) {
+    $scope.setPage = (page) => {
         if (page >= 0 && page < $scope.totalPages) {
             $scope.currentPage = page;
             $scope.getTourBasicList();
         }
     };
 
-    $scope.getPaginationRange = function () {
-        var range = [];
-        var start, end;
+    $scope.getPaginationRange = () => {
+        let range = [];
+        let start, end;
 
         if ($scope.totalPages <= 3) {
-            // Nếu tổng số trang nhỏ hơn hoặc bằng 5, hiển thị tất cả các trang
             start = 0;
             end = $scope.totalPages;
         } else {
-            // Hiển thị 2 trang trước và 2 trang sau trang hiện tại
             start = Math.max(0, $scope.currentPage - 1);
             end = Math.min(start + 3, $scope.totalPages);
 
-            // Điều chỉnh để luôn hiển thị 5 trang
             if (end === $scope.totalPages) {
                 start = $scope.totalPages - 3;
             }
         }
 
-        for (var i = start; i < end; i++) {
+        for (let i = start; i < end; i++) {
             range.push(i);
         }
 
         return range;
     };
 
-    $scope.pageSizeChanged = function () {
-        $scope.currentPage = 0; // Đặt lại về trang đầu tiên
-        $scope.getTourBasicList(); // Tải lại dữ liệu với kích thước trang mới
+    $scope.pageSizeChanged = () => {
+        $scope.currentPage = 0;
+        $scope.getTourBasicList();
     };
 
-    $scope.getDisplayRange = function () {
+    $scope.getDisplayRange = () => {
         return Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
     };
 
-    $scope.getTourBasicList = function () {
-        ToursServiceAD.findAllTours($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
-            .then(function (response) {
-                if (response.data === null || response.data.content.length === 0) {
-                    $scope.setPage(Math.max(0, $scope.currentPage - 1));
-                    return
-                }
-                $scope.tourBasicList = response.data.content;
-                $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
-                $scope.totalElements = response.data.totalElements; // Tổng số phần tử
+    const tourBasicData = (response) => {
+        $scope.tourBasicList = response.data !== null ? response.data.content : [];
+        $scope.totalPages = response.data !== null ? Math.ceil(response.data.totalElements / $scope.pageSize) : 0;
+        $scope.totalElements = response.data !== null ? response.data.totalElements : 0;
 
-                response.data.content.forEach(tour => {
-                    $scope.loadTourTypeName(tour.tourTypeId);
-                });
-            }, errorCallback).finally(function () {
+        $scope.tourBasicList.forEach(tour => {
+            $scope.loadTourTypeName(tour.tourTypeId);
+        });
+    };
+
+    $scope.getTourBasicList = () => {
+        ToursServiceAD.findAllTours($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
+            .then((response) => {
+                tourBasicData(response);
+            }, errorCallback).finally(() => {
             $scope.isLoading = false;
         });
 
         if (tourId !== undefined && tourId !== null && tourId !== "") {
-            ToursServiceAD.findTourById(tourId).then(function successCallback(response) {
+            ToursServiceAD.findTourById(tourId).then((response) => {
                 if (response.status === 200) {
                     $scope.tourBasic = response.data;
                 }
@@ -139,13 +134,13 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location
     };
 
 
-    $scope.sortData = function (column) {
+    $scope.sortData = (column) => {
         $scope.sortBy = column;
         $scope.sortDir = ($scope.sortBy === column && $scope.sortDir === 'asc') ? 'desc' : 'asc';
         $scope.getTourBasicList();
     };
 
-    $scope.getSortIcon = function (column) {
+    $scope.getSortIcon = (column) => {
         if ($scope.sortBy === column) {
             if ($scope.sortDir === 'asc') {
                 return $sce.trustAsHtml('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M182.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg>');
@@ -157,17 +152,16 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location
     };
 
 
-    $scope.searchTours = function () {
+    $scope.searchTours = () => {
         if (searchTimeout) $timeout.cancel(searchTimeout);
+        $scope.setPage(0);
 
-        searchTimeout = $timeout(function () {
+        searchTimeout = $timeout(() => {
             ToursServiceAD.findAllTours($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
-                .then(function (response) {
-                    $scope.tourBasicList = response.data.content;
-                    $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
-                    $scope.totalElements = response.data.totalElements;
+                .then((response) => {
+                    tourBasicData(response);
                 }, errorCallback);
-        }, 500); // 500ms debounce
+        }, 500);
     };
 
     $scope.getTourBasicList();
@@ -175,9 +169,9 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location
     /*==============================================================================*/
     //form create
 
-    $scope.loadSelectTourType = function () {
+    $scope.loadSelectTourType = () => {
         ToursTypeServiceAD.getAllTourTypes()
-            .then(function (response) {
+            .then((response) => {
                 $scope.tourTypeList = response.data;
             }, errorCallback);
     };
@@ -192,15 +186,15 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location
         dataTrans.append("toursDto", new Blob([JSON.stringify($scope.tourBasic)], {type: "application/json"}));
         dataTrans.append("tourImg", $scope.tourImgNoCloud);
 
-        ToursServiceAD.createTour(dataTrans).then(function successCallback() {
+        ToursServiceAD.createTour(dataTrans).then(() => {
             toastAlert('success', 'Thêm mới thành công !');
             $location.path('/admin/basic-tour-list');
-        }, errorCallback).finally(function () {
+        }, errorCallback).finally(() => {
             $scope.isLoading = false;
         });
     };
 
-    function urlToFile(url, fileName, mimeType) {
+    const urlToFile = (url, fileName, mimeType) => {
         return fetch(url)
             .then(response => response.blob())
             .then(blob => new File([blob], fileName, {type: mimeType}));
@@ -208,7 +202,7 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location
 
     //form update
     $scope.updateTourSubmit = () => {
-        function confirmUpdate() {
+        const confirmUpdate = () => {
             const dataTour = new FormData();
             $scope.isLoading = true;
 
@@ -229,10 +223,10 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location
     };
 
     const updateTour = (tourId, dataTour) => {
-        ToursServiceAD.updateTour(tourId, dataTour).then(function successCallback() {
+        ToursServiceAD.updateTour(tourId, dataTour).then(() => {
             toastAlert('success', 'Cập nhật thành công !');
             $location.path('/admin/basic-tour-list');
-        }, errorCallback).finally(function () {
+        }, errorCallback).finally(() => {
             $scope.isLoading = false;
         });
     }
@@ -242,9 +236,9 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location
     /**
      * Gọi api delete tour
      */
-    $scope.deleteTour = function (userId, tourName) {
-        function confirmDeleteTour() {
-            ToursServiceAD.deactivateTour(userId).then(function successCallback() {
+    $scope.deleteTour = (userId, tourName) => {
+        const confirmDeleteTour = () => {
+            ToursServiceAD.deactivateTour(userId).then(() => {
                 toastAlert('success', 'Xóa thành công !');
                 $scope.getTourBasicList();
             }, errorCallback);

@@ -37,7 +37,7 @@ travel_app.controller('VisitLocationPaymentControllerAD',
             })
         }
 
-        $scope.confirmCompletionOfTicketPurchase = function () {
+        $scope.confirmCompletionOfTicketPurchase = () => {
             $scope.orderVisitLocation = {
                 userId: $scope.tourGuide.id,
                 visitLocationId: visitLocationId,
@@ -60,7 +60,7 @@ travel_app.controller('VisitLocationPaymentControllerAD',
             dataOrderVisitLocation.append("orderVisitsDto", new Blob([JSON.stringify(orderVisitLocation)], {type: "application/json"}));
             dataOrderVisitLocation.append("tourDetailId", tourDetailId);
 
-            OrderVisitServiceAD.createOrderVisit(dataOrderVisitLocation).then(function successCallback(repo) {
+            OrderVisitServiceAD.createOrderVisit(dataOrderVisitLocation).then((repo) => {
                 let orderVisitLocationId = repo.data.data.id;
 
                 $scope.selectedTickets.forEach(item => {
@@ -75,21 +75,21 @@ travel_app.controller('VisitLocationPaymentControllerAD',
 
                     const dataOrderVisitLocationDetail = new FormData();
                     dataOrderVisitLocationDetail.append("orderVisitDetailsDto", new Blob([JSON.stringify(orderVisitLocationDetail)], {type: "application/json"}));
-                    OrderVisitDetailServiceAD.createOrderVisitDetail(dataOrderVisitLocationDetail).then(function successCallback() {
+                    OrderVisitDetailServiceAD.createOrderVisitDetail(dataOrderVisitLocationDetail).then(() => {
                     })
                 })
                 toastAlert('success', 'Thêm mới thành công !');
                 $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/visit-location-list`);
-            }, errorCallback).finally(function () {
+            }, errorCallback).finally(() => {
                 $scope.isLoading = false;
             });
         };
 
-        $scope.toggleActivities = function () {
+        $scope.toggleActivities = () => {
             $scope.showActivities = $scope.payment.method === '1';
         };
 
-        function errorCallback() {
+        const errorCallback = () => {
             $location.path('/admin/internal-server-error')
         }
     });

@@ -147,10 +147,10 @@
 
                                         <p class="m-2 fw-medium">
                                             Trạng thái:
-                                            <span class="fw-bold color-green" ng-if="ts.isActive === true">
+                                            <span class="fw-bold color-green" ng-if="ts.isStatus === 0">
                                                 Đang hoạt động
                                         </span>
-                                            <span class="fw-bold color-green" ng-if="ts.isActive === false">
+                                            <span class="fw-bold color-danger" ng-if="ts.isStatus === 1">
                                             Ngưng hoạt động
                                         </span>
                                         </p>
@@ -159,7 +159,7 @@
                                         <div class="mb-2">
                                             <p class="fw-medium mb-0 float-end">{{ ts.unitPrice | vnCurrency }}</p>
                                             <p class="float-end mb-3">Bao gồm phí và thuế</p>
-                                            <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/transportation-list/{{ts.id}}/transportation-payment"
+                                            <a ng-click="bookACar(ts)"
                                                class="btn btn-success float-end">Đặt xe</a>
                                         </div>
                                     </div>

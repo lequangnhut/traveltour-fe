@@ -136,27 +136,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Admin Schedule Management
          */
-        .when('/admin/tours-are-going-list', {
-            templateUrl: 'app/component/admin/views/pages/staff/schedule-management/tours-are-going/tours-are-going-list.html',
-            controller: 'ToursAreGoingControllerAD'
-        })
-        .when('/admin/travel-schedule-list', {
-            templateUrl: 'app/component/admin/views/pages/staff/schedule-management/travel-schedule/travel-schedule-list.html',
-            controller: 'TravelScheduleControllerAD'
-        })
-        //tour-customers
-        .when('/admin/tour-customer-list', {
-            templateUrl: 'app/component/admin/views/pages/staff/schedule-management/tour-customers/tour-customers-list.html',
-            controller: 'TourCustomersControllerAD'
-        })
-        .when('/admin/tour-customer-list/tour-customer-create', {
-            templateUrl: 'app/component/admin/views/pages/staff/schedule-management/tour-customers/tour-customers-create.html',
-            controller: 'TourCustomersControllerAD'
-        })
-        .when('/admin/tour-customer-list/tour-customer-update/:id', {
-            templateUrl: 'app/component/admin/views/pages/staff/schedule-management/tour-customers/tour-customers-update.html',
-            controller: 'TourCustomersControllerAD'
-        })
         .when('/admin/booking-list', {
             templateUrl: 'app/component/admin/views/pages/staff/booking/booking-list.html',
             controller: 'BookingControllerAD'
@@ -164,6 +143,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/admin/accommodation-information-list', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-service/accommodation-information-list.html',
             controller: 'AccommodationInformationControllerAD'
+        })
+        .when('/admin/transportation-information-list', {
+            templateUrl: 'app/component/admin/views/pages/staff/tour-service/transportation-information-list.html',
+            controller: 'TransportationInformationControllerAD'
         })
         /**
          * Agent

@@ -21,8 +21,8 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
 
 
     $scope.customerList = [];
-    $scope.currentPage = 0; // Trang hiện tại
-    $scope.pageSize = 5; // Số lượng tours trên mỗi trang
+    $scope.currentPage = 0;
+    $scope.pageSize = 5;
 
     let searchTimeout;
     let customerId = $routeParams.id;
@@ -32,7 +32,7 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
     $scope.cardError = false;
     $scope.invalidBirth = false;
 
-    function errorCallback() {
+    const errorCallback = () => {
         $location.path('/admin/internal-server-error')
     }
 
@@ -40,11 +40,11 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
      * Tải lên hình ảnh tour và lưu vào biến customer.avatar
      * @param file
      */
-    $scope.uploadCustomerAvatar = function (file) {
+    $scope.uploadCustomerAvatar = (file) => {
         if (file && !file.$error) {
             let reader = new FileReader();
 
-            reader.onload = function (e) {
+            reader.onload = (e) => {
                 $scope.customer.avatar = e.target.result;
                 $scope.customerAvatarNoCloud = file;
                 $scope.hasImage = true; // Đánh dấu là đã có ảnh
@@ -56,7 +56,7 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
     };
 
 
-    $scope.checkBirth = function () {
+    $scope.checkBirth = () => {
         let birthDate = new Date($scope.customer.birth);
         let today = new Date();
         let age = today.getFullYear() - birthDate.getFullYear();
@@ -68,11 +68,11 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
     };
 
 
-    $scope.isBirthInvalid = function () {
+    $scope.isBirthInvalid = () => {
         return $scope.invalidBirth; // Sử dụng biến mới để kiểm tra tuổi
     };
 
-    $scope.isBirthValid = function () {
+    $scope.isBirthValid = () => {
         return !$scope.invalidBirth && $scope.customer.birth;
     };
 
@@ -80,8 +80,8 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
     /**
      * @message Check duplicate email
      */
-    $scope.checkDuplicateEmail = function () {
-        AuthService.checkExistEmail($scope.customer.email).then(function successCallback(response) {
+    $scope.checkDuplicateEmail = () => {
+        AuthService.checkExistEmail($scope.customer.email).then((response) => {
             $scope.emailError = response.data.exists;
         });
     };
@@ -89,8 +89,8 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
     /**
      * @message Check duplicate phone
      */
-    $scope.checkDuplicatePhone = function () {
-        AuthService.checkExistPhone($scope.customer.phone).then(function successCallback(response) {
+    $scope.checkDuplicatePhone = () => {
+        AuthService.checkExistPhone($scope.customer.phone).then((response) => {
             $scope.phoneError = response.data.exists;
         });
     };
@@ -98,13 +98,13 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
     /**
      * @message Check duplicate card
      */
-    $scope.checkDuplicateCard = function () {
-        AuthService.checkExistCard($scope.customer.citizenCard).then(function successCallback(response) {
+    $scope.checkDuplicateCard = () => {
+        AuthService.checkExistCard($scope.customer.citizenCard).then((response) => {
             $scope.cardError = response.data.exists;
         });
     };
 
-    $scope.getCurrentAvatarSource = function () {
+    $scope.getCurrentAvatarSource = () => {
         if ($scope.customer.avatar && typeof $scope.customer.avatar === 'string') {
             if ($scope.customer.avatar.startsWith('http')) {
                 $scope.customerAvatarNoCloud = $scope.customer.avatar;
@@ -118,14 +118,14 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
     };
 
 
-    $scope.setPage = function (page) {
+    $scope.setPage = (page) => {
         if (page >= 0 && page < $scope.totalPages) {
             $scope.currentPage = page;
             $scope.getCustomerList();
         }
     };
 
-    $scope.getPaginationRange = function () {
+    $scope.getPaginationRange = () => {
         let range = [];
         let start, end;
 
@@ -148,49 +148,53 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
         return range;
     };
 
-    $scope.pageSizeChanged = function () {
+    $scope.pageSizeChanged = () => {
         $scope.currentPage = 0; // Đặt lại về trang đầu tiên
         $scope.getCustomerList(); // Tải lại dữ liệu với kích thước trang mới
     };
 
-    $scope.getDisplayRange = function () {
+    $scope.getDisplayRange = () => {
         return Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
     };
 
-    $scope.getCustomerList = function () {
+    const customerData = (response) => {
+        $scope.customerList = response.data.data !== null ? response.data.data.content : [];
+        $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
+        $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
+    };
+
+    $scope.getCustomerList = () => {
         CustomerServiceAD.getAllCustomer($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
-            .then(function (response) {
-                $scope.customerList = response.data.data.content;
-                $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                $scope.totalElements = response.data.data.totalElements; // Tổng số phần tử
-            }, errorCallback).finally(function () {
+            .then((response) => {
+                customerData(response);
+            }, errorCallback).finally(() => {
             $scope.isLoading = false;
         });
 
         if (customerId !== undefined && customerId !== null && customerId !== "") {
-            CustomerServiceAD.findCustomerById(customerId).then(function successCallback(response) {
+            CustomerServiceAD.findCustomerById(customerId).then((response) => {
                 if (response.status === 200) {
-                    $timeout(function () {
+                    $timeout(() => {
                         $scope.customer = response.data.data;
                         $rootScope.phonenow = response.data.data.phone;
                         $rootScope.cardnow = response.data.data.citizenCard;
                         $scope.customer.birth = new Date(response.data.data.birth);
                     }, 0);
                 }
-            }, errorCallback).finally(function () {
+            }, errorCallback).finally(() => {
                 $scope.isLoading = false;
             });
         }
     };
 
 
-    $scope.sortData = function (column) {
+    $scope.sortData = (column) => {
         $scope.sortBy = column;
         $scope.sortDir = ($scope.sortDir === 'asc') ? 'desc' : 'asc';
         $scope.getCustomerList();
     };
 
-    $scope.getSortIcon = function (column) {
+    $scope.getSortIcon = (column) => {
         if ($scope.sortBy === column) {
             if ($scope.sortDir === 'asc') {
                 return $sce.trustAsHtml('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M182.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg>');
@@ -202,15 +206,14 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
     };
 
 
-    $scope.searchCustomers = function () {
+    $scope.searchCustomers = () => {
         if (searchTimeout) $timeout.cancel(searchTimeout);
+        $scope.setPage(0);
 
-        searchTimeout = $timeout(function () {
+        searchTimeout = $timeout(() => {
             CustomerServiceAD.getAllCustomer($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
-                .then(function (response) {
-                    $scope.customerList = response.data.data.content;
-                    $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                    $scope.totalElements = response.data.data.totalElements;
+                .then((response) => {
+                    customerData(response);
                 }, errorCallback);
         }, 500); // 500ms debounce
     };
@@ -226,15 +229,15 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
         dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
         dataCustomer.append("customerAvatar", $scope.customerAvatarNoCloud);
 
-        CustomerServiceAD.createCustomer(dataCustomer).then(function successCallback() {
+        CustomerServiceAD.createCustomer(dataCustomer).then(() => {
             toastAlert('success', 'Thêm mới thành công !');
             $location.path('/admin/customer-list');
-        }, errorCallback).finally(function () {
+        }, errorCallback).finally(() => {
             $scope.isLoading = false;
         });
     };
 
-    function urlToFile(url, fileName, mimeType) {
+    const urlToFile = (url, fileName, mimeType) => {
         return fetch(url)
             .then(response => response.blob())
             .then(blob => new File([blob], fileName, {type: mimeType}));
@@ -242,8 +245,8 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
 
     //form update
     $scope.updateCustomerSubmit = () => {
-        const dataCustomer = new FormData();
         $scope.isLoading = true;
+        const dataCustomer = new FormData();
         if ($scope.hasImage) {
             dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
             dataCustomer.append("customerAvatar", $scope.customerAvatarNoCloud);
@@ -258,22 +261,22 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
     };
 
     const updateCustomer = (customerId, dataCustomer) => {
-        CustomerServiceAD.updateCustomer(customerId, dataCustomer).then(function successCallback() {
+        $scope.isLoading = true;
+        CustomerServiceAD.updateCustomer(customerId, dataCustomer).then(() => {
             toastAlert('success', 'Cập nhật thành công !');
             $location.path('/admin/customer-list');
-        }, errorCallback).finally(function () {
+        }, errorCallback).finally(() => {
             $scope.isLoading = false;
         });
     }
-
 
     //delete
     /**
      * Gọi api delete tour
      */
-    $scope.deleteCustomer = function (customerId, fullName) {
-        function confirmDeleteCustomer() {
-            CustomerServiceAD.deactivateCustomer(customerId).then(function successCallback() {
+    $scope.deleteCustomer = (customerId, fullName) => {
+        const confirmDeleteCustomer = () => {
+            CustomerServiceAD.deactivateCustomer(customerId).then(() => {
                 toastAlert('success', 'Xóa thành công !');
                 $scope.getCustomerList();
             }, errorCallback);
@@ -284,32 +287,32 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
     /**
      * * Của Thuynhdpc04763
      */
-    $scope.checkDuplicateThisPhone = function () {
-        if($scope.customer.phone == $rootScope.phonenow){
+    $scope.checkDuplicateThisPhone = () => {
+        if ($scope.customer.phone == $rootScope.phonenow) {
             $scope.phoneError = false;
             return;
         }
         AuthService.checkExistPhone($scope.customer.phone)
-            .then(function successCallback(response) {
-                if (response.status === 200){
+            .then((response) => {
+                if (response.status === 200) {
                     $scope.phoneError = response.data.exists;
-                }else{
+                } else {
                     $scope.phoneError = response.data.exists;
                 }
             });
     };
 
-    $scope.checkDuplicateCard = function () {
-        if($scope.customer.citizenCard == $rootScope.cardnow){
+    $scope.checkDuplicateCard = () => {
+        if ($scope.customer.citizenCard == $rootScope.cardnow) {
             $scope.cardError = false;
             return;
         }
-        AuthService.checkExistCard($scope.customer.citizenCard).then(function successCallback(response) {
+        AuthService.checkExistCard($scope.customer.citizenCard).then((response) => {
             $scope.cardError = response.data.exists;
         });
     };
 
-    function confirmUpdate() {
+    const confirmUpdate = () => {
         const dataCustomer = new FormData();
         $scope.isLoading = true;
         if ($scope.hasImage) {
@@ -317,8 +320,8 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
             dataCustomer.append("customerAvatar", $scope.customerAvatarNoCloud);
             updateInfo(customerId, dataCustomer);
         } else {
-            if($scope.customer.avatar === null){
-               $scope.customer.avatar = 'https://i.imgur.com/xm5Ufr5.jpg'
+            if ($scope.customer.avatar === null) {
+                $scope.customer.avatar = 'https://i.imgur.com/xm5Ufr5.jpg'
             }
             urlToFile($scope.customer.avatar, fileName, mimeType).then(file => {
                 dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
@@ -330,11 +333,11 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
 
     const updateInfo = (customerId, dataCustomer) => {
         $scope.isLoading = true;
-        CustomerServiceAD.updateCustomer(customerId, dataCustomer).then(function successCallback(response) {
+        CustomerServiceAD.updateCustomer(customerId, dataCustomer).then((response) => {
             if (response.status === 200) {
                 toastAlert('success', 'Cập nhật thành công !');
                 LocalStorageService.set('user', response.data.data);
-                var userRoles = response.data.data.roles;
+                let userRoles = response.data.data.roles;
 
                 if (hasAdminRole(userRoles)) {
                     $window.location.href = '/admin/dashboard';
@@ -344,18 +347,18 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
             } else {
                 $location.path('/admin/page-not-found');
             }
-        }, errorCallback).finally(function () {
+        }, errorCallback).finally(() => {
             $scope.isLoading = false;
         });
     }
-    $scope.updateInfoSubmit = function () {
+    $scope.updateInfoSubmit = () => {
         confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdate);
     }
 
-    function hasAdminRole(roles) {
-        var adminRoles = ['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_STAFF', 'ROLE_GUIDE'];
+    const hasAdminRole = (roles) => {
+        let adminRoles = ['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_STAFF', 'ROLE_GUIDE'];
 
-        for (var i = 0; i < roles.length; i++) {
+        for (let i = 0; i < roles.length; i++) {
             if (adminRoles.includes(roles[i].nameRole)) {
                 return true;
             }
@@ -366,7 +369,7 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
     if (AuthService.getUser() !== null) {
         $scope.roles = AuthService.getUser().roles.map(role => role.nameRole);
     }
-    $scope.hasRole = function (roleToCheck) {
+    $scope.hasRole = (roleToCheck) => {
         return $scope.roles.includes(roleToCheck);
     };
 });

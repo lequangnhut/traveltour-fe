@@ -45,4 +45,22 @@ travel_app.service('AccommodationInformationServiceAD', function ($http, $q) {
         return deferred.promise;
     };
 
+    this.restore = function (tourDetailId, hotelId) {
+        const deferred = $q.defer();
+        $http({
+            method: 'PUT',
+            url: API + `restore-booking-tour-hotel-by-tour-detail-id-and-hotel-id`,
+            params:
+                {
+                    tourDetailId: tourDetailId,
+                    hotelId: hotelId
+                }
+        }).then(function (response) {
+            deferred.resolve(response);
+        }, function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    };
+
 });
