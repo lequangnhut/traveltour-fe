@@ -1,4 +1,4 @@
-travel_app.controller('TourCusController', function ($scope, $location, TourCusService, TourDetailCusService, MapBoxService) {
+travel_app.controller('TourCusController', function ($scope, $location, TourCusService, TourDetailCusService, MapBoxService, ToursServiceAD) {
     $scope.currentPage = 0;
     $scope.pageSize = 9;
 
@@ -312,4 +312,15 @@ travel_app.controller('TourCusController', function ($scope, $location, TourCusS
     $(document).on('click', '#redirectTourDetail', function () {
         $('#modelMap').modal('hide');
     });
+
+    $scope.showCallTourModal = function () {
+        ToursServiceAD.findAllToursSelect().then(function (response) {
+            console.log(response)
+            $scope.tourBasicList = response.data.data;
+        }, errorCallback);
+        $('#formTourModal').modal('show');
+    };
+    $scope.closeFormModal = function () {
+        $('#formTourModal').modal('hide');
+    };
 });

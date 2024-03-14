@@ -1,5 +1,5 @@
 travel_app.controller('TourDetailCusController',
-    function ($scope, $location, $sce, $routeParams, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailCusService, MapBoxService) {
+    function ($scope, $location, $sce, $routeParams, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailCusService, MapBoxService, ToursServiceAD) {
         mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
         $scope.markerTrips = [];
@@ -613,4 +613,15 @@ travel_app.controller('TourDetailCusController',
                 }]
             });
         });
+
+        $scope.showCallTourModal = function () {
+            ToursServiceAD.findAllToursSelect().then(function (response) {
+                console.log(response)
+                $scope.tourBasicList = response.data.data;
+            }, errorCallback);
+            $('#formTourModal').modal('show');
+        };
+        $scope.closeFormModal = function () {
+            $('#formTourModal').modal('hide');
+        };
     });

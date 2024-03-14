@@ -756,6 +756,18 @@
                         </div>
                         <!--=== Booking Info Widget ===-->
 
+                        <!--=== Call Tour Widget ===-->
+                        <div class="sidebar-widget booking-form-widget wow fadeInUp mb-40">
+                            <div class="img-holder position-relative" style="padding-top: 45px">
+                                <button type="button"
+                                        style="position: absolute;width: 250px; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+                                        class="btn btn-green" data-toggle="modal" data-target="#formTourModal"
+                                        ng-click="showCallTourModal()">Bạn có đề xuất gì không ?
+                                </button>
+                            </div>
+                        </div>
+                        <!--=== Call Tour Widget ===-->
+
                         <!--=== Recent Place Widget ===-->
                         <div class="sidebar-widget recent-place-widget mb-40 wow fadeInUp">
                             <h4 class="widget-title">Top 5 tour nổi bật</h4>
@@ -815,3 +827,82 @@
         </div>
     </div>
 </section><!--====== End CTA Section ======-->
+
+<!--====== Start Modal Section ======-->
+<div id="formTourModal" class="modal fade" role="dialog">
+    <div  class="modal-dialog modal-dialog-centered" style="max-width: 40%; height: 80vh;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mapModalLabel">Bạn có đề xuất về Tour</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="btn-close" data-dismiss="modal"
+                            ng-click="closeFormModal()"></button>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <div id="i-want" class="mapBoxModel col-12" style="height: 100%; padding-left: 30px; padding-right: 30px; margin: 0;">
+                    <form name="tourDetailForm" style="height: 100%">
+                        <div class="col-12 mb-1">
+                            <h4 style="font-size: larger;font-weight: bold;color: darkgreen;">{{tourDetail.toursByTourId.tourName}}</h4>
+                        </div>
+                        <div class="col-12 mb-1">
+                            <label for="departureDate" class="form-label">Ngày đi</label>
+                            <input class="form-control" type="date"
+                                   name="birth"
+                                   ng-model="customer.birth"
+                                   ng-class="{ 'is-invalid': isBirthInvalid(),
+                                            'is-valid': isBirthValid() }"
+                                   ng-change="checkBirth()"
+                                   required/>
+                            <small class="text-danger"
+                                   ng-show="customerForm.birth.$error.required">
+                                Vui lòng nhập ngày sinh!
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="isBirthInvalid()">
+                                Yêu cầu trên 16 tuổi!
+                            </small>
+                        </div>
+                        <div class="col-12 mb-1">
+                            <label for="arrivalDate" class="form-label">Ngày về</label>
+                            <input class="form-control" type="date"
+                                   name="birth"
+                                   ng-model="customer.birth"
+                                   ng-class="{ 'is-invalid': isBirthInvalid(),
+                                            'is-valid': isBirthValid() }"
+                                   ng-change="checkBirth()"
+                                   required/>
+                            <small class="text-danger"
+                                   ng-show="customerForm.birth.$error.required">
+                                Vui lòng nhập ngày sinh!
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="isBirthInvalid()">
+                                Yêu cầu trên 16 tuổi!
+                            </small>
+                        </div>
+                        <div class="col-12 mb-1">
+                            <label for="arrivalDate" class="form-label">Ghi chú</label>
+                            <textarea class="form-control" name="note" ng-model="customer.note" rows="4" maxlength="200" required></textarea>
+                            <small class="text-danger"
+                                   ng-show="customerForm.birth.$error.required">
+                                Vui lòng nhập ngày sinh!
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="isBirthInvalid()">
+                                Yêu cầu trên 16 tuổi!
+                            </small>
+                        </div>
+                        <div class="mt-3 d-flex justify-content-center pb-0">
+                            <button type="button" class="btn btn-green" style="padding: 8px 50px; border-radius: 30px"
+                                    ng-click="closeFormModal()">Đóng
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -588,6 +588,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
                 }
             }
         })
+        .when('/information/history-order/:id', {
+            templateUrl: 'app/component/customers/views/pages/info/history-order.html',
+            controller: 'InformationController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/home');
+                    }
+                }
+            }
+        })
         .when('/order-visit', {
             templateUrl: 'app/component/customers/views/pages/booking/booking.html',
             controller: ''
