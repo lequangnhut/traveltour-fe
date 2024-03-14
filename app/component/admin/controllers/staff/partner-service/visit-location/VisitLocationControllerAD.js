@@ -183,7 +183,6 @@ travel_app.controller('VisitLocationControllerAD',
         }
 
         let ConfirmTicketSelection = (visitLocationId) => {
-            console.log($scope.visitLocationModal)
             let childTicketCount = 0;
             let adultTicketCount = 0;
 
