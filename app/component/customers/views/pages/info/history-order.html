@@ -1,0 +1,1390 @@
+<style>
+    #information-section .active {
+        border-left: 2px solid #e6eaf2;
+    }
+
+    .btn-look {
+        color: white;
+        font-weight: 500;
+        background-color: #63ab45;
+        border-radius: 20px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .btn-back {
+        color: white;
+        font-weight: 500;
+        background-color: #ffc107;
+        border-radius: 20px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .btn-cancel {
+        color: white;
+        font-weight: 500;
+        background-color: #dc3545;
+        border-radius: 20px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .btn-look:hover {
+        color: #63ab45;
+        border: 1px solid #63ab45;
+        background-color: white;
+    }
+
+    .btn-back:hover {
+        color: #ffc107;
+        border: 1px solid #ffc107;
+        background-color: white;
+    }
+
+    .btn-cancel:hover {
+        color: #dc3545;
+        border: 1px solid #dc3545;
+        background-color: white;
+    }
+
+    .close:focus {
+
+        outline: 1px dotted #fff !important;
+    }
+
+    .modal-body {
+
+        padding: 0rem !important;
+    }
+
+    .modal-title {
+
+        color: #fff;
+    }
+
+    .modal-header {
+        background: #63ab45;
+        color: #fff !important;
+    }
+
+    .fa-close {
+        color: #fff;
+    }
+
+    .heading {
+        font-weight: 500 !important;
+    }
+
+    .subheadings {
+        font-size: 15px;
+        color: #9c27b0;
+    }
+
+    .dots {
+        height: 10px;
+        width: 10px;
+        background-color: green;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    .gallery img {
+
+        margin-right: 10px;
+    }
+</style>
+<!--====== Start Breadcrumb Section ======-->
+<section class="page-banner overlay pt-170 pb-200 bg_cover"
+         style="background-image: url('https://digwallpapers.com/wallpapers/full/6/a/0/42640-3840x2160-nature-computer-background-photo-desktop-4k.jpg');">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="page-banner-content text-center text-white">
+                    <h1 class="page-title">Lịch sử giao dịch</h1>
+                    <ul class="breadcrumb-link text-white">
+                        <li><a href="/home">Trang chủ</a></li>
+                        <li class="active">Lịch sử giao dịch</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--====== End Breadcrumb Section ======-->
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<section id="information-section" style="margin-top: 50px">
+    <div class="container mb-4">
+        <div class="">
+            <div class="fs-3 mb-2 fw-bolder" style="color: #1e1e1e; font-weight: 500">Lịch sử giao dịch người dùng</div>
+            <main class="col-md-12 ms-sm-auto col-lg-12 mt-3">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <nav class="">
+                            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                                <button class="nav-link active fw-medium text-green" id="nav-tour-tab"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#nav-tour" type="button" role="tab" aria-controls="nav-tour"
+                                        aria-selected="true">Tour du lịch
+                                </button>
+                                <button class="nav-link fw-medium text-green" id="nav-hotel-map" data-bs-toggle="tab"
+                                        data-bs-target="#nav-hotel" type="button" role="tab" aria-controls="nav-hotel"
+                                        aria-selected="false">Khách sạn
+                                </button>
+                                <button class="nav-link fw-medium text-green" id="nav-vehicle-map" data-bs-toggle="tab"
+                                        data-bs-target="#nav-vehicle" type="button" role="tab"
+                                        aria-controls="nav-vehicle"
+                                        aria-selected="false">Phương tiện
+                                </button>
+                                <button class="nav-link fw-medium text-green" id="nav-visit-map" data-bs-toggle="tab"
+                                        data-bs-target="#nav-visit" type="button" role="tab" aria-controls="nav-visit"
+                                        aria-selected="false">Tham quan
+                                </button>
+                            </div>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade active show mb-4" id="nav-tour" role="tabpanel"
+                                 aria-labelledby="nav-tour-tab" style="border-left:none">
+                                <nav aria-label="Page navigation" style="float: right; margin-bottom: 20px;"
+                                     class="d-flex">
+                                    <div style="margin-right: 20px">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="height:44px;margin-right:20px;"
+                                                ng-model="orderStatus"
+                                                ng-init="orderStatus = '0'"
+                                                ng-change="getChangeStatus()">
+                                            <option value="0">Chờ thanh toán</option>
+                                            <option value="1">Đã thanh toán</option>
+                                            <option value="2">Đã hủy</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-right: 20px">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="height:44px;margin-right:20px;text-align:center"
+                                                ng-model="pageSize"
+                                                ng-init="pageSize='5'"
+                                                ng-change="pageSizeChanged()">
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                        </select>
+                                    </div>
+
+                                    <ul class="pagination justify-content-center align-items-center">
+                                        <!-- Previous Page -->
+                                        <li class="page-item" ng-class="{disabled: currentPage === 0}">
+                                            <a class="page-link" ng-click="setPage(0)">
+                                                <i class="fa-solid fa-angles-left"></i>
+                                            </a>
+                                        </li>
+
+                                        <!-- Ellipsis at the beginning -->
+                                        <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                            <span class="page-link">...</span>
+                                        </li>
+
+                                        <!-- Pagination Numbers -->
+                                        <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                            ng-class="{active: n === currentPage}">
+                                            <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                        </li>
+
+                                        <!-- Ellipsis at the end -->
+                                        <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                            <span class="page-link">...</span>
+                                        </li>
+
+                                        <!-- Next Page -->
+                                        <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}">
+                                            <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                                <i class="fa-solid fa-angles-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <div ng-include="'app/component/utils/loading-table.html'"></div>
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="font-weight: 500">#</th>
+                                        <th scope="col" style="font-weight: 500">Mã đơn</th>
+                                        <th scope="col" style="font-weight: 500">Tên tour</th>
+                                        <th scope="col" style="font-weight: 500">Ngày xuất phát</th>
+                                        <th scope="col" style="font-weight: 500">Ngày tạo đơn</th>
+                                        <th scope="col" style="font-weight: 500">Trạng thái</th>
+                                        <th scope="col" style="font-weight: 500">Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="btl in bookingTourList">
+                                        <td>{{ $index + 1 }}</td>
+                                        <td style="text-align: justify;">{{ btl.id }}</td>
+                                        <td style="text-align: justify;">{{ btl.toursByTourId.tourName }}</td>
+                                        <td>{{ (btl.startDate | vietnameseDateTime) || 'Đang cập nhật' }}</td>
+                                        <td>{{ (btl.endDate | vietnameseDateTime) || 'Đang cập nhật' }}</td>
+                                        <td ng-if="btl.orderStatus == 0">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-warning"></span>
+                                                <span class="text-status-warning">Chờ thanh toán</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="btl.orderStatus == 1">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-success"></span>
+                                                <span class="text-status-success">Đã thanh toán</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="btl.orderStatus == 2">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-error"></span>
+                                                <span class="text-status-error">Hủy giao dịch</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-look" ng-click="openTourModal(btl)"><i
+                                                    class="fa-solid fa-magnifying-glass"></i> Xem chi tiết
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="bookingTourList.length === 0 && orderStatus == 0">
+                                        <td colspan="14">Hiện không có đơn chờ thanh toán.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourList.length === 0 && orderStatus == 1">
+                                        <td colspan="14">Hiện không có đơn nào hoàn thành.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourList.length === 0 && orderStatus == 2">
+                                        <td colspan="14">Hiện không có đơn nào được hủy.</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="container mt-4 mb-4">
+                                    <div class="col-12">
+                                        <div class="fs-3 mb-3 fw-bolder" style="color: #1e1e1e; font-weight: 500">Chính
+                                            sách hủy dịch vụ du lịch của Travel Tour
+                                        </div>
+                                        <div class="mb-2" style="text-align: justify;">
+                                            <h5 class="mb-2" style="color: #504d4d"><i
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Điều kiện hủy
+                                                tour:</h5>
+                                            <p>- Hủy vé trong vòng 24 giờ hoặc ngay ngày khởi hành, phải trả 100% giá
+                                                trị đơn hàng.</p>
+                                            <p>- Hủy vé trước ngày khởi hành từ 2 - 7 ngày, phải trả 80% giá trị đơn
+                                                hàng.</p>
+                                            <p>- Hủy vé trước ngày khởi hành từ 8 - 14 ngày, phải trả 50% giá trị đơn
+                                                hàng.</p>
+                                            <p>- Hủy vé trước ngày khởi hành từ 15 - 25 ngày, phải trả 30% giá trị đơn
+                                                hàng.</p>
+                                            <p>- Hủy vé trước ngày khởi hành từ 26 - 29 ngày, phải trả 5% giá trị đơn
+                                                hàng.</p>
+                                            <p>- Hủy vé trước ngày khởi hành từ 30 ngày trở lên, phải trả phải trả 1%
+                                                giá trị đơn hàng.</p>
+                                        </div>
+                                        <div class="mb-2" style="text-align: justify;">
+                                            <h5 class="mb-2" style="color: #504d4d"><i
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Lưu ý:</h5>
+                                            <p>- Sau khi hủy tour, du khách vui lòng kiểm tra mail để xác nhận trong
+                                                vòng 15 ngày kể từ ngày kết thúc tour.
+                                                Chúng tôi chỉ thanh toán trong khoảng thời gian nói trên.</p>
+                                            <p>- Lệ phí hủy tour sẽ thay đổi tùy thuộc vào từng tour tuyến quý khách
+                                                đăng ký.</p>
+                                            <p>- Thời gian hủy tour được tính cho ngày làm việc, không tính ngày Thứ
+                                                Bảy, Chủ Nhật và các ngày nghỉ Lễ. </p>
+                                            <p>- Các tour trong ngày lễ, tết sẽ áp dụng điều kiện hủy riêng.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal Booking Tour-->
+                                <div class="modal fade" id="tourModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                                        <div class="modal-content" style="border:none; width:100%">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Thông tin dịch vụ tour</h5>
+                                                <button type="button" class="close" data-dismiss="modal" ng-click="closeTourModal()"
+                                                        style="background-color:#63ab45;color:white">
+                                                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row g-0">
+                                                    <div class="col-md-12 border-right">
+                                                        <div class="status p-3">
+                                                            <table class="table table-borderless" style="border-right:groove">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                Mã booking</span>
+                                                                            <span class="subheadings">{{bookingTour.id}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                Ngày tạo đơn</span>
+                                                                            <span class="subheadings">{{bookingTour.dateCreated | vietnameseDateTime}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="max-width: 100px;">
+                                                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                Tên tour</span>
+                                                                            <a class="subheadings" ng-click="closeTourModal()"
+                                                                               href="/tours/tour-detail/{{ bookingTour.tourDetailsByTourDetailId.id }}"
+                                                                               title="Xem chi tiết">{{bookingTour.toursByTourId.tourName}}
+                                                                                - {{ bookingTour.startDate | calculateDaysAndNights:bookingTour.endDate }} </a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                Ngày đi</span>
+                                                                            <span class="subheadings">{{bookingTour.startDate | vietnameseDateTime}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                Ngày về</span>
+                                                                            <span class="subheadings">{{bookingTour.endDate | vietnameseDateTime}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                Email khách hàng</span>
+                                                                            <span class="subheadings">{{bookingTour.customerEmail}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td colspan="2">
+                                                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                Số lượng vé</span>
+                                                                            <span class="subheadings">{{ (bookingTour.capacityAdult || 0) + ' x Người lớn, ' + (bookingTour.capacityKid || 0) + ' x Trẻ em, ' + (bookingTour.capacityBaby || 0) + ' x Em bé' }}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                Giá trị đơn</span>
+                                                                            <span class="subheadings">{{bookingTour.orderTotal | vnCurrency }}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                HTTToán</span>
+                                                                            <span class="subheadings" ng-if="bookingTour.paymentMethod === 0">Thanh toán tại quầy</span>
+                                                                            <span class="subheadings" ng-if="bookingTour.paymentMethod === 1">Thanh toán VNPay</span>
+                                                                            <span class="subheadings" ng-if="bookingTour.paymentMethod === 2">Thanh toán ZaloPay</span>
+                                                                            <span class="subheadings" ng-if="bookingTour.paymentMethod === 3">Thanh toán Momo</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                Trạng thái</span>
+                                                                            <span class="subheadings" ng-if="bookingTour.orderStatus === 0"><i
+                                                                                    class="dots bg-warning"></i> Chờ thanh toán</span>
+                                                                            <span class="subheadings" ng-if="bookingTour.orderStatus === 1"><i
+                                                                                    class="dots bg-success"></i> Đã thanh toán</span>
+                                                                            <span class="subheadings" ng-if="bookingTour.orderStatus === 2"><i
+                                                                                    class="dots bg-danger"></i> Đã hủy</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <div class="d-flex">
+                                                                <button class="btn btn-cancel"
+                                                                        ng-disabled="bookingTour.orderStatus === 2 || isDepartureDatePassed(bookingTour.startDate)"
+                                                                        ng-click="cancelBooking(bookingTour)" style="margin-right:20px">
+                                                                    <i class="fa-solid fa-trash"></i> Hủy đơn
+                                                                </button>
+                                                                <button class="btn btn-back" data-bs-dismiss="modal"
+                                                                        ng-click="closeTourModal()">
+                                                                    <i class="fa-solid fa-circle-left"></i> Trở về
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane face" id="nav-hotel" role="tabpanel" aria-labelledby="nav-hotel"
+                                 style="border-left:none" ng-controller="BookingHotelCustomerController">
+                                <nav aria-label="Page navigation" style="float: right; margin-bottom: 20px;"
+                                     class="d-flex">
+                                    <div style="margin-right: 20px">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="height:44px;margin-right:20px;"
+                                                ng-model="orderStatus"
+                                                ng-init="orderStatus = '0'"
+                                                ng-change="getChangeHotelStatus()">
+                                            <option value="0">Chờ thanh toán</option>
+                                            <option value="1">Đã thanh toán</option>
+                                            <option value="2">Đã hủy</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-right: 20px">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="height:44px;margin-right:20px;text-align:center"
+                                                ng-model="pageSize"
+                                                ng-init="pageSize='5'"
+                                                ng-change="pageSizeChanged()">
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                        </select>
+                                    </div>
+                                    <ul class="pagination justify-content-center align-items-center">
+                                        <!-- Previous Page -->
+                                        <li class="page-item" ng-class="{disabled: currentPage === 0}">
+                                            <a class="page-link" ng-click="setPage(0)">
+                                                <i class="fa-solid fa-angles-left"></i>
+                                            </a>
+                                        </li>
+
+                                        <!-- Ellipsis at the beginning -->
+                                        <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                            <span class="page-link">...</span>
+                                        </li>
+
+                                        <!-- Pagination Numbers -->
+                                        <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                            ng-class="{active: n === currentPage}">
+                                            <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                        </li>
+
+                                        <!-- Ellipsis at the end -->
+                                        <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                            <span class="page-link">...</span>
+                                        </li>
+
+                                        <!-- Next Page -->
+                                        <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}">
+                                            <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                                <i class="fa-solid fa-angles-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <div ng-include="'app/component/utils/loading-table.html'"></div>
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="font-weight: 500">#</th>
+                                        <th scope="col" style="font-weight: 500">Mã đơn</th>
+                                        <th scope="col" style="font-weight: 500">Tên khách sạn</th>
+                                        <th scope="col" style="font-weight: 500">Ngày check-in</th>
+                                        <th scope="col" style="font-weight: 500">Ngày check-out</th>
+                                        <th scope="col" style="font-weight: 500">Trạng thái</th>
+                                        <th scope="col" style="font-weight: 500">Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="h in bookingTourHotelList">
+                                        <td>{{ $index + 1 }}</td>
+                                        <td style="text-align: justify;">{{ h.id }}</td>
+                                        <td style="text-align: justify;">{{  h.hotel.hotelName }}</td>
+                                        <td>{{  h.checkIn | vietnameseDateTime}}</td>
+                                        <td>{{  h.checkOut | vietnameseDateTime}}</td>
+                                        <td ng-if="h.orderStatus == 0">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-warning"></span>
+                                                <span class="text-status-warning">Chờ thanh toán</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="h.orderStatus == 1">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-success"></span>
+                                                <span class="text-status-success">Đã thanh toán</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="h.orderStatus == 2">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-error"></span>
+                                                <span class="text-status-error">Hủy giao dịch</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-look" ng-click="openHotelModal(h)"><i
+                                                    class="fa-solid fa-magnifying-glass"></i> Xem chi tiết
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="bookingTourHotelList.length === 0 && orderStatus == 0">
+                                        <td colspan="14">Hiện không có đơn chờ thanh toán.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourHotelList.length === 0 && orderStatus == 1">
+                                        <td colspan="14">Hiện không có đơn nào hoàn thành.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourHotelList.length === 0 && orderStatus == 2">
+                                        <td colspan="14">Hiện không có đơn nào được hủy.</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="container mt-4 mb-4">
+                                    <div class="col-12">
+                                        <div class="fs-3 mb-3 fw-bolder" style="color: #1e1e1e; font-weight: 500">Chính
+                                            sách hủy đặt phòng của Travel Tour
+                                        </div>
+                                        <div class="mb-2" style="text-align: justify;">
+                                            <h5 class="mb-2" style="color: #504d4d"><i
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Điều kiện hủy đặt
+                                                phòng:</h5>
+                                            <p>- Hủy đặt phòng trong vòng 24 giờ hoặc ngay ngày khởi hành, phải trả 80%
+                                                giá trị đơn hàng.</p>
+                                            <p>- Hủy đặt phòng trước thời gian check-in từ 2 - 4 ngày, phải trả 50% giá
+                                                trị đơn hàng.</p>
+                                            <p>- Hủy đặt phòng trước thời gian check-in từ 5 - 15 ngày, phải trả 30% giá
+                                                trị đơn hàng.</p>
+                                            <p>- Hủy đặt phòng trước thời gian check-in từ 16 - 30 ngày, phải trả 10%
+                                                giá trị đơn hàng.</p>
+                                            <p>- Hủy đặt phòng trước thời gian check-in từ 30 ngày trở lên, sẽ được hoàn
+                                                tiền 100%.</p>
+                                        </div>
+                                        <div class="mb-2" style="text-align: justify;">
+                                            <h5 class="mb-2" style="color: #504d4d"><i
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Lưu ý:</h5>
+                                            <p>- Chỉ được phép miễn phí hoàn tiền đối với các đặt phòng thuộc diện được
+                                                miễn phí hoàn tiền.</p>
+                                            <p>- Để biết thêm thông tin về chính sách hoàn tiền đặt phòng khách sạn quý
+                                                khách vui lòng xem
+                                                thông tin đặt chỗ/phiếu thanh toán khách sạn trên TravelTour.</p>
+                                            <p>- Tiến trình hoàn tiền cho đặt phòng khách sạn có thể mất 10 ngày tính từ
+                                                thời điểm TravelTour
+                                                nhận được của quý khách và chấp thuận yêu cầu hoàn tiền hoàn chỉnh dựa
+                                                trên các điều khoản và điều kiện áp dụng.</p>
+                                            <p>- Lệ phí hủy tour sẽ thay đổi tùy thuộc vào từng tour tuyến quý khách
+                                                đăng ký.</p>
+                                            <p>- Không chấp nhận yêu cầu hoàn tiền một phần đối với đặt phòng khách sạn;
+                                                Yêu cầu hoàn tiền sẽ
+                                                được áp dụng cho toàn bộ số đêm nghỉ của cùng một Mã đặt chỗ. </p>
+                                            <p>- Các đơn hàng trong ngày lễ, tết sẽ áp dụng điều kiện hủy riêng.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal Booking Hotel-->
+                                <div class="modal fade" id="hotelModal" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                                        <div class="modal-content" style="border:none; width:100%">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel2">Thông tin dịch vụ khách
+                                                    sạn</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        ng-click="closeHotelModal()"
+                                                        style="background-color:#63ab45;color:white">
+                                                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row g-0">
+                                                    <div class="col-md-12 border-right">
+                                                        <div class="status p-3">
+                                                            <table class="table table-borderless"
+                                                                   style="border-right:groove">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Mã booking</span>
+                                                                            <span class="subheadings">{{bookingHotel.id}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Ngày tạo đơn</span>
+                                                                            <span class="subheadings">{{bookingHotel.dateCreated | vietnameseDateTime}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="max-width: 100px;">
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Tên khách sạn</span>
+                                                                            <span class="subheadings">{{bookingHotel.hotel.hotelName}}</span>
+<!--                                                                            <a class="subheadings"-->
+<!--                                                                               ng-click="closeHotelModal()"-->
+<!--                                                                               href="/hotel/hotel-detail/{{ bookingHotel.hotel.id }}"-->
+<!--                                                                               title="Xem chi tiết"></a>-->
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Ngày check-in</span>
+                                                                            <span class="subheadings">{{bookingHotel.checkIn | vietnameseDateTime}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Ngày check-out</span>
+                                                                            <span class="subheadings">{{bookingHotel.checkOut | vietnameseDateTime}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Tên khách hàng</span>
+                                                                            <span class="subheadings">{{bookingHotel.customerName}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Email khách hàng</span>
+                                                                            <span class="subheadings">{{bookingHotel.customerEmail}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Số điện thoại</span>
+                                                                            <span class="subheadings">{{bookingHotel.customerPhone}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="3">
+                                                                        <div class="d-flex flex-column">
+                                                                            <table class="table" style="border-top: inset;border-bottom: inherit;">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
+                                                                                        STT</th>
+                                                                                    <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
+                                                                                        Tên phòng</th>
+                                                                                    <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
+                                                                                        Giá phòng</th>
+                                                                                    <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
+                                                                                        Số lượng</th>
+                                                                                    <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
+                                                                                        Thành tiền</th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                <tr ng-repeat="rtt in roomTypeListCustomer">
+                                                                                    <td style="text-align: center;" class="subheadings">{{$index + 1}}</td>
+                                                                                    <td style="text-align: center;" class="subheadings">{{rtt.roomTypes.roomTypeName}}</td>
+                                                                                    <td style="text-align: center;" class="subheadings">{{rtt.roomTypes.price | vnCurrency }}</td>
+                                                                                    <td style="text-align: center;" class="subheadings">{{rtt.amount}}</td>
+                                                                                    <td style="text-align: center;" class="subheadings">{{(rtt.roomTypes.price * rtt.amount) | vnCurrency }}</td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Giá trị đơn</span>
+                                                                            <span class="subheadings">{{bookingHotel.orderTotal | vnCurrency }}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                HTTToán</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingHotel.paymentMethod === 'Momo'">Ví điện tử Momo</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingHotel.paymentMethod === 'TTTT'">Thanh toán trực tiếp</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingHotel.paymentMethod === 'VNPay'">Thanh toán VN Pay</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingHotel.paymentMethod === 'ZaloPay'">Ví điện tử ZaloPay</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Trạng thái</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingHotel.orderStatus === 0"><i
+                                                                                    class="dots bg-warning"></i> Chờ thanh toán</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingHotel.orderStatus === 1"><i
+                                                                                    class="dots bg-success"></i> Đã thanh toán</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingHotel.orderStatus === 2"><i
+                                                                                    class="dots bg-danger"></i> Đã hủy</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <div class="d-flex">
+                                                                <button class="btn btn-cancel"
+                                                                        ng-disabled="bookingHotel.orderStatus === 2 || isCheckInPassed(bookingHotel.checkIn)"
+                                                                        ng-click="cancelBookingHotelOrder(bookingHotel)"
+                                                                        style="margin-right:20px">
+                                                                    <i class="fa-solid fa-trash"></i> Hủy đơn
+                                                                </button>
+                                                                <button class="btn btn-back" data-bs-dismiss="modal"
+                                                                        ng-click="closeHotelModal()">
+                                                                    <i class="fa-solid fa-circle-left"></i> Trở về
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane face" id="nav-vehicle" role="tabpanel" aria-labelledby="nav-vehicle"
+                                 style="border-left:none"  ng-controller="BookingTransCustomerController">
+                                <nav aria-label="Page navigation" style="float: right; margin-bottom: 20px;"
+                                     class="d-flex">
+                                    <div style="margin-right: 20px">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="height:44px;margin-right:20px;"
+                                                ng-model="orderStatus"
+                                                ng-init="orderStatus = '0'"
+                                                ng-change="getChangeTransStatus()">
+                                            <option value="0">Chờ thanh toán</option>
+                                            <option value="1">Đã thanh toán</option>
+                                            <option value="2">Đã hủy</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-right: 20px">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="height:44px;margin-right:20px;text-align:center"
+                                                ng-model="pageSize"
+                                                ng-init="pageSize='5'"
+                                                ng-change="pageSizeChanged()">
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                        </select>
+                                    </div>
+                                    <ul class="pagination justify-content-center align-items-center">
+                                        <!-- Previous Page -->
+                                        <li class="page-item" ng-class="{disabled: currentPage === 0}">
+                                            <a class="page-link" ng-click="setPage(0)">
+                                                <i class="fa-solid fa-angles-left"></i>
+                                            </a>
+                                        </li>
+
+                                        <!-- Ellipsis at the beginning -->
+                                        <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                            <span class="page-link">...</span>
+                                        </li>
+
+                                        <!-- Pagination Numbers -->
+                                        <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                            ng-class="{active: n === currentPage}">
+                                            <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                        </li>
+
+                                        <!-- Ellipsis at the end -->
+                                        <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                            <span class="page-link">...</span>
+                                        </li>
+
+                                        <!-- Next Page -->
+                                        <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}">
+                                            <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                                <i class="fa-solid fa-angles-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <div ng-include="'app/component/utils/loading-table.html'"></div>
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="font-weight: 500">#</th>
+                                        <th scope="col" style="font-weight: 500">Mã đơn</th>
+                                        <th scope="col" style="font-weight: 500">Chuyến xe</th>
+                                        <th scope="col" style="font-weight: 500">Bắt đầu</th>
+                                        <th scope="col" style="font-weight: 500">Kết thúc</th>
+                                        <th scope="col" style="font-weight: 500">Trạng thái</th>
+                                        <th scope="col" style="font-weight: 500">Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="t in bookingTourTransList">
+                                        <td>{{ $index + 1 }}</td>
+                                        <td style="text-align: justify;">{{ t.id }}</td>
+                                        <td style="text-align: justify;">{{  (t.transportationSchedules.fromLocation) + ' - ' + (t.transportationSchedules.toLocation) }}</td>
+                                        <td>{{  t.transportationSchedules.departureTime | vietnameseDateTime}}</td>
+                                        <td>{{  t.transportationSchedules.arrivalTime | vietnameseDateTime}}</td>
+                                        <td ng-if="t.orderStatus == 0">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-warning"></span>
+                                                <span class="text-status-warning">Chờ thanh toán</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="t.orderStatus == 1">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-success"></span>
+                                                <span class="text-status-success">Đã thanh toán</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="t.orderStatus == 2">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-error"></span>
+                                                <span class="text-status-error">Hủy giao dịch</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-look" ng-click="openTransModal(t)"><i
+                                                    class="fa-solid fa-magnifying-glass"></i> Xem chi tiết
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="bookingTourTransList.length === 0 && orderStatus == 0">
+                                        <td colspan="14">Hiện không có đơn chờ thanh toán.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourTransList.length === 0 && orderStatus == 1">
+                                        <td colspan="14">Hiện không có đơn nào hoàn thành.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourTransList.length === 0 && orderStatus == 2">
+                                        <td colspan="14">Hiện không có đơn nào được hủy.</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="container mt-4 mb-4">
+                                    <div class="col-12">
+                                        <div class="fs-3 mb-3 fw-bolder" style="color: #1e1e1e; font-weight: 500">Chính
+                                            sách hủy vé xe khách
+                                        </div>
+                                        <div class="mb-2" style="text-align: justify;">
+                                            <h5 class="mb-2" style="color: #504d4d"><i
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Điều kiện hủy đặt
+                                                phòng:</h5>
+                                            <p>- Hủy vé trong vòng 24 giờ hoặc ngay ngày khởi hành, phải trả 70%%
+                                                giá trị đơn hàng.</p>
+                                            <p>- Hủy vé trước ngày khởi hành từ 2 - 3 ngày, phải trả 10% giá
+                                                trị đơn hàng.</p>
+                                            <p>- Hủy vé trước ngày khởi hành từ 4 ngày trở lên, sẽ được hoàn
+                                                tiền 100%.</p>
+                                        </div>
+                                        <div class="mb-2" style="text-align: justify;">
+                                            <h5 class="mb-2" style="color: #504d4d"><i
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Lưu ý:</h5>
+                                            <p>- Chỉ được phép miễn phí hoàn tiền đối với các loại vé thuộc diện được
+                                                miễn phí hoàn tiền.</p>
+                                            <p>- Tiến trình hoàn tiền cho hủy vé xe khách có thể mất 10 ngày tính từ
+                                                thời điểm TravelTour nhận được của quý khách và chấp thuận yêu cầu hoàn tiền hoàn chỉnh dựa
+                                                trên các điều khoản và điều kiện áp dụng.</p>
+                                            <p>- Các đơn hàng trong ngày lễ, tết sẽ áp dụng điều kiện hủy riêng.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal Booking Trans-->
+                                <div class="modal fade" id="transModal" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                                        <div class="modal-content" style="border:none; width:100%">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel3">
+                                                    Thông tin dịch vụ xe khách
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        ng-click="closeTransModal()"
+                                                        style="background-color:#63ab45;color:white">
+                                                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row g-0">
+                                                    <div class="col-md-12 border-right">
+                                                        <div class="status p-3">
+                                                            <table class="table table-borderless"
+                                                                   style="border-right:groove">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Mã booking</span>
+                                                                            <span class="subheadings">{{bookingTrans.id}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Ngày tạo đơn</span>
+                                                                            <span class="subheadings">{{bookingTrans.dateCreated | vietnameseDateTime}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Chuyến xe</span>
+                                                                            <span class="subheadings">{{(bookingTrans.transportationSchedules.fromLocation) + ' - ' + (bookingTrans.transportationSchedules.toLocation)}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Bắt đầu</span>
+                                                                            <span class="subheadings">{{bookingTrans.transportationSchedules.departureTime | vietnameseDateTime}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Kết thúc</span>
+                                                                            <span class="subheadings">{{bookingTrans.transportationSchedules.arrivalTime | vietnameseDateTime}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Tên khách hàng</span>
+                                                                            <span class="subheadings">{{bookingTrans.customerName}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Email</span>
+                                                                            <span class="subheadings">{{bookingTrans.customerEmail}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Số điện thoại</span>
+                                                                            <span class="subheadings">{{bookingTrans.customerPhone}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Nhà xe</span>
+                                                                            <span class="subheadings">{{bookingTrans.transportationBrands.transportationBrandName}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Giá vé</span>
+                                                                            <span class="subheadings">{{bookingTrans.transportationSchedules.unitPrice | vnCurrency }}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Số vé</span>
+                                                                            <span class="subheadings">{{bookingTrans.amountTicket}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Giá trị đơn</span>
+                                                                            <span class="subheadings">{{bookingTrans.orderTotal | vnCurrency }}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                HTTToán</span>
+<!--                                                                            <span class="subheadings"-->
+<!--                                                                                  ng-if="bookingTrans.paymentMethod === 'Momo'">Ví điện tử Momo</span>-->
+<!--                                                                            <span class="subheadings"-->
+<!--                                                                                  ng-if="bookingTrans.paymentMethod === 'TTTT'">Thanh toán trực tiếp</span>-->
+<!--                                                                            <span class="subheadings"-->
+<!--                                                                                  ng-if="bookingTrans.paymentMethod === 'VNPay'">Thanh toán VN Pay</span>-->
+<!--                                                                            <span class="subheadings"-->
+<!--                                                                                  ng-if="bookingTrans.paymentMethod === 'ZaloPay'">Ví điện tử ZaloPay</span>-->
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Trạng thái</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingTrans.orderStatus === 0"><i
+                                                                                    class="dots bg-warning"></i> Chờ thanh toán</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingTrans.orderStatus === 1"><i
+                                                                                    class="dots bg-success"></i> Đã thanh toán</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingTrans.orderStatus === 2"><i
+                                                                                    class="dots bg-danger"></i> Đã hủy</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <div class="d-flex">
+                                                                <button class="btn btn-cancel"
+                                                                        ng-disabled="bookingTrans.orderStatus === 2 || isStartPassed(bookingTrans.transportationSchedules.departureTime)"
+                                                                        ng-click="cancelBookingTransOrder(bookingTrans)"
+                                                                        style="margin-right:20px">
+                                                                    <i class="fa-solid fa-trash"></i> Hủy đơn
+                                                                </button>
+                                                                <button class="btn btn-back" data-bs-dismiss="modal"
+                                                                        ng-click="closeTransModal()">
+                                                                    <i class="fa-solid fa-circle-left"></i> Trở về
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane face" id="nav-visit" role="tabpanel" aria-labelledby="nav-visit"
+                                 style="border-left:none" ng-controller="BookingVisitCustomerController">
+                                <nav aria-label="Page navigation" style="float: right; margin-bottom: 20px;"
+                                     class="d-flex">
+                                    <div style="margin-right: 20px">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="height:44px;margin-right:20px;"
+                                                ng-model="orderStatus"
+                                                ng-init="orderStatus = '0'"
+                                                ng-change="getChangeVisitStatus()">
+                                            <option value="0">Chờ thanh toán</option>
+                                            <option value="1">Đã thanh toán</option>
+                                            <option value="2">Đã hủy</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-right: 20px">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="height:44px;margin-right:20px;text-align:center"
+                                                ng-model="pageSize"
+                                                ng-init="pageSize='5'"
+                                                ng-change="pageSizeChanged()">
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                        </select>
+                                    </div>
+                                    <ul class="pagination justify-content-center align-items-center">
+                                        <!-- Previous Page -->
+                                        <li class="page-item" ng-class="{disabled: currentPage === 0}">
+                                            <a class="page-link" ng-click="setPage(0)">
+                                                <i class="fa-solid fa-angles-left"></i>
+                                            </a>
+                                        </li>
+
+                                        <!-- Ellipsis at the beginning -->
+                                        <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                            <span class="page-link">...</span>
+                                        </li>
+
+                                        <!-- Pagination Numbers -->
+                                        <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                            ng-class="{active: n === currentPage}">
+                                            <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                        </li>
+
+                                        <!-- Ellipsis at the end -->
+                                        <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                            <span class="page-link">...</span>
+                                        </li>
+
+                                        <!-- Next Page -->
+                                        <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}">
+                                            <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                                <i class="fa-solid fa-angles-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <div ng-include="'app/component/utils/loading-table.html'"></div>
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="font-weight: 500">#</th>
+                                        <th scope="col" style="font-weight: 500">Mã đơn</th>
+                                        <th scope="col" style="font-weight: 500">Địa danh</th>
+                                        <th scope="col" style="font-weight: 500">Ngày check-in</th>
+                                        <th scope="col" style="font-weight: 500">Ngày tạo đơn</th>
+                                        <th scope="col" style="font-weight: 500">Trạng thái</th>
+                                        <th scope="col" style="font-weight: 500">Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="ov in bookingTourVisitList">
+                                        <td>{{ $index + 1 }}</td>
+                                        <td style="text-align: justify;">{{ ov.id }}</td>
+                                        <td style="text-align: justify;">{{  ov.visitLocationsByVisitLocationId.visitLocationName }}</td>
+                                        <td>{{  ov.checkIn | vietnameseDateTime}}</td>
+                                        <td>{{  ov.dateCreated | vietnameseDateTime}}</td>
+                                        <td ng-if="ov.orderStatus == 0">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-warning"></span>
+                                                <span class="text-status-warning">Chờ thanh toán</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="ov.orderStatus == 1">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-success"></span>
+                                                <span class="text-status-success">Đã thanh toán</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="ov.orderStatus == 2">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-error"></span>
+                                                <span class="text-status-error">Hủy giao dịch</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-look" ng-click="openVisitModal(ov)"><i
+                                                    class="fa-solid fa-magnifying-glass"></i> Xem chi tiết
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="bookingTourVisitList.length === 0 && orderStatus == 0">
+                                        <td colspan="14">Hiện không có đơn chờ thanh toán.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourVisitList.length === 0 && orderStatus == 1">
+                                        <td colspan="14">Hiện không có đơn nào hoàn thành.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourVisitList.length === 0 && orderStatus == 2">
+                                        <td colspan="14">Hiện không có đơn nào được hủy.</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="container mt-4 mb-4">
+                                    <div class="col-12">
+                                        <div class="fs-3 mb-3 fw-bolder" style="color: #1e1e1e; font-weight: 500">Chính
+                                            sách hủy vé các khu tham quan của Travel Tour
+                                        </div>
+                                        <div class="mb-2" style="text-align: justify;">
+                                            <h5 class="mb-2" style="color: #504d4d"><i
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Điều kiện hủy vé tham quan giải trí:</h5>
+                                            <p>- Hủy vé trong vòng 24 giờ hoặc ngay ngày được in trên vé, phải trả 80%
+                                                giá trị đơn hàng.</p>
+                                            <p>- Hủy vé trước thời gian được in trên vé từ 2 - 3 ngày, phải trả 50% giá
+                                                trị đơn hàng.</p>
+                                            <p>- Hủy vé trước thời gian được in trên vé từ 4 ngày trở lên, sẽ được hoàn
+                                                tiền 100%.</p>
+                                        </div>
+                                        <div class="mb-2" style="text-align: justify;">
+                                            <h5 class="mb-2" style="color: #504d4d"><i
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Lưu ý:</h5>
+                                            <p>- Chỉ được phép miễn phí hoàn tiền đối với các loại vé thuộc diện được
+                                                miễn phí hoàn tiền.</p>
+                                            <p>- Tiến trình hoàn tiền cho huy vé các khu tham quan có thể mất 10 ngày tính từ
+                                                thời điểm TravelTour nhận được của quý khách và chấp thuận yêu cầu hoàn tiền hoàn chỉnh dựa
+                                                trên các điều khoản và điều kiện áp dụng.</p>
+                                            <p>- Các đơn hàng trong ngày lễ, tết sẽ áp dụng điều kiện hủy riêng.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal Booking Visit-->
+                                <div class="modal fade" id="visitModal" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                                        <div class="modal-content" style="border:none; width:100%">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel4">Thông tin dịch vụ tham quan giải trí</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        ng-click="closeVisitModal()"
+                                                        style="background-color:#63ab45;color:white">
+                                                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row g-0">
+                                                    <div class="col-md-12 border-right">
+                                                        <div class="status p-3">
+                                                            <table class="table table-borderless"
+                                                                   style="border-right:groove">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Mã booking</span>
+                                                                            <span class="subheadings">{{bookingVisit.id}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Ngày tạo đơn</span>
+                                                                            <span class="subheadings">{{bookingVisit.dateCreated | vietnameseDateTime}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Địa danh tham quan</span>
+                                                                            <span class="subheadings">{{bookingVisit.visitLocationsByVisitLocationId.visitLocationName}}</span>
+                                                                            <!--                                                                            <a class="subheadings"-->
+                                                                            <!--                                                                               ng-click="closeHotelModal()"-->
+                                                                            <!--                                                                               href="/hotel/hotel-detail/{{ bookingHotel.hotel.id }}"-->
+                                                                            <!--                                                                               title="Xem chi tiết"></a>-->
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Địa chỉ</span>
+                                                                            <span class="subheadings">{{bookingVisit.visitLocationsByVisitLocationId.province}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Ngày check-in</span>
+                                                                            <span class="subheadings">{{bookingVisit.checkIn | vietnameseDateTime}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Tên khách hàng</span>
+                                                                            <span class="subheadings">{{bookingVisit.customerName}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Email khách hàng</span>
+                                                                            <span class="subheadings">{{bookingVisit.customerEmail}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Số điện thoại</span>
+                                                                            <span class="subheadings">{{bookingVisit.customerPhone}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="3">
+                                                                        <div class="d-flex flex-column">
+                                                                            <table class="table" style="border-top: inset;border-bottom: inherit;">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
+                                                                                        STT</th>
+                                                                                    <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
+                                                                                        Loại vé</th>
+                                                                                    <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
+                                                                                        Giá vé</th>
+                                                                                    <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
+                                                                                        Số lượng</th>
+                                                                                    <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
+                                                                                        Thành tiền</th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                <tr ng-repeat="ticket in ticketListCustomer">
+                                                                                    <td style="text-align: center;" class="subheadings">{{$index + 1}}</td>
+                                                                                    <td style="text-align: center;" class="subheadings">{{ticket.visitLocationTickets.ticketTypeName}}</td>
+                                                                                    <td style="text-align: center;" class="subheadings">{{ticket.visitLocationTickets.unitPrice | vnCurrency }}</td>
+                                                                                    <td style="text-align: center;" class="subheadings">{{ticket.amount}}</td>
+                                                                                    <td style="text-align: center;" class="subheadings">{{(ticket.visitLocationTickets.unitPrice * ticket.amount) | vnCurrency }}</td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Giá trị đơn</span>
+                                                                            <span class="subheadings">{{bookingVisit.orderTotal | vnCurrency }}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                                <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                    HTTToán</span>
+<!--                                                                            <span class="subheadings"-->
+<!--                                                                                  ng-if="bookingVisit.paymentMethod === 'Momo'">Ví điện tử Momo</span>-->
+<!--                                                                            <span class="subheadings"-->
+<!--                                                                                  ng-if="bookingVisit.paymentMethod === 'TTTT'">Thanh toán trực tiếp</span>-->
+<!--                                                                            <span class="subheadings"-->
+<!--                                                                                  ng-if="bookingVisit.paymentMethod === 'VNPay'">Thanh toán VN Pay</span>-->
+<!--                                                                            <span class="subheadings"-->
+<!--                                                                                  ng-if="bookingVisit.paymentMethod === 'ZaloPay'">Ví điện tử ZaloPay</span>-->
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Trạng thái</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingVisit.orderStatus === 0"><i
+                                                                                    class="dots bg-warning"></i> Chờ thanh toán</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingVisit.orderStatus === 1"><i
+                                                                                    class="dots bg-success"></i> Đã thanh toán</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingVisit.orderStatus === 2"><i
+                                                                                    class="dots bg-danger"></i> Đã hủy</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <div class="d-flex">
+                                                                <button class="btn btn-cancel"
+                                                                        ng-disabled="bookingVisit.orderStatus === 2 || isCheckInVisitPassed(bookingVisit.checkIn)"
+                                                                        ng-click="cancelBookingVisitOrder(bookingVisit)"
+                                                                        style="margin-right:20px">
+                                                                    <i class="fa-solid fa-trash"></i> Hủy đơn
+                                                                </button>
+                                                                <button class="btn btn-back" data-bs-dismiss="modal"
+                                                                        ng-click="closeVisitModal()">
+                                                                    <i class="fa-solid fa-circle-left"></i> Trở về
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+</section>
+
+<!-- Button trigger modal -->
+
+
+
