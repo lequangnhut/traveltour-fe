@@ -148,6 +148,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/staff/tour-service/transportation-information-list.html',
             controller: 'TransportationInformationControllerAD'
         })
+        .when('/admin/visit-information-list', {
+            templateUrl: 'app/component/admin/views/pages/staff/tour-service/visit-information-list.html',
+            controller: 'VisitInformationControllerAD'
+        })
         /**
          * Agent
          */

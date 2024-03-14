@@ -51,7 +51,7 @@ travel_app.controller('VisitLocationPaymentControllerAD',
                 orderTotal: $scope.total,
                 paymentMethod: $scope.payment.method !== '0',
                 dateCreated: new Date(),
-                orderStatus: 1,
+                orderStatus: $scope.payment.method,
             }
 
             let orderVisitLocation = $scope.orderVisitLocation;
@@ -70,8 +70,6 @@ travel_app.controller('VisitLocationPaymentControllerAD',
                         amount: item.quantity,
                         unitPrice: item.unitPrice,
                     }
-
-                    console.log(orderVisitLocationDetail)
 
                     const dataOrderVisitLocationDetail = new FormData();
                     dataOrderVisitLocationDetail.append("orderVisitDetailsDto", new Blob([JSON.stringify(orderVisitLocationDetail)], {type: "application/json"}));
