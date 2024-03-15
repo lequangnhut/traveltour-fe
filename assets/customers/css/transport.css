@@ -25,12 +25,12 @@
     content: "";
     width: 0;
     height: 0;
-    border-top: 16px solid transparent;
+    border-top: 17px solid transparent;
     border-bottom: 13px solid transparent;
     border-left: 15px solid currentcolor;
     position: absolute;
     top: 0;
-    right: -15px
+    right: -14px
 }
 
 .notification-tag .tag span {
@@ -47,4 +47,158 @@
     height: 35px;
     padding: 4px 8px;
     color: #484848;
+}
+
+/*Ghế ngồi*/
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+.isjdvH {
+    padding: 7px 10px 7px;
+    width: 350px;
+    height: 44px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    border: 1px solid rgb(47, 128, 237);
+    background-color: rgb(236, 244, 253);
+    display: flex;
+    vertical-align: middle;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.isjdvH .headline {
+    font-size: 14px;
+    display: inline;
+    color: rgb(71, 71, 71);
+}
+
+.isjdvH .url {
+    height: auto;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    float: right;
+    font-size: 14px;
+    white-space: nowrap;
+    font-weight: 700;
+    text-decoration-line: underline;
+    cursor: pointer;
+    background: unset !important;
+    box-shadow: unset !important;
+    color: rgb(36, 116, 229) !important;
+}
+
+.bEmALR .content {
+    font-size: 18px;
+    white-space: pre-line;
+}
+
+.theatre {
+    width: 100%;
+    max-width: 170px;
+    border-radius: 3px;
+    background-color: rgb(242, 242, 242);
+    padding: 20px 10px;
+    box-shadow: 0 0 7px -4px #000;
+}
+
+.steering-wheel {
+    margin-left: 12px;
+    margin-bottom: 10px;
+}
+
+.seats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+
+.seat {
+    display: flex;
+    flex: 0 0 14.28571%;
+    padding: 0 14px 5px 10px;
+    position: relative;
+}
+
+.seat input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.daMVvn svg rect {
+    stroke: rgb(242, 242, 242);
+    fill: rgb(224, 224, 224);
+}
+
+.daMVvn svg .icon-disabled {
+    fill: rgb(242, 242, 242);
+}
+
+.dLgsTe svg rect {
+    stroke: rgb(39, 174, 96);
+    fill: rgb(139, 229, 176);
+}
+
+.dLgsTe svg .icon-selected {
+    fill: rgb(39, 174, 96);
+}
+
+.seatActive svg .icon-selected {
+    fill: rgb(39, 174, 96);
+}
+
+.seatActive svg rect {
+    stroke: rgb(39, 174, 96);
+    fill: rgb(139, 229, 176);
+}
+
+/*tiến trình*/
+#progress-booking .progress-container {
+    margin: 30px 0 0 0;
+    overflow: auto;
+}
+
+#progress-booking .item {
+    width: 150px;
+}
+
+#progress-booking .vector {
+    border-radius: 50%;
+    border: 3px solid #63ab45;
+    width: 50px;
+    height: 50px;
+    fill: #63ab45;
+}
+
+#progress-booking .vector-wrapper {
+    text-align: center;
+}
+
+#progress-booking .num {
+    display: inline-block;
+    text-align: center;
+    border-radius: 50%;
+    border: 3px solid #63ab45;
+    width: 30px;
+    height: 30px;
+    line-height: 25px;
+    font-size: 16px;
+    font-weight: 400;
+    background: #63ab45;
+    color: #fff;
+}
+
+#progress-booking .text-wrapper {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 15px;
 }

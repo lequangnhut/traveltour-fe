@@ -1,5 +1,5 @@
-travel_app.filter('phoneNumber', function() {
-    return function(input) {
+travel_app.filter('phoneNumber', function () {
+    return function (input) {
         if (!input) return '';
 
         // Xóa các ký tự không phải số khỏi chuỗi số điện thoại
@@ -9,3 +9,9 @@ travel_app.filter('phoneNumber', function() {
         return phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
     };
 });
+
+travel_app.filter('trustHtml', ['$sce', function ($sce) {
+    return function (html) {
+        return $sce.trustAsHtml(html);
+    };
+}]);

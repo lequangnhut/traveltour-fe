@@ -32,7 +32,8 @@ travel_app.controller('SchedulesControllerAG', function ($scope, $timeout, $sce,
         tripType: null,
         dateCreated: null,
         isActive: null,
-        isStatus: null
+        isStatus: null,
+        scheduleNote: null
     }
 
     function errorCallback() {

@@ -247,51 +247,51 @@ travel_app.controller('TourDetailCusController',
                     });
                 }
 
-                $scope.mapTrips.on('style.load', function () {
-                    let waypoints = ''; // Chuỗi để lưu trữ các tọa độ trung gian
-
-                    $scope.coordinateTrips.forEach(function (coordinate, index) {
-                        waypoints += `${coordinate[0]},${coordinate[1]}`;
-                        if (index < $scope.coordinateTrips.length - 1) {
-                            waypoints += ';'; // Thêm dấu chấm phẩy giữa các tọa độ, trừ tọa độ cuối cùng
-                        }
-                    });
-
-                    let routeURL = `https://api.mapbox.com/directions/v5/mapbox/driving/${waypoints}?geometries=geojson&steps=true&access_token=${mapboxgl.accessToken}`;
-
-                    fetch(routeURL)
-                        .then(response => response.json())
-                        .then(data => {
-                            // Lấy dữ liệu về đường đi
-                            let route = data.routes[0].geometry;
-
-                            $scope.mapLineLayerId = 'map-line-' + new Date().getTime();
-
-                            $scope.mapTrips.addLayer({
-                                'id': $scope.mapLineLayerId,
-                                'type': 'line',
-                                'source': {
-                                    'type': 'geojson',
-                                    'data': {
-                                        'type': 'Feature',
-                                        'properties': {},
-                                        'geometry': route
-                                    }
-                                },
-                                'layout': {
-                                    'line-join': 'round',
-                                    'line-cap': 'round'
-                                },
-                                'paint': {
-                                    'line-color': '#e35050',
-                                    'line-width': 3
-                                }
-                            });
-                        })
-                        .catch(error => {
-                            console.error('Lỗi khi lấy thông tin định tuyến:', error);
-                        });
-                });
+                // $scope.mapTrips.on('style.load', function () {
+                //     let waypoints = ''; // Chuỗi để lưu trữ các tọa độ trung gian
+                //
+                //     $scope.coordinateTrips.forEach(function (coordinate, index) {
+                //         waypoints += `${coordinate[0]},${coordinate[1]}`;
+                //         if (index < $scope.coordinateTrips.length - 1) {
+                //             waypoints += ';'; // Thêm dấu chấm phẩy giữa các tọa độ, trừ tọa độ cuối cùng
+                //         }
+                //     });
+                //
+                //     let routeURL = `https://api.mapbox.com/directions/v5/mapbox/driving/${waypoints}?geometries=geojson&steps=true&access_token=${mapboxgl.accessToken}`;
+                //
+                //     fetch(routeURL)
+                //         .then(response => response.json())
+                //         .then(data => {
+                //             // Lấy dữ liệu về đường đi
+                //             let route = data.routes[0].geometry;
+                //
+                //             $scope.mapLineLayerId = 'map-line-' + new Date().getTime();
+                //
+                //             $scope.mapTrips.addLayer({
+                //                 'id': $scope.mapLineLayerId,
+                //                 'type': 'line',
+                //                 'source': {
+                //                     'type': 'geojson',
+                //                     'data': {
+                //                         'type': 'Feature',
+                //                         'properties': {},
+                //                         'geometry': route
+                //                     }
+                //                 },
+                //                 'layout': {
+                //                     'line-join': 'round',
+                //                     'line-cap': 'round'
+                //                 },
+                //                 'paint': {
+                //                     'line-color': '#e35050',
+                //                     'line-width': 3
+                //                 }
+                //             });
+                //         })
+                //         .catch(error => {
+                //             console.error('Lỗi khi lấy thông tin định tuyến:', error);
+                //         });
+                // });
             }
 
             /**

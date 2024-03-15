@@ -113,24 +113,30 @@
                                 <a ng-class="{ 'active': isActive('/hotel') }" href="/hotel">Khách sạn</a>
                             </li>
                             <li class="menu-item has-children">
-                                <a ng-class="{ 'active': isActive('/drive-move') }" href="/drive-move">Đặt xe</a>
-                            </li>
-                            <li class="menu-item has-children">
-                                <a ng-class="{ 'active': isActive('/tourism-location') }" href="/tourism-location">
-                                    Điểm tham quan
+                                <a ng-class="{ 'active': isActive('/drive-move') || isActive('/tourism-location') }"
+                                   href="javascript:void(0)">
+                                    Dịch vụ
+                                    <span class="fas fa-angle-down"></span>
                                 </a>
+                                <ul class="sub-menu">
+                                    <li><a href="/drive-move">Đặt xe</a></li>
+                                    <li><a href="/tourism-location">Điểm tham quan</a></li>
+                                </ul>
                             </li>
                             <li class="menu-item has-children">
                                 <a ng-class="{ 'active': isActive('/introduce') || isActive('/travel-guide') || isActive('/contact') }"
                                    href="javascript:void(0)">
-                                    Xem thêm
+                                    Về chúng tôi
                                     <span class="fas fa-angle-down"></span>
                                 </a>
                                 <ul class="sub-menu">
-                                    <li><a href="/introduce">Giới thiệu</a></li>
                                     <li><a href="/travel-guide">Cẩm nang du lịch</a></li>
+                                    <li><a href="/introduce">Giới thiệu</a></li>
                                     <li><a href="/contact">Liên hệ</a></li>
                                 </ul>
+                            </li>
+                            <li class="menu-item has-children">
+                                <a ng-class="{ 'active': isActive('/hotel') }" href="/hotel">Đăng ký thành đối tác</a>
                             </li>
                             <li class="menu-item search-item">
                                 <div class="search-btn" data-bs-toggle="modal" data-bs-target="#search-modal">

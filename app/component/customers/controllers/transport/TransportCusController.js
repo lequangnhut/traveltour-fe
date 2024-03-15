@@ -218,6 +218,14 @@ travel_app.controller('TransportCusController', function ($scope, $location, Map
                 $scope.markerTransport = [];
             }
         };
+
+        /**
+         * phương thức chuyển đến transport detail
+         */
+        $scope.detailTransport = function (brandId) {
+            $scope.encryptedBrandId = btoa(JSON.stringify(brandId));
+            $location.path('/drive-move/drive-transport-detail/' + $scope.encryptedBrandId);
+        }
     }
 
     /**

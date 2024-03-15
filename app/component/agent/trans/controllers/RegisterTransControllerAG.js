@@ -26,7 +26,7 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $rou
         id: null,
         agenciesId: null,
         transportationBrandName: null,
-        transportationBrandDescription: null,
+        transportationBrandPolicy: null,
         transportationBrandImg: null
     }
 

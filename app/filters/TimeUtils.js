@@ -68,9 +68,8 @@ travel_app.filter('formatTime', function () {
         let date = new Date(timestamp);
         let hours = date.getHours();
         let minutes = date.getMinutes();
-        let seconds = date.getSeconds();
 
-        return (hours < 10 ? '0' : '') + hours + ':' + (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+        return (hours < 10 ? '0' : '') + hours + ':' + (minutes < 10 ? '0' : '') + minutes;
     };
 });
 
@@ -148,8 +147,6 @@ travel_app.filter('calculateDaysAndNights', function () {
         }
     };
 });
-
-
 
 
 travel_app.filter('dateWithTimeFormat', function () {

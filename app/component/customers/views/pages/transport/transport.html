@@ -143,14 +143,6 @@
                                          alt="...">
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="/assets/customers/images/transport/banner-3.jpg" class="d-block w-100"
-                                         alt="...">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="/assets/customers/images/transport/banner-4.jpg" class="d-block w-100"
-                                         alt="...">
-                                </div>
-                                <div class="carousel-item">
                                     <img src="/assets/customers/images/transport/banner-5.jpg" class="d-block w-100"
                                          alt="...">
                                 </div>
@@ -252,9 +244,9 @@
                                             </div>
                                             <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
                                                 <div class="box">
-                                                    <a href="/drive-move/drive-transport-detail/{{ brand.id }}"
+                                                    <a href="#" ng-click="detailTransport(brand.id)"
                                                        class="btn btn-green w-100 mt-3">
-                                                        Chọn nhà xe
+                                                        Đặt vé
                                                     </a>
                                                 </div>
                                             </div>
@@ -264,6 +256,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="div" ng-if="transportBrand.length <= 0">
                         <div class="d-flex justify-content-center align-items-center">
                             Không có chuyến xe nào phù hợp với yêu cầu của bạn

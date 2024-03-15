@@ -12,6 +12,17 @@ travel_app.service('TransportCusService', function ($http) {
         });
     };
 
+    this.findAllTransportScheduleCus = function (page, size, brandId) {
+        return $http({
+            method: 'GET',
+            url: API_TRANSPORT + 'find-all-transport-schedule/' + brandId,
+            params: {
+                page: page || 0,
+                size: size || 10,
+            }
+        });
+    };
+
     this.findAllTransportBrandByIdCus = function (brandId) {
         return $http({
             method: 'GET',

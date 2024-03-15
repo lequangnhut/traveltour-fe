@@ -191,7 +191,7 @@
                                                 <div class="location text-orange" style="font-size: 14px">
                                                     <p>
                                                         <i class="fa-solid fa-user-tie"></i>
-                                                        Đã đặt: {{ tour.bookedSeat }}/{{ tour.numberOfGuests }} chổ
+                                                        Khách đã đặt: {{ tour.bookedSeat }}/{{ tour.numberOfGuests }} chổ
                                                     </p>
                                                 </div>
 
@@ -208,10 +208,6 @@
                                         <div class="roomTypeByHotel mb-3"
                                              style="padding-left: 10px ;border-left: 1px solid rgba(29, 35, 31, 0.1)">
                                             <div style="font-size: 14px; line-height: 20px">
-                                                <p class="fs-7 fw-medium mb-1">Hướng dẫn viên:
-                                                    {{ tour.usersByGuideId.fullName }}
-                                                    - {{ tour.usersByGuideId.address }}
-                                                </p>
                                                 <p class="fs-7 mb-1">Điểm đi:
                                                     <span class="fw-medium">{{ tour.fromLocation }}</span>
                                                 </p>

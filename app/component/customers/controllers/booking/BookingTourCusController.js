@@ -15,9 +15,9 @@ travel_app.controller('BookingTourCusController',
         $scope.bookingCustomerList = [];
 
         $scope.paymentMethods = {
-            VNPay: "TravelTour chấp nhận thanh toán bằng các thẻ ATM nội địa do các ngân hàng tại Việt Nam phát hành. Thẻ ghi nợ nội địa (thẻ ATM): Vietcombank, Vietinbank, DongA , VIBank, Techcombank, HDBank, Tienphong Bank, Military Bank, VietA Bank, Maritime Bank, Eximbank, SHB, Sacombank,  NamA Bank,...(23 Ngân hàng)",
+            VNPay: "TravelTour chấp nhận thanh toán bằng VNPay. Với hạn mức lên đến 30.000.000 VNĐ",
             ZaloPay: "TravelTour chấp nhận thanh toán bằng ZaloPay.",
-            Momo: "TravelTour chấp nhận thanh toán bằng Ví điện tử Momo. (*) Hạn mức tối đa là 20.000.000 VND",
+            Momo: "TravelTour chấp nhận thanh toán bằng Ví điện tử Momo. (*) Hạn mức tối đa là 20.000.000 VNĐ",
             Travel: "Quý khách vui lòng đến các văn phòng TravelTour để thanh toán và nhận vé."
         };
 
