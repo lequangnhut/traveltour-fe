@@ -15,9 +15,29 @@ travel_app.controller('TourCusController', function ($scope, $location, TourCusS
         {id: 5, label: 'Trên 5 sao'}
     ];
 
+    $scope.filters = {
+        price: 15000000,
+        tourTypeList: [],
+        checkInDateFiller: new Date(),
+        searchTerm: null,
+    }
+
     function errorCallback() {
         $location.path('/admin/internal-server-error')
     }
+
+    $scope.validateDates = () => {
+        $scope.currentDate = new Date();
+
+        let currentDateNow = Math.floor(($scope.filters.checkInDateFiller - $scope.currentDate) / (1000 * 60 * 60 * 24))
+
+        if (currentDateNow < -1) {
+            $scope.errorCheckInDateFiller = "Ngày đi không thể nhỏ hơn ngày hiện tại";
+        } else {
+            $scope.errorCheckInDateFiller = "";
+        }
+
+    };
 
     $scope.init = function () {
         $scope.isLoading = true;
@@ -45,6 +65,14 @@ travel_app.controller('TourCusController', function ($scope, $location, TourCusS
         TourCusService.findAllTourType().then(function (response) {
             if (response.status === 200) {
                 $scope.tourType = response.data.data;
+            } else {
+                $location.path('/admin/page-not-found')
+            }
+        }, errorCallback);
+
+        TourCusService.getAllTourDetail().then(function (response) {
+            if (response.status === 200) {
+                $scope.tourDetailDataList = response.data.data;
             } else {
                 $location.path('/admin/page-not-found')
             }
@@ -174,6 +202,59 @@ travel_app.controller('TourCusController', function ($scope, $location, TourCusS
     $scope.showLessItemsTourType = function () {
         $scope.limitTourType = 5;
         $scope.showMoreTourType = false;
+    };
+
+    //thêm danh sách lọc
+    $scope.ChooseFromAVarietyOfTours = (id) => {
+        let index = $scope.filters.tourTypeList.indexOf(id);
+        if (index === -1) {
+            $scope.filters.tourTypeList.push(id);
+        } else {
+            $scope.filters.tourTypeList.splice(index, 1);
+        }
+    };
+
+    $scope.filterAllTour = () => {
+        $scope.isLoading = true;
+
+        TourCusService.findAllTourDetailCustomerByFilters($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.filters)
+            .then((response) => {
+                if (response.status === 200) {
+                    $scope.tourDetail = response.data.data !== null ? response.data.data.content : [];
+                    $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
+                    $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
+                    console.log($scope.tourDetail)
+
+                    if (response.data.status === '204') {
+                        toastAlert('warning', 'Không tìm thấy dữ liệu !');
+                        return
+                    }
+                    angular.forEach($scope.tourDetail, function (detail) {
+                        let departureDate = new Date(detail.departureDate);
+                        let arrivalDate = new Date(detail.arrivalDate);
+
+                        detail.numberOfDays = Math.ceil((arrivalDate - departureDate) / (1000 * 60 * 60 * 24));
+                    });
+                } else {
+                    $location.path('/admin/page-not-found')
+                }
+            }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
+    }
+
+    //sắp xếp
+    $scope.sortData = (column, sortDir) => {
+
+        if (!sortDir) {
+            $scope.sortBy = "id";
+            $scope.sortDir = "asc";
+        } else {
+            $scope.sortBy = column;
+            $scope.sortDir = sortDir;
+        }
+
+        $scope.filterAllTour();
     };
 
     /**

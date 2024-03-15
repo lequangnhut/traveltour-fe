@@ -12,6 +12,30 @@ travel_app.service('TourCusService', function ($http) {
         });
     };
 
+    this.findAllTourDetailCustomerByFilters = function (page, size, sortBy, sortDir, filters) {
+        return $http({
+            method: 'GET',
+            url: API_TOUR + 'find-tour-detail-customer-by-filters',
+            params: {
+                page: page || 0,
+                size: size || 10,
+                sortBy: sortBy || 'id',
+                sortDir: sortDir || 'asc',
+                price: filters.price || null,
+                tourTypeList: filters.tourTypeList || null,
+                checkInDateFiller: filters.checkInDateFiller || null,
+                searchTerm: filters.searchTerm || null,
+            }
+        });
+    };
+
+    this.getAllTourDetail = function () {
+        return $http({
+            method: 'GET',
+            url: API_TOUR + 'get-tour-detail-customer-data-list',
+        });
+    };
+
     this.findAllTourType = function () {
         return $http({
             method: 'GET',
