@@ -136,7 +136,7 @@
                                 </ul>
                             </li>
                             <li class="menu-item has-children">
-                                <a ng-class="{ 'active': isActive('/hotel') }" href="/hotel">Đăng ký thành đối tác</a>
+                                <a ng-class="{ 'active': isActive('/register-agency') }" href="/register-agency">Đăng ký thành đối tác</a>
                             </li>
                             <li class="menu-item search-item">
                                 <div class="search-btn" data-bs-toggle="modal" data-bs-target="#search-modal">
@@ -170,6 +170,12 @@
                 <div class="nav-right-item" ng-if="isAuthenticated && hasRole('ROLE_CUSTOMER')">
                     <nav class="main-menu">
                         <ul>
+                            <li class="menu-item has-children">
+                                <a href="/chat" class="position-relative chat-user-header" >
+                                    <i class="fa-regular fa-message"></i>
+                                    <span class=" dot-message bg-green position-absolute text-center">2</span>
+                                </a>
+                            </li>
                             <li class="menu-item has-children">
                                 <a href="javascript:void(0)">Xin chào, {{ user.fullName }}
                                     <span class="fas fa-angle-down"></span>

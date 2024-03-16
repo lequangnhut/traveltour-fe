@@ -285,6 +285,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/room-amenities.html',
             controller: 'AccommodationLocationInformationEditController'
         })
+        .when('/business/hotel/chat', {
+            templateUrl: 'app/component/agent/hotel/views/pages/chat/chat.html',
+            controller: 'ChatHotelController'
+        })
 
         /**
          * Agent Transport
@@ -639,6 +643,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/hotel/hotel-detail.html',
             controller: 'HotelDetailController'
         })
+        .when('/chat/:id', {
+            templateUrl: 'app/component/customers/views/pages/chat/chat.html',
+            controller: 'ChatCustomerController'
+        })
         .when('/hotel/hotel-details/payment', {
             templateUrl: 'app/component/customers/views/pages/hotel/payment-hotel.html',
             controller: 'PaymentHotelController'
@@ -653,6 +661,18 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/payment-policy', {
             templateUrl: 'app/component/customers/views/pages/home/payment-policy.html'
+        })
+        .when('/chat', {
+            templateUrl: 'app/component/customers/views/pages/chat/chat.html',
+            controller: 'ChatCustomerController',
+        })
+        .when('/register-agency', {
+            templateUrl: 'app/component/customers/views/pages/register-agency/register-agency-home.html',
+            controller: 'RegisterAgencyController',
+        })
+        .when('/register-agency/register', {
+            templateUrl: 'app/component/customers/views/pages/register-agency/register-agency-form.html',
+            controller: '',
         })
 
         /**
