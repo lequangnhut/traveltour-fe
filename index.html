@@ -373,9 +373,9 @@
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
                                     <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'tours-are-going-list'}"
-                                       ng-click="setActiveNavItem('tours-are-going-list')"
-                                       href="/admin/tours-are-going-list"
+                                       ng-class="{ 'active': activeNavItem === 'tour-is-going-list'}"
+                                       ng-click="setActiveNavItem('tour-is-going-list')"
+                                       href="/admin/tour-is-going-list"
                                        role="button">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon">
@@ -393,9 +393,9 @@
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
                                     <a class="nav-link label-1"
-                                       ng-class="{ 'active': activeNavItem === 'tour-customer-list'}"
-                                       ng-click="setActiveNavItem('tour-customer-list')"
-                                       href="/admin/tour-customer-list">
+                                       ng-class="{ 'active': activeNavItem === 'customer-go-on-list'}"
+                                       ng-click="setActiveNavItem('customer-go-on-list')"
+                                       href="/admin/customer-go-on-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
@@ -1570,6 +1570,8 @@
 <script src="app/services/staff/AccommodationInformationServiceAD.js"></script>
 <script src="app/services/staff/TransportationInformationServiceAD.js"></script>
 <script src="app/services/staff/VisitInformationServiceAD.js"></script>
+<script src="app/services/staff/TourIsGoingServiceAD.js"></script>
+<script src="app/services/staff/CustomersGoOnTourServiceAD.js"></script>
 
 <!--====== Agent Service ======-->
 <script src="app/services/agent/TransportBrandServiceAG.js"></script>
@@ -1653,6 +1655,8 @@
 <script src="app/component/admin/controllers/staff/partner-service/visit-location/VisitLocationPaymentControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/partner-service/transportation/TransportationSchedulesControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/partner-service/transportation/TransportationSchedulesPaymentControllerAD.js"></script>
+<script src="app/component/admin/controllers/staff/travel-schedule/TourIsGoingControllerAD.js"></script>
+<script src="app/component/admin/controllers/staff/travel-schedule/CustomersGoOnTourControllerAD.js"></script>
 
 <!--====== Controller Agent ======-->
 <script src="app/component/agent/business/SelectTypeControllerAG.js"></script>
