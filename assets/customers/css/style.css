@@ -2836,9 +2836,8 @@ button {
     height: 100%;
     border-radius: 50%;
     border: 10px solid #63AB45;
-    border-color: transparent #63AB45 #63AB45;
-    -webkit-transform: rotate(55deg);
-    transform: rotate(55deg);
+    -webkit-transform: rotate(60deg);
+    transform: rotate(60deg);
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
