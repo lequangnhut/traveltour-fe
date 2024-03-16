@@ -1,0 +1,164 @@
+<div class="container">
+    <div class="header-control mb-4">
+        <div class="header-control-center">
+            <div class="d-flex justify-content-between align-items-center row ">
+                <div class="col-xl-12 mt-3">
+                    <h3 class="color-green fw-bold text-uppercase">Danh sách khách hàng đi tour</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="">
+        <div class="card card-customer">
+            <div class="row justify-content-between" style="margin: 20px 16px;">
+                <div class="col-xl-4 col-md-6">
+                    Bạn muốn tìm kiếm gì ?
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i
+                                class="fa-solid fa-magnifying-glass bg-light"></i></span>
+                        <input type="text" class="form-control" placeholder="Tìm kiếm" ng-model="searchTerm"
+                               ng-change="searchKey()">
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-6 d-flex align-items-center justify-content-end">
+                    <select class="form-select" aria-label="Default select example"
+                            ng-model="tourDetailId"
+                            ng-change="tourDetailIdChanged()">
+                        <option value="">Chọn tour bạn muốn xem</option>
+                        <option ng-repeat="tourDetail in tourDetails" value="{{tourDetail.id}}">
+                            {{ tourDetail.id + ' - ' + tourDetail.toursByTourId.tourName + ' - ' + (tourDetail.departureDate | date:'dd/MM/yyyy') }}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-xl-4 d-flex align-items-center justify-content-end mb-3 h-100"
+                     style="margin: 16px 0 0 0">
+                    <a href="/admin/customer-go-on-list/{{tourDetailId}}/customer-go-on-create" class="btn btn-primary"
+                       ng-if="buttonAddCustomer"><i
+                            class="fa-solid fa-plus" style="margin-right: 10px"></i> Tạo khách hàng mới
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="table-components table-responsive mb-5">
+        <div class="card table-responsive table-customer">
+            <div class="card-header ">
+                <div class="row">
+                    <div class="h4 col-lg-5 d-flex align-items-center h-100">
+                        <div class="d-flex align-items-center">
+                            <span class="h4">Danh sách khách hàng đi tour</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end align-items-baseline col-lg-2">
+                        <select class="form-select" aria-label="Default select example"
+                                ng-model="pageSize"
+                                ng-init="pageSize='5'"
+                                ng-change="pageSizeChanged()">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                        </select>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
+                        <nav aria-label="Page navigation" ng-if="bookingTourCustomerList.length !== 0">
+                            <ul class="pagination justify-content-center align-items-center">
+                                <!-- Previous Page -->
+                                <li class="page-item" ng-class="{disabled: currentPage === 0}">
+                                    <a class="page-link" ng-click="setPage(0)">
+                                        <i class="fa-solid fa-angles-left"></i>
+                                    </a>
+                                </li>
+
+                                <!-- Ellipsis at the beginning -->
+                                <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                    <span class="page-link">...</span>
+                                </li>
+
+                                <!-- Pagination Numbers -->
+                                <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                    ng-class="{active: n === currentPage}">
+                                    <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                </li>
+
+                                <!-- Ellipsis at the end -->
+                                <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                    <span class="page-link">...</span>
+                                </li>
+
+                                <!-- Next Page -->
+                                <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}">
+                                    <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                        <i class="fa-solid fa-angles-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-responsive text-center table-striped">
+                <div ng-include="'app/component/utils/loading-table.html'"></div>
+                <thead>
+                <tr class="bg-light">
+                    <th>#</th>
+                    <th class="cursor-pointer">
+                        <div class="icon-left">STT
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('customerName')">
+                        <div class="icon-left">Tên khách hàng
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('customerName')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('customerBirth')">
+                        <div class="icon-left">Ngày sinh
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('customerBirth')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('customerPhone')">
+                        <div class="icon-left">Số điện thoại
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('customerPhone')"></span>
+                        </div>
+                    </th>
+                    <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="btc in bookingTourCustomerList">
+                    <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
+                    <td>{{ $index + 1 }}</td>
+                    <td class=ext-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="{{ btc.customerName }}">
+                        {{ btc.customerName }}
+                    </td>
+                    <td>{{ btc.customerBirth | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ btc.customerPhone }}</td>
+                    <td class="d-flex align-items-center justify-content-center">
+                        <a ng-click="clickUpdate(btc.id, btc.customerPhone)" role="button"
+                           class="fs-1 btn text-warning px-2">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <a role="button" class="fs-1 btn text-danger px-3"
+                           ng-click="deleteCustomer(btc.id, btc.fullName)">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-if="bookingTourCustomerList.length === 0">
+                    <td colspan="14">Trang này không có dữ liệu.</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="card-footer">
+                <div class="d-flex justify-content-end">
+                    {{ getDisplayRange() }} trong tổng số {{ totalElements }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

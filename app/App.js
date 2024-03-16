@@ -152,6 +152,27 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/staff/tour-service/visit-information-list.html',
             controller: 'VisitInformationControllerAD'
         })
+
+        /**
+         * travel schedule
+         */
+        .when('/admin/tour-is-going-list', {
+            templateUrl: 'app/component/admin/views/pages/staff/travel-schedule/tour-is-going-list.html',
+            controller: 'TourIsGoingControllerAD'
+        })
+        .when('/admin/customer-go-on-list', {
+            templateUrl: 'app/component/admin/views/pages/staff/travel-schedule/customers-go-on-tour/customers-go-on-tour-list.html',
+            controller: 'CustomersGoOnTourControllerAD'
+        })
+        .when('/admin/customer-go-on-list/:tourDetailId/customer-go-on-create', {
+            templateUrl: 'app/component/admin/views/pages/staff/travel-schedule/customers-go-on-tour/customers-go-on-tour-create.html',
+            controller: 'CustomersGoOnTourControllerAD'
+        })
+        .when('/admin/customer-go-on-list/customer-go-on-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/staff/travel-schedule/customers-go-on-tour/customers-go-on-tour-update.html',
+            controller: 'CustomersGoOnTourControllerAD'
+        })
+
         /**
          * Agent
          */
