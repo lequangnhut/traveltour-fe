@@ -594,26 +594,6 @@ travel_app.controller('TourDetailCusController',
                     </div>`;
         }
 
-        $scope.$on('$viewContentLoaded', function () {
-            $('.place-slider').slick({
-                dots: false,
-                arrows: false,
-                infinite: true,
-                speed: 800,
-                autoplay: true,
-                variableWidth: true,
-                slidesToShow: 3,
-                slidesToScroll: 1,
-                prevArrow: '<div class="prev"><i class="far fa-arrow-left"></i></div>',
-                nextArrow: '<div class="next"><i class="far fa-arrow-right"></i></div>',
-                responsive: [{
-                    breakpoint: 767, settings: {
-                        slidesToShow: 1
-                    }
-                }]
-            });
-        });
-
         $scope.showCallTourModal = function () {
             ToursServiceAD.findAllToursSelect().then(function (response) {
                 console.log(response)

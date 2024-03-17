@@ -32,6 +32,7 @@
         <link rel="stylesheet" href="/assets/customers/css/payment-method.css">
         <link rel="stylesheet" href="/assets/customers/css/tour-trips.css">
         <link rel="stylesheet" href="/assets/customers/css/transport.css">
+        <link rel="stylesheet" href="/assets/customers/css/register-agencies.css">
         <link href="/node_modules/mapbox-gl/dist/mapbox-gl.css" type="text/css" rel="stylesheet">
 
         <script src="/assets/customers/vendor/jquery-3.6.0.min.js"></script>
@@ -1531,6 +1532,7 @@
 <script src="app/services/utils/FormatDate.js"></script>
 <script src="app/services/utils/GenerateCodePayService.js"></script>
 <script src="app/services/utils/Base64ObjectService.js"></script>
+<script src="app/services/utils/OTPService.js"></script>
 
 <!--====== Super Admin Service ======-->
 <script src="app/services/supperadmin/DecentralizationServiceAD.js"></script>
@@ -1608,6 +1610,9 @@
 
 <!--====== Service Customer Transport ======-->
 <script src="app/services/customer/transport/TransportCusService.js"></script>
+
+<!--====== Service Customer Register Agencies ======-->
+<script src="app/services/customer/register-agencies/RegisterAgenciesCusService.js"></script>
 
 <!--====== Service Customer ======-->
 <script src="app/services/customer/home/HomeCusService.js"></script>
@@ -1717,6 +1722,10 @@
 <!--====== Controller Customer Location ======-->
 <script src="app/component/customers/controllers/location/LocationCusController.js"></script>
 <script src="app/component/customers/controllers/location/LocationDetailCusController.js"></script>
+
+<!--====== Controller Customer Register Agencies ======-->
+<script src="app/component/customers/controllers/register-agency/RegisterAgencyCusController.js"></script>
+<script src="app/component/customers/controllers/register-agency/RegisterAgencyFormCusController.js"></script>
 
 <!--====== Controller Customer ======-->
 <script src="app/component/customers/controllers/home/IntroduceController.js"></script>

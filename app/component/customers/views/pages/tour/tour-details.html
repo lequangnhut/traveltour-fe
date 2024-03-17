@@ -1,30 +1,23 @@
 <!--====== Start Place Details Section ======-->
 <section class="place-details-section">
-    <!--=== Place Slider ===-->
-    <div class="place-slider-area overflow-hidden wow fadeInUp">
-        <div class="place-slider">
-            <div class="place-slider-item">
-                <div class="place-img">
-                    <img src="/assets/customers/images/place/single-place-1.jpg" alt="Place Image">
-                </div>
-            </div>
-            <div class="place-item">
-                <div class="place-img">
-                    <img src="/assets/customers/images/place/single-place-2.jpg" alt="Place Image">
-                </div>
-            </div>
-            <div class="place-slider-item">
-                <div class="place-img">
-                    <img src="/assets/customers/images/place/single-place-3.jpg" alt="Place Image">
-                </div>
-            </div>
-            <div class="place-slider-item">
-                <div class="place-img">
-                    <img src="/assets/customers/images/place/single-place-2.jpg" alt="Place Image">
+    <!--====== Start Breadcrumb Section ======-->
+    <section class="page-banner overlay pt-170 pb-170 bg_cover"
+             style="background-image: url(/assets/customers/images/bg/banner-tour.jpeg);">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="page-banner-content text-center text-white">
+                        <h1 class="page-title">Tour chi tiết</h1>
+                        <ul class="breadcrumb-link text-white">
+                            <li><a href="/home">Trang chủ</a></li>
+                            <li><a href="/tours">Booking tour</a></li>
+                            <li class="active">Tour chi tiết</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section><!--====== End Breadcrumb Section ======-->
 
     <div ng-include="'app/component/utils/loading-component.html'"></div>
 
@@ -631,12 +624,6 @@
                                         <span>{{ tourDetail.toLocation }}</span>
                                     </span>
                                 </li>
-                                <li>
-                                    <span><span class="fas fa-globe"></span>
-                                        Ngôn ngữ
-                                        <span>Tiếng việt</span>
-                                    </span>
-                                </li>
                             </ul>
                         </div>
 
@@ -652,13 +639,7 @@
                                         </div>
                                     </div>
                                     <div class="booking-item">
-                                        <label class="fw-normal">Ngày về:</label>
-                                        <div class="bk-item booking-date fw-medium">
-                                            <span>{{ tourDetail.arrivalDate | formatDate }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="booking-item">
-                                        <label class="fw-normal">Thời gian:</label>
+                                        <label class="fw-normal">Thời gian dự kiến:</label>
                                         <div class="bk-item booking-date fw-medium">
                                             <span>
                                                 <span>{{ tourDetail.departureDate | calculateDaysAndNights:tourDetail.arrivalDate }}</span>
@@ -830,7 +811,7 @@
 
 <!--====== Start Modal Section ======-->
 <div id="formTourModal" class="modal fade" role="dialog">
-    <div  class="modal-dialog modal-dialog-centered" style="max-width: 40%; height: 80vh;">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 40%; height: 80vh;">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -841,10 +822,11 @@
                 </button>
             </div>
             <div class="modal-body row">
-                <div id="i-want" class="mapBoxModel col-12" style="height: 100%; padding-left: 30px; padding-right: 30px; margin: 0;">
+                <div id="i-want" class="mapBoxModel col-12"
+                     style="height: 100%; padding-left: 30px; padding-right: 30px; margin: 0;">
                     <form name="tourDetailForm" style="height: 100%">
                         <div class="col-12 mb-1">
-                            <h4 style="font-size: larger;font-weight: bold;color: darkgreen;">{{tourDetail.toursByTourId.tourName}}</h4>
+                            <h4 style="font-size: larger;font-weight: bold;color: darkgreen;">{{ tourDetail.toursByTourId.tourName }}</h4>
                         </div>
                         <div class="col-12 mb-1">
                             <label for="departureDate" class="form-label">Ngày đi</label>
@@ -884,7 +866,8 @@
                         </div>
                         <div class="col-12 mb-1">
                             <label for="arrivalDate" class="form-label">Ghi chú</label>
-                            <textarea class="form-control" name="note" ng-model="customer.note" rows="4" maxlength="200" required></textarea>
+                            <textarea class="form-control" name="note" ng-model="customer.note" rows="4" maxlength="200"
+                                      required></textarea>
                             <small class="text-danger"
                                    ng-show="customerForm.birth.$error.required">
                                 Vui lòng nhập ngày sinh!

@@ -456,9 +456,8 @@ button {
     flex: 0 0 auto;
     margin-left: 20px;
     width: 40px;
-    height: 40px;
+    height: 23px;
     border-radius: 50%;
-    font-size: 18px;
 }
 
 .main-btn.filled-btn {
@@ -6778,7 +6777,7 @@ ul.slick-dots li.slick-active {
     color: #63AB45;
 }
 
-.bg-green{
+.bg-green {
     background-color: #63AB45;
     color: white;
 }

@@ -688,12 +688,15 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'ChatCustomerController',
         })
         .when('/register-agency', {
-            templateUrl: 'app/component/customers/views/pages/register-agency/register-agency-home.html',
-            controller: 'RegisterAgencyController',
+            templateUrl: 'app/component/customers/views/pages/register-agency/register-agency-home.html'
         })
         .when('/register-agency/register', {
+            templateUrl: 'app/component/customers/views/pages/register-agency/register-agency-otp.html',
+            controller: 'RegisterAgencyCusController',
+        })
+        .when('/register-agency/register/information', {
             templateUrl: 'app/component/customers/views/pages/register-agency/register-agency-form.html',
-            controller: '',
+            controller: 'RegisterAgencyFormCusController',
         })
 
         /**

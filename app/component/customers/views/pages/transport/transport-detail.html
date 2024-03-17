@@ -144,7 +144,9 @@
                                                         {{ schedule.fromLocation }}
                                                     </div>
                                                 </div>
-                                                <div class="duration">1h30m</div>
+                                                <div class="duration">
+                                                    {{ schedule.departureTime | averageTime: schedule.arrivalTime }}
+                                                </div>
                                                 <div class="content to d-flex">
                                                     <div class="hour mx-1 fw-medium fs-5">
                                                         {{ schedule.arrivalTime | formatTime }}
@@ -179,8 +181,11 @@
                                     </div>
                                     <div class="price d-flex justify-content-end bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
                                         <div class="box">
-                                            <p class="fw-medium text-danger">
-                                                Còn lại 10 chỗ trống
+                                            <p class="fw-medium text-danger"
+                                               ng-if="schedule.transportations.amountSeat - schedule.bookedSeat <= 5 && schedule.bookedSeat !== schedule.transportations.amountSeat"
+                                            >
+                                                Còn lại {{ schedule.transportations.amountSeat - schedule.bookedSeat }}
+                                                chỗ trống
                                             </p>
                                             <a href="#" class="btn btn-green w-100"
                                                ng-click="toggleBooking($index)">
@@ -491,10 +496,12 @@
                                                         <svg width="32" height="40" viewBox="0 0 28 40" fill="none"
                                                              xmlns="http://www.w3.org/2000/svg"
                                                              style="width: 27px; height: 40px;">
-                                                            <rect x="2.75" y="2.75" width="22.5" height="34.5" rx="2.25"
+                                                            <rect x="2.75" y="2.75" width="22.5" height="34.5"
+                                                                  rx="2.25"
                                                                   fill="#FFF" stroke="#B8B8B8"
                                                                   stroke-width="1.5" stroke-linejoin="round"></rect>
-                                                            <rect x="5.75" y="27.75" width="16.5" height="6.5" rx="2.25"
+                                                            <rect x="5.75" y="27.75" width="16.5" height="6.5"
+                                                                  rx="2.25"
                                                                   fill="#FFF" stroke="#B8B8B8"
                                                                   stroke-width="1.5" stroke-linejoin="round"></rect>
                                                             <path class="icon-selected"
@@ -511,6 +518,13 @@
                                     </ol>
                                 </div>
                             </div>
+                        </div>
+                        <hr>
+                        <div class="total-order-seat d-flex justify-content-end align-items-center">
+                            <div class="totel-price mx-3">
+                                Tổng cộng: <span class="fw-medium text-green">300.000 đ</span>
+                            </div>
+                            <button type="button" class="btn btn-green rounded-0">Tiếp tục</button>
                         </div>
                     </div>
                 </div>

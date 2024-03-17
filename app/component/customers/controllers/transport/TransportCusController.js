@@ -345,7 +345,7 @@ travel_app.controller('TransportCusController', function ($scope, $location, Map
                                             </div>
                                             <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
                                                 <div class="box">
-                                                    <a href="/drive-move/drive-transport-detail/${brand.id}"
+                                                    <a href="#"
                                                        class="btn btn-green w-100 mt-3 redirectTransportDetail">
                                                         Xem chi tiết
                                                     </a>

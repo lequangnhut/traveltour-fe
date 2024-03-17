@@ -1,6 +1,6 @@
 travel_app.controller('HomeCusController', function ($scope, $window, $location, HomeCusService, AuthService, NotificationService) {
     $scope.currentPage = 0;
-    $scope.pageSize = 9;
+    $scope.pageSize = 10;
 
     function errorCallback() {
         $location.path('/admin/internal-server-error')
@@ -12,6 +12,7 @@ travel_app.controller('HomeCusController', function ($scope, $window, $location,
         HomeCusService.findAllTourDetailCustomer($scope.currentPage, $scope.pageSize).then(function (response) {
             if (response.status === 200) {
                 $scope.tourDetail = response.data.data.content;
+
                 $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                 $scope.totalElements = response.data.data.totalElements;
             } else {

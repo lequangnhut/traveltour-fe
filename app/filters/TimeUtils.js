@@ -182,3 +182,25 @@ travel_app.filter('vietnameseDate', function () {
         return `${day}/${month}/${year}`;
     };
 });
+
+travel_app.filter('averageTime', function () {
+    return function (departureTime, arrivalTime) {
+        // Tính số mili giây giữa hai thời điểm
+        let difference = Math.abs(arrivalTime - departureTime);
+
+        // Chuyển đổi thành giờ và phút
+        let hours = Math.floor(difference / 3600000); // 1 giờ = 3600000 mili giây
+        let minutes = Math.floor((difference % 3600000) / 60000); // 1 phút = 60000 mili giây
+
+        // Tạo chuỗi kết quả
+        let result = '';
+
+        if (hours > 0) {
+            result += hours + 'h ';
+        }
+
+        result += minutes + 'p';
+
+        return result;
+    };
+});

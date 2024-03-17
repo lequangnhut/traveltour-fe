@@ -1,0 +1,186 @@
+<section style="margin-top: 150px">
+    <div class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-7" style="padding-right: 30px">
+                    <h2 class=" mb-5">Hãy đăng kí tài khoản của bạn để <span class="text-green">tiếp cận nguồn khách hàng</span>
+                        trên toàn quốc</h2>
+                    <div class="text-muted mb-4">
+                        <div class="d-flex align-items-center">
+                            <img src="/assets/customers/images/register-agency/BasicSetupEmptyState.png" width="50px"
+                                 alt="img" class="mx-3">
+                            <div>
+                                <div class="h4 ">Đăng kí nhanh chóng</div>
+                                <p>Thiết lập sản phẩm và dịch vụ của bạn chưa đầy 15 phút</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-muted mb-4">
+                        <div class="d-flex align-items-center">
+                            <img src="/assets/customers/images/register-agency/Websites.png" width="50px"
+                                 alt="img" class="mx-3">
+                            <div>
+                                <div class="h4 ">Dễ dàng nhập thông tin sản phẩm và dịch vụ</div>
+                                <p>Thêm thông tin sản phẩm và dịch vụ của bạn cực kì đơn giản và nhanh chóng với
+                                    TravelTour</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-muted mb-4">
+                        <div class="d-flex align-items-center">
+                            <img src="/assets/customers/images/register-agency/CustomerSupport.png" width="50px"
+                                 alt="img" class="mx-3">
+                            <div>
+                                <div class="h4">Hỗ trợ 24/7</div>
+                                <p>Chúng tôi luôn hỗ trợ khách hàng 24/7 giúp bạn tối ưu hóa doanh số bán hàng</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-muted mb-4">
+                        <div class="d-flex align-items-center">
+                            <img src="/assets/customers/images/register-agency/BoardChartUp.png" width="50px"
+                                 alt="img" class="mx-3">
+                            <div>
+                                <div class="h4 ">Thanh toán an toàn</div>
+                                <p>Đảm bảo nhận được tiền thanh toán và bảo vệ trước các trường hợp gian lận với Thanh
+                                    toán Online bởi TravelTour</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-muted mb-4">
+                        <div class="d-flex align-items-center">
+                            <img src="/assets/customers/images/register-agency/ChannelManager.png" width="50px"
+                                 alt="img" class="mx-3">
+                            <div>
+                                <div class="h4 ">Vận hành tinh giản</div>
+                                <p>Quản lí sản phẩm và dịch vụ của bạn hiệu quả hơn với TravelTour</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-muted mb-4">
+                        <div class="d-flex align-items-center">
+                            <img src="/assets/customers/images/register-agency/Document.png" width="50px"
+                                 alt="img" class="mx-3">
+                            <div>
+                                <div class="h4 ">Phí hoa hồng minh bạch</div>
+                                <p>Biết rõ Quý vị sẽ trả hoa hồng cho khoản nào và cho ai với phí hoa hồng minh bạch</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-5">
+                    <div class="form-input fancy-icon-box-two mb-5" style="width: 600px">
+                        <div class="p-4">
+                            <div class="h2 text-center">Tạo tài khoản đối tác</div>
+                            <p class="text-muted mb-4 text-center">
+                                Vui lòng điền đầy đủ thông tin để tạo tài khoản của bạn
+                            </p>
+                            <form ng-submit="submitOTP()" method="post" name="registerAgency">
+                                <div class="form-group mb-3">
+                                    <input type="email"
+                                           id="email"
+                                           name="email"
+                                           class="form-control"
+                                           ng-model="agencies.email"
+                                           ng-class="{ 'is-invalid': registerAgency.email.$invalid && registerAgency.email.$touched,
+                                                        'is-valid': registerAgency.email.$valid && registerAgency.email.$touched && !emailError }"
+                                           ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                                           ng-change="checkDuplicateEmail()"
+                                           ng-disabled="emailDisabled"
+                                           placeholder="Địa chỉ email"
+                                           required
+                                    >
+                                    <small class="text-danger"
+                                           ng-show="registerAgency.email.$touched && registerAgency.email.$error.required">
+                                        Vui lòng nhập địa chỉ email !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="registerAgency.email.$touched && registerAgency.email.$error.pattern">
+                                        Địa chỉ email không đúng định dạng !
+                                    </small>
+                                    <small class="text-danger" ng-show="registerAgency.email.$touched && emailError">
+                                        Email đã tồn tại ở một tài khoản khác!
+                                    </small>
+                                    <div class="d-flex justify-content-end fw-medium" ng-show="showOTPField">
+                                        <a href="#" ng-click="changeEmail()" class="text-green">Đổi email khác</a>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-3" ng-show="showOTPField">
+                                    <input type="tel"
+                                           maxlength="6"
+                                           id="password"
+                                           name="otp"
+                                           class="form-control"
+                                           ng-model="agencies.otp"
+                                           ng-class="{ 'is-invalid': registerAgency.otp.$invalid && registerAgency.otp.$touched,
+                                                        'is-valid': registerAgency.otp.$valid && registerAgency.otp.$touched }"
+                                           ng-pattern="/^\d{6}$/"
+                                           placeholder="Nhập mã OTP"
+                                    >
+                                    <small class="text-danger"
+                                           ng-show="registerAgency.otp.$touched && registerAgency.otp.$error.required">
+                                        Vui lòng nhập mã OTP !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="registerAgency.otp.$touched && registerAgency.otp.$error.pattern">
+                                        Mã OTP không đúng định dạng !
+                                    </small>
+                                </div>
+
+                                <div>
+                                    <div class="form-group mb-3" ng-show="!showOTPField">
+                                        <button type="button"
+                                                ng-click="submitEmail();"
+                                                ng-disabled="registerAgency.$invalid || emailError"
+                                                class="btn btn-green w-100"
+                                        >
+                                            Nhận OTP
+                                        </button>
+                                    </div>
+                                    <div class="form-group mb-3" ng-show="showOTPField">
+                                        <button type="submit"
+                                                class="btn btn-green w-100"
+                                                ng-disabled="registerAgency.$invalid || emailError"
+                                        >
+                                            Tiếp tục
+                                        </button>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="text-center mb-3">
+                                    Nếu quý vị có thắc mắc về bất kì vấn đề nào? Đừng ngần ngại hãy nhắn tin trực tiếp
+                                    cho chúng tôi để được giải đáp.
+                                </div>
+                                <div>
+                                    <div class="form-group mb-3">
+                                        <a href="/login-admin" role="button"
+                                           class="btn btn-outline-green text-green w-100">
+                                            Đăng nhập
+                                        </a>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="text-center mb-3">
+                                    Qua việc đăng nhập hoặc tạo tài khoản, bạn đồng ý với các Điều khoản và Điều kiện
+                                    cũng như Chính sách An toàn và Bảo mật của chúng tôi
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--<div class="form-group mb-3">-->
+<!--    <label for="confirmPassword">Xác nhận mật khẩu:</label>-->
+<!--    <input type="password" class="form-control" id="confirmPassword"-->
+<!--           name="confirmPassword"-->
+<!--           required>-->
+<!--</div>-->
+<!--<div class="form-group mb-3">-->
+<!--    <label for="phoneNumber">Số điện thoại:</label>-->
+<!--    <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" required>-->
+<!--</div>-->

@@ -7,7 +7,7 @@ travel_app.service('HomeCusService', function ($http) {
             url: API_HOME + 'find-tour-detail-customer',
             params: {
                 page: page || 0,
-                size: size || 5,
+                size: size || 10,
             }
         });
     };
