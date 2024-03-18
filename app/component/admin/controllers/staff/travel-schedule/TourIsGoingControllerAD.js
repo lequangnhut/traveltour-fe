@@ -1,33 +1,48 @@
-travel_app.controller('TourIsGoingControllerAD', function ($scope, $sce, $location, $timeout, CustomersGoOnTourServiceAD, TourDetailsServiceAD) {
+travel_app.controller('TourIsGoingControllerAD', function ($scope, $sce, $location, $routeParams, $timeout, $http, TourDetailsServiceAD, TourIsGoingServiceAD) {
+
     $scope.isLoading = true;
 
-    $scope.customer = {
-        avatar: null,
-        email: null,
-        password: null,
-        gender: null,
-        fullName: null,
-        birth: null,
-        address: null,
-        citizenCard: null,
-        phone: null,
-        isActive: null
-    }
+    let searchTimeout;
 
-    $scope.customerList = [];
+    $scope.tourDetailList = [];
     $scope.currentPage = 0;
     $scope.pageSize = 5;
-
-    let searchTimeout;
 
     const errorCallback = () => {
         $location.path('/admin/internal-server-error')
     }
 
+    /**
+     * Phương thức mở modal
+     */
+    $scope.openModal = (tourDetailId) => {
+        $('#modal-tour-detail').modal('show');
+
+        if (!tourDetailId) return;
+
+        TourDetailsServiceAD.findTourDetailById(tourDetailId)
+            .then(response => {
+                if (response.status === 200) {
+                    $timeout(() => {
+                        $scope.tourDetail = response.data.data;
+                    }, 0);
+                }
+            })
+            .catch(errorCallback);
+    }
+
+    /**
+     * Phương thức đóng modal
+     */
+    $scope.closeModal = () => {
+        $('#modal-tour-detail').modal('hide');
+    };
+
+    //phân trang
     $scope.setPage = (page) => {
         if (page >= 0 && page < $scope.totalPages) {
             $scope.currentPage = page;
-            $scope.getCustomerList();
+            $scope.getTourDetailList();
         }
     };
 
@@ -56,17 +71,35 @@ travel_app.controller('TourIsGoingControllerAD', function ($scope, $sce, $locati
 
     $scope.pageSizeChanged = () => {
         $scope.currentPage = 0;
-        $scope.getCustomerList();
+        $scope.getTourDetailList();
     };
 
     $scope.getDisplayRange = () => {
         return Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
     };
 
+    const tourDetailData = (response) => {
+        $scope.tourDetailList = response.data.data !== null ? response.data.data.content : [];
+        $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
+        $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
+    };
+
+    $scope.getTourDetailList = () => {
+        TourIsGoingServiceAD.getAll($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
+            .then((response) => {
+                tourDetailData(response);
+            }, errorCallback).finally(() => {
+            $scope.isLoading = false;
+        });
+    };
+
+    /**
+     * Sắp xếp
+     */
     $scope.sortData = (column) => {
         $scope.sortBy = column;
         $scope.sortDir = ($scope.sortDir === 'asc') ? 'desc' : 'asc';
-        $scope.getCustomerList();
+        $scope.getTourDetailList();
     };
 
     $scope.getSortIcon = (column) => {
@@ -80,99 +113,18 @@ travel_app.controller('TourIsGoingControllerAD', function ($scope, $sce, $locati
         return $sce.trustAsHtml('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"/></svg>');
     };
 
-    const customerData = (response) => {
-        $scope.customerList = response.data.data !== null ? response.data.data.content : [];
-        $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
-        $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
-    };
-
-    $scope.getCustomerList = () => {
-        CustomerServiceAD.getAllCustomer($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
-            .then((response) => {
-                customerData(response);
-            }, errorCallback).finally(() => {
-            $scope.isLoading = false;
-        });
-    };
-
-    $scope.searchCustomers = () => {
+    $scope.searchTourDetail = () => {
         if (searchTimeout) $timeout.cancel(searchTimeout);
         $scope.setPage(0);
 
         searchTimeout = $timeout(() => {
-            CustomerServiceAD.getAllCustomer($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
+            TourIsGoingServiceAD.getAll($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
                 .then((response) => {
-                    customerData(response);
+                    tourDetailData(response);
                 }, errorCallback);
-        }, 500); // 500ms debounce
+        }, 500)
     };
 
-
-    /*==============================================================================*/
-    //form create
-
-    $scope.createCustomerSubmit = () => {
-        $scope.isLoading = true;
-        const dataCustomer = new FormData();
-        dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
-        dataCustomer.append("customerAvatar", $scope.customerAvatarNoCloud);
-
-        CustomerServiceAD.createCustomer(dataCustomer).then(() => {
-            toastAlert('success', 'Thêm mới thành công !');
-            $location.path('/admin/customer-list');
-        }, errorCallback).finally(() => {
-            $scope.isLoading = false;
-        });
-    };
-
-    //form update
-    $scope.updateCustomerSubmit = () => {
-        $scope.isLoading = true;
-        const dataCustomer = new FormData();
-        if ($scope.hasImage) {
-            dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
-            dataCustomer.append("customerAvatar", $scope.customerAvatarNoCloud);
-            updateCustomer(customerId, dataCustomer);
-        } else {
-            urlToFile($scope.customer.avatar, fileName, mimeType).then(file => {
-                dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
-                dataCustomer.append("customerAvatar", file);
-                updateCustomer(customerId, dataCustomer);
-            }, errorCallback);
-        }
-    };
-
-    const updateCustomer = (customerId, dataCustomer) => {
-        $scope.isLoading = true;
-        CustomerServiceAD.updateCustomer(customerId, dataCustomer).then(() => {
-            toastAlert('success', 'Cập nhật thành công !');
-            $location.path('/admin/customer-list');
-        }, errorCallback).finally(() => {
-            $scope.isLoading = false;
-        });
-    }
-
-    //delete
-    /**
-     * Gọi api delete tour
-     */
-    $scope.deleteCustomer = (customerId, fullName) => {
-        const confirmDeleteCustomer = () => {
-            CustomerServiceAD.deactivateCustomer(customerId).then(() => {
-                toastAlert('success', 'Xóa thành công !');
-                $scope.getCustomerList();
-            }, errorCallback);
-        }
-
-        confirmAlert('Bạn có chắc chắn muốn xóa khách hàng ' + fullName + ' không ?', confirmDeleteCustomer);
-    }
-
-    TourDetailsServiceAD.findAllTourDetails().then((response) => {
-        $scope.tourDetails = response.data.data.content
-    }, errorCallback).finally(() => {
-        $scope.isLoading = false;
-    });
-
-    $scope.getCustomerList();
+    $scope.getTourDetailList();
 
 });

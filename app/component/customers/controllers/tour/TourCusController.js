@@ -223,7 +223,6 @@ travel_app.controller('TourCusController', function ($scope, $location, TourCusS
                     $scope.tourDetail = response.data.data !== null ? response.data.data.content : [];
                     $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
                     $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
-                    console.log($scope.tourDetail)
 
                     if (response.data.status === '204') {
                         toastAlert('warning', 'Không tìm thấy dữ liệu !');

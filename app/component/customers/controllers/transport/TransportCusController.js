@@ -1,37 +1,75 @@
-travel_app.controller('TransportCusController', function ($scope, $location, MapBoxService, TransportCusService) {
+travel_app.controller('TransportCusController', function ($scope, $location, MapBoxService, TransportCusService, TransportationBrandServiceAD, TransportationTypeServiceAD) {
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
     $scope.currentPage = 0;
     $scope.pageSize = 10;
+
+    $scope.transportationSearch = {}
+
+    $scope.showMoreTransportationBrand = false;
+    $scope.limitTransportationBrand = 5;
+
+    $scope.showMoreTransportationType = false;
+    $scope.limitTransportationType = 5;
 
     $scope.limitTransportType = 5;
 
     $scope.markerAllTransport = [];
     $scope.markerTransport = [];
 
-    $scope.ratings = [
-        {id: 1, label: 'Trên 1 sao'},
-        {id: 2, label: 'Trên 2 sao'},
-        {id: 3, label: 'Trên 3 sao'},
-        {id: 4, label: 'Trên 4 sao'},
-        {id: 5, label: 'Trên 5 sao'}
-    ];
+    $scope.ratings = [{id: 1, label: 'Trên 1 sao'}, {id: 2, label: 'Trên 2 sao'}, {id: 3, label: 'Trên 3 sao'}, {
+        id: 4, label: 'Trên 4 sao'
+    }, {id: 5, label: 'Trên 5 sao'}];
+
+    $scope.filters = {
+        searchTerm: null,
+        fromLocation: null,
+        toLocation: null,
+        checkInDateFiller: new Date(),
+        price: 15000000,
+        mediaTypeList: [],
+        listOfVehicleManufacturers: [],
+    };
+
+    const errorCallback = () => {
+        $location.path('/admin/internal-server-error')
+    }
+
+    const dataList = (response) => {
+        $scope.transportBrand = response !== null ? response.content : [];
+        $scope.totalPages = response !== null ? Math.ceil(response.totalElements / $scope.pageSize) : 0;
+        $scope.totalElements = response !== null ? response.totalElements : 0;
+    };
+
+    const fetchData = (serviceFunc, successCallback) => {
+        return serviceFunc().then((response) => {
+            if (response.status === 200) {
+                successCallback(response.data.data);
+            } else {
+                $location.path('/admin/page-not-found');
+            }
+        });
+    }
 
     $scope.init = function () {
         $scope.isLoading = true;
 
-        TransportCusService.findAllTransportBrandCus($scope.currentPage, $scope.pageSize).then(function (response) {
-            if (response.status === 200) {
-                $scope.transportBrand = response.data.data.content;
-
-                $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                $scope.totalElements = response.data.data.totalElements;
-            } else {
-                $location.path('/admin/page-not-found');
-            }
-        }).finally(function () {
-            $scope.isLoading = false;
+        Promise.all([fetchData(TransportCusService.findAllTransportBrandCus.bind(null, $scope.currentPage, $scope.pageSize), (repo) => {
+            dataList(repo);
+        }), fetchData(TransportationBrandServiceAD.getAllTransportationBrands, (repo) => {
+            $scope.transportationBrandList = repo;
+        }), fetchData(TransportationTypeServiceAD.getAllTransportationTypes, (repo) => {
+            $scope.transportationTypeList = repo;
+        }), fetchData(TransportCusService.getAllTransportCusDataList, (repo) => {
+            $scope.transportationDataList = repo.uniqueDataList;
+            $scope.fromLocationList = repo.fromLocationList;
+            $scope.toLocationList = repo.toLocationList;
         })
+        ]).finally(function () {
+            $scope.$apply(function () {
+                $scope.isLoading = false;
+            });
+        });
 
         /**
          * Phương thức mở model
@@ -226,6 +264,59 @@ travel_app.controller('TransportCusController', function ($scope, $location, Map
             $scope.encryptedBrandId = btoa(JSON.stringify(brandId));
             $location.path('/drive-move/drive-transport-detail/' + $scope.encryptedBrandId);
         }
+    }
+
+    //show tiện ích
+    $scope.showMoreItemsTransportationBrand = () => {
+        $scope.limitTransportationBrand = $scope.transportationBrandList.length;
+        $scope.showMoreTransportationBrand = true;
+    };
+
+    $scope.showLessItemsTransportationBrand = () => {
+        $scope.limitTransportationBrand = 5;
+        $scope.showMoreTransportationBrand = false;
+    };
+
+    $scope.showMoreItemsTransportationType = () => {
+        $scope.limitTransportationType = $scope.transportationTypeList.length;
+        $scope.showMoreTransportationType = true;
+    };
+
+    $scope.showLessItemsTransportationType = () => {
+        $scope.limitTransportationType = 5;
+        $scope.showMoreTransportationType = false;
+    };
+
+    //thêm danh sách lọc
+    $scope.ChooseFromAVarietyOfVehicles = (id) => {
+        let index = $scope.filters.mediaTypeList.indexOf(id);
+        if (index === -1) {
+            $scope.filters.mediaTypeList.push(id);
+        } else {
+            $scope.filters.mediaTypeList.splice(index, 1);
+        }
+    };
+
+    $scope.ChooseFromManyCarBrands = (id) => {
+        let index = $scope.filters.listOfVehicleManufacturers.indexOf(id);
+        if (index === -1) {
+            $scope.filters.listOfVehicleManufacturers.push(id);
+        } else {
+            $scope.filters.listOfVehicleManufacturers.splice(index, 1);
+        }
+    };
+
+    $scope.filterAllTransportCus = () => {
+        $scope.isLoading = true;
+        fetchData(TransportCusService.findAllTransportCustomerByFilters.bind(null, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.filters), (response) => {
+            dataList(response);
+            if (response === null) {
+                toastAlert('warning', 'Không tìm thấy dữ liệu !');
+            }
+        }).finally(function () {
+            $scope.isLoading = false;
+        })
+
     }
 
     /**

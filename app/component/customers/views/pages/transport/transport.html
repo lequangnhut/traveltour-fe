@@ -32,11 +32,10 @@
                     <!--====== Product Dropdown ======-->
                     <div class="product-dropdown float-md-end d-flex justify-content-end align-items-center">
                         <span class="m-3 fw-medium">Sắp xếp</span>
-                        <select class="wide" ng-model="filler.sort" ng-change="findAllRoomTypesByFillerClick()">
-                            <option value="">Mặc định</option>
-                            <option value="01">Giá tăng dần</option>
-                            <option value="02">Giá giảm dần</option>
-                            <option value="03">Đánh giá tốt nhất</option>
+                        <select class="wide" ng-model="sortTS" ng-change="sortData('unit_price', sortTS)">
+                            <option value="" data-display="asc">Mặc định</option>
+                            <option value="asc">Giá tăng dần</option>
+                            <option value="desc">Giá giảm dần</option>
                         </select>
                     </div>
                 </div>
@@ -60,13 +59,61 @@
                             <p class="fw-medium">Ngân sách của bạn</p>
                             <div class="findHotelType">
                                 <label for="rangePrice" class="form-label">Chọn ngân sách:</label>
-                                <input type="range" class="form-range" id="rangePrice" ng-model="filler.priceFilter"
+                                <input type="range" class="form-range" id="rangePrice" ng-model="filters.price"
                                        min="100000"
-                                       max="30000000" step="100000">
-                                <p>{{ filler.priceFilter | number:0 }} VND</p>
+                                       max="20000000" step="10000">
+                                <p>{{ filters.price | number:'0' }} VND</p>
                             </div>
                         </div>
 
+                        <div class="form-customer find-item mb-3">
+                            <p class="fw-medium">Loại phương tiện</p>
+                            <div class="findHotelType"
+                                 ng-repeat="tt in transportationTypeList | limitTo: limitTransportationType">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           value="{{tt.transportationTypeName}}"
+                                           id="{{tt.id}}"
+                                           ng-model="tt.checked"
+                                           ng-change="ChooseFromAVarietyOfVehicles(tt.id)">
+                                    <label class="form-check-label" for="{{tt.id}}">
+                                        {{ tt.transportationTypeName }}
+                                    </label>
+                                </div>
+                            </div>
+                            <button class="btn text-green"
+                                    ng-show="transportationBrandList.length > 5 && !showMoreTransportationType"
+                                    ng-click="showMoreItemsTransportationType()">Hiển thị thêm <i
+                                    class="fa-solid fa-angle-down"></i></button>
+                            <button class="btn text-green" ng-show="showMoreTransportationType"
+                                    ng-click="showLessItemsTransportationType()">Ẩn bớt <i
+                                    class="fa-solid fa-angle-up"></i>
+                            </button>
+                        </div>
+                        <div class="form-customer find-item mb-3">
+                            <p class="fw-medium">hãng phương tiện</p>
+                            <div class="findHotelType"
+                                 ng-repeat="tb in transportationBrandList | limitTo: limitTransportationBrand">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           value="{{tb.transportationBrandName}}"
+                                           id="{{tb.id}}"
+                                           ng-model="tb.checked"
+                                           ng-change="ChooseFromManyCarBrands(tb.id)">
+                                    <label class="form-check-label" for="{{tb.id}}">
+                                        {{ tb.transportationBrandName }}
+                                    </label>
+                                </div>
+                            </div>
+                            <button class="btn text-green"
+                                    ng-show="transportationBrandList.length > 5 && !showMoreTransportationBrand"
+                                    ng-click="showMoreItemsTransportationBrand()">Hiển thị thêm <i
+                                    class="fa-solid fa-angle-down"></i></button>
+                            <button class="btn text-green" ng-show="showMoreTransportationBrand"
+                                    ng-click="showLessItemsTransportationBrand()">Ẩn bớt <i
+                                    class="fa-solid fa-angle-up"></i>
+                            </button>
+                        </div>
                         <div class="find-item mb-3">
                             <p class="fw-medium">Điểm đánh giá của khách</p>
                             <div class="findHotelType">
@@ -85,7 +132,7 @@
                             </div>
                         </div>
                         <div class="find-item mb-3 d-flex justify-content-center mt-3">
-                            <button class="btn btn-green" ng-click="">
+                            <button class="btn btn-green" ng-click="filterAllTransportCus()">
                                 Lọc xe
                             </button>
                         </div>
@@ -95,34 +142,45 @@
 
             <div class="col-xl-9 col-md-12">
                 <div class="mb-3 w-100">
-                    <div class="row single-event-item">
-                        <div class="col-md-4">
-                            <label for="locationFilter" class="form-label">Địa điểm đi</label>
-                            <input type="text"
+                    <div class="row single-event-item d-flex align-items-end">
+                        <div class="col-md-3">
+                            <label for="locationFilter" class="form-label">Tìm kiếm</label>
+                            <input type="text" list="datalistOptionsTransportCus"
                                    class="form-control"
                                    id="locationFilter"
-                                   ng-model="filler.locationFilter"
-                                   placeholder="Nhập nơi bạn muốn đến..."
+                                   ng-model="filters.searchTerm"
+                                   placeholder=" ... "
                             >
+                            <datalist id="datalistOptionsTransportCus">
+                                <option ng-repeat="transportationData in transportationDataList"
+                                        value="{{transportationData}}">
+                            </datalist>
                         </div>
-                        <div class="col-md-4">
-                            <label for="checkInDateFiller" class="form-label">Ngày đi</label>
+
+                        <div class="col-md-3">
+                            <label for="fromLocation" class="form-label">Điểm đi</label>
+                            <select class="form-control" id="fromLocation"
+                                    ng-model="filters.fromLocation" ng-change="validateDates()">
+                                <option selected value="">Chọn điểm đi</option>
+                                <option ng-repeat="fl in fromLocationList" value="{{ fl }}">{{ fl }}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="toLocation" class="form-label">Điểm dến</label>
+                            <select class="form-control" id="toLocation"
+                                    ng-model="filters.toLocation" ng-change="validateDates()">
+                                <option selected value="">Chọn điểm đến</option>
+                                <option ng-repeat="tl in toLocationList" value="{{tl}}">{{ tl }}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="checkInDateFiller" class="form-label">Ngày đi (dự kiến)</label>
                             <input type="date" class="form-control" id="checkInDateFiller"
-                                   ng-model="filler.checkInDateFiller" ng-change="validateDates()">
-                            <span class="text-danger" ng-if="errorCheckInDateFiller">
-                                {{ errorCheckInDateFiller }}
-                            </span>
+                                   ng-model="filters.checkInDateFiller" ng-change="validateDates()">
                         </div>
-                        <div class="col-md-4">
-                            <label for="checkOutDateFiller" class="form-label">Ngày về</label>
-                            <input type="date" class="form-control" id="checkOutDateFiller"
-                                   ng-model="filler.checkOutDateFiller" ng-change="validateDates()">
-                            <span class="text-danger" ng-if="errorCheckOutDateFiller">
-                                {{ errorCheckOutDateFiller }}
-                            </span>
-                        </div>
-                        <div class="d-flex justify-content-end mt-3">
-                            <button type="button" class="btn btn-green" ng-click=""><i
+
+                        <div class="d-flex justify-content-end mt-3 col-md-12">
+                            <button type="button" class="btn btn-green" ng-click="filterAllTransportCus()"><i
                                     class="fa-solid fa-magnifying-glass"></i> Tìm chuyến xe
                             </button>
                         </div>

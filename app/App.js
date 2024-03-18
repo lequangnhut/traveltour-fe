@@ -172,6 +172,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/staff/travel-schedule/customers-go-on-tour/customers-go-on-tour-update.html',
             controller: 'CustomersGoOnTourControllerAD'
         })
+        .when('/admin/bill-list', {
+            templateUrl: 'app/component/admin/views/pages/staff/bill/bill-list.html',
+            controller: 'BillControllerAD'
+        })
 
         /**
          * Agent
