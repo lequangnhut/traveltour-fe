@@ -2,7 +2,8 @@ travel_app.controller('BookingTourCusController',
     function ($scope, $sce, $location, $rootScope, $window, $routeParams, AuthService, LocalStorageService, BookingTourCusService, TourDetailCusService, GenerateCodePayService) {
 
         let user = AuthService.getUser();
-        let tourDetailId = $routeParams.id;
+        let tourDetailId = JSON.parse(atob($routeParams.id));
+        $scope.tourDetailIdBase64 = $routeParams.id;
 
         if (!user) {
             LocalStorageService.set('redirectAfterLogin', $location.path());
@@ -95,7 +96,7 @@ travel_app.controller('BookingTourCusController',
                     centerAlert('Xác nhận !', 'Vui lòng chấp nhận điều khoản, điều kiện.', 'warning')
                 } else {
                     LocalStorageService.set('serviceCustomer', $scope.service);
-                    $location.path('/tours/tour-detail/' + $scope.tourDetail.id + '/booking-tour/customer-information');
+                    $location.path('/tours/tour-detail/' + btoa(JSON.stringify($scope.tourDetail.id)) + '/booking-tour/customer-information');
                 }
             };
 
@@ -177,7 +178,7 @@ travel_app.controller('BookingTourCusController',
                         LocalStorageService.set('bookingTicket', bookingTicket);
 
                         toastAlert('success', 'Đặt tour thành công !');
-                        $location.path('/tours/tour-detail/' + tourDetail.id + '/booking-tour/customer-information/check-information');
+                        $location.path('/tours/tour-detail/' + btoa(JSON.stringify(tourDetail.id)) + '/booking-tour/customer-information/check-information');
                         $scope.bookingCustomerList.splice(0, $scope.bookingCustomerList.length);
                     } else {
                         $location.path('/admin/page-not-found')
@@ -221,7 +222,55 @@ travel_app.controller('BookingTourCusController',
                     bookingTourCustomersDto: $scope.bookingCustomerList
                 }
 
-                BookingTourCusService.redirectVNPay(tourDetail.id, bookingTourId).then(function successCallBack(response) {
+                BookingTourCusService.redirectVNPay(tourDetail.id, bookingTourId, ticket.adults, ticket.children).then(function successCallBack(response) {
+                    if (response.status === 200) {
+                        LocalStorageService.set('bookingDto', bookingDto);
+                        LocalStorageService.set('bookingTicket', bookingDto.bookingToursDto);
+
+                        $window.location.href = response.data.redirectUrl;
+                        $scope.bookingCustomerList.splice(0, $scope.bookingCustomerList.length);
+                    } else {
+                        $location.path('/admin/page-not-found')
+                    }
+                }, errorCallback).finally(function () {
+                    $scope.isLoading = false;
+                });
+            }
+
+            confirmAlert('Bạn có chắc chắn địa chỉ email: ' + email + ' là chính xác không ?', confirmBookTour);
+        }
+
+        $scope.paymentMomo = function () {
+            if (user !== null) {
+                if (user.roles.some(role => role.nameRole === 'ROLE_CUSTOMER')) {
+                    $scope.bookings_tour.userId = user.id;
+                } else {
+                    LocalStorageService.remove('user');
+                }
+            }
+
+            let ticket = $scope.ticket;
+            let email = $scope.bookings_tour.customerEmail;
+            let totalPrice = $scope.totalPrice;
+            let tourDetail = $scope.tourDetail;
+            let bookingTourId = GenerateCodePayService.generateCodeBooking('MOMO', tourDetail.id);
+
+            $scope.bookings_tour.id = bookingTourId;
+            $scope.bookings_tour.capacityAdult = ticket.adults;
+            $scope.bookings_tour.capacityKid = ticket.children;
+            $scope.bookings_tour.capacityBaby = ticket.baby;
+            $scope.bookings_tour.orderTotal = totalPrice;
+            $scope.bookings_tour.paymentMethod = 3; // 3: MOMO
+            $scope.bookings_tour.orderCode = GenerateCodePayService.generateCodePayment('MOMO');
+
+            function confirmBookTour() {
+                $scope.isLoading = true;
+
+                let bookingDto = {
+                    bookingToursDto: $scope.bookings_tour, bookingTourCustomersDto: $scope.bookingCustomerList
+                }
+
+                BookingTourCusService.redirectMomo(tourDetail.id, bookingTourId, ticket.adults, ticket.children).then(function successCallBack(response) {
                     if (response.status === 200) {
                         LocalStorageService.set('bookingDto', bookingDto);
                         LocalStorageService.set('bookingTicket', bookingDto.bookingToursDto);
@@ -273,54 +322,6 @@ travel_app.controller('BookingTourCusController',
                 BookingTourCusService.redirectZALOPay(paymentData).then(function successCallBack(response) {
                     if (response.status === 200) {
                         $window.location.href = response.data.data;
-                        $scope.bookingCustomerList.splice(0, $scope.bookingCustomerList.length);
-                    } else {
-                        $location.path('/admin/page-not-found')
-                    }
-                }, errorCallback).finally(function () {
-                    $scope.isLoading = false;
-                });
-            }
-
-            confirmAlert('Bạn có chắc chắn địa chỉ email: ' + email + ' là chính xác không ?', confirmBookTour);
-        }
-
-        $scope.paymentMomo = function () {
-            if (user !== null) {
-                if (user.roles.some(role => role.nameRole === 'ROLE_CUSTOMER')) {
-                    $scope.bookings_tour.userId = user.id;
-                } else {
-                    LocalStorageService.remove('user');
-                }
-            }
-
-            let ticket = $scope.ticket;
-            let email = $scope.bookings_tour.customerEmail;
-            let totalPrice = $scope.totalPrice;
-            let tourDetail = $scope.tourDetail;
-            let bookingTourId = GenerateCodePayService.generateCodeBooking('MOMO', tourDetail.id);
-
-            $scope.bookings_tour.id = bookingTourId;
-            $scope.bookings_tour.capacityAdult = ticket.adults;
-            $scope.bookings_tour.capacityKid = ticket.children;
-            $scope.bookings_tour.capacityBaby = ticket.baby;
-            $scope.bookings_tour.orderTotal = totalPrice;
-            $scope.bookings_tour.paymentMethod = 3; // 3: MOMO
-            $scope.bookings_tour.orderCode = GenerateCodePayService.generateCodePayment('MOMO');
-
-            function confirmBookTour() {
-                $scope.isLoading = true;
-
-                let bookingDto = {
-                    bookingToursDto: $scope.bookings_tour, bookingTourCustomersDto: $scope.bookingCustomerList
-                }
-
-                BookingTourCusService.redirectMomo(tourDetail.id, bookingTourId).then(function successCallBack(response) {
-                    if (response.status === 200) {
-                        LocalStorageService.set('bookingDto', bookingDto);
-                        LocalStorageService.set('bookingTicket', bookingDto.bookingToursDto);
-
-                        $window.location.href = response.data.redirectUrl;
                         $scope.bookingCustomerList.splice(0, $scope.bookingCustomerList.length);
                     } else {
                         $location.path('/admin/page-not-found')

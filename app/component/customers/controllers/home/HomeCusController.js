@@ -38,6 +38,13 @@ travel_app.controller('HomeCusController', function ($scope, $window, $location,
                 }
             }
         }, errorCallback);
+
+        /**
+         * phương thức chuyển đến tour detail
+         */
+        $scope.redirectTourDetail = function (tourDetailId) {
+            $location.path('/tours/tour-detail/' + btoa(JSON.stringify(tourDetailId)));
+        }
     }
 
     /**

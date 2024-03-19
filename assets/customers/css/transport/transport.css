@@ -1,0 +1,486 @@
+.container-transport {
+    min-height: 200px;
+}
+
+.info-transport {
+    position: relative;
+}
+
+.info-transport .rating {
+    height: 130px;
+}
+
+.transport-card-item .content {
+    padding: 10px 0 5px;
+}
+
+.notification-tag .tag {
+    display: inline-block;
+    position: relative;
+    margin-right: 24px;
+    padding: 0 15px;
+}
+
+.notification-tag .tag::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 17px solid transparent;
+    border-bottom: 13px solid transparent;
+    border-left: 15px solid currentcolor;
+    position: absolute;
+    top: 0;
+    right: -14px
+}
+
+.notification-tag .tag span {
+    color: white;
+    font-size: 16px;
+}
+
+.content-discount {
+    align-items: center;
+    border: 1px solid #27ae60;
+    border-radius: 4px;
+    display: flex;
+    font-size: 12px;
+    height: 35px;
+    padding: 4px 8px;
+    color: #484848;
+}
+
+/*Ghế ngồi*/
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+.isjdvH {
+    padding: 7px 10px 7px;
+    width: 350px;
+    height: 44px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    border: 1px solid rgb(47, 128, 237);
+    background-color: rgb(236, 244, 253);
+    display: flex;
+    vertical-align: middle;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.isjdvH .headline {
+    font-size: 14px;
+    display: inline;
+    color: rgb(71, 71, 71);
+}
+
+.isjdvH .url {
+    height: auto;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    float: right;
+    font-size: 14px;
+    white-space: nowrap;
+    font-weight: 700;
+    text-decoration-line: underline;
+    cursor: pointer;
+    background: unset !important;
+    box-shadow: unset !important;
+    color: rgb(36, 116, 229) !important;
+}
+
+.bEmALR .content {
+    font-size: 18px;
+    white-space: pre-line;
+}
+
+.theatre {
+    width: 100%;
+    max-width: 170px;
+    margin-bottom: 20px;
+    border-radius: 3px;
+    background-color: rgb(242, 242, 242);
+    padding: 20px 10px;
+    box-shadow: 0 0 7px -4px #000;
+}
+
+.steering-wheel {
+    margin-left: 12px;
+}
+
+.seats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+
+.seat {
+    display: flex;
+    flex: 0 0 14.28571%;
+    padding: 0 14px 5px 10px;
+    position: relative;
+}
+
+.seat input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.daMVvn svg rect {
+    stroke: rgb(242, 242, 242);
+    fill: rgb(224, 224, 224);
+}
+
+.daMVvn svg .icon-disabled {
+    fill: rgb(242, 242, 242);
+}
+
+.dLgsTe svg rect {
+    stroke: rgb(39, 174, 96);
+    fill: rgb(139, 229, 176);
+}
+
+.dLgsTe svg .icon-selected {
+    fill: rgb(39, 174, 96);
+}
+
+.seatActive svg .icon-selected {
+    fill: rgb(39, 174, 96);
+}
+
+.seatActive svg rect {
+    stroke: rgb(39, 174, 96);
+    fill: rgb(139, 229, 176);
+}
+
+/*tiến trình*/
+#progress-booking .progress-container {
+    margin: 30px 0 0 0;
+    overflow: auto;
+}
+
+#progress-booking .item {
+    width: 150px;
+}
+
+#progress-booking .vector {
+    border-radius: 50%;
+    border: 3px solid #63ab45;
+    width: 50px;
+    height: 50px;
+    fill: #63ab45;
+}
+
+#progress-booking .vector-wrapper {
+    text-align: center;
+}
+
+#progress-booking .num {
+    display: inline-block;
+    text-align: center;
+    border-radius: 50%;
+    border: 3px solid #63ab45;
+    width: 30px;
+    height: 30px;
+    line-height: 25px;
+    font-size: 16px;
+    font-weight: 400;
+    background: #63ab45;
+    color: #fff;
+}
+
+#progress-booking .text-wrapper {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 15px;
+}
+
+/*
+CCS cho tile khi hover vào label
+ */
+.theatre ol li ol li label[title] {
+    position: relative;
+    display: inline-block;
+}
+
+.theatre ol li ol li label[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%; /* Hiển thị title bên trên */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.44);
+    color: #fff;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.theatre ol li ol li label[title]:hover::before {
+    content: "";
+    position: absolute;
+    bottom: 75%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-style: solid;
+    border-width: 5px;
+    border-color: rgba(0, 0, 0, 0.44) transparent transparent transparent;
+}
+
+.theatre ol li ol li label[title]:hover::after,
+.theatre ol li ol li label[title]:hover::before {
+    opacity: 1;
+}
+
+/*
+Thông tin chi tiết của phần booking xe
+ */
+.denlzE.trust {
+    border: 1px solid rgb(39, 174, 96);
+    background-color: rgb(238, 251, 244) !important;
+}
+
+.denlzE.trust-message-content-container {
+    display: flex;
+    border-radius: 8px;
+    padding: 10px 12px;
+    gap: 10px;
+    align-items: center;
+}
+
+.cKlGoa {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    background: white;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 8px;
+}
+
+.cKlGoa .section-ticket-header {
+    display: flex;
+    width: 100%;
+    padding: 12px;
+    gap: 12px;
+    border-bottom: 1px solid rgb(224, 224, 224);
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.cKlGoa .section-ticket-header .section-ticket-header-left {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    gap: 8px;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.cKlGoa .section-ticket-header .section-ticket-header-left .total-ticket {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.cKlGoa .section-ticket-content {
+    width: 100%;
+    padding: 0 12px 12px;
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
+}
+
+.cKlGoa .section-ticket-company-info {
+    display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 10px 0;
+    gap: 12px;
+    border-bottom: 1px solid rgb(224, 224, 224);
+    width: 100%;
+}
+
+.cKlGoa .section-ticket-company-info .section-ticket-company-info-name {
+    display: grid;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0;
+    row-gap: 2px;
+    flex: 1 1 0;
+}
+
+.cKlGoa .section-ticket-company-info .section-ticket-company-info-name p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.boemqK {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+    letter-spacing: 0;
+    margin-bottom: 0;
+}
+
+.evVLoJ {
+    display: flex;
+    position: relative;
+    width: 100%;
+}
+
+.evVLoJ .section-route-info {
+    margin: auto;
+    display: grid;
+    width: 100%;
+}
+
+.evVLoJ .date-time-container .date-time-container-pick-up, .evVLoJ .date-time-container .date-time-container-drop-off {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    margin: auto;
+    text-align: center;
+}
+
+.progress-location {
+    padding: 0 20px 0 19px;
+}
+
+.evVLoJ .icon-container .icon-container-top {
+    padding: 16px 16px 4px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 44px;
+}
+
+.dlwjtp .icon-container-divider {
+    display: flex;
+    min-height: 24px;
+}
+
+.dlwjtp .area-point-container {
+    display: flex;
+}
+
+.evVLoJ .date-time-container {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+container .date-time-container-drop-off {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    margin: auto;
+    text-align: center;
+}
+
+.kxACTE {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 10px;
+    margin-bottom: 0;
+}
+
+.evVLoJ .date-time-container .date-time-container-pick-up p, .evVLoJ .date-time-container .date-time-container-drop-off p {
+    margin-bottom: 0px;
+}
+
+.evVLoJ .icon-container {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.dlwjtp .icon-container-divider {
+    display: flex;
+    min-height: 24px;
+}
+
+.dlwjtp .icon-container-divider .icon-container-divider-border-right {
+    border-right: 1px solid rgb(224, 224, 224);
+}
+
+.dlwjtp .icon-container-divider .icon-container-divider-border-left {
+    border-left: 1px solid rgb(224, 224, 224);
+}
+
+.dlwjtp .icon-container-divider div {
+    flex: 1 1 0%;
+}
+
+.evVLoJ .icon-container .icon-container-bottom {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 5px 0 26px;
+}
+
+.dlwjtp .section-area {
+    display: flex;
+    gap: 6px;
+    margin: auto;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.dlwjtp .section-area .section-area-picker {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.jCbuWT {
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    margin-bottom: 0;
+}
+
+.eSKsXb {
+    font-size: 12px;
+    line-height: 12px;
+    letter-spacing: 0.3px;
+    margin-bottom: 0;
+}
+
+.jPSIDj {
+    margin: 0 0 0 4px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 13px;
+    letter-spacing: 0.3px;
+}
+
+.evVLoJ .button-mobile-change {
+    white-space: nowrap;
+    margin: auto;
+}

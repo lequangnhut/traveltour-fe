@@ -1,7 +1,6 @@
 travel_app.controller('BookingSuccessCusController', function ($scope, $location, $routeParams, BookingTourCusService, LocalStorageService) {
     let bookingTourId = $routeParams.orderInfo;
     $scope.transactionId = $routeParams.transactionId;
-    $scope.totalPrice = $routeParams.totalPrice;
 
     function errorCallback() {
         $location.path('/admin/internal-server-error')
@@ -13,7 +12,7 @@ travel_app.controller('BookingSuccessCusController', function ($scope, $location
 
         if (dataBooking === null && bookingTicket === null) {
             toastAlert('warning', 'Booking không tồn tại !');
-            $location.path('/home');
+            $location.path('/tours');
             return;
         }
 
@@ -21,6 +20,13 @@ travel_app.controller('BookingSuccessCusController', function ($scope, $location
         $scope.tourDetail = LocalStorageService.get('dataBooking').tourDetail;
         $scope.provinceName = LocalStorageService.get('dataBooking').provinceName;
         $scope.bookingTicket = LocalStorageService.get('bookingTicket');
+
+        let unitPrice = $scope.tourDetail.unitPrice;
+        let amountAdults = $scope.ticket.adults;
+        let amountChildren = $scope.ticket.children;
+
+        $scope.totalPrice = (amountAdults * unitPrice) + (amountChildren * (unitPrice * 0.3));
+        $scope.totalTikets = parseInt($scope.ticket.adults) + parseInt($scope.ticket.children) + parseInt($scope.ticket.baby);
 
         let paymentProcessed = LocalStorageService.get('paymentProcessed');
 

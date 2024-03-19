@@ -591,6 +591,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/home/home.html',
             controller: 'HomeCusController'
         })
+        .when('/payment-policy', {
+            templateUrl: 'app/component/customers/views/pages/home/payment-policy.html',
+            controller: 'MainController'
+        })
         .when('/home/see-ticket-informatione/:orderTransportId', {
             templateUrl: 'app/component/customers/views/pages/home/home.html',
             controller: 'TicketController'
@@ -676,6 +680,14 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/hotel/payment-hotel.html',
             controller: 'PaymentHotelController'
         })
+        .when('/chat', {
+            templateUrl: 'app/component/customers/views/pages/chat/chat.html',
+            controller: 'ChatCustomerController',
+        })
+
+        /**
+         * Booking xe customer
+         */
         .when('/drive-move', {
             templateUrl: 'app/component/customers/views/pages/transport/transport.html',
             controller: 'TransportCusController'
@@ -684,13 +696,14 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/transport/transport-detail.html',
             controller: 'TransportDetailCusController'
         })
-        .when('/payment-policy', {
-            templateUrl: 'app/component/customers/views/pages/home/payment-policy.html'
+        .when('/drive-move/drive-transport-detail/:brandId/booking-confirmation/:scheduleId', {
+            templateUrl: 'app/component/customers/views/pages/transport/transport-booking.html',
+            controller: 'TransBookingCusController'
         })
-        .when('/chat', {
-            templateUrl: 'app/component/customers/views/pages/chat/chat.html',
-            controller: 'ChatCustomerController',
-        })
+
+        /**
+         * Register Agencies
+         */
         .when('/register-agency', {
             templateUrl: 'app/component/customers/views/pages/register-agency/register-agency-home.html'
         })
@@ -704,7 +717,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
 
         /**
-         * Booking
+         * Booking tour
          */
         .when('/tours/tour-detail/:id/booking-tour', {
             templateUrl: 'app/component/customers/views/pages/booking/booking.html',

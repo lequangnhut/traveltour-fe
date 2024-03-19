@@ -36,8 +36,14 @@ travel_app.controller('TourCusController', function ($scope, $location, TourCusS
         } else {
             $scope.errorCheckInDateFiller = "";
         }
-
     };
+
+    /**
+     * phương thức chuyển đến tour detail
+     */
+    $scope.redirectTourDetail = function (tourDetailId) {
+        $location.path('/tours/tour-detail/' + btoa(JSON.stringify(tourDetailId)));
+    }
 
     $scope.init = function () {
         $scope.isLoading = true;
@@ -379,7 +385,7 @@ travel_app.controller('TourCusController', function ($scope, $location, TourCusS
                                                 <div class="fw-bold text-end" style="font-size: 20px">
                                                     ${$scope.formatPrice(tourDetail.unitPrice)} ₫
                                                 </div>
-                                                <a href="/tours/tour-detail/${tourDetail.id}" id="redirectTourDetail" class="btn btn-green w-100 mt-3">Xem chi tiết</a>
+                                                <a href="#" id="redirectTourDetail" class="btn btn-green w-100 mt-3">Xem chi tiết</a>
                                             </div>
                                         </div>
                                     </div>
@@ -388,10 +394,6 @@ travel_app.controller('TourCusController', function ($scope, $location, TourCusS
                         </div>
                     </div>`;
     }
-
-    $(document).on('click', '#redirectTourDetail', function () {
-        $('#modelMap').modal('hide');
-    });
 
     $scope.showCallTourModal = function () {
         ToursServiceAD.findAllToursSelect().then(function (response) {

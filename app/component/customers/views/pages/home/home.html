@@ -97,8 +97,9 @@
                                     {{ detail.departureDate | calculateDaysAndNights:detail.arrivalDate }}
                                 </span>
                                 <span>
-                                    <a href="/tours/tour-detail/{{detail.id}}">Chi tiết<span
-                                            class="fas fa-long-arrow-right"></span></a>
+                                    <a href="#" ng-click="redirectTourDetail(detail.id)">Chi tiết
+                                        <span class="fas fa-long-arrow-right"></span>
+                                    </a>
                                 </span>
                             </div>
                         </div>

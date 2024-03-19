@@ -31,10 +31,6 @@ travel_app.controller('TransportCusController', function ($scope, $location, Map
         listOfVehicleManufacturers: [],
     };
 
-    const errorCallback = () => {
-        $location.path('/admin/internal-server-error')
-    }
-
     const dataList = (response) => {
         $scope.transportBrand = response !== null ? response.content : [];
         $scope.totalPages = response !== null ? Math.ceil(response.totalElements / $scope.pageSize) : 0;

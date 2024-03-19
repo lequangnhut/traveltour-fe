@@ -196,7 +196,7 @@ travel_app.filter('averageTime', function () {
         let result = '';
 
         if (hours > 0) {
-            result += hours + 'h ';
+            result += hours + 'h';
         }
 
         result += minutes + 'p';

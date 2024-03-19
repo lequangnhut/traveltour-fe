@@ -1,25 +1,29 @@
 travel_app.service('BookingTourCusService', function ($http) {
 
-    let API_BOOKING = BASE_API + 'book-tour/';
+    let API_BOOKING = BASE_API + 'customer/booking-tour/';
 
-    this.redirectVNPay = function (tourDetailId, orderId) {
+    this.redirectVNPay = function (tourDetailId, orderId, ticketAdult, ticketChildren) {
         return $http({
             method: 'POST',
-            url: BASE_API + 'vnpay/submit-payment',
+            url: API_BOOKING + 'vnpay/submit-payment',
             params: {
                 tourDetailId: tourDetailId,
                 orderInfo: orderId,
+                ticketAdult: ticketAdult,
+                ticketChildren: ticketChildren
             }
         });
     }
 
-    this.redirectMomo = function (tourDetailId, bookingTourId) {
+    this.redirectMomo = function (tourDetailId, bookingTourId, ticketAdult, ticketChildren) {
         return $http({
             method: 'POST',
-            url: BASE_API + 'momo/submit-payment',
+            url: API_BOOKING + 'momo/submit-payment',
             params: {
                 tourDetailId: tourDetailId,
                 bookingTourId: bookingTourId,
+                ticketAdult: ticketAdult,
+                ticketChildren: ticketChildren
             }
         });
     }
@@ -27,7 +31,7 @@ travel_app.service('BookingTourCusService', function ($http) {
     this.redirectZALOPay = function (paymentData) {
         return $http({
             method: 'POST',
-            url: BASE_API + 'zalopay/submit-payment',
+            url: API_BOOKING + 'zalopay/submit-payment',
             data: paymentData
         });
     }

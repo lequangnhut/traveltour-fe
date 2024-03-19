@@ -8,7 +8,7 @@
                     <h1 class="page-title">Booking Tours</h1>
                     <ul class="breadcrumb-link text-white">
                         <li><a href="/home">Trang chủ</a></li>
-                        <li class="active">Booking tour</li>
+                        <li class="active">Tour</li>
                     </ul>
                 </div>
             </div>
@@ -267,7 +267,7 @@
                                                     <p class="fs-7 float-end">
                                                         {{ tour.departureDate | calculateDaysAndNights:tour.arrivalDate }}
                                                     </p>
-                                                    <a href="/tours/tour-detail/{{ tour.id }}"
+                                                    <a href="#" ng-click="redirectTourDetail(tour.id)"
                                                        class="btn btn-green w-100 mt-3">
                                                         Xem chi tiết
                                                     </a>

@@ -8,7 +8,8 @@
                     <h1 class="page-title">Đặt Tour</h1>
                     <ul class="breadcrumb-link text-white">
                         <li><a href="/home">Trang chủ</a></li>
-                        <li><a href="/tours/tour-detail/TD0007">Tour chi tiết</a></li>
+                        <li><a href="/tours">Tour</a></li>
+                        <li><a href="/tours/tour-detail/{{ tourDetailIdBase64 }}">Tour chi tiết</a></li>
                         <li class="active">Chọn dịch vụ</li>
                     </ul>
                 </div>
@@ -337,7 +338,7 @@
 
                             <div class="button-footer">
                                 <a class="btn btn-outline-green rounded-0 ps-4 p-2 px-4 ms-4"
-                                   href="/tours/tour-detail/{{ tourDetail.id }}"
+                                   href="/tours/tour-detail/{{ tourDetailIdBase64 }}"
                                    role="button">
                                     <i class="fa-solid fa-arrow-left"></i>
                                     TRỞ VỀ

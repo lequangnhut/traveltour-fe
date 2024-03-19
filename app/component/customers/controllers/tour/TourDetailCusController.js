@@ -33,7 +33,7 @@ travel_app.controller('TourDetailCusController',
             baby: '0'
         }
 
-        const tourDetailId = $routeParams.id;
+        const tourDetailId = JSON.parse(atob($routeParams.id));
 
         function errorCallback() {
             $location.path('/admin/internal-server-error')
@@ -340,7 +340,7 @@ travel_app.controller('TourDetailCusController',
                     }
 
                     LocalStorageService.set('dataBooking', dataBooking);
-                    $location.path('/tours/tour-detail/' + tourDetailId + '/booking-tour');
+                    $location.path('/tours/tour-detail/' + btoa(JSON.stringify(tourDetailId)) + '/booking-tour');
                 }
             }
         }
@@ -571,9 +571,6 @@ travel_app.controller('TourDetailCusController',
                                     <div class="roomTypeByHotel mb-3"
                                          style="padding-left: 10px ;border-left: 1px solid rgba(29, 35, 31, 0.1)">
                                         <div style="font-size: 14px; line-height: 20px">
-                                            <p class="fs-7 fw-medium mb-1">Hướng dẫn viên:
-                                                ${tourDetail.usersByGuideId.fullName} - ${tourDetail.usersByGuideId.address}
-                                            </p>
                                             <p class="fs-7 mb-1">Điểm đi:
                                                 <span class="fw-medium">${tourDetail.fromLocation}</span>
                                             </p>
@@ -596,7 +593,6 @@ travel_app.controller('TourDetailCusController',
 
         $scope.showCallTourModal = function () {
             ToursServiceAD.findAllToursSelect().then(function (response) {
-                console.log(response)
                 $scope.tourBasicList = response.data.data;
             }, errorCallback);
             $('#formTourModal').modal('show');
