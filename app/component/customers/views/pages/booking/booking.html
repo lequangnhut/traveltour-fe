@@ -449,11 +449,22 @@
                                         </span>
                                     </div>
                                 </div>
+                                <div class="booking-item">
+                                    <label>
+                                        <i class="fa-solid fa-user-check"></i>
+                                        Tổng số lượng:
+                                    </label>
+                                    <div class="bk-item booking-user">
+                                        <span class="fw-medium">
+                                            {{ totalQuantity }} vé
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="booking-total mb-20">
                                 <div class="total fs-5">
                                     <label>Tổng tiền</label>
-                                    <span class="price fw-bold text-green">
+                                    <span class="price fw-medium text-green">
                                         {{ totalPrice | vnCurrency }}
                                     </span>
                                 </div>

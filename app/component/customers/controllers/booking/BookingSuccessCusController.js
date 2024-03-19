@@ -1,6 +1,7 @@
 travel_app.controller('BookingSuccessCusController', function ($scope, $location, $routeParams, BookingTourCusService, LocalStorageService) {
     let bookingTourId = $routeParams.orderInfo;
     $scope.transactionId = $routeParams.transactionId;
+    $scope.paymentTime = $routeParams.paymentTime;
 
     function errorCallback() {
         $location.path('/admin/internal-server-error')
