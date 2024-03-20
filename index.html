@@ -31,6 +31,8 @@
         <link rel="stylesheet" href="/assets/customers/css/hotels-customer.css">
         <link rel="stylesheet" href="/assets/customers/css/payment-method.css">
         <link rel="stylesheet" href="/assets/customers/css/tour-trips.css">
+        <link rel="stylesheet" href="/assets/customers/css/transport.css">
+        <link rel="stylesheet" href="/assets/customers/css/chat.css">
         <link rel="stylesheet" href="/assets/customers/css/transport/transport.css">
         <link rel="stylesheet" href="/assets/customers/css/transport/trans-booking.css">
         <link rel="stylesheet" href="/assets/customers/css/register-agencies.css">
@@ -49,6 +51,10 @@
         <script src="/assets/customers/js/notification/SwalAlert.js"></script>
         <script src="/assets/customers/js/theme.js"></script>
         <script src="/node_modules/mapbox-gl/dist/mapbox-gl.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-sanitize.js"></script>
+
 
     </div>
 
@@ -105,6 +111,10 @@
         <script src="/lib/angularjs/axios.min.js"></script>
         <script src="/lib/canvasjs/canvasjs.min.js"></script>
         <script src="/lib/moment/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-sanitize.js"></script>
+
         <script>
             var phoenixIsRTL = window.config.config.phoenixIsRTL;
             if (phoenixIsRTL) {
@@ -710,6 +720,42 @@
                                         </span>
                                             <span class="nav-link-text-wrapper">
                                             <span class="nav-link-text">Quản lí phòng khách sạn</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- label-->
+                                <p class="navbar-vertical-label text-uppercase">Tin nhắn</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1" href="/business/hotel/chat">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-icon">
+                                            <span data-feather="message-square"></span>
+                                        </span>
+                                            <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Tin nhắn</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- label-->
+                                <p class="navbar-vertical-label text-uppercase">Giảm giá</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1" href="/business/hotel/home">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                            <span data-feather="home"></span>
+                                        </span>
+                                            <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Giảm giá khách sạn</span>
                                         </span>
                                         </div>
                                     </a>
@@ -1491,6 +1537,7 @@
     </a>
 </div>
 
+<script src="app/ChatConnect.js"></script>
 <!--====== Angular js ======-->
 <script src="/node_modules/angular/angular.js"></script>
 <script src="/lib/angular-route.min.js"></script>
@@ -1533,6 +1580,7 @@
 <script src="app/services/utils/FormatDate.js"></script>
 <script src="app/services/utils/GenerateCodePayService.js"></script>
 <script src="app/services/utils/Base64ObjectService.js"></script>
+<script src="app/services/utils/WebSocketService.js"></script>
 <script src="app/services/utils/OTPService.js"></script>
 
 <!--====== Super Admin Service ======-->
@@ -1621,6 +1669,9 @@
 <script src="app/services/customer/ForgotPwService.js"></script>
 <script src="app/services/customer/history-order/HistoryOrderServiceCUS.js"></script>
 
+<!--====== Service Chat ======-->
+<script src="app/services/chat/UserChatService.js"></script>
+
 <!--====== Controller Super Admin ======-->
 <script src="app/component/admin/controllers/auth/LoginControllerAD.js"></script>
 <script src="app/component/admin/controllers/dashboard/DashboardControllerAD.js"></script>
@@ -1690,6 +1741,7 @@
 <script src="app/component/agent/hotel/controllers/booking/BookingListControllerAG.js"></script>
 <script src="app/component/agent/hotel/controllers/booking/BookingAddControllerAG.js"></script>
 <script src="app/component/agent/hotel/controllers/booking/BookingEditControllerAG.js"></script>
+<script src="app/component/agent/hotel/controllers/chat/ChatHotelController.js"></script>
 
 <!--====== Controller Agent Visit ======-->
 <script src="app/component/agent/visits/controllers/RegisterVisitsControllerAG.js"></script>
@@ -1712,6 +1764,7 @@
 <script src="app/component/customers/controllers/hotel/HotelController.js"></script>
 <script src="app/component/customers/controllers/hotel/HotelDetailController.js"></script>
 <script src="app/component/customers/controllers/hotel/PaymentHotelController.js"></script>
+<script src="app/component/customers/controllers/chat/ChatCustomerController.js"></script>
 
 <!--====== Controller Customer Transport ======-->
 <script src="app/component/customers/controllers/transport/TransportCusController.js"></script>
@@ -1741,6 +1794,7 @@
 <script src="app/component/customers/controllers/info/BookingHotelCustomerController.js"></script>
 <script src="app/component/customers/controllers/info/BookingTransCustomerController.js"></script>
 <script src="app/component/customers/controllers/info/BookingVisitCustomerController.js"></script>
-
+<script src="app/component/customers/controllers/chat/ChatCustomerController.js"></script>
+<script src="app/component/customers/controllers/register-agency/RegisterAgencyController.js"></script>
 </body>
 </html>

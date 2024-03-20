@@ -60,9 +60,12 @@ travel_app.controller('MainController',
             /**
              * Set role gọi ra slide bar
              */
-            if (AuthService.getUser() !== null) {
-                $scope.roles = AuthService.getUser().roles.map(role => role.nameRole);
+            $scope.roles = [];
+            var user = AuthService.getUser();
+            if (user !== null && user.roles && user.roles.length > 0) {
+                $scope.roles = user.roles.map(role => role.nameRole);
             }
+
             $scope.hasRole = function (roleToCheck) {
                 return $scope.roles.includes(roleToCheck);
             };
@@ -205,6 +208,7 @@ travel_app.controller('MainController',
                 '/business/register-transports',
                 '/business/register-visit',
                 '/business/register-business',
+                'business/register-hotel',
                 '/business/register-business-success',
                 '/business/select-type',
                 '/business/hotel/home',
@@ -294,4 +298,75 @@ travel_app.controller('MainController',
         $scope.playErrorSound = function () {
             $scope.errorSound.play();
         };
+
+
+        // /** Hàm cập nhật để vô hiệu hóa mã OTP đổi mật khẩu */
+        // $scope.updatePassEvent = function () {
+        //     UpdateStatusService.updateOtpStatus().then(function () {
+        //     }).catch(function (error) {
+        //         console.error(error);
+        //     });
+        // };
+        // /** Hàm cập nhật để thay đổi trạng thái tour details */
+        // $scope.updateTourEvent = function () {
+        //     UpdateStatusService.updateTourDetailsStatus().then(function () {
+        //     }).catch(function (error) {
+        //         console.error(error);
+        //     });
+        // };
+        // /** Hàm cập nhật để thay đổi trạng thái transportation schedules */
+        // $scope.updateScheduleEvent = function () {
+        //     UpdateStatusService.updateSchedulesStatus().then(function () {
+        //     }).catch(function (error) {
+        //         console.error(error);
+        //     });
+        // };
+        //
+        // setInterval(function () {
+        //     $scope.updatePassEvent();
+        //     $scope.updateTourEvent();
+        //     $scope.updateScheduleEvent();
+        // }, 1000);
+
+        $scope.notifyMessenger = function (message, header, webUrl) {
+            var absoluteUrl = window.location.origin + webUrl;
+            if (!window.Notification) {
+                console.log('Browser does not support notifications.');
+            } else {
+                // check if permission is already granted
+                if (Notification.permission === 'granted') {
+                    var notify = new Notification(header, {
+                        body: message.content,
+                        icon: '/assets/admin/assets/img/icons/logo.png',
+                    });
+                    notify.onclick = function() {
+                        if (webUrl) {
+                            window.open(webUrl, '_blank');
+                        }
+                    };
+                } else {
+                    // request permission from user
+                    Notification.requestPermission().then(function (p) {
+                        if (p === 'granted') {
+                            // show notification here
+                            var notify = new Notification(header, {
+                                body: message.content,
+                                icon: '/assets/admin/assets/img/icons/logo.png',
+                            });
+
+                            notify.onclick = function() {
+                                if (absoluteUrl) {
+                                    window.open(absoluteUrl, '_blank');
+                                }
+                            };
+                        } else {
+                            console.log('User blocked notifications.');
+                        }
+                    }).catch(function (err) {
+                        console.error(err);
+                    });
+                }
+            }
+        }
+
     });

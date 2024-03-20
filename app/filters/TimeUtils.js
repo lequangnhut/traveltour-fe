@@ -73,6 +73,49 @@ travel_app.filter('formatTime', function () {
     };
 });
 
+travel_app.filter('formatHoursLeft', function() {
+    return function(timestamp) {
+        if (!timestamp) return '';
+
+        var date = new Date(timestamp);
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1; // Tháng trong JavaScript được đánh số từ 0 đến 11, nên cần cộng thêm 1
+        var day = date.getDate();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+
+        var formattedYear = year;
+        var formattedMonth = (month < 10 ? '0' : '') + month;
+        var formattedDay = (day < 10 ? '0' : '') + day;
+        var formattedHours = (hours < 10 ? '0' : '') + hours;
+        var formattedMinutes = (minutes < 10 ? '0' : '') + minutes;
+
+        return formattedHours + ':' + formattedMinutes + ' ' + formattedDay + '/' + formattedMonth + '/' + formattedYear;
+    };
+});
+
+travel_app.filter('formatHoursRight', function() {
+    return function(timestamp) {
+        if (!timestamp) return '';
+
+        var date = new Date(timestamp);
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1; // Tháng trong JavaScript được đánh số từ 0 đến 11, nên cần cộng thêm 1
+        var day = date.getDate();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+
+        var formattedYear = year;
+        var formattedMonth = (month < 10 ? '0' : '') + month;
+        var formattedDay = (day < 10 ? '0' : '') + day;
+        var formattedHours = (hours < 10 ? '0' : '') + hours;
+        var formattedMinutes = (minutes < 10 ? '0' : '') + minutes;
+
+        return formattedDay + '/' + formattedMonth + '/' + formattedYear + ' ' + formattedHours + ':' + formattedMinutes;
+    };
+});
+
+
 
 travel_app.filter('formatDateTime', function () {
     return function (apiDateTime) {
@@ -109,6 +152,38 @@ travel_app.filter('timeAgo', function () {
                 return interval + " phút trước";
             }
             return Math.floor(seconds) + " giây trước";
+        }
+        return '';
+    };
+});
+
+travel_app.filter('statusOnlineUser', function () {
+    return function (input) {
+        if (input) {
+            var seconds = Math.floor((new Date() - new Date(input)) / 1000);
+
+            var interval = Math.floor(seconds / 31536000);
+
+            if (interval > 1) {
+                return "Truy cập " + interval + " năm trước";
+            }
+            interval = Math.floor(seconds / 2592000);
+            if (interval > 1) {
+                return "Truy cập " + interval + " tháng trước";
+            }
+            interval = Math.floor(seconds / 86400);
+            if (interval > 1) {
+                return "Truy cập " + interval + " ngày trước";
+            }
+            interval = Math.floor(seconds / 3600);
+            if (interval > 1) {
+                return "Truy cập " + interval + " giờ trước";
+            }
+            interval = Math.floor(seconds / 60);
+            if (interval > 1) {
+                return "Truy cập " + interval + " phút trước";
+            }
+            return "Truy cập " + Math.floor(seconds) + " giây trước";
         }
         return '';
     };

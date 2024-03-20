@@ -1,4 +1,4 @@
-travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll, $window, $timeout, $routeParams, $rootScope,AuthService,GenerateCodePayService, OrderHotelService, Base64ObjectService, HotelServiceCT, RoomTypeServiceCT, PaymentMethodServiceCT) {
+travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll, $window,$location, $timeout, $routeParams, $rootScope,AuthService, WebSocketService, LocalStorageService,GenerateCodePayService, OrderHotelService, Base64ObjectService, HotelServiceCT, RoomTypeServiceCT, PaymentMethodServiceCT) {
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
     $anchorScroll();
@@ -88,13 +88,15 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
         locationFilter: null,
         capacityAdultsFilter: 2,
         capacityChildrenFilter: 0,
-        checkInDateFiller: new Date(),
-        checkOutDateFiller: new Date(),
+        checkInDateFiller: null,
+        checkOutDateFiller: null,
         hotelIdFilter: null,
         page: 0,
         size: 10,
         sort: null
     }
+
+    $scope.filler = JSON.parse($window.localStorage.getItem('fillerHotel'));
 
     $scope.totalPrice = 0;
 
@@ -214,7 +216,7 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
     $scope.directPayment = function () {
         $scope.isLoading = true;
         $scope.orderRoomType = {
-            userId: GenerateCodePayService.generateCodeBooking('TTTT', $scope.roomTypes.id),
+            id: GenerateCodePayService.generateCodeBooking($scope.paymentHotelCustomer.paymentMethods, $scope.roomTypes.id),
             customerName: $scope.paymentHotelCustomer.customerName,
             customerCitizenCard: $scope.paymentHotelCustomer.customerCitizenCard,
             customerPhone: $scope.paymentHotelCustomer.customerPhone,
@@ -229,7 +231,11 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
         }
 
         if (user !== null) {
-            $scope.orderRoomType.userId = user.id;
+            if (user.roles.some(role => role.nameRole === 'ROLE_CUSTOMER')) {
+                $scope.orderRoomType.userId = user.id;
+            } else {
+                LocalStorageService.remove('user');
+            }
         }
 
         $scope.orderDetailsHotel = $scope.roomTypes.map(function(roomType) {
@@ -246,7 +252,9 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
         console.log($scope.orderDetailsHotel);
         OrderHotelService.createOrderHotel($scope.orderRoomType, $scope.orderDetailsHotel).then(function successCallBack(response) {
             if (response.status === 200) {
+                WebSocketService.sendMessage('createOrder');
                 toastAlert('success', 'Đặt khách sạn thành công !');
+                $location.path('/hotel');
             }
         }).finally(function () {
             $scope.isLoading = false;
@@ -258,7 +266,7 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
     $scope.paymentVNPay = function () {
         $scope.isLoading = true;
         $scope.orderRoomType = {
-            id: GenerateCodePayService.generateCodeBooking('TTTT', $scope.roomTypes.id),
+            id: GenerateCodePayService.generateCodeBooking($scope.paymentHotelCustomer.paymentMethods, $scope.roomTypes.id),
             customerName: $scope.paymentHotelCustomer.customerName,
             customerCitizenCard: $scope.paymentHotelCustomer.customerCitizenCard,
             customerPhone: $scope.paymentHotelCustomer.customerPhone,
@@ -273,7 +281,11 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
         }
 
         if (user !== null) {
-            $scope.orderRoomType.userId = user.id;
+            if (user.roles.some(role => role.nameRole === 'ROLE_CUSTOMER')) {
+                $scope.orderRoomType.userId = user.id;
+            } else {
+                LocalStorageService.remove('user');
+            }
         }
 
         $scope.orderDetailsHotel = $scope.roomTypes.map(function(roomType) {
@@ -291,7 +303,7 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
         console.log($scope.orderDetailsHotel);
         OrderHotelService.createOrderHotelWithVNPay($scope.orderRoomType, $scope.orderDetailsHotel).then(function successCallBack(response) {
             if (response.status === 200) {
-                toastAlert('success', 'Đặt khách sạn thành công !');
+                $window.location.href = response.data.redirectUrl;
             }
         }).finally(function () {
             $scope.isLoading = false;
