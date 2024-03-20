@@ -36,7 +36,9 @@
                                     {{ province }}
                                     <span ng-if="!$last">- &nbsp;</span>
                                 </span>
-                                <span ng-if="provinceName.length === 0">Không có địa điểm tham quan.</span>
+                                <span ng-if="provinceName.length === 0">
+                                    Hiện tại tour này không có điểm tham quan.
+                                </span>
                             </p>
                         </div>
                     </div>
@@ -87,7 +89,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="share-nav">
-                            <a href="#">Chia sẽ<span class="fas fa-share"></span></a>
+                            <a href="#">Chia sẻ<span class="fas fa-share"></span></a>
                             <a href="#">Yêu thích<span class="fas fa-heart"></span></a>
                         </div>
                     </div>
@@ -619,9 +621,11 @@
                                     </span>
                                 </li>
                                 <li>
-                                    <span><span class="fas fa-map-marker-alt"></span>
+                                    <span title="Điểm đến {{ tourDetail.toLocation }}">
+                                        <span class="fas fa-map-marker-alt"></span>
                                         Điểm đến
-                                        <span>{{ tourDetail.toLocation }}</span>
+                                        <span>{{ tourDetail.toLocation | limitTo: 15 }}</span>
+                                        <span ng-show="tourDetail.toLocation.length > 15">...</span>
                                     </span>
                                 </li>
                             </ul>
@@ -728,7 +732,7 @@
                                                   d="M511.6 36.86l-64 415.1c-1.5 9.734-7.375 18.22-15.97 23.05c-4.844 2.719-10.27 4.097-15.68 4.097c-4.188 0-8.319-.8154-12.29-2.472l-122.6-51.1l-50.86 76.29C226.3 508.5 219.8 512 212.8 512C201.3 512 192 502.7 192 491.2v-96.18c0-7.115 2.372-14.03 6.742-19.64L416 96l-293.7 264.3L19.69 317.5C8.438 312.8 .8125 302.2 .0625 289.1s5.469-23.72 16.06-29.77l448-255.1c10.69-6.109 23.88-5.547 34 1.406S513.5 24.72 511.6 36.86z"></path>
                                         </svg>
                                     </button>
-                                    <span class="d-flex justify-content-center text-danger fw-bold"
+                                    <span class="d-flex justify-content-center text-danger fw-medium"
                                           ng-if="tourDetail.bookedSeat === tourDetail.numberOfGuests">
                                         Hiện tại tour đã hết vé !
                                     </span>

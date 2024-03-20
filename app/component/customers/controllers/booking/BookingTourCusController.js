@@ -9,6 +9,7 @@ travel_app.controller('BookingTourCusController',
             LocalStorageService.set('redirectAfterLogin', $location.path());
         }
 
+        $scope.showForm = false;
         $scope.checkPrivatePolicy = false;
         $scope.selectedPaymentMethod = '';
         $scope.selectedContent = '';
@@ -20,6 +21,10 @@ travel_app.controller('BookingTourCusController',
             ZaloPay: "TravelTour chấp nhận thanh toán bằng ZaloPay.",
             Momo: "TravelTour chấp nhận thanh toán bằng Ví điện tử Momo. (*) Hạn mức tối đa là 20.000.000 VNĐ",
             Travel: "Quý khách vui lòng đến các văn phòng TravelTour để thanh toán và nhận vé."
+        };
+
+        $scope.showContent = function (paymentMethod) {
+            $scope.selectedContent = $sce.trustAsHtml($scope.paymentMethods[paymentMethod]);
         };
 
         $scope.service = {
@@ -56,17 +61,6 @@ travel_app.controller('BookingTourCusController',
             $location.path('/admin/internal-server-error')
         }
 
-        $scope.showContent = function (paymentMethod) {
-            $scope.selectedContent = $sce.trustAsHtml($scope.paymentMethods[paymentMethod]);
-        };
-
-        $scope.isBirthDateInvalid = function (birthDate) {
-            let selectedDate = new Date(birthDate);
-            let currentDate = new Date();
-            currentDate.setFullYear(currentDate.getFullYear() - 2);
-            return selectedDate >= currentDate;
-        };
-
         $scope.init = function () {
             let dataBooking = LocalStorageService.get('dataBooking');
             let bookingTicket = LocalStorageService.get('bookingTicket');
@@ -85,10 +79,16 @@ travel_app.controller('BookingTourCusController',
             $scope.totalQuantity = Object.values($scope.ticket).reduce((total, value) => total + parseInt(value), 0);
             $scope.ticketArray = Array.from({length: $scope.totalQuantity}, (_, index) => index);
 
+            /**
+             * Hàm này dùng để tính discount code
+             */
             $scope.submitDiscountCode = function () {
                 let discountCode = $scope.service.discountCode;
             }
 
+            /**
+             * Hàm này để check xem có đủ điều kiện để vượt form không
+             */
             $scope.acceptPassForm = function () {
                 if (!$scope.service.paymentMethod) {
                     centerAlert('Xác nhận !', 'Vui lòng chọn phương thức thanh toán.', 'warning')
@@ -100,6 +100,21 @@ travel_app.controller('BookingTourCusController',
                 }
             };
 
+            /**
+             * Kiểm tra ngày sinh trên form (lớn hơn 2 tuổi)
+             * @param birthDate
+             * @returns {boolean}
+             */
+            $scope.isBirthDateInvalid = function (birthDate) {
+                let selectedDate = new Date(birthDate);
+                let currentDate = new Date();
+                currentDate.setFullYear(currentDate.getFullYear() - 2);
+                return selectedDate >= currentDate;
+            };
+
+            /**
+             * Phương thức lấy hình thức thanh toán so sánh để thanh toán
+             */
             $scope.submitBooking = function () {
                 let paymentMethod = LocalStorageService.get('serviceCustomer').paymentMethod;
 
@@ -116,6 +131,16 @@ travel_app.controller('BookingTourCusController',
                 $scope.addCustomerToList();
             }
 
+            /**
+             * click vào để show ra form thêm thông tin khách hàng
+             */
+            $scope.showFormImportInfo = function () {
+                $scope.showForm = !$scope.showForm;
+            }
+
+            /**
+             * Phương thức thêm tất cả người dùng vào csdl
+             */
             $scope.addCustomerToList = function () {
                 let widgets = document.querySelectorAll('.sidebar-widget.category-widget.mb-30');
                 widgets.forEach(function (widget, index) {

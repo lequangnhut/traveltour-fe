@@ -13,6 +13,7 @@ travel_app.controller('TransBookingCusController',
             LocalStorageService.set('redirectAfterLogin', $location.path());
         }
 
+        $scope.checkPrivatePolicy = false;
         $scope.selectedPaymentMethod = '';
         $scope.showPaymentGuide = {
             Travel: false,
@@ -71,6 +72,9 @@ travel_app.controller('TransBookingCusController',
         $scope.submitBooking = function () {
             if (!$scope.selectedPaymentMethod) {
                 centerAlert('Xác nhận !', 'Vui lòng chọn phương thức thanh toán.', 'warning');
+                return;
+            } else if ($scope.checkPrivatePolicy === false) {
+                centerAlert('Xác nhận !', 'Vui lòng chấp nhận điều khoản, điều kiện.', 'warning')
                 return;
             }
 
