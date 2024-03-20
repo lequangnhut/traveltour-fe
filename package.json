@@ -13,9 +13,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@stomp/stompjs": "^7.0.0",
     "@turf/turf": "^6.5.0",
     "angular": "^1.8.3",
     "angular-table-npm": "^1.0.8",
+    "angular-websocket": "^2.0.1",
     "angularjs": "^0.0.1",
     "axios": "^1.6.5",
     "crypto-js": "^4.2.0",
@@ -27,7 +29,8 @@
     "ngx-auth": "^6.0.0",
     "sass": "^1.69.7",
     "satellizer": "^0.15.5",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "stompjs": "^2.3.3"
   },
   "devDependencies": {
     "lite-server": "^2.6.1"

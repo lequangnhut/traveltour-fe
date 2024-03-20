@@ -311,7 +311,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'AccommodationLocationInformationEditController'
         })
         .when('/business/hotel/chat', {
-            templateUrl: 'app/component/agent/hotel/views/pages/chat/chat.html',
+            templateUrl: 'app/component/agent/hotel/views/pages/chat/chat-agency.html',
             controller: 'ChatHotelController'
         })
 

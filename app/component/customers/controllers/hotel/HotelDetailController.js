@@ -1,4 +1,4 @@
-travel_app.controller('HotelDetailController', function ($scope, $anchorScroll, $window, $routeParams, $location, HotelServiceCT, RoomTypeServiceCT, Base64ObjectService) {
+travel_app.controller('HotelDetailController', function ($scope, $anchorScroll, $window, $routeParams, $location, HotelServiceCT, RoomTypeServiceCT, AgenciesServiceAG, Base64ObjectService) {
     $scope.encryptedData = $routeParams.encryptedData;
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
@@ -271,7 +271,6 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll, 
     };
 
 
-
     $scope.totalAmountRoomSelected = function () {
         var total = 0;
         for (var i = 0; i < $scope.roomTypeSelected.length; i++) {
@@ -281,19 +280,37 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll, 
     }
 
     $scope.paymentHotelNow = function () {
-        $scope.selectedData = $scope.roomTypeSelected.map(function(roomType) {
+        $window.localStorage.removeItem('roomTypeSelected');
+        $window.localStorage.removeItem('fillerHotel');
+        $scope.selectedData = $scope.roomTypeSelected.map(function (roomType) {
             return {
                 id: roomType.id,
                 amountRoomSelected: roomType.amountRoomSelected
             };
         });
+        $scope.filler = JSON.parse(atob($scope.encryptedData));
+        $scope.filler.roomTypeSelected = new Date($scope.filler.checkInDateFiller);
+        $scope.filler.roomTypeSelected = new Date($scope.filler.checkOutDateFiller);
+
         $scope.roomTypeSelected.checkInDate = $scope.filler.checkInDateFiller;
         $scope.roomTypeSelected.checkOutDate = $scope.filler.checkOutDateFiller;
 
         $window.localStorage.setItem('roomTypeSelected', JSON.stringify($scope.roomTypeSelected));
         $window.localStorage.setItem('fillerHotel', JSON.stringify($scope.filler));
+        $window.location.href = '/hotel/hotel-details/payment';
     }
 
+    $scope.redirectToChatHotel = function (agencyId) {
+        RoomTypeServiceCT.findUserByAgencyId(agencyId).then(function successCallback(response) {
+            if (response.status === 200) {
+                $scope.agencyId = response.data.data.userId;
+                var encodedId  = btoa($scope.agencyId);
+                $window.location.href = '/chat/' + encodedId;
+            } else {
+                $location.path('/admin/internal-server-error');
+            }
+        })
 
+    }
 
 });

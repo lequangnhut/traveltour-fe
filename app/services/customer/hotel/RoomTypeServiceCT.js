@@ -28,4 +28,14 @@ travel_app.service('RoomTypeServiceCT', function ($http) {
             }
         });
     }
+
+    this.findUserByAgencyId = function (agencyId) {
+        return $http({
+            method: 'GET',
+            url: API_ROOM_TYPE_CUSTOMER + 'findUserByAgencyId',
+            params: {
+                agencyId: agencyId
+            }
+        })
+    }
 })
