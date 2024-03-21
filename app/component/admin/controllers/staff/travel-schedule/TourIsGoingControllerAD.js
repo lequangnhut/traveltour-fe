@@ -16,7 +16,7 @@ travel_app.controller('TourIsGoingControllerAD', function ($scope, $sce, $locati
      * Phương thức mở modal
      */
     $scope.openModal = (tourDetailId) => {
-        $('#modal-tour-detail').modal('show');
+        $('#modal-tour-is-going').modal('show');
 
         if (!tourDetailId) return;
 
@@ -35,7 +35,7 @@ travel_app.controller('TourIsGoingControllerAD', function ($scope, $sce, $locati
      * Phương thức đóng modal
      */
     $scope.closeModal = () => {
-        $('#modal-tour-detail').modal('hide');
+        $('#modal-tour-is-going').modal('hide');
     };
 
     //phân trang

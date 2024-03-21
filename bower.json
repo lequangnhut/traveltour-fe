@@ -1,0 +1,6 @@
+{
+  "name": "traveltourfrontend",
+  "dependencies": {
+    "qrcode": "latest"
+  }
+}
