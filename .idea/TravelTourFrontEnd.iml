@@ -18,5 +18,6 @@
     <orderEntry type="library" name="ckeditor" level="application" />
     <orderEntry type="library" name="moment.js" level="application" />
     <orderEntry type="library" name="canvasjs" level="application" />
+    <orderEntry type="library" name="font-awesome" level="application" />
   </component>
 </module>

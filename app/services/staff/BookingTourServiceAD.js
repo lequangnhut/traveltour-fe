@@ -18,6 +18,19 @@ travel_app.service('BookingTourServiceAD', function ($http, $q) {
         return deferred.promise;
     };
 
+    this.updateStatus = function (id) {
+        const deferred = $q.defer();
+        $http({
+            method: 'PUT',
+            url: API + 'update-booking-tour/' + id
+        }).then(function (response) {
+            deferred.resolve(response);
+        }, function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    };
+
     this.deactivate = function (id) {
         const deferred = $q.defer();
         $http({

@@ -122,6 +122,18 @@ travel_app.controller('BookingControllerAD',
             }, 500); // 500ms debounce
         };
 
+        $scope.browseBookingTour = (id) => {
+            const confirm = () => {
+                BookingTourServiceAD.updateStatus(id).then(() => {
+                    toastAlert('success', 'Duyệt thành công !');
+                    $('#modal-tour-detail').modal('hide');
+                    $scope.getTourBookingList();
+                }, errorCallback);
+            }
+
+            confirmAlert('Bạn có chắc chắn muốn duyệt booking này không ?', confirm);
+        }
+
         $scope.deleteBookingTour = (id) => {
             const confirm = () => {
                 BookingTourServiceAD.deactivate(id).then(() => {
