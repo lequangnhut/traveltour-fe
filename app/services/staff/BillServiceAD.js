@@ -1,17 +1,16 @@
-travel_app.service('BillTourServiceAD', function ($http, $q) {
-    let API = BASE_API + 'staff/booking-tour/';
+travel_app.service('BillTourServiceAD', function ($http, $q, ) {
+    let API = BASE_API + 'staff/invoices/';
 
-    this.getAll = function (page, size, sortBy, sortDir, orderStatus, searchTerm) {
+    this.getAll = function (page, size, sortBy, sortDir, searchTerm) {
         const deferred = $q.defer();
         $http({
             method: 'GET',
-            url: API + 'find-all-booking-tour',
+            url: API + 'find-all-invoices',
             params: {
                 page: page || 0,
                 size: size || 10,
                 sortBy: sortBy || 'id',
                 sortDir: sortDir || 'asc',
-                orderStatus: orderStatus || 0,
                 searchTerm: searchTerm || null
             }
         }).then(deferred.resolve, deferred.reject);

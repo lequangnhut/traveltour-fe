@@ -192,7 +192,7 @@
                                         <div class="col-9">
                                             <p class="mb-0">
                                                 <span class="fw-bold">{{ ohd.roomTypeName }}</span>
-                                                <span>({{ ohd.unitPrice }}) x </span>
+                                                <span>({{ ohd.unitPrice | vnCurrency }}) x </span>
                                                 <span class="fw-bold">{{ ohd.totalAmount }}</span>
                                                 <span class="fw-bold float-end">{{ ohd.totalPrice | vnCurrency }}</span>
                                             </p>
@@ -290,9 +290,9 @@
                 <button type="button" class="btn btn-success" data-dismiss="modal" ng-if="tourGuide.orderStatus == 0"
                         ng-click="openModalPay()">Thanh toán
                 </button>
-                <button type="button" class="btn btn-green" data-dismiss="modal" ng-if="tourGuide.orderStatus == 2"
-                        ng-click="restoreBookingTourHotel()">Khôi phục đơn
-                </button>
+<!--                <button type="button" class="btn btn-green" data-dismiss="modal" ng-if="tourGuide.orderStatus == 2"-->
+<!--                        ng-click="restoreBookingTourHotel()">Khôi phục đơn-->
+<!--                </button>-->
                 <button type="button" class="btn btn-danger" data-dismiss="modal" ng-if="tourGuide.orderStatus != 2"
                         ng-click="deactivateBookingTourHotel()">Hủy đơn
                 </button>
