@@ -297,6 +297,24 @@ travel_app.controller("InformationController", function ($scope, $location, $win
         confirmAlert('Bạn có chắc chắn muốn đổi mật khẩu ?', confirmUpdatePass);
     }
 
+    const confirmUpdatePassAdmin = () => {
+        $scope.isLoading = true;
+        CustomerServiceAD.updatePass($scope.customer.id, $scope.passUpdate).then(function successCallback(response) {
+            if (response.status === 200) {
+                toastAlert('success', 'Cập nhật thành công !');
+                $location.path("/login-admin");
+            } else {
+                $location.path('/admin/page-not-found');
+            }
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
+    }
+
+    $scope.submit_changePassAdmin = function () {
+        confirmAlert('Bạn có chắc chắn muốn đổi mật khẩu ?', confirmUpdatePassAdmin);
+    }
+
     //===============================================================================================================
     //phân trang
     $scope.setPage = function (page) {
@@ -378,28 +396,33 @@ travel_app.controller("InformationController", function ($scope, $location, $win
         $('#tourModal').modal('show');
 
         $scope.bookingTour = data;
-        var currentDate = new Date();  // Ngày hiện tại
-        var departureDate = new Date(data.startDate);  // Ngày xuất phát
+        // var currentDate = new Date();  // Ngày hiện tại
+        // var departureDate = new Date(data.startDate);  // Ngày xuất phát
 
         if(data.orderStatus === 0 && data.paymentMethod === 0){
             $scope.mess = "Bạn có muốn hủy tour không ?";
             return
         }
 
-        // Tính số ngày còn lại giữa ngày hiện tại và ngày xuất phát
-        var daysRemaining = Math.ceil((departureDate - currentDate) / (1000 * 60 * 60 * 24));
+        var currentDate = new Date();
+        var departureDate = new Date(data.startDate);
 
-        if (daysRemaining >= 30) {
+        var currentDateTime = currentDate.getTime();
+        var departureDateTime = departureDate.getTime();
+
+        var diffInDays = Math.ceil((departureDateTime - currentDateTime) / (1000 * 60 * 60 * 24));
+
+        if (diffInDays >= 30) {
             $scope.mess = "Chi phí hủy tour là 1% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        } else if (daysRemaining >= 26 && daysRemaining <= 29) {
+        } else if (diffInDays >= 26 && diffInDays <= 29) {
             $scope.mess = "Chi phí hủy tour là 5% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        } else if (daysRemaining >= 15 && daysRemaining <= 25) {
+        } else if (diffInDays >= 15 && diffInDays <= 25) {
             $scope.mess = "Chi phí hủy tour là 30% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        } else if (daysRemaining >= 8 && daysRemaining <= 14) {
+        } else if (diffInDays >= 8 && diffInDays <= 14) {
             $scope.mess = "Chi phí hủy tour là 50% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        }else if (daysRemaining >= 2 && daysRemaining <= 7) {
+        }else if (diffInDays >= 2 && diffInDays <= 7) {
             $scope.mess = "Chi phí hủy tour là 80% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        }else if (daysRemaining >= 0 && daysRemaining <= 1) {
+        }else if (diffInDays >= 0 && diffInDays <= 1) {
             $scope.mess = "Chi phí hủy tour là 100% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
         } else {
             $scope.mess = "Bạn có muốn hủy tour không ?";

@@ -11,12 +11,15 @@ travel_app.controller('NotificationControllerAD', function ($scope, $http, $loca
         $scope.isLoading = true;
 
         NotificationsServiceAD.findAllNote().then(function successCallback(response) {
-            $scope.showNotification = false;
+            $scope.showNotifications = false;
             $scope.allNotification = response.data.data;
+            if($scope.allNotification == null){
+                return
+            }
 
             for (let i = 0; i < $scope.allNotification.length; i++) {
                 if ($scope.allNotification[i].isSeen === false) {
-                    $scope.showNotification = true;
+                    $scope.showNotifications = true;
                 }
             }
             $scope.updateVisibleNotifications();
@@ -79,12 +82,17 @@ travel_app.controller('NotificationControllerAD', function ($scope, $http, $loca
     $scope.loadData = function () {
         $scope.isLoading = true;
         NotificationsServiceAD.findAllNote().then(function successCallback(response) {
-            $scope.showNotification = false;
+            $scope.showNotifications = false;
             $scope.allNotification = response.data.data;
+
+            if(response.data.data === null){
+                $scope.showNotifications = false;
+                return;
+            }
 
             for (let i = 0; i < $scope.allNotification.length; i++) {
                 if ($scope.allNotification[i].isSeen === false) {
-                    $scope.showNotification = true;
+                    $scope.showNotifications = true;
                     break;
                 }
             }

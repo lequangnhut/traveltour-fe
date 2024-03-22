@@ -227,7 +227,8 @@ travel_app.controller('MainController',
                 locationPath.includes('/business/hotel/home/hotel/update/') ||
                 locationPath.includes('/business/transport/home/update-transport/') ||
                 locationPath.includes('/business/visit/home/update-visit-location/') ||
-                locationPath.includes('/admin/information-update/')
+                locationPath.includes('/admin/information-update/') ||
+                locationPath.includes('/admin/change-password/')
             ) {
                 return true;
             }
@@ -264,7 +265,8 @@ travel_app.controller('MainController',
                 locationPath.includes('/business/hotel/home/hotel/update/') ||
                 locationPath.includes('/business/transport/home/update-transport/') ||
                 locationPath.includes('/business/visit/home/update-visit-location/',) ||
-                locationPath.includes('/admin/information-update/')
+                locationPath.includes('/admin/information-update/') ||
+                locationPath.includes('/admin/change-password/')
             ) {
                 return {'margin': '0'};
             }
