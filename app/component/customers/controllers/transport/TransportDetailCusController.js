@@ -55,7 +55,7 @@ travel_app.controller('TransportDetailCusController', function ($scope, $locatio
         $scope.getSeat = function (transportSchedule) {
             let seatRows = [];
             for (let i = 0; i < transportSchedule.length; i++) {
-                let bookSeats = Array.from({length: transportSchedule[i].transportations.amountSeat}, (_, i) => i + 1);
+                let bookSeats = transportSchedule[i].transportationScheduleSeatsById;
                 let chunkedSeats = $scope.chunkArray(bookSeats, 3);
                 seatRows.push(chunkedSeats);
             }
@@ -90,8 +90,14 @@ travel_app.controller('TransportDetailCusController', function ($scope, $locatio
          * @param seatIndex
          */
         $scope.isActiveSeat = function (schedule, rowIndex, seatIndex) {
+            let scheduleSeat = $scope.getSeat([schedule])[0][rowIndex][seatIndex];
+
+            if (scheduleSeat.isBooked) {
+                return;
+            }
+
             let unitPrice = schedule.unitPrice;
-            let seatNumber = $scope.getSeat([schedule])[0][rowIndex][seatIndex];
+            let seatNumber = scheduleSeat.seatNumber;
             let seatSelections = $scope.seatSelections[schedule.id];
             let count = Object.keys(seatSelections).filter(key => seatSelections[key]).length;
 
@@ -118,6 +124,10 @@ travel_app.controller('TransportDetailCusController', function ($scope, $locatio
             $scope.schedulePrices[index] = totalPrice;
         };
 
+        /**
+         * Chuyển hướng đến trang booking
+         * @param schedule
+         */
         $scope.redirectBooking = function (schedule) {
             let brandId = btoa(JSON.stringify(schedule.transportationBrands.id));
             let scheduleId = btoa(JSON.stringify(schedule.id));

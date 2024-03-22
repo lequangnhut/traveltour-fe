@@ -15,6 +15,13 @@ travel_app.service('OrderTransportService', function ($http) {
         })
     }
 
+    this.findSeatByScheduleId = function (scheduleId) {
+        return $http({
+            method: 'GET',
+            url: API_ORDER_TRANS + 'find-all-transport-seats-by-schedule-id/' + scheduleId
+        })
+    }
+
     this.findByOrderTransportId = function (orderTransId) {
         return $http({
             method: 'GET',
@@ -36,10 +43,10 @@ travel_app.service('OrderTransportService', function ($http) {
         })
     }
 
-    this.create = function (orderTransportationsDto) {
+    this.create = function (orderTransportationsDto, seatNumber) {
         return $http({
             method: 'POST',
-            url: API_ORDER_TRANS + 'create-order-transport',
+            url: API_ORDER_TRANS + 'create-order-transport/' + seatNumber,
             data: orderTransportationsDto
         })
     }
@@ -52,10 +59,10 @@ travel_app.service('OrderTransportService', function ($http) {
         })
     }
 
-    this.delete = function (orderTransportId) {
+    this.delete = function (orderTransportId, scheduleId) {
         return $http({
             method: 'GET',
-            url: API_ORDER_TRANS + 'delete-order-transport/' + orderTransportId
+            url: API_ORDER_TRANS + 'delete-order-transport/' + orderTransportId + '/' + scheduleId
         })
     }
 })

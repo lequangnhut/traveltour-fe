@@ -1,6 +1,4 @@
-/*
-CCS cho tile khi hover vào span
- */
+/* CCS cho tile khi hover vào span ở trang tour detail */
 .sidebar-widget ul li span[title] {
     position: relative;
     display: inline-block;
@@ -34,5 +32,42 @@ CCS cho tile khi hover vào span
 
 .sidebar-widget ul li span[title]:hover::after,
 .sidebar-widget ul li span[title]:hover::before {
+    opacity: 1;
+}
+
+/* CCS cho tile khi hover vào span ở trang home */
+.place-content .info p span[title] {
+    position: relative;
+    display: inline-block;
+}
+
+.place-content .info p span[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%; /* Hiển thị title bên trên */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.44);
+    color: #fff;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.place-content .info p span[title]:hover::before {
+    content: "";
+    position: absolute;
+    bottom: 63%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-style: solid;
+    border-width: 5px;
+    border-color: rgba(0, 0, 0, 0.44) transparent transparent transparent;
+}
+
+.place-content .info p span[title]:hover::after,
+.place-content .info p span[title]:hover::before {
     opacity: 1;
 }

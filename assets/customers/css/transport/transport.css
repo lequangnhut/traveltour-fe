@@ -109,8 +109,30 @@
     background-color: rgb(242, 242, 242);
     padding: 20px 10px;
     box-shadow: 0 0 7px -4px #000;
+    /*max-height: calc(8 * (40px + 10px));*/
+    /*overflow-y: auto;*/
+    /*overflow-x: hidden;*/
 }
 
+/*!*tTiết kế thanh cuộn*!*/
+/*.theatre::-webkit-scrollbar {*/
+/*    width: 2px;*/
+/*}*/
+
+/*.theatre::-webkit-scrollbar-track {*/
+/*    background-color: #f1f1f1;*/
+/*}*/
+
+/*.theatre::-webkit-scrollbar-thumb {*/
+/*    background-color: #888;*/
+/*    border-radius: 4px;*/
+/*}*/
+
+/*.theatre::-webkit-scrollbar-thumb:hover {*/
+/*    background-color: #555;*/
+/*}*/
+
+/*thiết kế chổ ngồi*/
 .steering-wheel {
     margin-left: 12px;
 }
@@ -203,9 +225,7 @@
     font-size: 15px;
 }
 
-/*
-CCS cho tile khi hover vào label
- */
+/* CCS cho tile khi hover vào label */
 .theatre ol li ol li label[title] {
     position: relative;
     display: inline-block;
@@ -242,9 +262,7 @@ CCS cho tile khi hover vào label
     opacity: 1;
 }
 
-/*
-Thông tin chi tiết của phần booking xe
- */
+/* Thông tin chi tiết của phần booking xe */
 .denlzE.trust {
     border: 1px solid rgb(39, 174, 96);
     background-color: rgb(238, 251, 244) !important;

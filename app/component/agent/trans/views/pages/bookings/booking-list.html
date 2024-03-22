@@ -3,7 +3,7 @@
         <div class="header-control-center">
             <div class="d-flex justify-content-between align-items-center row ">
                 <div class="col-xl-6 mt-3">
-                    <h3 class="color-green fw-bold">DANH SÁCH BOOKING PHƯƠNG TIỆN</h3>
+                    <h3 class="color-green fw-bold">DANH SÁCH ĐẶT VÉ XE</h3>
                 </div>
             </div>
         </div>
@@ -165,7 +165,8 @@
                         <a href="#"
                            ng-click="deleteOrderTransport(booking.id, booking.amountTicket,
                            transportScheduleName[booking.transportationScheduleId].fromLocation,
-                           transportScheduleName[booking.transportationScheduleId].toLocation)"
+                           transportScheduleName[booking.transportationScheduleId].toLocation,
+                           booking.transportationScheduleId)"
                            role="button"
                            class="fs-1 btn text-danger"
                         >

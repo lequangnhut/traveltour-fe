@@ -249,8 +249,8 @@
                                                 <div class="carousel-item"
                                                      ng-repeat="img in schedule.transportations.transportationImagesById"
                                                      ng-class="{ 'active': $first }">
-                                                    <img ng-src="{{ img.imagePath }}" class="d-block w-100"
-                                                         height="400"
+                                                    <img ng-src="{{ img.imagePath }}" class="d-block w-100 rounded-2"
+                                                         height="480"
                                                          onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"
                                                          alt="" src="">
                                                 </div>
@@ -268,12 +268,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="row p-2">
                                         <div class="col-3 mb-3 p-1"
                                              ng-repeat="img in schedule.transportations.transportationImagesById">
                                             <div class="img-banner-carousel">
                                                 <img ng-src="{{ img.imagePath }}" width="100" src=""
-                                                     style="height: 100px; width: 100%"
+                                                     style="height: 130px; width: 100%"
                                                      class="img-fluid rounded-2" alt="">
                                             </div>
                                         </div>
@@ -356,6 +356,10 @@
                                             <div class="fw-medium">
                                                 {{ schedule.departureTime | formatTime }} •
                                                 Bến xe trung tâm {{ schedule.toLocation }}
+                                                <br>
+                                            </div>
+                                            <div class="fw-normal" style="font-size: 14px">
+                                                Chi tiết: {{ schedule.toAddress }}
                                             </div>
                                         </div>
                                         <div class="col-lg-5 col-md-12 col-12">
@@ -363,6 +367,9 @@
                                             <div class="fw-medium">
                                                 {{ schedule.arrivalTime | formatTime }} •
                                                 Bến xe trung tâm {{ schedule.fromLocation }}
+                                            </div>
+                                            <div class="fw-normal" style="font-size: 14px">
+                                                Chi tiết: {{ schedule.fromAddress }}
                                             </div>
                                         </div>
                                     </div>
@@ -492,6 +499,30 @@
                                         </div>
                                         <span class="seat-name ms-2">Ghế không bán</span>
                                     </div>
+
+                                    <div class="seat-info d-flex align-items-center mb-30 col-12">
+                                        <div class="SeatThumbnail__SeatContainer-sc-1ooosi9-0 daMVvn seat-thumbnail"
+                                             disabled="">
+                                            <svg width="32" height="40" viewBox="0 0 28 40" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="2.75" y="2.75" width="22.5" height="34.5" rx="2.25"
+                                                      fill="#FFF" stroke="#B8B8B8" stroke-width="1.5"
+                                                      stroke-linejoin="round"></rect>
+                                                <rect x="5.75" y="27.75" width="16.5" height="6.5" rx="2.25"
+                                                      fill="#FFF" stroke="#B8B8B8" stroke-width="1.5"
+                                                      stroke-linejoin="round"></rect>
+                                                <path class="icon-disabled"
+                                                      d="M18.96 11.46l-1.42-1.42L14 13.59l-3.54-3.55-1.42 1.42L12.59 15l-3.55 3.54 1.42 1.42L14 16.41l3.54 3.55 1.42-1.42L15.41 15l3.55-3.54z"
+                                                      fill="transparent"></path>
+                                                <span style="position: absolute; transform: translate(-150%, 20%);">
+                                                    <p class="fw-medium text-danger">
+                                                        <i class="fa-solid fa-ban"></i>
+                                                    </p>
+                                                </span>
+                                            </svg>
+                                        </div>
+                                        <span class="seat-name ms-2">Ghế đã đặt</span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -534,12 +565,13 @@
                                     <ol class="cabin">
                                         <li class="row row--1" ng-repeat="row in getSeat([schedule])[0]">
                                             <ol class="seats" type="A">
-                                                <li class="seat" ng-repeat="seatNumber in row">
-                                                    <input type="checkbox" id="{{ 'seat-' + seatNumber }}"/>
-                                                    <label for="{{ 'seat-' + seatNumber }}"
-                                                           title="Số ghế: {{seatNumber + ' - Giá: ' + formatPrice(schedule.unitPrice) }}"
+                                                <li class="seat" ng-class="{ 'daMVvn': seat.isBooked }"
+                                                    id="{{ 'booked-' + seat.seatNumber}}" ng-repeat="seat in row">
+                                                    <input type="checkbox" id="{{ 'seat-' + seat.seatNumber }}"/>
+                                                    <label for="{{ 'seat-' + seat.seatNumber }}"
+                                                           title="Số ghế: {{seat.seatNumber + ' - Giá: ' + formatPrice(schedule.unitPrice) }}"
                                                            ng-click="isActiveSeat(schedule, $parent.$index, $index)"
-                                                           ng-class="{'seatActive': seatSelections[schedule.id] && seatSelections[schedule.id][seatNumber]}">
+                                                           ng-class="{'seatActive': seatSelections[schedule.id] && seatSelections[schedule.id][seat.seatNumber]}">
                                                         <a href="#">
                                                             <svg width="32" height="40" viewBox="0 0 28 40" fill="none"
                                                                  xmlns="http://www.w3.org/2000/svg"
@@ -558,6 +590,12 @@
                                                                 <path class="icon-disabled"
                                                                       d="M18.96 11.46l-1.42-1.42L14 13.59l-3.54-3.55-1.42 1.42L12.59 15l-3.55 3.54 1.42 1.42L14 16.41l3.54 3.55 1.42-1.42L15.41 15l3.55-3.54z"
                                                                       fill="transparent"></path>
+                                                                <span ng-if="seat.isBooked"
+                                                                      style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                                                    <p class="fw-medium text-danger">
+                                                                        <i class="fa-solid fa-ban"></i>
+                                                                    </p>
+                                                                </span>
                                                             </svg>
                                                         </a>
                                                     </label>
@@ -592,9 +630,9 @@
                     </div>
                 </div>
 
-                <div class="div mb-30" ng-if="transportSchedule.length === 0">
+                <div class="div mb-30" ng-if="transportSchedule.length < 0">
                     <div class="d-flex justify-content-center align-items-center fs-5">
-                        Không có chuyến xe nào phù hợp với yêu cầu của bạn
+                        Hiện tại nhà xe chưa có vé xe phù hợp ! Cảm ơn bạn.
                     </div>
                 </div>
 

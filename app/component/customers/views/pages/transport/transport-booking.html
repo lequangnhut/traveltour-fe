@@ -22,13 +22,6 @@
 <div class="container-fluid overflow-hidden px-lg-0">
     <section class="h-100" id="cart">
         <div class="container py-4">
-            <div tabindex="0" role="button" class="d-flex align-items-center">
-                <img src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/chevron_left_gray.svg" width="20"
-                     height="20" alt="">
-                <a href="#" class="fw-medium pt-1 text-green" ng-click="goBack()">
-                    Quay lại
-                </a>
-            </div>
             <form ng-submit="submitBooking()" method="post" name="transportBookingForm">
                 <div class="row d-flex justify-content-center my-4">
                     <div class="col-md-8">
@@ -45,7 +38,7 @@
                                            class="form-control"
                                            id="customer_name"
                                            name="customerName"
-                                           ng-model="customerInfo.customerName"
+                                           ng-model="bookingTransport.customerName"
                                            ng-class="{ 'is-invalid': transportBookingForm.customerName.$invalid && transportBookingForm.customerName.$touched,
                                                                 'is-valid': transportBookingForm.customerName.$valid && transportBookingForm.customerName.$touched }"
                                            ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
@@ -64,6 +57,7 @@
                                         Họ và tên không đúng định dạng !
                                     </small>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-floating mb-3">
@@ -72,7 +66,7 @@
                                                    id="customer_phone"
                                                    maxlength="10"
                                                    name="customerPhone"
-                                                   ng-model="customerInfo.customerPhone"
+                                                   ng-model="bookingTransport.customerPhone"
                                                    ng-class="{ 'is-invalid': transportBookingForm.customerPhone.$invalid && transportBookingForm.customerPhone.$touched, 
                                                                 'is-valid': transportBookingForm.customerPhone.$valid && transportBookingForm.customerPhone.$touched }"
                                                    ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
@@ -92,13 +86,14 @@
                                             </small>
                                         </div>
                                     </div>
+
                                     <div class="col-6">
                                         <div class="form-floating mb-3">
                                             <input type="email"
                                                    class="form-control"
                                                    id="customer_email"
                                                    name="customerEmail"
-                                                   ng-model="customerInfo.customerEmail"
+                                                   ng-model="bookingTransport.customerEmail"
                                                    ng-class="{ 'is-invalid': transportBookingForm.customerEmail.$invalid && transportBookingForm.customerEmail.$touched, 
                                                                 'is-valid': transportBookingForm.customerEmail.$valid && transportBookingForm.customerEmail.$touched }"
                                                    ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
@@ -118,6 +113,17 @@
                                             </small>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control"
+                                              rows="5"
+                                              id="order_note"
+                                              name="customerName"
+                                              ng-model="bookingTransport.orderNote"
+                                              placeholder="name@example.com"
+                                    ></textarea>
+                                    <label for="order_note">Ghi chú trong chuyến đi</label>
                                 </div>
 
                                 <div class="TrustMessage__Container-bei6cg-0 denlzE trust-message-content-container trust undefined">
@@ -507,6 +513,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="button-footer-transport mt-30">
+                            <a class="btn btn-outline-green rounded-0 ps-4 p-2 px-4 ms-4"
+                               href="#" ng-click="goBack()" role="button">
+                                <i class="fa-solid fa-arrow-left"></i>
+                                TRỞ VỀ
+                            </a>
+                            <button type="submit"
+                                    ng-disabled="transportBookingForm.$invalid"
+                                    class="btn btn-outline-green rounded-0 ps-4 p-2 px-4 mx-4 float-end">
+                                TIẾP THEO
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="col-md-4">
@@ -595,9 +615,7 @@
                                                                     Vp bến xe {{ transportSchedule.toLocation }}
                                                                 </p>
                                                                 <p class="base__SmallCaption-sc-1tvbuqk-32 eSKsXb color--medium-sub">
-                                                                    99 Nguyễn Cư Trinh, Phường Nguyễn Cư Trinh, Quận 1,
-                                                                    Hồ
-                                                                    Chí Minh
+                                                                    {{ transportSchedule.toAddress }}
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -635,9 +653,7 @@
                                                                     Vp bến xe {{ transportSchedule.fromLocation }}
                                                                 </p>
                                                                 <p class="base__SmallCaption-sc-1tvbuqk-32 eSKsXb color--medium-sub">
-                                                                    44-21 Thích Quảng Đức, Khu đô thị Hà Quang 2, Phước
-                                                                    Hải,
-                                                                    Nha Trang, Phường Phước Hải, Nha Trang, Khánh Hòa
+                                                                    {{ transportSchedule.fromAddress }}
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -678,11 +694,8 @@
                                         <span class="fw-medium">{{ totalPrice | vnCurrency }}</span>
                                     </li>
                                 </ul>
-                                <div class="w-100 d-flex justify-content-center align-items-center">
-                                    <button type="submit" ng-disabled="transportBookingForm.$invalid"
-                                            class="btn btn-green btn-lg btn-block text-center w-100">
-                                        Tiến hành thanh toán
-                                    </button>
+                                <div class="d-flex justify-content-center fw-medium text-danger">
+                                    Kiểm tra kỹ thông tin trước khi thanh toán
                                 </div>
                             </div>
                         </div>

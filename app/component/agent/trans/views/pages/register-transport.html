@@ -81,6 +81,37 @@
                         </div>
 
                         <div class="col-12">
+                            <label class="form-label">Địa chỉ trên bản đồ</label>
+                            <div class="row">
+                                <div class="col-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="address"
+                                           ng-model="transportBrand.transportationBrandAddress"
+                                           ng-class="{ 'is-invalid': register_trans.transportationBrandAddress.$invalid && register_trans.transportationBrandAddress.$touched,
+                                                'is-valid': register_trans.transportationBrandAddress.$valid && register_trans.transportationBrandAddress.$touched }"
+                                           placeholder="Vui lòng nhập địa chỉ nhà xe"
+                                           required
+                                    >
+                                    <small class="text-danger"
+                                           ng-show="register_trans.transportationBrandAddress.$touched && register_trans.transportationBrandAddress.$error.required">
+                                        Vui lòng nhập địa chỉ nhà xe !
+                                    </small>
+                                </div>
+                                <div class="col-3 d-flex justify-content-end">
+                                    <button data-bs-toggle="modal"
+                                            data-bs-target="#modalMapTransport"
+                                            type="button"
+                                            class="btn btn-primary"
+                                            ng-click="showModalMap()"
+                                    >
+                                        Mở bản đồ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
                             <label class="form-label">Hình ảnh chứng minh</label>
                             <input class="form-control"
                                    type="file"
@@ -282,3 +313,46 @@
         </div>
     </section>
 </form>
+
+<!-- Modal -->
+<div class="modal fade" id="modalMapTransport" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="modalMapTourDetailLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabelMap">Bản đồ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-10 mb-3 position-relative">
+                        <input type="text"
+                               class="form-control"
+                               ng-model="searchLocation"
+                               placeholder="Nhập tên tỉnh thành cần tìm ở đây..."
+                               ng-keyup="searchLocationOnMap()"
+                        >
+                        <div style="position: relative;">
+                            <div class="autocomplete" ng-if="showSuggestions"
+                                 style="position: absolute; top: 10px; left: 10px; z-index: 100;">
+                                <ul class="list-group">
+                                    <li class="list-group-item cursor-pointer"
+                                        ng-repeat="location in suggestedLocations" ng-click="selectLocation(location)">
+                                        {{ location }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary" ng-click="submitSearchOnMap()">Tìm kiếm</button>
+                    </div>
+                    <div id="map" class="col-12" style="height: 500px"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>

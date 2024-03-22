@@ -74,7 +74,7 @@
             </div>
 
             <div class="col-md-6">
-                <label class="form-label">NGÀY / GIỜ VỀ</label>
+                <label class="form-label">NGÀY / GIỜ ĐẾN</label>
                 <input type="datetime-local"
                        class="form-control"
                        name="arrivalTime"
@@ -99,7 +99,7 @@
             </div>
 
             <!-- Sử dụng trong HTML -->
-            <div class="col-6">
+            <div class="col-2">
                 <label class="form-label">Điểm Đi</label>
                 <select class="form-select"
                         name="fromLocation"
@@ -107,7 +107,6 @@
                         ng-options="city.Name as city.Name for city in provinces"
                         ng-model="schedules.fromLocation"
                         ng-change="updateToLocation()"
-                        disabled
                         required
                 >
                     <option value="" disabled selected>Chọn điểm đi</option>
@@ -118,7 +117,39 @@
                 </small>
             </div>
 
-            <div class="col-6">
+            <div class="col-4">
+                <label class="form-label">Vị trí bến xe (Điểm đi)</label>
+                <div class="row">
+                    <div class="col-9 ps-2 px-0">
+                        <input type="text"
+                               title="{{ schedules.fromAddress }}"
+                               class="form-control"
+                               name="fromAddress"
+                               ng-model="schedules.fromAddress"
+                               ng-class="{ 'is-invalid': form_trips.fromAddress.$invalid && form_trips.fromAddress.$touched,
+                                                'is-valid': form_trips.fromAddress.$valid && form_trips.fromAddress.$touched }"
+                               placeholder="Vui lòng nhập địa chỉ bến xe"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="form_trips.fromAddress.$touched && form_trips.fromAddress.$error.required">
+                            Vui lòng nhập địa chỉ nhà xe !
+                        </small>
+                    </div>
+                    <div class="col-3 d-flex justify-content-end">
+                        <button data-bs-toggle="modal"
+                                data-bs-target="#modalMapTransport"
+                                type="button"
+                                class="btn btn-primary"
+                                ng-click="showModalMap('fromAddress')"
+                        >
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-2">
                 <label class="form-label">Điểm Đến</label>
                 <select class="form-select"
                         name="toLocation"
@@ -126,7 +157,6 @@
                         ng-options="city.Name as city.Name for city in provinces"
                         ng-model="schedules.toLocation"
                         ng-change="updateToLocation()"
-                        disabled
                         required
                 >
                     <option value="" disabled selected>Chọn điểm đến</option>
@@ -138,6 +168,38 @@
                 <small class="text-danger" ng-show="toLocationError">
                     Điểm đi và điểm đến không thể trùng nhau!
                 </small>
+            </div>
+
+            <div class="col-4">
+                <label class="form-label">VỊ TRÍ BẾN XE (ĐIỂM ĐẾN)</label>
+                <div class="row">
+                    <div class="col-9 ps-2 px-0">
+                        <input type="text"
+                               title="{{ schedules.fromAddress }}"
+                               class="form-control"
+                               name="toAddress"
+                               ng-model="schedules.toAddress"
+                               ng-class="{ 'is-invalid': form_trips.toAddress.$invalid && form_trips.toAddress.$touched,
+                                                'is-valid': form_trips.toAddress.$valid && form_trips.toAddress.$touched }"
+                               placeholder="Vui lòng nhập địa chỉ bến xe"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="form_trips.toAddress.$touched && form_trips.toAddress.$error.required">
+                            Vui lòng nhập địa chỉ nhà xe !
+                        </small>
+                    </div>
+                    <div class="col-3 d-flex justify-content-end">
+                        <button data-bs-toggle="modal"
+                                data-bs-target="#modalMapTransport"
+                                type="button"
+                                class="btn btn-primary"
+                                ng-click="showModalMap('toAddress')"
+                        >
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-6">
@@ -166,8 +228,8 @@
                        name="bookedSeat"
                        ng-model="schedules.bookedSeat"
                        ng-class="{ 'is-invalid': form_trip.bookedSeat.$invalid && form_trip.bookedSeat.$touched, 'is-valid': form_trip.bookedSeat.$valid && form_trip.bookedSeat.$touched }"
-                       ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
                        ng-pattern="/^[0-9]*$/"
+                       disabled
                 >
             </div>
 
@@ -232,5 +294,48 @@
                 </button>
             </div>
         </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalMapTransport" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="modalMapTourDetailLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabelMap">Bản đồ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-10 mb-3 position-relative">
+                        <input type="text"
+                               class="form-control"
+                               ng-model="searchLocation"
+                               placeholder="Nhập tên tỉnh thành cần tìm ở đây..."
+                               ng-keyup="searchLocationOnMap()"
+                        >
+                        <div style="position: relative;">
+                            <div class="autocomplete" ng-if="showSuggestions"
+                                 style="position: absolute; top: 10px; left: 10px; z-index: 100;">
+                                <ul class="list-group">
+                                    <li class="list-group-item cursor-pointer"
+                                        ng-repeat="location in suggestedLocations" ng-click="selectLocation(location)">
+                                        {{ location }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary" ng-click="submitSearchOnMap()">Tìm kiếm</button>
+                    </div>
+                    <div id="map" class="col-12" style="height: 500px"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Xác nhận</button>
+            </div>
+        </div>
     </div>
 </div>
