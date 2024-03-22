@@ -23,7 +23,7 @@ travel_app.controller('ChatHotelController', function ($scope, $routeParams, $ht
      */
     $scope.connect = async function () {
         if (user && user.id && user.fullName) {
-            var socket = new SockJS('http://localhost:8080/api/v1/ws');
+            var socket = new SockJS(`${BASE_API}ws`);
             stompClient = Stomp.over(socket);
             stompClient.connect({}, async function () {
                 try {
