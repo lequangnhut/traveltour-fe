@@ -1,0 +1,393 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<style>
+    .close:focus{
+
+        outline: 1px dotted #fff !important;
+    }
+    .modal-body {
+
+        padding: 0rem !important;
+    }
+    .fa-close{
+        color: #fff;
+    }
+    .heading{
+
+        font-weight: 500 !important;
+    }
+    .subheadings{
+        margin-top: 3px;
+        font-size: 14px;
+        color: #9c27b0;
+    }
+    .dots {
+        height: 10px;
+        width: 10px;
+        background-color: green;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+    }
+    .gallery img{
+
+        margin-right: 10px;
+    }
+    .fs-9{
+        font-size: 9px;
+    }
+
+    .btn-back {
+        color: white;
+        font-weight: 500;
+        background-color: #ffc107;
+        border-radius: 20px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .btn-ok {
+        color: white;
+        font-weight: 500;
+        background-color: #ab4eff;
+        border-radius: 20px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .btn-cancel {
+        color: white;
+        font-weight: 500;
+        background-color: #dc3545;
+        border-radius: 20px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .btn-back:hover {
+        color: #ffc107;
+        border: 1px solid #ffc107;
+        background-color: white;
+    }
+
+    .btn-ok:hover {
+        color: #ab4eff;
+        border: 1px solid #ab4eff;
+        background-color: white;
+    }
+
+    .btn-cancel:hover {
+        color: #dc3545;
+        border: 1px solid #dc3545;
+        background-color: white;
+    }
+</style>
+
+<div class="container">
+    <div class="header-control mb-4">
+        <div class="header-control-center mb-3">
+            <div class="d-flex justify-content-between align-items-center row ">
+                <div class="col-xl-6 mt-3">
+                    <h3 class="color-green fw-bold">QUẢN LÝ KHÁCH SẠN</h3>
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <div class="card card-customer">
+                <div class="row" style="margin: 20px 16px 20px 16px">
+                    <div class="col-xl-4">
+                        Bạn muốn tìm kiếm gì ?
+                        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">
+            <a href="#" class="bg-light text-dark">
+              <i class="fa-solid fa-magnifying-glass bg-light"></i>
+            </a>
+          </span>
+                            <input type="text" class="form-control"
+                                   placeholder="Nhập tên của khách cần tìm"
+                                   ng-model="searchTerm" ng-change="searchName()">
+                        </div>
+                    </div>
+                    <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
+                         style="margin: 20px 0 0 0">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-components table-responsive mb-5">
+            <div class="card table-responsive table-customer">
+                <div class="card-header ">
+                    <div class="row">
+                        <div class="mt-2 h4 col-lg-5 d-flex align-items-center h-100">
+                            <div class="d-flex align-items-center">
+                                <span class="h4">Danh sách khách sạn</span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end align-items-baseline col-lg-3">
+                            <select class="form-select" aria-label="Default select example"
+                                    ng-model="isAccepted"
+                                    ng-init="isAccepted='true'"
+                                    ng-change="getChangeStatus()">
+                                <option value="true">Hợp lệ</option>
+                                <option value="false">Không hợp lệ</option>
+                            </select>
+                        </div>
+                        <div class="d-flex justify-content-end align-items-baseline col-lg-2">
+                            <select class="form-select" aria-label="Default select example"
+                                    ng-model="pageSize"
+                                    ng-init="pageSize='5'"
+                                    ng-change="pageSizeChanged()">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                            </select>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end h-100 col-lg-2">
+                            <nav aria-label="Page navigation example float-end">
+                                <ul class="pagination justify-content-center align-items-center">
+                                    <li class="page-item" ng-class="{disabled: currentPage === 0}">
+                                        <a class="page-link" ng-click="setPage(0)">
+                                            <i class="fa-solid fa-angles-left"></i>
+                                        </a>
+                                    </li>
+                                    <!-- Ellipsis at the beginning -->
+                                    <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                        <span class="page-link">...</span>
+                                    </li>
+
+                                    <!-- Pagination Numbers -->
+                                    <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                        ng-class="{active: n === currentPage}">
+                                        <a class="page-link" ng-click="setPage(n)">{{n + 1}}</a>
+                                    </li>
+
+                                    <!-- Ellipsis at the end -->
+                                    <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                        <span class="page-link">...</span>
+                                    </li>
+
+                                    <!-- Next Page -->
+                                    <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}">
+                                        <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                            <i class="fa-solid fa-angles-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-responsive text-center">
+<!--                    <div ng-include="'app/component/utils/loading-table.html'"></div>-->
+                    <thead>
+                    <tr class="bg-light">
+                        <th scope="col"># <i class="fa-solid fa-sort"></i></th>
+                        <th ng-click="sortData('hotelName')">
+                            <div class="icon-left">Tên khách sạn
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('hotelName')"></span>
+                            </div>
+                        </th>
+                        <th ng-click="sortData('district')">
+                            <div class="icon-left">Địa chỉ
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('district')"></span>
+                            </div>
+                        </th>
+                        <th ng-click="sortData('hotelTypeId')">
+                            <div class="icon-left">Loại khách sạn
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('hotelTypeId')"></span>
+                            </div>
+                        </th>
+                        <th ng-click="sortData('isActive')">
+                            <div class="icon-left">Trạng thái
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('isActive')"></span>
+                            </div>
+                        </th>
+                        <th scope="col">Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="ht in hotelPostList">
+                        <td style="font-size: small">{{$index + 1}}</td>
+                        <td>{{ht.hotelName || 'Đang cập nhật'}}</td>
+                        <td>{{(ht.district || 'Đang cập nhật') + ', ' + (ht.province || 'Đang cập nhật')}}</td>
+                        <td>{{ht.hotelTypes.hotelTypeName || 'Đang cập nhật'}}</td>
+                        <td>
+                            <div ng-if="ht.isAccepted === true" class="d-flex align-items-center justify-content-center">
+                                <span class="status-success"></span> <span class="text-status-success">Hợp lệ</span>
+                            </div>
+                            <div ng-if="ht.isAccepted === false" class="d-flex align-items-center justify-content-center">
+                                <span class="status-success"></span> <span class="text-status-error">Không hợp lệ</span>
+                            </div>
+                        </td>
+                        <td class="d-flex align-items-center justify-content-center">
+                            <a role="button" class="fs-1 btn text-info px-2" ng-click="openModal(ht)"
+                               title="Xem hồ sơ">
+                                <i class="fa-regular fa-newspaper"></i>
+                            </a>
+                            <a role="button" class="fs-1 btn text-warning px-2" href="/admin/post/hotel-post-list/room-list/{{ht.id}}"
+                               title="Danh sách phòng">
+                                <i class="fa-solid fa-door-open"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr ng-if="hotelPostList.length === 0">
+                        <td colspan="8">Không có dữ liệu.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-end">
+                        {{getDisplayRange()}} trong tổng số {{totalElements}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="hotelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="max-width: 750px;padding-top: 40px">
+        <div class="modal-content">
+            <button type="button" ng-click="closeModal()" style="width: 30px;border-radius: 50px;
+                                    border: 1px solid grey;margin-top: -15px;align-self: self-end;
+                                    background: #ffffff;margin-right: -15px;color: grey;">
+                <span aria-hidden="true"><i class="fa fa-close"></i></span>
+            </button>
+            <div class="modal-body">
+                <div class="row g-0">
+                    <div class="col-md-7 border-right">
+                        <div class="status p-3">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <td class="pt-1" colspan="2" >
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block">Doanh nghiệp quản lý</span>
+                                            <span class="subheadings">{{hotelPost.agencies.nameAgency || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-1" colspan="2" >
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block">Địa chỉ khách sạn</span>
+                                            <span class="subheadings">{{(hotelPost.address || 'Đang cập nhật') + ', ' + (hotelPost.ward || 'Đang cập nhật') + ', ' + (hotelPost.district || 'Đang cập nhật') + ', ' + (hotelPost.province || 'Đang cập nhật')}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-1" style="width: 50%;">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block">Số điện thoại</span>
+                                            <span class="subheadings">{{hotelPost.phone || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="pt-1" style="width: 50%;">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block">Website</span>
+                                            <span class="subheadings">{{hotelPost.urlWebsite || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-1" colspan="2" >
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block">Mô tả của khách sạn</span>
+                                            <span class="subheadings" style="justify-content: center">{{hotelPost.hotelDescription || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-1"  colspan="2" >
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block">Tiện ích khách sạn</span>
+                                            <div class="row">
+                                                <span ng-repeat = "uti in utilitiesList" style="padding-top: 5px;"
+                                                      class="subheadings col-6" >{{uti.placeUtilitiesName || 'Đang cập nhật'}}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="p-2 pb-4 pe-3">
+                            <div class="profile text-center">
+                                <img ng-src="{{hotelPost.hotelAvatar || 'https://langem.geologia.unam.mx/wp-content/uploads/2018/04/placeholder.png'}}" width="185" class="img-thumbnail">
+                                <span class="d-block mt-1 mb-1 font-weight-bold" style="text-transform: uppercase; font-weight: bold">{{hotelPost.hotelName || 'Đang cập nhật'}}</span>
+                            </div>
+                            <div class="about-doctor">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td  class="pt-1">
+                                            <div class="d-flex flex-column">
+                                                <span class="heading d-block">Mã lưu trú</span>
+                                                <span class="subheadings">{{hotelPost.id || 'Đang cập nhật'}}</span>
+                                            </div>
+                                        </td>
+                                        <td class="pt-1">
+                                            <div class="d-flex flex-column">
+                                                <span class="heading d-block">Số tầng</span>
+                                                <span class="subheadings">{{hotelPost.floorNumber || 'Đang cập nhật'}}</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-1" colspan="2">
+                                            <div class="d-flex flex-column">
+                                                <span class="heading d-block">Loại hình khách sạn</span>
+                                                <span class="subheadings">{{hotelPost.hotelTypes.hotelTypeName || 'Đang cập nhật'}}</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-1" colspan="2">
+                                            <div class="d-flex flex-column">
+                                                <span class="heading d-block">Ngày đăng ký</span>
+                                                <span class="subheadings">{{(hotelPost.dateCreated  | vietnameseDateTime ) || 'Đang cập nhật'}}</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-1" colspan="2">
+                                            <div class="d-flex flex-column">
+                                                <span class="heading d-block">Trạng thái phê duyệt</span>
+                                                <span class="subheadings" ng-if="hotelPost.isAccepted === false"><i
+                                                        class="dots bg-warning"></i>Không hợp lệ</span>
+                                                <span class="subheadings" ng-if="hotelPost.isAccepted === true"><i
+                                                        class="dots bg-success"></i> Hợp lệ</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="about-doctor" style="text-align: right;">
+                                <button class="btn btn-cancel"
+                                        ng-click="deniedObject(hotelPost)"
+                                        style="margin-right:10px">
+                                    <i class="fa-solid fa-trash"></i> Từ chối
+                                </button>
+                                <button class="btn btn-ok"
+                                        ng-click="acceptObject(hotelPost)"
+                                        style="margin-right:10px">
+                                    <i class="fa-solid fa-circle-check"></i> Phê duyệt
+                                </button>
+                                <button class="btn btn-back" data-bs-dismiss="modal"
+                                        ng-click="closeModal()"
+                                        style="margin-right:5px">
+                                    <i class="fa-solid fa-circle-left"></i> Trở về
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

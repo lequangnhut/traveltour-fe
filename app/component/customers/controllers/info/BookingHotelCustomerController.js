@@ -4,6 +4,7 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $locat
     let userId = $routeParams.id;
 
     $scope.mess = ''
+    $scope.cancelWithFee = false;
 
     $scope.bookingTourHotelList = [];
     $scope.roomTypeListCustomer = [];
@@ -100,9 +101,9 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $locat
     }
 
     $scope.isCheckInPassed = function (checkInDate) {
-        var currentDate = new Date();  // Ngày hiện tại
-        var departure = new Date(checkInDate);  // Ngày xuất phát
-        // Tính số ngày còn lại giữa ngày hiện tại và ngày xuất phát
+        var currentDate = new Date();
+        var departure = new Date(checkInDate);
+
         var checkDown = Math.ceil((departure - currentDate) / (1000 * 60 * 60 * 24));
 
         return checkDown < 0;
@@ -111,40 +112,45 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $locat
     $scope.openHotelModal = function (data) {
         $('#hotelModal').modal('show');
         $scope.bookingHotel = data;
+
+        var promises = [];
+
         for (let i = 0; i < $scope.bookingTourHotelList.length; i++) {
-            HistoryOrderServiceCUS.getOrderDetails($scope.bookingHotel.id)
+            var promise = HistoryOrderServiceCUS.getOrderDetails($scope.bookingHotel.id)
                 .then(function (rooms) {
-                    $scope.roomTypeListCustomer = rooms.data.data
+                    $scope.roomTypeListCustomer = rooms.data.data;
+                    for (let j = 0; j < $scope.roomTypeListCustomer.length; j++) {
+                        if ($scope.roomTypeListCustomer[j].roomTypes.freeCancellation === false) {
+                            $scope.cancelWithFee = true;
+                            return; // Dừng vòng lặp khi tìm thấy phòng không được miễn hủy
+                        }
+                    }
                 });
-
+            promises.push(promise);
         }
-        var currentDate = new Date();  // Ngày hiện tại
-        var departureDate = new Date(data.startDate);  // Ngày xuất phát
 
-        // if(data.orderStatus === 0 && data.paymentMethod === 0){
-        //     $scope.mess = "Bạn có muốn hủy tour không ?";
-        //     return
-        // }
-        //
-        // // Tính số ngày còn lại giữa ngày hiện tại và ngày xuất phát
-        // var daysRemaining = Math.ceil((departureDate - currentDate) / (1000 * 60 * 60 * 24));
-        // //console.log(daysRemaining)
-        // if (daysRemaining >= 30) {
-        //     $scope.mess = "Chi phí hủy tour là 1% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        // } else if (daysRemaining >= 26 && daysRemaining <= 29) {
-        //     $scope.mess = "Chi phí hủy tour là 5% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        // } else if (daysRemaining >= 15 && daysRemaining <= 25) {
-        //     $scope.mess = "Chi phí hủy tour là 30% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        // } else if (daysRemaining >= 8 && daysRemaining <= 14) {
-        //     $scope.mess = "Chi phí hủy tour là 50% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        // }else if (daysRemaining >= 2 && daysRemaining <= 7) {
-        //     $scope.mess = "Chi phí hủy tour là 80% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        // }else if (daysRemaining >= 0 && daysRemaining <= 1) {
-        //     $scope.mess = "Chi phí hủy tour là 100% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        // } else {
-        //     $scope.mess = "Bạn có muốn hủy tour không ?";
-        // }
+        Promise.all(promises).then(function() {
+            if((data.orderStatus === 0 && data.paymentMethod === 'TTTT') || $scope.cancelWithFee === false){
+                $scope.mess = "Bạn có muốn hủy phòng không ?";
+                return;
+            }
+        });
+
+        var currentDate = new Date();
+        var departureDate = new Date(data.checkIn);
+        var currentDateTime = currentDate.getTime();
+        var departureDateTime = departureDate.getTime();
+        var diffInDays = Math.ceil((departureDateTime - currentDateTime) / (1000 * 60 * 60 * 24)) - 1;
+
+        if (diffInDays >= 2 && diffInDays <= 4) {
+            $scope.mess = "Chi phí hủy là 50% trên tổng giá trị đơn. Bạn có muốn hủy phòng không ?";
+        }else if (diffInDays >= 0 && diffInDays <= 1) {
+            $scope.mess = "Chi phí hủy là 100% trên tổng giá trị đơn. Bạn có muốn hủy phòng không ?";
+        } else {
+            $scope.mess = "Bạn có muốn hủy phòng không ?";
+        }
     }
+
 
     $scope.closeHotelModal = function () {
         $('#hotelModal').modal('hide');
@@ -152,9 +158,16 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $locat
 
     $scope.cancelBookingHotelOrder = function (data) {
         function confirmDeleteType() {
-            $('#hotelModal').modal('hide'); // Đóng modal khi thành công
+            $scope.isLoading = true;
+            HistoryOrderServiceCUS.cancelHotel(data.id).then(function successCallback(response) {
+                centerAlert('Thành công !', 'Đã hủy booking, mời người dùng check mail !', 'success');
+                $('#hotelModal').modal('hide'); // Đóng modal khi thành công
+                $scope.getBookingTourHotelList();
+            }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
         }
-        confirmAlert("Xóa Hotel", confirmDeleteType);
+        confirmAlert($scope.mess, confirmDeleteType);
     };
 
 

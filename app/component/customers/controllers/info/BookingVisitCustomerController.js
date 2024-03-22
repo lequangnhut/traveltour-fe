@@ -107,32 +107,19 @@ travel_app.controller("BookingVisitCustomerController", function ($scope, $locat
                 });
 
         }
-        var currentDate = new Date();  // Ngày hiện tại
-        var departureDate = new Date(data.startDate);  // Ngày xuất phát
+        var currentDate = new Date();
+        var departureDate = new Date(data.checkIn);
+        var currentDateTime = currentDate.getTime();
+        var departureDateTime = departureDate.getTime();
+        var diffInDays = Math.ceil((departureDateTime - currentDateTime) / (1000 * 60 * 60 * 24)) - 1;
 
-        // if(data.orderStatus === 0 && data.paymentMethod === 0){
-        //     $scope.mess = "Bạn có muốn hủy tour không ?";
-        //     return
-        // }
-        //
-        // // Tính số ngày còn lại giữa ngày hiện tại và ngày xuất phát
-        // var daysRemaining = Math.ceil((departureDate - currentDate) / (1000 * 60 * 60 * 24));
-        // //console.log(daysRemaining)
-        // if (daysRemaining >= 30) {
-        //     $scope.mess = "Chi phí hủy tour là 1% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        // } else if (daysRemaining >= 26 && daysRemaining <= 29) {
-        //     $scope.mess = "Chi phí hủy tour là 5% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        // } else if (daysRemaining >= 15 && daysRemaining <= 25) {
-        //     $scope.mess = "Chi phí hủy tour là 30% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        // } else if (daysRemaining >= 8 && daysRemaining <= 14) {
-        //     $scope.mess = "Chi phí hủy tour là 50% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        // }else if (daysRemaining >= 2 && daysRemaining <= 7) {
-        //     $scope.mess = "Chi phí hủy tour là 80% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        // }else if (daysRemaining >= 0 && daysRemaining <= 1) {
-        //     $scope.mess = "Chi phí hủy tour là 100% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        // } else {
-        //     $scope.mess = "Bạn có muốn hủy tour không ?";
-        // }
+        if (diffInDays >= 2 && diffInDays <= 3) {
+            $scope.mess = "Chi phí hủy là 50% trên tổng giá trị đơn. Bạn có muốn hủy vé không ?";
+        }else if (diffInDays >= 0 && diffInDays <= 1) {
+            $scope.mess = "Chi phí hủy là 80% trên tổng giá trị đơn. Bạn có muốn hủy vé không ?";
+        } else {
+            $scope.mess = "Bạn có muốn hủy vé không ?";
+        }
     }
 
     $scope.closeVisitModal = function () {
@@ -141,8 +128,15 @@ travel_app.controller("BookingVisitCustomerController", function ($scope, $locat
 
     $scope.cancelBookingVisitOrder = function (data) {
         function confirmDeleteType() {
-            $('#visitModal').modal('hide'); // Đóng modal khi thành công
+            $scope.isLoading = true;
+            HistoryOrderServiceCUS.cancelVisit(data.id).then(function successCallback(response) {
+                centerAlert('Thành công !', 'Đã hủy booking, mời người dùng check mail !', 'success');
+                $('#visitModal').modal('hide'); // Đóng modal khi thành công
+                $scope.getBookingTourVisitList();
+            }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
         }
-        confirmAlert("Xóa Visit", confirmDeleteType);
+        confirmAlert($scope.mess, confirmDeleteType);
     };
 })

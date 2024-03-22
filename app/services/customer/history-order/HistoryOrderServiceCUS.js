@@ -131,4 +131,49 @@ travel_app.service('HistoryOrderServiceCUS', function ($http, $q) {
             url: API_HISTORY_ORDER + 'find-visitdetails-by-ordersId/' + orderHotelsId
         })
     }
+
+    this.cancelHotel = function (id) {
+        const deferred = $q.defer();
+        $http({
+            method: 'DELETE',
+            url: API_HISTORY_ORDER + 'delete-booking-hotel-customer/' + id,
+            headers: {'Content-Type': undefined},
+            transformRequest: angular.identity
+        }).then(function (response) {
+            deferred.resolve(response);
+        }, function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    };
+
+    this.cancelVisit = function (id) {
+        const deferred = $q.defer();
+        $http({
+            method: 'DELETE',
+            url: API_HISTORY_ORDER + 'delete-booking-visit-customer/' + id,
+            headers: {'Content-Type': undefined},
+            transformRequest: angular.identity
+        }).then(function (response) {
+            deferred.resolve(response);
+        }, function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    };
+
+    this.cancelTrans = function (id) {
+        const deferred = $q.defer();
+        $http({
+            method: 'DELETE',
+            url: API_HISTORY_ORDER + 'delete-booking-trans-customer/' + id,
+            headers: {'Content-Type': undefined},
+            transformRequest: angular.identity
+        }).then(function (response) {
+            deferred.resolve(response);
+        }, function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    };
 });
