@@ -219,7 +219,7 @@
                                 <span class="status-success"></span> <span class="text-status-success">Hợp lệ</span>
                             </div>
                             <div ng-if="rt.isActive == 0" class="d-flex align-items-center justify-content-center">
-                                <span class="status-success"></span> <span class="text-status-error">Không hợp lệ</span>
+                                <span class="status-error"></span> <span class="text-status-error">Không hợp lệ</span>
                             </div>
                         </td>
                         <td class="d-flex align-items-center justify-content-center">
@@ -258,6 +258,14 @@
                         <div class="status p-3">
                             <table class="table table-bordered">
                                 <tbody>
+                                <tr>
+                                    <td class="pt-1" colspan="2" >
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block">Khách sạn quản lý</span>
+                                            <span class="subheadings" style="justify-content: center">{{room.hotelsByHotelId.hotelName || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td style="width: 50%;" class="pt-1 text-center">
                                         <div class="d-flex flex-column">
@@ -309,7 +317,7 @@
                         </div>
                     </div>
                     <div class="col-md-5">
-                        <div class="p-2 pb-4 pe-3 text-center">
+                        <div class="p-2 pb-4 pe-3 pt-3 text-center">
                             <div class="profile">
                                 <div class="carousel slide carousel-fade" id="carouselExampleFade" data-ride="carousel">
                                     <div class="carousel-inner rounded">
@@ -334,6 +342,14 @@
                             <div class="about-doctor">
                                 <table class="table table-bordered">
                                     <tbody>
+                                    <tr>
+                                        <td class="pt-1" colspan="2">
+                                            <div class="d-flex flex-column">
+                                                <span class="heading d-block">Mã phòng</span>
+                                                <span class="subheadings">{{room.id || 'Đang cập nhật'}}</span>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <td class="pt-1">
                                             <div class="d-flex flex-column">
@@ -379,13 +395,13 @@
                                 </table>
                             </div>
                             <div class="about-doctor" style="text-align: right;">
-                                <button class="btn btn-cancel"
-                                        ng-click="deniedObject(room)"
+                                <button class="btn btn-cancel" ng-if="room.isActive == 1"
+                                        ng-click="deniedFormRoom(room)"
                                         style="margin-right:10px">
                                     <i class="fa-solid fa-trash"></i> Từ chối
                                 </button>
-                                <button class="btn btn-ok"
-                                        ng-click="acceptObject(room)"
+                                <button class="btn btn-ok" ng-if="room.isActive == 0"
+                                        ng-click="acceptFormRoom(room)"
                                         style="margin-right:10px">
                                     <i class="fa-solid fa-circle-check"></i> Phê duyệt
                                 </button>

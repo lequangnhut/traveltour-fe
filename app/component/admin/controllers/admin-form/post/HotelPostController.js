@@ -136,5 +136,35 @@ travel_app.controller("HotelPostController", function ($scope, $sce, $location, 
         $('#hotelModal').modal('hide');
     };
 
+    $scope.deniedFormHotel = function (data) {
+        function confirmDeny() {
+            PostServiceAD.deniedHotel(data.id)
+                .then(function (res) {
+                    toastAlert('success', 'Đã từ chối quyền hoạt động!');
+                    $scope.getHotelPostList();
+                    $('#hotelModal').modal('hide');
+                })
+                .catch(errorCallback).finally(function () {
+                    $scope.isLoading = false;
+                });
+        }
+        confirmAlertPost('Bạn không phê duyệt dịch vụ này?', confirmDeny);
+    };
+
+    $scope.acceptFormHotel = function (data) {
+        function confirmAccept() {
+            PostServiceAD.acceptHotel(data.id)
+                .then(function (res) {
+                    toastAlert('success', 'Đã cấp quyền hoạt động!');
+                    $scope.getHotelPostList();
+                    $('#hotelModal').modal('hide');
+                })
+                .catch(errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+        }
+        confirmAlertPost('Bạn muốn phê duyệt dịch vụ này?', confirmAccept);
+    };
+
 
 })

@@ -2,9 +2,7 @@ travel_app.service('PostServiceAD', function ($http, $q) {
 
     let API_POST = BASE_API + 'admin/post/';
 
-    /**
-     * API show list
-     */
+    /** HOTEL*/
     this.findAllHotel = function (page, size, sortBy, sortDir, isAccepted, searchTerm) {
         const deferred = $q.defer();
         $http({
@@ -41,6 +39,35 @@ travel_app.service('PostServiceAD', function ($http, $q) {
         return deferred.promise;
     };
 
+    this.deniedHotel = function (id) {
+        return $http({
+            method: 'PUT',
+            url: API_POST + 'denied-hotel-post/' + id
+        })
+    };
+
+    this.acceptHotel = function (id) {
+        return $http({
+            method: 'PUT',
+            url: API_POST + 'accepted-hotel-post/' + id
+        })
+    };
+
+    this.deniedRoom = function (id) {
+        return $http({
+            method: 'PUT',
+            url: API_POST + 'denied-room-post/' + id
+        })
+    };
+
+    this.acceptRoom = function (id) {
+        return $http({
+            method: 'PUT',
+            url: API_POST + 'accepted-room-post/' + id
+        })
+    };
+
+    /** TRANSPORTATION*/
     this.findAllTrans = function (page, size, sortBy, sortDir, isAccepted, searchTerm) {
         const deferred = $q.defer();
         $http({
@@ -96,6 +123,49 @@ travel_app.service('PostServiceAD', function ($http, $q) {
         return deferred.promise;
     };
 
+    this.deniedBrand = function (id) {
+        return $http({
+            method: 'PUT',
+            url: API_POST + 'denied-brand-post/' + id
+        })
+    };
+
+    this.acceptBrand = function (id) {
+        return $http({
+            method: 'PUT',
+            url: API_POST + 'accepted-brand-post/' + id
+        })
+    };
+
+    this.deniedTrans = function (id) {
+        return $http({
+            method: 'PUT',
+            url: API_POST + 'denied-trans-post/' + id
+        })
+    };
+
+    this.acceptTrans = function (id) {
+        return $http({
+            method: 'PUT',
+            url: API_POST + 'accepted-trans-post/' + id
+        })
+    };
+
+    this.deniedSchedules = function (id) {
+        return $http({
+            method: 'PUT',
+            url: API_POST + 'denied-schedule-post/' + id
+        })
+    };
+
+    this.acceptSchedules = function (id) {
+        return $http({
+            method: 'PUT',
+            url: API_POST + 'accepted-schedule-post/' + id
+        })
+    };
+
+    /**VISIT*/
     this.findAllVisit = function (page, size, sortBy, sortDir, isAccepted, searchTerm) {
         const deferred = $q.defer();
         $http({
@@ -112,5 +182,20 @@ travel_app.service('PostServiceAD', function ($http, $q) {
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
     };
+
+    this.deniedVisit = function (id) {
+        return $http({
+            method: 'PUT',
+            url: API_POST + 'denied-visit-post/' + id
+        })
+    };
+
+    this.acceptVisit = function (id) {
+        return $http({
+            method: 'PUT',
+            url: API_POST + 'accepted-visit-post/' + id
+        })
+    };
+
 
 });

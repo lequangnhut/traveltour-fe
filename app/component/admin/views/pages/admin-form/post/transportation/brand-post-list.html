@@ -100,7 +100,7 @@
             </a>
           </span>
                             <input type="text" class="form-control"
-                                   placeholder="Nhập tên của doanh nghiệp cần tìm"
+                                   placeholder="Nhập tên hãng xe cần tìm"
                                    ng-model="searchTerm" ng-change="searchName()">
                         </div>
                     </div>
@@ -212,7 +212,7 @@
                                 <span class="status-success"></span> <span class="text-status-success">Hợp lệ</span>
                             </div>
                             <div ng-if="br.isAccepted === false" class="d-flex align-items-center justify-content-center">
-                                <span class="status-success"></span> <span class="text-status-error">Không hợp lệ</span>
+                                <span class="status-error"></span> <span class="text-status-error">Không hợp lệ</span>
                             </div>
                         </td>
                         <td class="">
@@ -253,18 +253,16 @@
             <div class="modal-body">
                 <div class="row g-0">
                     <div class="col-md-12 border-right">
+                        <div class="status p-3 pb-2">
+                            <div class="profile" style="text-align-last: center;">
+                                <img src="{{brands.transportationBrandImg || 'https://langem.geologia.unam.mx/wp-content/uploads/2018/04/placeholder.png'}}" width="200" class="img-thumbnail">
+                                <span class="heading d-block pt-2">Tên hãng xe</span>
+                                <span class="subheadings" style="font-size: x-large;text-transform: uppercase;font-weight: 700;">{{brands.transportationBrandName || 'Đang cập nhật'}}</span>
+                            </div>
+                        </div>
                         <div class="status p-3 pb-4">
-                            <table class="table table-borderless">
+                            <table class="table table-bordered">
                                 <tbody>
-                                <tr>
-                                    <td style="padding-top: 0px; width: 50%" colspan="2">
-                                        <div class="profile" style="text-align-last: center;">
-                                            <img src="{{brands.transportationBrandImg || 'https://langem.geologia.unam.mx/wp-content/uploads/2018/04/placeholder.png'}}" width="200" class="img-thumbnail">
-                                            <span class="heading d-block pt-2">Tên hãng xe</span>
-                                            <span class="subheadings" style="font-size: x-large;text-transform: uppercase;font-weight: 700;">{{brands.transportationBrandName || 'Đang cập nhật'}}</span>
-                                        </div>
-                                    </td>
-                                </tr>
                                 <tr>
                                     <td style="padding-top: 0px;" colspan="2" >
                                         <div class="d-flex flex-column">
@@ -299,15 +297,15 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="pt-1" colspan="2">
+                                    <td class="pt-3" colspan="2">
                                         <div class="about-doctor" style="text-align: right;">
-                                            <button class="btn btn-cancel"
-                                                    ng-click="deniedObject(brands)"
+                                            <button class="btn btn-cancel" ng-if="brands.isAccepted === true"
+                                                    ng-click="deniedFormBrand(brands)"
                                                     style="margin-right:10px">
                                                 <i class="fa-solid fa-trash"></i> Từ chối
                                             </button>
-                                            <button class="btn btn-ok"
-                                                    ng-click="acceptObject(brands)"
+                                            <button class="btn btn-ok" ng-if="brands.isAccepted === false"
+                                                    ng-click="acceptFormBrand(brands)"
                                                     style="margin-right:10px">
                                                 <i class="fa-solid fa-circle-check"></i> Phê duyệt
                                             </button>

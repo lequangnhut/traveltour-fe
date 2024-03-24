@@ -106,7 +106,7 @@
             </a>
           </span>
                             <input type="text" class="form-control"
-                                   placeholder="Nhập tên của doanh nghiệp cần tìm"
+                                   placeholder="Nhập tên bảng số xe cần tìm"
                                    ng-model="searchTerm" ng-change="searchName()">
                         </div>
                     </div>
@@ -224,7 +224,7 @@
                                 <span class="status-success"></span> <span class="text-status-success">Hợp lệ</span>
                             </div>
                             <div ng-if="tran.isActive == false" class="d-flex align-items-center justify-content-center">
-                                <span class="status-success"></span> <span class="text-status-error">Không hợp lệ</span>
+                                <span class="status-error"></span> <span class="text-status-error">Không hợp lệ</span>
                             </div>
                         </td>
                         <td>
@@ -336,13 +336,13 @@
                             </div>
                         </div>
                         <div class="about-doctor pb-4" style="text-align: right;">
-                            <button class="btn btn-cancel"
-                                    ng-click="deniedObject(car)"
+                            <button class="btn btn-cancel" ng-if="car.isActive === true"
+                                    ng-click="deniedFormTrans(car)"
                                     style="margin-right:10px">
                                 <i class="fa-solid fa-trash"></i> Từ chối
                             </button>
-                            <button class="btn btn-ok"
-                                    ng-click="acceptObject(car)"
+                            <button class="btn btn-ok" ng-if="car.isActive === false"
+                                    ng-click="acceptFormTrans(car)"
                                     style="margin-right:10px">
                                 <i class="fa-solid fa-circle-check"></i> Phê duyệt
                             </button>

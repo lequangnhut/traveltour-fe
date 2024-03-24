@@ -876,7 +876,7 @@
                                                     class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Điều kiện hủy vé xe:</h5>
                                             <p>- Hủy vé trong vòng 24 giờ hoặc ngay ngày khởi hành, phải trả 70%
                                                 giá trị đơn hàng.</p>
-                                            <p>- Hủy vé trước ngày khởi hành từ 2 - 3 ngày, phải trả 10% giá
+                                            <p>- Hủy vé trước ngày khởi hành từ 2 - 3 ngày, phải trả 30% giá
                                                 trị đơn hàng.</p>
                                             <p>- Hủy vé trước ngày khởi hành từ 4 ngày trở lên, sẽ được hoàn
                                                 tiền 100%.</p>
@@ -988,15 +988,19 @@
                                                                     <td>
                                                                         <div class="d-flex flex-column">
                                                                             <span class="heading d-block" style="font-size: larger;color: #727179;">
-                                                                                Giá vé</span>
+                                                                                Đơn giá</span>
                                                                             <span class="subheadings">{{bookingTrans.transportationSchedules.unitPrice | vnCurrency }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
-                                                                                Số vé</span>
-                                                                            <span class="subheadings">{{bookingTrans.amountTicket}}</span>
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">Số vé (x{{bookingTrans.amountTicket}})</span>
+                                                                            <!-- Hiển thị danh sách ghế -->
+                                                                            <p class="subheadings d-flex">
+                                                                                <span ng-repeat="seat in ticketListCustomer" style="margin-right: 5px;">
+                                                                                    Ghế {{ seat.transportationScheduleSeats.seatNumber }}{{$last ? '' : ', '}}
+                                                                                </span>
+                                                                            </p>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -1004,7 +1008,7 @@
                                                                     <td>
                                                                         <div class="d-flex flex-column">
                                                                             <span class="heading d-block" style="font-size: larger;color: #727179;">
-                                                                                Giá trị đơn</span>
+                                                                                Tổng tiền</span>
                                                                             <span class="subheadings">{{bookingTrans.orderTotal | vnCurrency }}</span>
                                                                         </div>
                                                                     </td>
@@ -1012,14 +1016,10 @@
                                                                         <div class="d-flex flex-column">
                                                                             <span class="heading d-block" style="font-size: larger;color: #727179;">
                                                                                 HTTToán</span>
-<!--                                                                            <span class="subheadings"-->
-<!--                                                                                  ng-if="bookingTrans.paymentMethod === 'Momo'">Ví điện tử Momo</span>-->
-<!--                                                                            <span class="subheadings"-->
-<!--                                                                                  ng-if="bookingTrans.paymentMethod === 'TTTT'">Thanh toán trực tiếp</span>-->
-<!--                                                                            <span class="subheadings"-->
-<!--                                                                                  ng-if="bookingTrans.paymentMethod === 'VNPay'">Thanh toán VN Pay</span>-->
-<!--                                                                            <span class="subheadings"-->
-<!--                                                                                  ng-if="bookingTrans.paymentMethod === 'ZaloPay'">Ví điện tử ZaloPay</span>-->
+                                                                            <span class="subheadings" ng-if="bookingTrans.paymentMethod === 0">Thanh toán tại quầy</span>
+                                                                            <span class="subheadings" ng-if="bookingTrans.paymentMethod === 1">Thanh toán VNPay</span>
+                                                                            <span class="subheadings" ng-if="bookingTrans.paymentMethod === 2">Thanh toán ZaloPay</span>
+                                                                            <span class="subheadings" ng-if="bookingTrans.paymentMethod === 3">Thanh toán Momo</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>

@@ -138,4 +138,34 @@ travel_app.controller("RoomPostController", function ($scope, $location, $window
         $('#roomModal').modal('hide');
     };
 
+    $scope.deniedFormRoom = function (data) {
+        function confirmDeny() {
+            PostServiceAD.deniedRoom(data.id)
+                .then(function (res) {
+                    toastAlert('success', 'Đã từ chối quyền hoạt động!');
+                    $scope.getRoomTypeList();
+                    $('#roomModal').modal('hide');
+                })
+                .catch(errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+        }
+        confirmAlertPost('Bạn không phê duyệt dịch vụ này?', confirmDeny);
+    };
+
+    $scope.acceptFormRoom = function (data) {
+        function confirmAccept() {
+            PostServiceAD.acceptRoom(data.id)
+                .then(function (res) {
+                    toastAlert('success', 'Đã cấp quyền hoạt động!');
+                    $scope.getRoomTypeList();
+                    $('#roomModal').modal('hide');
+                })
+                .catch(errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+        }
+        confirmAlertPost('Bạn muốn phê duyệt dịch vụ này?', confirmAccept);
+    };
+
 })
