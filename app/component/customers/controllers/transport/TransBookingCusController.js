@@ -1,6 +1,5 @@
 travel_app.controller('TransBookingCusController',
-    function ($scope, $location, $routeParams, LocalStorageService, AuthService, TransportationScheduleServiceAD, BookingTransportCusService) {
-
+    function ($scope, $location, $routeParams, $interval, LocalStorageService, GenerateCodePayService, AuthService, TransportationScheduleServiceAD, BookingTransportCusService) {
         let user = AuthService.getUser();
 
         if (LocalStorageService.get('dataBookingTransport') === null) {
@@ -109,8 +108,10 @@ travel_app.controller('TransBookingCusController',
          */
         $scope.paymentTravel = function () {
             let seatNumber = $scope.seatNumber;
+            let transportSchedule = $scope.transportSchedule;
             let orderTransport = $scope.bookingTransport;
 
+            orderTransport.id = GenerateCodePayService.generateCodeBooking('VPO', transportSchedule.id);
             orderTransport.transportationScheduleId = $scope.scheduleId;
             orderTransport.amountTicket = $scope.totalAmountSeat;
             orderTransport.orderTotal = $scope.totalPrice;
@@ -125,8 +126,23 @@ travel_app.controller('TransBookingCusController',
             }
 
             function confirmBookTour() {
+                $scope.isLoading = true;
+
                 BookingTransportCusService.createBookingTransport(orderTransport, seatNumber).then(function (response) {
-                    console.log(response)
+                    if (response.status === 200) {
+                        let dataBookingTransportSuccess = {
+                            orderTransport: response.data.data,
+                            transportSchedule: transportSchedule,
+                            seatNumber: seatNumber
+                        }
+                        LocalStorageService.set('dataBookingTransportSuccess', dataBookingTransportSuccess);
+
+                        $location.path('/drive-move/drive-transport-detail/booking-confirmation/booking-successfully');
+                    } else {
+                        $location.path('/admin/page-not-found');
+                    }
+                }).finally(function () {
+                    $scope.isLoading = false;
                 });
             }
 
@@ -185,6 +201,45 @@ travel_app.controller('TransBookingCusController',
             if (next.controller !== 'TransBookingCusController' && next.controller !== 'LoginController' && next.controller !== 'MainController') {
                 LocalStorageService.remove('dataBookingTransport');
                 LocalStorageService.remove('redirectAfterLogin');
+                LocalStorageService.remove('countdownTime');
             }
+
+            if (next.controller !== 'TransBookingCusController' && next.controller !== 'TransBookingSuccessCusController') {
+                LocalStorageService.remove('dataBookingTransportSuccess');
+            }
+        });
+
+        /**
+         * Đếm thời gian thanh toán
+         */
+        let savedTime = LocalStorageService.get('countdownTime');
+        let countdownTime = savedTime ? JSON.parse(savedTime) : {minutes: 10, seconds: 0};
+
+        $scope.minutes = countdownTime.minutes;
+        $scope.seconds = countdownTime.seconds;
+
+        let intervalPromise = $interval(function () {
+            if ($scope.seconds > 0 || $scope.minutes > 0) {
+                $scope.seconds--;
+                if ($scope.seconds < 0) {
+                    $scope.seconds = 59;
+                    $scope.minutes--;
+                }
+            } else {
+                LocalStorageService.remove('countdownTime');
+                $location.path('/drive-move');
+                centerAlert('Thất bại', 'Đã hết thời gian thanh toán quý khách vui lòng đặt vé khác', 'warning');
+                return;
+            }
+
+            LocalStorageService.set('countdownTime', JSON.stringify({
+                minutes: $scope.minutes,
+                seconds: $scope.seconds
+            }));
+
+        }, 1000);
+
+        $scope.$on('$destroy', function () {
+            $interval.cancel(intervalPromise);
         });
     })

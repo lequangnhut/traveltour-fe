@@ -187,11 +187,18 @@
                                             <p class="fw-medium text-danger"
                                                ng-if="schedule.transportations.amountSeat - schedule.bookedSeat <= 5 && schedule.bookedSeat !== schedule.transportations.amountSeat"
                                             >
-                                                Còn lại {{ schedule.transportations.amountSeat - schedule.bookedSeat }}
+                                                Còn lại
+                                                {{ schedule.transportations.amountSeat - schedule.bookedSeat }}
                                                 chỗ trống
                                             </p>
+                                            <p class="fw-medium text-danger"
+                                               ng-if="schedule.transportations.amountSeat === schedule.bookedSeat">
+                                                Xe đã hết chổ
+                                            </p>
                                             <a href="#" class="btn btn-green w-100 text-white"
-                                               ng-click="toggleBooking($index)">
+                                               ng-click="toggleBooking($index)"
+                                               ng-hide="schedule.transportations.amountSeat === schedule.bookedSeat"
+                                            >
                                                 Đặt vé ngay
                                             </a>
                                             <div class="d-flex align-items-center justify-content-end mt-3 text-green">
@@ -355,21 +362,21 @@
                                             <span class="fw-medium fs-5">Điểm đón</span>
                                             <div class="fw-medium">
                                                 {{ schedule.departureTime | formatTime }} •
-                                                Bến xe trung tâm {{ schedule.toLocation }}
+                                                Bến xe trung tâm {{ schedule.fromLocation }}
                                                 <br>
                                             </div>
                                             <div class="fw-normal" style="font-size: 14px">
-                                                Chi tiết: {{ schedule.toAddress }}
+                                                Chi tiết: {{ schedule.fromAddress }}
                                             </div>
                                         </div>
                                         <div class="col-lg-5 col-md-12 col-12">
                                             <span class="fw-medium fs-5">Điểm trả</span>
                                             <div class="fw-medium">
                                                 {{ schedule.arrivalTime | formatTime }} •
-                                                Bến xe trung tâm {{ schedule.fromLocation }}
+                                                Bến xe trung tâm {{ schedule.toLocation }}
                                             </div>
                                             <div class="fw-normal" style="font-size: 14px">
-                                                Chi tiết: {{ schedule.fromAddress }}
+                                                Chi tiết: {{ schedule.toAddress }}
                                             </div>
                                         </div>
                                     </div>
@@ -691,7 +698,7 @@
                     </div>
                     <!--=== Recent Post Widget ===-->
                     <div class="sidebar-widget recent-post-widget mb-40 wow fadeInUp">
-                        <h4 class="widget-title">Recent News</h4>
+                        <h4 class="widget-title">Nhà xe vừa xem qua</h4>
                         <ul class="recent-post-list">
                             <li class="post-thumbnail-content">
                                 <img src="/assets/customers/images/blog/post-thumb-1.jpg" alt="post thumb">
@@ -699,23 +706,6 @@
                                     <h5><a href="">Quality Assurance
                                         Requirements Web
                                         Dev Risk Manage</a></h5>
-                                    <span class="posted-on"><span class="fas fa-calendar-alt"></span><a href="#">November 23,2022</a></span>
-                                </div>
-                            </li>
-                            <li class="post-thumbnail-content">
-                                <img src="/assets/customers/images/blog/post-thumb-2.jpg" alt="post thumb">
-                                <div class="post-title-date">
-                                    <h5><a href="">Deep Div Wonder
-                                        World Of Displaem
-                                        Filtering</a></h5>
-                                    <span class="posted-on"><span class="fas fa-calendar-alt"></span><a href="#">November 23,2022</a></span>
-                                </div>
-                            </li>
-                            <li class="post-thumbnail-content">
-                                <img src="/assets/customers/images/blog/post-thumb-3.jpg" alt="post thumb">
-                                <div class="post-title-date">
-                                    <h5><a href="">Handling Mountin mountin Naviation
-                                        Routes In Native</a></h5>
                                     <span class="posted-on"><span class="fas fa-calendar-alt"></span><a href="#">November 23,2022</a></span>
                                 </div>
                             </li>

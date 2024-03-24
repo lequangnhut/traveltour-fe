@@ -1,27 +1,22 @@
-<!--====== Start Breadcrumb Section ======-->
-<section class="page-banner overlay pt-170 pb-170 bg_cover"
-         style="background-image: url(/assets/customers/images/bg/banner-transport.jpg);">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="page-banner-content text-center text-white">
-                    <h1 class="page-title">Phương Tiện Di Chuyển</h1>
-                    <ul class="breadcrumb-link text-white">
-                        <li><a href="/home">Trang chủ</a></li>
-                        <li><a href="/drive-move">Phương tiện di chuyển</a></li>
-                        <li><a href="#" ng-click="goBack()">Chuyến đi chi tiết</a></li>
-                        <li class="active">Đặt xe</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section><!--====== End Breadcrumb Section ======-->
+<div ng-include="'app/component/utils/loading-html.html'"></div>
 
 <!--====== Start Booking Form ======-->
 <div class="container-fluid overflow-hidden px-lg-0">
     <section class="h-100" id="cart">
         <div class="container py-4">
+            <!--====== Start Breadcrumb Section ======-->
+            <section class="pt-15 pb-15 mt-50 rounded-2"
+                     style="background: rgb(238, 251, 244); border: 1px solid rgb(39, 174, 96)">
+                <div class="container d-flex justify-content-center">
+                    <span class="fw-medium fs-5 mx-2">Thời gian thanh toán còn lại là</span>
+                    <div class="container-time pb-1">
+                        <p class="time fw-bold fs-5 pt-1 text-white">
+                            {{ minutes }} : {{ seconds | twoDigit }}
+                        </p>
+                    </div>
+                </div>
+            </section><!--====== End Breadcrumb Section ======-->
+
             <form ng-submit="submitBooking()" method="post" name="transportBookingForm">
                 <div class="row d-flex justify-content-center my-4">
                     <div class="col-md-8">
@@ -119,7 +114,7 @@
                                     <textarea class="form-control"
                                               rows="5"
                                               id="order_note"
-                                              name="customerName"
+                                              name="orderNote"
                                               ng-model="bookingTransport.orderNote"
                                               placeholder="name@example.com"
                                     ></textarea>
@@ -172,10 +167,15 @@
                                                             Hướng dẫn thanh toán
                                                         </span>
                                                             <div class="PaymentMethods__GuildContainer-sc-6pvdqp-5 jCaFku">
-                                                                <p>1. Bạn sẽ được chuyển đến ứng dụng Momo<br>
-                                                                    2. Nhập thông tin thẻ thanh toán mới hoặc chọn thanh
-                                                                    toán qua ví Momo/thẻ đã liên kết với ví Momo<br>
-                                                                    3. Chọn "Thanh toán" để tiến thành thanh toán vé
+                                                                <p>
+                                                                    Bạn hãy đến phòng vé của nhà xe Bình Minh Bus để
+                                                                    thanh toán số tiền 1.498.000đ cho mã đặt chỗ
+                                                                    M15Y9R6.
+                                                                    <br>
+                                                                    Địa chỉ:
+                                                                    <br>
+                                                                    VP Sài Gòn: 99 Nguyễn Cư Trinh, P.Nguyễn Cư Trinh,
+                                                                    Q1
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -271,10 +271,13 @@
                                                             Hướng dẫn thanh toán
                                                         </span>
                                                             <div class="PaymentMethods__GuildContainer-sc-6pvdqp-5 jCaFku">
-                                                                <p>1. Bạn sẽ được chuyển đến ứng dụng Momo<br>
-                                                                    2. Nhập thông tin thẻ thanh toán mới hoặc chọn thanh
-                                                                    toán qua ví Momo/thẻ đã liên kết với ví Momo<br>
-                                                                    3. Chọn "Thanh toán" để tiến thành thanh toán vé
+                                                                <p>
+                                                                    1. Đăng nhập Ứng dụng ngân hàng hoặc Ví VNPAY
+                                                                    <br>
+                                                                    2. Quét mã VNPAY-QR để thanh toán
+                                                                    <br>
+                                                                    3. Nhập số tiền thanh toán & mã giảm giá (nếu có),
+                                                                    xác minh giao dịch để đặt vé
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -323,10 +326,13 @@
                                                             Hướng dẫn thanh toán
                                                         </span>
                                                             <div class="PaymentMethods__GuildContainer-sc-6pvdqp-5 jCaFku">
-                                                                <p>1. Bạn sẽ được chuyển đến ứng dụng Momo<br>
+                                                                <p>
+                                                                    1. Bạn sẽ được chuyển đến ứng dụng ZaloPay
+                                                                    <br>
                                                                     2. Nhập thông tin thẻ thanh toán mới hoặc chọn thanh
-                                                                    toán qua ví Momo/thẻ đã liên kết với ví Momo<br>
-                                                                    3. Chọn "Thanh toán" để tiến thành thanh toán vé
+                                                                    toán qua ví ZaloPay/thẻ đã liên kết với ví ZaloPay
+                                                                    <br>
+                                                                    3. Chọn "Thanh toán" để tiến thành thanh toán vé.
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -544,7 +550,7 @@
                                                  alt="bus_blue_icon" width="16" height="16">
                                             <p class="base__Caption01Highlight-sc-1tvbuqk-17 jCbuWT">
                                                 {{ transportSchedule.departureTime | formatTime }} •
-                                                Tại bến xe trung tâm {{ transportSchedule.toLocation }}
+                                                Tại bến xe trung tâm {{ transportSchedule.fromLocation }}
                                             </p>
                                             <div class="total-ticket ms-4">
                                                 <img class="people-icon ls-is-cached lazyloaded"
@@ -612,10 +618,10 @@
                                                         <div class="section-area">
                                                             <div class="section-area-picker">
                                                                 <p class="base__Caption01Highlight-sc-1tvbuqk-17 jCbuWT">
-                                                                    Vp bến xe {{ transportSchedule.toLocation }}
+                                                                    Vp bến xe {{ transportSchedule.fromLocation }}
                                                                 </p>
                                                                 <p class="base__SmallCaption-sc-1tvbuqk-32 eSKsXb color--medium-sub">
-                                                                    {{ transportSchedule.toAddress }}
+                                                                    {{ transportSchedule.fromAddress }}
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -650,10 +656,10 @@
                                                         <div class="section-area">
                                                             <div class="section-area-picker">
                                                                 <p class="base__Caption01Highlight-sc-1tvbuqk-17 jCbuWT">
-                                                                    Vp bến xe {{ transportSchedule.fromLocation }}
+                                                                    Vp bến xe {{ transportSchedule.toLocation }}
                                                                 </p>
                                                                 <p class="base__SmallCaption-sc-1tvbuqk-32 eSKsXb color--medium-sub">
-                                                                    {{ transportSchedule.fromAddress }}
+                                                                    {{ transportSchedule.toAddress }}
                                                                 </p>
                                                             </div>
                                                         </div>

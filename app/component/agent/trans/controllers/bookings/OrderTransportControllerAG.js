@@ -39,10 +39,11 @@ travel_app.controller('OrderTransportControllerAG',
         }
 
         $scope.init = function () {
+            $scope.scheduleId = $routeParams.scheduleId;
             /**
              * tìm tất cả booking fill lên bảng
              */
-            OrderTransportService.findAllOrderTransport(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
+            OrderTransportService.findAllOrderTransport(brandId, $scope.scheduleId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
                 .then(function successCallback(response) {
                     if (response.status === 200) {
                         $scope.orderTransport = response.data.content;
@@ -65,7 +66,7 @@ travel_app.controller('OrderTransportControllerAG',
                 if (searchTimeout) $timeout.cancel(searchTimeout);
 
                 searchTimeout = $timeout(function () {
-                    OrderTransportService.findAllOrderTransport(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
+                    OrderTransportService.findAllOrderTransport(brandId, $scope.scheduleId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
                         .then(function (response) {
                             $scope.orderTransport = response.data.content;
                             $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);

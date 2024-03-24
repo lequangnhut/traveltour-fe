@@ -19,9 +19,9 @@
                         name="transportationId"
                         ng-class="{ 'is-invalid': form_trip.transportationId.$invalid && form_trip.transportationId.$touched, 'is-valid': form_trip.transportationId.$valid && form_trip.transportationId.$touched }"
                         ng-options="transport.id as transport.id + ' - ' +  transport.licensePlate + ' - ' + transport.amountSeat + ' Chổ' for transport in transportations"
-                        ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
                         ng-change="onTransportationIdChange()"
                         ng-model="schedules.transportationId"
+                        disabled
                         required
                 >
                     <option value="" disabled selected>Chọn phương tiện</option>

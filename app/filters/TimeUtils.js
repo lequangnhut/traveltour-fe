@@ -73,8 +73,8 @@ travel_app.filter('formatTime', function () {
     };
 });
 
-travel_app.filter('formatHoursLeft', function() {
-    return function(timestamp) {
+travel_app.filter('formatHoursLeft', function () {
+    return function (timestamp) {
         if (!timestamp) return '';
 
         var date = new Date(timestamp);
@@ -94,8 +94,8 @@ travel_app.filter('formatHoursLeft', function() {
     };
 });
 
-travel_app.filter('formatHoursRight', function() {
-    return function(timestamp) {
+travel_app.filter('formatHoursRight', function () {
+    return function (timestamp) {
         if (!timestamp) return '';
 
         var date = new Date(timestamp);
@@ -114,7 +114,6 @@ travel_app.filter('formatHoursRight', function() {
         return formattedDay + '/' + formattedMonth + '/' + formattedYear + ' ' + formattedHours + ':' + formattedMinutes;
     };
 });
-
 
 
 travel_app.filter('formatDateTime', function () {
@@ -277,5 +276,11 @@ travel_app.filter('averageTime', function () {
         result += minutes + 'p';
 
         return result;
+    };
+});
+
+travel_app.filter('twoDigit', function () {
+    return function (input) {
+        return input < 10 ? '0' + input : input;
     };
 });

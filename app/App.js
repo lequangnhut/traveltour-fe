@@ -356,15 +356,15 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-update.html',
             controller: 'TransportControllerAG'
         })
-        .when('/business/transport/order-transport-management', {
+        .when('/business/transport/schedules-management/order-transport-management/:scheduleId', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-list.html',
             controller: 'OrderTransportControllerAG'
         })
-        .when('/business/transport/order-transport-management/create-order-visit', {
+        .when('/business/transport/schedules-management/order-transport-management/:scheduleId/create-order-visit', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-create.html',
             controller: 'OrderTransportControllerAG'
         })
-        .when('/business/transport/order-transport-management/update-order-visit/:id', {
+        .when('/business/transport/schedules-management/order-transport-management/:scheduleId/update-order-visit/:id', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-update.html',
             controller: 'OrderTransportControllerAG'
         })
@@ -739,6 +739,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/drive-move/drive-transport-detail/:brandId/booking-confirmation/:scheduleId', {
             templateUrl: 'app/component/customers/views/pages/transport/transport-booking.html',
             controller: 'TransBookingCusController'
+        })
+        .when('/drive-move/drive-transport-detail/booking-confirmation/booking-successfully', {
+            templateUrl: 'app/component/customers/views/pages/transport/transport-booking-success.html',
+            controller: 'TransBookingSuccessCusController'
         })
 
         /**

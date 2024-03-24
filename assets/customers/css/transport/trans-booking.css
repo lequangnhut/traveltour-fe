@@ -21,3 +21,460 @@
     letter-spacing: 0;
     margin-bottom: 0;
 }
+
+/* transport booking thành công */
+.card-content .body-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.card-body-content {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    background: white;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 8px;
+}
+
+.card-body-content .section-ticket-header {
+    display: flex;
+    width: 100%;
+    padding: 12px;
+    gap: 12px;
+    border-bottom: 1px solid rgb(224, 224, 224);
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.card-body-content .section-ticket-header .section-ticket-header-left {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    gap: 8px;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.card-body-content .section-ticket-header .section-ticket-header-left img, .card-body-content .section-ticket-header .section-ticket-header-left p, .card-body-content .section-ticket-header .section-ticket-header-left span {
+    margin: auto;
+}
+
+.card-body-content .section-ticket-header .section-ticket-header-left img, .card-body-content .section-ticket-header .section-ticket-header-left p, .card-body-content .section-ticket-header .section-ticket-header-left span {
+    margin: auto;
+}
+
+.date-time {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    margin-bottom: 0;
+}
+
+.card-body-content .section-ticket-header .section-ticket-header-left .total-ticket {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.card-body-content .section-ticket-header .section-ticket-header-left img, .card-body-content .section-ticket-header .section-ticket-header-left p, .card-body-content .section-ticket-header .section-ticket-header-left span {
+    margin: auto;
+}
+
+.card-body-content .section-ticket-header .section-ticket-header-left .total-ticket p {
+    margin-left: 4px;
+}
+
+.card-body-content .section-ticket-header .section-ticket-header-left img, .card-body-content .section-ticket-header .section-ticket-header-left p, .card-body-content .section-ticket-header .section-ticket-header-left span {
+    margin: auto;
+}
+
+.amount-ticket {
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.1px;
+    margin-bottom: 0;
+}
+
+.detail {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 16px;
+    margin-bottom: 0;
+    letter-spacing: 0;
+    text-decoration: underline;
+    text-underline-offset: 1px;
+    word-break: normal;
+    color: #63AB45;
+}
+
+.card-body-content .section-ticket-content {
+    width: 100%;
+    padding: 0 12px 12px;
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
+}
+
+.card-content .pointer {
+    cursor: pointer;
+}
+
+.card-body-content .section-ticket-company-info {
+    display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 10px 0;
+    gap: 12px;
+    border-bottom: 1px solid rgb(224, 224, 224);
+    width: 100%;
+}
+
+.image-avatar {
+    width: 58px;
+    height: 36px;
+    border-radius: 4px;
+}
+
+.card-body-content .section-ticket-company-info .section-ticket-company-info-name {
+    display: grid;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0;
+    row-gap: 2px;
+    flex: 1 1 0;
+}
+
+.card-body-content .section-ticket-company-info .section-ticket-company-info-name p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.brand-name {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+    letter-spacing: 0;
+    margin-bottom: 0;
+}
+
+.card-body-content .section-ticket-company-info .section-ticket-company-info-name p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.trans-type {
+    font-size: 10px;
+    line-height: 12px;
+    letter-spacing: 0.3px;
+    margin-bottom: 0;
+}
+
+.detail-content {
+    display: flex;
+    position: relative;
+    width: 100%;
+}
+
+.detail-content .section-route-info {
+    margin: auto;
+    display: grid;
+    width: 100%;
+}
+
+.content-time .area-point-container {
+    display: flex;
+}
+
+.detail-content .date-time-container {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.detail-content .date-time-container .date-time-container-pick-up, .detail-content .date-time-container .date-time-container-drop-off {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    margin: auto;
+    text-align: center;
+}
+
+.content-time .date-time-container-drop-off, .content-time .date-time-container-pick-up {
+    min-width: 55px;
+}
+
+.detail-content .date-time-container .date-time-container-pick-up p, .detail-content .date-time-container .date-time-container-drop-off p {
+    margin-bottom: 0;
+}
+
+body .color--medium-sub {
+    color: rgb(133, 133, 133) !important;
+}
+
+.date-trans {
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 12px;
+    letter-spacing: 0.3px;
+    margin-bottom: 0;
+}
+
+.detail-content .icon-container .icon-container-top {
+    padding: 16px 17px 4px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 44px;
+}
+
+.content-time .section-area {
+    display: flex;
+    gap: 6px;
+    margin: auto;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.content-time .section-area .section-area-picker {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.date-time {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    margin-bottom: 0;
+}
+
+.trans-type {
+    font-size: 10px;
+    line-height: 12px;
+    letter-spacing: 0.3px;
+    margin-bottom: 0;
+}
+
+.detail-content .button-mobile-change {
+    white-space: nowrap;
+    margin: auto;
+}
+
+.content-time .button-mobile-change {
+    margin: auto 0;
+    cursor: pointer;
+}
+
+.content-time .area-point-container {
+    display: flex;
+}
+
+.detail-content .date-time-container {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.detail-content .date-time-container .date-time-container-pick-up, .detail-content .date-time-container .date-time-container-drop-off {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    margin: auto;
+    text-align: center;
+}
+
+.content-time .date-time-container-drop-off, .content-time .date-time-container-pick-up {
+    min-width: 55px;
+}
+
+.time-trans {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 0;
+}
+
+.detail-content .date-time-container .date-time-container-pick-up p, .detail-content .date-time-container .date-time-container-drop-off p {
+    margin-bottom: 0;
+}
+
+body .color--medium-sub {
+    color: rgb(133, 133, 133) !important;
+}
+
+.date-trans {
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 12px;
+    letter-spacing: 0.3px;
+    margin-bottom: 0;
+}
+
+.detail-content .icon-container {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.content-time .icon-container-divider {
+    display: flex;
+    min-height: 30px;
+}
+
+.content-time .icon-container-divider .icon-container-divider-border-right {
+    border-right: 1px solid rgb(224, 224, 224);
+}
+
+.content-time .icon-container-divider .icon-container-divider-border-left {
+    border-left: 1px solid rgb(224, 224, 224);
+}
+
+.content-time .icon-container-divider div {
+    flex: 1 1 0;
+}
+
+.detail-content .icon-container .icon-container-bottom {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin: auto;
+    padding: 4px 17px 16px;
+}
+
+.content-time .section-area {
+    display: flex;
+    gap: 6px;
+    margin: auto;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.content-time .section-area .section-area-picker {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.date-time {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    margin-bottom: 0;
+}
+
+.trans-type {
+    font-size: 13px;
+    line-height: 12px;
+    letter-spacing: 0.3px;
+    margin-bottom: 0;
+}
+
+.detail-content .button-mobile-change {
+    white-space: nowrap;
+    margin: auto;
+}
+
+.content-time .button-mobile-change {
+    margin: auto 0;
+    cursor: pointer;
+}
+
+.content-schedule .header-container {
+    background-image: url('https://229a2c9fe669f7b.cmccloud.com.vn/images/mobile-card1.png');
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    padding: 16px;
+    overflow: hidden;
+    position: relative;
+}
+
+.content-schedule .header-container .header-title {
+    font-size: 14px;
+    line-height: 18px;
+    color: white;
+    font-weight: 500;
+}
+
+.content-schedule .header-container .header-content {
+    font-size: 14px;
+    line-height: 18px;
+    color: white;
+}
+
+.content-schedule .header-container .image-hotel {
+    position: absolute;
+    width: 100px;
+    bottom: -25px;
+    right: -15px;
+}
+
+.content-schedule .header-container-tour {
+    background-image: url('https://229a2c9fe669f7b.cmccloud.com.vn/images/mobile-card2.png');
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    padding: 16px;
+    overflow: hidden;
+    position: relative;
+}
+
+.content-schedule .header-container-tour .header-title {
+    font-size: 14px;
+    line-height: 18px;
+    color: white;
+    font-weight: 500;
+}
+
+.content-schedule .header-container-tour .header-content {
+    font-size: 14px;
+    line-height: 18px;
+    color: white;
+}
+
+.content-schedule .header-container-tour .image-hotel {
+    position: absolute;
+    width: 150px;
+    bottom: -50px;
+    left: 13px;
+}
+
+.container-time {
+    background-color: rgb(235, 87, 87);
+    height: 32px;
+    min-width: 80px;
+    border-radius: 8px;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    padding-bottom: 1px;
+}

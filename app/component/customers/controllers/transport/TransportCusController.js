@@ -364,7 +364,7 @@ travel_app.controller('TransportCusController', function ($scope, $location, Map
                             </div>
                             <div class="col-xl-9 col-lg-8">
                                 <div class="meta row">
-                                    <div class="col-lg-8 container-hotel">
+                                    <div class="col-lg-8 container-transport">
                                         <div>
                                         <span>
                                             <i class="fa-solid fa-bus"></i>

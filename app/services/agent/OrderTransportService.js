@@ -1,10 +1,10 @@
 travel_app.service('OrderTransportService', function ($http) {
     let API_ORDER_TRANS = BASE_API + 'agent/order-transport/';
 
-    this.findAllOrderTransport = function (brandId, page, size, sortBy, sortDir, searchTerm) {
+    this.findAllOrderTransport = function (brandId, scheduleId, page, size, sortBy, sortDir, searchTerm) {
         return $http({
             method: 'GET',
-            url: API_ORDER_TRANS + 'find-all-order-transport/' + brandId,
+            url: API_ORDER_TRANS + 'find-all-order-transport/' + brandId + '/' + scheduleId,
             params: {
                 page: page || 0,
                 size: size || 5,
