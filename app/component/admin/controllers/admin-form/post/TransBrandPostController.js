@@ -25,7 +25,7 @@ travel_app.controller("TransBrandPostController", function ($scope, $sce, $locat
     $scope.setPage = function (page) {
         if (page >= 0 && page < $scope.totalPages) {
             $scope.currentPage = page;
-            $scope.getHotelPostList();
+            $scope.getTransPostList();
         }
     };
 
@@ -135,5 +135,34 @@ travel_app.controller("TransBrandPostController", function ($scope, $sce, $locat
         $('#brandModal').modal('hide');
     };
 
+    $scope.deniedFormBrand = function (data) {
+        function confirmDeny() {
+            PostServiceAD.deniedBrand(data.id)
+                .then(function (res) {
+                    toastAlert('success', 'Đã từ chối quyền hoạt động!');
+                    $scope.getTransPostList();
+                    $('#brandModal').modal('hide');
+                })
+                .catch(errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+        }
+        confirmAlertPost('Bạn không phê duyệt dịch vụ này?', confirmDeny);
+    };
+
+    $scope.acceptFormBrand = function (data) {
+        function confirmAccept() {
+            PostServiceAD.acceptBrand(data.id)
+                .then(function (res) {
+                    toastAlert('success', 'Đã cấp quyền hoạt động!');
+                    $scope.getTransPostList();
+                    $('#brandModal').modal('hide');
+                })
+                .catch(errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+        }
+        confirmAlertPost('Bạn muốn phê duyệt dịch vụ này?', confirmAccept);
+    };
 
 })

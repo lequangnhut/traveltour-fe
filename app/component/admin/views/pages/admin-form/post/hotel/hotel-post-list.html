@@ -101,7 +101,7 @@
             </a>
           </span>
                             <input type="text" class="form-control"
-                                   placeholder="Nhập tên của khách cần tìm"
+                                   placeholder="Nhập tên khách sạn cần tìm"
                                    ng-model="searchTerm" ng-change="searchName()">
                         </div>
                     </div>
@@ -213,7 +213,7 @@
                                 <span class="status-success"></span> <span class="text-status-success">Hợp lệ</span>
                             </div>
                             <div ng-if="ht.isAccepted === false" class="d-flex align-items-center justify-content-center">
-                                <span class="status-success"></span> <span class="text-status-error">Không hợp lệ</span>
+                                <span class="status-error"></span> <span class="text-status-error">Không hợp lệ</span>
                             </div>
                         </td>
                         <td class="d-flex align-items-center justify-content-center">
@@ -365,13 +365,13 @@
                                 </table>
                             </div>
                             <div class="about-doctor" style="text-align: right;">
-                                <button class="btn btn-cancel"
-                                        ng-click="deniedObject(hotelPost)"
+                                <button class="btn btn-cancel" ng-if="hotelPost.isAccepted === true"
+                                        ng-click="deniedFormHotel(hotelPost)"
                                         style="margin-right:10px">
                                     <i class="fa-solid fa-trash"></i> Từ chối
                                 </button>
-                                <button class="btn btn-ok"
-                                        ng-click="acceptObject(hotelPost)"
+                                <button class="btn btn-ok" ng-if="hotelPost.isAccepted === false"
+                                        ng-click="acceptFormHotel(hotelPost)"
                                         style="margin-right:10px">
                                     <i class="fa-solid fa-circle-check"></i> Phê duyệt
                                 </button>

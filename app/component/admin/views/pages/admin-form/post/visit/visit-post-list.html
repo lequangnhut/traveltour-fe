@@ -211,7 +211,7 @@
                                 <span class="status-success"></span> <span class="text-status-success">Hợp lệ</span>
                             </div>
                             <div ng-if="vi.isAccepted === false" class="d-flex align-items-center justify-content-center">
-                                <span class="status-success"></span> <span class="text-status-error">Không hợp lệ</span>
+                                <span class="status-error"></span> <span class="text-status-error">Không hợp lệ</span>
                             </div>
                         </td>
                         <td class="d-flex align-items-center justify-content-center">
@@ -378,13 +378,13 @@
                                 </table>
                             </div>
                             <div class="about-doctor" style="text-align: right;">
-                                <button class="btn btn-cancel"
-                                        ng-click="deniedObject(locate)"
+                                <button class="btn btn-cancel" ng-if="locate.isAccepted === true"
+                                        ng-click="deniedFormVisit(locate)"
                                         style="margin-right:10px">
                                     <i class="fa-solid fa-trash"></i> Từ chối
                                 </button>
                                 <button class="btn btn-ok"
-                                        ng-click="acceptObject(locate)"
+                                        ng-click="acceptFormVisit(locate)" ng-if="locate.isAccepted === false"
                                         style="margin-right:10px">
                                     <i class="fa-solid fa-circle-check"></i> Phê duyệt
                                 </button>

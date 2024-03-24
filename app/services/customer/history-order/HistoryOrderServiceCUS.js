@@ -89,7 +89,7 @@ travel_app.service('HistoryOrderServiceCUS', function ($http, $q) {
     this.getOrderDetails = function (orderHotelsId) {
         return $http({
             method: 'GET',
-            url: API_HISTORY_ORDER + 'find-orderdetails-by-ordersId/' + orderHotelsId
+            url: API_HISTORY_ORDER + 'find-order-detail-by-ordersId/' + orderHotelsId
         })
     }
 
@@ -108,6 +108,13 @@ travel_app.service('HistoryOrderServiceCUS', function ($http, $q) {
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
     };
+
+    this.getOrderTransDetails = function (orderId) {
+        return $http({
+            method: 'GET',
+            url: API_HISTORY_ORDER + 'find-trans-detail-by-ordersId/' + orderId
+        })
+    }
 
     this.getAllOrderVisitByInfo = function (page, size, sortBy, sortDir, orderStatus, userId) {
         const deferred = $q.defer();
@@ -128,7 +135,7 @@ travel_app.service('HistoryOrderServiceCUS', function ($http, $q) {
     this.getOrderVisitDetails = function (orderHotelsId) {
         return $http({
             method: 'GET',
-            url: API_HISTORY_ORDER + 'find-visitdetails-by-ordersId/' + orderHotelsId
+            url: API_HISTORY_ORDER + 'find-visit-detail-by-ordersId/' + orderHotelsId
         })
     }
 

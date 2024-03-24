@@ -136,4 +136,33 @@ travel_app.controller("VisitPostController", function ($scope, $sce, $location, 
         $('#visitModal').modal('hide');
     };
 
+    $scope.deniedFormVisit = function (data) {
+        function confirmDeny() {
+            PostServiceAD.deniedVisit(data.id)
+                .then(function (res) {
+                    toastAlert('success', 'Đã từ chối quyền hoạt động!');
+                    $scope.getVisitPostList();
+                    $('#visitModal').modal('hide');
+                })
+                .catch(errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+        }
+        confirmAlertPost('Bạn không phê duyệt dịch vụ này?', confirmDeny); // Chuyển hàm confirmDeleteType vào hàm confirmAlert
+    };
+
+    $scope.acceptFormVisit = function (data) {
+        function confirmAccept() {
+            PostServiceAD.acceptVisit(data.id)
+                .then(function (res) {
+                    toastAlert('success', 'Đã cấp quyền hoạt động!');
+                    $scope.getVisitPostList();
+                    $('#visitModal').modal('hide');
+                })
+                .catch(errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+        }
+        confirmAlertPost('Bạn muốn phê duyệt dịch vụ này?', confirmAccept);
+    };
 })

@@ -6,7 +6,7 @@ travel_app.controller("BookingTransCustomerController", function ($scope, $locat
     $scope.mess = ''
 
     $scope.bookingTourTransList = [];
-    $scope.roomTypeListCustomer = [];
+    $scope.ticketListCustomer = [];
     $scope.currentPage = 0;
     $scope.pageSize = 5;
     $scope.currentTab = 'pending';
@@ -100,14 +100,27 @@ travel_app.controller("BookingTransCustomerController", function ($scope, $locat
     $scope.openTransModal = function (data) {
         $('#transModal').modal('show');
         $scope.bookingTrans = data;
+
+        for (let i = 0; i < $scope.bookingTourTransList.length; i++) {
+            HistoryOrderServiceCUS.getOrderTransDetails($scope.bookingTrans.id)
+                .then(function (ticket) {
+                    $scope.ticketListCustomer = ticket.data.data
+                });
+
+        }
+
+        if(data.orderStatus === 0 && data.paymentMethod === 0){
+            $scope.mess = "Bạn có muốn hủy tour không ?";
+            return
+        }
+
         var currentDate = new Date();
-        var departureDate = new Date(data.checkIn);
+        var departureDate = new Date(data.transportationSchedules.departureTime);
         var currentDateTime = currentDate.getTime();
         var departureDateTime = departureDate.getTime();
         var diffInDays = Math.ceil((departureDateTime - currentDateTime) / (1000 * 60 * 60 * 24)) - 1;
-
         if (diffInDays >= 2 && diffInDays <= 3) {
-            $scope.mess = "Chi phí hủy là 10% trên tổng giá trị đơn. Bạn có muốn hủy vé không ?";
+            $scope.mess = "Chi phí hủy là 30% trên tổng giá trị đơn. Bạn có muốn hủy vé không ?";
         }else if (diffInDays >= 0 && diffInDays <= 1) {
             $scope.mess = "Chi phí hủy là 70% trên tổng giá trị đơn. Bạn có muốn hủy vé không ?";
         } else {
@@ -121,15 +134,15 @@ travel_app.controller("BookingTransCustomerController", function ($scope, $locat
 
     $scope.cancelBookingTransOrder = function (data) {
         function confirmDeleteType() {
-            // $scope.isLoading = true;
-            // HistoryOrderServiceCUS.cancelTrans(data.id).then(function successCallback(response) {
-            //     centerAlert('Thành công !', 'Đã hủy booking, mời người dùng check mail !', 'success');
-            //     $('#hotelModal').modal('hide'); // Đóng modal khi thành công
-            //     $scope.getBookingTourHotelList();
-            // }, errorCallback).finally(function () {
-            //     $scope.isLoading = false;
-            // });
-        }
-        confirmAlert("Xóa Trans", confirmDeleteType);
+                $scope.isLoading = true;
+                HistoryOrderServiceCUS.cancelTrans(data.id).then(function successCallback(response) {
+                    centerAlert('Thành công !', 'Đã hủy booking, mời người dùng check mail !', 'success');
+                    $('#transModal').modal('hide'); // Đóng modal khi thành công
+                    $scope.getBookingTourTransList();
+                }, errorCallback).finally(function () {
+                    $scope.isLoading = false;
+                });
+            }
+        confirmAlert($scope.mess, confirmDeleteType);
     };
 })

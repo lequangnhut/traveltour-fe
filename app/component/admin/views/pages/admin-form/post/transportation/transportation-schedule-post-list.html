@@ -103,7 +103,8 @@
                               <i class="fa-solid fa-magnifying-glass bg-light"></i>
                             </a>
                           </span>
-                            <input type="text" class="form-control" placeholder="Nhập tên địa điểm cần tìm" ng-model="searchTerm" ng-change="searchName()">
+                            <input type="text" class="form-control" placeholder="Nhập tên địa điểm cần tìm"
+                                   ng-model="searchTerm" ng-change="searchName()">
                         </div>
                     </div>
                     <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
@@ -214,7 +215,7 @@
                                 <span class="status-success"></span> <span class="text-status-success">Hợp lệ</span>
                             </div>
                             <div ng-if="trip.isActive == false" class="d-flex align-items-center justify-content-center">
-                                <span class="status-success"></span> <span class="text-status-error">Không hợp lệ</span>
+                                <span class="status-error"></span> <span class="text-status-error">Không hợp lệ</span>
                             </div>
                         </td>
                         <td class="d-flex align-items-center justify-content-center">
@@ -345,13 +346,13 @@
                                 </tbody>
                             </table>
                             <div class="about-doctor" style="text-align: right;">
-                                <button class="btn btn-cancel"
-                                        ng-click="deniedObject(tripDetail)"
+                                <button class="btn btn-cancel" ng-if="tripDetail.isActive === true"
+                                        ng-click="deniedFormSchedule(tripDetail)"
                                         style="margin-right:10px">
                                     <i class="fa-solid fa-trash"></i> Từ chối
                                 </button>
-                                <button class="btn btn-ok"
-                                        ng-click="acceptObject(tripDetail)"
+                                <button class="btn btn-ok" ng-if="tripDetail.isActive === false"
+                                        ng-click="acceptFormSchedule(tripDetail)"
                                         style="margin-right:10px">
                                     <i class="fa-solid fa-circle-check"></i> Phê duyệt
                                 </button>

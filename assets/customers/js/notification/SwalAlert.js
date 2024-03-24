@@ -40,3 +40,19 @@ function confirmAlert(text, callback) {
         }
     });
 }
+
+function confirmAlertPost(text, callback) {
+    Swal.fire({
+        text: text,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Đồng ý!",
+        cancelButtonText: 'Từ bỏ'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            callback();
+        }
+    });
+}
