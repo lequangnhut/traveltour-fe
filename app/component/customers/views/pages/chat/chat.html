@@ -58,9 +58,9 @@
                                 <span ng-if="userChat.status === 'ONLINE'" class="fas fa-circle chat-online position-absolute"
                                       style="bottom: 0; right: 4px; width: 10px; height: 10px"></span>
                             </div>
-                            <div class="full-name-wrapper">
+                            <div class="full-name-wrapper mx-1" >
                                 <span class="full-name">{{ userChat.fullName}}</span>
-                                <div class="small" ng-bind="userChat.newMessage"></div>
+                                <div class="small" ng-class="{'fw-medium': userChat.countMessageUnread > 0}"> <span ng-if="userChat.userId === userAgencyId.id.toString()">Bạn: </span> {{ userChat.newMessage }}</div>
                             </div>
                         </div>
                         <div class="badge bg-green" ng-show="userChat.countMessageUnread > 0" ng-bind="userChat.countMessageUnread"></div>

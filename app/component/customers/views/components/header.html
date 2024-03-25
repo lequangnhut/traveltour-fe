@@ -183,7 +183,7 @@
                             <li class="menu-item has-children">
                                 <a href="/chat" class="position-relative chat-user-header">
                                     <i class="fa-regular fa-message"></i>
-                                    <span class=" dot-message bg-green position-absolute text-center">2</span>
+                                    <span class=" dot-message bg-green position-absolute text-center" ng-if="countMessageUnread > 0" ng-bind="countMessageUnread"></span>
                                 </a>
                             </li>
                             <li class="menu-item has-children">

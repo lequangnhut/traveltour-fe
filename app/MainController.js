@@ -1,5 +1,5 @@
 travel_app.controller('MainController',
-    function ($scope, $rootScope, $location, $window, $timeout, AuthService, AgenciesServiceAG, HotelServiceAG, TransportBrandServiceAG, VisitLocationServiceAG, LocalStorageService, NotificationService) {
+    function ($scope, $rootScope, $location, $window, $timeout, AuthService, AgenciesServiceAG, HotelServiceAG, TransportBrandServiceAG, VisitLocationServiceAG, LocalStorageService, NotificationService, WebSocketService) {
         $scope.selectedRole = LocalStorageService.get('selectedRole') || null;
         $scope.activeNavItem = LocalStorageService.get('activeNavItem') || null;
 
@@ -9,6 +9,7 @@ travel_app.controller('MainController',
         $scope.successSound = new Audio('assets/admin/assets/sound/success.mp3');
         $scope.errorSound = new Audio('assets/admin/assets/sound/error.mp3');
 
+        $scope.countMessageUnread = 0;
         function errorCallback() {
             $location.path('/admin/internal-server-error')
         }
@@ -341,7 +342,7 @@ travel_app.controller('MainController',
                         body: message.content,
                         icon: '/assets/admin/assets/img/icons/logo.png',
                     });
-                    notify.onclick = function() {
+                    notify.onclick = function () {
                         if (webUrl) {
                             window.open(webUrl, '_blank');
                         }
@@ -356,7 +357,7 @@ travel_app.controller('MainController',
                                 icon: '/assets/admin/assets/img/icons/logo.png',
                             });
 
-                            notify.onclick = function() {
+                            notify.onclick = function () {
                                 if (absoluteUrl) {
                                     window.open(absoluteUrl, '_blank');
                                 }
@@ -370,4 +371,76 @@ travel_app.controller('MainController',
                 }
             }
         }
+
+        $scope.connect = async function () {
+            try {
+                await WebSocketService.connect(user, $scope.onConnected);
+            } catch (error) {
+                console.error("Error connecting:", error);
+            }
+        };
+
+        $scope.onConnected = async function (user, stompClient) {
+            try {
+                await stompClient.send("/app/user.userConnected", {}, JSON.stringify({
+                    userId: user.id,
+                    fullName: user.fullName,
+                    role: user.roles[0].nameRole,
+                    avatar: user.avatar
+                }));
+
+                await $scope.findUsersChat(stompClient);
+
+                stompClient.subscribe(`/user/${user.id}/queue/messages`, async function (message) {
+                    $scope.message = JSON.parse(message.body);
+                    $scope.message.timestamp = Date.now();
+                    await $scope.findUsersChat(stompClient);
+                    $scope.notifyMessenger($scope.message, "Bạn vừa có tin nhắn mới", "/business/hotel/chat");
+                    $scope.$apply();
+                });
+            } catch (error) {
+                console.error("Error onConnected:", error);
+            }
+        };
+
+        /**
+         * Lấy danh sách lịch sử tin nhắn của người dùng
+         * @returns {Promise<unknown>}
+         */
+        $scope.findUsersChat = async function (stompClient) {
+            try {
+                stompClient.send(`/app/${user.id}/chat.findUsersChat`, {}, JSON.stringify({
+                    userId: user.id,
+                    role: user.roles[0].nameRole
+                }));
+
+                return new Promise(function (resolve, reject) {
+                    stompClient.subscribe(`/user/${user.id}/chat/findUsersChat`, function (message) {
+                        $scope.userChatsList = JSON.parse(message.body);
+                        console.log($scope.userChatsList);
+                        $scope.countMessageUnread = 0
+                        $scope.userChatsList.forEach(function(item) {
+                            $scope.countMessageUnread += item.countMessageUnread;
+                        });
+                        console.log($scope.countMessageUnread)
+                        resolve($scope.userChatsList);
+                    });
+                });
+            } catch (error) {
+                console.error("Error findUsersChat:", error);
+                throw error;
+            }
+        };
+
+        $scope.connect();
+
+        window.onbeforeunload = function () {
+            WebSocketService.disconnect(user);
+        };
+
+        window.onunload = function () {
+            WebSocketService.disconnect(user);
+        };
+
+
     });
