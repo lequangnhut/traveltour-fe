@@ -69,7 +69,7 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
             if ($scope.agencyId) {
                 const userChatResponse = await fetch(`${BASE_API}messages/${$scope.agencyId}/${user.id}/checkNoChatMessage`);
                 $scope.statusNotVariable = await userChatResponse.json();
-                if($scope.statusNotVariable.data === 0) {
+                if ($scope.statusNotVariable.data === 0) {
                     var chatMessage = {
                         senderId: $scope.agencyId,
                         recipientId: user.id,
@@ -77,7 +77,7 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
                         timestamp: new Date()
                     };
 
-                    if($scope.displayUserChat) {
+                    if ($scope.displayUserChat) {
                         $scope.newMessage = {
                             senderId: $scope.agencyId,
                             content: "Chúng tôi có thể giúp gì cho bạn?",
@@ -89,17 +89,29 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
                     stompClient.send(`/app/${user.id}/chat`, {}, JSON.stringify(chatMessage));
                 }
                 await $scope.findUsersChat();
-                $scope.matchedUserChat = $scope.userChatsList.find(function(userChat) {
+                $scope.matchedUserChat = $scope.userChatsList.find(function (userChat) {
                     return userChat.userId === $scope.agencyId;
                 });
                 await $scope.fetchAndDisplayUserChat($scope.agencyId)
-                $scope.displayUserChat = $scope.matchedUserChat;
+                $timeout(function () {
+                    $scope.displayUserChat = $scope.matchedUserChat;
+                }, 200)
             }
         } catch (error) {
             console.error("Error:", error);
         }
         await $scope.findUsersChat();
         scrollToBottom()
+        if($scope.agencyId) {
+            $scope.matchedUserChat = $scope.userChatsList.find(function (userChat) {
+                return userChat.userId === $scope.agencyId;
+            });
+            await $scope.fetchAndDisplayUserChat($scope.agencyId)
+            $timeout(function () {
+                $scope.displayUserChat = $scope.matchedUserChat;
+            }, 200)
+            await $scope.fetchAndDisplayUserChat($scope.agencyId)
+        }
     };
 
 
@@ -211,6 +223,11 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
                 content: $scope.messageContent,
                 timestamp: new Date()
             }
+
+            stompClient.send(`/app/${user.id}/chat.updateStatusMessenger`, {}, JSON.stringify({
+                senderId: customerId,
+                recipientId: user.id
+            }));
 
             $scope.displayMessages.push($scope.newMessage)
             stompClient.send(`/app/${user.id}/chat`, {}, JSON.stringify(chatMessage));
