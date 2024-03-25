@@ -3,12 +3,11 @@
         <div class="header-control-center">
             <div class="d-flex justify-content-between align-items-center row ">
                 <div class="col-xl-6 mt-3">
-                    <h3 class="color-green fw-bold">LỊCH HOẠT ĐỘNG PHƯƠNG TIỆN</h3>
+                    <h3 class="color-green fw-bold">DANH SÁCH LOẠI TIỆN ÍCH</h3>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="">
         <div class="card card-customer">
             <div class="row" style="margin: 20px 16px 20px 16px">
@@ -22,17 +21,18 @@
                             </span>
                         <input type="text"
                                class="form-control"
-                               placeholder="Tìm kiếm mã, giá, điểm đi, đến..."
+                               placeholder="Tìm kiếm"
                                ng-model="searchTerm"
-                               ng-change="searchTransportationSchedules()"
+                               ng-change="searchTransUtility()"
                         >
                     </div>
                 </div>
                 <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
                      style="margin: 20px 0 0 0">
-                    <a href="/business/transport/schedules-management/create-schedules" class="btn btn-primary">
+                    <a href="/admin/type/transport-utilities-list/transport-utilities-create"
+                       class="btn btn-primary fw-bold">
                         <i class="fa-solid fa-plus" style="margin-right: 10px"></i>
-                        Tạo chuyến đi
+                        Thêm thể loại
                     </a>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                 <div class="row">
                     <div class="h4 col-lg-5 d-flex align-items-center h-100">
                         <div class="d-flex align-items-center">
-                            <span class="h4">Danh sách chuyến đi</span>
+                            <span class="h4">Danh sách loại phương tiện</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end align-items-baseline col-lg-2">
@@ -101,101 +101,46 @@
                 <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
-                    <th>#</th>
-                    <th ng-click="sortData('id')">
-                        <div class="icon-left">ID
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                    <th scope="col"># <i class="fa-solid fa-sort"></i></th>
+                    <th>
+                        <div class="icon-left">ICON
+                            <span class="sorting-icon"></span>
                         </div>
                     </th>
-                    <th ng-click="sortData('transportationId')">
-                        <div class="icon-left">Phương tiện
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('transportationId')"></span>
+                    <th>
+                        <div class="icon-left">Tiêu đề
+                            <span class="sorting-icon"></span>
                         </div>
                     </th>
-                    <th ng-click="sortData('fromLocation')">
-                        <div class="icon-left">Điểm đi
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('fromLocation')"></span>
+                    <th>
+                        <div class="icon-left">Mô tả tiện ích
+                            <span class="sorting-icon"></span>
                         </div>
                     </th>
-                    <th ng-click="sortData('toLocation')">
-                        <div class="icon-left">Điểm đến
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('toLocation')"></span>
-                        </div>
-                    </th>
-                    <th ng-click="sortData('bookedSeat')">
-                        <div class="icon-left">Số chổ ngồi
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('bookedSeat')"></span>
-                        </div>
-                    </th>
-                    <th ng-click="sortData('bookedSeat')">
-                        <div class="icon-left">Đã đặt
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('bookedSeat')"></span>
-                        </div>
-                    </th>
-                    <th ng-click="sortData('unitPrice')">
-                        <div class="icon-left">Đơn giá
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('unitPrice')"></span>
-                        </div>
-                    </th>
-                    <th ng-click="sortData('isStatus')">
-                        <div class="icon-left">Trạng thái
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('isStatus')"></span>
-                        </div>
-                    </th>
-                    <th>Thao tác</th>
+                    <th scope="col">Thao tác</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="schedule in transportationSchedules">
+                <tr ng-repeat="util in transportUtilityData">
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ schedule.id }}</td>
-                    <td>{{ transportation[schedule.transportationId].licensePlate || 'Đang tải...' }}</td>
-                    <td>{{ schedule.fromLocation }}</td>
-                    <td>{{ schedule.toLocation }}</td>
-                    <td>{{ transportation[schedule.transportationId].amountSeat + ' Chỗ' || 'Đang tải...' }}</td>
-                    <td>{{ schedule.bookedSeat + ' Chỗ' }}</td>
-                    <td>{{ schedule.unitPrice | vnCurrency }}</td>
-                    <td ng-if="schedule.isStatus == 0">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <span class="status-warning"></span>
-                            <span class="text-status-warning">Chờ vận hành</span>
-                        </div>
+                    <td>
+                        <img ng-src="{{ util.icon }}" class="img-fluid" width="40" alt="icon demo">
                     </td>
-                    <td ng-if="schedule.isStatus == 1">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <span class="status-success"></span>
-                            <span class="text-status-success">Đang vận hành</span>
-                        </div>
-                    </td>
-                    <td ng-if="schedule.isStatus == 2">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <span class="status-success"></span>
-                            <span class="text-status-success">Đã hoàn tất</span>
-                        </div>
-                    </td>
-                    <td ng-if="schedule.isStatus == 3">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <span class="status-error"></span>
-                            <span class="text-status-error">Hủy chuyến đi</span>
-                        </div>
-                    </td>
-                    <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                        <a href="/business/transport/schedules-management/update-schedules/{{ schedule.id }}"
-                           role="button" class="fs-1 px-2 btn text-warning">
+                    <td>{{ util.title }}</td>
+                    <td>{{ util.description }}</td>
+                    <td class="d-flex align-items-center justify-content-center">
+                        <a href="/admin/type/transport-utilities-list/transport-utilities-update/{{util.id}}"
+                           role="button" class="fs-1 btn text-warning px-2">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a href="/business/transport/schedules-management/order-transport-management/{{ schedule.id }}"
-                           role="button" class="fs-1 btn text-primary px-2" title="Vé của khách hàng">
-                            <i class="fa-solid fa-clipboard-list"></i>
-                        </a>
-                        <a href="#" ng-click="deleteSchedule(schedule.id, schedule.fromLocation, schedule.toLocation)"
-                           role="button" class="fs-1 px-2 btn text-danger">
+                        <a href="#" ng-click="deleteTransportUtility(util.id)"
+                           role="button" class="fs-1 btn text-danger px-2">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
                 </tr>
-                <tr ng-if="transportationSchedules.length === 0">
-                    <td colspan="10">Không có dữ liệu chuyến đi.</td>
+                <tr ng-if="transportUtility.length === 0">
+                    <td colspan="8">Không có dữ liệu.</td>
                 </tr>
                 </tbody>
             </table>

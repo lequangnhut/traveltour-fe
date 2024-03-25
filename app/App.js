@@ -504,6 +504,18 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-type/transportation-type-update.html',
             controller: 'TransTypeControllerAD'
         })
+        .when('/admin/type/transport-utilities-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-utilities/transportation-utilities-list.html',
+            controller: 'TransportUtilityControllerAD'
+        })
+        .when('/admin/type/transport-utilities-list/transport-utilities-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-utilities/transportation-utilities-create.html',
+            controller: 'TransportUtilityControllerAD'
+        })
+        .when('/admin/type/transport-utilities-list/transport-utilities-update/:transportUtilitiesId', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-utilities/transportation-utilities-update.html',
+            controller: 'TransportUtilityControllerAD'
+        })
         .when('/admin/type/hotel-utility-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-list.html',
             controller: 'PlaceUtilityControllerAD'

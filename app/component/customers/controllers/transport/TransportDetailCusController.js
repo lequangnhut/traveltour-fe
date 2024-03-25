@@ -1,193 +1,263 @@
-travel_app.controller('TransportDetailCusController', function ($scope, $location, $sce, $routeParams, TransportCusService, TransportBrandServiceAG, LocalStorageService) {
-    $scope.encryptedBrandId = $routeParams.brandId;
-    let brandId = JSON.parse(atob($scope.encryptedBrandId));
+travel_app.controller('TransportDetailCusController',
+    function ($scope, $location, $sce, $routeParams, TransportCusService, TransportServiceAG, TransportBrandServiceAG, LocalStorageService) {
+        $scope.encryptedBrandId = $routeParams.brandId;
+        let brandId = JSON.parse(atob($scope.encryptedBrandId));
 
-    $scope.currentPage = 0;
-    $scope.pageSize = 10;
+        $scope.currentPage = 0;
+        $scope.pageSize = 10;
 
-    $scope.seatNumbers = [];
-    $scope.seatSelections = [];
+        $scope.seatNumbers = [];
+        $scope.seatSelections = [];
 
-    $scope.schedulePrices = [];
+        $scope.transportUtilities = [];
 
-    $scope.activeTransportInfoTab = -1;
-    $scope.activeTransportBookingTab = -1;
+        $scope.schedulePrices = [];
 
-    $scope.toggleDetail = function (index) {
-        $scope.activeTransportInfoTab = ($scope.activeTransportInfoTab === index) ? -1 : index;
-        $scope.activeTransportBookingTab = -1;
-    };
+        $scope.isGetSeatCalled = false;
 
-    $scope.toggleBooking = function (index) {
-        $scope.activeTransportBookingTab = ($scope.activeTransportBookingTab === index) ? -1 : index;
         $scope.activeTransportInfoTab = -1;
-    };
-
-    $scope.init = function () {
-        $scope.isLoading = true;
+        $scope.activeTransportBookingTab = -1;
 
         /**
-         * Hiển thị tất cả các xe có vé
+         * Phưương thức mở tab xem thêm bên dưới
+         * @param index
          */
-        TransportCusService.findAllTransportScheduleCus($scope.currentPage, $scope.pageSize, brandId).then(function (response) {
-            if (response.status === 200) {
-                $scope.transportSchedule = response.data.data.content;
+        $scope.toggleDetail = function (index) {
+            $scope.activeTransportInfoTab = ($scope.activeTransportInfoTab === index) ? -1 : index;
+            $scope.activeTransportBookingTab = -1;
 
-                $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                $scope.totalElements = response.data.data.totalElements;
-
-                $scope.transportSchedule.forEach(function (schedule) {
-                    $scope.seatSelections[schedule.id] = {};
-                    $scope.schedulePrices.push(0);
-                });
-            } else {
-                $location.path('/admin/page-not-found');
+            if ($scope.activeTransportInfoTab !== -1) {
+                $scope.getTransportUtilities(index);
             }
-        }).finally(function () {
-            $scope.isLoading = false;
-        });
-
-        /**
-         * tìm tất cả chổ ngồi fill lên chiếc xe
-         * @param transportSchedule
-         * @returns {*[]}
-         */
-        $scope.getSeat = function (transportSchedule) {
-            let seatRows = [];
-            for (let i = 0; i < transportSchedule.length; i++) {
-                let bookSeats = transportSchedule[i].transportationScheduleSeatsById;
-                let chunkedSeats = $scope.chunkArray(bookSeats, 3);
-                seatRows.push(chunkedSeats);
-            }
-            return seatRows;
-        }
-
-        $scope.chunkArray = function (array, chunkSize) {
-            let result = [];
-            for (let i = 0; i < array.length; i += chunkSize) {
-                result.push(array.slice(i, i + chunkSize));
-            }
-            return result;
-        }
-
-        /**
-         * Tìm tên nhà xe
-         */
-        TransportBrandServiceAG.findByTransportBrandId(brandId).then(function (response) {
-            if (response.status === 200) {
-                $scope.transportBrand = response.data.data;
-            } else {
-                $location.path('/admin/page-not-found');
-            }
-        }).finally(function () {
-            $scope.isLoading = false;
-        });
-
-        /**
-         * Chọn chổ ngồi
-         * @param schedule
-         * @param rowIndex
-         * @param seatIndex
-         */
-        $scope.isActiveSeat = function (schedule, rowIndex, seatIndex) {
-            let scheduleSeat = $scope.getSeat([schedule])[0][rowIndex][seatIndex];
-
-            if (scheduleSeat.isBooked) {
-                return;
-            }
-
-            let unitPrice = schedule.unitPrice;
-            let seatNumber = scheduleSeat.seatNumber;
-            let seatSelections = $scope.seatSelections[schedule.id];
-            let count = Object.keys(seatSelections).filter(key => seatSelections[key]).length;
-
-            if ($scope.seatSelections[schedule.id] && $scope.seatSelections[schedule.id][seatNumber]) {
-                delete $scope.seatSelections[schedule.id][seatNumber];
-                count--;
-            } else {
-                if (count >= 4) {
-                    centerAlert('Thông báo', 'Quý khách chỉ được đặt tối đa 4 ghế.', 'warning');
-                    return;
-                }
-
-                if (!$scope.seatSelections[schedule.id]) {
-                    $scope.seatSelections[schedule.id] = {};
-                }
-                $scope.seatSelections[schedule.id][seatNumber] = true;
-                count++;
-            }
-
-            let totalPrice = unitPrice * count;
-            let index = $scope.transportSchedule.findIndex(item => item.id === schedule.id);
-
-            $scope.seatNumbers[index] = Object.keys($scope.seatSelections[schedule.id]);
-            $scope.schedulePrices[index] = totalPrice;
         };
 
         /**
-         * Chuyển hướng đến trang booking
-         * @param schedule
+         * Phưương thức thay đổi icon khi nhấn vào xem thêm
+         * @param index
          */
-        $scope.redirectBooking = function (schedule) {
-            let brandId = btoa(JSON.stringify(schedule.transportationBrands.id));
-            let scheduleId = btoa(JSON.stringify(schedule.id));
-            let totalAmountSeat = Object.keys($scope.seatSelections[schedule.id]).length;
-            let seatNumber = Object.keys($scope.seatSelections[schedule.id]);
-            let totalPrice = $scope.schedulePrices.reduce((total, price) => total + price, 0);
+        $scope.getChangeIcon = function (index) {
+            if ($scope.activeTransportInfoTab === index) {
+                if ($scope.activeTransportInfoTab === -1) {
+                    return $sce.trustAsHtml('<svg class="svg-inline--fa fa-angle-down" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"></path></svg>');
+                } else {
+                    return $sce.trustAsHtml('<svg class="svg-inline--fa fa-angle-up" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M352 352c-8.188 0-16.38-3.125-22.62-9.375L192 205.3l-137.4 137.4c-12.5 12.5-32.75 12.5-45.25 0s-12.5-32.75 0-45.25l160-160c12.5-12.5 32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25C368.4 348.9 360.2 352 352 352z"></path></svg>');
+                }
+            }
+            return $sce.trustAsHtml('<svg class="svg-inline--fa fa-angle-down" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"></path></svg>');
+        };
 
-            if (angular.equals($scope.seatSelections[schedule.id], {})) {
-                centerAlert('Thông báo', 'Vui lòng chọn ít nhất một chổ ngồi !', 'warning');
-                return;
+        /**
+         * Phưương thức mở tab booking bên dưới
+         * @param index
+         */
+        $scope.toggleBooking = function (index) {
+            $scope.activeTransportBookingTab = ($scope.activeTransportBookingTab === index) ? -1 : index;
+            $scope.activeTransportInfoTab = -1;
+            $scope.isGetSeatCalled = true;
+        };
+
+        $scope.init = function () {
+            $scope.isLoading = true;
+
+            /**
+             * Hiển thị tất cả các xe có vé
+             */
+            TransportCusService.findAllTransportScheduleCus($scope.currentPage, $scope.pageSize, brandId).then(function (response) {
+                if (response.status === 200) {
+                    $scope.transportSchedule = response.data.data.content;
+
+                    $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
+                    $scope.totalElements = response.data.data.totalElements;
+
+                    $scope.transportSchedule.forEach(function (schedule) {
+                        $scope.seatSelections[schedule.id] = {};
+                        $scope.schedulePrices.push(0);
+                        $scope.splittingCabinTrans(schedule.transportationTypes);
+                    });
+                } else {
+                    $location.path('/admin/page-not-found');
+                }
+            }).finally(function () {
+                $scope.isLoading = false;
+            });
+
+            /**
+             * Tìm tên nhà xe
+             */
+            TransportBrandServiceAG.findByTransportBrandId(brandId).then(function (response) {
+                if (response.status === 200) {
+                    $scope.transportBrand = response.data.data;
+                } else {
+                    $location.path('/admin/page-not-found');
+                }
+            }).finally(function () {
+                $scope.isLoading = false;
+            });
+
+            /**
+             * Lấy dữ liệu tiện ích từ API fill lên cho từng chiếc xe
+             * @param index
+             */
+            $scope.getTransportUtilities = function (index) {
+                $scope.transportUtilities = [];
+                let schedule = $scope.transportSchedule[index];
+
+                schedule.transportations.transportUtilities.forEach(function (utilId) {
+                    TransportServiceAG.findByTransportUtilityId(utilId).then(function (response) {
+                        if (response.status === 200) {
+                            if (!$scope.transportUtilities[index]) {
+                                $scope.transportUtilities[index] = [];
+                            }
+                            $scope.transportUtilities[index].push(response.data.data);
+                        } else {
+                            $location.path('/admin/page-not-found');
+                        }
+                    });
+                });
+            };
+
+            /**
+             * Phương thức phân biệt xe khách để tách cabin làm giường hoặc ghế
+             * @param transportationType
+             */
+            $scope.splittingCabinTrans = function (transportationType) {
+                if (transportationType.transportationTypeName.includes('giường')) {
+                    console.log('giường');
+                } else if (transportationType.transportationTypeName.includes('ghế')) {
+                    console.log('ghế');
+                } else {
+                    console.log(transportationType.transportationTypeName);
+                }
             }
 
-            let dataBookingTransport = {
-                seatNumber: seatNumber,
-                totalAmountSeat: totalAmountSeat,
-                totalPrice: totalPrice
+            /**
+             * tìm tất cả chổ ngồi fill lên chiếc xe
+             * @param transportSchedule
+             * @returns {*[]}
+             */
+            $scope.getSeat = function (transportSchedule) {
+                let seatRows = [];
+                for (let i = 0; i < transportSchedule.length; i++) {
+                    let bookSeats = transportSchedule[i].transportationScheduleSeatsById;
+                    let chunkedSeats = $scope.chunkArray(bookSeats, 3);
+                    seatRows.push(chunkedSeats);
+                }
+                return seatRows;
             }
 
-            LocalStorageService.set('dataBookingTransport', dataBookingTransport);
-            $location.path('/drive-move/drive-transport-detail/' + brandId + '/booking-confirmation/' + scheduleId);
+            $scope.chunkArray = function (array, chunkSize) {
+                let result = [];
+                for (let i = 0; i < array.length; i += chunkSize) {
+                    result.push(array.slice(i, i + chunkSize));
+                }
+                return result;
+            }
+
+            /**
+             * Chọn chổ ngồi
+             * @param schedule
+             * @param rowIndex
+             * @param seatIndex
+             */
+            $scope.isActiveSeat = function (schedule, rowIndex, seatIndex) {
+                let scheduleSeat = $scope.getSeat([schedule])[0][rowIndex][seatIndex];
+
+                if (scheduleSeat.isBooked) {
+                    return;
+                }
+
+                let unitPrice = schedule.unitPrice;
+                let seatNumber = scheduleSeat.seatNumber;
+                let seatSelections = $scope.seatSelections[schedule.id];
+                let count = Object.keys(seatSelections).filter(key => seatSelections[key]).length;
+
+                if ($scope.seatSelections[schedule.id] && $scope.seatSelections[schedule.id][seatNumber]) {
+                    delete $scope.seatSelections[schedule.id][seatNumber];
+                    count--;
+                } else {
+                    if (count >= 4) {
+                        centerAlert('Thông báo', 'Quý khách chỉ được đặt tối đa 4 ghế.', 'warning');
+                        return;
+                    }
+
+                    if (!$scope.seatSelections[schedule.id]) {
+                        $scope.seatSelections[schedule.id] = {};
+                    }
+                    $scope.seatSelections[schedule.id][seatNumber] = true;
+                    count++;
+                }
+
+                let totalPrice = unitPrice * count;
+                let index = $scope.transportSchedule.findIndex(item => item.id === schedule.id);
+
+                $scope.seatNumbers[index] = Object.keys($scope.seatSelections[schedule.id]);
+                $scope.schedulePrices[index] = totalPrice;
+            };
+
+            /**
+             * Chuyển hướng đến trang booking
+             * @param schedule
+             */
+            $scope.redirectBooking = function (schedule) {
+                let brandId = btoa(JSON.stringify(schedule.transportationBrands.id));
+                let scheduleId = btoa(JSON.stringify(schedule.id));
+                let totalAmountSeat = Object.keys($scope.seatSelections[schedule.id]).length;
+                let seatNumber = Object.keys($scope.seatSelections[schedule.id]);
+                let totalPrice = $scope.schedulePrices.reduce((total, price) => total + price, 0);
+
+                if (angular.equals($scope.seatSelections[schedule.id], {})) {
+                    centerAlert('Thông báo', 'Vui lòng chọn ít nhất một chổ ngồi !', 'warning');
+                    return;
+                }
+
+                let dataBookingTransport = {
+                    seatNumber: seatNumber,
+                    totalAmountSeat: totalAmountSeat,
+                    totalPrice: totalPrice
+                }
+
+                LocalStorageService.set('dataBookingTransport', dataBookingTransport);
+                $location.path('/drive-move/drive-transport-detail/' + brandId + '/booking-confirmation/' + scheduleId);
+            }
         }
-    }
 
-    /**
-     * Phân trang
-     */
-    $scope.setPage = function (page) {
-        if (page >= 0 && page < $scope.totalPages) {
-            $scope.currentPage = page;
+        /**
+         * Phân trang
+         */
+        $scope.setPage = function (page) {
+            if (page >= 0 && page < $scope.totalPages) {
+                $scope.currentPage = page;
+                $scope.init();
+            }
+        };
+
+        $scope.getPaginationRange = function () {
+            const range = [];
+            let start, end;
+
+            if ($scope.totalPages <= 3) {
+                start = 0;
+                end = $scope.totalPages;
+            } else {
+                start = Math.max(0, $scope.currentPage - 1);
+                end = Math.min(start + 3, $scope.totalPages);
+
+                if (end === $scope.totalPages) {
+                    start = $scope.totalPages - 3;
+                }
+            }
+
+            for (let i = start; i < end; i++) {
+                range.push(i);
+            }
+
+            return range;
+        };
+
+        $scope.pageSizeChanged = function () {
+            $scope.currentPage = 0;
             $scope.init();
-        }
-    };
+        };
 
-    $scope.getPaginationRange = function () {
-        const range = [];
-        let start, end;
-
-        if ($scope.totalPages <= 3) {
-            start = 0;
-            end = $scope.totalPages;
-        } else {
-            start = Math.max(0, $scope.currentPage - 1);
-            end = Math.min(start + 3, $scope.totalPages);
-
-            if (end === $scope.totalPages) {
-                start = $scope.totalPages - 3;
-            }
-        }
-
-        for (let i = start; i < end; i++) {
-            range.push(i);
-        }
-
-        return range;
-    };
-
-    $scope.pageSizeChanged = function () {
-        $scope.currentPage = 0;
         $scope.init();
-    };
-
-    $scope.init();
-});
+    });

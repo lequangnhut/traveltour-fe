@@ -97,7 +97,7 @@
                 </small>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 mb-4">
                 <label class="form-label">Hình ảnh xe</label>
                 <input class="form-control"
                        type="file"
@@ -121,13 +121,28 @@
                 </small>
             </div>
 
+            <div class="col-12 row">
+                <label class="form-label mb-2">Tiện ích nhà xe</label>
+                <div class="col-2" ng-repeat="util in transportUtilities">
+                    <div class="mb-3">
+                        <label for="util-{{ util.id }}" class="form-check-label">
+                            <input id="util-{{ util.id }}"
+                                   type="checkbox"
+                                   ng-click="selectedTransportUtilities(util.id)"
+                                   class="form-check-input"
+                            >
+                            {{ util.title }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-12 d-flex justify-content-end mt-5">
                 <button type="button" class="btn" style="margin-right: 20px">
                     <a class="btn" href="/business/transport/transport-management">Trở về</a>
                 </button>
                 <button type="submit"
                         class="btn btn-submit fw-bold"
-                        ng-disabled="form_transport.$invalid || licenseError"
                 >
                     Thêm mới
                 </button>

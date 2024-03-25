@@ -79,7 +79,7 @@
                 </small>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 mb-4">
                 <label class="form-label">Ảnh đại diện xe</label>
                 <input class="form-control"
                        type="file"
@@ -106,7 +106,7 @@
                 </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 mb-4">
                 <label class="form-label">TRẠNG THÁI</label>
                 <select class="form-select"
                         name="isActive"
@@ -122,6 +122,23 @@
                        ng-show="form_transport.isActive.$touched && form_transport.isActive .$error.required">
                     Vui lòng chọn trạng thái !
                 </small>
+            </div>
+
+            <div class="col-12 row">
+                <label class="form-label mb-2">Tiện ích nhà xe</label>
+                <div class="col-2" ng-repeat="util in transportUtilities">
+                    <div class="mb-3">
+                        <label for="util-{{ util.id }}" class="form-check-label">
+                            <input id="util-{{ util.id }}"
+                                   type="checkbox"
+                                   ng-click="selectedTransportUtilities(util.id)"
+                                   class="form-check-input"
+                                   ng-checked="checkedTitle(util.title)"
+                            >
+                            {{ util.title }}
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <div class="col-12 d-flex justify-content-end mt-5">

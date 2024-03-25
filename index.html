@@ -625,6 +625,22 @@
                                     </a>
                                 </div>
 
+                                <!-- Thể loại tiện ích xe -->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'transport-utilities'}"
+                                       ng-click="setActiveNavItem('transport-utilities')"
+                                       href="/admin/type/transport-utilities-list">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <i class="fa-solid fa-van-shuttle"></i>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Danh mục tiện ích xe khách</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
                                 <!-- Thể loại tiện ích lưu trú -->
                                 <div class="nav-item-wrapper">
                                     <a class="nav-link dropdown-indicator label-1"
@@ -1638,6 +1654,7 @@
 <script src="app/services/admin/BedTypeServiceAD.js"></script>
 <script src="app/services/admin/VisitLocationTypeServiceAD.js"></script>
 <script src="app/services/admin/TransportTypeServiceAD.js"></script>
+<script src="app/services/admin/TransportUtilityServiceAD.js"></script>
 <script src="app/services/admin/TourTypeServiceAD.js"></script>
 <script src="app/services/admin/RoomUtilityServiceAD.js"></script>
 <script src="app/services/admin/PlaceUtilityServiceAD.js"></script>
@@ -1734,6 +1751,7 @@
 <script src="app/component/admin/controllers/admin-form/typesAD/BedTypeControllerAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/typesAD/VisitLocationTypeControllerAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/typesAD/TransTypeControllerAD.js"></script>
+<script src="app/component/admin/controllers/admin-form/typesAD/TransportUtilityControllerAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/typesAD/TourTypeControllerAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/typesAD/RoomUtilityControllerAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/typesAD/PlaceUtilityControllerAD.js"></script>

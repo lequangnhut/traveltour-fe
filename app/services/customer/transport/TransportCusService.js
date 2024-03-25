@@ -12,14 +12,6 @@ travel_app.service('TransportCusService', function ($http) {
         });
     };
 
-    this.findAllTransportSeatByScheduleIdCus = function (scheduleId) {
-        return $http({
-            method: 'GET',
-            url: API_TRANSPORT + 'find-all-transport-seats-by-schedule-id/' + scheduleId,
-        });
-    };
-
-
     this.findAllTransportCustomerByFilters = (page, size, sortBy, sortDir, filters) => {
         return $http({
             method: 'GET',

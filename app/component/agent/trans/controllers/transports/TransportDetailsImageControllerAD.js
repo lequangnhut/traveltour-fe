@@ -33,8 +33,8 @@ travel_app.controller('TransportDetailsImageControllerAD', function ($scope, $ro
         if (transportDetailId !== undefined && transportDetailId !== null && transportDetailId !== "") {
             TransportServiceAG.findByTransportId(transportDetailId).then(function successCallback(response) {
                 if (response.status === 200) {
-                    $scope.transportationImages = response.data.data.transportationImagesById;
-                    $scope.transportBrand = response.data.data.transportationBrandsByTransportationBrandId;
+                    $scope.transportationImages = response.data.data.transportGetDataDto.transportationImagesById;
+                    $scope.transportBrand = response.data.data.transportGetDataDto.transportationBrandsByTransportationBrandId;
                 } else {
                     $location.path('/admin/page-not-found');
                 }

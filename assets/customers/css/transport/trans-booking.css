@@ -478,3 +478,21 @@ body .color--medium-sub {
     align-items: center;
     padding-bottom: 1px;
 }
+
+/* điều chỉnh cho thanh cuộn */
+.section-ticket-header .offcanvas {
+    width: 35%;
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #888 transparent;
+}
+
+.section-ticket-header .offcanvas::-webkit-scrollbar {
+    width: 8px;
+}
+
+.section-ticket-header .offcanvas::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}

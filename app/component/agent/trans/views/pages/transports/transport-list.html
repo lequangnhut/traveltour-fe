@@ -140,7 +140,7 @@
                     <td>{{ $index + 1 }}</td>
                     <td>
                         <img ng-src="{{ transport.transportationImg }}" class="img-fluid" alt="avatar"
-                             width="60" title="Xem ảnh xe">
+                             width="55" title="Xem ảnh xe">
                     </td>
                     <td>{{ transport.licensePlate }}</td>
                     <td>{{ transportTypeName[transport.transportationTypeId] || 'Đang tải...' }}</td>
@@ -159,14 +159,6 @@
                         </div>
                     </td>
                     <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                        <!--                        <a href="/business/transport/transport-management/update-transport/{{ transport.id }}"-->
-                        <!--                           role="button" class="fs-1 btn text-warning">-->
-                        <!--                            <i class="fa-solid fa-pen-to-square"></i>-->
-                        <!--                        </a>-->
-                        <!--                        <a href="#" ng-click="deleteTrans(transport.id, transport.licensePlate)"-->
-                        <!--                           role="button" class="fs-1 btn text-danger">-->
-                        <!--                            <i class="fa-solid fa-trash"></i>-->
-                        <!--                        </a>-->
                         <button class="fs-1 btn text-info px-2" ng-click="openModal(transport.id)">
                             <i class="fa-regular fa-eye"></i>
                         </button>
@@ -202,20 +194,15 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card mb-3">
-                                <img class="img-fluid" ng-src="{{ transportation.transportationImg }}"
+                                <img class="img-fluid rounded-2" ng-src="{{ transportation.transportationImg }}"
                                      style="height: 500px"/>
-                                <div class="card-body ">
-                                    <div class="bg-header-model">
-                                        <div class="h2 text-center fw-medium">{{ tourDetail.toursByTourId.tourName }}</div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header p-3 fw-bold">
-                                    Thông tin nhà xe
+                                    Thông tin xe khách
                                 </div>
                                 <div class="card-body p-3">
                                     <p class="m-2 fw-medium">Mã nhà xe: <span
@@ -239,21 +226,9 @@
                                                 Ngưng hoạt động
                                         </span>
                                     </p>
-                                </div>
-                                <div class="card-footer d-flex justify-content-center p-3">
-                                    <a href="/business/transport/home/update-transport/{{ transportBrand.id }}"
-                                       ng-click="closeModal()"
-                                       class="btn btn-green">Cập nhật thông tin nhà xe</a>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-header p-3 fw-bold">
-                                    Chi tiết xe khách
-                                </div>
-                                <div class="card-body p-3">
+                                    <hr>
+
                                     <p class="m-2 fw-medium">Mã xe khách: <span
                                             class="fw-medium">{{ transportation.id }}</span></p>
                                     <p class="m-2 fw-medium">Biển số xe: <span
@@ -275,12 +250,26 @@
                                     </p>
                                 </div>
                                 <div class="card-footer d-flex justify-content-center p-3">
-                                    <a role="button"
-                                       href="/business/transport/transport-management/update-transport/{{ transportation.id }}"
-                                       ng-click="closeModal()" class="btn btn-green"
-                                    >
-                                        Cập nhật chi tiết xe khách
-                                    </a>
+                                    <a href="/business/transport/transport-management/update-transport/{{ transportation.id }}"
+                                       ng-click="closeModal()"
+                                       class="btn btn-green">Cập nhật thông tin nhà xe</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header p-3 fw-bold">
+                                    Tiện ích nhà xe
+                                </div>
+                                <div class="card-body p-3">
+                                    <div ng-repeat="util in transportUtilityModal">
+                                        <li class="m-2">{{ util.title }}</li>
+                                    </div>
+                                    <div class="d-flex justify-content-center" ng-if="transportUtilityModal.length === 0">
+                                        Xe <span class="fw-medium">&nbsp;{{ transportation.licensePlate }}&nbsp;</span>
+                                        chưa có tiện ích.
+                                    </div>
                                 </div>
                             </div>
                         </div>

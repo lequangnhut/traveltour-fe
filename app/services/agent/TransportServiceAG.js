@@ -15,6 +15,20 @@ travel_app.service('TransportServiceAG', function ($http) {
         })
     }
 
+    this.findAllTransportUtilities = function () {
+        return $http({
+            method: 'GET',
+            url: API_TRANS + 'find-all-transportation-utilities'
+        })
+    }
+
+    this.findByTransportUtilityId = function (transportUtilityId) {
+        return $http({
+            method: 'GET',
+            url: API_TRANS + 'find-by-transportation-utilities-by-id/' + transportUtilityId
+        })
+    }
+
     this.findByTransportId = function (transportId) {
         return $http({
             method: 'GET',
@@ -57,19 +71,19 @@ travel_app.service('TransportServiceAG', function ($http) {
         })
     }
 
-    this.create = function (transportationsDto) {
+    this.create = function (transportationsDto, selectedUtilities) {
         return $http({
             method: 'POST',
-            url: API_TRANS + 'create-transportation',
+            url: API_TRANS + 'create-transportation/' + selectedUtilities,
             headers: {'Content-Type': undefined},
             data: transportationsDto
         })
     }
 
-    this.update = function (transportationsDto) {
+    this.update = function (transportationsDto, selectedUtilities) {
         return $http({
             method: 'PUT',
-            url: API_TRANS + 'update-transportation',
+            url: API_TRANS + 'update-transportation/' + selectedUtilities,
             headers: {'Content-Type': undefined},
             data: transportationsDto
         })

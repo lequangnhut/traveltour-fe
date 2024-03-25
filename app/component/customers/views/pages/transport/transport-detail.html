@@ -205,7 +205,7 @@
                                                 <a href="#" class="mx-2" ng-click="toggleDetail($index)">
                                                     Xem chi tiết
                                                 </a>
-                                                <i class="fa-solid fa-angle-down"></i>
+                                                <i ng-bind-html="getChangeIcon($index)"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -289,61 +289,20 @@
 
                                 <div class="tab-pane fade" id="nav-until-{{$index}}" role="tabpanel"
                                      aria-labelledby="nav-until-tab-{{$index}}">
-                                    <div class="card border-0 bg-light rounded-0">
+                                    <div class="card border-0 bg-light rounded-0"
+                                         ng-repeat="util in transportUtilities[$index]">
                                         <div class="p-3">
                                             <div class="img-until d-flex align-content-center">
-                                                <img src="/assets/customers/images/transport/until/1.png"
-                                                     class="img-fluid" width="44" alt="">
-                                                <p class="fs-6 fw-medium p-2">Nhân viên sử dụng tiếng anh</p>
+                                                <img ng-src="{{ util.icon }}" class="img-fluid" width="44" alt="">
+                                                <p class="fs-6 fw-medium p-2">{{ util.title }}</p>
                                             </div>
-                                            <p>Nhân viên phòng vé, tài xế , phụ xe có thể giao tiếp bằng tiếng anh với
-                                                hành khách.</p>
+                                            <p>{{ util.description }}</p>
                                         </div>
                                         <div style="height: 1px; background: rgb(192, 192, 192); width: 100%"></div>
                                     </div>
-                                    <div class="card border-0 bg-light rounded-0">
-                                        <div class="p-3">
-                                            <div class="img-until d-flex align-content-center">
-                                                <img src="/assets/customers/images/transport/until/3.png"
-                                                     class="img-fluid" width="44" alt="">
-                                                <p class="fs-6 fw-medium p-2">Đèn đọc sách</p>
-                                            </div>
-                                            <p>Hỗ trợ hành khách đọc sách dễ dàng và an toàn khi ngồi trên xe.</p>
-                                        </div>
-                                        <div style="height: 1px; background: rgb(192, 192, 192); width: 100%"></div>
-                                    </div>
-                                    <div class="card border-0 bg-light rounded-0">
-                                        <div class="p-3">
-                                            <div class="img-until d-flex align-content-center">
-                                                <img src="/assets/customers/images/transport/until/5.png"
-                                                     class="img-fluid" width="44" alt="">
-                                                <p class="fs-6 fw-medium p-2">Nước uống</p>
-                                            </div>
-                                            <p>Nhà xe có phục vụ nước cho hành khách.</p>
-                                        </div>
-                                        <div style="height: 1px; background: rgb(192, 192, 192); width: 100%"></div>
-                                    </div>
-                                    <div class="card border-0 bg-light rounded-0">
-                                        <div class="p-3">
-                                            <div class="img-until d-flex align-content-center">
-                                                <img src="/assets/customers/images/transport/until/7.png"
-                                                     class="img-fluid" width="44" alt="">
-                                                <p class="fs-6 fw-medium p-2">Gối nằm</p>
-                                            </div>
-                                            <p>Trên xe có trang bị gối nằm.</p>
-                                        </div>
-                                        <div style="height: 1px; background: rgb(192, 192, 192); width: 100%"></div>
-                                    </div>
-                                    <div class="card border-0 bg-light rounded-0">
-                                        <div class="p-3">
-                                            <div class="img-until d-flex align-content-center">
-                                                <img src="/assets/customers/images/transport/until/6.png"
-                                                     class="img-fluid" width="44" alt="">
-                                                <p class="fs-6 fw-medium p-2">Búa phá kính</p>
-                                            </div>
-                                            <p>Dùng để phá kính ô tô thoát hiểm trong trường hợp khẩn cấp.</p>
-                                        </div>
-                                        <div style="height: 1px; background: rgb(192, 192, 192); width: 100%"></div>
+                                    <div class="d-flex justify-content-center"
+                                         ng-if="!transportUtilities[$index] || transportUtilities[$index].length === 0">
+                                        Hiện tại chúng tôi chưa lấy được tiện ích của nhà xe này.
                                     </div>
                                 </div>
 
@@ -534,7 +493,7 @@
                             </div>
 
                             <div class="col-6 d-flex justify-content-end">
-                                <div class="theatre rounded-top-5">
+                                <div class="theatre rounded-top-5 ms-3">
                                     <div class="steering-wheel">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
@@ -570,7 +529,8 @@
                                     </ol>
 
                                     <ol class="cabin">
-                                        <li class="row row--1" ng-repeat="row in getSeat([schedule])[0]">
+                                        <li class="row row--1" ng-if="isGetSeatCalled"
+                                            ng-repeat="row in getSeat([schedule])[0]">
                                             <ol class="seats" type="A">
                                                 <li class="seat" ng-class="{ 'daMVvn': seat.isBooked }"
                                                     id="{{ 'booked-' + seat.seatNumber}}" ng-repeat="seat in row">
