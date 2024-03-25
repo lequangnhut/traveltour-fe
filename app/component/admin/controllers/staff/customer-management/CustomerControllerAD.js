@@ -64,7 +64,7 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
         if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
             age--;
         }
-        $scope.invalidBirth = age < 16;
+        $scope.invalidBirth = age < 0;
     };
 
 
