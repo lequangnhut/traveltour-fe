@@ -53,22 +53,19 @@
                        placeholder="exam@gmail.com"
                        name="email"
                        ng-model="customer.email"
-                       ng-class="{ 'is-invalid': customerForm.email.$invalid, 'is-valid': customerForm.email.$valid && !emailError }"
-                       ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
-                       ng-change="checkDuplicateEmail()"
-                       required
+                        readonly
                 >
-                <small class="text-danger"
-                       ng-show="customerForm.email.$error.required">
-                    Vui lòng nhập địa chỉ email !
-                </small>
-                <small class="text-danger"
-                       ng-show="customerForm.email.$error.pattern">
-                    Địa chỉ email không đúng định dạng !
-                </small>
-                <small class="text-danger" ng-show="emailError">
-                    Email đã tồn tại ở một tài khoản khác!
-                </small>
+<!--                <small class="text-danger"-->
+<!--                       ng-show="customerForm.email.$error.required">-->
+<!--                    Vui lòng nhập địa chỉ email !-->
+<!--                </small>-->
+<!--                <small class="text-danger"-->
+<!--                       ng-show="customerForm.email.$error.pattern">-->
+<!--                    Địa chỉ email không đúng định dạng !-->
+<!--                </small>-->
+<!--                <small class="text-danger" ng-show="emailError">-->
+<!--                    Email đã tồn tại ở một tài khoản khác!-->
+<!--                </small>-->
             </div>
             <div class="col-md-6">
                 <label class="form-label">HỌ VÀ TÊN</label>
@@ -105,8 +102,8 @@
                     Vui lòng nhập ngày sinh !
                 </small>
                 <small class="text-danger"
-                       ng-show="isBirthInvalid()">
-                    Yêu cầu trên 16 tuổi !
+                       ng-show="customerForm.customerBirth.$touched && isBirthInvalid()">
+                    Số tuổi có vẻ chưa đúng!
                 </small>
             </div>
             <div class="col-md-6">
@@ -119,7 +116,7 @@
                        ng-class="{ 'is-invalid': customerForm.phone.$invalid,
                                             'is-valid': customerForm.phone.$valid && !phoneError }"
                        ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
-                       ng-change="checkDuplicatePhone()"
+                       ng-change="checkDuplicateThisPhone()"
                        required
                 >
                 <small class="text-danger"
@@ -146,7 +143,7 @@
                 >
                 <small class="text-danger"
                        ng-show="customerForm.address.$touched && customerForm.address.$error.required">
-                    Vui lòng nhập địa chỉ doanh nghiệp !
+                    Vui lòng nhập địa chỉ !
                 </small>
             </div>
             <div class="col-md-6">
