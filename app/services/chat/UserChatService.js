@@ -58,21 +58,33 @@ travel_app.service('UserChatService', function ($http, $q) {
         return await deferred.promise;
     }
 
-    this.sendMessage = function(nickname, selectedUserId, messageContent) {
+    this.sendMessage = async function(nickname, selectedUserId, messageContent) {
         var chatMessage = {
             senderId: nickname,
             recipientId: selectedUserId,
             content: messageContent,
             timestamp: new Date()
         };
-        return $http({
-            method: 'POST',
-            url: API_CHAT + 'chat',
-            data: chatMessage,
-        });
+
+        try {
+            // Gọi API bằng cách sử dụng await
+            var response = await $http({
+                method: 'POST',
+                url: API_CHAT + 'chat',
+                data: chatMessage,
+            });
+
+            // Trả về dữ liệu
+            return response.data;
+        } catch (error) {
+            // Xử lý lỗi
+            throw error;
+        }
     };
 
-    this.findUserChatById = function (senderId, recipientId) {
+
+
+    this.findUserChatById = async function (senderId, recipientId) {
 
         var formData = new FormData();
 
