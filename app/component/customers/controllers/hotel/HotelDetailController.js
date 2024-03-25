@@ -305,6 +305,7 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll, 
             if (response.status === 200) {
                 $scope.agencyId = response.data.data.userId;
                 var encodedId  = btoa($scope.agencyId);
+                console.log($scope.agencyId)
                 $window.location.href = '/chat/' + encodedId;
             } else {
                 $location.path('/admin/internal-server-error');

@@ -370,5 +370,4 @@ travel_app.controller('MainController',
                 }
             }
         }
-
     });
