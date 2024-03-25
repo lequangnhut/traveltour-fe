@@ -356,15 +356,15 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-update.html',
             controller: 'TransportControllerAG'
         })
-        .when('/business/transport/order-transport-management', {
+        .when('/business/transport/schedules-management/order-transport-management/:scheduleId', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-list.html',
             controller: 'OrderTransportControllerAG'
         })
-        .when('/business/transport/order-transport-management/create-order-visit', {
+        .when('/business/transport/schedules-management/order-transport-management/:scheduleId/create-order-visit', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-create.html',
             controller: 'OrderTransportControllerAG'
         })
-        .when('/business/transport/order-transport-management/update-order-visit/:id', {
+        .when('/business/transport/schedules-management/order-transport-management/:scheduleId/update-order-visit/:id', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-update.html',
             controller: 'OrderTransportControllerAG'
         })
@@ -576,6 +576,42 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/admin/views/pages/admin-form/report/statistical.html',
             controller: 'StatisticalControllerAD'
         })
+        .when('/admin/post/hotel-post-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/post/hotel/hotel-post-list.html',
+            controller: 'HotelPostController'
+        })
+        .when('/admin/post/hotel-post-list/room-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/post/hotel/room-type-post-list.html',
+            controller: 'RoomPostController'
+        })
+        .when('/admin/post/hotel-post-list/room-list/:id', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/post/hotel/room-type-post-list.html',
+            controller: 'RoomPostController'
+        })
+        .when('/admin/post/brand-post-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/post/transportation/brand-post-list.html',
+            controller: 'TransBrandPostController'
+        })
+        .when('/admin/post/brand-post-list/transportation-post-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/post/transportation/transportation-post-list.html',
+            controller: 'TransportationPostController'
+        })
+        .when('/admin/post/brand-post-list/transportation-post-list/:id', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/post/transportation/transportation-post-list.html',
+            controller: 'TransportationPostController'
+        })
+        .when('/admin/post/brand-post-list/transportation-list/transportation-schedule-post-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/post/transportation/transportation-schedule-post-list.html',
+            controller: 'SchedulePostController'
+        })
+        .when('/admin/post/brand-post-list/transportation-list/transportation-schedule-post-list/:id', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/post/transportation/transportation-schedule-post-list.html',
+            controller: 'SchedulePostController'
+        })
+        .when('/admin/post/visit-post-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/post/visit/visit-post-list.html',
+            controller: 'VisitPostController'
+        })
 
         /**
          * Admin Infomation
@@ -583,6 +619,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/admin/information-update/:id', {
             templateUrl: 'app/component/admin/views/pages/information/information-update.html',
             controller: 'CustomerControllerAD'
+        })
+        .when('/admin/change-password/:id', {
+            templateUrl: 'app/component/admin/views/pages/information/change-password.html',
+            controller: 'InformationController'
         })
         /**
          * Customer
@@ -699,6 +739,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/drive-move/drive-transport-detail/:brandId/booking-confirmation/:scheduleId', {
             templateUrl: 'app/component/customers/views/pages/transport/transport-booking.html',
             controller: 'TransBookingCusController'
+        })
+        .when('/drive-move/drive-transport-detail/booking-confirmation/booking-successfully', {
+            templateUrl: 'app/component/customers/views/pages/transport/transport-booking-success.html',
+            controller: 'TransBookingSuccessCusController'
         })
 
         /**

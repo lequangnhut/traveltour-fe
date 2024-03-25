@@ -1,0 +1,520 @@
+<!--====== Start Booking Form ======-->
+<div class="container-fluid overflow-hidden mt-5 px-lg-0">
+    <section class="h-100" id="cart">
+        <div class="container py-4 mt-3 mb-3">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card mb-3">
+                        <div class="col-lg-12 col-12 col-md-12 mb-4 mt-4">
+                            <div class="img-success d-flex justify-content-center mb-4">
+                                <img src="/assets/customers/images/booking/checked-success.png" width="80"
+                                     class="img-fluid"
+                                     alt="thành công">
+                            </div>
+                            <div class="content-payment-done d-flex justify-content-center">
+                                <div class="content text-center">
+                                    <div class="mb-2 h2" style="font-weight: 600">Đặt chổ thành công</div>
+                                    <div class="booking-id mt-2 mb-2">
+                                        <button type="button" class="btn border-0 fs-6 ps-3 px-3 bg-green">
+                                            Mã đơn hàng: {{ orderTransport.id }}
+                                        </button>
+                                    </div>
+                                    <p class="mb-2">Thông tin chuyến đi đã được gửi đến email
+                                        <br>
+                                        <strong class="fw-medium">{{ orderTransport.customerEmail }}</strong>,
+                                        bạn hãy kiểm tra nhé.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-content m-3">
+                            <h6 class="mb-3">Thông tin chuyến đi</h6>
+
+                            <div class="body-container">
+                                <div class="card-body-content">
+                                    <div class="section-ticket-header pointer">
+                                        <div class="section-ticket-header-left">
+                                            <img class="bus-blue-icon ls-is-cached lazyloaded"
+                                                 data-src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/bus_blue_24dp.svg"
+                                                 src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/bus_blue_24dp.svg"
+                                                 alt="bus_blue_icon" width="16" height="16">
+                                            <p class="date-time">
+                                                {{ transportSchedule.departureTime | formatTime }} •
+                                                Tại bến xe trung tâm {{ transportSchedule.fromLocation }}
+                                            </p>
+                                            <div class="total-ticket">
+                                                <img class="people-icon ls-is-cached lazyloaded"
+                                                     data-src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/people_alt_black_24dp.svg"
+                                                     src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/people_alt_black_24dp.svg"
+                                                     alt="people_alt_black_icon" width="16"
+                                                     height="16">
+                                                <p class="amount-ticket fw-medium">{{ orderTransport.amountTicket }}</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="detail" role="button"
+                                               data-bs-toggle="offcanvas"
+                                               data-bs-target="#toggle-detail-trans"
+                                               aria-controls="toggle-detail-trans"
+                                               ng-click="toggleOffCanVas()"
+                                            >
+                                                Chi tiết
+                                            </p>
+                                        </div>
+
+                                        <div class="offcanvas offcanvas-end bg-light" tabindex="-1"
+                                             id="toggle-detail-trans"
+                                             aria-labelledby="toggle-detail-label" style="width: 35%; height: 100%">
+                                            <div class="offcanvas-header bg-green">
+                                                <h6 id="toggle-detail-label" class="text-white">
+                                                    <i class="fa fa-arrow-left mx-2"></i>
+                                                    Chi tiết chuyến đi
+                                                </h6>
+                                            </div>
+                                            <div class="m-3">
+                                                <div class="card-body-content mb-4">
+                                                    <div class="section-ticket-header pointer">
+                                                        <div class="section-ticket-header-left">
+                                                            <img class="bus-blue-icon ls-is-cached lazyloaded"
+                                                                 data-src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/bus_blue_24dp.svg"
+                                                                 src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/bus_blue_24dp.svg"
+                                                                 alt="bus_blue_icon" width="16" height="16">
+                                                            <p class="date-time">
+                                                                {{ transportSchedule.departureTime | formatTime }} •
+                                                                Tại bến xe trung
+                                                                tâm {{ transportSchedule.fromLocation }}
+                                                            </p>
+                                                            <div class="total-ticket">
+                                                                <img class="people-icon ls-is-cached lazyloaded"
+                                                                     data-src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/people_alt_black_24dp.svg"
+                                                                     src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/people_alt_black_24dp.svg"
+                                                                     alt="people_alt_black_icon" width="16"
+                                                                     height="16">
+                                                                <p class="amount-ticket fw-medium">
+                                                                    {{ orderTransport.amountTicket }}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="section-ticket-content">
+                                                        <div class="section-ticket-company-info pointer">
+                                                            <div>
+                                                                <img src="https://static.vexere.com/production/images/1656960376767.jpeg"
+                                                                     alt="avatar" class="image-avatar">
+                                                            </div>
+                                                            <div class="section-ticket-company-info-name">
+                                                                <p class="brand-name">
+                                                                    {{ transportSchedule.transportationBrandsByTransportationBrandId.transportationBrandName }}
+                                                                </p>
+                                                                <p class="trans-type">
+                                                                    {{
+                                                                        transportSchedule.transportationTypesByTransportationTypeId.transportationTypeName +
+                                                                        ' (' + transportSchedule.transportationsByTransportationId.amountSeat + ' chổ)'
+                                                                    }}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="detail-content">
+                                                            <div class="section-route-info">
+                                                                <div class="content-time">
+                                                                    <div class="area-point-container ">
+                                                                        <div class="date-time-container">
+                                                                            <div class="date-time-container-pick-up">
+                                                                                <div class="time-trans">
+                                                                                    {{ transportSchedule.departureTime | formatTime }}
+                                                                                </div>
+                                                                                <p class="date-trans color--medium-sub">
+                                                                                    ({{ transportSchedule.departureTime | formatDate }}
+                                                                                    )
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="icon-container">
+                                                                            <div class="icon-container-top">
+                                                                                <img class="pickup-icon ls-is-cached lazyloaded"
+                                                                                     data-src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/pickup_vex_blue_24dp.svg"
+                                                                                     src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/pickup_vex_blue_24dp.svg"
+                                                                                     alt="pickup-icon" width="12"
+                                                                                     height="12">
+                                                                            </div>
+                                                                            <div class="icon-container-divider">
+                                                                                <div class="icon-container-divider-border-right"></div>
+                                                                                <div class="icon-container-divider-border-left"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="section-area">
+                                                                            <div class="section-area-picker">
+                                                                                <p class="date-time"
+                                                                                   style="font-size: 14px">
+                                                                                    Vp bến xe
+                                                                                    {{ transportSchedule.fromLocation }}
+                                                                                </p>
+                                                                                <p class="trans-type color--medium-sub">
+                                                                                    {{ transportSchedule.fromAddress }}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="button-mobile-change"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="content-time">
+                                                                    <div class="area-point-container ">
+                                                                        <div class="date-time-container">
+                                                                            <div class="date-time-container-drop-off">
+                                                                                <div class="time-trans">
+                                                                                    {{ transportSchedule.arrivalTime | formatTime }}
+                                                                                </div>
+                                                                                <p class="date-trans color--medium-sub">
+                                                                                    ({{ transportSchedule.arrivalTime | formatDate }}
+                                                                                    )
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="icon-container">
+                                                                            <div class="icon-container-divider">
+                                                                                <div class="icon-container-divider-border-right"
+                                                                                     style="padding-left: 1px"></div>
+                                                                                <div class="icon-container-divider-border-left"></div>
+                                                                            </div>
+                                                                            <div class="icon-container-bottom">
+                                                                                <img class="dropoff-icon ls-is-cached lazyloaded"
+                                                                                     data-src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/dropoff_semantic_negative_12dp.svg"
+                                                                                     src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/dropoff_semantic_negative_12dp.svg"
+                                                                                     alt="dropoff-icon" width="19"
+                                                                                     height="12">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="section-area">
+                                                                            <div class="section-area-picker">
+                                                                                <p class="date-time"
+                                                                                   style="font-size: 14px">
+                                                                                    Vp bến xe
+                                                                                    {{ transportSchedule.toLocation }}
+                                                                                </p>
+                                                                                <p class="trans-type color--medium-sub">
+                                                                                    {{ transportSchedule.toAddress }}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="button-mobile-change"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card mb-4">
+                                                    <div class="content-trans m-3">
+                                                        <h6 class="mb-3">Thông tin chuyến đi</h6>
+
+                                                        <div class="content-trans-item" style="font-size: 14px">
+                                                            <label>Tuyến</label>
+                                                            <div class="float-end fw-medium">
+                                                                {{ transportSchedule.fromLocation }}
+                                                                - {{ transportSchedule.toLocation }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="content-trans-item" style="font-size: 14px">
+                                                            <label>Nhà xe</label>
+                                                            <div class="float-end fw-medium">
+                                                                {{ transportSchedule.transportationBrandsByTransportationBrandId.transportationBrandName }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="content-trans-item" style="font-size: 14px">
+                                                            <label>Chuyến</label>
+                                                            <div class="float-end fw-medium">
+                                                                {{ transportSchedule.departureTime | formatTime }} -
+                                                                {{ transportSchedule.departureTime | formatDate }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="content-trans-item" style="font-size: 14px">
+                                                            <label>Loại xe</label>
+                                                            <div class="float-end fw-medium">
+                                                                {{
+                                                                    transportSchedule.transportationTypesByTransportationTypeId.transportationTypeName +
+                                                                    ' (' + transportSchedule.transportationsByTransportationId.amountSeat + ' chổ)'
+                                                                }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="content-trans-item" style="font-size: 14px">
+                                                            <label>Số lượng</label>
+                                                            <div class="float-end fw-medium">
+                                                                {{ orderTransport.amountTicket }} vé
+                                                            </div>
+                                                        </div>
+                                                        <div class="content-trans-item" style="font-size: 14px">
+                                                            <label>Mã ghế/giường</label>
+                                                            <div class="float-end fw-medium">
+                                                                <span class="fw-medium text-green"
+                                                                      ng-repeat="seat in seatNumber">
+                                                                    {{ seat }}<span ng-if="!$last">,&nbsp;</span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card">
+                                                    <div class="content-trans m-3">
+                                                        <h6 class="mb-3">Thông tin liên hệ</h6>
+
+                                                        <div class="content-trans-item" style="font-size: 14px">
+                                                            <label>Họ và tên</label>
+                                                            <div class="float-end fw-medium">
+                                                                {{ orderTransport.customerName }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="content-trans-item" style="font-size: 14px">
+                                                            <label>Số điện thoại</label>
+                                                            <div class="float-end fw-medium">
+                                                                {{ orderTransport.customerPhone }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="content-trans-item" style="font-size: 14px">
+                                                            <label>Email</label>
+                                                            <div class="float-end fw-medium">
+                                                                {{ orderTransport.customerEmail }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="section-ticket-content">
+                                        <div class="section-ticket-company-info pointer">
+                                            <div>
+                                                <img src="https://static.vexere.com/production/images/1656960376767.jpeg"
+                                                     alt="avatar" class="image-avatar">
+                                            </div>
+                                            <div class="section-ticket-company-info-name">
+                                                <p class="brand-name">
+                                                    {{ transportSchedule.transportationBrandsByTransportationBrandId.transportationBrandName }}
+                                                </p>
+                                                <p class="trans-type">
+                                                    {{
+                                                        transportSchedule.transportationTypesByTransportationTypeId.transportationTypeName +
+                                                        ' (' + transportSchedule.transportationsByTransportationId.amountSeat + ' chổ)'
+                                                    }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="detail-content">
+                                            <div class="section-route-info">
+                                                <div class="content-time">
+                                                    <div class="area-point-container ">
+                                                        <div class="date-time-container">
+                                                            <div class="date-time-container-pick-up">
+                                                                <div class="time-trans">
+                                                                    {{ transportSchedule.departureTime | formatTime }}
+                                                                </div>
+                                                                <p class="date-trans color--medium-sub">
+                                                                    ({{ transportSchedule.departureTime | formatDate }})
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="icon-container">
+                                                            <div class="icon-container-top">
+                                                                <img class="pickup-icon ls-is-cached lazyloaded"
+                                                                     data-src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/pickup_vex_blue_24dp.svg"
+                                                                     src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/pickup_vex_blue_24dp.svg"
+                                                                     alt="pickup-icon" width="12" height="12">
+                                                            </div>
+                                                            <div class="icon-container-divider">
+                                                                <div class="icon-container-divider-border-right"></div>
+                                                                <div class="icon-container-divider-border-left"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="section-area">
+                                                            <div class="section-area-picker">
+                                                                <p class="date-time" style="font-size: 14px">
+                                                                    Vp bến xe {{ transportSchedule.fromLocation }}
+                                                                </p>
+                                                                <p class="trans-type color--medium-sub">
+                                                                    {{ transportSchedule.fromAddress }}
+                                                                </p>
+                                                            </div>
+                                                            <div class="button-mobile-change"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="content-time">
+                                                    <div class="area-point-container ">
+                                                        <div class="date-time-container">
+                                                            <div class="date-time-container-drop-off">
+                                                                <div class="time-trans">
+                                                                    {{ transportSchedule.arrivalTime | formatTime }}
+                                                                </div>
+                                                                <p class="date-trans color--medium-sub">
+                                                                    ({{ transportSchedule.arrivalTime | formatDate }})
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="icon-container">
+                                                            <div class="icon-container-divider">
+                                                                <div class="icon-container-divider-border-right"
+                                                                     style="padding-left: 2px"></div>
+                                                                <div class="icon-container-divider-border-left"></div>
+                                                            </div>
+                                                            <div class="icon-container-bottom">
+                                                                <img class="dropoff-icon ls-is-cached lazyloaded"
+                                                                     data-src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/dropoff_semantic_negative_12dp.svg"
+                                                                     src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/dropoff_semantic_negative_12dp.svg"
+                                                                     alt="dropoff-icon" width="13" height="12">
+                                                            </div>
+                                                        </div>
+                                                        <div class="section-area">
+                                                            <div class="section-area-picker">
+                                                                <p class="date-time" style="font-size: 14px">
+                                                                    Vp bến xe {{ transportSchedule.toLocation }}
+                                                                </p>
+                                                                <p class="trans-type color--medium-sub">
+                                                                    {{ transportSchedule.toAddress }}
+                                                                </p>
+                                                            </div>
+                                                            <div class="button-mobile-change"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card mb-3" ng-if="orderTransport.orderStatus === 0 || orderTransport.orderStatus === 1">
+                        <div class="content-schedule m-3">
+                            <h5 class="mb-3">Thông tin thanh toán</h5>
+
+                            <div class="content-trans-item" style="font-size: 14px">
+                                <label>Phương thức thanh toán</label>
+                                <div class="float-end fw-medium">
+                                    <span ng-if="orderTransport.paymentMethod === 0">
+                                        Thanh toán tại nhà xe
+                                    </span>
+                                    <span ng-if="orderTransport.paymentMethod === 1">
+                                        Thanh toán bằng Ví VNPay
+                                    </span>
+                                    <span ng-if="orderTransport.paymentMethod === 2">
+                                        Thanh toán bằng Ví ZALOPay
+                                    </span>
+                                    <span ng-if="orderTransport.paymentMethod === 3">
+                                        Thanh toán bằng Ví MOMO
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="content-trans-item" style="font-size: 14px">
+                                <label>Tổng tiền</label>
+                                <div class="float-end fw-medium">
+                                    {{ orderTransport.orderTotal | vnCurrency }}
+                                </div>
+                            </div>
+                            <div class="content-trans-item" style="font-size: 14px">
+                                <label>Trạng thái</label>
+                                <div class="float-end fw-medium">
+                                    <span class="text-warning" ng-if="orderTransport.orderStatus === 0">
+                                        Chờ thanh toán
+                                    </span>
+                                    <span class="text-success" ng-if="orderTransport.orderStatus === 1">
+                                        Đã thanh toán
+                                    </span>
+                                    <span class="text-danger" ng-if="orderTransport.orderStatus === 2">
+                                        Hủy giao dịch
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3" ng-if="orderTransport.orderStatus === 2">
+                        <div class="content-schedule m-3">
+                            <h5 class="mb-3">Thông tin hủy</h5>
+
+                            <div class="content-trans-item" style="font-size: 14px">
+                                <label>Lí do hủy</label>
+                                <div class="float-end fw-medium">
+                                    {{ orderTransport.orderNote }}
+                                </div>
+                            </div>
+                            <div class="content-trans-item" style="font-size: 14px">
+                                <label>Số tiền đã thanh toán</label>
+                                <div class="float-end fw-medium">
+                                    {{ orderTransport.orderTotal | vnCurrency }}
+                                </div>
+                            </div>
+                            <div class="content-trans-item" style="font-size: 14px">
+                                <label>Phí hủy</label>
+                                <div class="float-end fw-medium text-success">
+                                    Không tốn phí
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="content-schedule m-3">
+                            <h5 class="mb-3">Quản lý đơn hàng</h5>
+
+                            <div class="title-container-left d-flex">
+                                <div class="material-icons-wrapper md-24 justify-content-start">
+                                    <i class="fa-solid fa-circle-question fs-4 mx-3 text-green"></i>
+                                </div>
+                                <p class="fw-medium">Trung tâm hỗ trợ</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="content-schedule m-3">
+                            <h5 class="mb-3">Dịch vụ khác dành cho bạn</h5>
+
+                            <div class="header-container mb-3" ng-click="redirectService('tour')" role="button">
+                                <div class="header-title">Đặt tour giá ưu đãi</div>
+                                <div class="header-content">Đà Lạt, Vũng Tàu, Sa Pa, Hà Giang...</div>
+                                <div class="image-hotel">
+                                    <img src="/assets/customers/images/transport/tour-banner-2.png"
+                                         class="img-fluid rounded-top" alt="">
+                                </div>
+                            </div>
+
+                            <div class="header-container-tour" ng-click="redirectService('hotel')" role="button">
+                                <div class="image-hotel">
+                                    <img src="/assets/customers/images/transport/hotel-banner-1.png"
+                                         class="img-fluid rounded-top" alt="">
+                                </div>
+                                <div class="float-end">
+                                    <div class="header-title">Thuê khách sạn giá rẻ</div>
+                                    <div class="header-content">Khách sạn giá cả hợp lý phải chăng</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div><!--====== End Booking Form ======-->
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Ảnh xe</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="" id="modalImage" class="img-fluid" alt="Ảnh phương tiện">
+            </div>
+        </div>
+    </div>
+</div>

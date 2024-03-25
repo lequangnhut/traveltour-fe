@@ -85,11 +85,14 @@
                             </h4>
                             <p class="location">
                                 <span class="fas fa-map-marker-alt"></span>
-                                {{ detail.toLocation }}
+                                <span title="Điểm đến {{ detail.toLocation }}">
+                                    <span>{{ detail.toLocation | limitTo: 20 }}</span>
+                                    <span ng-show="detail.toLocation.length > 20">...</span>
+                                </span>
                             </p>
                             <p class="price">
                                 <span class="far fa-money-bill-alt"></span>
-                                Giá từ: <span class="fw-bold">{{ detail.unitPrice | vnCurrency }}</span>
+                                Giá từ: <span class="fw-medium">{{ detail.unitPrice | vnCurrency }}</span>
                             </p>
                             <div class="meta">
                                 <span>
@@ -766,39 +769,39 @@
                         <div class="col col-lg-8 ">
                             <section class="thong-tin-ve" style="height: 100%;">
                                 <ul>
-                                    <span class="mb-3 fw-bold"> Thông tin người đại diện: </span>
+                                    <span class="mb-3 fw-medium"> Thông tin người đại diện: </span>
                                     {{ orderTransport.customerName }}
                                 </ul>
                                 <ul>
-                                    <span class="mb-3 fw-bold">CMND / CCCD: </span>
+                                    <span class="mb-3 fw-medium">CMND / CCCD: </span>
                                     {{ orderTransport.customerCitizenCard }}
                                 </ul>
                                 <ul>
-                                    <span class="mb-3 fw-bold">Số điện thoại: </span>
+                                    <span class="mb-3 fw-medium">Số điện thoại: </span>
                                     {{ orderTransport.customerPhone }}
                                 </ul>
                                 <ul>
-                                    <span class="mb-3 fw-bold">Số lượng vé: </span>
+                                    <span class="mb-3 fw-medium">Số lượng vé: </span>
                                     {{ orderTransport.amountTicket + ' Vé' }}
                                 </ul>
                                 <ul>
-                                    <span class="mb-3 fw-bold">Chuyến đi: </span>
+                                    <span class="mb-3 fw-medium">Chuyến đi: </span>
                                     {{ transportSchedule.fromLocation + ' - ' + transportSchedule.toLocation }}
                                 </ul>
                                 <ul>
-                                    <span class="mb-3 fw-bold">Khởi hành vào lúc: </span>
+                                    <span class="mb-3 fw-medium">Khởi hành vào lúc: </span>
                                     {{ transportSchedule.departureTime | vietnameseDateTime }}
                                 </ul>
                                 <ul>
-                                    <span class="mb-3 fw-bold">Dự kiến vào lúc: </span>
+                                    <span class="mb-3 fw-medium">Dự kiến vào lúc: </span>
                                     {{ transportSchedule.arrivalTime | vietnameseDateTime }}
                                 </ul>
                                 <ul ng-if="orderTransport.orderNote !== null">
-                                    <span class="mb-3 fw-bold">Ghi chú: </span>
+                                    <span class="mb-3 fw-medium">Ghi chú: </span>
                                     {{ orderTransport.orderNote }}
                                 </ul>
                                 <ul ng-if="orderTransport.orderNote === null">
-                                    <span class="mb-3 fw-bold">Ghi chú: </span>
+                                    <span class="mb-3 fw-medium">Ghi chú: </span>
                                     Không có thông tin ghi chú
                                 </ul>
                             </section>
@@ -814,20 +817,20 @@
                                 </div>
                                 <div>
                                     <ul>
-                                        <span class="mt-3 fw-bold">Đơn Giá:</span>
+                                        <span class="mt-3 fw-medium">Đơn Giá:</span>
                                         {{ transportSchedule.unitPrice | vnCurrency }}
                                     </ul>
                                 </div>
                                 <div>
                                     <ul>
-                                        <span class="mt-3 fw-bold">Số lượng:</span>
+                                        <span class="mt-3 fw-medium">Số lượng:</span>
                                         {{ orderTransport.amountTicket + ' Vé' }}
                                     </ul>
                                 </div>
                                 <div class="tong-tien">
                                     <div>
                                         <ul>
-                                            <span class="mt-5 fw-bold">
+                                            <span class="mt-5 fw-medium">
                                                 Tổng tiền: {{ orderTransport.orderTotal | vnCurrency }}
                                             </span>
                                         </ul>

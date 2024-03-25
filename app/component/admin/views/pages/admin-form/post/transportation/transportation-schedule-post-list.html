@@ -1,0 +1,371 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<style>
+    .close:focus{
+
+        outline: 1px dotted #fff !important;
+    }
+    .modal-body {
+
+        padding: 0rem !important;
+    }
+    .fa-close{
+        color: #fff;
+    }
+    .heading{
+
+        font-weight: 500 !important;
+    }
+    .subheadings{
+        font-size: 14px;
+        color: #9c27b0;
+    }
+    .dots {
+        height: 10px;
+        width: 10px;
+        background-color: green;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+    }
+    .gallery img{
+
+        margin-right: 10px;
+    }
+
+    .btn-back {
+        color: white;
+        font-weight: 500;
+        background-color: #ffc107;
+        border-radius: 20px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .btn-ok {
+        color: white;
+        font-weight: 500;
+        background-color: #ab4eff;
+        border-radius: 20px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .btn-cancel {
+        color: white;
+        font-weight: 500;
+        background-color: #dc3545;
+        border-radius: 20px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .btn-back:hover {
+        color: #ffc107;
+        border: 1px solid #ffc107;
+        background-color: white;
+    }
+
+    .btn-ok:hover {
+        color: #ab4eff;
+        border: 1px solid #ab4eff;
+        background-color: white;
+    }
+
+    .btn-cancel:hover {
+        color: #dc3545;
+        border: 1px solid #dc3545;
+        background-color: white;
+    }
+</style>
+
+<div class="container">
+    <div class="header-control mb-4">
+        <nav aria-label="breadcrumb" ng-if="tripList.length > 0">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="/admin/post/brand-post-list">Danh sách phương tiện</a></li>
+                <li class="breadcrumb-item"><a href="/admin/post/brand-post-list/transportation-post-list/{{linkBack}}">Danh sách xe</a></li>
+                <li class="breadcrumb-item active" style="width: 150px"><p>Lịch trình di chuyển</p></li>
+            </ol>
+        </nav>
+        <div class="header-control-center mb-3">
+            <div class="d-flex justify-content-between align-items-center row ">
+                <div class="col-xl-6 mt-3">
+                    <h3 class="color-green fw-bold mb-3">DANH SÁCH CHUYẾN ĐI</h3>
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <div class="card card-customer">
+                <div class="row" style="margin: 20px 16px 20px 16px">
+                    <div class="col-xl-4">
+                        Bạn muốn tìm kiếm gì ?
+                        <div class="input-group mb-3">
+                          <span class="input-group-text" id="basic-addon1">
+                            <a href="#" class="bg-light text-dark">
+                              <i class="fa-solid fa-magnifying-glass bg-light"></i>
+                            </a>
+                          </span>
+                            <input type="text" class="form-control" placeholder="Nhập tên địa điểm cần tìm"
+                                   ng-model="searchTerm" ng-change="searchName()">
+                        </div>
+                    </div>
+                    <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
+                         style="margin: 20px 0 0 0">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-components table-responsive mb-5">
+            <div class="card table-responsive table-customer">
+                <div class="card-header ">
+                    <div class="row">
+                        <div class="mt-2 h4 col-lg-5 d-flex align-items-center h-100">
+                            <div class="d-flex align-items-center">
+                                <span class="h4">Danh sách chuyến đi</span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end align-items-baseline col-lg-3">
+                            <select class="form-select" aria-label="Default select example"
+                                    ng-model="isActive"
+                                    ng-init="isActive='true'"
+                                    ng-change="getChangeStatus()">
+                                <option value="true">Hợp lệ</option>
+                                <option value="false">Không hợp lệ</option>
+                            </select>
+                        </div>
+                        <div class="d-flex justify-content-end align-items-baseline col-lg-2">
+                            <select class="form-select" aria-label="Default select example"
+                                    ng-model="pageSize"
+                                    ng-init="pageSize='5'"
+                                    ng-change="pageSizeChanged()">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                            </select>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end h-100 col-lg-2">
+                            <nav aria-label="Page navigation example float-end">
+                                <ul class="pagination justify-content-center align-items-center">
+                                    <li class="page-item" ng-class="{disabled: currentPage === 0}">
+                                        <a class="page-link" ng-click="setPage(0)">
+                                            <i class="fa-solid fa-angles-left"></i>
+                                        </a>
+                                    </li>
+                                    <!-- Ellipsis at the beginning -->
+                                    <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                        <span class="page-link">...</span>
+                                    </li>
+
+                                    <!-- Pagination Numbers -->
+                                    <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                        ng-class="{active: n === currentPage}">
+                                        <a class="page-link" ng-click="setPage(n)">{{n + 1}}</a>
+                                    </li>
+
+                                    <!-- Ellipsis at the end -->
+                                    <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                        <span class="page-link">...</span>
+                                    </li>
+
+                                    <!-- Next Page -->
+                                    <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}">
+                                        <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                            <i class="fa-solid fa-angles-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-responsive text-center">
+<!--                    <div ng-include="'app/component/utils/loading-table.html'"></div>-->
+                    <thead>
+                    <tr class="bg-light">
+                        <th scope="col"># <i class="fa-solid fa-sort"></i></th>
+                        <th ng-click="sortData('fromLocation')">
+                            <div class="icon-left">Chuyến xe
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('fromLocation')"></span>
+                            </div>
+                        </th>
+                        <th ng-click="sortData('departureTime')">
+                            <div class="icon-left">Bắt đầu
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('departureTime')"></span>
+                            </div>
+                        </th>
+                        <th ng-click="sortData('arrivalTime')">
+                            <div class="icon-left">Kết thúc
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('arrivalTime')"></span>
+                            </div>
+                        </th>
+                        <th ng-click="sortData('isActive')">
+                            <div class="icon-left">Trạng thái
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('isActive')"></span>
+                            </div>
+                        </th>
+                        <th scope="col">Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="trip in tripList">
+                        <td style="font-size: small">{{$index + 1}}</td>
+                        <td>{{(trip.fromLocation || 'Đang cập nhật') + ' - ' + (trip.toLocation || 'Đang cập nhật')}}</td>
+                        <td>{{(trip.departureTime | vietnameseDateTime) || 'Đang cập nhật'}}</td>
+                        <td>{{(trip.arrivalTime  | vietnameseDateTime) || 'Đang cập nhật'}}</td>
+                        <td>
+                            <div ng-if="trip.isActive == true" class="d-flex align-items-center justify-content-center">
+                                <span class="status-success"></span> <span class="text-status-success">Hợp lệ</span>
+                            </div>
+                            <div ng-if="trip.isActive == false" class="d-flex align-items-center justify-content-center">
+                                <span class="status-error"></span> <span class="text-status-error">Không hợp lệ</span>
+                            </div>
+                        </td>
+                        <td class="d-flex align-items-center justify-content-center">
+                            <a role="button" class="fs-1 btn text-info px-2" ng-click="openModal(trip)"
+                               title="Xem hồ sơ">
+                                <i class="fa-regular fa-newspaper"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr ng-if="tripList.length === 0">
+                        <td colspan="8">Không có dữ liệu.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-end">
+                        {{getDisplayRange()}} trong tổng số {{totalElements}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="timeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="max-width: 700px;padding-top: 40px";>
+        <div class="modal-content">
+            <button type="button" ng-click="closeModal()" style="width: 30px;border-radius: 50px;
+                                    border: 1px solid grey;margin-top: -15px;align-self: self-end;
+                                    background: #ffffff;margin-right: -15px;color: grey;">
+                <span aria-hidden="true"><i class="fa fa-close"></i></span>
+            </button>
+            <div class="modal-body">
+                <div class="row g-0">
+                    <div class="col-md-12 border-right">
+                        <div class="status p-3 pb-4">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <td class="pt-1" colspan="2">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block"><i class="fa-solid fa-briefcase"></i>&nbsp;Hãng xe quản lý</span>
+                                            <span class="subheadings mt-2">{{tripDetail.transportationsByTransportationId.transportationBrandName || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="pt-1">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block"><i class="fa-solid fa-tag"></i>&nbsp; Mã chuyến đi</span>
+                                            <span class="subheadings text-center mt-2">{{tripDetail.id || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="pt-1">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block"><i class="fa-regular fa-id-card"></i>&nbsp; Bảng số xe</span>
+                                            <span class="subheadings text-center mt-2">{{tripDetail.transportations.licensePlate || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-1">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block"><i class="fa-solid fa-clock"></i>&nbsp; Giờ bắt đầu</span>
+                                            <span class="subheadings text-center mt-2">{{(tripDetail.departureTime | vietnameseDateTime) || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="pt-1">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block"><i class="fa-solid fa-map-pin"></i>&nbsp; Điểm bắt đầu</span>
+                                            <span class="subheadings text-center mt-2">{{tripDetail.fromLocation || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="pt-1">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block"><i class="fa-solid fa-clock"></i>&nbsp; Giờ kết thúc</span>
+                                            <span class="subheadings text-center mt-2">{{(tripDetail.arrivalTime | vietnameseDateTime) || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="pt-1">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block"><i class="fa-solid fa-map-pin"></i>&nbsp; Điểm kết thúc</span>
+                                            <span class="subheadings text-center mt-2">{{tripDetail.toLocation || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-1" colspan="2">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block"><i class="fa-solid fa-truck-plane"></i>&nbsp; Loại chuyến xe</span>
+                                            <span ng-if="tripDetail.tripType == false" class="subheadings mt-2">Xe khách lẻ</span>
+                                            <span ng-if="tripDetail.tripType == true" class="subheadings mt-2">Xe khách đoàn</span>
+                                        </div>
+                                    </td>
+                                    <td class="pt-1">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block"><i class="fa-solid fa-hand-holding-dollar"></i>&nbsp; Giá tiền</span>
+                                            <span ng-if="tripDetail.tripType == false" class="subheadings mt-2">{{((tripDetail.unitPrice | vnCurrency) + ' / vé')  || 'Đang cập nhật'}}</span>
+                                            <span ng-if="tripDetail.tripType == true" class="subheadings mt-2">{{((tripDetail.unitPrice | vnCurrency) + ' / chuyến') || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="pt-1">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block"><i class="fa-solid fa-ticket"></i>&nbsp; Số vé đã đặt</span>
+                                            <span class="subheadings text-center mt-2">{{tripDetail.bookedSeat || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-1" colspan="4">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block">Trạng thái phê duyệt</span>
+                                            <span class="subheadings" ng-if="tripDetail.isActive === false"><i
+                                                    class="dots bg-warning"></i>Không hợp lệ</span>
+                                            <span class="subheadings" ng-if="tripDetail.isActive === true"><i
+                                                    class="dots bg-success"></i> Hợp lệ</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-1" colspan="4" >
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block"><i class="fa-solid fa-comment"></i>&nbsp; Ghi chú chuyến đi</span>
+                                            <span class="subheadings mt-2" style="justify-content: center">{{tripDetail.scheduleNote || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="about-doctor" style="text-align: right;">
+                                <button class="btn btn-cancel" ng-if="tripDetail.isActive === true"
+                                        ng-click="deniedFormSchedule(tripDetail)"
+                                        style="margin-right:10px">
+                                    <i class="fa-solid fa-trash"></i> Từ chối
+                                </button>
+                                <button class="btn btn-ok" ng-if="tripDetail.isActive === false"
+                                        ng-click="acceptFormSchedule(tripDetail)"
+                                        style="margin-right:10px">
+                                    <i class="fa-solid fa-circle-check"></i> Phê duyệt
+                                </button>
+                                <button class="btn btn-back" data-bs-dismiss="modal"
+                                        ng-click="closeModal()"
+                                        style="margin-right:5px">
+                                    <i class="fa-solid fa-circle-left"></i> Trở về
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

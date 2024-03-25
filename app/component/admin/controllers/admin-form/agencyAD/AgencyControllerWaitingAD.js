@@ -93,7 +93,8 @@ travel_app.controller('AgencyControllerWaitingAD', function ($scope, $location, 
                     $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                     $scope.totalElements = response.data.data.totalElements;
                 }
-            }, errorCallback).finally(function () {$scope.isLoading = false;
+            }, errorCallback).finally(function () {
+            $scope.isLoading = false;
         });
 
         if (typeId !== undefined && typeId !== null && typeId !== "") {
@@ -103,7 +104,7 @@ travel_app.controller('AgencyControllerWaitingAD', function ($scope, $location, 
                         $scope.agent = response.data.data;
                         $rootScope.namenow = $scope.agent.bedTypeName;
                     }
-                }, errorCallback).finally(function (){
+                }, errorCallback).finally(function () {
                 $scope.isLoading = false;
             });
         }
@@ -131,10 +132,10 @@ travel_app.controller('AgencyControllerWaitingAD', function ($scope, $location, 
         searchTimeout = $timeout(function () {
             AgencyServiceAD.findAllTypeWaiting($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
                 .then(function (response) {
-                    if (response.data.status === "404"){
+                    if (response.data.status === "404") {
                         $scope.typeList.length = 0;
                         $scope.totalElements = 0;
-                    }else{
+                    } else {
                         $scope.typeList = response.data.data.content;
                         $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                         $scope.totalElements = response.data.totalElements;
@@ -171,6 +172,7 @@ travel_app.controller('AgencyControllerWaitingAD', function ($scope, $location, 
             toastAlert('success', 'Phê duyệt thành công !');
             $scope.getTypeList();
             $location.path("admin/agency/agency-list")
+            $('#scrollingLong2').modal('hide');
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
@@ -185,6 +187,7 @@ travel_app.controller('AgencyControllerWaitingAD', function ($scope, $location, 
         AgencyServiceAD.deniedAgency($scope.agent.id).then(function successCallback() {
             toastAlert('success', 'Từ chối hồ sơ thành công !');
             $scope.getTypeList();
+            $('#scrollingLong2').modal('hide');
         }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });

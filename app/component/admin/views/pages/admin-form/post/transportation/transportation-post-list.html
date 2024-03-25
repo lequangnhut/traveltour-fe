@@ -1,0 +1,359 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<style>
+    .close:focus{
+
+        outline: 1px dotted #fff !important;
+    }
+    .modal-body {
+
+        padding: 0rem !important;
+    }
+    .fa-close{
+        color: #fff;
+    }
+    .heading{
+
+        font-weight: 500 !important;
+    }
+    .subheadings{
+        font-size: 12px;
+        color: #9c27b0;
+    }
+    .dots {
+        height: 10px;
+        width: 10px;
+        background-color: green;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+    }
+    .gallery img{
+
+        margin-right: 10px;
+    }
+    .fs-9{
+        font-size: 9px;
+    }
+
+    .btn-back {
+        color: white;
+        font-weight: 500;
+        background-color: #ffc107;
+        border-radius: 20px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .btn-ok {
+        color: white;
+        font-weight: 500;
+        background-color: #ab4eff;
+        border-radius: 20px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .btn-cancel {
+        color: white;
+        font-weight: 500;
+        background-color: #dc3545;
+        border-radius: 20px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .btn-back:hover {
+        color: #ffc107;
+        border: 1px solid #ffc107;
+        background-color: white;
+    }
+
+    .btn-ok:hover {
+        color: #ab4eff;
+        border: 1px solid #ab4eff;
+        background-color: white;
+    }
+
+    .btn-cancel:hover {
+        color: #dc3545;
+        border: 1px solid #dc3545;
+        background-color: white;
+    }
+</style>
+
+<div class="container">
+    <div class="header-control mb-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item text-dark"><a href="/admin/post/brand-post-list">Danh sách phương tiện</a></li>
+                <li class="breadcrumb-item active" style="width: 150px"><p>Danh sách xe</p></li>
+            </ol>
+        </nav>
+        <div class="header-control-center mb-3">
+            <div class="d-flex justify-content-between align-items-center row ">
+                <div class="col-xl-6 mt-3">
+                    <h3 class="color-green fw-bold mb-3">DANH SÁCH PHƯƠNG TIỆN</h3>
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <div class="card card-customer">
+                <div class="row" style="margin: 20px 16px 20px 16px">
+                    <div class="col-xl-4">
+                        Bạn muốn tìm kiếm gì ?
+                        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">
+            <a href="#" class="bg-light text-dark">
+              <i class="fa-solid fa-magnifying-glass bg-light"></i>
+            </a>
+          </span>
+                            <input type="text" class="form-control"
+                                   placeholder="Nhập tên bảng số xe cần tìm"
+                                   ng-model="searchTerm" ng-change="searchName()">
+                        </div>
+                    </div>
+                    <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
+                         style="margin: 20px 0 0 0">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-components table-responsive mb-5">
+            <div class="card table-responsive table-customer">
+                <div class="card-header ">
+                    <div class="row">
+                        <div class="mt-2 h4 col-lg-5 d-flex align-items-center h-100">
+                            <div class="d-flex align-items-center">
+                                <span class="h4">Danh sách phương tiện</span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end align-items-baseline col-lg-3">
+                            <select class="form-select" aria-label="Default select example"
+                                    ng-model="isActive"
+                                    ng-init="isActive='true'"
+                                    ng-change="getChangeStatus()">
+                                <option value="true">Hợp lệ</option>
+                                <option value="false">Không hợp lệ</option>
+                            </select>
+                        </div>
+                        <div class="d-flex justify-content-end align-items-baseline col-lg-2">
+                            <select class="form-select" aria-label="Default select example"
+                                    ng-model="pageSize"
+                                    ng-init="pageSize='5'"
+                                    ng-change="pageSizeChanged()">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                            </select>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end h-100 col-lg-2">
+                            <nav aria-label="Page navigation example float-end">
+                                <ul class="pagination justify-content-center align-items-center">
+                                    <li class="page-item" ng-class="{disabled: currentPage === 0}">
+                                        <a class="page-link" ng-click="setPage(0)">
+                                            <i class="fa-solid fa-angles-left"></i>
+                                        </a>
+                                    </li>
+                                    <!-- Ellipsis at the beginning -->
+                                    <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                        <span class="page-link">...</span>
+                                    </li>
+
+                                    <!-- Pagination Numbers -->
+                                    <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                        ng-class="{active: n === currentPage}">
+                                        <a class="page-link" ng-click="setPage(n)">{{n + 1}}</a>
+                                    </li>
+
+                                    <!-- Ellipsis at the end -->
+                                    <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                        <span class="page-link">...</span>
+                                    </li>
+
+                                    <!-- Next Page -->
+                                    <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}">
+                                        <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                            <i class="fa-solid fa-angles-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-responsive text-center">
+<!--                    <div ng-include="'app/component/utils/loading-table.html'"></div>-->
+                    <thead>
+                    <tr class="bg-light">
+                        <th scope="col"># <i class="fa-solid fa-sort"></i></th>
+                        <th ng-click="sortData('id')">
+                            <div class="icon-left">Mã phương tiện
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                            </div>
+                        </th>
+                        <th ng-click="sortData('licensePlate')">
+                            <div class="icon-left">Bảng số xe
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('licensePlate')"></span>
+                            </div>
+                        </th>
+                        <th ng-click="sortData('amountSeat')">
+                            <div class="icon-left">Số chỗ ngồi
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('amountSeat')"></span>
+                            </div>
+                        </th>
+                        <th ng-click="sortData('dateCreated')">
+                            <div class="icon-left">Ngày đăng ký
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('dateCreated')"></span>
+                            </div>
+                        </th>
+                        <th ng-click="sortData('isActive')">
+                            <div class="icon-left">Trạng thái
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('isActive')"></span>
+                            </div>
+                        </th>
+                        <th scope="col">Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="tran in transList">
+                        <td style="font-size: small">{{$index + 1}}</td>
+                        <td>{{tran.id || 'Đang cập nhật'}}</td>
+                        <td>{{tran.licensePlate || 'Đang cập nhật'}}</td>
+                        <td>{{tran.amountSeat || 'Đang cập nhật'}}</td>
+                        <td>{{(tran.dateCreated  | vietnameseDateTime)  || 'Đang cập nhật'}}</td>
+                        <td>
+                            <div ng-if="tran.isActive == true" class="d-flex align-items-center justify-content-center">
+                                <span class="status-success"></span> <span class="text-status-success">Hợp lệ</span>
+                            </div>
+                            <div ng-if="tran.isActive == false" class="d-flex align-items-center justify-content-center">
+                                <span class="status-error"></span> <span class="text-status-error">Không hợp lệ</span>
+                            </div>
+                        </td>
+                        <td>
+                            <a role="button" class="fs-1 btn text-info px-2" ng-click="openModal(tran)"
+                               title="Xem hồ sơ">
+                                <i class="fa-regular fa-newspaper"></i>
+                            </a>
+                            <a role="button" class="fs-1 btn text-warning px-2" href="/admin/post/brand-post-list/transportation-list/transportation-schedule-post-list/{{tran.id}}"
+                               title="Danh sách chuyến xe">
+                                <i class="fa-regular fa-calendar-days"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr ng-if="transList.length === 0">
+                        <td colspan="8">Không có dữ liệu.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-end">
+                        {{getDisplayRange()}} trong tổng số {{totalElements}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="transModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="max-width: 700px; padding-top: 40px">
+        <div class="modal-content">
+            <button type="button" ng-click="closeModal()" style="width: 30px;border-radius: 50px;
+                                    border: 1px solid grey;margin-top: -15px;align-self: self-end;
+                                    background: #ffffff;margin-right: -15px;color: grey;">
+                <span aria-hidden="true"><i class="fa fa-close"></i></span>
+            </button>
+            <div class="modal-body">
+                <div class="row g-0">
+                    <div class="col-md-7 border-right">
+                        <div class="status p-3">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <td style="width: 50%" class="pt-1 text-center">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block">Mã phương tiện</span>
+                                            <span class="subheadings">{{car.id || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                    <td style="width: 50%;" class="pt-1 text-center">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block">Số chỗ ngồi</span>
+                                            <span class="subheadings">{{car.amountSeat || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%;" class="pt-1" colspan="2">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block">Ngày đăng ký</span>
+                                            <span class="subheadings">{{(car.dateCreated | vietnameseDateTime) || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%;" class="pt-1">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block">Loại phương tiện</span>
+                                            <span class="subheadings">{{car.transportationTypes.transportationTypeName || 'Đang cập nhật'}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="pt-1" colspan="2">
+                                        <div class="d-flex flex-column">
+                                            <span class="heading d-block">Trạng thái phê duyệt</span>
+                                            <span class="subheadings" ng-if="car.isActive === false"><i
+                                                    class="dots bg-warning"></i>Không hợp lệ</span>
+                                            <span class="subheadings" ng-if="car.isActive === true"><i
+                                                    class="dots bg-success"></i> Hợp lệ</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="text-center" style="padding:1rem">
+                            <div class="profile">
+                                <div class="carousel slide carousel-fade" id="carouselExampleFade" data-ride="carousel">
+                                    <div class="carousel-inner rounded">
+                                        <div class="carousel-item active">
+                                            <img class="d-block" style="width: 300px; height: 160px" src="{{car.transportationImg || 'https://langem.geologia.unam.mx/wp-content/uploads/2018/04/placeholder.png'}}" alt="Third slide">
+                                        </div>
+                                        <div class="carousel-item" ng-if="carImageList.length > 0" ng-repeat="img in carImageList">
+                                            <img class="d-block" style="width: 300px; height: 160px" src="{{img.imagePath || 'https://langem.geologia.unam.mx/wp-content/uploads/2018/04/placeholder.png'}}" alt="First slide">
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev" fdprocessedid="7o4it">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next" fdprocessedid="pheykm">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </button>
+                                </div>
+                                <span class="heading d-block">Bảng số xe</span>
+                                <span class="d-block mb-1 mt-1 font-weight-bold" style="text-transform: uppercase; font-weight: bold">{{car.licensePlate || 'Đang cập nhật'}}</span>
+                            </div>
+                        </div>
+                        <div class="about-doctor pb-4" style="text-align: right;">
+                            <button class="btn btn-cancel" ng-if="car.isActive === true"
+                                    ng-click="deniedFormTrans(car)"
+                                    style="margin-right:10px">
+                                <i class="fa-solid fa-trash"></i> Từ chối
+                            </button>
+                            <button class="btn btn-ok" ng-if="car.isActive === false"
+                                    ng-click="acceptFormTrans(car)"
+                                    style="margin-right:10px">
+                                <i class="fa-solid fa-circle-check"></i> Phê duyệt
+                            </button>
+                            <button class="btn btn-back" data-bs-dismiss="modal"
+                                    ng-click="closeModal()"
+                                    style="margin-right:5px">
+                                <i class="fa-solid fa-circle-left"></i> Trở về
+                            </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bản đồ chỗ ngồi</title>
+    <style>
+
+        .seat-container {
+            border: 2px solid #000000;
+            border-radius: 5px;
+            padding: 10px 15px 5px 15px; /* Đã điều chỉnh padding */
+            max-width: 150px; /* Đã điều chỉnh max-width */
+            margin: 20px 30px 20px 30px;
+        }
+
+        .row {
+            display: flex;
+            margin-bottom: 4px; /* Đã điều chỉnh margin-bottom */
+            place-content: center;
+        }
+
+        .seat {
+            width: 30px; /* Đã điều chỉnh width */
+            height: 30px; /* Đã điều chỉnh height */
+            background-color: #abffdf;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #000000;
+            font-weight: bold;
+            margin-right: 4px; /* Đã điều chỉnh margin-right */
+            position: relative;
+            cursor: pointer;
+            font-size: x-small;
+            border: 2px solid black;
+        }
+
+        .seat-checkbox {
+            display: none;
+        }
+
+        .seat-label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .seat-checkbox:checked + .seat-label::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px; /* Đã điều chỉnh width */
+            height: 30px; /* Đã điều chỉnh height */
+            background-color: #808080a8;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="row">
+    <div class="col-4 seat-container">
+        <h5 style="text-align: center; margin-top:0px; margin-bottom: 0px">BẢN ĐỒ CHỖ NGỒI</h5>
+        <h5 style="text-align: center; margin-top:5px; margin-bottom: 10px">Xe 40 chỗ - Loại 1</h5>
+        <div class="row">
+            <div class="col-6 seat" style="width: 105px;background-color: #acc3ff;margin-right: 11px">
+                TÀI XẾ
+            </div>
+            <div class="col-6 seat" style="width: 105px;background-color: #acc3ff;margin-left: 11px">
+                HDV
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A1" type="checkbox" class="seat-checkbox">
+                <label for="A1" class="seat-label"></label>
+                A1
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B1" type="checkbox" class="seat-checkbox">
+                <label for="B1" class="seat-label"></label>
+                B1
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C1" type="checkbox" class="seat-checkbox">
+                <label for="C1" class="seat-label"></label>
+                C1
+            </div>
+            <div class="col-3 seat">
+                <input id="D1" type="checkbox" class="seat-checkbox">
+                <label for="D1" class="seat-label"></label>
+                D1
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A2" type="checkbox" class="seat-checkbox">
+                <label for="A2" class="seat-label"></label>
+                A2
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B2" type="checkbox" class="seat-checkbox">
+                <label for="B2" class="seat-label"></label>
+                B2
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C2" type="checkbox" class="seat-checkbox">
+                <label for="C2" class="seat-label"></label>
+                C2
+            </div>
+            <div class="col-3 seat">
+                <input id="D2" type="checkbox" class="seat-checkbox">
+                <label for="D2" class="seat-label"></label>
+                D2
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A3" type="checkbox" class="seat-checkbox">
+                <label for="A3" class="seat-label"></label>
+                A3
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B3" type="checkbox" class="seat-checkbox">
+                <label for="B3" class="seat-label"></label>
+                B3
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C3" type="checkbox" class="seat-checkbox">
+                <label for="C3" class="seat-label"></label>
+                C3
+            </div>
+            <div class="col-3 seat">
+                <input id="D3" type="checkbox" class="seat-checkbox">
+                <label for="D3" class="seat-label"></label>
+                D3
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A4" type="checkbox" class="seat-checkbox">
+                <label for="A4" class="seat-label"></label>
+                A4
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B4" type="checkbox" class="seat-checkbox">
+                <label for="B4" class="seat-label"></label>
+                B4
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C4" type="checkbox" class="seat-checkbox">
+                <label for="C4" class="seat-label"></label>
+                C4
+            </div>
+            <div class="col-3 seat">
+                <input id="D4" type="checkbox" class="seat-checkbox">
+                <label for="D4" class="seat-label"></label>
+                D4
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A5" type="checkbox" class="seat-checkbox">
+                <label for="A5" class="seat-label"></label>
+                A5
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B5" type="checkbox" class="seat-checkbox">
+                <label for="B5" class="seat-label"></label>
+                B5
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C5" type="checkbox" class="seat-checkbox">
+                <label for="C5" class="seat-label"></label>
+                C5
+            </div>
+            <div class="col-3 seat">
+                <input id="D5" type="checkbox" class="seat-checkbox">
+                <label for="D5" class="seat-label"></label>
+                D5
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A6" type="checkbox" class="seat-checkbox">
+                <label for="A6" class="seat-label"></label>
+                A6
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B6" type="checkbox" class="seat-checkbox">
+                <label for="B6" class="seat-label"></label>
+                B6
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C6" type="checkbox" class="seat-checkbox">
+                <label for="C6" class="seat-label"></label>
+                C6
+            </div>
+            <div class="col-3 seat">
+                <input id="D6" type="checkbox" class="seat-checkbox">
+                <label for="D6" class="seat-label"></label>
+                D6
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A7" type="checkbox" class="seat-checkbox">
+                <label for="A7" class="seat-label"></label>
+                A7
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B7" type="checkbox" class="seat-checkbox">
+                <label for="B7" class="seat-label"></label>
+                B7
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C7" type="checkbox" class="seat-checkbox">
+                <label for="C7" class="seat-label"></label>
+                C7
+            </div>
+            <div class="col-3 seat">
+                <input id="D7" type="checkbox" class="seat-checkbox">
+                <label for="D7" class="seat-label"></label>
+                D7
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="A8" type="checkbox" class="seat-checkbox">
+                <label for="A8" class="seat-label"></label>
+                A8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="B8" type="checkbox" class="seat-checkbox">
+                <label for="B8" class="seat-label"></label>
+                B8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="C8" type="checkbox" class="seat-checkbox">
+                <label for="C8" class="seat-label"></label>
+                C8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="D8" type="checkbox" class="seat-checkbox">
+                <label for="D8" class="seat-label"></label>
+                D8
+            </div>
+        </div>
+        <input type="radio" id="map1" name="seat-map" style="margin-left: 65px; margin-top: 10px">
+    </div>
+    <div class="col-4 seat-container">
+        <h5 style="text-align: center; margin-top:0px; margin-bottom: 0px">BẢN ĐỒ CHỖ NGỒI</h5>
+        <h5 style="text-align: center; margin-top:5px; margin-bottom: 10px">Xe 40 chỗ - Loại 1</h5>
+        <div class="row">
+            <div class="col-6 seat" style="width: 105px;background-color: #acc3ff;margin-right: 11px">
+                TÀI XẾ
+            </div>
+            <div class="col-6 seat" style="width: 105px;background-color: #acc3ff;margin-left: 11px">
+                HDV
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A1" type="checkbox" class="seat-checkbox">
+                <label for="A1" class="seat-label"></label>
+                A1
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B1" type="checkbox" class="seat-checkbox">
+                <label for="B1" class="seat-label"></label>
+                B1
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C1" type="checkbox" class="seat-checkbox">
+                <label for="C1" class="seat-label"></label>
+                C1
+            </div>
+            <div class="col-3 seat">
+                <input id="D1" type="checkbox" class="seat-checkbox">
+                <label for="D1" class="seat-label"></label>
+                D1
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A2" type="checkbox" class="seat-checkbox">
+                <label for="A2" class="seat-label"></label>
+                A2
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B2" type="checkbox" class="seat-checkbox">
+                <label for="B2" class="seat-label"></label>
+                B2
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C2" type="checkbox" class="seat-checkbox">
+                <label for="C2" class="seat-label"></label>
+                C2
+            </div>
+            <div class="col-3 seat">
+                <input id="D2" type="checkbox" class="seat-checkbox">
+                <label for="D2" class="seat-label"></label>
+                D2
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A3" type="checkbox" class="seat-checkbox">
+                <label for="A3" class="seat-label"></label>
+                A3
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B3" type="checkbox" class="seat-checkbox">
+                <label for="B3" class="seat-label"></label>
+                B3
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C3" type="checkbox" class="seat-checkbox">
+                <label for="C3" class="seat-label"></label>
+                C3
+            </div>
+            <div class="col-3 seat">
+                <input id="D3" type="checkbox" class="seat-checkbox">
+                <label for="D3" class="seat-label"></label>
+                D3
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A4" type="checkbox" class="seat-checkbox">
+                <label for="A4" class="seat-label"></label>
+                A4
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B4" type="checkbox" class="seat-checkbox">
+                <label for="B4" class="seat-label"></label>
+                B4
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C4" type="checkbox" class="seat-checkbox">
+                <label for="C4" class="seat-label"></label>
+                C4
+            </div>
+            <div class="col-3 seat">
+                <input id="D4" type="checkbox" class="seat-checkbox">
+                <label for="D4" class="seat-label"></label>
+                D4
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A5" type="checkbox" class="seat-checkbox">
+                <label for="A5" class="seat-label"></label>
+                A5
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B5" type="checkbox" class="seat-checkbox">
+                <label for="B5" class="seat-label"></label>
+                B5
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C5" type="checkbox" class="seat-checkbox">
+                <label for="C5" class="seat-label"></label>
+                C5
+            </div>
+            <div class="col-3 seat">
+                <input id="D5" type="checkbox" class="seat-checkbox">
+                <label for="D5" class="seat-label"></label>
+                D5
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A6" type="checkbox" class="seat-checkbox">
+                <label for="A6" class="seat-label"></label>
+                A6
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B6" type="checkbox" class="seat-checkbox">
+                <label for="B6" class="seat-label"></label>
+                B6
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C6" type="checkbox" class="seat-checkbox">
+                <label for="C6" class="seat-label"></label>
+                C6
+            </div>
+            <div class="col-3 seat">
+                <input id="D6" type="checkbox" class="seat-checkbox">
+                <label for="D6" class="seat-label"></label>
+                D6
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A7" type="checkbox" class="seat-checkbox">
+                <label for="A7" class="seat-label"></label>
+                A7
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B7" type="checkbox" class="seat-checkbox">
+                <label for="B7" class="seat-label"></label>
+                B7
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C7" type="checkbox" class="seat-checkbox">
+                <label for="C7" class="seat-label"></label>
+                C7
+            </div>
+            <div class="col-3 seat">
+                <input id="D7" type="checkbox" class="seat-checkbox">
+                <label for="D7" class="seat-label"></label>
+                D7
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="A8" type="checkbox" class="seat-checkbox">
+                <label for="A8" class="seat-label"></label>
+                A8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="B8" type="checkbox" class="seat-checkbox">
+                <label for="B8" class="seat-label"></label>
+                B8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="C8" type="checkbox" class="seat-checkbox">
+                <label for="C8" class="seat-label"></label>
+                C8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="D8" type="checkbox" class="seat-checkbox">
+                <label for="D8" class="seat-label"></label>
+                D8
+            </div>
+        </div>
+        <input type="radio" id="map1" name="seat-map" style="margin-left: 65px; margin-top: 10px">
+    </div>
+    <div class="col-4 seat-container">
+        <h5 style="text-align: center; margin-top:0px; margin-bottom: 0px">BẢN ĐỒ CHỖ NGỒI</h5>
+        <h5 style="text-align: center; margin-top:5px; margin-bottom: 10px">Xe 40 chỗ - Loại 1</h5>
+        <div class="row">
+            <div class="col-6 seat" style="width: 105px;background-color: #acc3ff;margin-right: 11px">
+                TÀI XẾ
+            </div>
+            <div class="col-6 seat" style="width: 105px;background-color: #acc3ff;margin-left: 11px">
+                HDV
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A1" type="checkbox" class="seat-checkbox">
+                <label for="A1" class="seat-label"></label>
+                A1
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B1" type="checkbox" class="seat-checkbox">
+                <label for="B1" class="seat-label"></label>
+                B1
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C1" type="checkbox" class="seat-checkbox">
+                <label for="C1" class="seat-label"></label>
+                C1
+            </div>
+            <div class="col-3 seat">
+                <input id="D1" type="checkbox" class="seat-checkbox">
+                <label for="D1" class="seat-label"></label>
+                D1
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A2" type="checkbox" class="seat-checkbox">
+                <label for="A2" class="seat-label"></label>
+                A2
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B2" type="checkbox" class="seat-checkbox">
+                <label for="B2" class="seat-label"></label>
+                B2
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C2" type="checkbox" class="seat-checkbox">
+                <label for="C2" class="seat-label"></label>
+                C2
+            </div>
+            <div class="col-3 seat">
+                <input id="D2" type="checkbox" class="seat-checkbox">
+                <label for="D2" class="seat-label"></label>
+                D2
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A3" type="checkbox" class="seat-checkbox">
+                <label for="A3" class="seat-label"></label>
+                A3
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B3" type="checkbox" class="seat-checkbox">
+                <label for="B3" class="seat-label"></label>
+                B3
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C3" type="checkbox" class="seat-checkbox">
+                <label for="C3" class="seat-label"></label>
+                C3
+            </div>
+            <div class="col-3 seat">
+                <input id="D3" type="checkbox" class="seat-checkbox">
+                <label for="D3" class="seat-label"></label>
+                D3
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A4" type="checkbox" class="seat-checkbox">
+                <label for="A4" class="seat-label"></label>
+                A4
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B4" type="checkbox" class="seat-checkbox">
+                <label for="B4" class="seat-label"></label>
+                B4
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C4" type="checkbox" class="seat-checkbox">
+                <label for="C4" class="seat-label"></label>
+                C4
+            </div>
+            <div class="col-3 seat">
+                <input id="D4" type="checkbox" class="seat-checkbox">
+                <label for="D4" class="seat-label"></label>
+                D4
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A5" type="checkbox" class="seat-checkbox">
+                <label for="A5" class="seat-label"></label>
+                A5
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B5" type="checkbox" class="seat-checkbox">
+                <label for="B5" class="seat-label"></label>
+                B5
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C5" type="checkbox" class="seat-checkbox">
+                <label for="C5" class="seat-label"></label>
+                C5
+            </div>
+            <div class="col-3 seat">
+                <input id="D5" type="checkbox" class="seat-checkbox">
+                <label for="D5" class="seat-label"></label>
+                D5
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A6" type="checkbox" class="seat-checkbox">
+                <label for="A6" class="seat-label"></label>
+                A6
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B6" type="checkbox" class="seat-checkbox">
+                <label for="B6" class="seat-label"></label>
+                B6
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C6" type="checkbox" class="seat-checkbox">
+                <label for="C6" class="seat-label"></label>
+                C6
+            </div>
+            <div class="col-3 seat">
+                <input id="D6" type="checkbox" class="seat-checkbox">
+                <label for="D6" class="seat-label"></label>
+                D6
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A7" type="checkbox" class="seat-checkbox">
+                <label for="A7" class="seat-label"></label>
+                A7
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B7" type="checkbox" class="seat-checkbox">
+                <label for="B7" class="seat-label"></label>
+                B7
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C7" type="checkbox" class="seat-checkbox">
+                <label for="C7" class="seat-label"></label>
+                C7
+            </div>
+            <div class="col-3 seat">
+                <input id="D7" type="checkbox" class="seat-checkbox">
+                <label for="D7" class="seat-label"></label>
+                D7
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="A8" type="checkbox" class="seat-checkbox">
+                <label for="A8" class="seat-label"></label>
+                A8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="B8" type="checkbox" class="seat-checkbox">
+                <label for="B8" class="seat-label"></label>
+                B8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="C8" type="checkbox" class="seat-checkbox">
+                <label for="C8" class="seat-label"></label>
+                C8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="D8" type="checkbox" class="seat-checkbox">
+                <label for="D8" class="seat-label"></label>
+                D8
+            </div>
+        </div>
+        <input type="radio" id="map1" name="seat-map" style="margin-left: 65px; margin-top: 10px">
+    </div>
+</div>
+<div class="row">
+    <div class="col-4 seat-container">
+        <h5 style="text-align: center; margin-top:0px; margin-bottom: 0px">BẢN ĐỒ CHỖ NGỒI</h5>
+        <h5 style="text-align: center; margin-top:5px; margin-bottom: 10px">Xe 40 chỗ - Loại 1</h5>
+        <div class="row">
+            <div class="col-6 seat" style="width: 105px;background-color: #acc3ff;margin-right: 11px">
+                TÀI XẾ
+            </div>
+            <div class="col-6 seat" style="width: 105px;background-color: #acc3ff;margin-left: 11px">
+                HDV
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A1" type="checkbox" class="seat-checkbox">
+                <label for="A1" class="seat-label"></label>
+                A1
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B1" type="checkbox" class="seat-checkbox">
+                <label for="B1" class="seat-label"></label>
+                B1
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C1" type="checkbox" class="seat-checkbox">
+                <label for="C1" class="seat-label"></label>
+                C1
+            </div>
+            <div class="col-3 seat">
+                <input id="D1" type="checkbox" class="seat-checkbox">
+                <label for="D1" class="seat-label"></label>
+                D1
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A2" type="checkbox" class="seat-checkbox">
+                <label for="A2" class="seat-label"></label>
+                A2
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B2" type="checkbox" class="seat-checkbox">
+                <label for="B2" class="seat-label"></label>
+                B2
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C2" type="checkbox" class="seat-checkbox">
+                <label for="C2" class="seat-label"></label>
+                C2
+            </div>
+            <div class="col-3 seat">
+                <input id="D2" type="checkbox" class="seat-checkbox">
+                <label for="D2" class="seat-label"></label>
+                D2
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A3" type="checkbox" class="seat-checkbox">
+                <label for="A3" class="seat-label"></label>
+                A3
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B3" type="checkbox" class="seat-checkbox">
+                <label for="B3" class="seat-label"></label>
+                B3
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C3" type="checkbox" class="seat-checkbox">
+                <label for="C3" class="seat-label"></label>
+                C3
+            </div>
+            <div class="col-3 seat">
+                <input id="D3" type="checkbox" class="seat-checkbox">
+                <label for="D3" class="seat-label"></label>
+                D3
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A4" type="checkbox" class="seat-checkbox">
+                <label for="A4" class="seat-label"></label>
+                A4
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B4" type="checkbox" class="seat-checkbox">
+                <label for="B4" class="seat-label"></label>
+                B4
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C4" type="checkbox" class="seat-checkbox">
+                <label for="C4" class="seat-label"></label>
+                C4
+            </div>
+            <div class="col-3 seat">
+                <input id="D4" type="checkbox" class="seat-checkbox">
+                <label for="D4" class="seat-label"></label>
+                D4
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A5" type="checkbox" class="seat-checkbox">
+                <label for="A5" class="seat-label"></label>
+                A5
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B5" type="checkbox" class="seat-checkbox">
+                <label for="B5" class="seat-label"></label>
+                B5
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C5" type="checkbox" class="seat-checkbox">
+                <label for="C5" class="seat-label"></label>
+                C5
+            </div>
+            <div class="col-3 seat">
+                <input id="D5" type="checkbox" class="seat-checkbox">
+                <label for="D5" class="seat-label"></label>
+                D5
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A6" type="checkbox" class="seat-checkbox">
+                <label for="A6" class="seat-label"></label>
+                A6
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B6" type="checkbox" class="seat-checkbox">
+                <label for="B6" class="seat-label"></label>
+                B6
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C6" type="checkbox" class="seat-checkbox">
+                <label for="C6" class="seat-label"></label>
+                C6
+            </div>
+            <div class="col-3 seat">
+                <input id="D6" type="checkbox" class="seat-checkbox">
+                <label for="D6" class="seat-label"></label>
+                D6
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A7" type="checkbox" class="seat-checkbox">
+                <label for="A7" class="seat-label"></label>
+                A7
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B7" type="checkbox" class="seat-checkbox">
+                <label for="B7" class="seat-label"></label>
+                B7
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C7" type="checkbox" class="seat-checkbox">
+                <label for="C7" class="seat-label"></label>
+                C7
+            </div>
+            <div class="col-3 seat">
+                <input id="D7" type="checkbox" class="seat-checkbox">
+                <label for="D7" class="seat-label"></label>
+                D7
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="A8" type="checkbox" class="seat-checkbox">
+                <label for="A8" class="seat-label"></label>
+                A8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="B8" type="checkbox" class="seat-checkbox">
+                <label for="B8" class="seat-label"></label>
+                B8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="C8" type="checkbox" class="seat-checkbox">
+                <label for="C8" class="seat-label"></label>
+                C8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="D8" type="checkbox" class="seat-checkbox">
+                <label for="D8" class="seat-label"></label>
+                D8
+            </div>
+        </div>
+        <input type="radio" id="map1" name="seat-map" style="margin-left: 65px; margin-top: 10px">
+    </div>
+    <div class="col-4 seat-container">
+        <h5 style="text-align: center; margin-top:0px; margin-bottom: 0px">BẢN ĐỒ CHỖ NGỒI</h5>
+        <h5 style="text-align: center; margin-top:5px; margin-bottom: 10px">Xe 40 chỗ - Loại 1</h5>
+        <div class="row">
+            <div class="col-6 seat" style="width: 105px;background-color: #acc3ff;margin-right: 11px">
+                TÀI XẾ
+            </div>
+            <div class="col-6 seat" style="width: 105px;background-color: #acc3ff;margin-left: 11px">
+                HDV
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A1" type="checkbox" class="seat-checkbox">
+                <label for="A1" class="seat-label"></label>
+                A1
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B1" type="checkbox" class="seat-checkbox">
+                <label for="B1" class="seat-label"></label>
+                B1
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C1" type="checkbox" class="seat-checkbox">
+                <label for="C1" class="seat-label"></label>
+                C1
+            </div>
+            <div class="col-3 seat">
+                <input id="D1" type="checkbox" class="seat-checkbox">
+                <label for="D1" class="seat-label"></label>
+                D1
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A2" type="checkbox" class="seat-checkbox">
+                <label for="A2" class="seat-label"></label>
+                A2
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B2" type="checkbox" class="seat-checkbox">
+                <label for="B2" class="seat-label"></label>
+                B2
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C2" type="checkbox" class="seat-checkbox">
+                <label for="C2" class="seat-label"></label>
+                C2
+            </div>
+            <div class="col-3 seat">
+                <input id="D2" type="checkbox" class="seat-checkbox">
+                <label for="D2" class="seat-label"></label>
+                D2
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A3" type="checkbox" class="seat-checkbox">
+                <label for="A3" class="seat-label"></label>
+                A3
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B3" type="checkbox" class="seat-checkbox">
+                <label for="B3" class="seat-label"></label>
+                B3
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C3" type="checkbox" class="seat-checkbox">
+                <label for="C3" class="seat-label"></label>
+                C3
+            </div>
+            <div class="col-3 seat">
+                <input id="D3" type="checkbox" class="seat-checkbox">
+                <label for="D3" class="seat-label"></label>
+                D3
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A4" type="checkbox" class="seat-checkbox">
+                <label for="A4" class="seat-label"></label>
+                A4
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B4" type="checkbox" class="seat-checkbox">
+                <label for="B4" class="seat-label"></label>
+                B4
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C4" type="checkbox" class="seat-checkbox">
+                <label for="C4" class="seat-label"></label>
+                C4
+            </div>
+            <div class="col-3 seat">
+                <input id="D4" type="checkbox" class="seat-checkbox">
+                <label for="D4" class="seat-label"></label>
+                D4
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A5" type="checkbox" class="seat-checkbox">
+                <label for="A5" class="seat-label"></label>
+                A5
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B5" type="checkbox" class="seat-checkbox">
+                <label for="B5" class="seat-label"></label>
+                B5
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C5" type="checkbox" class="seat-checkbox">
+                <label for="C5" class="seat-label"></label>
+                C5
+            </div>
+            <div class="col-3 seat">
+                <input id="D5" type="checkbox" class="seat-checkbox">
+                <label for="D5" class="seat-label"></label>
+                D5
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A6" type="checkbox" class="seat-checkbox">
+                <label for="A6" class="seat-label"></label>
+                A6
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B6" type="checkbox" class="seat-checkbox">
+                <label for="B6" class="seat-label"></label>
+                B6
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C6" type="checkbox" class="seat-checkbox">
+                <label for="C6" class="seat-label"></label>
+                C6
+            </div>
+            <div class="col-3 seat">
+                <input id="D6" type="checkbox" class="seat-checkbox">
+                <label for="D6" class="seat-label"></label>
+                D6
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A7" type="checkbox" class="seat-checkbox">
+                <label for="A7" class="seat-label"></label>
+                A7
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B7" type="checkbox" class="seat-checkbox">
+                <label for="B7" class="seat-label"></label>
+                B7
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C7" type="checkbox" class="seat-checkbox">
+                <label for="C7" class="seat-label"></label>
+                C7
+            </div>
+            <div class="col-3 seat">
+                <input id="D7" type="checkbox" class="seat-checkbox">
+                <label for="D7" class="seat-label"></label>
+                D7
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="A8" type="checkbox" class="seat-checkbox">
+                <label for="A8" class="seat-label"></label>
+                A8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="B8" type="checkbox" class="seat-checkbox">
+                <label for="B8" class="seat-label"></label>
+                B8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="C8" type="checkbox" class="seat-checkbox">
+                <label for="C8" class="seat-label"></label>
+                C8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="D8" type="checkbox" class="seat-checkbox">
+                <label for="D8" class="seat-label"></label>
+                D8
+            </div>
+        </div>
+        <input type="radio" id="map1" name="seat-map" style="margin-left: 65px; margin-top: 10px">
+    </div>
+    <div class="col-4 seat-container">
+        <h5 style="text-align: center; margin-top:0px; margin-bottom: 0px">BẢN ĐỒ CHỖ NGỒI</h5>
+        <h5 style="text-align: center; margin-top:5px; margin-bottom: 10px">Xe 40 chỗ - Loại 1</h5>
+        <div class="row">
+            <div class="col-6 seat" style="width: 105px;background-color: #acc3ff;margin-right: 11px">
+                TÀI XẾ
+            </div>
+            <div class="col-6 seat" style="width: 105px;background-color: #acc3ff;margin-left: 11px">
+                HDV
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A1" type="checkbox" class="seat-checkbox">
+                <label for="A1" class="seat-label"></label>
+                A1
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B1" type="checkbox" class="seat-checkbox">
+                <label for="B1" class="seat-label"></label>
+                B1
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C1" type="checkbox" class="seat-checkbox">
+                <label for="C1" class="seat-label"></label>
+                C1
+            </div>
+            <div class="col-3 seat">
+                <input id="D1" type="checkbox" class="seat-checkbox">
+                <label for="D1" class="seat-label"></label>
+                D1
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A2" type="checkbox" class="seat-checkbox">
+                <label for="A2" class="seat-label"></label>
+                A2
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B2" type="checkbox" class="seat-checkbox">
+                <label for="B2" class="seat-label"></label>
+                B2
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C2" type="checkbox" class="seat-checkbox">
+                <label for="C2" class="seat-label"></label>
+                C2
+            </div>
+            <div class="col-3 seat">
+                <input id="D2" type="checkbox" class="seat-checkbox">
+                <label for="D2" class="seat-label"></label>
+                D2
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A3" type="checkbox" class="seat-checkbox">
+                <label for="A3" class="seat-label"></label>
+                A3
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B3" type="checkbox" class="seat-checkbox">
+                <label for="B3" class="seat-label"></label>
+                B3
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C3" type="checkbox" class="seat-checkbox">
+                <label for="C3" class="seat-label"></label>
+                C3
+            </div>
+            <div class="col-3 seat">
+                <input id="D3" type="checkbox" class="seat-checkbox">
+                <label for="D3" class="seat-label"></label>
+                D3
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A4" type="checkbox" class="seat-checkbox">
+                <label for="A4" class="seat-label"></label>
+                A4
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B4" type="checkbox" class="seat-checkbox">
+                <label for="B4" class="seat-label"></label>
+                B4
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C4" type="checkbox" class="seat-checkbox">
+                <label for="C4" class="seat-label"></label>
+                C4
+            </div>
+            <div class="col-3 seat">
+                <input id="D4" type="checkbox" class="seat-checkbox">
+                <label for="D4" class="seat-label"></label>
+                D4
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A5" type="checkbox" class="seat-checkbox">
+                <label for="A5" class="seat-label"></label>
+                A5
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B5" type="checkbox" class="seat-checkbox">
+                <label for="B5" class="seat-label"></label>
+                B5
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C5" type="checkbox" class="seat-checkbox">
+                <label for="C5" class="seat-label"></label>
+                C5
+            </div>
+            <div class="col-3 seat">
+                <input id="D5" type="checkbox" class="seat-checkbox">
+                <label for="D5" class="seat-label"></label>
+                D5
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A6" type="checkbox" class="seat-checkbox">
+                <label for="A6" class="seat-label"></label>
+                A6
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B6" type="checkbox" class="seat-checkbox">
+                <label for="B6" class="seat-label"></label>
+                B6
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C6" type="checkbox" class="seat-checkbox">
+                <label for="C6" class="seat-label"></label>
+                C6
+            </div>
+            <div class="col-3 seat">
+                <input id="D6" type="checkbox" class="seat-checkbox">
+                <label for="D6" class="seat-label"></label>
+                D6
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat">
+                <input id="A7" type="checkbox" class="seat-checkbox">
+                <label for="A7" class="seat-label"></label>
+                A7
+            </div>
+            <div class="col-3 seat" style="margin-right: 11px">
+                <input id="B7" type="checkbox" class="seat-checkbox">
+                <label for="B7" class="seat-label"></label>
+                B7
+            </div>
+            <div class="col-3 seat" style="margin-left: 11px">
+                <input id="C7" type="checkbox" class="seat-checkbox">
+                <label for="C7" class="seat-label"></label>
+                C7
+            </div>
+            <div class="col-3 seat">
+                <input id="D7" type="checkbox" class="seat-checkbox">
+                <label for="D7" class="seat-label"></label>
+                D7
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="A8" type="checkbox" class="seat-checkbox">
+                <label for="A8" class="seat-label"></label>
+                A8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="B8" type="checkbox" class="seat-checkbox">
+                <label for="B8" class="seat-label"></label>
+                B8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="C8" type="checkbox" class="seat-checkbox">
+                <label for="C8" class="seat-label"></label>
+                C8
+            </div>
+            <div class="col-3 seat" style="width: 35px;">
+                <input id="D8" type="checkbox" class="seat-checkbox">
+                <label for="D8" class="seat-label"></label>
+                D8
+            </div>
+        </div>
+        <input type="radio" id="map1" name="seat-map" style="margin-left: 65px; margin-top: 10px">
+    </div>
+</div>
+</body>
+</html>

@@ -1,6 +1,5 @@
 travel_app.controller('TransBookingCusController',
-    function ($scope, $location, $routeParams, AuthService, TransportationScheduleServiceAD, LocalStorageService) {
-
+    function ($scope, $location, $routeParams, $interval, LocalStorageService, GenerateCodePayService, AuthService, TransportationScheduleServiceAD, BookingTransportCusService) {
         let user = AuthService.getUser();
 
         if (LocalStorageService.get('dataBookingTransport') === null) {
@@ -22,10 +21,21 @@ travel_app.controller('TransBookingCusController',
             ZaloPay: false
         };
 
-        $scope.customerInfo = {
+        $scope.bookingTransport = {
+            id: null,
+            userId: null,
+            transportationScheduleId: null,
             customerName: null,
+            customerCitizenCard: null,
             customerPhone: null,
-            customerEmail: null
+            customerEmail: null,
+            amountTicket: null,
+            orderTotal: null,
+            paymentMethod: null,
+            orderCode: null,
+            dateCreated: null,
+            orderStatus: null,
+            orderNote: null
         }
 
         /**
@@ -47,12 +57,12 @@ travel_app.controller('TransBookingCusController',
         };
 
         $scope.init = function () {
-            let scheduleId = JSON.parse(atob($routeParams.scheduleId));
+            $scope.scheduleId = JSON.parse(atob($routeParams.scheduleId));
 
             /**
              * Tìm đối tượng nhà xe
              */
-            TransportationScheduleServiceAD.findById(scheduleId).then(function (response) {
+            TransportationScheduleServiceAD.findById($scope.scheduleId).then(function (response) {
                 if (response.status === 200) {
                     $scope.transportSchedule = response.data.data;
                     $scope.totalAmountSeat = LocalStorageService.get('dataBookingTransport').totalAmountSeat;
@@ -97,19 +107,46 @@ travel_app.controller('TransBookingCusController',
          * Thanh toán tại quầy
          */
         $scope.paymentTravel = function () {
+            let seatNumber = $scope.seatNumber;
+            let transportSchedule = $scope.transportSchedule;
+            let orderTransport = $scope.bookingTransport;
+
+            orderTransport.id = GenerateCodePayService.generateCodeBooking('VPO', transportSchedule.id);
+            orderTransport.transportationScheduleId = $scope.scheduleId;
+            orderTransport.amountTicket = $scope.totalAmountSeat;
+            orderTransport.orderTotal = $scope.totalPrice;
+            orderTransport.paymentMethod = 0; // thanh toán tại quầy
+
             if (user !== null) {
                 if (user.roles.some(role => role.nameRole === 'ROLE_CUSTOMER')) {
-                    console.log(user.id)
+                    orderTransport.userId = user.id;
                 } else {
                     LocalStorageService.remove('user');
                 }
             }
 
             function confirmBookTour() {
-                console.log($scope.customerInfo)
+                $scope.isLoading = true;
+
+                BookingTransportCusService.createBookingTransport(orderTransport, seatNumber).then(function (response) {
+                    if (response.status === 200) {
+                        let dataBookingTransportSuccess = {
+                            orderTransport: response.data.data,
+                            transportSchedule: transportSchedule,
+                            seatNumber: seatNumber
+                        }
+                        LocalStorageService.set('dataBookingTransportSuccess', dataBookingTransportSuccess);
+
+                        $location.path('/drive-move/drive-transport-detail/booking-confirmation/booking-successfully');
+                    } else {
+                        $location.path('/admin/page-not-found');
+                    }
+                }).finally(function () {
+                    $scope.isLoading = false;
+                });
             }
 
-            confirmAlert('Bạn có chắc chắn địa chỉ email: ' + $scope.customerInfo.customerEmail + ' là chính xác không ?', confirmBookTour);
+            confirmAlert('Bạn có chắc chắn địa chỉ email: ' + $scope.bookingTransport.customerEmail + ' là chính xác không ?', confirmBookTour);
         }
 
         $scope.paymentVNPay = function () {
@@ -122,10 +159,10 @@ travel_app.controller('TransBookingCusController',
             }
 
             function confirmBookTour() {
-                console.log($scope.customerInfo)
+                console.log($scope.bookingTransport)
             }
 
-            confirmAlert('Bạn có chắc chắn địa chỉ email: ' + $scope.customerInfo.customerEmail + ' là chính xác không ?', confirmBookTour);
+            confirmAlert('Bạn có chắc chắn địa chỉ email: ' + $scope.bookingTransport.customerEmail + ' là chính xác không ?', confirmBookTour);
         }
 
         $scope.paymentZaLoPay = function () {
@@ -138,10 +175,10 @@ travel_app.controller('TransBookingCusController',
             }
 
             function confirmBookTour() {
-                console.log($scope.customerInfo)
+                console.log($scope.bookingTransport)
             }
 
-            confirmAlert('Bạn có chắc chắn địa chỉ email: ' + $scope.customerInfo.customerEmail + ' là chính xác không ?', confirmBookTour);
+            confirmAlert('Bạn có chắc chắn địa chỉ email: ' + $scope.bookingTransport.customerEmail + ' là chính xác không ?', confirmBookTour);
         }
 
         $scope.paymentMomo = function () {
@@ -154,16 +191,55 @@ travel_app.controller('TransBookingCusController',
             }
 
             function confirmBookTour() {
-                console.log($scope.customerInfo)
+                console.log($scope.bookingTransport)
             }
 
-            confirmAlert('Bạn có chắc chắn địa chỉ email: ' + $scope.customerInfo.customerEmail + ' là chính xác không ?', confirmBookTour);
+            confirmAlert('Bạn có chắc chắn địa chỉ email: ' + $scope.bookingTransport.customerEmail + ' là chính xác không ?', confirmBookTour);
         }
 
         $scope.$on('$routeChangeStart', function (event, next, current) {
             if (next.controller !== 'TransBookingCusController' && next.controller !== 'LoginController' && next.controller !== 'MainController') {
                 LocalStorageService.remove('dataBookingTransport');
                 LocalStorageService.remove('redirectAfterLogin');
+                LocalStorageService.remove('countdownTime');
             }
+
+            if (next.controller !== 'TransBookingCusController' && next.controller !== 'TransBookingSuccessCusController') {
+                LocalStorageService.remove('dataBookingTransportSuccess');
+            }
+        });
+
+        /**
+         * Đếm thời gian thanh toán
+         */
+        let savedTime = LocalStorageService.get('countdownTime');
+        let countdownTime = savedTime ? JSON.parse(savedTime) : {minutes: 10, seconds: 0};
+
+        $scope.minutes = countdownTime.minutes;
+        $scope.seconds = countdownTime.seconds;
+
+        let intervalPromise = $interval(function () {
+            if ($scope.seconds > 0 || $scope.minutes > 0) {
+                $scope.seconds--;
+                if ($scope.seconds < 0) {
+                    $scope.seconds = 59;
+                    $scope.minutes--;
+                }
+            } else {
+                LocalStorageService.remove('countdownTime');
+                $location.path('/drive-move');
+                centerAlert('Thất bại', 'Đã hết thời gian thanh toán quý khách vui lòng đặt vé khác', 'warning');
+                return;
+            }
+
+            LocalStorageService.set('countdownTime', JSON.stringify({
+                minutes: $scope.minutes,
+                seconds: $scope.seconds
+            }));
+
+        }, 1000);
+
+        $scope.$on('$destroy', function () {
+            $interval.cancel(intervalPromise);
         });
     })

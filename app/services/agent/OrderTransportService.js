@@ -1,10 +1,10 @@
 travel_app.service('OrderTransportService', function ($http) {
     let API_ORDER_TRANS = BASE_API + 'agent/order-transport/';
 
-    this.findAllOrderTransport = function (brandId, page, size, sortBy, sortDir, searchTerm) {
+    this.findAllOrderTransport = function (brandId, scheduleId, page, size, sortBy, sortDir, searchTerm) {
         return $http({
             method: 'GET',
-            url: API_ORDER_TRANS + 'find-all-order-transport/' + brandId,
+            url: API_ORDER_TRANS + 'find-all-order-transport/' + brandId + '/' + scheduleId,
             params: {
                 page: page || 0,
                 size: size || 5,
@@ -12,6 +12,13 @@ travel_app.service('OrderTransportService', function ($http) {
                 sortDir: sortDir || 'asc',
                 searchTerm: searchTerm || ''
             }
+        })
+    }
+
+    this.findSeatByScheduleId = function (scheduleId) {
+        return $http({
+            method: 'GET',
+            url: API_ORDER_TRANS + 'find-all-transport-seats-by-schedule-id/' + scheduleId
         })
     }
 
@@ -36,10 +43,10 @@ travel_app.service('OrderTransportService', function ($http) {
         })
     }
 
-    this.create = function (orderTransportationsDto) {
+    this.create = function (orderTransportationsDto, seatNumber) {
         return $http({
             method: 'POST',
-            url: API_ORDER_TRANS + 'create-order-transport',
+            url: API_ORDER_TRANS + 'create-order-transport/' + seatNumber,
             data: orderTransportationsDto
         })
     }
@@ -52,10 +59,10 @@ travel_app.service('OrderTransportService', function ($http) {
         })
     }
 
-    this.delete = function (orderTransportId) {
+    this.delete = function (orderTransportId, scheduleId) {
         return $http({
             method: 'GET',
-            url: API_ORDER_TRANS + 'delete-order-transport/' + orderTransportId
+            url: API_ORDER_TRANS + 'delete-order-transport/' + orderTransportId + '/' + scheduleId
         })
     }
 })

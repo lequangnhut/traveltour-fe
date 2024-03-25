@@ -219,7 +219,7 @@
                                         <td style="text-align: justify;">{{ btl.id }}</td>
                                         <td style="text-align: justify;">{{ btl.toursByTourId.tourName }}</td>
                                         <td>{{ (btl.startDate | vietnameseDateTime) || 'Đang cập nhật' }}</td>
-                                        <td>{{ (btl.endDate | vietnameseDateTime) || 'Đang cập nhật' }}</td>
+                                        <td>{{ (btl.dateCreated | vietnameseDateTime)}}</td>
                                         <td ng-if="btl.orderStatus == 0">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <span class="status-warning"></span>
@@ -311,41 +311,48 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
-                                                Mã booking</span>
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">Mã booking</span>
                                                                             <span class="subheadings">{{bookingTour.id}}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
-                                                Ngày tạo đơn</span>
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">Ngày tạo đơn</span>
                                                                             <span class="subheadings">{{bookingTour.dateCreated | vietnameseDateTime}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Email khách hàng</span>
+                                                                            <span class="subheadings">{{bookingTour.customerEmail}}</span>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td style="max-width: 100px;">
                                                                         <div class="d-flex flex-column">
-                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
-                                                Tên tour</span>
-                                                                            <a class="subheadings" ng-click="closeTourModal()"
-                                                                               href="/tours/tour-detail/{{ bookingTour.tourDetailsByTourDetailId.id }}"
-                                                                               title="Xem chi tiết">{{bookingTour.toursByTourId.tourName}}
-                                                                                - {{ bookingTour.startDate | calculateDaysAndNights:bookingTour.endDate }} </a>
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Tên tour</span>
+                                                                            <span class="subheadings" ng-click="closeTourModal()">
+                                                                                {{bookingTour.toursByTourId.tourName}}
+                                                                            </span>
+                                                                            <span class="subheadings">
+                                                                                {{ bookingTour.startDate | calculateDaysAndNights:bookingTour.endDate }}
+                                                                            </span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
-                                                Ngày đi</span>
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Ngày đi</span>
                                                                             <span class="subheadings">{{bookingTour.startDate | vietnameseDateTime}}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
-                                                Ngày về</span>
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Ngày về</span>
                                                                             <span class="subheadings">{{bookingTour.endDate | vietnameseDateTime}}</span>
                                                                         </div>
                                                                     </td>
@@ -353,15 +360,15 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
-                                                Email khách hàng</span>
-                                                                            <span class="subheadings">{{bookingTour.customerEmail}}</span>
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Đơn giá</span>
+                                                                            <span class="subheadings">{{bookingTour.tourDetailsByTourDetailId.unitPrice | vnCurrency}}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td colspan="2">
                                                                         <div class="d-flex flex-column">
-                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
-                                                Số lượng vé</span>
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Số lượng vé</span>
                                                                             <span class="subheadings">{{ (bookingTour.capacityAdult || 0) + ' x Người lớn, ' + (bookingTour.capacityKid || 0) + ' x Trẻ em, ' + (bookingTour.capacityBaby || 0) + ' x Em bé' }}</span>
                                                                         </div>
                                                                     </td>
@@ -369,15 +376,15 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
-                                                Giá trị đơn</span>
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Giá trị đơn</span>
                                                                             <span class="subheadings">{{bookingTour.orderTotal | vnCurrency }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
-                                                HTTToán</span>
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                HTTToán</span>
                                                                             <span class="subheadings" ng-if="bookingTour.paymentMethod === 0">Thanh toán tại quầy</span>
                                                                             <span class="subheadings" ng-if="bookingTour.paymentMethod === 1">Thanh toán VNPay</span>
                                                                             <span class="subheadings" ng-if="bookingTour.paymentMethod === 2">Thanh toán ZaloPay</span>
@@ -386,8 +393,8 @@
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
-                                                Trạng thái</span>
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                Trạng thái</span>
                                                                             <span class="subheadings" ng-if="bookingTour.orderStatus === 0"><i
                                                                                     class="dots bg-warning"></i> Chờ thanh toán</span>
                                                                             <span class="subheadings" ng-if="bookingTour.orderStatus === 1"><i
@@ -544,11 +551,7 @@
                                                 giá trị đơn hàng.</p>
                                             <p>- Hủy đặt phòng trước thời gian check-in từ 2 - 4 ngày, phải trả 50% giá
                                                 trị đơn hàng.</p>
-                                            <p>- Hủy đặt phòng trước thời gian check-in từ 5 - 15 ngày, phải trả 30% giá
-                                                trị đơn hàng.</p>
-                                            <p>- Hủy đặt phòng trước thời gian check-in từ 16 - 30 ngày, phải trả 10%
-                                                giá trị đơn hàng.</p>
-                                            <p>- Hủy đặt phòng trước thời gian check-in từ 30 ngày trở lên, sẽ được hoàn
+                                            <p>- Hủy đặt phòng trước thời gian check-in từ 5 ngày trở lên, sẽ được hoàn
                                                 tiền 100%.</p>
                                         </div>
                                         <div class="mb-2" style="text-align: justify;">
@@ -870,11 +873,10 @@
                                         </div>
                                         <div class="mb-2" style="text-align: justify;">
                                             <h5 class="mb-2" style="color: #504d4d"><i
-                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Điều kiện hủy đặt
-                                                phòng:</h5>
-                                            <p>- Hủy vé trong vòng 24 giờ hoặc ngay ngày khởi hành, phải trả 70%%
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Điều kiện hủy vé xe:</h5>
+                                            <p>- Hủy vé trong vòng 24 giờ hoặc ngay ngày khởi hành, phải trả 70%
                                                 giá trị đơn hàng.</p>
-                                            <p>- Hủy vé trước ngày khởi hành từ 2 - 3 ngày, phải trả 10% giá
+                                            <p>- Hủy vé trước ngày khởi hành từ 2 - 3 ngày, phải trả 30% giá
                                                 trị đơn hàng.</p>
                                             <p>- Hủy vé trước ngày khởi hành từ 4 ngày trở lên, sẽ được hoàn
                                                 tiền 100%.</p>
@@ -986,15 +988,19 @@
                                                                     <td>
                                                                         <div class="d-flex flex-column">
                                                                             <span class="heading d-block" style="font-size: larger;color: #727179;">
-                                                                                Giá vé</span>
+                                                                                Đơn giá</span>
                                                                             <span class="subheadings">{{bookingTrans.transportationSchedules.unitPrice | vnCurrency }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
-                                                                                Số vé</span>
-                                                                            <span class="subheadings">{{bookingTrans.amountTicket}}</span>
+                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">Số vé (x{{bookingTrans.amountTicket}})</span>
+                                                                            <!-- Hiển thị danh sách ghế -->
+                                                                            <p class="subheadings d-flex">
+                                                                                <span ng-repeat="seat in ticketListCustomer" style="margin-right: 5px;">
+                                                                                    Ghế {{ seat.transportationScheduleSeats.seatNumber }}{{$last ? '' : ', '}}
+                                                                                </span>
+                                                                            </p>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -1002,7 +1008,7 @@
                                                                     <td>
                                                                         <div class="d-flex flex-column">
                                                                             <span class="heading d-block" style="font-size: larger;color: #727179;">
-                                                                                Giá trị đơn</span>
+                                                                                Tổng tiền</span>
                                                                             <span class="subheadings">{{bookingTrans.orderTotal | vnCurrency }}</span>
                                                                         </div>
                                                                     </td>
@@ -1010,14 +1016,10 @@
                                                                         <div class="d-flex flex-column">
                                                                             <span class="heading d-block" style="font-size: larger;color: #727179;">
                                                                                 HTTToán</span>
-<!--                                                                            <span class="subheadings"-->
-<!--                                                                                  ng-if="bookingTrans.paymentMethod === 'Momo'">Ví điện tử Momo</span>-->
-<!--                                                                            <span class="subheadings"-->
-<!--                                                                                  ng-if="bookingTrans.paymentMethod === 'TTTT'">Thanh toán trực tiếp</span>-->
-<!--                                                                            <span class="subheadings"-->
-<!--                                                                                  ng-if="bookingTrans.paymentMethod === 'VNPay'">Thanh toán VN Pay</span>-->
-<!--                                                                            <span class="subheadings"-->
-<!--                                                                                  ng-if="bookingTrans.paymentMethod === 'ZaloPay'">Ví điện tử ZaloPay</span>-->
+                                                                            <span class="subheadings" ng-if="bookingTrans.paymentMethod === 0">Thanh toán tại quầy</span>
+                                                                            <span class="subheadings" ng-if="bookingTrans.paymentMethod === 1">Thanh toán VNPay</span>
+                                                                            <span class="subheadings" ng-if="bookingTrans.paymentMethod === 2">Thanh toán ZaloPay</span>
+                                                                            <span class="subheadings" ng-if="bookingTrans.paymentMethod === 3">Thanh toán Momo</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>

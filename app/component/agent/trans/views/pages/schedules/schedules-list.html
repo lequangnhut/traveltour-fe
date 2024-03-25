@@ -181,11 +181,15 @@
                     </td>
                     <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
                         <a href="/business/transport/schedules-management/update-schedules/{{ schedule.id }}"
-                           role="button" class="fs-1 btn text-warning">
+                           role="button" class="fs-1 px-2 btn text-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
+                        <a href="/business/transport/schedules-management/order-transport-management/{{ schedule.id }}"
+                           role="button" class="fs-1 btn text-primary px-2" title="Danh sách vé tham quan">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </a>
                         <a href="#" ng-click="deleteSchedule(schedule.id, schedule.fromLocation, schedule.toLocation)"
-                           role="button" class="fs-1 btn text-danger">
+                           role="button" class="fs-1 px-2 btn text-danger">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>

@@ -1,4 +1,6 @@
-travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $routeParams, $location, AgenciesServiceAG, TransportBrandServiceAG, AuthService) {
+travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $routeParams, $location, AgenciesServiceAG, TransportBrandServiceAG, MapBoxService) {
+    mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
+
     let brandId = $routeParams.id;
 
     $scope.currentStep = 1;
@@ -27,6 +29,7 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $rou
         agenciesId: null,
         transportationBrandName: null,
         transportationBrandPolicy: null,
+        transportationBrandAddress: null,
         transportationBrandImg: null
     }
 
@@ -135,4 +138,128 @@ travel_app.controller('RegisterTransControllerAG', function ($scope, $http, $rou
     }
 
     $scope.init();
+
+    $scope.initMap = () => {
+        $scope.map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v12',
+            center: [106.6297, 10.8231],
+            zoom: 9
+        });
+
+        $scope.map.on('load', () => {
+            $scope.map.on('click', (e) => {
+                $scope.longitude = e.lngLat.lng;
+                $scope.latitude = e.lngLat.lat;
+
+                if ($scope.currentMarker) {
+                    $scope.currentMarker.remove();
+                }
+
+                $scope.toLocationArray = [$scope.longitude, $scope.latitude];
+
+                $scope.showLocationOnInput($scope.toLocationArray);
+
+                $scope.currentMarker = new mapboxgl.Marker()
+                    .setLngLat([$scope.longitude, $scope.latitude])
+                    .addTo($scope.map);
+            });
+        });
+    }
+
+    $scope.searchLocationOnMap = () => {
+        let searchQuery = encodeURIComponent($scope.searchLocation);
+
+        if (searchQuery) {
+            let apiUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchQuery}.json?access_token=${mapboxgl.accessToken}&country=VN&type=region&autocomplete=true`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.features.length > 0) {
+                        $scope.suggestedLocations = data.features.map(feature => feature.place_name);
+                        $scope.showSuggestions = true;
+                    } else {
+                        $scope.showSuggestions = false;
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi khi tìm kiếm địa điểm:', error);
+                    $scope.showSuggestions = false;
+                });
+        } else {
+            $scope.showSuggestions = false;
+            $scope.initMap();
+        }
+    }
+
+    $scope.selectLocation = (location) => {
+        $scope.searchLocation = location;
+        $scope.searchLocationOnMap();
+        $scope.showSuggestions = false;
+    }
+
+    $scope.submitSearchOnMap = () => {
+        $scope.showSuggestions = false;
+        let searchQuery = $scope.searchLocation;
+
+        if (searchQuery) {
+            if (searchQuery.length > 50) {
+                searchQuery = searchQuery.substring(0, 50);
+            }
+
+            let relatedKeywords = searchQuery.split(' ').filter(keyword => keyword.length > 2);
+            searchQuery = relatedKeywords.join(' ');
+
+            MapBoxService.geocodeAddress(searchQuery, (error, coordinates) => {
+                if (error) {
+                    console.error('Lỗi khi tìm kiếm địa điểm:', error);
+                    return;
+                }
+
+                let bbox = [
+                    [coordinates[0] - 0.01, coordinates[1] - 0.01],
+                    [coordinates[0] + 0.01, coordinates[1] + 0.01]
+                ];
+
+                $scope.map ? $scope.map.fitBounds(bbox) : $scope.initMap();
+            });
+        } else {
+            $scope.initMap();
+        }
+    }
+
+    $scope.showLocationOnInput = (toLocation) => {
+        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${toLocation[0]},${toLocation[1]}.json?access_token=${mapboxgl.accessToken}`)
+            .then(response => response.json())
+            .then(data => {
+                $scope.$apply(() => {
+                    let addressComponents = data.features[0].place_name.split(',');
+                    for (let i = addressComponents.length - 1; i >= 0; i--) {
+                        let lastPart = addressComponents[i].trim();
+                        if (!isNaN(lastPart)) {
+                            addressComponents.splice(i, 1);
+                            break;
+                        }
+                    }
+                    $scope.transportBrand.transportationBrandAddress = addressComponents.join(',').trim();
+                });
+            })
+            .catch(error => {
+                console.error('Lỗi khi lấy thông tin địa chỉ:', error);
+            });
+    }
+
+    /**
+     * Phương thức hiển thị modal
+     */
+    $scope.showModalMap = () => {
+        $scope.searchLocation = "";
+        let modelMap = $('#modalMapTransport');
+        modelMap.modal('show');
+
+        modelMap.on('shown.bs.modal', () => {
+            $scope.initMap();
+        });
+    };
 });

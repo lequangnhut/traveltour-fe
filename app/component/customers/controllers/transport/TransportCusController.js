@@ -136,7 +136,7 @@ travel_app.controller('TransportCusController', function ($scope, $location, Map
             var bounds = new mapboxgl.LngLatBounds();
 
             for (const brand of transportBrand) {
-                let address = brand.agenciesByAgenciesId.province + ', ' + brand.agenciesByAgenciesId.district + ', ' + brand.agenciesByAgenciesId.ward + ', ' + brand.agenciesByAgenciesId.address;
+                let address = brand.transportationBrandAddress;
 
                 let iconUrl = '/assets/customers/images/icon/maker.png';
                 let el = document.createElement('div');
@@ -186,7 +186,7 @@ travel_app.controller('TransportCusController', function ($scope, $location, Map
         $scope.addMarkerTransport = function (transportBrand) {
             $scope.removeMarkerTransport();
             let bounds = new mapboxgl.LngLatBounds();
-            let address = transportBrand.agenciesByAgenciesId.province + ', ' + transportBrand.agenciesByAgenciesId.district + ', ' + transportBrand.agenciesByAgenciesId.ward + ', ' + transportBrand.agenciesByAgenciesId.address;
+            let address = transportBrand.transportationBrandAddress;
 
             let iconUrl = '/assets/customers/images/icon/maker.png';
             let el = document.createElement('div');
@@ -364,7 +364,7 @@ travel_app.controller('TransportCusController', function ($scope, $location, Map
                             </div>
                             <div class="col-xl-9 col-lg-8">
                                 <div class="meta row">
-                                    <div class="col-lg-8 container-hotel">
+                                    <div class="col-lg-8 container-transport">
                                         <div>
                                         <span>
                                             <i class="fa-solid fa-bus"></i>
@@ -395,13 +395,7 @@ travel_app.controller('TransportCusController', function ($scope, $location, Map
                                             <div style="font-size: 14px; line-height: 20px">
                                                 <p class="mb-3">
                                                     <span class="fas fa-map-marker-alt text-green"></span>
-                                                    ${brand.agenciesByAgenciesId.address}
-                                                    -
-                                                    ${brand.agenciesByAgenciesId.ward}
-                                                    <br>
-                                                    ${brand.agenciesByAgenciesId.district}
-                                                    -
-                                                    ${brand.agenciesByAgenciesId.province}
+                                                    ${brand.transportationBrandAddress}
                                                 </p>
                                                 <div class="text-green">
                                                     <i class="fa-solid fa-check"></i> Xe có WIFI miễn phí

@@ -110,7 +110,7 @@
                                             <!-- Pagination Numbers -->
                                             <li class="page-item" ng-repeat="n in getPaginationRange()"
                                                 ng-class="{active: n === currentPage}">
-                                                <a class="page-link" ng-click="setPage(n)">{{n + 1}}</a>
+                                                <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
                                             </li>
 
                                             <!-- Ellipsis at the end -->
@@ -142,7 +142,8 @@
                                 </th>
                                 <th ng-click="sortData('representativeName')">
                                     <div class="icon-left">Người đại diện
-                                        <span class="sorting-icon" ng-bind-html="getSortIcon('representativeName')"></span>
+                                        <span class="sorting-icon"
+                                              ng-bind-html="getSortIcon('representativeName')"></span>
                                     </div>
                                 </th>
                                 <th ng-click="sortData('phone')">
@@ -166,11 +167,11 @@
                             <tbody>
                             <tr ng-repeat="type in typeList">
                                 <!--          <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>-->
-                                <td style="font-size: small">{{$index + 1}}</td>
-                                <td>{{type.nameAgency ? type.nameAgency : '-'}}</td>
-                                <td>{{type.representativeName ? type.representativeName : '-'}}</td>
-                                <td>{{ type.phone ? type.phone : '-'}}</td>
-                                <td>{{type.province ? type.province : '-'}}</td>
+                                <td style="font-size: small">{{ $index + 1 }}</td>
+                                <td>{{ type.nameAgency ? type.nameAgency : '-' }}</td>
+                                <td>{{ type.representativeName ? type.representativeName : '-' }}</td>
+                                <td>{{ type.phone ? type.phone : '-' }}</td>
+                                <td>{{ type.province ? type.province : '-' }}</td>
                                 <td>
                                     <div class="d-flex align-items-center justify-content-center">
                                         <span class="status-warning"></span> <span class="text-status-warning">Chờ phê duyệt</span>
@@ -190,7 +191,7 @@
                         </table>
                         <div class="card-footer">
                             <div class="d-flex justify-content-end">
-                                {{getDisplayRange()}} trong tổng số {{totalElements}}
+                                {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                             </div>
                         </div>
                     </div>
@@ -218,10 +219,10 @@
                                                     Tên doanh nghiệp
                                                 </label>
                                                 <p class="mb-3 lh-lg mb-0"
-                                                   style="font-size: 25px; font-weight: bold">{{agent.nameAgency}}</p>
+                                                   style="font-size: 25px; font-weight: bold">{{ agent.nameAgency }}</p>
                                                 <p class="mb-2 lh-lg mb-0"
                                                    style="font-size: 20px; color: rgba(0,0,0,0.71); padding-left:25px; text-transform: none; font-weight: bolder">
-                                                    ID: {{agent.id}}</p>
+                                                    ID: {{ agent.id }}</p>
                                                 <p class="mb-0 text-700 lh-lg mb-0" style="font-size: large"
                                                    ng-if="agent.nameAgency == null">(Trống)</p>
                                             </div>
@@ -240,35 +241,36 @@
                                                     <hr>
                                                     <p class="mb-3 lh-lg ng-binding"
                                                        style="font-size: 15px; padding-left: 20px; padding-right: 20px">
-                                                        <strong>Mã doanh nghiệp: </strong> {{agent.id || '...'}}
+                                                        <strong>Mã doanh nghiệp: </strong> {{ agent.id || '...' }}
                                                     </p>
                                                     <p class="mb-3 lh-lg ng-binding"
                                                        style="font-size: 15px;padding-left: 20px; padding-right: 20px">
                                                         <strong>Tên doanh
-                                                            nghiệp: </strong> {{agent.nameAgency || '...'}}
+                                                            nghiệp: </strong> {{ agent.nameAgency || '...' }}
                                                     </p>
                                                     <p class="mb-3 lh-lg ng-binding"
                                                        style="font-size: 15px;padding-left: 20px; padding-right: 20px">
                                                         <strong>Người đại
-                                                            diện: </strong> {{agent.representativeName || '...'}}
+                                                            diện: </strong> {{ agent.representativeName || '...' }}
                                                     </p>
                                                     <p class="mb-3 lh-lg ng-binding"
                                                        style="font-size: 15px;padding-left: 20px; padding-right: 20px">
-                                                        <strong>Mã số thuế: </strong> {{agent.taxId || '...'}}
+                                                        <strong>Mã số thuế: </strong> {{ agent.taxId || '...' }}
                                                     </p>
                                                     <p class="mb-3 lh-lg ng-binding"
                                                        style="font-size: 15px;padding-left: 20px; padding-right: 20px">
-                                                        <strong>Số điện thoại: </strong> {{agent.phone || '...'}}
+                                                        <strong>Số điện thoại: </strong> {{ agent.phone || '...' }}
                                                     </p>
                                                     <p class="mb-3 lh-lg ng-binding"
                                                        style="font-size: 15px;padding-left: 20px; padding-right: 20px">
-                                                        <strong>Địa chỉ website: </strong> {{agent.urlWebsite || '...'}}
+                                                        <strong>Địa chỉ
+                                                            website: </strong> {{ agent.urlWebsite || '...' }}
                                                     </p>
                                                     <p class="mb-3 lh-lg ng-binding"
                                                        style="font-size: 15px;padding-left: 20px; padding-right: 20px">
-                                                        <strong>Địa chỉ: </strong> {{agent.address || '...'}}
-                                                        , {{agent.ward || '...'}}, {{agent.district || '...'}}
-                                                        , {{agent.province || '...'}}
+                                                        <strong>Địa chỉ: </strong> {{ agent.address || '...' }}
+                                                        , {{ agent.ward || '...' }}, {{ agent.district || '...' }}
+                                                        , {{ agent.province || '...' }}
                                                     </p>
                                                     <p class="mb-3 lh-lg ng-binding"
                                                        style="font-size: 15px;padding-left: 20px; padding-right: 20px">
@@ -310,12 +312,11 @@
                                     </div>
                                     <div class="modal-footer" style="padding-right: 0">
                                         <a class="btn btn-warning fw-bold" type="button" ng-click="acceptedThisAgency()"
-                                           data-bs-dismiss="modal" style="background-color: goldenrod; color: #ffffff;">Đồng
-                                            ý</a>
+                                           style="background-color: goldenrod; color: #ffffff;">Đồng ý</a>
                                         <a class="btn btn-danger fw-bold" type="button" ng-click="deniedThisAgency()"
-                                           data-bs-dismiss="modal" style="background-color: #ff3659; color: #ffffff;">Từ
-                                            chối</a>
-                                        <button class="btn btn-outline-primary fw-bold" type="button" data-bs-dismiss="modal"
+                                           style="background-color: #ff3659; color: #ffffff;">Từ chối</a>
+                                        <button class="btn btn-outline-primary fw-bold" type="button"
+                                                data-bs-dismiss="modal"
                                                 style="background-color: #367cff; color: #ffffff;">Trở về
                                         </button>
                                     </div>
@@ -382,7 +383,7 @@
                                             <!-- Pagination Numbers -->
                                             <li class="page-item" ng-repeat="n in getPaginationRange()"
                                                 ng-class="{active: n === currentPage}">
-                                                <a class="page-link" ng-click="setPage(n)">{{n + 1}}</a>
+                                                <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
                                             </li>
 
                                             <!-- Ellipsis at the end -->
@@ -416,7 +417,8 @@
                                 </th>
                                 <th ng-click="sortData('representativeName')">
                                     <div class="icon-left">Người đại diện
-                                        <span class="sorting-icon" ng-bind-html="getSortIcon('representativeName')"></span>
+                                        <span class="sorting-icon"
+                                              ng-bind-html="getSortIcon('representativeName')"></span>
                                     </div>
                                 </th>
                                 <th ng-click="sortData('phone')">
@@ -440,11 +442,11 @@
                             <tbody>
                             <tr ng-repeat="type in typeList">
                                 <!--          <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>-->
-                                <td style="font-size: small">{{$index + 1}}</td>
-                                <td>{{type.nameAgency ? type.nameAgency : '-'}}</td>
-                                <td>{{type.representativeName ? type.representativeName : '-'}}</td>
-                                <td>{{ type.phone ? type.phone : '-'}}</td>
-                                <td>{{type.province ? type.province : '-'}}</td>
+                                <td style="font-size: small">{{ $index + 1 }}</td>
+                                <td>{{ type.nameAgency ? type.nameAgency : '-' }}</td>
+                                <td>{{ type.representativeName ? type.representativeName : '-' }}</td>
+                                <td>{{ type.phone ? type.phone : '-' }}</td>
+                                <td>{{ type.province ? type.province : '-' }}</td>
                                 <td>
                                     <div class="d-flex align-items-center justify-content-center">
                                         <span class="status-error"></span> <span class="text-status-error">Đăng ký thất bại</span>
@@ -452,7 +454,8 @@
                                 </td>
                                 <td class="d-flex align-items-center justify-content-center">
                                     <!--            -->
-                                    <a role="button" class="fs-1 btn text-warning px-2" ng-click="openModalDenied(type.id)"
+                                    <a role="button" class="fs-1 btn text-warning px-2"
+                                       ng-click="openModalDenied(type.id)"
                                        title="Xem hồ sơ">
                                         <i class="fa-solid fa-file-signature"></i>
                                     </a>
@@ -465,7 +468,7 @@
                         </table>
                         <div class="card-footer">
                             <div class="d-flex justify-content-end">
-                                {{getDisplayRangeDenied()}} trong tổng số {{totalElementsDenied}}
+                                {{ getDisplayRangeDenied() }} trong tổng số {{ totalElementsDenied }}
                             </div>
                         </div>
                     </div>
@@ -493,10 +496,10 @@
                                                     Tên doanh nghiệp
                                                 </label>
                                                 <p class="mb-3 lh-lg mb-0"
-                                                   style="font-size: 25px; font-weight: bold">{{agent.nameAgency}}</p>
+                                                   style="font-size: 25px; font-weight: bold">{{ agent.nameAgency }}</p>
                                                 <p class="mb-2 lh-lg mb-0"
                                                    style="font-size: 20px; color: rgba(0,0,0,0.71); padding-left:25px; text-transform: none; font-weight: bolder">
-                                                    ID: {{agent.id}}</p>
+                                                    ID: {{ agent.id }}</p>
                                                 <p class="mb-0 text-700 lh-lg mb-0" style="font-size: large"
                                                    ng-if="agent.nameAgency == null">(Trống)</p>
                                             </div>
@@ -515,35 +518,36 @@
                                                     <hr>
                                                     <p class="mb-3 lh-lg ng-binding"
                                                        style="font-size: 15px; padding-left: 20px; padding-right: 20px">
-                                                        <strong>Mã doanh nghiệp: </strong> {{agent.id || '...'}}
+                                                        <strong>Mã doanh nghiệp: </strong> {{ agent.id || '...' }}
                                                     </p>
                                                     <p class="mb-3 lh-lg ng-binding"
                                                        style="font-size: 15px;padding-left: 20px; padding-right: 20px">
                                                         <strong>Tên doanh
-                                                            nghiệp: </strong> {{agent.nameAgency || '...'}}
+                                                            nghiệp: </strong> {{ agent.nameAgency || '...' }}
                                                     </p>
                                                     <p class="mb-3 lh-lg ng-binding"
                                                        style="font-size: 15px;padding-left: 20px; padding-right: 20px">
                                                         <strong>Người đại
-                                                            diện: </strong> {{agent.representativeName || '...'}}
+                                                            diện: </strong> {{ agent.representativeName || '...' }}
                                                     </p>
                                                     <p class="mb-3 lh-lg ng-binding"
                                                        style="font-size: 15px;padding-left: 20px; padding-right: 20px">
-                                                        <strong>Mã số thuế: </strong> {{agent.taxId || '...'}}
+                                                        <strong>Mã số thuế: </strong> {{ agent.taxId || '...' }}
                                                     </p>
                                                     <p class="mb-3 lh-lg ng-binding"
                                                        style="font-size: 15px;padding-left: 20px; padding-right: 20px">
-                                                        <strong>Số điện thoại: </strong> {{agent.phone || '...'}}
+                                                        <strong>Số điện thoại: </strong> {{ agent.phone || '...' }}
                                                     </p>
                                                     <p class="mb-3 lh-lg ng-binding"
                                                        style="font-size: 15px;padding-left: 20px; padding-right: 20px">
-                                                        <strong>Địa chỉ website: </strong> {{agent.urlWebsite || '...'}}
+                                                        <strong>Địa chỉ
+                                                            website: </strong> {{ agent.urlWebsite || '...' }}
                                                     </p>
                                                     <p class="mb-3 lh-lg ng-binding"
                                                        style="font-size: 15px;padding-left: 20px; padding-right: 20px">
-                                                        <strong>Địa chỉ: </strong> {{agent.address || '...'}}
-                                                        , {{agent.ward || '...'}}, {{agent.district || '...'}}
-                                                        , {{agent.province || '...'}}
+                                                        <strong>Địa chỉ: </strong> {{ agent.address || '...' }}
+                                                        , {{ agent.ward || '...' }}, {{ agent.district || '...' }}
+                                                        , {{ agent.province || '...' }}
                                                     </p>
                                                     <p class="mb-3 lh-lg ng-binding"
                                                        style="font-size: 15px;padding-left: 20px; padding-right: 20px">
@@ -592,7 +596,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer" style="padding-right: 0">
-                                        <button class="btn btn-outline-primary fw-bold" type="button" data-bs-dismiss="modal"
+                                        <button class="btn btn-outline-primary fw-bold" type="button"
+                                                data-bs-dismiss="modal"
                                                 style="background-color: #367cff; color: #ffffff;">Trở về
                                         </button>
                                     </div>

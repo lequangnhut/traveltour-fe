@@ -7,6 +7,9 @@ travel_app.controller('OrderTransportControllerAG',
 
         $scope.isLoading = true;
 
+        $scope.seatSelections = [];
+        $scope.schedulePrices = [];
+
         $scope.currentPage = 0;
         $scope.pageSize = 5;
 
@@ -24,6 +27,7 @@ travel_app.controller('OrderTransportControllerAG',
             orderTotal: null,
             priceFormat: null,
             paymentMethod: null,
+            seatName: null,
             orderCode: GenerateCodeFactory.generateOrderCode(),
             dateCreated: new Date(),
             orderStatus: null,
@@ -35,10 +39,15 @@ travel_app.controller('OrderTransportControllerAG',
         }
 
         $scope.init = function () {
-            OrderTransportService.findAllOrderTransport(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
+            $scope.scheduleId = $routeParams.scheduleId;
+            /**
+             * tìm tất cả booking fill lên bảng
+             */
+            OrderTransportService.findAllOrderTransport(brandId, $scope.scheduleId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
                 .then(function successCallback(response) {
                     if (response.status === 200) {
                         $scope.orderTransport = response.data.content;
+
                         $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
                         $scope.totalElements = response.data.totalElements;
 
@@ -57,7 +66,7 @@ travel_app.controller('OrderTransportControllerAG',
                 if (searchTimeout) $timeout.cancel(searchTimeout);
 
                 searchTimeout = $timeout(function () {
-                    OrderTransportService.findAllOrderTransport(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
+                    OrderTransportService.findAllOrderTransport(brandId, $scope.scheduleId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
                         .then(function (response) {
                             $scope.orderTransport = response.data.content;
                             $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
@@ -114,15 +123,19 @@ travel_app.controller('OrderTransportControllerAG',
             $scope.updateAmountAndTotal = function () {
                 $scope.bookings.amountTicket = 1;
 
-                const selectedSchedule = $scope.transportSchedules.find(function (schedule) {
+                $scope.selectedSchedule = $scope.transportSchedules.find(function (schedule) {
                     return schedule.id === $scope.bookings.transportationScheduleId;
                 });
 
-                if (selectedSchedule) {
-                    $scope.bookings.orderTotal = $scope.formatPrice(selectedSchedule.unitPrice * $scope.bookings.amountTicket);
+                if ($scope.selectedSchedule) {
+                    $scope.bookings.orderTotal = $scope.formatPrice($scope.selectedSchedule.unitPrice * $scope.bookings.amountTicket);
+                    $scope.findScheduleByScheduleId();
                 }
             };
 
+            /**
+             * Cập nhật giá tiền và fill lên form
+             */
             $scope.updateTotal = function () {
                 const selectedSchedule = $scope.transportSchedules.find(function (schedule) {
                     return schedule.id === $scope.bookings.transportationScheduleId;
@@ -133,6 +146,83 @@ travel_app.controller('OrderTransportControllerAG',
                 }
             };
 
+            /**
+             *  Tìm schedule bằng transport id
+             */
+            $scope.findScheduleByScheduleId = function () {
+                let scheduleId = $scope.bookings.transportationScheduleId;
+
+                OrderTransportService.findSeatByScheduleId(scheduleId).then(function (response) {
+                    if (response.status === 200) {
+                        let transportSeat = response.data.data;
+                        $scope.transportSeat = $scope.getSeat(transportSeat);
+                    } else {
+                        $location.path('/admin/page-not-found');
+                    }
+                });
+            }
+
+            /**
+             * tìm tất cả chổ ngồi fill lên chiếc xe
+             * @param transportSeat
+             * @returns {*[]}
+             */
+            $scope.getSeat = function (transportSeat) {
+                let seatRows = [];
+                let chunkedSeats = $scope.chunkArray(transportSeat, 3);
+                seatRows.push(chunkedSeats);
+                return seatRows;
+            }
+
+            $scope.chunkArray = function (array, chunkSize) {
+                let result = [];
+                for (let i = 0; i < array.length; i += chunkSize) {
+                    result.push(array.slice(i, i + chunkSize));
+                }
+                return result;
+            }
+
+            /**
+             * Chọn chổ ngồi
+             */
+            $scope.isActiveSeat = function (seat) {
+                $scope.selectedSchedule = $scope.transportSchedules.find(function (schedule) {
+                    return schedule.id === $scope.bookings.transportationScheduleId;
+                });
+
+                if (seat.isBooked) {
+                    return;
+                }
+
+                let seatNumber = seat.seatNumber;
+                let seatSelections = $scope.seatSelections[$scope.selectedSchedule.id];
+
+                if (seatSelections && seatSelections[seatNumber]) {
+                    delete seatSelections[seatNumber];
+                } else {
+                    if ($scope.bookings.amountTicket >= 4 || seat.isBooked) {
+                        centerAlert('Thông báo', 'Mỗi khách hàng chỉ có thể đặt tối đa 4 ghế.', 'warning');
+                        return;
+                    }
+
+                    if (!seatSelections) {
+                        seatSelections = {};
+                    }
+                    seatSelections[seatNumber] = true;
+                }
+
+                $scope.seatSelections[$scope.selectedSchedule.id] = seatSelections;
+                let seatNumbers = Object.keys($scope.seatSelections[$scope.selectedSchedule.id]);
+
+                // Tính tổng số ghế đã chọn
+                $scope.bookings.amountTicket = Object.keys(seatSelections).length;
+                $scope.bookings.seatName = seatNumbers;
+                $scope.updateTotal();
+            };
+
+            /**
+             * Phương thức này dùng để update order transport
+             */
             if (orderTransportId !== undefined && orderTransportId !== null && orderTransportId !== "") {
                 OrderTransportService.findByOrderTransportId(orderTransportId).then(function successCallback(response) {
                     if (response.status === 200) {
@@ -216,7 +306,7 @@ travel_app.controller('OrderTransportControllerAG',
             $scope.bookings.priceFormat = $scope.bookings.orderTotal;
             let orderTransportationsDto = $scope.bookings;
 
-            OrderTransportService.create(orderTransportationsDto).then(function successCallback() {
+            OrderTransportService.create(orderTransportationsDto, orderTransportationsDto.seatName).then(function successCallback() {
                 toastAlert('success', 'Thêm mới thành công !')
                 $location.path('/business/transport/order-transport-management');
             }, errorCallback).finally(function () {
@@ -247,10 +337,10 @@ travel_app.controller('OrderTransportControllerAG',
         /**
          * Gọi api delete
          */
-        $scope.deleteOrderTransport = function (orderTransportId, amountTicket, fromLocation, toLocation) {
+        $scope.deleteOrderTransport = function (orderTransportId, amountTicket, fromLocation, toLocation, scheduleId) {
             function confirmDelete() {
-                OrderTransportService.delete(orderTransportId).then(function () {
-                    toastAlert('success', 'Xóa vé thành công !');
+                OrderTransportService.delete(orderTransportId, scheduleId).then(function () {
+                    toastAlert('success', 'Xóa vé xe thành công !');
                     $location.path('/business/transport/order-transport-management');
                     $scope.init();
                 }, errorCallback).finally(function () {

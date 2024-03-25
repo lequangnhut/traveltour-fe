@@ -480,7 +480,7 @@
                                        href="/admin/agency/agency-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="file-text"></span>
+                                            <i class="fa-solid fa-briefcase"></i>
                                             <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Thông tin doanh nghiệp</span>
                                         </span>
@@ -497,18 +497,62 @@
                                        href="/admin/agency/agency-list-check">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="file-text"></span>
+                                            <i class="fa-solid fa-file-signature"></i>
                                             <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Chờ phê duyệt</span>
                                             <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
                                                   style="font-size: 6px;margin-bottom: 4px" ng-if="count > 0">
                                             </span>
-
                                             </span>
-                                            <!--                                            <span class="notification-badge" style=" display: inline-block; padding: 2px 8px;-->
-                                            <!--                                                background-color: #4CAF50; color: #fff; border-radius: 50%; /* Tạo khung tròn */-->
-                                            <!--                                                margin-left: 45px; font-size: smaller">{{ count }}-->
-                                            <!--                                            </span>-->
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- QUẢN LÝ BÀI ĐĂNG - Header -->
+                                <p class="navbar-vertical-label">QUẢN LÝ DỊCH VỤ</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'hotel-post-list'}"
+                                       ng-click="setActiveNavItem('hotel-post-list')"
+                                       href="/admin/post/hotel-post-list">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <i class="fa-solid fa-hotel"></i>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thông tin khách sạn</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'brand-post-list'}"
+                                       ng-click="setActiveNavItem('brand-post-list')"
+                                       href="/admin/post/brand-post-list">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <i class="fa-solid fa-car"></i>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thông tin phương tiện</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'visit-post-list'}"
+                                       ng-click="setActiveNavItem('visit-post-list')"
+                                       href="/admin/post/visit-post-list">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <i class="fa-solid fa-hippo"></i>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Thông tin tham quan</span>
+                                        </span>
                                         </div>
                                     </a>
                                 </div>
@@ -525,7 +569,7 @@
                                        href="/admin/type/tour-type-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="globe"></span>
+                                            <i class="fa-solid fa-umbrella-beach"></i>
                                             <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Danh mục tour</span>
                                         </span>
@@ -541,7 +585,7 @@
                                        href="/admin/type/hotel-type-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="home"></span>
+                                            <i class="fa-solid fa-house"></i>
                                             <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Danh mục lưu trú</span>
                                         </span>
@@ -557,7 +601,7 @@
                                        href="/admin/type/visit-location-type-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="map"></span>
+                                            <i class="fa-solid fa-location-dot"></i>
                                             <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Danh mục địa điểm</span>
                                         </span>
@@ -573,7 +617,7 @@
                                        href="/admin/type/transportation-type-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="target"></span>
+                                            <i class="fa-solid fa-van-shuttle"></i>
                                             <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Danh mục phương tiện</span>
                                         </span>
@@ -589,7 +633,7 @@
                                        href="/admin/type/hotel-utility-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="grid"></span>
+                                            <i class="fa-solid fa-mug-saucer"></i>
                                             <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Danh mục tiện ích lưu trú</span>
                                         </span>
@@ -604,7 +648,7 @@
                                        href="/admin/type/room-utility-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="server"></span>
+                                            <i class="fa-solid fa-fan"></i>
                                             <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Danh mục tiện ích phòng</span>
                                         </span>
@@ -619,7 +663,7 @@
                                        href="/admin/type/bed-type-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="slack"></span>
+                                            <i class="fa-solid fa-bed"></i>
                                             <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Danh mục giường</span>
                                         </span>
@@ -639,7 +683,7 @@
                                        href="/admin/report/revenue">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="trello"></span>
+                                            <i class="fa-solid fa-money-bill-wave"></i>
                                             <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Doanh thu</span>
                                         </span>
@@ -655,7 +699,7 @@
                                        href="/admin/report/statistical">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <span data-feather="sliders"></span>
+                                            <i class="fa-solid fa-chart-simple"></i>
                                             <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Thống kê</span>
                                         </span>
@@ -898,25 +942,6 @@
                                         </span>
                                             <span class="nav-link-text-wrapper">
                                             <span class="nav-link-text">Danh sách chuyến đi</span>
-                                        </span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- label-->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link label-1"
-                                       ng-click="setActiveNavItem('bookings-list')"
-                                       ng-class="{ 'active': activeNavItem === 'bookings-list'}"
-                                       href="/business/transport/order-transport-management"
-                                    >
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span class="nav-link-icon">
-                                            <span data-feather="navigation"></span>
-                                        </span>
-                                            <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Danh sách booking</span>
                                         </span>
                                         </div>
                                     </a>
@@ -1267,7 +1292,7 @@
                             <span data-feather="bell" style="height:20px;width:20px;color:#B197FC;"></span>
                             <sup>
                                 <i class="fa-solid fa-circle fa-rotate-90 fa-2xs"
-                                   style="color: #fe3939;" ng-if="showNotification===true"></i>
+                                   style="color: #fe3939;" ng-if="showNotifications === true"></i>
                             </sup>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end notification-dropdown-menu py-0 shadow border border-300 navbar-dropdown-caret"
@@ -1288,8 +1313,8 @@
                                                ng-if="!allNotification || allNotification.length === 0">
                                                 Không có thông báo mới.
                                             </a>
-                                            <div class="px-2 px-sm-3 py-3 border-300 notification-card position-relative
-                                                 unread border-bottom"
+                                            <div ng-if="allNotification.length > 0"
+                                                 class="px-2 px-sm-3 py-3 border-300 notification-card position-relative unread border-bottom"
                                                  ng-style="{'background-color': notification.isSeen ? 'rgb(198 245 214 / 45%)' : 'white'}"
                                                  ng-repeat="notification in visibleNotifications">
                                                 <div class="d-flex align-items-center justify-content-between position-relative"
@@ -1371,7 +1396,7 @@
 
                     <li class="nav-item dropdown">
                         <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#" role="button"
-                           data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                           data-bs-toggle="dropdown" data-bs-auto-close="true"
                            aria-haspopup="true" aria-expanded="false"
                         >
                             <div class="avatar avatar-l ">
@@ -1406,6 +1431,12 @@
                                             <a class="nav-link px-3" href="admin/information-update/{{user.id}}">
                                                 <span class="me-2 text-900" data-feather="user"></span>
                                                 <span>Thông tin cá nhân</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link px-3" href="admin/change-password/{{user.id}}">
+                                                <span class="me-2 text-900" data-feather="key"></span>
+                                                <span>Đổi mật khẩu</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
@@ -1601,6 +1632,7 @@
 <script src="app/services/admin/PlaceUtilityServiceAD.js"></script>
 <script src="app/services/admin/AgencyServiceAD.js"></script>
 <script src="app/services/admin/NotificationsServiceAD.js"></script>
+<script src="app/services/admin/PostServiceAD.js"></script>
 
 <!--====== Staff Service ======-->
 <script src="app/services/staff/ToursServiceAD.js"></script>
@@ -1665,6 +1697,7 @@
 
 <!--====== Service Customer Transport ======-->
 <script src="app/services/customer/transport/TransportCusService.js"></script>
+<script src="app/services/customer/transport/BookingTransportCusService.js"></script>
 
 <!--====== Service Customer Register Agencies ======-->
 <script src="app/services/customer/register-agencies/RegisterAgenciesCusService.js"></script>
@@ -1698,6 +1731,12 @@
 <script src="app/component/admin/controllers/admin-form/agencyAD/AgencyControllerInactiveAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/reportAD/RevenueControllerAD.js"></script>
 <script src="app/component/admin/controllers/admin-form/notificationAD/NotificationControllerAD.js"></script>
+<script src="app/component/admin/controllers/admin-form/post/HotelPostController.js"></script>
+<script src="app/component/admin/controllers/admin-form/post/RoomPostController.js"></script>
+<script src="app/component/admin/controllers/admin-form/post/SchedulePostController.js"></script>
+<script src="app/component/admin/controllers/admin-form/post/TransBrandPostController.js"></script>
+<script src="app/component/admin/controllers/admin-form/post/TransportationPostController.js"></script>
+<script src="app/component/admin/controllers/admin-form/post/VisitPostController.js"></script>
 
 <!--====== Controller Staff ======-->
 <script src="app/component/admin/controllers/staff/tour-management/BasicTourControllerAD.js"></script>
@@ -1775,6 +1814,7 @@
 <script src="app/component/customers/controllers/transport/TransportCusController.js"></script>
 <script src="app/component/customers/controllers/transport/TransportDetailCusController.js"></script>
 <script src="app/component/customers/controllers/transport/TransBookingCusController.js"></script>
+<script src="app/component/customers/controllers/transport/TransBookingSuccessCusController.js"></script>
 
 <!--====== Controller Customer Booking ======-->
 <script src="app/component/customers/controllers/booking/BookingTourCusController.js"></script>
@@ -1800,6 +1840,6 @@
 <script src="app/component/customers/controllers/info/BookingTransCustomerController.js"></script>
 <script src="app/component/customers/controllers/info/BookingVisitCustomerController.js"></script>
 <script src="app/component/customers/controllers/chat/ChatCustomerController.js"></script>
-<script src="app/component/customers/controllers/register-agency/RegisterAgencyController.js"></script>
+
 </body>
 </html>
