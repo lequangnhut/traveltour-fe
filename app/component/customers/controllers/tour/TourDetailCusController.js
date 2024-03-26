@@ -1,5 +1,5 @@
 travel_app.controller('TourDetailCusController',
-    function ($scope, $location, $sce, $filter, $routeParams, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailCusService, MapBoxService, ToursServiceAD) {
+    function ($scope, $location, $sce, $timeout, $filter, $routeParams, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailCusService, MapBoxService, ToursServiceAD) {
         mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
         $scope.markerTrips = [];
@@ -159,6 +159,9 @@ travel_app.controller('TourDetailCusController',
 
                         $scope.initMapTrips();
                         $scope.createMarkerTrips($scope.tourTrips);
+                        $timeout(function () {
+                            $scope.removeMapLayer($scope.mapLineLayerId);
+                        }, 100)
                     } else {
                         $location.path('/admin/page-not-found')
                     }
@@ -251,7 +254,7 @@ travel_app.controller('TourDetailCusController',
                     });
                 }
 
-                $scope.mapTrips.on('style.load', function () {
+                $scope.mapTrips.on('style.load', async function () {
                     let waypoints = ''; // Chuỗi để lưu trữ các tọa độ trung gian
 
                     $scope.coordinateTrips.forEach(function (coordinate, index) {
@@ -263,7 +266,7 @@ travel_app.controller('TourDetailCusController',
 
                     let routeURL = `https://api.mapbox.com/directions/v5/mapbox/driving/${waypoints}?geometries=geojson&steps=true&access_token=${mapboxgl.accessToken}`;
 
-                    fetch(routeURL)
+                    await fetch(routeURL)
                         .then(response => response.json())
                         .then(data => {
                             // Lấy dữ liệu về đường đi
@@ -291,7 +294,6 @@ travel_app.controller('TourDetailCusController',
                                     'line-width': 3
                                 }
                             });
-                            $scope.removeMapLayer($scope.mapLineLayerId);
                         })
                         .catch(error => {
                             console.error('Lỗi khi lấy thông tin định tuyến:', error);

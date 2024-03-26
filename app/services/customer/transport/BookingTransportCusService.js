@@ -8,4 +8,18 @@ travel_app.service('BookingTransportCusService', function ($http) {
             data: orderTransport
         });
     }
+
+    this.redirectVNPayTransport = function (orderTransport, scheduleId, orderInfo, amountTicket, seatNumber) {
+        return $http({
+            method: 'POST',
+            url: API_BOOKING_TRANSPORT + 'vnpay/submit-payment',
+            data: orderTransport,
+            params: {
+                scheduleId: scheduleId,
+                orderInfo: orderInfo,
+                amountTicket: amountTicket,
+                seatNumber: seatNumber
+            }
+        });
+    }
 })
