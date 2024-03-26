@@ -1,7 +1,7 @@
-travel_app.service('PrintService', ['$window', '$filter', function ($window, $filter) {
+travel_app.service('PrintService', ['$window', '$filter', '$timeout', function ($window, $filter, $timeout) {
     this.print = (invoices) => {
         let windowFeatures = 'left=300,right=200,top=100,toolbar=no,location=no,directories=no,menubar=no,scrollbars=no,width=900,height=600';
-        let printWindow = $window.open('', '_blank', windowFeatures);
+        let printWindow = $window.open('', '', windowFeatures);
 
         let formattedDate = $filter('vietnameseDate')(invoices.dateCreated);
         let formattedTotal = $filter('vnCurrency')(invoices.bookingToursByBookingTourId.orderTotal);

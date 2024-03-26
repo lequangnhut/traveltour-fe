@@ -4,7 +4,12 @@ travel_app.controller('LocationCusController', function ($scope, $location, MapB
     $scope.currentPage = 0;
     $scope.pageSize = 10;
 
+    $scope.showMoreLocationType = false;
+    $scope.limitLocationType = 3;
+
     $scope.markers = [];
+    $scope.TickerTypeList = [];
+    $scope.LocationTypeList = [];
 
     $scope.tickets = [
         {id: 1, label: 'Vé người lớn'},
@@ -20,8 +25,19 @@ travel_app.controller('LocationCusController', function ($scope, $location, MapB
         {id: 5, label: 'Trên 5 sao'}
     ];
 
+    $scope.filters = {
+        searchTerm: null,
+        price: 15000000,
+        TickerTypeList: [],
+        LocationTypeList: [],
+    };
+
     function errorCallback() {
         $location.path('/admin/internal-server-error')
+    }
+
+    $scope.redirectVisitLocationDetail = function (visitLocationId) {
+        $location.path('/tourism-location/tourism-location-detail/' + btoa(JSON.stringify(visitLocationId)));
     }
 
     $scope.init = function () {
@@ -187,6 +203,48 @@ travel_app.controller('LocationCusController', function ($scope, $location, MapB
         $scope.currentPage = 0;
         $scope.init();
     };
+
+    $scope.showMoreTypesOfLocations = () => {
+        $scope.limitLocationType = $scope.visitLocationType.length;
+        $scope.showMoreLocationType = true;
+    };
+
+    $scope.showLessTypesOfLocations = () => {
+        $scope.limitLocationType = 3;
+        $scope.showMoreLocationType = false;
+    };
+
+    //thêm danh sách lọc
+    $scope.chooseFromAVarietyOfTickets = (id) => {
+        let index = $scope.filters.TickerTypeList.indexOf(id);
+        if (index === -1) {
+            $scope.filters.TickerTypeList.push(id);
+        } else {
+            $scope.filters.TickerTypeList.splice(index, 1);
+        }
+    };
+
+    $scope.chooseFromAVarietyOfLocations = (id) => {
+        let index = $scope.filters.LocationTypeList.indexOf(id);
+        if (index === -1) {
+            $scope.filters.LocationTypeList.push(id);
+        } else {
+            $scope.filters.LocationTypeList.splice(index, 1);
+        }
+    };
+
+    $scope.filterAllVisitCus = () => {
+        $scope.isLoading = true;
+        LocationCusService.findAllVisitCustomerByFilters($scope.currentPage, $scope.pageSize, $scope.filters).then((response) => {
+            console.log(response)
+            $scope.visitLocation = response.data.data !== null ? response.data.data.content : [];
+            $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
+            $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
+        }).finally(function () {
+            $scope.isLoading = false;
+        })
+
+    }
 
     $scope.init();
 

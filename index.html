@@ -30,14 +30,13 @@
         <link rel="stylesheet" href="/assets/customers/css/booking.css">
         <link rel="stylesheet" href="/assets/customers/css/hotels-customer.css">
         <link rel="stylesheet" href="/assets/customers/css/payment-method.css">
-        <link rel="stylesheet" href="/assets/customers/css/tour-trips.css">
-        <link rel="stylesheet" href="/assets/customers/css/transport.css">
         <link rel="stylesheet" href="/assets/customers/css/chat.css">
         <link rel="stylesheet" href="/assets/customers/css/tour/tour-trips.css">
         <link rel="stylesheet" href="/assets/customers/css/transport/transport.css">
         <link rel="stylesheet" href="/assets/customers/css/transport/trans-booking.css">
         <link rel="stylesheet" href="/assets/customers/css/register-agencies.css">
         <link rel="stylesheet" href="/assets/customers/css/tour/tour-detail.css">
+        <link rel="stylesheet" href="/assets/customers/css/visit-location.css">
         <link href="/node_modules/mapbox-gl/dist/mapbox-gl.css" type="text/css" rel="stylesheet">
 
         <script src="/assets/customers/vendor/jquery-3.6.0.min.js"></script>
@@ -55,8 +54,6 @@
         <script src="/node_modules/mapbox-gl/dist/mapbox-gl.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-sanitize.js"></script>
-
 
     </div>
 
@@ -115,7 +112,8 @@
         <script src="/lib/moment/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-sanitize.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+
 
         <script>
             var phoenixIsRTL = window.config.config.phoenixIsRTL;
@@ -1713,9 +1711,13 @@
 
 <!--====== Service Customer Location ======-->
 <script src="app/services/customer/location/LocationCusService.js"></script>
+<script src="app/services/customer/location/LocationDetailCusService.js"></script>
 
 <!--====== Service Customer Booking ======-->
 <script src="app/services/customer/booking/BookingTourCusService.js"></script>
+
+<!--====== Service Customer Booking Location ======-->
+<script src="app/services/customer/booking/BookingLocationCusService.js"></script>
 
 <!--====== Service Customer Hotels ======-->
 <script src="app/services/customer/hotel/HotelServiceCT.js"></script>
@@ -1853,6 +1855,10 @@
 <!--====== Controller Customer Location ======-->
 <script src="app/component/customers/controllers/location/LocationCusController.js"></script>
 <script src="app/component/customers/controllers/location/LocationDetailCusController.js"></script>
+
+<!--====== Controller Customer Booking Location ======-->
+<script src="app/component/customers/controllers/booking-location/BookingLocationCusController.js"></script>
+<script src="app/component/customers/controllers/booking-location/BookingLocationSuccessCusController.js"></script>
 
 <!--====== Controller Customer Register Agencies ======-->
 <script src="app/component/customers/controllers/register-agency/RegisterAgencyCusController.js"></script>

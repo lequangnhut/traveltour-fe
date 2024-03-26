@@ -57,4 +57,21 @@ travel_app.service('MapBoxService', function ($http, $q) {
 
         return deferred.promise;
     };
+
+    this.getCoordinatesFromAddress = function (address) {
+        let url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + encodeURIComponent(address) + '.json?access_token=' + accessToken;
+
+        return $http.get(url).then(function (response) {
+            let data = response.data;
+            if (data.features.length > 0) {
+                return data.features[0].geometry.coordinates; // Trả về coordinates
+            } else {
+                throw new Error("Không tìm thấy địa chỉ.");
+            }
+        }).catch(function (error) {
+            throw error;
+        });
+    };
+
+
 });

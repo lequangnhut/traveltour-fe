@@ -797,6 +797,30 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
 
         /**
+         * Booking locations
+         */
+        .when('/tourism-location/tourism-location-detail/:id/booking-location', {
+            templateUrl: 'app/component/customers/views/pages/booking-location/booking-location.html',
+            controller: 'BookingLocationCusController'
+        })
+        .when('/tourism-location/tourism-location-detail/:id/booking-location/customer-information', {
+            templateUrl: 'app/component/customers/views/pages/booking-location/booking-location-info-customer.html',
+            controller: 'BookingLocationCusController'
+        })
+        .when('/tourism-location/tourism-location-detail/:id/booking-location/customer-information/check-information', {
+            templateUrl: 'app/component/customers/views/pages/booking-location/booking-location-check-info.html',
+            controller: 'BookingLocationSuccessCusController'
+        })
+        .when('/tourism-location/tourism-location-detail/:id/booking-location/customer-information/check-information/payment-success', {
+            templateUrl: 'app/component/customers/views/pages/booking-location/booking-location-check-info.html',
+            controller: 'BookingLocationSuccessCusController'
+        })
+        .when('/tourism-location/tourism-location-detail/:id/booking-location/customer-information/check-information/payment-failure', {
+            templateUrl: 'app/component/customers/views/pages/booking-location/booking-location-check-info.html',
+            controller: 'BookingLocationSuccessCusController'
+        })
+
+        /**
          * Authentication
          */
         .when('/sign-in', {

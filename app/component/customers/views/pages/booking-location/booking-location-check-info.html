@@ -1,0 +1,220 @@
+<!--====== Start Breadcrumb Section ======-->
+<section class="page-banner overlay pt-170 pb-200 bg_cover"
+         style="background-image: url(/assets/customers/images/bg/default-top-banner.jpg);">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="page-banner-content text-center text-white">
+                    <h1 class="page-title">Giao dịch thành công</h1>
+                    <ul class="breadcrumb-link text-white">
+                        <li><a href="/home">Trang chủ</a></li>
+                        <li><a href="/tourism-location">Tham quan</a></li>
+                        <li><a>Chi tiết tham quan</a></li>
+                        <li><a>Chọn dịch vụ</a></li>
+                        <li><a href="#">Nhập thông tin</a></li>
+                        <li class="active">Thành công</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--====== End Breadcrumb Section ======-->
+
+<!--====== Giao dịch thành công ======-->
+<section class="mt-50 mb-50 d-flex justify-content-center">
+    <div class="container-fluid booking-form-success row m-auto" style="max-width: 85%;">
+        <div class="col-lg-12 col-12 col-md-12 mb-30">
+            <div class="img-success d-flex justify-content-center mb-4">
+                <img src="/assets/customers/images/booking/checked-success.png" width="100" class="img-fluid"
+                     alt="thành công">
+            </div>
+            <div class="content-payment-done d-flex justify-content-center">
+                <div class="content text-center">
+                    <div class="mb-2 h1">Cảm Ơn Bạn Đã Đặt Vé Của Chúng Tôi</div>
+                    <p class="mb-2">Đơn hàng của bạn đã được xác nhận, giờ bạn có thể kiếm tra đơn hàng của mình trong
+                        hóa đơn lịch sử giao dịch.
+                    </p>
+
+                    <div class="booking-id mt-2 mb-2">
+                        <button type="button" class="btn border-0 p-3" style="background: #D9D9D9">
+                            Mã đơn hàng của bạn là: {{ bookingTicket.id }}
+                        </button>
+                    </div>
+
+                    <p class="mb-2">Ngày / giờ thanh toán:
+                        <span class="fw-medium">{{ paymentTime | formatDateTime }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8 col-12 col-md-12 row" id="booking-payment">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header fw-medium text-center fs-5" style="background: #E3E6ED">
+                        Thông tin cá nhân
+                    </div>
+                    <div class="card-body">
+                        <div class="item-content mb-3">
+                            <span class="fw-medium">Họ và tên:</span>
+                            <span class="float-end">{{ bookingTicket.customerName }}</span>
+                        </div>
+                        <div class="item-content mb-3">
+                            <span class="fw-medium">CCCD / CMND:</span>
+                            <span class="float-end">{{ bookingTicket.customerCitizenCard }}</span>
+                        </div>
+                        <div class="item-content mb-3">
+                            <span class="fw-medium">Số điện thoại:</span>
+                            <span class="float-end">{{ bookingTicket.customerPhone }}</span>
+                        </div>
+                        <div class="item-content mb-3">
+                            <span class="fw-medium">Email:</span>
+                            <span class="float-end">{{ bookingTicket.customerEmail }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header fw-medium text-center fs-5" style="background: #E3E6ED">
+                        Thông tin vé của bạn
+                    </div>
+                    <div class="card-body">
+                        <div class="item-content mb-3">
+                            <span class="fw-medium">Mã tour:</span>
+                            <span class="float-end fw-medium">
+                                {{ tourDetail.toursByTourId.id + '-' + year + '-' + tourDetail.id }}
+                            </span>
+                        </div>
+                        <div class="item-content mb-3">
+                            <span class="fw-medium">Điểm đến:</span>
+                            <span class="float-end">{{ tourDetail.toLocation }}</span>
+                        </div>
+                        <div class="item-content mb-3">
+                            <span class="fw-medium">Ngày đi:</span>
+                            <span class="float-end">
+                                {{ tourDetail.departureDate | formatDate }}
+                            </span>
+                        </div>
+                        <div class="item-content mb-3">
+                            <span class="fw-medium">Ngày về:</span>
+                            <span class="float-end">
+                                {{ tourDetail.arrivalDate | formatDate }}
+                            </span>
+                        </div>
+                        <div class="item-content mb-3">
+                            <span class="fw-medium">Thời gian:</span>
+                            <span class="float-end">
+                                {{ tourDetail.departureDate | calculateDaysAndNights:tourDetail.arrivalDate }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header fw-medium text-center fs-5" style="background: #E3E6ED">
+                        Chi tiết vé
+                    </div>
+                    <div class="card-body">
+                        <div class="item-content mb-3" ng-if="ticket.adults > 0">
+                            <span class="fw-medium">Vé người lớn:</span>
+                            <span class="float-end fw-medium">
+                                {{ tourDetail.unitPrice | vnCurrency }} x {{ ticket.adults }}
+                            </span>
+                        </div>
+                        <div class="item-content mb-3" ng-if="ticket.children > 0">
+                            <span class="fw-medium">Vé trẻ em:</span>
+                            <span class="float-end fw-medium">
+                                {{ tourDetail.unitPrice * 0.3 | vnCurrency }} x {{ ticket.children }}
+                            </span>
+                        </div>
+                        <div class="item-content mb-3" ng-if="ticket.baby > 0">
+                            <span class="fw-medium">Em bé (Dưới 0.75m):</span>
+                            <span class="float-end fw-medium">0 x {{ ticket.baby }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header fw-medium text-center fs-5" style="background: #E3E6ED">
+                        Phương thức thanh toán
+                    </div>
+                    <div class="card-body">
+                        <div class="item-content mb-3 d-flex justify-content-center align-items-center">
+                            <span class="fw-medium">
+                                <img src="/assets/customers/images/payment/vnpay.png" width="40" class="img-fluid"
+                                     alt="">
+                            </span>
+                            <span class="fw-medium">Thanh toán bằng Ví VNPay</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header fw-medium text-center fs-5" style="background: #E3E6ED">
+                    Chi tiết đơn hàng
+                </div>
+                <div class="card-body p-0">
+                    <div class="item-content">
+                        <div class="img-content">
+                            <img ng-src="{{ tourDetail.toursByTourId.tourImg }}" class="img-fluid"
+                                 alt="avatar ảnh">
+                        </div>
+                    </div>
+
+                    <div class="p-4 pb-1">
+                        <ul class="ratings">
+                            <li><span class="fas fa-star fs-5"></span></li>
+                            <li><span class="fas fa-star fs-5"></span></li>
+                            <li><span class="fas fa-star fs-5"></span></li>
+                            <li><span class="fas fa-star fs-5"></span></li>
+                            <li><span class="fas fa-star fs-5"></span></li>
+                        </ul>
+
+                        <h4 class="text-center mb-3">Du lịch bãi biển Hà Tiên</h4>
+
+                        <div class="booking-location mb-1">
+                            <i class="fa-solid fa-location-dot text-green"></i>
+                            <span>Địa chỉ:</span>
+                            <span class="fw-medium float-end">
+                                {{ tourDetail.toursByTourId.tourName + ' - ' + tourDetail.fromLocation }}
+                                <span ng-repeat="province in provinceName" ng-if="province != 'Cần Thơ'">
+                                    - {{ province }} -
+                                 </span>
+                            </span>
+                        </div>
+                        <div class="booking-price">
+                            <i class="fa-solid fa-tag text-green"></i>
+                            <span>Giá chỉ từ:</span>
+                            <span class="fw-medium float-end">{{ totalPrice | vnCurrency }}</span>
+                        </div>
+
+                        <hr class="fw-medium" style="opacity: 1.25">
+
+                        <div class="booking-time-play">
+                            <i class="fa-regular fa-clock text-green"></i>
+                            <span class="fw-medium">
+                                {{ tourDetail.departureDate | calculateDaysAndNights:tourDetail.arrivalDate }}
+                            </span>
+
+                            <div class="booking-start-time float-end">
+                                <i class="fa-solid fa-van-shuttle text-green"></i>
+                                <span class="fw-medium">
+                                Khởi hành {{ tourDetail.departureDate | formatDate }}
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--====== Giao dịch thành công ======-->

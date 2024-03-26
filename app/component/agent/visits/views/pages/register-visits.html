@@ -129,7 +129,6 @@
                                    ng-model="visitLocation.phone"
                                    ng-class="{ 'is-invalid': register_visits.phone.$invalid && register_visits.phone.$touched, 'is-valid': register_visits.phone.$valid && register_visits.phone.$touched && !phoneError }"
                                    ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
-                                   ng-change="checkDuplicatePhone()"
                                    required
                             >
                             <small class="text-danger"
@@ -140,9 +139,7 @@
                                    ng-show="register_visits.phone.$touched && register_visits.phone.$error.pattern">
                                 Số điện thoại không đúng định dạng !
                             </small>
-                            <small class="text-danger" ng-show="register_visits.phone.$touched && phoneError">
-                                Số điện thoại đã tồn tại ở một tài khoản khác !
-                            </small>
+
                         </div>
 
                         <div class="col-md-4">
@@ -265,6 +262,102 @@
                                 Vui lòng tải lên hình ảnh của doanh nghiệp !
                             </small>
                         </div>
+                        <div class="container-desciption" rich-text-editor>
+                            <div class="">
+                                <label class="form-label">Mô tả <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="options">
+                                <!-- Text Format -->
+                                <button id="bold" type="button" class="option-button format">
+                                    <i class="fa-solid fa-bold"></i>
+                                </button>
+                                <button id="italic" type="button" class="option-button format">
+                                    <i class="fa-solid fa-italic"></i>
+                                </button>
+                                <button id="underline" type="button" class="option-button format">
+                                    <i class="fa-solid fa-underline"></i>
+                                </button>
+                                <button id="strikethrough" type="button" class="option-button format">
+                                    <i class="fa-solid fa-strikethrough"></i>
+                                </button>
+                                <button id="superscript" type="button" class="option-button script">
+                                    <i class="fa-solid fa-superscript"></i>
+                                </button>
+                                <button id="subscript" type="button" class="option-button script">
+                                    <i class="fa-solid fa-subscript"></i>
+                                </button>
+                                <!-- List -->
+                                <button id="insertOrderedList" type="button" class="option-button">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                </button>
+                                <button id="insertUnorderedList" type="button" class="option-button">
+                                    <i class="fa-solid fa-list"></i>
+                                </button>
+                                <!-- Table -->
+                                <button id="createTable" type="button">
+                                    <i class="fa-solid fa-table"></i>
+                                </button>
+                                <!-- Undo/Redo -->
+                                <button id="undo" type="button" class="option-button">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </button>
+                                <button id="redo" type="button" class="option-button">
+                                    <i class="fa-solid fa-rotate-right"></i>
+                                </button>
+                                <!-- Link -->
+                                <button id="createLink" type="button" class="adv-option-button">
+                                    <i class="fa fa-link"></i>
+                                </button>
+                                <button id="unlink" type="button" class="option-button">
+                                    <i class="fa fa-unlink"></i>
+                                </button>
+                                <!-- Alignment -->
+                                <button id="justifyLeft" type="button" class="option-button align">
+                                    <i class="fa-solid fa-align-left"></i>
+                                </button>
+                                <button id="justifyCenter" type="button" class="option-button align">
+                                    <i class="fa-solid fa-align-center"></i>
+                                </button>
+                                <button id="justifyRight" type="button" class="option-button align">
+                                    <i class="fa-solid fa-align-right"></i>
+                                </button>
+                                <button id="justifyFull" type="button" class="option-button align">
+                                    <i class="fa-solid fa-align-justify"></i>
+                                </button>
+                                <button id="indent" type="button" class="option-button spacing">
+                                    <i class="fa-solid fa-indent"></i>
+                                </button>
+                                <button id="outdent" type="button" class="option-button spacing">
+                                    <i class="fa-solid fa-outdent"></i>
+                                </button>
+                                <!-- Headings -->
+                                <select id="formatBlock" type="section" class="adv-option-button">
+                                    <option value="H1">H1</option>
+                                    <option value="H2">H2</option>
+                                    <option value="H3">H3</option>
+                                    <option value="H4">H4</option>
+                                    <option value="H5">H5</option>
+                                    <option value="H6">H6</option>
+                                </select>
+                                <!-- Font -->
+                                <select id="fontName" type="select" class="adv-option-button"></select>
+                                <select id="fontSize" type="select" class="adv-option-button"></select>
+                                <!-- Color -->
+                                <div class="input-wrapper">
+                                    <input type="color" id="foreColor" class="adv-option-button"/>
+                                    <label for="foreColor">Màu chữ</label>
+                                </div>
+                                <div class="input-wrapper">
+                                    <input type="color" id="backColor" class="adv-option-button"/>
+                                    <label for="backColor">Làm nổi bật</label>
+                                </div>
+                            </div>
+                            <div class="form-control mb-1" contenteditable="true" id="text-input"
+                                 name="detailDescription"
+                                 ng-model="visitLocation.detailDescription" ng-blur="setTouched()"></div>
+                            <span class="text-danger" id="invalid-templateDescription"></span>
+                            <span class="text-danger m-2" ng-show="isActive()">Vui lòng nhập mô tả</span>
+                        </div>
 
                         <div class="d-flex justify-content-end mt-5">
                             <a role="button"
@@ -380,18 +473,23 @@
                                        placeholder="300,000"
                                        name="adult"
                                        ng-model="unitPrice.adult"
-                                       ng-class="{ 'is-invalid': register_visits.adult.$invalid && register_visits.adult.$touched, 'is-valid': register_visits.adult.$valid && register_visits.adult.$touched }"
-                                       ng-pattern="/^(\d{1,3}(,\d{3})*(,\d{1,3})*(,\d{3})*|\d+(,\d{1,3})*)$/"
-                                       vietnam-currency-input
+                                       ng-class="{ 'is-invalid': (register_visits.adult.$touched && (!register_visits.adult.$valid || !isAdultPriceValid() || invalidAdultPriceFormat)),
+                                            'is-valid': register_visits.adult.$touched && (register_visits.adult.$valid || isAdultPriceValid())}"
+                                       format-price-input
+                                       ng-keypress="onPriceKeyPress($event); checkAdultPriceFormat()"
                                        ng-disabled="!ticketTypes.adult"
-                                >
+                                       required>
                                 <small class="text-danger"
                                        ng-show="register_visits.adult.$touched && register_visits.adult.$error.required">
-                                    Vui lòng nhập giá !
+                                    Giá không được bỏ trống!
                                 </small>
                                 <small class="text-danger"
-                                       ng-show="register_visits.adult.$touched && register_visits.adult.$error.pattern">
-                                    Giá không đúng định dạng !
+                                       ng-show="register_visits.adult.$touched && invalidAdultPriceFormat">
+                                    Giá không đúng định dạng số!
+                                </small>
+                                <small class="text-danger"
+                                       ng-show="register_visits.adult.$touched && !isAdultPriceValid()">
+                                    Giá phải lớn hơn 0!
                                 </small>
                             </div>
                         </div>
@@ -415,18 +513,23 @@
                                        placeholder="150,000"
                                        name="child"
                                        ng-model="unitPrice.child"
-                                       ng-class="{ 'is-invalid': register_visits.child.$invalid && register_visits.child.$touched, 'is-valid': register_visits.child.$valid && register_visits.child.$touched }"
-                                       vietnam-currency-input
-                                       ng-pattern="/^(\d{1,3}(,\d{3})*(,\d{1,3})*(,\d{3})*|\d+(,\d{1,3})*)$/"
+                                       ng-class="{ 'is-invalid': (register_visits.child.$touched && (!register_visits.child.$valid || !isChildPriceValid() || invalidChildPriceFormat)),
+                                            'is-valid': register_visits.child.$touched && (register_visits.child.$valid || isChildPriceValid())}"
+                                       format-price-input
+                                       ng-keypress="onPriceKeyPress($event); checkChildPriceFormat()"
                                        ng-disabled="!ticketTypes.child"
-                                >
+                                       required>
                                 <small class="text-danger"
                                        ng-show="register_visits.child.$touched && register_visits.child.$error.required">
-                                    Vui lòng nhập giá !
+                                    Giá không được bỏ trống!
                                 </small>
                                 <small class="text-danger"
-                                       ng-show="register_visits.child.$touched && register_visits.child.$error.pattern">
-                                    Giá không đúng định dạng !
+                                       ng-show="register_visits.child.$touched && invalidChildPriceFormat">
+                                    Giá không đúng định dạng số!
+                                </small>
+                                <small class="text-danger"
+                                       ng-show="register_visits.child.$touched && !isChildPriceValid()">
+                                    Giá phải lớn hơn 0!
                                 </small>
                             </div>
                         </div>
