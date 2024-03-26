@@ -161,6 +161,33 @@ travel_app.controller('ChatHotelController', function ($scope, $routeParams, $ht
     };
 
 
+    $scope.sendMessage = async function (customerId) {
+        $scope.messageContent.trim();
+        if ($scope.messageContent !== '' && $scope.displayUserChat !== null && $scope.displayUserChat !== undefined) {
+            var chatMessage = {
+                senderId: user.id,
+                recipientId: customerId,
+                content: $scope.messageContent,
+                timestamp: new Date()
+            };
+            $scope.newMessage = {
+                senderId: user.id,
+                content: $scope.messageContent,
+                timestamp: new Date()
+            }
+
+            $scope.displayMessages.push($scope.newMessage)
+            stompClient.send(`/app/${user.id}/chat`, {}, JSON.stringify(chatMessage));
+        }
+
+        $scope.messageContent = '';
+        console.log($scope.displayUserChat)
+        $timeout(function () {
+            $scope.updateStatusMessenger($scope.displayUserChat);
+        },200)
+        scrollToBottom()
+    };
+
     $scope.updateStatusMessenger = async function (userChat) {
         $scope.displayUserChat = userChat;
         console.log(userChat)
@@ -187,33 +214,6 @@ travel_app.controller('ChatHotelController', function ($scope, $routeParams, $ht
         });
     };
 
-    $scope.sendMessage = async function (customerId) {
-        $scope.messageContent.trim();
-        console.log("Mã người dùng: ", customerId)
-        if ($scope.messageContent !== '' && $scope.displayUserChat !== null && $scope.displayUserChat !== undefined) {
-            var chatMessage = {
-                senderId: user.id,
-                recipientId: customerId,
-                content: $scope.messageContent,
-                timestamp: new Date()
-            };
-            $scope.newMessage = {
-                senderId: user.id,
-                content: $scope.messageContent,
-                timestamp: new Date()
-            }
-
-            $scope.displayMessages.push($scope.newMessage)
-            stompClient.send(`/app/${user.id}/chat`, {}, JSON.stringify(chatMessage));
-        }
-
-        $scope.messageContent = '';
-        $timeout(function() {
-            $scope.findUsersChat();
-        })
-        scrollToBottom()
-
-    };
 
     function scrollToBottom() {
         $timeout(function () {

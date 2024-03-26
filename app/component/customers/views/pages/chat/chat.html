@@ -109,7 +109,7 @@
                             <div class="" ng-repeat="message in displayMessages">
                                 <div class="chat-message-right pb-4" ng-if="message.senderId.toString() === userAgencyId.id.toString()">
                                     <div>
-                                        <img ng-src="{{ displayUserChat.avatar || 'assets/customers/images/icon/user.png' }}"
+                                        <img ng-src="{{ avatarUser.avatar || 'assets/customers/images/icon/user.png' }}"
                                              onerror="this.src='assets/customers/images/icon/user.png'"
                                              class="rounded-circle mr-1" alt="avatar" width="40" height="40" />
                                     </div>
