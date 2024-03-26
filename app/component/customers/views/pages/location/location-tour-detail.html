@@ -1,126 +1,251 @@
-<!--====== Start Blog Details Section ======-->
-<section class="blog-details-section pt-100 pb-70">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-8">
-                <!--=== Blog Details Wrapper ===-->
-                <div class="blog-details-wrapper pr-lg-50">
-                    <div class="blog-post mb-60 wow fadeInUp">
-                        <div class="post-thumbnail">
-                            <img src="/assets/customers/images/blog/tourism-location.png" alt="Blog Image">
-                        </div>
-                        <div class="post-meta text-center pt-25 pb-15 mb-25">
-                            <span><span class="fas fa-user"></span><a href="#">Matthew N. Davis</a></span>
-                            <span><span class="fas fa-calendar-alt"></span><a href="#">November 23,2022</a></span>
-                            <span><span class="fas fa-comment"></span><a href="#">Comments (05)</a></span>
-                        </div>
-                        <div class="main-post">
-                            <div class="entry-content">
-                                <h3 class="title">50 Resources And Tools To Turbocharge Amazon
-                                    Product Scraper Copywriting Skills</h3>
-                                <p>Sit amet consectetur adipiscing elit. Phasellus viverra justo, orci, interdum purus
-                                    purus vitae vulputate nec
-                                    Vel nunc vivamus felis sit est, mus aliquam massa volutpat. Consectetur scelerisque
-                                    tincidunt vulputate quis.
-                                    Metus eu, nisi nibh et adipiscing natoque tincidunt. Sed morbi arcu integer
-                                    vestibulum scelerisque tincidunt
-                                    mauris. Lectus molestie vestibulum ac, nec. Nisl rutrum cras dictum lectus molestie
-                                    leoenim sapien aenean
-                                    lectus. Platea enim nunc feugiat mauris, ut in volutpat nunc. Nulla sit rhoncus
-                                    consequat malesuada magna diam tempor mauris proin vulputate tortorpurus nunc
-                                    elementum quam pharetra mauris Habitant massa turpis nunc eu. Aliquet at velit etiam
-                                    turpis a arcu consectetur sed.</p>
-                                <h4>Build Camping Easily</h4>
-                                <p>Metus eu, nisi nibh et adipiscing natoque tincidunt. Sed morbi arcu integer
-                                    vestibulum scelerisque tincidunt
-                                    mauris. Lectus molestie vestibulum ac, nec. Nisl rutrum cras dictum lectus molestie
-                                    leoenim sapien aenean
-                                    lectus. Platea enim nunc feugiat mauris, ut in volutpat nunc. Nulla sit rhoncus
-                                    consequat</p>
-                                <blockquote class="block-quote">
-                                    <img src="/assets/customers/images/blog/quote.png" alt="quote image">
-                                    <h3>Handling Mounting And Unmounting Given
-                                        Navigation Routes In React Native</h3>
-                                    <span>Johnny M. Martin</span>
-                                </blockquote>
-                            </div>
-                        </div>
-                        <div class="entry-footer wow fadeInUp">
-                            <div class="tag-links">
-                                <h6>Popular Tags</h6>
-                                <a href="#">Camping</a>
-                                <a href="#">Tent Camp</a>
-                                <a href="#">Couple Cabin</a>
-                            </div>
-                            <div class="social-share">
-                                <h6>Share News :</h6>
-                                <a href="#"><span class="fab fa-facebook-f"></span></a>
-                                <a href="#"><span class="fab fa-twitter"></span></a>
-                                <a href="#"><span class="fab fa-instagram"></span></a>
-                                <a href="#"><span class="fab fa-linkedin-in"></span></a>
-                            </div>
+<!--====== Start Place Details Section ======-->
+<section class="place-details-section">
+    <!--====== Start Breadcrumb Section ======-->
+    <section class="page-banner overlay pt-170 pb-170 bg_cover"
+             style="background-image: url(/assets/customers/images/bg/banner-1.jpg);">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="page-banner-content text-center text-white">
+                        <h1 class="page-title">Địa Điểm Tham Quan</h1>
+                        <ul class="breadcrumb-link text-white">
+                            <li><a href="/home">Trang chủ</a></li>
+                            <li><a href="/tourism-location">Tham quan</a></li>
+                            <li class="active">Chi tiết tham quan</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!--====== End Breadcrumb Section ======-->
+
+    <div ng-include="'app/component/utils/loading-component.html'"></div>
+
+    <div class="container" ng-if="!isLoading">
+        <!--=== Tour Details Wrapper ===-->
+        <div class="tour-details-wrapper pt-80">
+            <!--=== Tour Title Wrapper ===-->
+            <div class="tour-title-wrapper wow fadeInUp">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="tour-title mb-20">
+                            <h3 class="title text-capitalize">{{ locationDetail.visitLocationName }}</h3>
+                            <p>
+                                <span class="fas fa-map-marker-alt"></span>
+                                <span>
+                                  {{ locationDetail.ward }} - {{ locationDetail.district }}
+                                    - {{ locationDetail.province }}
+                                </span>
+                                <span ng-if="provinceName.length === 0">
+                                    Hiện tại tour này không có điểm tham quan.
+                                </span>
+                            </p>
                         </div>
                     </div>
-                    <!--===  Post Author Box  ===-->
-                    <div class="post-author-box d-flex pb-60 mb-60 wow fadeInUp">
-                        <div class="author-thumb">
-                            <img src="/assets/customers/images/blog/author-1.jpg" alt="post author">
+                    <div class="col-xl-6">
+                        <div class="tour-widget-info">
+                            <div class="info-box mb-20">
+                                <div class="icon">
+                                    <span class="fal fa-box-usd"></span>
+                                </div>
+                                <div class="info">
+                                    <h4><span>Chỉ từ</span>{{ priceTickets | vnCurrency }}</h4>
+                                </div>
+                            </div>
+
+                            <div class="info-box mb-20">
+                                <div class="icon">
+                                    <svg style="width: 115%" viewBox="0 0 24 24" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg" data-id="IcSystemToolMap">
+                                        <path d="M4 7.5L3 8V20L8 19M8 19L16 21M8 19V16M16 21L21 20V8H20M16 21V16"
+                                              stroke="#687176" stroke-width="2" stroke-linecap="round"
+                                              stroke-linejoin="round"></path>
+                                        <path d="M12 14.5C12 14.5 7 11 7 7C7 4.5 9 2 12 2C15 2 17 4.5 17 7C17 11 12 14.5 12 14.5Z"
+                                              stroke="#0194F3" stroke-width="2" stroke-linecap="round"
+                                              stroke-linejoin="round"></path>
+                                        <path d="M12 8.5C12.8284 8.5 13.5 7.82843 13.5 7C13.5 6.17157 12.8284 5.5 12 5.5C11.1716 5.5 10.5 6.17157 10.5 7C10.5 7.82843 11.1716 8.5 12 8.5Z"
+                                              stroke="#0194F3" stroke-width="2" stroke-linecap="round"
+                                              stroke-linejoin="round"></path>
+                                    </svg>
+                                </div>
+                                <div class="info">
+                                    <h4>
+                                        <span class="text-green" style="cursor: pointer;" ng-click="scrollToMap()">
+                                            Xem bản đồ
+                                        </span>
+                                        {{ locationDetail.district }}
+                                    </h4>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="author-content">
-                            <h5>Bruno R. Bouchard</h5>
-                            <span class="position">Author</span>
-                            <p>Donec duis enim ipsum odio at cursus. Fames semper enim integer epsum ultricies faucibus
-                                augue enim semper</p>
-                            <ul class="social-link">
-                                <li><a href="#"><span class="fab fa-facebook-f"></span></a></li>
-                                <li><a href="#"><span class="fab fa-twitter"></span></a></li>
-                                <li><a href="#"><span class="fab fa-instagram"></span></a></li>
-                                <li><a href="#"><span class="fab fa-linkedin-in"></span></a></li>
+                    </div>
+                </div>
+            </div>
+            <!--=== Tour Area Nav ===-->
+            <div class="tour-area-nav pt-20 pb-20 wow fadeInUp">
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <div class="ratings-box">
+                            <ul class="ratings">
+                                <li><span class="fas fa-star"></span></li>
+                                <li><span class="fas fa-star"></span></li>
+                                <li><span class="fas fa-star"></span></li>
+                                <li><span class="fas fa-star"></span></li>
+                                <li><span class="fas fa-star"></span></li>
+                                <li><a href="#">(3k Lượt xem)</a></li>
                             </ul>
                         </div>
                     </div>
-                    <!--===  Post Navigation  ===-->
-                    <div class="post-navigation-item pb-30 mb-55 wow fadeInUp">
-                        <div class="prev-post post-nav-item d-flex mb-30">
-                            <div class="thumb">
-                                <img src="/assets/customers/images/blog/prev-post.jpg" alt="Post Thumb">
-                            </div>
-                            <div class="content">
-                                <h6><a href="#">Web Quality Assurance
-                                    Requirements To Web
-                                    Dev Risk Manage</a></h6>
-                                <span class="post-date"><a href="#"><span class="fas fa-calendar-alt"></span>November 23,2022</a></span>
-                            </div>
+                    <div class="col-md-8">
+                        <div class="share-nav">
+                            <a href="#">Chia sẻ<span class="fas fa-share"></span></a>
+                            <a href="#">Yêu thích<span class="fas fa-heart"></span></a>
                         </div>
-                        <div class="next-post post-nav-item d-flex mb-30">
-                            <div class="thumb">
-                                <img src="/assets/customers/images/blog/next-post.jpg" alt="Post Thumb">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-8 visit-parent-class">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade active show" id="nav-home" role="tabpanel"
+                             aria-labelledby="nav-home-tab">
+
+                            <div class="place-content-wrap my-4 wow fadeInUp max-wi"
+                                 ng-bind-html="locationDetailDescription"
+                                 style="text-align: justify; white-space: pre-line; font-family: 'Roboto',sans-serif;">
                             </div>
-                            <div class="content">
-                                <h6><a href="#">Deep Dive Into Wonder
-                                    World Of Displaements
-                                    Filtering</a></h6>
-                                <span class="post-date"><a href="#"><span class="fas fa-calendar-alt"></span>November 23,2022</a></span>
+                            <div class="place-content-wrap mb-4 wow fadeInUp"
+                                 ng-if="locationDetailDescription === null">
+                                Chưa cập nhật thông tin chi tiết về địa điểm tham quan này.
+                            </div>
+
+                            <!--=== Map Box ===-->
+                            <div class="map-box mb-40">
+                                <div id="map" class="rounded-3" style="width: 100%; height: 500px;"></div>
+                            </div><!--=== Map Box ===-->
+                        </div>
+                    </div>
+
+                    <!--=== Reviews Area ===-->
+                    <div class="reviews-wrapper mb-60 wow fadeInUp">
+                        <div class="reviews-inner-box">
+                            <div class="rating-value">
+                                <h5>Đánh giá của khách hàng</h5>
+                                <div class="rate-score">4.9</div>
+                                <ul class="ratings">
+                                    <li><span class="fas fa-star"></span></li>
+                                    <li><span class="fas fa-star"></span></li>
+                                    <li><span class="fas fa-star"></span></li>
+                                    <li><span class="fas fa-star"></span></li>
+                                    <li><span class="fas fa-star"></span></li>
+                                    <li><a href="#">(4.9)</a></li>
+                                </ul>
+                                <span class="reviews">3k Đánh giá</span>
+                            </div>
+                            <div class="reviews-progress">
+                                <div class="single-progress-bar">
+                                    <div class="progress-title">
+                                        <h6>Chất lượng <span class="rate">4.8</span></h6>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar wow slideInLeft" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div class="single-progress-bar">
+                                    <div class="progress-title">
+                                        <h6>Thành viên đội<span class="rate">4.6</span></h6>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar wow slideInLeft" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                <div class="single-progress-bar">
+                                    <div class="progress-title">
+                                        <h6>Địa điểm<span class="rate">4.7</span></h6>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar wow slideInLeft" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                <div class="single-progress-bar">
+                                    <div class="progress-title">
+                                        <h6>Trị giá<span class="rate">4.9</span></h6>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar wow slideInLeft" style="width: 95%"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!--===  Comments Area  ===-->
-                    <div class="comments-area mb-60 wow fadeInUp">
-                        <h5 class="comments-title mb-40">Popular Comments</h5>
-                        <ul class="comments-list">
+                    <!--=== Comments Area ===-->
+                    <div class="comments-area wow fadeInUp">
+                        <ul class="comment-list">
                             <li>
                                 <div class="comment">
                                     <div class="comment-avatar">
-                                        <img src="/assets/customers/images/blog/comment-1.jpg" alt="comment author">
+                                        <img src="/assets/customers/images/place/comment-1.jpg"
+                                             alt="comment author">
                                     </div>
                                     <div class="comment-wrap">
                                         <div class="comment-author-content">
-                                            <span class="author-name">Jonathan M. Dickinson<span class="date">September 25, 2022</span></span>
-                                            <p>Nov ut perspiciatis unde omnis iste natus sit voluptatem accusantium
-                                                doloremque
-                                                laudantium, totam rem aperiam quae abillo inventore veritatis</p>
-                                            <a href="#" class="btn-link">Reply<span
-                                                    class="fas fa-angle-double-right"></span></a>
+                                            <span class="author-name">Nguyễn Văn A
+                                                        <span class="time">
+                                                            <span class="fas fa-clock"></span>
+                                                            5 phút trước
+                                                        </span>
+                                                    </span>
+                                            <ul class="comment-rating-ul mb-20">
+                                                <li>
+                                                    <span class="title">Chất lượng</span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Vị trí</span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Dịch vụ</span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Đội ngũ</span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Giá</span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                </li>
+                                            </ul>
+                                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui
+                                                blanditiis
+                                                praesentium voluptatum deleniti atque corrupti quos dolores et quas
+                                                molestias excepture</p>
+                                            <a href="#" class="btn-link">Trả lời
+                                                <span class="fas fa-angle-double-right"></span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -128,37 +253,138 @@
                                     <li>
                                         <div class="comment">
                                             <div class="comment-avatar">
-                                                <img src="/assets/customers/images/blog/comment-2.jpg"
+                                                <img src="/assets/customers/images/place/comment-2.jpg"
                                                      alt="comment author">
                                             </div>
                                             <div class="comment-wrap">
                                                 <div class="comment-author-content">
-                                                    <span class="author-name">Jonathan M. Dickinson<span class="date">September 25, 2022</span></span>
-                                                    <p>Nov ut perspiciatis unde omnis iste natus sit voluptatem
-                                                        accusantium doloremque
-                                                        laudantium, totam rem aperiam quae abillo inventore
-                                                        veritatis</p>
-                                                    <a href="#" class="btn-link">Reply<span
-                                                            class="fas fa-angle-double-right"></span></a>
+                                                    <span class="author-name">Nguyễn Văn B
+                                                        <span class="time">
+                                                            <span class="fas fa-clock"></span>
+                                                            5 phút trước
+                                                        </span>
+                                                    </span>
+                                                    <ul class="comment-rating-ul mb-20">
+                                                        <li>
+                                                            <span class="title">Chất lượng</span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="title">Vị trí</span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="title">Dịch vụ</span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="title">Đội ngũ</span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="title">Giá</span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                            <span><span class="fas fa-star"></span></span>
+                                                        </li>
+                                                    </ul>
+                                                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus
+                                                        qui
+                                                        blanditiis praesentium voluptatum deleniti atque corrupti
+                                                        quos
+                                                        dolores et quas molestias excepture</p>
+                                                    <a href="#" class="btn-link">Trả lời
+                                                        <span class="fas fa-angle-double-right"></span>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
                                     </li>
                                 </ul>
                             </li>
+                        </ul>
+                        <ul class="comment-list">
                             <li>
                                 <div class="comment">
                                     <div class="comment-avatar">
-                                        <img src="/assets/customers/images/blog/comment-3.jpg" alt="comment author">
+                                        <img src="/assets/customers/images/place/comment-3.jpg"
+                                             alt="comment author">
                                     </div>
                                     <div class="comment-wrap">
                                         <div class="comment-author-content">
-                                            <span class="author-name">Michael C. Paille<span class="date">September 25, 2022</span></span>
-                                            <p>Nov ut perspiciatis unde omnis iste natus sit voluptatem accusantium
-                                                doloremque
-                                                laudantium, totam rem aperiam quae abillo inventore veritatis</p>
-                                            <a href="#" class="btn-link">Reply<span
-                                                    class="fas fa-angle-double-right"></span></a>
+                                            <span class="author-name">Nguyễn Văn Tèo
+                                                        <span class="time">
+                                                            <span class="fas fa-clock"></span>
+                                                            5 phút trước
+                                                        </span>
+                                                    </span>
+                                            <ul class="comment-rating-ul mb-20">
+                                                <li>
+                                                    <span class="title">Chất lượng</span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Vị trí</span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Dịch vụ</span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Đội ngũ</span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Giá</span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                    <span><span class="fas fa-star"></span></span>
+                                                </li>
+                                            </ul>
+                                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui
+                                                blanditiis
+                                                praesentium voluptatum deleniti atque corrupti quos dolores et quas
+                                                molestias excepture</p>
+                                            <a href="#" class="btn-link">Trả lời
+                                                <span class="fas fa-angle-double-right"></span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -166,155 +392,316 @@
                         </ul>
                     </div>
                     <!--===  Comments Form  ===-->
-                    <div class="comments-respond mb-30 wow fadeInUp" id="comment-respond">
-                        <h3 class="comments-heading">Leave a Comments</h3>
-                        <p>Send us your valuable feedback about our services</p>
+                    <div class="comments-respond mb-30 wow fadeInUp">
+                        <h3 class="comments-heading" style="margin-bottom: 15px;">Để lại một bình luận</h3>
+                        <ul class="comment-rating-ul mb-20">
+                            <li>
+                                <span class="title">Chất lượng</span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                            </li>
+                            <li>
+                                <span class="title">Vị trí</span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                            </li>
+                            <li>
+                                <span class="title">Dịch vụ</span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                            </li>
+                            <li>
+                                <span class="title">Đội ngũ</span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                            </li>
+                            <li>
+                                <span class="title">Giá</span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                                <span><span class="fas fa-star"></span></span>
+                            </li>
+                        </ul>
                         <form class="comment-form">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form_group">
-                                        <input type="email" class="form_control" placeholder="Email Address" name="name"
-                                               required>
+                                        <input type="email"
+                                               class="form_control"
+                                               placeholder="Địa chỉ email"
+                                               name="name"
+                                               required
+                                        >
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form_group">
-                                        <input type="text" class="form_control" placeholder="Enter Name" name="email"
-                                               required>
+                                        <input type="text"
+                                               class="form_control"
+                                               placeholder="Họ và tên"
+                                               name="email"
+                                               required
+                                        >
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form_group">
-                                        <textarea name="message" class="form_control" rows="4"
-                                                  placeholder="Write Comments"></textarea>
+                                        <textarea name="message"
+                                                  class="form_control"
+                                                  rows="4"
+                                                  placeholder="Nhập nội dung..."
+                                        ></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form_group">
-                                        <button class="main-btn primary-btn">Send comments<span
-                                                class="fas fa-angle-double-right"></span></button>
+                                        <button class="main-btn primary-btn">
+                                            Gửi nội dung
+                                            <span class="fas fa-angle-double-right"></span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-4">
-                <div class="sidebar-widget-area">
-                    <!--=== Category Widget ===-->
-                    <div class="sidebar-widget category-widget mb-30 wow fadeInUp">
-                        <h4 class="widget-title">Liên hệ đặt vé tham quan</h4>
-                        <ul class="category-nav">
-                            <li><a href="#">Dịch vụ khách sạn an toàn<span class="fas fa-arrow-right"></span></a></li>
-                            <li><a href="#">Hotline: 19008622<span class="fas fa-arrow-right"></span></a></li>
-                            <li><a href="#">Email: TravelTour&#64;gmail.com<span class="fas fa-arrow-right"></span></a>
-                            </li>
-                            <li><a href="#">Địa chỉ: Ninh Kiều Cần Thơ<span class="fas fa-arrow-right"></span></a></li>
-                        </ul>
-                    </div>
-                    <!--=== Recent Post Widget ===-->
-                    <div class="sidebar-widget recent-post-widget mb-40 wow fadeInUp">
-                        <h4 class="widget-title">Recent News</h4>
-                        <ul class="recent-post-list">
-                            <li class="post-thumbnail-content">
-                                <img src="/assets/customers/images/blog/post-thumb-1.jpg" alt="post thumb">
-                                <div class="post-title-date">
-                                    <h5><a href="">Quality Assurance
-                                        Requirements Web
-                                        Dev Risk Manage</a></h5>
-                                    <span class="posted-on"><span class="fas fa-calendar-alt"></span><a href="#">November 23,2022</a></span>
+                <div class="col-xl-4">
+                    <!--=== Sidebar Widget Area ===-->
+                    <div class="sidebar-widget-area pt-45 pl-lg-30">
+                        <div class="sidebar-widget booking-info-widget wow fadeInUp mb-40">
+                            <h4 class="widget-title">Đặt vé ngay</h4>
+                            <ul class="info-list">
+                                <li>
+                                    <span class="d-flex align-items-center bd-highlight">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="29"
+                                             viewBox="0 0 24 24" fill="none">
+                                            <path d="M7 2V5M17 2V5M3 8H21M11.5 11.5H12.5V12.5H11.5V11.5ZM11.5 16.5H12.5V17.5H11.5V16.5ZM16.5 11.5H17.5V12.5H16.5V11.5ZM6.5 16.5H7.5V17.5H6.5V16.5ZM5 21H19C20.1046 21 21 20.1046 21 19V6C21 4.89543 20.1046 4 19 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21Z"
+                                                  stroke="#70A941" stroke-width="2" stroke-linecap="round"
+                                                  stroke-linejoin="round"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M7.5 11.5V12.5H6.5V11.5H7.5Z" stroke="#0194F3" stroke-width="2"
+                                                  stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        Ngày
+                                        <span class="ms-auto bd-highlight">
+                                            <input type="date" ng-model="tickets.departureDate" class="form-control"
+                                                   min="{{getCurrentDate()}}" ng-blur="checkDate()"/>
+                                        </span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="d-flex align-items-center bd-highlight">
+                                       <span class="fas fa-user-circle"></span>
+                                        Người lớn (trên 90cm)
+                                        <span class="ms-auto bd-highlight" style="width: 70px">
+                                            <input type="number" class="form-control" ng-model="tickets.adultTickets"
+                                                   ng-change="calculateTotalPrice()"
+                                                   ng-blur="onQuantityBlurAdult(tickets)" min="1" max="99"
+                                                   oninput="validity.valid||(value='');">
+                                        </span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="d-flex align-items-center bd-highlight">
+                                       <span class="fas fa-user-circle"></span>
+                                        Trẻ em (dưới 90cm)
+                                        <span class="ms-auto bd-highlight" style="width: 70px">
+                                            <input type="number" class="form-control" ng-model="tickets.childrenTickets"
+                                                   ng-change="calculateTotalPrice()"
+                                                   ng-blur="onQuantityBlurChildren(tickets)" min="0" max="99"
+                                                   oninput="validity.valid||(value='');">
+                                        </span>
+                                    </span>
+                                </li>
+                                <div class="booking-total mb-20">
+                                    <div class="total">
+                                        <label>Tạm tính ({{ tickets.totalTickets }}) vé</label>
+                                        <span class="price">
+                                            {{ tickets.totalPrice | vnCurrency }}
+                                        </span>
+                                    </div>
                                 </div>
-                            </li>
-                            <li class="post-thumbnail-content">
-                                <img src="/assets/customers/images/blog/post-thumb-2.jpg" alt="post thumb">
-                                <div class="post-title-date">
-                                    <h5><a href="">Deep Div Wonder
-                                        World Of Displaem
-                                        Filtering</a></h5>
-                                    <span class="posted-on"><span class="fas fa-calendar-alt"></span><a href="#">November 23,2022</a></span>
+                                <div class="submit-button">
+                                    <button type="submit" ng-click="submitBookingLocation()"
+                                            class="main-btn primary-btn w-100 d-flex justify-content-between"
+                                    >
+                                        Đặt vé ngay
+                                        <svg class="svg-inline--fa fa-paper-plane" aria-hidden="true"
+                                             focusable="false"
+                                             data-prefix="fas" data-icon="paper-plane" role="img"
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 512"
+                                             data-fa-i2svg="">
+                                            <path fill="currentColor"
+                                                  d="M511.6 36.86l-64 415.1c-1.5 9.734-7.375 18.22-15.97 23.05c-4.844 2.719-10.27 4.097-15.68 4.097c-4.188 0-8.319-.8154-12.29-2.472l-122.6-51.1l-50.86 76.29C226.3 508.5 219.8 512 212.8 512C201.3 512 192 502.7 192 491.2v-96.18c0-7.115 2.372-14.03 6.742-19.64L416 96l-293.7 264.3L19.69 317.5C8.438 312.8 .8125 302.2 .0625 289.1s5.469-23.72 16.06-29.77l448-255.1c10.69-6.109 23.88-5.547 34 1.406S513.5 24.72 511.6 36.86z"></path>
+                                        </svg>
+                                    </button>
                                 </div>
-                            </li>
-                            <li class="post-thumbnail-content">
-                                <img src="/assets/customers/images/blog/post-thumb-3.jpg" alt="post thumb">
-                                <div class="post-title-date">
-                                    <h5><a href="">Handling Mountin mountin Naviation
-                                        Routes In Native</a></h5>
-                                    <span class="posted-on"><span class="fas fa-calendar-alt"></span><a href="#">November 23,2022</a></span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section><!--====== End Blog Details Section ======-->
+                            </ul>
+                        </div>
 
-<!--====== Start Gallery Section ======-->
-<section class="gallery-section mbm-150">
-    <div class="container-fluid">
-        <div class="slider-active-5-item wow fadeInUp">
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-1.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-1.jpg" class="icon-btn img-popup"><span
-                                class="fas fa-plus"></span></a>
-                    </div>
-                </div>
-            </div>
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-2.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-2.jpg" class="icon-btn img-popup"><span
-                                class="fas fa-plus"></span></a>
-                    </div>
-                </div>
-            </div>
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-3.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-3.jpg" class="icon-btn img-popup"><span
-                                class="fas fa-plus"></span></a>
-                    </div>
-                </div>
-            </div>
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-4.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-4.jpg" class="icon-btn img-popup"><span
-                                class="fas fa-plus"></span></a>
-                    </div>
-                </div>
-            </div>
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-5.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-5.jpg" class="icon-btn img-popup"><span
-                                class="fas fa-plus"></span></a>
-                    </div>
-                </div>
-            </div>
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-3.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-3.jpg" class="icon-btn img-popup"><span
-                                class="fas fa-plus"></span></a>
+                        <!--=== Call Tour Widget ===-->
+                        <div class="sidebar-widget booking-form-widget wow fadeInUp mb-40">
+                            <div class="img-holder position-relative" style="padding-top: 45px">
+                                <button type="button"
+                                        style="position: absolute;width: 250px; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+                                        class="btn btn-green" data-toggle="modal" data-target="#formTourModal"
+                                        ng-click="showCallTourModal()">Bạn có đề xuất gì không ?
+                                </button>
+                            </div>
+                        </div>
+                        <!--=== Call Tour Widget ===-->
+
+                        <!--=== Recent Place Widget ===-->
+                        <div class="sidebar-widget recent-place-widget mb-40 wow fadeInUp">
+                            <h4 class="widget-title">Top 5 tour nổi bật</h4>
+                            <ul class="recent-place-list">
+                                <li class="place-thumbnail-content" ng-repeat="trend in locationTrendData">
+                                    <img ng-src="{{ trend.visitLocationImage }}" alt="post thumb" src="">
+                                    <div class="place-content">
+                                        <ul class="ratings">
+                                            <li><span class="fas fa-star"></span></li>
+                                            <li><span class="fas fa-star"></span></li>
+                                            <li><span class="fas fa-star"></span></li>
+                                            <li><span class="fas fa-star"></span></li>
+                                            <li><span class="fas fa-star"></span></li>
+                                        </ul>
+                                        <h5><a href="/home">{{ trend.visitLocationName }}</a>
+                                        </h5>
+                                        <span class="price">
+                                            <span class="text m-0">Chỉ từ:</span>
+                                            <span class="currency">{{ priceTicketsTrend | vnCurrency }}</span>
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section><!--====== End Gallery Section ======-->
+</section><!--====== End Place Details Section ======-->
+
+<!--====== Start CTA Section ======-->
+<section class="cta-bg overlay bg_cover pt-150 pb-150"
+         style="background-image: url(/assets/customers/images/bg/cta-bg2.jpg);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-xl-7 col-lg-8">
+                <!--=== CTA Content Box ===-->
+                <div class="cta-content-box text-white wow fadeInLeft">
+                    <h2 class="mb-35">Bạn đã sẵn sàng cho chuyến du lịch của mình!</h2>
+                    <a href="" class="main-btn primary-btn">Để Lại thông tin
+                        <svg class="svg-inline--fa fa-paper-plane" aria-hidden="true" focusable="false"
+                             data-prefix="fas" data-icon="paper-plane" role="img"
+                             xmlns="http://www.w3.org/2000/svg" viewBox="-50 -23 680 520" data-fa-i2svg="">
+                            <path fill="currentColor"
+                                  d="M511.6 36.86l-64 415.1c-1.5 9.734-7.375 18.22-15.97 23.05c-4.844 2.719-10.27 4.097-15.68 4.097c-4.188 0-8.319-.8154-12.29-2.472l-122.6-51.1l-50.86 76.29C226.3 508.5 219.8 512 212.8 512C201.3 512 192 502.7 192 491.2v-96.18c0-7.115 2.372-14.03 6.742-19.64L416 96l-293.7 264.3L19.69 317.5C8.438 312.8 .8125 302.2 .0625 289.1s5.469-23.72 16.06-29.77l448-255.1c10.69-6.109 23.88-5.547 34 1.406S513.5 24.72 511.6 36.86z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-5 col-lg-4">
+                <div class="play-box text-lg-end text-center wow fadeInRight">
+                    <a href="https://www.youtube.com/watch?v=ibuUmMhD2Pg" class="video-popup"><span
+                            class="fas fa-play"></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--====== End CTA Section ======-->
+
+<!--====== Start Modal Section ======-->
+<div id="formTourModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 40%; height: 80vh;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mapModalLabel">Bạn có đề xuất về Tour</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="btn-close" data-dismiss="modal"
+                            ng-click="closeFormModal()"></button>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <div id="i-want" class="mapBoxModel col-12"
+                     style="height: 100%; padding-left: 30px; padding-right: 30px; margin: 0;">
+                    <form name="tourDetailForm" style="height: 100%">
+                        <div class="col-12 mb-1">
+                            <h4 style="font-size: larger;font-weight: bold;color: darkgreen;">{{ tourDetail.toursByTourId.tourName }}</h4>
+                        </div>
+                        <div class="col-12 mb-1">
+                            <label for="departureDate" class="form-label">Ngày đi</label>
+                            <input class="form-control" type="date"
+                                   name="birth"
+                                   ng-model="customer.birth"
+                                   ng-class="{ 'is-invalid': isBirthInvalid(),
+                                            'is-valid': isBirthValid() }"
+                                   ng-change="checkBirth()"
+                                   required/>
+                            <small class="text-danger"
+                                   ng-show="customerForm.birth.$error.required">
+                                Vui lòng nhập ngày sinh!
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="isBirthInvalid()">
+                                Yêu cầu trên 16 tuổi!
+                            </small>
+                        </div>
+                        <div class="col-12 mb-1">
+                            <label for="arrivalDate" class="form-label">Ngày về</label>
+                            <input class="form-control" type="date"
+                                   name="birth"
+                                   ng-model="customer.birth"
+                                   ng-class="{ 'is-invalid': isBirthInvalid(),
+                                            'is-valid': isBirthValid() }"
+                                   ng-change="checkBirth()"
+                                   required/>
+                            <small class="text-danger"
+                                   ng-show="customerForm.birth.$error.required">
+                                Vui lòng nhập ngày sinh!
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="isBirthInvalid()">
+                                Yêu cầu trên 16 tuổi!
+                            </small>
+                        </div>
+                        <div class="col-12 mb-1">
+                            <label for="arrivalDate" class="form-label">Ghi chú</label>
+                            <textarea class="form-control" name="note" ng-model="customer.note" rows="4" maxlength="200"
+                                      required></textarea>
+                            <small class="text-danger"
+                                   ng-show="customerForm.birth.$error.required">
+                                Vui lòng nhập ngày sinh!
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="isBirthInvalid()">
+                                Yêu cầu trên 16 tuổi!
+                            </small>
+                        </div>
+                        <div class="mt-3 d-flex justify-content-center pb-0">
+                            <button type="button" class="btn btn-green" style="padding: 8px 50px; border-radius: 30px"
+                                    ng-click="closeFormModal()">Đóng
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

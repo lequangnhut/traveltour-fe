@@ -8,7 +8,7 @@
                     <h1 class="page-title">Địa Điểm Tham Quan</h1>
                     <ul class="breadcrumb-link text-white">
                         <li><a href="/home">Trang chủ</a></li>
-                        <li class="active">Địa điểm tham quan</li>
+                        <li class="active">Tham quan</li>
                     </ul>
                 </div>
             </div>
@@ -29,15 +29,15 @@
                 </div>
                 <div class="col-md-5">
                     <!--====== Product Dropdown ======-->
-                    <div class="product-dropdown float-md-end d-flex justify-content-end align-items-center">
-                        <span class="m-3 fw-medium">Sắp xếp</span>
-                        <select class="wide" ng-model="filler.sort" ng-change="findAllRoomTypesByFillerClick()">
-                            <option value="">Mặc định</option>
-                            <option value="01">Giá tăng dần</option>
-                            <option value="02">Giá giảm dần</option>
-                            <option value="03">Đánh giá tốt nhất</option>
-                        </select>
-                    </div>
+<!--                    <div class="product-dropdown float-md-end d-flex justify-content-end align-items-center">-->
+<!--                        <span class="m-3 fw-medium">Sắp xếp</span>-->
+<!--                        <select class="wide" ng-model="filler.sort" ng-change="findAllRoomTypesByFillerClick()">-->
+<!--                            <option value="">Mặc định</option>-->
+<!--                            <option value="01">Giá tăng dần</option>-->
+<!--                            <option value="02">Giá giảm dần</option>-->
+<!--                            <option value="03">Đánh giá tốt nhất</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@
                                 <h6 class="post-meta">
                                     <span>{{ location.agenciesByAgenciesId.nameAgency }}</span>
                                 </h6>
-                                <h3 class="title">
+                                <h3 class="title text-capitalize">
                                     <a href="/tourism-location/tourism-location-detail/{{location.id}}">
                                         {{ location.visitLocationName }}
                                     </a>
@@ -70,9 +70,7 @@
                                     <span ng-if="ticket.unitPrice">- {{ ticket.unitPrice | vnCurrency }}</span>
                                 </span>
                                 </div>
-                                <a href="/tourism-location/tourism-location-detail/{{location.id}}"
-                                   class="main-btn filled-btn"
-                                >
+                                <a ng-click="redirectVisitLocationDetail(location.id)" class="main-btn filled-btn detail-link">
                                     Xem chi tiết
                                     <svg class="svg-inline--fa fa-paper-plane" aria-hidden="true" focusable="false"
                                          data-prefix="fas" data-icon="paper-plane" role="img"
@@ -129,7 +127,8 @@
                             <form>
                                 <div class="form_group">
                                     <label><span class="fas fa-search"></span></label>
-                                    <input type="text" class="form_control" placeholder="Tìm kiếm..." name="search">
+                                    <input type="text" class="form_control" placeholder="Tìm kiếm..."
+                                           ng-model="filters.searchTerm">
                                 </div>
                             </form>
                         </div>
@@ -148,14 +147,15 @@
                     </div>
 
                     <div class="content">
+
                         <div class="find-item mb-3">
                             <p class="fw-medium">Ngân sách của bạn</p>
                             <div class="findHotelType">
                                 <label for="rangePrice" class="form-label">Chọn ngân sách:</label>
-                                <input type="range" class="form-range" id="rangePrice" ng-model="filler.priceFilter"
+                                <input type="range" class="form-range" id="rangePrice" ng-model="filters.price"
                                        min="100000"
-                                       max="30000000" step="100000">
-                                <p>{{ filler.priceFilter | number:0 }} VND</p>
+                                       max="20000000" step="10000">
+                                <p>{{ filters.price | number:'0' }} VND</p>
                             </div>
                         </div>
 
@@ -165,9 +165,10 @@
                                 <div class="form-check">
                                     <input class="form-check-input"
                                            type="checkbox"
-                                           name="ticket"
-                                           ng-value="ticket.id"
+                                           ng-model="ticket.checked"
+                                           value="{{ticket.id}}"
                                            id="{{ ticket.label }}"
+                                           ng-change="chooseFromAVarietyOfTickets(ticket.label)"
                                     >
                                     <label class="form-check-label" for="{{ ticket.label }}">
                                         {{ ticket.label }}
@@ -178,19 +179,29 @@
 
                         <div class="find-item mb-3">
                             <p class="fw-medium">Loại địa điểm</p>
-                            <div class="findHotelType" ng-repeat="type in visitLocationType">
+                            <div class="findHotelType"
+                                 ng-repeat="type in visitLocationType | limitTo: limitLocationType">
                                 <div class="form-check">
                                     <input class="form-check-input"
                                            type="checkbox"
-                                           name="type"
-                                           ng-value="type.id"
-                                           id="{{ type.id }}"
+                                           value="{{type.id}}"
+                                           id="{{ type.visitLocationTypeName }}"
+                                           ng-model="type.checked"
+                                           ng-change="chooseFromAVarietyOfLocations(type.id)"
                                     >
-                                    <label class="form-check-label" for="{{ type.id }}">
+                                    <label class="form-check-label" for="{{ type.visitLocationTypeName }}">
                                         {{ type.visitLocationTypeName }}
                                     </label>
                                 </div>
                             </div>
+                            <button class="btn text-green"
+                                    ng-show="visitLocationType.length > 3 && !showMoreLocationType"
+                                    ng-click="showMoreTypesOfLocations()">Hiển thị thêm <i
+                                    class="fa-solid fa-angle-down"></i></button>
+                            <button class="btn text-green" ng-show="showMoreLocationType"
+                                    ng-click="showLessTypesOfLocations()">Ẩn bớt <i
+                                    class="fa-solid fa-angle-up"></i>
+                            </button>
                         </div>
 
                         <div class="find-item mb-3">
@@ -211,7 +222,7 @@
                             </div>
                         </div>
                         <div class="find-item mb-3 d-flex justify-content-center mt-3">
-                            <button class="btn btn-green" ng-click="">
+                            <button class="btn btn-green" ng-click="filterAllVisitCus()">
                                 Lọc địa điểm
                             </button>
                         </div>

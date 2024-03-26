@@ -1,0 +1,378 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<!--====== Start Breadcrumb Section ======-->
+<section class="page-banner overlay pt-170 pb-200 bg_cover"
+         style="background-image: url(/assets/customers/images/bg/default-top-banner.jpg);">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="page-banner-content text-center text-white">
+                    <h1 class="page-title">Địa Điểm Tham Quan</h1>
+                    <ul class="breadcrumb-link text-white">
+                        <li><a href="/home">Trang chủ</a></li>
+                        <li><a href="/tourism-location">Tham quan</a></li>
+                        <li><a href="/tourism-location/tourism-location-detail/{{locationDetailIdBase64}}">Chi tiết tham
+                            quan</a></li>
+                        <li>
+                            <a href="/tourism-location/tourism-location-detail/{{ locationDetailIdBase64 }}/booking-location">Chọn
+                                dịch vụ</a></li>
+                        <li class="active">Nhập thông tin</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--====== End Breadcrumb Section ======-->
+
+<!--====== Tiến trình ======-->
+<section id="business-information" class="mb-20">
+    <div class="container-fluid">
+        <div class="logo text-center">
+            <div class="progress-register">
+                <!-- Tiến dộ -->
+                <div class="progress-container">
+                    <div class="container">
+                        <div class="d-flex justify-content-center">
+                            <div class="item">
+                                <div class="item-1">
+                                    <div class="vector-wrapper">
+                                        <svg class="vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             id="tick">
+                                            <path d="M223.9 329.7c-2.4 2.4-5.8 4.4-8.8 4.4s-6.4-2.1-8.9-4.5l-56-56 17.8-17.8 47.2 47.2L340 177.3l17.5 18.1-133.6 134.3z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="text-wrapper">Chọn dịch vụ</div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-1">
+                                    <div class="vector-wrapper">
+                                        <span class="num">2</span>
+                                    </div>
+                                    <div class="text-wrapper fw-medium">Nhập thông tin</div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-1">
+                                    <div class="vector-wrapper">
+                                        <span class="num">3</span>
+                                    </div>
+                                    <div class="text-wrapper">Thanh toán</div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-1">
+                                    <div class="vector-wrapper">
+                                        <span class="num">4</span>
+                                    </div>
+                                    <div class="text-wrapper">Xem lại thông tin</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--====== Tiến trình ======-->
+
+<!--====== Start Blog Details Section ======-->
+<section class="blog-details-section pb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="title-information mb-3">
+                    <h4>Đặt vé của tôi</h4>
+                    <p>Điền thông tin và xem lại</p>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <!--=== Blog Details Wrapper ===-->
+                <div class="blog-details-wrapper pr-lg-50">
+                    <div class="sidebar-widget-area">
+                        <!--=== Category Widget ===-->
+                        <form method="post" role="form" name="bookingCustomerForm">
+                            <div class="sidebar-widget category-widget mb-30 wow fadeInUp">
+                                <div class="row">
+                                    <h4 class="col-9 fs-6">Thông tin liên hệ (nhận vé / phiếu thanh toán)</h4>
+                                    <span class="col-3 text-green" style="cursor: pointer" ng-click="downloadQRCode()">
+                                    <i class="text-green fa-solid fa-file-export"></i> Xuất QR
+                                </span>
+                                </div>
+                                <hr>
+                                <div class="mb-4 row">
+                                    <div class="col-8">
+                                        <div class="row">
+                                            <div class="col-12 mb-3">
+                                                <label for="full_name" class="form-label">Họ và tên<span class="text-danger">*</span></label>
+                                                <input type="text"
+                                                       id="full_name"
+                                                       class="form-control"
+                                                       ng-model="bookingLocation.customerName"
+                                                       placeholder="VD: Nguyen Van A"
+                                                       ng-class="{'is-invalid': bookingCustomerForm.customerName.$invalid && bookingCustomerForm.customerName.$touched, 'is-valid': bookingCustomerForm.customerName.$valid && bookingCustomerForm.customerName.$touched}"
+                                                       ng-change="codeQrOnChange()"
+                                                       required>
+                                                <small class="text-danger"
+                                                       ng-show="bookingCustomerForm.customerName.$touched && bookingCustomerForm.customerName.$error.required">
+                                                    Vui lòng nhập họ và tên!
+                                                </small>
+                                                <small class="text-danger"
+                                                       ng-show="bookingCustomerForm.customerName.$touched && bookingCustomerForm.customerName.$error.pattern">
+                                                    Họ và tên không đúng định dạng!
+                                                </small>
+                                            </div>
+
+                                            <div class="col-12 mb-3">
+                                                <label for="phone" class="form-label">Điện thoại di động<span class="text-danger">*</span></label>
+                                                <input type="tel"
+                                                       id="phone"
+                                                       class="form-control"
+                                                       ng-model="bookingLocation.customerPhone"
+                                                       ng-class="{'is-invalid': bookingCustomerForm.customerPhone.$invalid && bookingCustomerForm.customerPhone.$touched, 'is-valid': bookingCustomerForm.customerPhone.$valid && bookingCustomerForm.customerPhone.$touched}"
+                                                       ng-change="codeQrOnChange()"
+                                                       placeholder="VD: 0918298029"
+                                                       required>
+                                                <small class="text-danger"
+                                                       ng-show="bookingCustomerForm.customerPhone.$touched && bookingCustomerForm.customerPhone.$error.required">
+                                                    Vui lòng nhập số điện thoại!
+                                                </small>
+                                                <small class="text-danger"
+                                                       ng-show="bookingCustomerForm.customerPhone.$touched && bookingCustomerForm.customerPhone.$error.pattern">
+                                                    Số điện thoại không đúng định dạng!
+                                                </small>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="email" class="form-label">Email
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <input type="email"
+                                                       id="email"
+                                                       class="form-control"
+                                                       name="customerEmail"
+                                                       ng-model="bookingLocation.customerEmail"
+                                                       ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                                                       placeholder="VD: example@gmail.com"
+                                                       ng-class="{ 'is-invalid': bookingCustomerForm.customerEmail.$invalid && bookingCustomerForm.customerEmail.$touched, 'is-valid': bookingCustomerForm.customerEmail.$valid && bookingCustomerForm.customerEmail.$touched }"
+                                                       ng-change="codeQrOnChange()"
+                                                       required
+                                                >
+                                                <small class="text-danger"
+                                                       ng-show="bookingCustomerForm.customerEmail.$touched && bookingCustomerForm.customerEmail.$error.required">
+                                                    Vui lòng nhập địa chỉ email !
+                                                </small>
+                                                <small class="text-danger"
+                                                       ng-show="bookingCustomerForm.customerEmail.$touched && bookingCustomerForm.customerEmail.$error.pattern">
+                                                    Địa chỉ email không đúng định dạng !
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 d-flex justify-content-center align-items-center">
+                                        <qr text="locationQr" correction-level="'M'" size="150"></qr>
+                                    </div>
+                                </div>
+
+<!--                                <div class="row">-->
+
+<!--                                    <div class="show-form">-->
+<!--                                        <a href="" class="text-green" ng-click="showFormImportInfo()">-->
+<!--                                            Nhập thêm thông tin cho {{ tickets.totalTickets }} khách hàng-->
+<!--                                            <i class="fa-solid fa-angle-down"></i>-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                            </div>
+
+<!--                            <div class="sidebar-widget category-widget mb-30" ng-show="showForm"-->
+<!--                                 ng-repeat="item in tickets.totalTickets">-->
+<!--                                <h4 class="widget-title fs-6">Thông tin hành khách {{ $index + 1 }}</h4>-->
+<!--                                <div class="mb-3">-->
+<!--                                    &lt;!&ndash; Input Họ và tên &ndash;&gt;-->
+<!--                                    <div class="mb-3">-->
+<!--                                        <label for="customerFullName{{ key }}" class="form-label">Họ và tên</label>-->
+<!--                                        <input type="text"-->
+<!--                                               id="customerFullName{{ key }}"-->
+<!--                                               class="form-control"-->
+<!--                                               name="customerNameKH{{ key }}"-->
+<!--                                               ng-model="bookings_tour_customer['customerName' + key]"-->
+<!--                                               placeholder="VD: Nguyen Van A"-->
+<!--                                               ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"-->
+<!--                                        >-->
+<!--                                        &lt;!&ndash; Thông báo lỗi &ndash;&gt;-->
+<!--                                        <small class="text-danger"-->
+<!--                                               ng-show="bookingCustomerForm['customerNameKH' + key].$touched && bookingCustomerForm['customerNameKH' + key].$error.required">-->
+<!--                                            Vui lòng nhập họ và tên !-->
+<!--                                        </small>-->
+<!--                                        <small class="text-danger"-->
+<!--                                               ng-show="bookingCustomerForm['customerNameKH' + key].$touched && bookingCustomerForm['customerNameKH' + key].$error.pattern">-->
+<!--                                            Họ và tên không đúng định dạng !-->
+<!--                                        </small>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <div class="row mb-3">-->
+<!--                                    &lt;!&ndash; Input Ngày sinh &ndash;&gt;-->
+<!--                                    <div class="col-6 mb-3">-->
+<!--                                        <label for="customerBirth{{ key }}" class="form-label">Ngày sinh</label>-->
+<!--                                        <input type="date"-->
+<!--                                               id="customerBirth{{ key }}"-->
+<!--                                               class="form-control"-->
+<!--                                               name="customerBirthKH{{ key }}"-->
+<!--                                               ng-model="bookings_tour_customer['customerBirth' + key]"-->
+<!--                                        >-->
+<!--                                        &lt;!&ndash; Thông báo lỗi &ndash;&gt;-->
+<!--                                        <small class="text-danger"-->
+<!--                                               ng-show="bookingCustomerForm['customerBirthKH' + key].$touched && bookingCustomerForm['customerBirthKH' + key].$error.required">-->
+<!--                                            Vui lòng chọn ngày sinh !-->
+<!--                                        </small>-->
+<!--                                        <small class="text-danger"-->
+<!--                                               ng-show="isBirthDateInvalid(bookings_tour_customer['customerBirth' + key])">-->
+<!--                                            {{ bookingCustomerForm['customerBirthKH' + key].$error.required ? 'Vui lòng chọn ngày sinh!' : 'Ngày sinh không hợp lệ!' }}-->
+<!--                                        </small>-->
+<!--                                    </div>-->
+<!--                                    &lt;!&ndash; Input Số điện thoại &ndash;&gt;-->
+<!--                                    <div class="col-6 mb-3">-->
+<!--                                        <label for="customerPhone{{ key }}" class="form-label">Điện thoại di-->
+<!--                                            động</label>-->
+<!--                                        <input type="tel"-->
+<!--                                               id="customerPhone{{ key }}"-->
+<!--                                               name="customerPhoneKH{{ key }}"-->
+<!--                                               maxlength="10"-->
+<!--                                               class="form-control"-->
+<!--                                               ng-model="bookings_tour_customer['customerPhone' + key]"-->
+<!--                                               ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"-->
+<!--                                               placeholder="VD: 0918298029"-->
+<!--                                        >-->
+<!--                                        &lt;!&ndash; Thông báo lỗi &ndash;&gt;-->
+<!--                                        <small class="text-danger"-->
+<!--                                               ng-show="bookingCustomerForm['customerPhoneKH' + key].$touched && bookingCustomerForm['customerPhoneKH' + key].$error.required">-->
+<!--                                            Vui lòng nhập số điện thoại !-->
+<!--                                        </small>-->
+<!--                                        <small class="text-danger"-->
+<!--                                               ng-show="bookingCustomerForm['customerPhoneKH' + key].$touched && bookingCustomerForm['customerPhoneKH' + key].$error.pattern">-->
+<!--                                            Số điện thoại không đúng định dạng !-->
+<!--                                        </small>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+                            <div class="sidebar-widget category-widget mb-30 wow fadeInUp">
+                                <h5 class="widget-title fs-6">Yêu cầu thêm (tuỳ chọn)</h5>
+                                <textarea class="form-control"
+                                          rows="2"
+                                          placeholder="Yêu cầu đặc biệt"
+                                          ng-model="bookingLocation.orderNote"
+                                ></textarea>
+                                <span>
+                                    Dành một chút thời gian để ghi chú lại những yêu cầu đặc biệt của bạn, để chúng tôi
+                                    có thể đảm bảo rằng chuyến đi của bạn sẽ trở thành một trải nghiệm không thể quên !
+                                </span>
+                            </div>
+
+                            <div class="button-footer">
+                                <a class="btn btn-outline-green rounded-0 ps-4 p-2 px-4 ms-4"
+                                   href="/tours/tour-detail/{{ tourDetailIdBase64 }}/booking-tour"
+                                   role="button">
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                    TRỞ VỀ
+                                </a>
+                                <button type="button"
+                                        ng-disabled="bookingCustomerForm.$invalid"
+                                        ng-click="submitBooking()"
+                                        class="btn btn-outline-green rounded-0 ps-4 p-2 px-4 mx-4 float-end">
+                                    TIẾP THEO
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4">
+                <div class="sidebar-widget-area">
+                    <!--=== Booking Widget ===-->
+                    <div class="sidebar-widget bg-white booking-form-widget wow fadeInUp mb-40">
+                        <h4 class="mb-4">Thông tin đơn của bạn</h4>
+                        <div class="sidebar-booking-form">
+                            <div class="booking-date-time mb-20">
+                                <img src="{{ locationDetail.visitLocationImage }}"
+                                     class="img-fluid rounded-2 mb-2"
+                                     alt="avatar tour"
+                                >
+                                <span class="fs-6 fw-medium text-transform-uppercase">
+                                    {{ locationDetail.visitLocationName }}
+                                </span>
+                            </div>
+                            <div class="booking-date-time mb-20">
+                                <div class="booking-item">
+                                    <label class="fw-normal">
+                                        <i class="fa-solid fa-barcode"></i>
+                                        Mã:
+                                    </label>
+                                    <div class="bk-item booking-date fw-medium">
+                                        <span>{{ locationDetail.id }}</span>
+                                    </div>
+                                </div>
+                                <div class="booking-item">
+                                    <label class="fw-normal">
+                                        <i class="fa-regular fa-calendar-minus"></i>
+                                        Ngày:
+                                    </label>
+                                    <div class="bk-item booking-date fw-medium">
+                                        <span>{{ tickets.departureDate | formatDate }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="booking-guest-box mb-20">
+                                <h6 class="mb-20">Vé</h6>
+                                <div class="booking-item" ng-if="tickets.adultTickets > 0">
+                                    <label>
+                                        <i class="fa fa-user-secret"></i>
+                                        Vé người lớn:
+                                    </label>
+                                    <div class="bk-item booking-user">
+                                        <span class="fw-medium">
+                                            {{ tickets.adultPrice | vnCurrency }} x {{ tickets.adultTickets }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="booking-item" ng-if="tickets.childrenTickets > 0">
+                                    <label>
+                                        <i class="fa fa-child"></i>
+                                        Vé trẻ em:
+                                    </label>
+                                    <div class="bk-item booking-user">
+                                       <span class="fw-medium">
+                                            {{ tickets.childrenPrice | vnCurrency }} x {{ tickets.childrenTickets }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="booking-item">
+                                    <label>
+                                        <i class="fa-solid fa-user-check"></i>
+                                        Tổng số lượng:
+                                    </label>
+                                    <div class="bk-item booking-user">
+                                        <span class="fw-medium">
+                                            {{ tickets.totalTickets }} vé
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="booking-total mb-20">
+                                <div class="total fs-5">
+                                    <label>Tổng tiền</label>
+                                    <span class="price fw-medium text-green">
+                                        {{ tickets.totalPrice | vnCurrency }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--=== Booking Info Widget ===-->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

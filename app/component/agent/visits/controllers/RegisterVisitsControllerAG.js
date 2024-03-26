@@ -7,6 +7,9 @@ travel_app.controller('RegisterVisitsControllerAG',
         $scope.checkboxChecked = false;
         $scope.phoneError = null;
 
+        $scope.invalidAdultPriceFormat = false;
+        $scope.invalidChildPriceFormat = false;
+
         $scope.nextStep = function () {
             if ($scope.currentStep < 4) {
                 $scope.currentStep++;
@@ -54,8 +57,20 @@ travel_app.controller('RegisterVisitsControllerAG',
             address: null,
             openingTime: null,
             closingTime: null,
-            agenciesId: null
+            agenciesId: null,
+            detailDescription: null
         }
+
+        $scope.setTouched = () => {
+            $scope.activityInDayTouched = true;
+        };
+
+        $scope.isActive = () => {
+            return $scope.activityInDayTouched &&
+                ($scope.visitLocation.detailDescription === null ||
+                    $scope.visitLocation.detailDescription === undefined ||
+                    $scope.visitLocation.detailDescription === '');
+        };
 
         $scope.init = function () {
             /**
@@ -357,6 +372,37 @@ travel_app.controller('RegisterVisitsControllerAG',
             }
         };
 
+        const isPriceValid = (price) => {
+            return price > 0;
+        }
+
+        $scope.isAdultPriceValid = () => {
+            return isPriceValid($scope.unitPrice.adult);
+        }
+
+        $scope.isChildPriceValid = () => {
+            return isPriceValid($scope.unitPrice.child);
+        }
+
+        $scope.onPriceKeyPress = (event) => {
+            let inputValue = event.key;
+
+            if (/^[0-9]+$/.test(inputValue)) {
+                return true;
+            } else {
+                event.preventDefault();
+                return false;
+            }
+        };
+
+        $scope.checkAdultPriceFormat = () => {
+            $scope.invalidAdultPriceFormat = !/^[0-9]*$/.test($scope.unitPrice.adult);
+        };
+
+        $scope.checkChildPriceFormat = () => {
+            $scope.invalidChildPriceFormat = !/^[0-9]*$/.test($scope.unitPrice.child);
+        };
+
         $scope.submitDataRegisterVisits = function () {
             VisitLocationServiceAG.findAllByAgencyId($scope.agencies.id).then(function successCallback(response) {
                 let locationVisit = response.data;
@@ -405,7 +451,6 @@ travel_app.controller('RegisterVisitsControllerAG',
             dataVisit.append("visitLocationImage", $scope.visitLocation.visitLocationImage);
             dataVisit.append("selectedTickets", new Blob([JSON.stringify(selectedTickets)], {type: "application/json"}));
             dataVisit.append("unitPrices", new Blob([JSON.stringify(unitPrices)], {type: "application/json"}));
-
             VisitLocationServiceAG.registerVisit(dataVisit, apiUrl).then(function successCallback() {
                 $location.path(urlRedirect);
                 centerAlert('Thành công !', 'Thông tin địa điểm tham quan đã được cập nhật thành công.', 'success')
