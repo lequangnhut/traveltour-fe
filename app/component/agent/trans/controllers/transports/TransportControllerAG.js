@@ -24,7 +24,8 @@ travel_app.controller('TransportControllerAG',
             transportTypeImg: null,
             licensePlate: null,
             amountSeat: null,
-            isActive: null
+            isActive: null,
+            isTransportBed: null
         }
 
         function errorCallback() {

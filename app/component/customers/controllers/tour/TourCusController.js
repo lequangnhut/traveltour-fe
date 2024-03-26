@@ -1,4 +1,4 @@
-travel_app.controller('TourCusController', function ($scope, $location, TourCusService, TourDetailCusService, MapBoxService, ToursServiceAD) {
+travel_app.controller('TourCusController', function ($scope, $location, $filter, TourCusService, TourDetailCusService, MapBoxService, ToursServiceAD) {
     $scope.currentPage = 0;
     $scope.pageSize = 9;
 
@@ -303,14 +303,15 @@ travel_app.controller('TourCusController', function ($scope, $location, TourCusS
     $scope.init();
 
     function createPopupContent(tourDetail) {
+        let formattedDate = $filter('formatDate')(tourDetail.departureDate);
         return `    <div class="m-1 mb-30 row">
                         <div class="img-holder col-xl-3 col-lg-4 p-0">
-                            <img src="${tourDetail.toursByTourId.tourImg}" style="height: 170px"
+                            <img src="${tourDetail.toursByTourId.tourImg}" class="rounded-3" style="height: 170px"
                                  onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
                         </div>
                         <div class=" col-xl-9 col-lg-8">
                             <div class="meta row">
-                                <div class="col-lg-8 container-hotel">
+                                <div class="col-lg-8">
                                     <div>
                                         <span>
                                             <i class="fa-solid fa-street-view"></i>
@@ -341,17 +342,14 @@ travel_app.controller('TourCusController', function ($scope, $location, TourCusS
                                     <div class="roomTypeByHotel mb-3"
                                          style="padding-left: 10px ;border-left: 1px solid rgba(29, 35, 31, 0.1)">
                                         <div style="font-size: 14px; line-height: 20px">
-                                            <p class="fs-7 fw-medium mb-1">Hướng dẫn viên:
-                                                ${tourDetail.usersByGuideId.fullName} - ${tourDetail.usersByGuideId.address}
-                                            </p>
                                             <p class="fs-7 mb-1">Điểm đi:
                                                 <span class="fw-medium">${tourDetail.fromLocation}</span>
                                             </p>
                                             <p class="fs-7 mb-1">Điểm đến:
                                                 <span class="fw-medium">${tourDetail.toLocation}</span>
                                             </p>
-                                            <p class="fs-7 mb-1">Dự kiến đi trong:
-                                                
+                                            <p class="fs-7 mb-1">Ngày đi:
+                                                <span class="fw-medium">${formattedDate}</span>
                                             </p>
                                             <div class="text-green">
                                                 <i class="fa-solid fa-check"></i> Xe có WIFI miễn phí

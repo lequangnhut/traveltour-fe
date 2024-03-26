@@ -58,7 +58,7 @@
                 </small>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <label class="form-label">SỐ CHỔ NGỒI</label>
                 <input type="text"
                        class="form-control"
@@ -76,6 +76,26 @@
                 <small class="text-danger"
                        ng-show="form_transport.amountSeat.$touched && form_transport.amountSeat.$error.pattern">
                     Số chổ ngồi không đúng định dạng !
+                </small>
+            </div>
+
+            <div class="col-lg-3">
+                <label for="isTransportBed" class="form-label">LOẠI CHỔ NGỒI (GHẾ/GIƯỜNG)</label>
+                <select id="isTransportBed"
+                        class="form-select"
+                        name="isTransportBed"
+                        ng-class="{ 'is-invalid': form_transport.isTransportBed.$invalid && form_transport.isTransportBed.$touched,
+                                    'is-valid': form_transport.isTransportBed.$valid && form_transport.isTransportBed.$touched }"
+                        ng-model="transportation.isTransportBed"
+                        required
+                >
+                    <option value="" disabled selected>Chọn loại phương tiện</option>
+                    <option value="false">Xe ghế ngồi</option>
+                    <option value="true">Xe giường nằm</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="form_transport.isTransportBed.$touched && form_transport.isTransportBed.$error.required">
+                    Vui lòng chọn loại phương tiện !
                 </small>
             </div>
 

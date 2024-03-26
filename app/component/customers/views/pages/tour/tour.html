@@ -191,7 +191,8 @@
                                                 <div class="location text-orange" style="font-size: 14px">
                                                     <p>
                                                         <i class="fa-solid fa-user-tie"></i>
-                                                        Khách đã đặt: {{ tour.bookedSeat }}/{{ tour.numberOfGuests }} chổ
+                                                        Khách đã đặt: {{ tour.bookedSeat }}/{{ tour.numberOfGuests }}
+                                                        chổ
                                                     </p>
                                                 </div>
 
@@ -213,6 +214,9 @@
                                                 </p>
                                                 <p class="fs-7 mb-1">Điểm đến:
                                                     <span class="fw-medium">{{ tour.toLocation }}</span>
+                                                </p>
+                                                <p class="fs-7 mb-1">Ngày đi:
+                                                    <span class="fw-medium">{{ tour.departureDate | formatDate }}</span>
                                                 </p>
                                                 <p class="fs-7 mb-1">Dự kiến đi trong:
                                                     {{ tour.departureDate | calculateDaysAndNights:tour.arrivalDate }}
@@ -377,7 +381,7 @@
 
 <!--====== Start Modal Section ======-->
 <div id="formTourModal" class="modal fade" role="dialog">
-    <div  class="modal-dialog modal-dialog-centered" style="max-width: 40%; height: 80vh;">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 40%; height: 80vh;">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -388,12 +392,15 @@
                 </button>
             </div>
             <div class="modal-body row">
-                <div id="i-want" class="mapBoxModel col-12" style="height: 100%; padding-left: 30px; padding-right: 30px; margin: 0;">
+                <div id="i-want" class="mapBoxModel col-12"
+                     style="height: 100%; padding-left: 30px; padding-right: 30px; margin: 0;">
                     <form name="tourDetailForm" style="height: 100%">
                         <div class="col-12 mb-1">
                             <label for="tourNameSelect" class="form-label">Tên tour</label>
-                            <select id="tourNameSelect" class="form-select" name="tourNameSelect" ng-model="selectedTour"
-                                    ng-options="tour.id as (tour.id + '-' + tour.tourName) for tour in tourBasicList" required>
+                            <select id="tourNameSelect" class="form-select" name="tourNameSelect"
+                                    ng-model="selectedTour"
+                                    ng-options="tour.id as (tour.id + '-' + tour.tourName) for tour in tourBasicList"
+                                    required>
                                 <option value="" disabled selected>Chọn tour</option>
                             </select>
                             <small class="text-danger"
@@ -439,7 +446,8 @@
                         </div>
                         <div class="col-12 mb-1">
                             <label for="arrivalDate" class="form-label">Ghi chú</label>
-                            <textarea class="form-control" name="note" ng-model="customer.note" rows="4" maxlength="200" required></textarea>
+                            <textarea class="form-control" name="note" ng-model="customer.note" rows="4" maxlength="200"
+                                      required></textarea>
                             <small class="text-danger"
                                    ng-show="customerForm.birth.$error.required">
                                 Vui lòng nhập ngày sinh!

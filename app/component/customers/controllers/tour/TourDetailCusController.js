@@ -1,5 +1,5 @@
 travel_app.controller('TourDetailCusController',
-    function ($scope, $location, $sce, $routeParams, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailCusService, MapBoxService, ToursServiceAD) {
+    function ($scope, $location, $sce, $filter, $routeParams, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailCusService, MapBoxService, ToursServiceAD) {
         mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
         $scope.markerTrips = [];
@@ -41,10 +41,6 @@ travel_app.controller('TourDetailCusController',
 
         $scope.init = function () {
             $scope.isLoading = true;
-
-            $scope.changeTab = function (tabName) {
-                $scope.$broadcast('tabChanged', {tabName: tabName});
-            };
 
             TourDetailCusService.findByTourDetailId(tourDetailId).then(function (response) {
                 if (response.status === 200) {
@@ -110,6 +106,14 @@ travel_app.controller('TourDetailCusController',
             }
 
             /**
+             * phương thức chuyển tab thì resize lại bản đồ
+             */
+            $scope.changeTab = function (tabName) {
+                $scope.$broadcast('tabChanged', {tabName: tabName});
+                $scope.initDataChangeTab(tourDetailId);
+            };
+
+            /**
              * phương thức khởi tạo bản đồ
              */
             $scope.initMapTrips = function () {
@@ -124,31 +128,31 @@ travel_app.controller('TourDetailCusController',
             /**
              * phương lấy tất cả tour trip ra theo ngày 1
              */
-            TourTripsServiceAD.getTripsByTourId(tourDetailId).then(function (response) {
-                if (response.status === 200) {
-                    $scope.tourTrips = response.data.data.tourTrips;
-                    $scope.dayInTrip = response.data.data.dayInTrip.map(function (item) {
-                        return {
-                            dayTrip: item
-                        };
-                    });
+            $scope.initDataChangeTab = function (tourDetailId) {
+                TourTripsServiceAD.getTripsByTourId(tourDetailId).then(function (response) {
+                    if (response.status === 200) {
+                        $scope.tourTrips = response.data.data.tourTrips;
+                        $scope.dayInTrip = response.data.data.dayInTrip.map(function (item) {
+                            return {
+                                dayTrip: item
+                            };
+                        });
 
-                    $scope.initMapTrips();
-                    $scope.createMarkerTrips($scope.tourTrips);
-                } else {
-                    $location.path('/admin/page-not-found')
-                }
-            }, errorCallback).finally(function () {
-                $scope.isLoading = false;
-            });
+                        $scope.initMapTrips();
+                        $scope.createMarkerTrips($scope.tourTrips);
+                    } else {
+                        $location.path('/admin/page-not-found')
+                    }
+                }, errorCallback).finally(function () {
+                    $scope.isLoading = false;
+                });
+            }
 
             /**
              * phương thức thay đổi ngày và điểm đi trên bản đồ
              * @param dayInTrip
              */
             $scope.changeLocationOnMap = function (dayInTrip) {
-                $scope.removeMapLayer();
-
                 TourTripsServiceAD.findTripsByDayInTrip(dayInTrip, tourDetailId).then(function (response) {
                     if (response.status === 200) {
                         $scope.tourTrips = response.data.data;
@@ -247,64 +251,63 @@ travel_app.controller('TourDetailCusController',
                     });
                 }
 
-                // $scope.mapTrips.on('style.load', function () {
-                //     let waypoints = ''; // Chuỗi để lưu trữ các tọa độ trung gian
-                //
-                //     $scope.coordinateTrips.forEach(function (coordinate, index) {
-                //         waypoints += `${coordinate[0]},${coordinate[1]}`;
-                //         if (index < $scope.coordinateTrips.length - 1) {
-                //             waypoints += ';'; // Thêm dấu chấm phẩy giữa các tọa độ, trừ tọa độ cuối cùng
-                //         }
-                //     });
-                //
-                //     let routeURL = `https://api.mapbox.com/directions/v5/mapbox/driving/${waypoints}?geometries=geojson&steps=true&access_token=${mapboxgl.accessToken}`;
-                //
-                //     fetch(routeURL)
-                //         .then(response => response.json())
-                //         .then(data => {
-                //             // Lấy dữ liệu về đường đi
-                //             let route = data.routes[0].geometry;
-                //
-                //             $scope.mapLineLayerId = 'map-line-' + new Date().getTime();
-                //
-                //             $scope.mapTrips.addLayer({
-                //                 'id': $scope.mapLineLayerId,
-                //                 'type': 'line',
-                //                 'source': {
-                //                     'type': 'geojson',
-                //                     'data': {
-                //                         'type': 'Feature',
-                //                         'properties': {},
-                //                         'geometry': route
-                //                     }
-                //                 },
-                //                 'layout': {
-                //                     'line-join': 'round',
-                //                     'line-cap': 'round'
-                //                 },
-                //                 'paint': {
-                //                     'line-color': '#e35050',
-                //                     'line-width': 3
-                //                 }
-                //             });
-                //         })
-                //         .catch(error => {
-                //             console.error('Lỗi khi lấy thông tin định tuyến:', error);
-                //         });
-                // });
+                $scope.mapTrips.on('style.load', function () {
+                    let waypoints = ''; // Chuỗi để lưu trữ các tọa độ trung gian
+
+                    $scope.coordinateTrips.forEach(function (coordinate, index) {
+                        waypoints += `${coordinate[0]},${coordinate[1]}`;
+                        if (index < $scope.coordinateTrips.length - 1) {
+                            waypoints += ';'; // Thêm dấu chấm phẩy giữa các tọa độ, trừ tọa độ cuối cùng
+                        }
+                    });
+
+                    let routeURL = `https://api.mapbox.com/directions/v5/mapbox/driving/${waypoints}?geometries=geojson&steps=true&access_token=${mapboxgl.accessToken}`;
+
+                    fetch(routeURL)
+                        .then(response => response.json())
+                        .then(data => {
+                            // Lấy dữ liệu về đường đi
+                            let route = data.routes[0].geometry;
+
+                            $scope.mapLineLayerId = 'map-line-' + new Date().getTime();
+
+                            $scope.mapTrips.addLayer({
+                                'id': $scope.mapLineLayerId,
+                                'type': 'line',
+                                'source': {
+                                    'type': 'geojson',
+                                    'data': {
+                                        'type': 'Feature',
+                                        'properties': {},
+                                        'geometry': route
+                                    }
+                                },
+                                'layout': {
+                                    'line-join': 'round',
+                                    'line-cap': 'round'
+                                },
+                                'paint': {
+                                    'line-color': '#e35050',
+                                    'line-width': 3
+                                }
+                            });
+                            $scope.removeMapLayer($scope.mapLineLayerId);
+                        })
+                        .catch(error => {
+                            console.error('Lỗi khi lấy thông tin định tuyến:', error);
+                        });
+                });
             }
 
             /**
              * Phương thức xóa toàn bộ đường dẫn vẽ trên bản đồ
              */
-            $scope.removeMapLayer = function () {
-                let mapLineLayerId = $scope.mapLineLayerId;
-
+            $scope.removeMapLayer = function (mapLineLayerId) {
                 if (mapLineLayerId && $scope.mapTrips.getLayer(mapLineLayerId)) {
                     $scope.mapTrips.removeLayer(mapLineLayerId);
                     $scope.mapTrips.removeSource(mapLineLayerId);
                 } else {
-                    console.log("cc")
+                    console.log("không xóa dược")
                 }
             }
 
@@ -533,14 +536,15 @@ travel_app.controller('TourDetailCusController',
         $scope.init();
 
         function createPopupContent(tourDetail) {
+            let formattedDate = $filter('formatDate')(tourDetail.departureDate);
             return `    <div class="m-1 mb-30 row">
                         <div class="img-holder col-xl-3 col-lg-4 p-0">
-                            <img src="${tourDetail.toursByTourId.tourImg}" style="height: 170px"
+                            <img src="${tourDetail.toursByTourId.tourImg}" class="rounded-3" style="height: 170px"
                                  onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
                         </div>
                         <div class=" col-xl-9 col-lg-8">
                             <div class="meta row">
-                                <div class="col-lg-12 ">
+                                <div class="col-lg-8">
                                     <div>
                                         <span>
                                             <i class="fa-solid fa-street-view"></i>
@@ -577,11 +581,42 @@ travel_app.controller('TourDetailCusController',
                                             <p class="fs-7 mb-1">Điểm đến:
                                                 <span class="fw-medium">${tourDetail.toLocation}</span>
                                             </p>
+                                            <p class="fs-7 mb-1">Ngày đi:
+                                                <span class="fw-medium">${formattedDate}</span>
+                                            </p>
                                             <div class="text-green">
                                                 <i class="fa-solid fa-check"></i> Xe có WIFI miễn phí
                                             </div>
                                             <div class="text-green">
                                                 <i class="fa-solid fa-check"></i> Miễn phí nước suối
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="infoHotel h-100 w-100 position-relative row">
+                                        <div class="rating col-xl-12 col-lg-12 col-sm-6 col-6">
+                                            <div class="float-end" style="font-size: 14px; line-height: 20px">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="rating-content float-end m-2">
+                                                        <p>Rất tốt</p>
+                                                        <p>133 Đánh giá</p>
+                                                    </div>
+                                                    <div class="rating-content float-end">
+                                                        <div class="btn-green text-center"
+                                                             style="width: 50px; height: 50px; line-height: 50px; border-radius: 8px">
+                                                            <span class="fw-medium fs-5">4.9</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
+                                            <div class="box">
+                                                <div class="fw-bold text-end" style="font-size: 20px">
+                                                    ${$scope.formatPrice(tourDetail.unitPrice)} ₫
+                                                </div>
+                                                <a href="#" id="redirectTourDetail" class="btn btn-green w-100 mt-3">Đặt tour ngay</a>
                                             </div>
                                         </div>
                                     </div>

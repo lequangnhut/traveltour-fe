@@ -48,12 +48,16 @@ travel_app.controller('TransportDetailCusController',
 
         /**
          * Phưương thức mở tab booking bên dưới
+         * @param schedule
          * @param index
          */
-        $scope.toggleBooking = function (index) {
+        $scope.toggleBooking = function (index, schedule) {
             $scope.activeTransportBookingTab = ($scope.activeTransportBookingTab === index) ? -1 : index;
             $scope.activeTransportInfoTab = -1;
             $scope.isGetSeatCalled = true;
+
+            // lấy dữ liệu của ghế fill lên xe
+            $scope.seatInTrans = $scope.getSeat(schedule);
         };
 
         $scope.init = function () {
@@ -72,7 +76,6 @@ travel_app.controller('TransportDetailCusController',
                     $scope.transportSchedule.forEach(function (schedule) {
                         $scope.seatSelections[schedule.id] = {};
                         $scope.schedulePrices.push(0);
-                        $scope.splittingCabinTrans(schedule.transportationTypes);
                     });
                 } else {
                     $location.path('/admin/page-not-found');
@@ -117,31 +120,30 @@ travel_app.controller('TransportDetailCusController',
             };
 
             /**
-             * Phương thức phân biệt xe khách để tách cabin làm giường hoặc ghế
-             * @param transportationType
-             */
-            $scope.splittingCabinTrans = function (transportationType) {
-                if (transportationType.transportationTypeName.includes('giường')) {
-                    console.log('giường');
-                } else if (transportationType.transportationTypeName.includes('ghế')) {
-                    console.log('ghế');
-                } else {
-                    console.log(transportationType.transportationTypeName);
-                }
-            }
-
-            /**
              * tìm tất cả chổ ngồi fill lên chiếc xe
              * @param transportSchedule
              * @returns {*[]}
              */
             $scope.getSeat = function (transportSchedule) {
                 let seatRows = [];
-                for (let i = 0; i < transportSchedule.length; i++) {
-                    let bookSeats = transportSchedule[i].transportationScheduleSeatsById;
+                let bookSeats = transportSchedule.transportationScheduleSeatsById;
+
+                if (transportSchedule.transportations.isTransportBed) {
+                    let totalSeats = bookSeats.length;
+                    let halfIndex = Math.ceil(totalSeats / 2);
+                    let lowerBedSeats = bookSeats.slice(0, halfIndex);
+                    let upperBedSeats = bookSeats.slice(halfIndex);
+
+                    let chunkedLowerBedSeats = $scope.chunkArray(lowerBedSeats, 3);
+                    let chunkedUpperBedSeats = $scope.chunkArray(upperBedSeats, 3);
+
+                    seatRows.push(chunkedLowerBedSeats);
+                    seatRows.push(chunkedUpperBedSeats);
+                } else {
                     let chunkedSeats = $scope.chunkArray(bookSeats, 3);
                     seatRows.push(chunkedSeats);
                 }
+
                 return seatRows;
             }
 
@@ -156,18 +158,15 @@ travel_app.controller('TransportDetailCusController',
             /**
              * Chọn chổ ngồi
              * @param schedule
-             * @param rowIndex
-             * @param seatIndex
+             * @param seat
              */
-            $scope.isActiveSeat = function (schedule, rowIndex, seatIndex) {
-                let scheduleSeat = $scope.getSeat([schedule])[0][rowIndex][seatIndex];
-
-                if (scheduleSeat.isBooked) {
+            $scope.isActiveSeat = function (schedule, seat) {
+                if (seat.isBooked) {
                     return;
                 }
 
                 let unitPrice = schedule.unitPrice;
-                let seatNumber = scheduleSeat.seatNumber;
+                let seatNumber = seat.seatNumber;
                 let seatSelections = $scope.seatSelections[schedule.id];
                 let count = Object.keys(seatSelections).filter(key => seatSelections[key]).length;
 

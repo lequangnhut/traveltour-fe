@@ -169,8 +169,24 @@ travel_app.controller('OrderTransportControllerAG',
              */
             $scope.getSeat = function (transportSeat) {
                 let seatRows = [];
-                let chunkedSeats = $scope.chunkArray(transportSeat, 3);
-                seatRows.push(chunkedSeats);
+                let transportation = $scope.selectedSchedule.transportations;
+
+                if (transportation.isTransportBed) {
+                    let totalSeats = transportSeat.length;
+                    let halfIndex = Math.ceil(totalSeats / 2);
+                    let lowerBedSeats = transportSeat.slice(0, halfIndex);
+                    let upperBedSeats = transportSeat.slice(halfIndex);
+
+                    let chunkedLowerBedSeats = $scope.chunkArray(lowerBedSeats, 3);
+                    let chunkedUpperBedSeats = $scope.chunkArray(upperBedSeats, 3);
+
+                    seatRows.push(chunkedLowerBedSeats);
+                    seatRows.push(chunkedUpperBedSeats);
+                } else {
+                    let chunkedSeats = $scope.chunkArray(transportSeat, 3);
+                    seatRows.push(chunkedSeats);
+                }
+
                 return seatRows;
             }
 

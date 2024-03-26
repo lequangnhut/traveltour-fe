@@ -13,7 +13,7 @@
 
     <div class="card card-custom">
         <form class="row g-3 form-input-custom" ng-submit="createOrderTransport()" name="form_booking" role="form">
-            <div class="col-lg-10 ">
+            <div class="col-lg-8">
                 <div class="row">
                     <div class="col-lg-12 mb-3">
                         <label for="inputState" class="form-label">MÃ CHUYẾN ĐI</label>
@@ -175,9 +175,10 @@
                 </div>
             </div>
 
-            <div class="col-lg-2">
-                <div class="d-flex justify-content-end">
-                    <div class="theatre rounded-top-5">
+            <div class="col-lg-4">
+                <label></label>
+                <div class="d-flex justify-content-center">
+                    <div class="theatre rounded-top-5 mx-3">
                         <div class="steering-wheel">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
@@ -214,6 +215,50 @@
 
                         <ol class="cabin ps-0">
                             <li class="row row--1" ng-repeat="row in transportSeat[0]">
+                                <ol class="seats" type="A">
+                                    <li class="seat" ng-class="{ 'daMVvn': seat.isBooked }" ng-repeat="seat in row">
+                                        <input type="checkbox" id="{{ 'seat-' + seat.seatNumber }}"/>
+                                        <label for="{{ 'seat-' + seat.seatNumber }}"
+                                               title="Số ghế: {{seat.seatNumber + ' - Giá: ' + formatPrice(selectedSchedule.unitPrice) }}"
+                                               ng-click="isActiveSeat(seat)"
+                                               ng-class="{'seatActive': seatSelections[selectedSchedule.id] && seatSelections[selectedSchedule.id][seat.seatNumber]}">
+                                            <a href="#">
+                                                <svg width="32" height="40" viewBox="0 0 28 40" fill="none"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     style="width: 27px; height: 40px;">
+                                                    <rect x="2.75" y="2.75" width="22.5" height="34.5"
+                                                          rx="2.25"
+                                                          fill="#FFF" stroke="#B8B8B8"
+                                                          stroke-width="1.5" stroke-linejoin="round"></rect>
+                                                    <rect x="5.75" y="27.75" width="16.5" height="6.5"
+                                                          rx="2.25"
+                                                          fill="#FFF" stroke="#B8B8B8"
+                                                          stroke-width="1.5" stroke-linejoin="round"></rect>
+                                                    <path class="icon-selected"
+                                                          d="M14 8.333A6.67 6.67 0 0 0 7.333 15 6.67 6.67 0 0 0 14 21.667 6.67 6.67 0 0 0 20.667 15 6.669 6.669 0 0 0 14 8.333zm-1.333 10L9.334 15l.94-.94 2.393 2.387 5.06-5.06.94.946-6 6z"
+                                                          fill="transparent"></path>
+                                                    <path class="icon-disabled"
+                                                          d="M18.96 11.46l-1.42-1.42L14 13.59l-3.54-3.55-1.42 1.42L12.59 15l-3.55 3.54 1.42 1.42L14 16.41l3.54 3.55 1.42-1.42L15.41 15l3.55-3.54z"
+                                                          fill="transparent"></path>
+                                                    <span ng-if="seat.isBooked"
+                                                          style="font-size: 14px ;position: absolute; top: 60%; left: 45%; transform: translate(-50%, -50%);">
+                                                        <p class="fw-medium text-danger">
+                                                            <i class="fa-solid fa-ban"></i>
+                                                        </p>
+                                                    </span>
+                                                </svg>
+                                            </a>
+                                        </label>
+                                    </li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="theatre rounded-top-5" ng-if="selectedSchedule.transportations.isTransportBed">
+                        <div class="steering-wheel" style="margin-bottom: 85px"></div>
+                        <ol class="cabin ps-0">
+                            <li class="row row--1" ng-repeat="row in transportSeat[1]">
                                 <ol class="seats" type="A">
                                     <li class="seat" ng-class="{ 'daMVvn': seat.isBooked }" ng-repeat="seat in row">
                                         <input type="checkbox" id="{{ 'seat-' + seat.seatNumber }}"/>
