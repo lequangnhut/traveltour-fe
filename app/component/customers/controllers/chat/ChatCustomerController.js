@@ -5,6 +5,7 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
     }
 
     var user = JSON.parse(window.localStorage.getItem('user'));
+    $scope.avatarUser = JSON.parse(window.localStorage.getItem('user'))
     var stompClient = null;
 
     $scope.userAgencyId = []
@@ -210,7 +211,6 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
 
     $scope.sendMessage = async function (customerId) {
         $scope.messageContent.trim();
-        console.log("Mã người dùng: ", customerId)
         if (($scope.messageContent !== '') && $scope.displayUserChat !== null && $scope.displayUserChat !== undefined) {
             var chatMessage = {
                 senderId: user.id,
@@ -235,7 +235,7 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
 
         $scope.messageContent = '';
         $timeout(function () {
-            $scope.findUsersChat();
+            $scope.updateStatusMessenger($scope.displayUserChat);
         }, 100)
         scrollToBottom()
     };
