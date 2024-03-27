@@ -10,6 +10,7 @@ travel_app.controller('MainController',
         $scope.errorSound = new Audio('assets/admin/assets/sound/error.mp3');
 
         $scope.countMessageUnread = 0;
+
         function errorCallback() {
             $location.path('/admin/internal-server-error')
         }
@@ -417,12 +418,10 @@ travel_app.controller('MainController',
                 return new Promise(function (resolve, reject) {
                     stompClient.subscribe(`/user/${user.id}/chat/findUsersChat`, function (message) {
                         $scope.userChatsList = JSON.parse(message.body);
-                        console.log($scope.userChatsList);
                         $scope.countMessageUnread = 0
-                        $scope.userChatsList.forEach(function(item) {
+                        $scope.userChatsList.forEach(function (item) {
                             $scope.countMessageUnread += item.countMessageUnread;
                         });
-                        console.log($scope.countMessageUnread)
                         resolve($scope.userChatsList);
                     });
                 });

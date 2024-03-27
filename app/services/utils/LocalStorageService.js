@@ -14,6 +14,10 @@ travel_app.service('LocalStorageService', function () {
         localStorage.removeItem(key);
     };
 
+    this.clearAll = function () {
+        localStorage.clear();
+    };
+
     this.encryptData = function (data, customKey) {
         const combinedKey = customKey + defaultKey;
 

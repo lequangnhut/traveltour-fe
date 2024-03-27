@@ -1,5 +1,5 @@
 travel_app.controller('TransBookingSuccessCusController',
-    function ($scope, $location, $timeout, $routeParams, LocalStorageService, BookingTransportCusService) {
+    function ($scope, $location, $timeout, $routeParams, LocalStorageService) {
 
         $scope.init = function () {
             let dataBookingTransportSuccess = LocalStorageService.get('dataBookingTransportSuccess');
@@ -12,6 +12,7 @@ travel_app.controller('TransBookingSuccessCusController',
 
             $scope.seatNumber = dataBookingTransportSuccess.seatNumber;
             $scope.orderTransport = dataBookingTransportSuccess.orderTransport;
+            $scope.orderTransport.orderStatus = parseInt(atob($routeParams.orderStatus), 10);
             $scope.transportSchedule = dataBookingTransportSuccess.transportSchedule;
         }
 

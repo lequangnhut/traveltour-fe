@@ -195,23 +195,50 @@ travel_app.controller('TransBookingCusController',
             confirmAlert('Bạn có chắc chắn địa chỉ email: ' + $scope.bookingTransport.customerEmail + ' là chính xác không ?', confirmBookTour);
         }
 
-        $scope.paymentZaLoPay = function () {
+        $scope.paymentMomo = function () {
+            let seatNumber = $scope.seatNumber;
+            let transportSchedule = $scope.transportSchedule;
+            let orderTransport = $scope.bookingTransport;
+
+            orderTransport.id = GenerateCodePayService.generateCodeBooking('MOMO', transportSchedule.id);
+            orderTransport.transportationScheduleId = $scope.scheduleId;
+            orderTransport.amountTicket = $scope.totalAmountSeat;
+            orderTransport.orderTotal = $scope.totalPrice;
+            orderTransport.paymentMethod = 3; // thanh toán bằng Momo
+
+
             if (user !== null) {
                 if (user.roles.some(role => role.nameRole === 'ROLE_CUSTOMER')) {
-                    console.log(user.id)
+                    orderTransport.userId = user.id;
                 } else {
                     LocalStorageService.remove('user');
                 }
             }
 
             function confirmBookTour() {
-                console.log($scope.bookingTransport)
+                $scope.isLoading = true;
+
+                BookingTransportCusService.redirectMomoTransport(orderTransport, seatNumber).then(function (response) {
+                    if (response.status === 200) {
+                        let dataBookingTransportSuccess = {
+                            orderTransport: orderTransport,
+                            transportSchedule: transportSchedule,
+                            seatNumber: seatNumber
+                        }
+                        LocalStorageService.set('dataBookingTransportSuccess', dataBookingTransportSuccess);
+                        $window.location.href = response.data.redirectUrl;
+                    } else {
+                        $location.path('/admin/page-not-found');
+                    }
+                }).finally(function () {
+                    $scope.isLoading = false;
+                });
             }
 
             confirmAlert('Bạn có chắc chắn địa chỉ email: ' + $scope.bookingTransport.customerEmail + ' là chính xác không ?', confirmBookTour);
         }
 
-        $scope.paymentMomo = function () {
+        $scope.paymentZaLoPay = function () {
             if (user !== null) {
                 if (user.roles.some(role => role.nameRole === 'ROLE_CUSTOMER')) {
                     console.log(user.id)

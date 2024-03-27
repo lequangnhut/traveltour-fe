@@ -22,4 +22,15 @@ travel_app.service('BookingTransportCusService', function ($http) {
             }
         });
     }
+
+    this.redirectMomoTransport = function (orderTransport, seatNumber) {
+        return $http({
+            method: 'POST',
+            url: API_BOOKING_TRANSPORT + 'momo/submit-payment',
+            data: orderTransport,
+            params: {
+                seatNumber: seatNumber
+            }
+        });
+    }
 })

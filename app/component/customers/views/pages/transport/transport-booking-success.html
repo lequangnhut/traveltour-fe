@@ -8,18 +8,30 @@
                         <div class="col-lg-12 col-12 col-md-12 mb-4 mt-4">
                             <div class="img-success d-flex justify-content-center mb-4">
                                 <img src="/assets/customers/images/booking/checked-success.png" width="80"
-                                     class="img-fluid"
-                                     alt="thành công">
+                                     class="img-fluid" alt="icon_payment" ng-if="orderTransport.orderStatus !== 2">
+                                <img src="/assets/customers/images/booking/payment-failed.png" width="80"
+                                     class="img-fluid" alt="icon_payment" ng-if="orderTransport.orderStatus === 2">
                             </div>
                             <div class="content-payment-done d-flex justify-content-center">
                                 <div class="content text-center">
-                                    <div class="mb-2 h2" style="font-weight: 600">Đặt chổ thành công</div>
+                                    <div class="mb-2 h2" style="font-weight: 600"
+                                         ng-if="orderTransport.orderStatus !== 2">
+                                        Đặt chổ thành công
+                                    </div>
+                                    <div class="mb-2 h2" style="font-weight: 600"
+                                         ng-if="orderTransport.orderStatus === 2">
+                                        Đặt chổ thất bại
+                                    </div>
                                     <div class="booking-id mt-2 mb-2">
-                                        <button type="button" class="btn border-0 fs-6 ps-3 px-3 bg-green">
+                                        <button type="button"
+                                                class="btn border-0 fs-6 ps-3 px-3"
+                                                ng-class="{'bg-green': orderTransport.orderStatus !== 2, 'bg-secondary text-white': orderTransport.orderStatus === 2}"
+                                        >
                                             Mã đơn hàng: {{ orderTransport.id }}
                                         </button>
                                     </div>
-                                    <p class="mb-2">Thông tin chuyến đi đã được gửi đến email
+                                    <p class="mb-2" ng-if="orderTransport.orderStatus === 2">
+                                        Thông tin chuyến đi đã được gửi đến email
                                         <br>
                                         <strong class="fw-medium">{{ orderTransport.customerEmail }}</strong>,
                                         bạn hãy kiểm tra nhé.
@@ -441,8 +453,8 @@
 
                             <div class="content-trans-item" style="font-size: 14px">
                                 <label>Lí do hủy</label>
-                                <div class="float-end fw-medium">
-                                    {{ orderTransport.orderNote }}
+                                <div class="float-end fw-medium text-danger">
+                                    Thanh toán thất bại
                                 </div>
                             </div>
                             <div class="content-trans-item" style="font-size: 14px">
