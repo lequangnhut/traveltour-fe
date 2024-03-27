@@ -64,10 +64,13 @@ travel_app.controller('TransBookingCusController',
              */
             TransportationScheduleServiceAD.findById($scope.scheduleId).then(function (response) {
                 if (response.status === 200) {
+                    let dataBookingTransport = LocalStorageService.get('dataBookingTransport');
+                    let decryptDataBookingTransport = LocalStorageService.decryptData(dataBookingTransport, 'encryptBookingTransport');
+
                     $scope.transportSchedule = response.data.data;
-                    $scope.totalAmountSeat = LocalStorageService.get('dataBookingTransport').totalAmountSeat;
-                    $scope.totalPrice = LocalStorageService.get('dataBookingTransport').totalPrice;
-                    $scope.seatNumber = LocalStorageService.get('dataBookingTransport').seatNumber;
+                    $scope.totalAmountSeat = decryptDataBookingTransport.totalAmountSeat;
+                    $scope.totalPrice = decryptDataBookingTransport.totalPrice;
+                    $scope.seatNumber = decryptDataBookingTransport.seatNumber;
                 } else {
                     $location.path('/admin/page-not-found');
                 }
@@ -270,7 +273,8 @@ travel_app.controller('TransBookingCusController',
          * Đếm thời gian thanh toán
          */
         let savedTime = LocalStorageService.get('countdownTime');
-        let countdownTime = savedTime ? JSON.parse(savedTime) : {minutes: 10, seconds: 0};
+        let decryptCountdownTime = LocalStorageService.decryptData(savedTime, 'encryptCountdownTime');
+        let countdownTime = decryptCountdownTime ? JSON.parse(decryptCountdownTime) : {minutes: 10, seconds: 0};
 
         $scope.minutes = countdownTime.minutes;
         $scope.seconds = countdownTime.seconds;
@@ -289,10 +293,12 @@ travel_app.controller('TransBookingCusController',
                 return;
             }
 
-            LocalStorageService.set('countdownTime', JSON.stringify({
+            let countdownTime = JSON.stringify({
                 minutes: $scope.minutes,
                 seconds: $scope.seconds
-            }));
+            });
+            let encryptCountdownTime = LocalStorageService.encryptData(countdownTime, 'encryptCountdownTime');
+            LocalStorageService.set('countdownTime', encryptCountdownTime);
 
         }, 1000);
 

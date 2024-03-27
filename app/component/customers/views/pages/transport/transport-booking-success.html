@@ -30,9 +30,8 @@
                                             Mã đơn hàng: {{ orderTransport.id }}
                                         </button>
                                     </div>
-                                    <p class="mb-2" ng-if="orderTransport.orderStatus === 2">
-                                        Thông tin chuyến đi đã được gửi đến email
-                                        <br>
+                                    <p class="mb-2" ng-if="orderTransport.orderStatus !== 2">
+                                        Thông tin chuyến đi đã được gửi đến email <br>
                                         <strong class="fw-medium">{{ orderTransport.customerEmail }}</strong>,
                                         bạn hãy kiểm tra nhé.
                                     </p>

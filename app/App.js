@@ -685,7 +685,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             }
         })
         .when('/order-visit', {
-            templateUrl: 'app/component/customers/views/pages/booking/booking.html',
+            templateUrl: 'app/component/customers/views/pages/tour/booking.html',
             controller: ''
         })
         .when('/introduce', {
@@ -738,7 +738,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
 
         /**
-         * Booking xe customer
+         * Booking transport customer
          */
         .when('/drive-move', {
             templateUrl: 'app/component/customers/views/pages/transport/transport.html',
@@ -758,42 +758,19 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
 
         /**
-         * Register Agencies
-         */
-        .when('/register-agency', {
-            templateUrl: 'app/component/customers/views/pages/register-agency/register-agency-home.html'
-        })
-        .when('/register-agency/register', {
-            templateUrl: 'app/component/customers/views/pages/register-agency/register-agency-otp.html',
-            controller: 'RegisterAgencyCusController',
-        })
-        .when('/register-agency/register/information', {
-            templateUrl: 'app/component/customers/views/pages/register-agency/register-agency-form.html',
-            controller: 'RegisterAgencyFormCusController',
-        })
-
-        /**
-         * Booking tour
+         * Booking tour customer
          */
         .when('/tours/tour-detail/:id/booking-tour', {
-            templateUrl: 'app/component/customers/views/pages/booking/booking.html',
+            templateUrl: 'app/component/customers/views/pages/tour/booking.html',
             controller: 'BookingTourCusController'
         })
         .when('/tours/tour-detail/:id/booking-tour/customer-information', {
-            templateUrl: 'app/component/customers/views/pages/booking/booking-info-customer.html',
+            templateUrl: 'app/component/customers/views/pages/tour/booking-info-customer.html',
             controller: 'BookingTourCusController'
         })
-        .when('/tours/tour-detail/:id/booking-tour/customer-information/check-information', {
-            templateUrl: 'app/component/customers/views/pages/booking/booking-check-info.html',
-            controller: 'BookingSuccessCusController'
-        })
-        .when('/tours/tour-detail/:id/booking-tour/customer-information/check-information/payment-success', {
-            templateUrl: 'app/component/customers/views/pages/booking/booking-check-info.html',
-            controller: 'BookingSuccessCusController'
-        })
-        .when('/tours/tour-detail/:id/booking-tour/customer-information/check-information/payment-failure', {
-            templateUrl: 'app/component/customers/views/pages/booking/booking-check-info.html',
-            controller: 'BookingSuccessCusController'
+        .when('/tours/tour-detail/booking-tour/customer-information/payment-success', {
+            templateUrl: 'app/component/customers/views/pages/tour/booking-tour-success.html',
+            controller: 'BookingTourSuccessCusController'
         })
 
         /**
@@ -818,6 +795,21 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/tourism-location/tourism-location-detail/:id/booking-location/customer-information/check-information/payment-failure', {
             templateUrl: 'app/component/customers/views/pages/booking-location/booking-location-check-info.html',
             controller: 'BookingLocationSuccessCusController'
+        })
+
+        /**
+         * Register Agencies
+         */
+        .when('/register-agency', {
+            templateUrl: 'app/component/customers/views/pages/register-agency/register-agency-home.html'
+        })
+        .when('/register-agency/register', {
+            templateUrl: 'app/component/customers/views/pages/register-agency/register-agency-otp.html',
+            controller: 'RegisterAgencyCusController',
+        })
+        .when('/register-agency/register/information', {
+            templateUrl: 'app/component/customers/views/pages/register-agency/register-agency-form.html',
+            controller: 'RegisterAgencyFormCusController',
         })
 
         /**

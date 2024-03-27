@@ -12,8 +12,13 @@ travel_app.controller('TransBookingSuccessCusController',
 
             $scope.seatNumber = dataBookingTransportSuccess.seatNumber;
             $scope.orderTransport = dataBookingTransportSuccess.orderTransport;
-            $scope.orderTransport.orderStatus = parseInt(atob($routeParams.orderStatus), 10);
             $scope.transportSchedule = dataBookingTransportSuccess.transportSchedule;
+
+            if ($routeParams.orderStatus) {
+                $scope.orderTransport.orderStatus = parseInt(atob($routeParams.orderStatus), 10);
+            } else {
+                $scope.orderTransport.orderStatus = 0;
+            }
         }
 
         $scope.init();

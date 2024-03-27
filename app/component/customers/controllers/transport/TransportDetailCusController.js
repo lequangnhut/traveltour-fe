@@ -209,14 +209,34 @@ travel_app.controller('TransportDetailCusController',
                     return;
                 }
 
-                let dataBookingTransport = {
-                    seatNumber: seatNumber,
-                    totalAmountSeat: totalAmountSeat,
-                    totalPrice: totalPrice
-                }
+                // api check xem chổ đã có người chọn trước chưa
+                TransportCusService.checkSeatBySeatNumberAndScheduleId(schedule.id, $scope.seatNumbers).then(function (response) {
+                    if (response.status === 200) {
+                        let isBooked = response.data.data;
 
-                LocalStorageService.set('dataBookingTransport', dataBookingTransport);
-                $location.path('/drive-move/drive-transport-detail/' + brandId + '/booking-confirmation/' + scheduleId);
+                        if (!isBooked) {
+                            TransportCusService.findSeatBySeatNumberAndScheduleId(schedule.id, $scope.seatNumbers).then(function (response) {
+                                if (response.status === 200) {
+                                    let dataBookingTransport = {
+                                        seatNumber: seatNumber,
+                                        totalAmountSeat: totalAmountSeat,
+                                        totalPrice: totalPrice,
+                                    }
+
+                                    let encryptBookingTransport = LocalStorageService.encryptData(dataBookingTransport, 'encryptBookingTransport');
+                                    LocalStorageService.set('dataBookingTransport', encryptBookingTransport);
+                                    $location.path('/drive-move/drive-transport-detail/' + brandId + '/booking-confirmation/' + scheduleId);
+                                } else {
+                                    $location.path('/admin/page-not-found');
+                                }
+                            })
+                        } else {
+                            centerAlert('Thông báo', 'Xin lỗi! Đã có người nhanh tay hơn chọn chổ của bạn rồi.', 'warning');
+                        }
+                    } else {
+                        $location.path('/admin/page-not-found');
+                    }
+                })
             }
         }
 

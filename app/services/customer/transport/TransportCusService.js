@@ -12,6 +12,20 @@ travel_app.service('TransportCusService', function ($http) {
         });
     };
 
+    this.findSeatBySeatNumberAndScheduleId = function (seatNumber, scheduleId) {
+        return $http({
+            method: 'GET',
+            url: API_TRANSPORT + 'find-seat-by-seat-number-and-schedule-id/' + seatNumber + '/' + scheduleId
+        })
+    }
+
+    this.checkSeatBySeatNumberAndScheduleId = function (seatNumber, scheduleId) {
+        return $http({
+            method: 'GET',
+            url: API_TRANSPORT + 'check-seat-by-seat-number-and-schedule-id/' + seatNumber + '/' + scheduleId
+        })
+    }
+
     this.findAllTransportCustomerByFilters = (page, size, sortBy, sortDir, filters) => {
         return $http({
             method: 'GET',

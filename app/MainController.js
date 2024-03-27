@@ -440,6 +440,4 @@ travel_app.controller('MainController',
         window.onunload = function () {
             WebSocketService.disconnect(user);
         };
-
-
     });

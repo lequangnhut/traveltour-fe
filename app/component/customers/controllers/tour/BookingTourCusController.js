@@ -203,7 +203,7 @@ travel_app.controller('BookingTourCusController',
                         LocalStorageService.set('bookingTicket', bookingTicket);
 
                         toastAlert('success', 'Đặt tour thành công !');
-                        $location.path('/tours/tour-detail/' + btoa(JSON.stringify(tourDetail.id)) + '/booking-tour/customer-information/check-information');
+                        $location.path('/tours/tour-detail/booking-tour/customer-information/payment-success');
                         $scope.bookingCustomerList.splice(0, $scope.bookingCustomerList.length);
                     } else {
                         $location.path('/admin/page-not-found')
@@ -229,9 +229,8 @@ travel_app.controller('BookingTourCusController',
             let email = $scope.bookings_tour.customerEmail;
             let totalPrice = $scope.totalPrice;
             let tourDetail = $scope.tourDetail;
-            let bookingTourId = GenerateCodePayService.generateCodeBooking('VNPAY', tourDetail.id);
 
-            $scope.bookings_tour.id = bookingTourId;
+            $scope.bookings_tour.id = GenerateCodePayService.generateCodeBooking('VNPAY', tourDetail.id);
             $scope.bookings_tour.capacityAdult = ticket.adults;
             $scope.bookings_tour.capacityKid = ticket.children;
             $scope.bookings_tour.capacityBaby = ticket.baby;
@@ -247,7 +246,7 @@ travel_app.controller('BookingTourCusController',
                     bookingTourCustomersDto: $scope.bookingCustomerList
                 }
 
-                BookingTourCusService.redirectVNPay(tourDetail.id, bookingTourId, ticket.adults, ticket.children).then(function successCallBack(response) {
+                BookingTourCusService.redirectVNPay(bookingDto).then(function successCallBack(response) {
                     if (response.status === 200) {
                         LocalStorageService.set('bookingDto', bookingDto);
                         LocalStorageService.set('bookingTicket', bookingDto.bookingToursDto);
@@ -278,9 +277,8 @@ travel_app.controller('BookingTourCusController',
             let email = $scope.bookings_tour.customerEmail;
             let totalPrice = $scope.totalPrice;
             let tourDetail = $scope.tourDetail;
-            let bookingTourId = GenerateCodePayService.generateCodeBooking('MOMO', tourDetail.id);
 
-            $scope.bookings_tour.id = bookingTourId;
+            $scope.bookings_tour.id = GenerateCodePayService.generateCodeBooking('MOMO', tourDetail.id);
             $scope.bookings_tour.capacityAdult = ticket.adults;
             $scope.bookings_tour.capacityKid = ticket.children;
             $scope.bookings_tour.capacityBaby = ticket.baby;
@@ -292,10 +290,11 @@ travel_app.controller('BookingTourCusController',
                 $scope.isLoading = true;
 
                 let bookingDto = {
-                    bookingToursDto: $scope.bookings_tour, bookingTourCustomersDto: $scope.bookingCustomerList
+                    bookingToursDto: $scope.bookings_tour,
+                    bookingTourCustomersDto: $scope.bookingCustomerList
                 }
 
-                BookingTourCusService.redirectMomo(tourDetail.id, bookingTourId, ticket.adults, ticket.children).then(function successCallBack(response) {
+                BookingTourCusService.redirectMomo(bookingDto).then(function successCallBack(response) {
                     if (response.status === 200) {
                         LocalStorageService.set('bookingDto', bookingDto);
                         LocalStorageService.set('bookingTicket', bookingDto.bookingToursDto);

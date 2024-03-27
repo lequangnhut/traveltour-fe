@@ -1,37 +1,19 @@
-<!--====== Start Breadcrumb Section ======-->
-<section class="page-banner overlay pt-170 pb-200 bg_cover"
-         style="background-image: url(/assets/customers/images/bg/default-top-banner.jpg);">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="page-banner-content text-center text-white">
-                    <h1 class="page-title">Giao dịch thành công</h1>
-                    <ul class="breadcrumb-link text-white">
-                        <li><a href="/home">Trang chủ</a></li>
-                        <li><a href="/tours">Tour</a></li>
-                        <li><a href="#">Tour chi tiết</a></li>
-                        <li><a href="#">Chọn dịch vụ</a></li>
-                        <li><a href="#">Nhập thông tin</a></li>
-                        <li class="active">Thành công</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section><!--====== End Breadcrumb Section ======-->
-
 <!--====== Giao dịch thành công ======-->
-<section class="mt-50 mb-50 d-flex justify-content-center">
+<section class="mt-100 mb-50 d-flex justify-content-center">
     <div class="container-fluid booking-form-success row m-auto" style="max-width: 85%;">
         <div class="col-lg-12 col-12 col-md-12 mb-30">
             <div class="img-success d-flex justify-content-center mb-4">
                 <img src="/assets/customers/images/booking/checked-success.png" width="100" class="img-fluid"
-                     alt="thành công">
+                     alt="payment-logo" ng-if="orderStatus !== 2">
+                <img src="/assets/customers/images/booking/payment-failed.png" width="100" class="img-fluid"
+                     alt="payment-logo" ng-if="orderStatus === 2">
             </div>
             <div class="content-payment-done d-flex justify-content-center">
                 <div class="content text-center">
-                    <div class="mb-2 h1">Cảm Ơn Bạn Đã Đặt Tour Của TravelTour</div>
-                    <p class="mb-2">Đơn hàng của bạn đã được xác nhận, giờ bạn có thể kiếm tra đơn hàng của mình trong
+                    <div class="mb-2 h1" ng-if="orderStatus !== 2">Cảm Ơn Bạn Đã Đặt Tour Của TravelTour</div>
+                    <div class="mb-2 h1" ng-if="orderStatus === 2">Đặt tour không thành công</div>
+                    <p class="mb-2" ng-if="orderStatus !== 2">
+                        Đơn hàng của bạn đã được xác nhận, giờ bạn có thể kiếm tra đơn hàng của mình trong
                         hóa đơn lịch sử giao dịch.
                     </p>
 
@@ -135,6 +117,15 @@
                             <span class="fw-medium">Em bé (Dưới 0.75m):</span>
                             <span class="float-end fw-medium">0 x {{ ticket.baby }}</span>
                         </div>
+
+                        <hr>
+
+                        <div class="item-content mb-3">
+                            <span class="fw-medium">Tổng tiền:</span>
+                            <span class="float-end fw-medium">
+                                {{ totalPrice | vnCurrency }}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -145,12 +136,29 @@
                         Phương thức thanh toán
                     </div>
                     <div class="card-body">
-                        <div class="item-content mb-3 d-flex justify-content-center align-items-center">
+                        <div class="item-content mb-3 d-flex justify-content-center align-items-center"
+                             ng-if="paymentMethodTour === 'VPO'">
+                            <span class="fw-medium">
+                                <img src="/assets/customers/images/payment/traveltour.jpg" width="40" class="img-fluid"
+                                     alt="">
+                            </span>
+                            <span class="fw-medium">Thanh toán tại quầy</span>
+                        </div>
+                        <div class="item-content mb-3 d-flex justify-content-center align-items-center"
+                             ng-if="paymentMethodTour === 'VNPAY'">
                             <span class="fw-medium">
                                 <img src="/assets/customers/images/payment/vnpay.png" width="40" class="img-fluid"
                                      alt="">
                             </span>
                             <span class="fw-medium">Thanh toán bằng Ví VNPay</span>
+                        </div>
+                        <div class="item-content mb-3 d-flex justify-content-center align-items-center"
+                             ng-if="paymentMethodTour === 'MOMO'">
+                            <span class="fw-medium">
+                                <img src="/assets/customers/images/payment/momo.webp" width="40" class="img-fluid"
+                                     alt="">
+                            </span>
+                            <span class="fw-medium">Thanh toán bằng Ví Momo</span>
                         </div>
                     </div>
                 </div>
@@ -185,10 +193,7 @@
                             <i class="fa-solid fa-location-dot text-green"></i>
                             <span>Địa chỉ:</span>
                             <span class="fw-medium float-end">
-                                {{ tourDetail.toursByTourId.tourName + ' - ' + tourDetail.fromLocation }}
-                                <span ng-repeat="province in provinceName" ng-if="province != 'Cần Thơ'">
-                                    - {{ province }} -
-                                 </span>
+                                {{ tourDetail.toLocation }}
                             </span>
                         </div>
                         <div class="booking-price">
@@ -204,13 +209,6 @@
                             <span class="fw-medium">
                                 {{ tourDetail.departureDate | calculateDaysAndNights:tourDetail.arrivalDate }}
                             </span>
-
-                            <div class="booking-start-time float-end">
-                                <i class="fa-solid fa-van-shuttle text-green"></i>
-                                <span class="fw-medium">
-                                Khởi hành {{ tourDetail.departureDate | formatDate }}
-                            </span>
-                            </div>
                         </div>
                     </div>
                 </div>
