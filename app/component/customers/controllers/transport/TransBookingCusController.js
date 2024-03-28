@@ -257,18 +257,6 @@ travel_app.controller('TransBookingCusController',
             confirmAlert('Bạn có chắc chắn địa chỉ email: ' + $scope.bookingTransport.customerEmail + ' là chính xác không ?', confirmBookTour);
         }
 
-        $scope.$on('$routeChangeStart', function (event, next, current) {
-            if (next.controller !== 'TransBookingCusController' && next.controller !== 'LoginController' && next.controller !== 'MainController') {
-                LocalStorageService.remove('dataBookingTransport');
-                LocalStorageService.remove('redirectAfterLogin');
-                LocalStorageService.remove('countdownTime');
-            }
-
-            if (next.controller !== 'TransBookingCusController' && next.controller !== 'TransBookingSuccessCusController') {
-                LocalStorageService.remove('dataBookingTransportSuccess');
-            }
-        });
-
         /**
          * Đếm thời gian thanh toán
          */
@@ -304,5 +292,33 @@ travel_app.controller('TransBookingCusController',
 
         $scope.$on('$destroy', function () {
             $interval.cancel(intervalPromise);
+        });
+
+        /**
+         * Bắt sự kiện nếu người dùng click ra khỏi trang này thì hiện thông báo
+         */
+        $scope.$on('$locationChangeStart', function (event) {
+            event.preventDefault();
+
+            function confirm() {
+                $window.location.href = '/drive-move'
+            }
+
+            confirmAlert('Vé vẫn đang được giữ cho bạn, bạn nhớ thanh toán để đặt vé thành công nhé.', confirm);
+        });
+
+        /**
+         * Nếu ra khỏi controller sẽ xóa localStored
+         */
+        $scope.$on('$routeChangeStart', function (event, next, current) {
+            if (next.controller !== 'TransBookingCusController' && next.controller !== 'LoginController' && next.controller !== 'MainController') {
+                LocalStorageService.remove('dataBookingTransport');
+                LocalStorageService.remove('redirectAfterLogin');
+                LocalStorageService.remove('countdownTime');
+            }
+
+            if (next.controller !== 'TransBookingCusController' && next.controller !== 'TransBookingSuccessCusController') {
+                LocalStorageService.remove('dataBookingTransportSuccess');
+            }
         });
     })

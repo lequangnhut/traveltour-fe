@@ -1,10 +1,10 @@
 travel_app.controller('SchedulesControllerAG',
-    function ($scope, $timeout, $sce, $filter, $location, $routeParams, $http, LocalStorageService, SchedulesServiceAG, TransportServiceAG, MapBoxService) {
+    function ($scope, $timeout, $sce, $filter, $location, $routeParams, $http, LocalStorageService, Base64ObjectService, SchedulesServiceAG, TransportServiceAG, MapBoxService) {
         mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
         let searchTimeout;
         let brandId = LocalStorageService.get('brandId');
-        let scheduleId = $routeParams.id;
+        let scheduleId = Base64ObjectService.decodeObject($routeParams.id);
 
         $scope.dateError = null;
 

@@ -497,7 +497,8 @@
 
                             <div class="col-6 d-flex justify-content-end">
                                 <div class="cabin-transport">
-                                    <span class="d-flex justify-content-center" ng-if="schedule.transportations.isTransportBed">
+                                    <span class="d-flex justify-content-center"
+                                          ng-if="schedule.transportations.isTransportBed">
                                         Tầng dưới
                                     </span>
                                     <!--cabin xe-->
@@ -548,17 +549,20 @@
                                                                ng-click="isActiveSeat(schedule, seat)"
                                                                ng-class="{'seatActive': seatSelections[schedule.id] && seatSelections[schedule.id][seat.seatNumber]}">
                                                             <a href="#">
-                                                                <svg width="32" height="40" viewBox="0 0 28 40" fill="none"
+                                                                <svg width="32" height="40" viewBox="0 0 28 40"
+                                                                     fill="none"
                                                                      xmlns="http://www.w3.org/2000/svg"
                                                                      style="width: 27px; height: 40px;">
                                                                     <rect x="2.75" y="2.75" width="22.5" height="34.5"
                                                                           rx="2.25"
                                                                           fill="#FFF" stroke="#B8B8B8"
-                                                                          stroke-width="1.5" stroke-linejoin="round"></rect>
+                                                                          stroke-width="1.5"
+                                                                          stroke-linejoin="round"></rect>
                                                                     <rect x="5.75" y="27.75" width="16.5" height="6.5"
                                                                           rx="2.25"
                                                                           fill="#FFF" stroke="#B8B8B8"
-                                                                          stroke-width="1.5" stroke-linejoin="round"></rect>
+                                                                          stroke-width="1.5"
+                                                                          stroke-linejoin="round"></rect>
                                                                     <path class="icon-selected"
                                                                           d="M14 8.333A6.67 6.67 0 0 0 7.333 15 6.67 6.67 0 0 0 14 21.667 6.67 6.67 0 0 0 20.667 15 6.669 6.669 0 0 0 14 8.333zm-1.333 10L9.334 15l.94-.94 2.393 2.387 5.06-5.06.94.946-6 6z"
                                                                           fill="transparent"></path>
@@ -601,17 +605,20 @@
                                                                ng-click="isActiveSeat(schedule, seat)"
                                                                ng-class="{'seatActive': seatSelections[schedule.id] && seatSelections[schedule.id][seat.seatNumber]}">
                                                             <a href="#">
-                                                                <svg width="32" height="40" viewBox="0 0 28 40" fill="none"
+                                                                <svg width="32" height="40" viewBox="0 0 28 40"
+                                                                     fill="none"
                                                                      xmlns="http://www.w3.org/2000/svg"
                                                                      style="width: 27px; height: 40px;">
                                                                     <rect x="2.75" y="2.75" width="22.5" height="34.5"
                                                                           rx="2.25"
                                                                           fill="#FFF" stroke="#B8B8B8"
-                                                                          stroke-width="1.5" stroke-linejoin="round"></rect>
+                                                                          stroke-width="1.5"
+                                                                          stroke-linejoin="round"></rect>
                                                                     <rect x="5.75" y="27.75" width="16.5" height="6.5"
                                                                           rx="2.25"
                                                                           fill="#FFF" stroke="#B8B8B8"
-                                                                          stroke-width="1.5" stroke-linejoin="round"></rect>
+                                                                          stroke-width="1.5"
+                                                                          stroke-linejoin="round"></rect>
                                                                     <path class="icon-selected"
                                                                           d="M14 8.333A6.67 6.67 0 0 0 7.333 15 6.67 6.67 0 0 0 14 21.667 6.67 6.67 0 0 0 20.667 15 6.669 6.669 0 0 0 14 8.333zm-1.333 10L9.334 15l.94-.94 2.393 2.387 5.06-5.06.94.946-6 6z"
                                                                           fill="transparent"></path>
@@ -748,13 +755,23 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body bEmALR">
-                <p class="base__Body01-sc-1tvbuqk-20 eatZYE content color--black">Quý khách lưu ý:
-                    1. Nhà xe KHÔNG nhận trung chuyển nếu không có địa chỉ chính xác. Quý khách vui lòng nhập chi tiết
-                    địa chỉ nơi đi và nơi đến (Nhà xe nhận trung chuyển khách trong bán kính 10km từ Văn phòng Cần Thơ).
-                    2. Hình ảnh sơ đồ xe Limousine 9 chỗ chỉ mang tính chất tương đối và có thể thành đổi thành loại xe
-                    Limousine 11 chỗ tùy theo giờ xuất bến.
-                    3. Quý khách đặt vé có điểm đón dọc đường hoặc từ 3 vé trở lên vui lòng thanh toán trước để giữ vé
-                    Xin cảm ơn quý khách!
+                <p class="content-note-transport">
+                    <strong>a)</strong> Quý khách kiểm tra cẩn thận các thông tin vé trước khi tiến hành xác nhận đặt vé
+                    và thanh toán.
+                    <br>
+                    <strong>b)</strong> Đối với những khách hàng có êu cầu trung chuyến, hãy liên hệ cho nhà xe
+                    trước khi kết thúc chuyến 30 phút.
+                    <br>
+                    <strong>c)</strong> Đặt chỗ chỉ được xác nhận sau khi việc thanh toán tiền vé đã hoàn tất.Quý khách
+                    sẽ nhận được thư xác nhận chi tiết vé đã đặt thông qua email đã cung cấp.
+                    <br>
+                    Lưu ý:
+                    <br>
+                    <strong>a)</strong> Chúng tôi không chịu trách nhiệm trong trường hợp Quý khách nhập sai địa chỉ
+                    email, số điện thoại và thông tin cá nhân.
+                    <br>
+                    <strong>b)</strong> Sơ đồ chỗ ngồi chỉ mang tính minh họa, sẽ có sai lệnh nhất định với thực tế, để
+                    rõ hơn hãy liên hệ với nhà xe.
                 </p>
             </div>
             <div class="modal-footer">
@@ -766,3 +783,30 @@
         </div>
     </div>
 </div>
+
+<!-- Thẻ chờ thời gian thanh toán -->
+<!--<div class="toast-container position-fixed bottom-0 end-0 p-3">-->
+<!--    <div id="toast-delay-booking" class="toast bg-white" role="alert" aria-live="assertive" aria-atomic="true"-->
+<!--         data-bs-autohide="false">-->
+<!--        <div class="toast-header">-->
+<!--            <img src="https://229a2c9fe669f7b.cmccloud.com.vn/httpImage/bus_station.svg" class="rounded me-2" alt="...">-->
+<!--            <strong class="me-auto">Thanh toán vé xe</strong>-->
+<!--            <small class="fw-medium text-danger">Thời gian còn lại 04:00</small>-->
+<!--        </div>-->
+<!--        <div class="toast-body">-->
+<!--            <div class="ps-1 fw-medium">-->
+<!--                Vé xe: Cần Thơ - Sài Gòn-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    function showToast() {-->
+<!--        const toastLiveExample = document.getElementById('toast-delay-booking');-->
+<!--        const toast = new bootstrap.Toast(toastLiveExample);-->
+<!--        toast.show();-->
+<!--    }-->
+
+<!--    showToast();-->
+<!--</script>-->

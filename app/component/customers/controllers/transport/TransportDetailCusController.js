@@ -210,12 +210,12 @@ travel_app.controller('TransportDetailCusController',
                 }
 
                 // api check xem chổ đã có người chọn trước chưa
-                TransportCusService.checkSeatBySeatNumberAndScheduleId(schedule.id, $scope.seatNumbers).then(function (response) {
+                TransportCusService.checkSeatBySeatNumberAndScheduleId(schedule.id, seatNumber).then(function (response) {
                     if (response.status === 200) {
                         let isBooked = response.data.data;
 
                         if (!isBooked) {
-                            TransportCusService.findSeatBySeatNumberAndScheduleId(schedule.id, $scope.seatNumbers).then(function (response) {
+                            TransportCusService.findSeatBySeatNumberAndScheduleId(schedule.id, seatNumber).then(function (response) {
                                 if (response.status === 200) {
                                     let dataBookingTransport = {
                                         seatNumber: seatNumber,
@@ -231,12 +231,12 @@ travel_app.controller('TransportDetailCusController',
                                 }
                             })
                         } else {
-                            centerAlert('Thông báo', 'Xin lỗi! Đã có người nhanh tay hơn chọn chổ của bạn rồi.', 'warning');
+                            centerAlert('Thông báo', 'Chỗ bạn chọn đã có người khác nhanh tay mua rồi, bạn hãy chọn chỗ khác nhé.', 'warning');
                         }
                     } else {
                         $location.path('/admin/page-not-found');
                     }
-                })
+                });
             }
         }
 

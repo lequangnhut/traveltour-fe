@@ -6,6 +6,8 @@
                     <h3 class="color-green fw-bold">LỊCH HOẠT ĐỘNG PHƯƠNG TIỆN</h3>
                 </div>
             </div>
+            <div class="mt-3 fw-bold">Công ty:
+                <span>{{ transportBrand.transportationBrandName || 'Đang tải...' }}</span></div>
         </div>
     </div>
 
@@ -180,11 +182,13 @@
                         </div>
                     </td>
                     <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                        <a href="/business/transport/schedules-management/update-schedules/{{ schedule.id }}"
+                        <a href="#"
+                           ng-click="redirectPage('/business/transport/schedules-management/update-schedules/', schedule.id)"
                            role="button" class="fs-1 px-2 btn text-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a href="/business/transport/schedules-management/order-transport-management/{{ schedule.id }}"
+                        <a href="#"
+                           ng-click="redirectPage('/business/transport/schedules-management/order-transport-management/', schedule.id)"
                            role="button" class="fs-1 btn text-primary px-2" title="Vé của khách hàng">
                             <i class="fa-solid fa-clipboard-list"></i>
                         </a>

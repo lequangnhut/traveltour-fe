@@ -7,7 +7,7 @@
                     <h3 class="color-green fw-bold">CẬP NHẬT VÉ XE</h3>
                 </div>
             </div>
-            <div class="mt-3 fw-bold">Công ty: <span>{{ transportBrand.transportationBrandName }}</span></div>
+            <div class="mt-3 fw-bold">Công ty: <span>{{ transportBrand.transportationBrandName || 'Đang tải...' }}</span></div>
         </div>
     </div>
 
@@ -21,7 +21,6 @@
                         ng-class="{ 'is-invalid': form_booking.transportationScheduleId.$invalid && form_booking.transportationScheduleId.$touched, 'is-valid': form_booking.transportationScheduleId.$valid && form_booking.transportationScheduleId.$touched }"
                         ng-options="schedules.id as schedules.id + ' - ' + schedules.fromLocation + ' - ' + schedules.toLocation for schedules in transportSchedules"
                         ng-model="bookings.transportationScheduleId"
-                        ng-change="updateAmountAndTotal()"
                         disabled
                         required
                 >
@@ -182,7 +181,7 @@
             <div class="col-12 d-flex justify-content-end mt-5">
                 <button type="button" class="btn" style="margin-right: 20px">
                     <a class="btn"
-                       href="/business/transport/schedules-management/order-transport-management/{{ scheduleId }}">
+                       href="/business/transport/schedules-management/order-transport-management/{{ scheduleIdRedirect }}">
                         Trở về
                     </a>
                 </button>

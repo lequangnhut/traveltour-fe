@@ -1,7 +1,7 @@
 travel_app.controller('TransportControllerAG',
-    function ($scope, $sce, $routeParams, $timeout, $location, LocalStorageService, TransportServiceAG) {
+    function ($scope, $sce, $routeParams, $timeout, $location, LocalStorageService, Base64ObjectService, TransportServiceAG) {
         let searchTimeout;
-        let transportId = $routeParams.id;
+        let transportId = Base64ObjectService.decodeObject($routeParams.id);
         let brandId = LocalStorageService.get('brandId');
 
         $scope.licenseError = null;

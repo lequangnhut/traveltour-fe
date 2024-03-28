@@ -1,5 +1,5 @@
 travel_app.controller('MainController',
-    function ($scope, $rootScope, $location, $window, $timeout, AuthService, AgenciesServiceAG, HotelServiceAG, TransportBrandServiceAG, VisitLocationServiceAG, LocalStorageService, NotificationService, WebSocketService) {
+    function ($scope, $rootScope, $location, $window, $timeout, AuthService, AgenciesServiceAG, Base64ObjectService, HotelServiceAG, TransportBrandServiceAG, VisitLocationServiceAG, LocalStorageService, NotificationService, WebSocketService) {
         $scope.selectedRole = LocalStorageService.get('selectedRole') || null;
         $scope.activeNavItem = LocalStorageService.get('activeNavItem') || null;
 
@@ -29,6 +29,16 @@ travel_app.controller('MainController',
                 }
                 return price.replace(/[^0-9]/g, '');
             };
+
+            /**
+             * Hàm để di chuyển trang encode mã
+             * @param objId
+             * @param url
+             */
+            $scope.redirectPage = function (url, objId) {
+                let objIdEncode = Base64ObjectService.encodeObject(objId);
+                $location.path(url + objIdEncode);
+            }
 
             /**
              * Set active cho navbar trên header
