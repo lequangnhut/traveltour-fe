@@ -5,6 +5,7 @@ travel_app.controller('LocationDetailCusController', function ($scope, $location
         departureDate: new Date(),
         adultTickets: 1,
         childrenTickets: 0,
+        freeTickets: 0,
         adultPrice: 0,
         childrenPrice: 0,
         totalTickets: 1,
@@ -68,7 +69,7 @@ travel_app.controller('LocationDetailCusController', function ($scope, $location
 
                 // Giả định rằng visitLocationTicketsById là mảng và không rỗng
                 const tickets = $scope.locationDetail.visitLocationTicketsById || [];
-                let adultPrice = 0, childrenPrice = 0;
+                let adultPrice = 0, childrenPrice = 0, freePrice = 0;
 
                 // Lọc và phân loại vé một lần
                 tickets.forEach(ticket => {
@@ -77,11 +78,14 @@ travel_app.controller('LocationDetailCusController', function ($scope, $location
                         adultPrice = ticket.unitPrice;
                     } else if (ticketName === 'vé trẻ em') {
                         childrenPrice = ticket.unitPrice;
+                    } else if (ticketName === 'miễn phí vé') {
+                        freePrice = ticketName;
                     }
                 });
 
                 $scope.tickets.adultPrice = adultPrice;
                 $scope.tickets.childrenPrice = childrenPrice;
+                $scope.tickets.freePrice = freePrice;
 
                 // Tính toán tổng giá vé
                 $scope.calculateTotalPrice();
@@ -242,6 +246,21 @@ travel_app.controller('LocationDetailCusController', function ($scope, $location
     $scope.closeFormModal = () => {
         $('#formTourModal').modal('hide');
     };
+
+//     document.addEventListener('scroll', () => {
+//         const rightColumn = document.querySelector('.sticky-right-column');
+//         const rightColumnHeight = rightColumn.offsetHeight;
+//         console.log(rightColumnHeight)
+//         // Lấy vị trí top của màn hình
+//         const scrollTop = window.scrollY;
+//         console.log(scrollTop)
+//
+// // Lấy vị trí bottom của màn hình
+//         const scrollBottom = scrollTop + window.innerHeight;
+//         console.log(scrollBottom)
+//
+//     });
+
 
     $scope.init();
 

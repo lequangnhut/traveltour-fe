@@ -95,54 +95,62 @@
                             <div class="sidebar-widget category-widget mb-30 wow fadeInUp">
                                 <div class="row">
                                     <h4 class="col-9 fs-6">Thông tin liên hệ (nhận vé / phiếu thanh toán)</h4>
-                                    <span class="col-3 text-green" style="cursor: pointer" ng-click="downloadQRCode()">
-                                    <i class="text-green fa-solid fa-file-export"></i> Xuất QR
-                                </span>
+<!--                                    <span class="col-3 text-green" style="cursor: pointer" ng-click="downloadQRCode()">-->
+<!--                                    <i class="text-green fa-solid fa-file-export"></i> Xuất QR-->
+<!--                                </span>-->
                                 </div>
                                 <hr>
                                 <div class="mb-4 row">
-                                    <div class="col-8">
-                                        <div class="row">
-                                            <div class="col-12 mb-3">
-                                                <label for="full_name" class="form-label">Họ và tên<span class="text-danger">*</span></label>
+                                            <div class="col-6 mb-3">
+                                                <label for="full_name" class="form-label">Họ và tên
+                                                    <span class="text-danger">*</span>
+                                                </label>
                                                 <input type="text"
                                                        id="full_name"
                                                        class="form-control"
+                                                       name="customerName"
                                                        ng-model="bookingLocation.customerName"
                                                        placeholder="VD: Nguyen Van A"
-                                                       ng-class="{'is-invalid': bookingCustomerForm.customerName.$invalid && bookingCustomerForm.customerName.$touched, 'is-valid': bookingCustomerForm.customerName.$valid && bookingCustomerForm.customerName.$touched}"
+                                                       ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                                       ng-class="{ 'is-invalid': bookingCustomerForm.customerName.$invalid && bookingCustomerForm.customerName.$touched, 'is-valid': bookingCustomerForm.customerName.$valid && bookingCustomerForm.customerName.$touched }"
                                                        ng-change="codeQrOnChange()"
-                                                       required>
+                                                       required
+                                                >
                                                 <small class="text-danger"
                                                        ng-show="bookingCustomerForm.customerName.$touched && bookingCustomerForm.customerName.$error.required">
-                                                    Vui lòng nhập họ và tên!
+                                                    Vui lòng nhập họ và tên !
                                                 </small>
                                                 <small class="text-danger"
                                                        ng-show="bookingCustomerForm.customerName.$touched && bookingCustomerForm.customerName.$error.pattern">
-                                                    Họ và tên không đúng định dạng!
+                                                    Họ và tên không đúng định dạng !
                                                 </small>
                                             </div>
 
-                                            <div class="col-12 mb-3">
-                                                <label for="phone" class="form-label">Điện thoại di động<span class="text-danger">*</span></label>
+                                            <div class="col-6 mb-3">
+                                                <label for="phone" class="form-label">Điện thoại di động<span
+                                                        class="text-danger">*</span></label>
                                                 <input type="tel"
                                                        id="phone"
+                                                       name="customerPhone"
+                                                       maxlength="10"
                                                        class="form-control"
                                                        ng-model="bookingLocation.customerPhone"
-                                                       ng-class="{'is-invalid': bookingCustomerForm.customerPhone.$invalid && bookingCustomerForm.customerPhone.$touched, 'is-valid': bookingCustomerForm.customerPhone.$valid && bookingCustomerForm.customerPhone.$touched}"
+                                                       ng-class="{ 'is-invalid': bookingCustomerForm.customerPhone.$invalid && bookingCustomerForm.customerPhone.$touched, 'is-valid': bookingCustomerForm.customerPhone.$valid && bookingCustomerForm.customerPhone.$touched }"
+                                                       ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
                                                        ng-change="codeQrOnChange()"
                                                        placeholder="VD: 0918298029"
-                                                       required>
+                                                       required
+                                                >
                                                 <small class="text-danger"
                                                        ng-show="bookingCustomerForm.customerPhone.$touched && bookingCustomerForm.customerPhone.$error.required">
-                                                    Vui lòng nhập số điện thoại!
+                                                    Vui lòng nhập số điện thoại !
                                                 </small>
                                                 <small class="text-danger"
                                                        ng-show="bookingCustomerForm.customerPhone.$touched && bookingCustomerForm.customerPhone.$error.pattern">
-                                                    Số điện thoại không đúng định dạng!
+                                                    Số điện thoại không đúng định dạng !
                                                 </small>
                                             </div>
-                                            <div class="col-12">
+                                            <div class="col-6">
                                                 <label for="email" class="form-label">Email
                                                     <span class="text-danger">*</span>
                                                 </label>
@@ -166,96 +174,11 @@
                                                     Địa chỉ email không đúng định dạng !
                                                 </small>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-4 d-flex justify-content-center align-items-center">
-                                        <qr text="locationQr" correction-level="'M'" size="150"></qr>
-                                    </div>
+<!--                                    <div class="col-4 d-flex justify-content-center align-items-center">-->
+<!--                                        <qr text="locationQr" correction-level="'M'" size="150"></qr>-->
+<!--                                    </div>-->
                                 </div>
-
-<!--                                <div class="row">-->
-
-<!--                                    <div class="show-form">-->
-<!--                                        <a href="" class="text-green" ng-click="showFormImportInfo()">-->
-<!--                                            Nhập thêm thông tin cho {{ tickets.totalTickets }} khách hàng-->
-<!--                                            <i class="fa-solid fa-angle-down"></i>-->
-<!--                                        </a>-->
-<!--                                    </div>-->
-<!--                                </div>-->
                             </div>
-
-<!--                            <div class="sidebar-widget category-widget mb-30" ng-show="showForm"-->
-<!--                                 ng-repeat="item in tickets.totalTickets">-->
-<!--                                <h4 class="widget-title fs-6">Thông tin hành khách {{ $index + 1 }}</h4>-->
-<!--                                <div class="mb-3">-->
-<!--                                    &lt;!&ndash; Input Họ và tên &ndash;&gt;-->
-<!--                                    <div class="mb-3">-->
-<!--                                        <label for="customerFullName{{ key }}" class="form-label">Họ và tên</label>-->
-<!--                                        <input type="text"-->
-<!--                                               id="customerFullName{{ key }}"-->
-<!--                                               class="form-control"-->
-<!--                                               name="customerNameKH{{ key }}"-->
-<!--                                               ng-model="bookings_tour_customer['customerName' + key]"-->
-<!--                                               placeholder="VD: Nguyen Van A"-->
-<!--                                               ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"-->
-<!--                                        >-->
-<!--                                        &lt;!&ndash; Thông báo lỗi &ndash;&gt;-->
-<!--                                        <small class="text-danger"-->
-<!--                                               ng-show="bookingCustomerForm['customerNameKH' + key].$touched && bookingCustomerForm['customerNameKH' + key].$error.required">-->
-<!--                                            Vui lòng nhập họ và tên !-->
-<!--                                        </small>-->
-<!--                                        <small class="text-danger"-->
-<!--                                               ng-show="bookingCustomerForm['customerNameKH' + key].$touched && bookingCustomerForm['customerNameKH' + key].$error.pattern">-->
-<!--                                            Họ và tên không đúng định dạng !-->
-<!--                                        </small>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-
-<!--                                <div class="row mb-3">-->
-<!--                                    &lt;!&ndash; Input Ngày sinh &ndash;&gt;-->
-<!--                                    <div class="col-6 mb-3">-->
-<!--                                        <label for="customerBirth{{ key }}" class="form-label">Ngày sinh</label>-->
-<!--                                        <input type="date"-->
-<!--                                               id="customerBirth{{ key }}"-->
-<!--                                               class="form-control"-->
-<!--                                               name="customerBirthKH{{ key }}"-->
-<!--                                               ng-model="bookings_tour_customer['customerBirth' + key]"-->
-<!--                                        >-->
-<!--                                        &lt;!&ndash; Thông báo lỗi &ndash;&gt;-->
-<!--                                        <small class="text-danger"-->
-<!--                                               ng-show="bookingCustomerForm['customerBirthKH' + key].$touched && bookingCustomerForm['customerBirthKH' + key].$error.required">-->
-<!--                                            Vui lòng chọn ngày sinh !-->
-<!--                                        </small>-->
-<!--                                        <small class="text-danger"-->
-<!--                                               ng-show="isBirthDateInvalid(bookings_tour_customer['customerBirth' + key])">-->
-<!--                                            {{ bookingCustomerForm['customerBirthKH' + key].$error.required ? 'Vui lòng chọn ngày sinh!' : 'Ngày sinh không hợp lệ!' }}-->
-<!--                                        </small>-->
-<!--                                    </div>-->
-<!--                                    &lt;!&ndash; Input Số điện thoại &ndash;&gt;-->
-<!--                                    <div class="col-6 mb-3">-->
-<!--                                        <label for="customerPhone{{ key }}" class="form-label">Điện thoại di-->
-<!--                                            động</label>-->
-<!--                                        <input type="tel"-->
-<!--                                               id="customerPhone{{ key }}"-->
-<!--                                               name="customerPhoneKH{{ key }}"-->
-<!--                                               maxlength="10"-->
-<!--                                               class="form-control"-->
-<!--                                               ng-model="bookings_tour_customer['customerPhone' + key]"-->
-<!--                                               ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"-->
-<!--                                               placeholder="VD: 0918298029"-->
-<!--                                        >-->
-<!--                                        &lt;!&ndash; Thông báo lỗi &ndash;&gt;-->
-<!--                                        <small class="text-danger"-->
-<!--                                               ng-show="bookingCustomerForm['customerPhoneKH' + key].$touched && bookingCustomerForm['customerPhoneKH' + key].$error.required">-->
-<!--                                            Vui lòng nhập số điện thoại !-->
-<!--                                        </small>-->
-<!--                                        <small class="text-danger"-->
-<!--                                               ng-show="bookingCustomerForm['customerPhoneKH' + key].$touched && bookingCustomerForm['customerPhoneKH' + key].$error.pattern">-->
-<!--                                            Số điện thoại không đúng định dạng !-->
-<!--                                        </small>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
 
                             <div class="sidebar-widget category-widget mb-30 wow fadeInUp">
                                 <h5 class="widget-title fs-6">Yêu cầu thêm (tuỳ chọn)</h5>
