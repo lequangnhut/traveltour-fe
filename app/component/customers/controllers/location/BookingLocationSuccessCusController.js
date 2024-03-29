@@ -18,12 +18,10 @@ travel_app.controller('BookingLocationSuccessCusController', function ($scope, $
     }
 
     $scope.init = function () {
-        let dataBookingLocation = LocalStorageService.get('dataBookingLocation');
-        let decryptedDataBookingLocation = LocalStorageService.decryptData(dataBookingLocation, 'encryptDataBookingLocation');
+        let decryptedDataBookingLocation = LocalStorageService.decryptLocalData('dataBookingLocation', 'encryptDataBookingLocation');
         console.log(decryptedDataBookingLocation)
 
-        let orderVisitLocation = LocalStorageService.get('orderVisitLocation');
-        let decryptedDataOrderVisitLocation = LocalStorageService.decryptData(orderVisitLocation, 'encryptDataOrderVisitLocation');
+        let decryptedDataOrderVisitLocation = LocalStorageService.decryptLocalData('orderVisitLocation', 'encryptDataOrderVisitLocation');
 
         if (decryptedDataBookingLocation === null || decryptedDataBookingLocation === undefined) {
             toastAlert('warning', 'Booking tham quan không tồn tại !');

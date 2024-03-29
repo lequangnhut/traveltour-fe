@@ -48,8 +48,7 @@ travel_app.controller('BookingLocationCusController', function ($scope, $sce, $t
 
         $scope.isLoading = true;
 
-        let dataBookingLocation = LocalStorageService.get('dataBookingLocation');
-        let decryptedDataBookingLocation = LocalStorageService.decryptData(dataBookingLocation, 'encryptDataBookingLocation');
+        let decryptedDataBookingLocation = LocalStorageService.decryptLocalData('dataBookingLocation', 'encryptDataBookingLocation');
         if (decryptedDataBookingLocation === null || decryptedDataBookingLocation === undefined) {
             centerAlert('Cảnh báo', 'Chúng tôi nhận thấy bạn đang truy cập bất thường vào trang này, vui lòng rời khỏi !', 'warning');
             $location.path('/tourism-location');
@@ -175,9 +174,7 @@ travel_app.controller('BookingLocationCusController', function ($scope, $sce, $t
                 if (repo.status === 200) {
                     $timeout(() => {
                         let orderVisitLocation = repo.data.data;
-                        console.log(orderVisitLocation)
-                        let encryptDataOrderVisitLocation = LocalStorageService.encryptData(orderVisitLocation, 'encryptDataOrderVisitLocation');
-                        LocalStorageService.set('orderVisitLocation', encryptDataOrderVisitLocation);
+                        LocalStorageService.encryptLocalData(orderVisitLocation, 'orderVisitLocation', 'encryptDataOrderVisitLocation');
                         toastAlert('success', 'Đặt vé tham quan thành công !');
                         $location.path('/tourism-location/tourism-location-detail/' + btoa(JSON.stringify(visitLocationId)) + '/booking-location/customer-information/check-information');
                     }, 0)

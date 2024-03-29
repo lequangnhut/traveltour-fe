@@ -140,8 +140,7 @@ travel_app.controller('LocationDetailCusController', function ($scope, $location
      * phương thức gửi booking location cho server
      */
     $scope.submitBookingLocation = () => {
-        let encryptedData = LocalStorageService.encryptData($scope.tickets, 'encryptDataBookingLocation');
-        LocalStorageService.set('dataBookingLocation', encryptedData);
+        LocalStorageService.encryptLocalData($scope.tickets,'dataBookingLocation', 'encryptDataBookingLocation');
         $location.path('/tourism-location/tourism-location-detail/' + btoa(JSON.stringify(visitLocationId)) + '/booking-location');
     }
 
