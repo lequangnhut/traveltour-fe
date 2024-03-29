@@ -93,8 +93,7 @@ travel_app.controller("BookingTransCustomerController", function ($scope, $locat
         var departure = new Date(checkInDate);  // Ngày xuất phát
         // Tính số ngày còn lại giữa ngày hiện tại và ngày xuất phát
         var checkDown = Math.ceil((departure - currentDate) / (1000 * 60 * 60 * 24));
-
-        return checkDown < 0;
+        return checkDown <= 0 || checkDown === -0;
     };
 
     $scope.openTransModal = function (data) {
@@ -110,7 +109,7 @@ travel_app.controller("BookingTransCustomerController", function ($scope, $locat
         }
 
         if(data.orderStatus === 0 && data.paymentMethod === 0){
-            $scope.mess = "Bạn có muốn hủy tour không ?";
+            $scope.mess = "Bạn có muốn hủy vé không ?";
             return
         }
 
@@ -118,14 +117,15 @@ travel_app.controller("BookingTransCustomerController", function ($scope, $locat
         var departureDate = new Date(data.transportationSchedules.departureTime);
         var currentDateTime = currentDate.getTime();
         var departureDateTime = departureDate.getTime();
-        var diffInDays = Math.ceil((departureDateTime - currentDateTime) / (1000 * 60 * 60 * 24)) - 1;
+        var diffInDays = Math.ceil((departureDateTime - currentDateTime) / (1000 * 60 * 60 * 24))-1;
         if (diffInDays >= 2 && diffInDays <= 3) {
             $scope.mess = "Chi phí hủy là 30% trên tổng giá trị đơn. Bạn có muốn hủy vé không ?";
-        }else if (diffInDays >= 0 && diffInDays <= 1) {
+        }else if (diffInDays <= 1) {
             $scope.mess = "Chi phí hủy là 70% trên tổng giá trị đơn. Bạn có muốn hủy vé không ?";
         } else {
             $scope.mess = "Bạn có muốn hủy vé không ?";
         }
+        //console.log(diffInDays);
     }
 
     $scope.closeTransModal = function () {

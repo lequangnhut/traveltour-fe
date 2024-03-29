@@ -1,5 +1,5 @@
 travel_app.controller('TransportUtilityControllerAD',
-    function ($scope, $location, $timeout, $routeParams, TransportUtilityServiceAD) {
+    function ($scope, $location, $timeout, $routeParams, $rootScope, $sce, TransportUtilityServiceAD) {
         let searchTimeout;
 
         $scope.currentPage = 0;
@@ -11,22 +11,37 @@ travel_app.controller('TransportUtilityControllerAD',
             description: null
         }
 
+        function errorCallback() {
+            $location.path('/admin/internal-server-error')
+        }
+
         $scope.init = function () {
             $scope.transportUtilitiesId = $routeParams.transportUtilitiesId;
             $scope.isLoading = true;
 
-            TransportUtilityServiceAD.findAllTransUtility($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function (response) {
-                if (response.status === 200) {
-                    $scope.transportUtilityData = response.data.data.content;
-
-                    $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                    $scope.totalElements = response.data.data.totalElements;
-                } else {
-                    $location.path('/admin/page-not-found');
-                }
-            }).finally(function () {
-                $scope.isLoading = false;
-            })
+            // TransportUtilityServiceAD.findAllTransUtility($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function (response) {
+            //     if (response.status === 200) {
+            //         $scope.transportUtilityData = response.data.data.content;
+            //         $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
+            //         $scope.totalElements = response.data.data.totalElements;
+            //     } else {
+            //         $location.path('/admin/page-not-found');
+            //     }
+            // }).finally(function () {
+            //     $scope.isLoading = false;
+            // })
+            TransportUtilityServiceAD.findAllTransUtility($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
+                .then(function (response) {
+                    if (response.data.status === "404") {
+                        $scope.transportUtilityData.length = 0;
+                        $scope.totalElements = 0;
+                    } else {
+                        $scope.transportUtilityData = response.data.data.content;
+                        $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
+                        $scope.totalElements = response.data.data.totalElements;
+                    }
+                }, errorCallback).finally(function () {$scope.isLoading = false;
+            });
 
             /**
              * Tìm kiếm
@@ -37,10 +52,14 @@ travel_app.controller('TransportUtilityControllerAD',
 
                 searchTimeout = $timeout(function () {
                     TransportUtilityServiceAD.findAllTransUtility($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm).then(function (response) {
-                        $scope.transportUtilityData = response.data.data.content;
-
-                        $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                        $scope.totalElements = response.data.data.totalElements;
+                        if (response.data.status === "404"){
+                            $scope.transportUtilityData.length = 0;
+                            $scope.totalElements = 0;
+                        }else{
+                            $scope.transportUtilityData = response.data.data.content;
+                            $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
+                            $scope.totalElements = response.data.data.totalElements;
+                        }
                     }).finally(function () {
                         $scope.isLoading = false;
                     });
@@ -61,6 +80,7 @@ travel_app.controller('TransportUtilityControllerAD',
                 TransportUtilityServiceAD.findTransUtilityById($scope.transportUtilitiesId).then(function successCallback(response) {
                     if (response.status === 200) {
                         $scope.transportUtility = response.data.data;
+                        $rootScope.namenow = $scope.transportUtility.title;
                     } else {
                         $location.path('/admin/page-not-found');
                     }
@@ -167,6 +187,7 @@ travel_app.controller('TransportUtilityControllerAD',
                     } else {
                         $location.path('/admin/page-not-found');
                     }
+                    console.log(response)
                 }).finally(function () {
                     $scope.isLoading = false;
                 })
@@ -175,21 +196,77 @@ travel_app.controller('TransportUtilityControllerAD',
             confirmAlert('Bạn có chắc chắn muốn cập nhật tiện ích xe không ?', confirmUpdate);
         }
 
-        $scope.deleteTransportUtility = function (utilityId) {
-            function confirmDelete() {
-                TransportUtilityServiceAD.deleteTransUtility(utilityId).then(function (response) {
-                    if (response.status === 200) {
-                        toastAlert('success', 'Xóa tiện ích thành công !');
-                        $location.path('/admin/type/transport-utilities-list');
-                        $scope.init();
-                    } else {
-                        $location.path('/admin/page-not-found');
-                    }
-                });
-            }
+        // $scope.deleteTransportUtility = function (utilityId) {
+        //     function confirmDelete() {
+        //
+        //         TransportUtilityServiceAD.deleteTransUtility(utilityId).then(function (response) {
+        //             if (response.status === 200) {
+        //                 toastAlert('success', 'Xóa tiện ích thành công !');
+        //                 $location.path('/admin/type/transport-utilities-list');
+        //                 $scope.init();
+        //             } else {
+        //                 $location.path('/admin/page-not-found');
+        //             }
+        //         });
+        //     }
+        //
+        //     confirmAlert('Bạn có chắc chắn muốn xóa tiện ích xe không ?', confirmDelete);
+        // }
 
-            confirmAlert('Bạn có chắc chắn muốn xóa tiện ích xe không ?', confirmDelete);
-        }
+        $scope.deleteTransportUtility = function (utilityId) {
+            $scope.isLoading = true;
+            function confirmDelete() {
+                TransportUtilityServiceAD.checkTypeIsWorking(utilityId).then(
+                    function successCallback(response) {
+                        if (response.data.status.toString() === "200"){
+                            toastAlert('error', "Thể loại đang được sử dụng !");
+                        }else{
+                            TransportUtilityServiceAD.deleteTransUtility(utilityId).then(function (response) {
+                                if (response.status === 200) {
+                                    toastAlert('success', 'Xóa tiện ích thành công !');
+                                    $location.path('/admin/type/transport-utilities-list');
+                                    $scope.init();
+                                } else {
+                                    $location.path('/admin/page-not-found');
+                                }
+                            })
+                            .catch(function (deleteError) {
+                                toastAlert('error', 'Lỗi khi xóa !');
+                            });
+                        }},errorCallback).finally(function (){
+                    $scope.isLoading = false;
+                });
+            }confirmAlert('Bạn có chắc chắn muốn xóa tiện ích xe không ?', confirmDelete);
+        };
 
         $scope.init();
+
+        //Check name cho thêm mới
+        $scope.checkDuplicateTypeName = function () {
+            TransportUtilityServiceAD.checkExistTypeName($scope.transportUtility.title)
+                .then(function successCallback(response) {
+                    if (response.status === 200){
+                        $scope.nameError = response.data.data.exists;
+                    }else{
+                        $scope.nameError = response.data.data.exists;
+                    }
+
+                });
+        };
+
+        //Check name cho cập nhật
+        $scope.checkDuplicateTypeNameUpdate = function () {
+            if($scope.transportUtility.title == $rootScope.namenow){
+                $scope.nameError = false;
+                return;
+            }
+            TransportUtilityServiceAD.checkExistTypeName($scope.transportUtility.title)
+                .then(function successCallback(response) {
+                    if (response.data.data.status === 200){
+                        $scope.nameError = response.data.data.exists;
+                    }else{
+                        $scope.nameError = response.data.data.exists;
+                    }
+                });
+        };
     });

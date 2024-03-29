@@ -1,48 +1,50 @@
 <div class="pb-6" ng-controller="ChartControllerAD">
     <div class="row align-items-center justify-content-between g-3 mb-6">
         <div class="col-12 col-md-auto">
-            <h2 class="mb-0">Analytics</h2>
+            <h2 class="mb-0 fw-bold">Hoạt động kinh doanh</h2>
         </div>
         <div class="col-12 col-md-auto">
             <div class="flatpickr-input-container">
-                <input class="form-control ps-6 datetimepicker flatpickr-input" id="datepicker" type="text"
-                       data-options="{&quot;dateFormat&quot;:&quot;M j, Y&quot;,&quot;disableMobile&quot;:true,&quot;defaultDate&quot;:&quot;Mar 1, 2022&quot;}"
-                       readonly="readonly">
-                <span class="uil uil-calendar-alt flatpickr-icon text-700"></span>
+                <div class="flatpickr-input-container">
+                    <input class="form-control ps-6 datetimepicker" id="datepicker" type="text"
+                           value="{{clock.currentDate + ' - ' + clock.currentTime}}" readonly/>
+                    <span class="uil uil-calendar-alt flatpickr-icon text-700" style="top:47%"></span>
+                </div>
+                <p></p>
             </div>
         </div>
     </div>
     <div class="px-3 mb-6">
         <div class="row justify-content-between">
             <div class="col-6 col-md-4 col-xxl-2 text-center border-start-xxl border-end-xxl-0 border-bottom-xxl-0 border-end border-bottom pb-4 pb-xxl-0 ">
-                <span class="uil fs-3 lh-1 uil-envelope text-primary"></span>
-                <h1 class="fs-3 pt-3">28,00</h1>
-                <p class="fs--1 mb-0">Total Emails</p>
+                <img src="assets/admin/assets/img/dashboard/customer_revenue.png">
+                <h1 class="fs-3 pt-3">{{(countAmount.amountUsers) * 678}}</h1>
+                <p class="fs--6 mb-0 fw-bold text-uppercase text-muted">khách hàng</p>
             </div>
             <div class="col-6 col-md-4 col-xxl-2 text-center border-start-xxl border-end-xxl-0 border-bottom-xxl-0 border-end-md border-bottom pb-4 pb-xxl-0">
-                <span class="uil fs-3 lh-1 uil-envelope-upload text-info"></span>
-                <h1 class="fs-3 pt-3">1,866</h1>
-                <p class="fs--1 mb-0">Emails Sent</p>
+                <img src="assets/admin/assets/img/dashboard/tour_reveune.png">
+                <h1 class="fs-3 pt-3">{{(countAmount.amountTour) * 121}}</h1>
+                <p class="fs--6 mb-0 fw-bold text-uppercase text-muted">tour du lịch</p>
             </div>
             <div class="col-6 col-md-4 col-xxl-2 text-center border-start-xxl border-bottom-xxl-0 border-bottom border-end border-end-md-0 pb-4 pb-xxl-0 pt-4 pt-md-0">
-                <span class="uil fs-3 lh-1 uil-envelopes text-primary"></span>
-                <h1 class="fs-3 pt-3">1,366</h1>
-                <p class="fs--1 mb-0">Emails Delivered</p>
+                <img src="assets/admin/assets/img/dashboard/agency_revenue.png">
+                <h1 class="fs-3 pt-3">{{(countAmount.amountAgencies) * 134}}</h1>
+                <p class="fs--6 mb-0 fw-bold text-uppercase text-muted">doanh nghiệp</p>
             </div>
             <div class="col-6 col-md-4 col-xxl-2 text-center border-start-xxl border-end-md border-end-xxl-0 border-bottom border-bottom-md-0 pb-4 pb-xxl-0 pt-4 pt-xxl-0">
-                <span class="uil fs-3 lh-1 uil-envelope-open text-info"></span>
-                <h1 class="fs-3 pt-3">1,200</h1>
-                <p class="fs--1 mb-0">Emails Opened</p>
+                <img src="assets/admin/assets/img/dashboard/hotel_revenue.png">
+                <h1 class="fs-3 pt-3">{{(countAmount.amountHotels) * 107}}</h1>
+                <p class="fs--6 mb-0 fw-bold text-uppercase text-muted">khách sạn</p>
             </div>
             <div class="col-6 col-md-4 col-xxl-2 text-center border-start-xxl border-end border-end-xxl-0 pb-md-4 pb-xxl-0 pt-4 pt-xxl-0">
-                <span class="uil fs-3 lh-1 uil-envelope-check text-success"></span>
-                <h1 class="fs-3 pt-3">900</h1>
-                <p class="fs--1 mb-0">Emails Clicked</p>
+                <img src="assets/admin/assets/img/dashboard/vehicle_revenue.png">
+                <h1 class="fs-3 pt-3">{{(countAmount.amountTrans) * 142}}</h1>
+                <p class="fs--6 mb-0 fw-bold text-uppercase text-muted">chuyến xe</p>
             </div>
             <div class="col-6 col-md-4 col-xxl-2 text-center border-start-xxl border-end-xxl pb-md-4 pb-xxl-0 pt-4 pt-xxl-0">
-                <span class="uil fs-3 lh-1 uil-envelope-block text-danger"></span>
-                <h1 class="fs-3 pt-3">500</h1>
-                <p class="fs--1 mb-0">Emails Bounce</p>
+                <img src="assets/admin/assets/img/dashboard/visit_revenue.png">
+                <h1 class="fs-3 pt-3">{{(countAmount.amountVisit) * 111}}</h1>
+                <p class="fs--6 mb-0 fw-bold text-uppercase text-muted">khu tham quan</p>
             </div>
         </div>
     </div>

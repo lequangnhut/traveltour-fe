@@ -75,11 +75,13 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $locat
                     return;
                 }
                 $scope.bookingTourHotelList = response.data.data.content;
+                //console.log(response.data.data.content)
                 $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                 $scope.totalElements = response.data.data.totalElements;
                 for (let i = 0; i < $scope.bookingTourHotelList.length; i++) {
                     HistoryOrderServiceCUS.getHotels($scope.bookingTourHotelList[i].orderHotelDetailsById[0].roomTypeId)
                         .then(function (hotels) {
+                            //console.log(hotels)
                         if (hotels) {
                             $scope.bookingTourHotelList[i].hotel = hotels.data.data;
                         } else {
@@ -106,7 +108,7 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $locat
 
         var checkDown = Math.ceil((departure - currentDate) / (1000 * 60 * 60 * 24));
 
-        return checkDown < 0;
+        return checkDown <= 0 || checkDown === -0;
     };
 
     $scope.openHotelModal = function (data) {
@@ -119,6 +121,7 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $locat
             var promise = HistoryOrderServiceCUS.getOrderDetails($scope.bookingHotel.id)
                 .then(function (rooms) {
                     $scope.roomTypeListCustomer = rooms.data.data;
+                    //console.log(rooms.data)
                     for (let j = 0; j < $scope.roomTypeListCustomer.length; j++) {
                         if ($scope.roomTypeListCustomer[j].roomTypes.freeCancellation === false) {
                             $scope.cancelWithFee = true;
@@ -144,11 +147,12 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $locat
 
         if (diffInDays >= 2 && diffInDays <= 4) {
             $scope.mess = "Chi phí hủy là 50% trên tổng giá trị đơn. Bạn có muốn hủy phòng không ?";
-        }else if (diffInDays >= 0 && diffInDays <= 1) {
+        }else if (diffInDays <= 1) {
             $scope.mess = "Chi phí hủy là 100% trên tổng giá trị đơn. Bạn có muốn hủy phòng không ?";
         } else {
             $scope.mess = "Bạn có muốn hủy phòng không ?";
         }
+        //console.log(diffInDays);
     }
 
 
