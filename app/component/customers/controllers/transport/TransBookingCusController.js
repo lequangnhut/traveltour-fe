@@ -302,23 +302,12 @@ travel_app.controller('TransBookingCusController',
 
             function confirm() {
                 $window.location.href = '/drive-move'
-            }
-
-            confirmAlert('Vé vẫn đang được giữ cho bạn, bạn nhớ thanh toán để đặt vé thành công nhé.', confirm);
-        });
-
-        /**
-         * Nếu ra khỏi controller sẽ xóa localStored
-         */
-        $scope.$on('$routeChangeStart', function (event, next, current) {
-            if (next.controller !== 'TransBookingCusController' && next.controller !== 'LoginController' && next.controller !== 'MainController') {
                 LocalStorageService.remove('dataBookingTransport');
                 LocalStorageService.remove('redirectAfterLogin');
                 LocalStorageService.remove('countdownTime');
-            }
-
-            if (next.controller !== 'TransBookingCusController' && next.controller !== 'TransBookingSuccessCusController') {
                 LocalStorageService.remove('dataBookingTransportSuccess');
             }
+
+            confirmAlert('Nếu bạn rời khỏi trang này, quá trình thanh toán sẽ bị hủy bỏ và dữ liệu đã nhập sẽ bị mất. Bạn có muốn tiếp tục rời khỏi trang ?', confirm);
         });
     })

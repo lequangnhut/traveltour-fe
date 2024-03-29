@@ -24,5 +24,6 @@
     <orderEntry type="library" name="crypto-js" level="application" />
     <orderEntry type="library" name="sockjs-client" level="application" />
     <orderEntry type="library" name="stomp.js" level="application" />
+    <orderEntry type="library" name="sockjs-client" level="application" />
   </component>
 </module>

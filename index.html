@@ -52,9 +52,9 @@
         <script src="/assets/customers/js/notification/SwalAlert.js"></script>
         <script src="/assets/customers/js/theme.js"></script>
         <script src="/node_modules/mapbox-gl/dist/mapbox-gl.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-
+        <script src="/lib/websocket/sockjs.min.js"></script>
+        <script src="/lib/websocket/stomp.min.js"></script>
+        <script src="/lib/angularjs/crypto-js.min.js"></script>
     </div>
 
     <div ng-cloak ng-if="isManagerPage()">
@@ -110,10 +110,8 @@
         <script src="/lib/angularjs/axios.min.js"></script>
         <script src="/lib/canvasjs/canvasjs.min.js"></script>
         <script src="/lib/moment/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
-
+        <script src="/lib/websocket/sockjs.min.js"></script>
+        <script src="/lib/websocket/stomp.min.js"></script>
 
         <script>
             var phoenixIsRTL = window.config.config.phoenixIsRTL;
@@ -1847,7 +1845,6 @@
 <script src="app/component/customers/controllers/transport/TransportDetailCusController.js"></script>
 <script src="app/component/customers/controllers/transport/TransBookingCusController.js"></script>
 <script src="app/component/customers/controllers/transport/TransBookingSuccessCusController.js"></script>
-<script src="app/component/customers/controllers/transport/TransportCountdownCusService.js"></script>
 
 <!--====== Controller Customer Booking ======-->
 <script src="app/component/customers/controllers/tour/BookingTourCusController.js"></script>
