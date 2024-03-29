@@ -21,7 +21,7 @@
                             </span>
                         <input type="text"
                                class="form-control"
-                               placeholder="Tìm kiếm"
+                               placeholder="Tìm kiếm theo tên tiện ích"
                                ng-model="searchTerm"
                                ng-change="searchTransUtility()"
                         >
@@ -107,14 +107,14 @@
                             <span class="sorting-icon"></span>
                         </div>
                     </th>
-                    <th>
-                        <div class="icon-left">Tiêu đề
-                            <span class="sorting-icon"></span>
+                    <th ng-click="sortData('title')">
+                        <div class="icon-left">Tên tiện ích
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('title')"></span>
                         </div>
                     </th>
-                    <th>
+                    <th ng-click="sortData('description')">
                         <div class="icon-left">Mô tả tiện ích
-                            <span class="sorting-icon"></span>
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('description')"></span>
                         </div>
                     </th>
                     <th scope="col">Thao tác</th>
@@ -139,7 +139,7 @@
                         </a>
                     </td>
                 </tr>
-                <tr ng-if="transportUtility.length === 0">
+                <tr ng-if="transportUtilityData.length === 0">
                     <td colspan="8">Không có dữ liệu.</td>
                 </tr>
                 </tbody>

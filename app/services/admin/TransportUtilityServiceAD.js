@@ -42,8 +42,24 @@ travel_app.service('TransportUtilityServiceAD', function ($http) {
 
     this.deleteTransUtility = function (transUtilityId) {
         return $http({
-            method: 'GET',
+            method: 'DELETE',
             url: API_TRANS_UTILITY + 'delete-transport-utilities/' + transUtilityId
         });
+    }
+
+    this.checkExistTypeName = function (name) {
+        return $http({
+            method: 'GET',
+            url: API_TRANS_UTILITY + 'check-duplicate-trans-utility-name/' + name,
+            param: 'name' + name
+        })
+    }
+
+    this.checkTypeIsWorking = function (id) {
+        return $http({
+            method: 'GET',
+            url: API_TRANS_UTILITY + 'check-trans-utility-working/' + id,
+            param: 'id' + id
+        })
     }
 });

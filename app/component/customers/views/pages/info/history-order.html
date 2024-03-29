@@ -1242,10 +1242,6 @@
                                                                             <span class="heading d-block" style="font-size: larger;color: #727179;">
                                                                                 Địa danh tham quan</span>
                                                                             <span class="subheadings">{{bookingVisit.visitLocationsByVisitLocationId.visitLocationName}}</span>
-                                                                            <!--                                                                            <a class="subheadings"-->
-                                                                            <!--                                                                               ng-click="closeHotelModal()"-->
-                                                                            <!--                                                                               href="/hotel/hotel-detail/{{ bookingHotel.hotel.id }}"-->
-                                                                            <!--                                                                               title="Xem chi tiết"></a>-->
                                                                         </div>
                                                                     </td>
                                                                     <td>
@@ -1329,14 +1325,14 @@
                                                                         <div class="d-flex flex-column">
                                                                                 <span class="heading d-block" style="font-size: larger;color: #727179;">
                                                                                     HTTToán</span>
-<!--                                                                            <span class="subheadings"-->
-<!--                                                                                  ng-if="bookingVisit.paymentMethod === 'Momo'">Ví điện tử Momo</span>-->
-<!--                                                                            <span class="subheadings"-->
-<!--                                                                                  ng-if="bookingVisit.paymentMethod === 'TTTT'">Thanh toán trực tiếp</span>-->
-<!--                                                                            <span class="subheadings"-->
-<!--                                                                                  ng-if="bookingVisit.paymentMethod === 'VNPay'">Thanh toán VN Pay</span>-->
-<!--                                                                            <span class="subheadings"-->
-<!--                                                                                  ng-if="bookingVisit.paymentMethod === 'ZaloPay'">Ví điện tử ZaloPay</span>-->
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingVisit.paymentMethod === 0">Thanh toán tại quầy</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingVisit.paymentMethod === 1">Thanh toán VNPay</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingVisit.paymentMethod === 2">Thanh toán ZaloPay</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingVisit.paymentMethod === 3">Thanh toán Momo</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>

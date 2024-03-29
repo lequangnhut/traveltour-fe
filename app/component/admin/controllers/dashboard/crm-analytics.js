@@ -1,4 +1,4 @@
-travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $timeout) {
+travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $timeout, $interval, RevenueServiceAD) {
 
     const {merge: merge} = window._;
     const echartSetOption = (e, t, o, n) => {
@@ -570,4 +570,33 @@ travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $timeou
             appCalendarInit();
         });
     });
+
+    /** Hàm trả trang lỗi*/
+    function errorCallback() {
+        $location.path('/admin/internal-server-error')
+    }
+
+    $scope.clock = {
+        currentDate: new Date().toLocaleDateString(),
+        currentTime: new Date().toLocaleTimeString()
+    };
+
+    $interval(function() {
+        var now = new Date();
+        $scope.clock.currentDate = now.toLocaleDateString();
+        $scope.clock.currentTime = now.toLocaleTimeString();
+    }, 1000);
+
+    $scope.getAllCount = function () {
+        $scope.isLoading = true;
+        RevenueServiceAD.countAll()
+            .then(function (response) {
+                //console.log(response.data.data)
+                $scope.countAmount = response.data.data;
+            }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
+    };
+
+    $scope.getAllCount();
 });

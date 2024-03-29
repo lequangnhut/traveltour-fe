@@ -42,13 +42,14 @@
             </div>
 
             <div class="col-md-6">
-                <label for="title" class="form-label">Tiêu đề</label>
+                <label for="title" class="form-label">Tiện ích</label>
                 <input class="form-control" id="title" type="text"
                        placeholder="Nhập tiêu đề tiện ích"
                        name="title"
                        ng-model="transportUtility.title"
-                       ng-class="{ 'is-invalid': typeform.title.$invalid && typeform.title.$touched,
+                       ng-class="{ 'is-invalid': typeform.title.$invalid && typeform.title.$touched || nameError,
                                     'is-valid': typeform.title.$valid && typeform.title.$touched }"
+                       ng-change="checkDuplicateTypeNameUpdate()"
                        required
                 />
                 <small class="text-danger"
@@ -72,10 +73,7 @@
                 />
                 <small class="text-danger"
                        ng-show="typeform.description.$touched && typeform.description.$error.required">
-                    Vui lòng nhập tiện ích cho xe !
-                </small>
-                <small class="text-danger" ng-show="typeform.description.$touched && nameError">
-                    Tiện ích này đã tồn tại !
+                    Vui lòng nhập mô tả tiện ích cho xe !
                 </small>
             </div>
 

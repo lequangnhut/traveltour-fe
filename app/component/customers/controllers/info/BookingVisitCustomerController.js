@@ -94,19 +94,28 @@ travel_app.controller("BookingVisitCustomerController", function ($scope, $locat
 
         var checkDown = Math.ceil((departure - currentDate) / (1000 * 60 * 60 * 24));
 
-        return checkDown < 0;
+        return checkDown < 0 || checkDown === -0;
     };
 
     $scope.openVisitModal = function (data) {
         $('#visitModal').modal('show');
+        //console.log(data)
         $scope.bookingVisit = data;
         for (let i = 0; i < $scope.bookingTourVisitList.length; i++) {
             HistoryOrderServiceCUS.getOrderVisitDetails($scope.bookingVisit.id)
+
                 .then(function (ticket) {
+                    //console.log(ticket.data.data)
                     $scope.ticketListCustomer = ticket.data.data
                 });
 
         }
+
+        if(data.orderStatus === 0 && data.paymentMethod === 0){
+            $scope.mess = "Bạn có muốn hủy vé không ?";
+            return
+        }
+
         var currentDate = new Date();
         var departureDate = new Date(data.checkIn);
         var currentDateTime = currentDate.getTime();
@@ -115,11 +124,12 @@ travel_app.controller("BookingVisitCustomerController", function ($scope, $locat
 
         if (diffInDays >= 2 && diffInDays <= 3) {
             $scope.mess = "Chi phí hủy là 50% trên tổng giá trị đơn. Bạn có muốn hủy vé không ?";
-        }else if (diffInDays >= 0 && diffInDays <= 1) {
+        }else if (diffInDays <= 1) {
             $scope.mess = "Chi phí hủy là 80% trên tổng giá trị đơn. Bạn có muốn hủy vé không ?";
         } else {
             $scope.mess = "Bạn có muốn hủy vé không ?";
         }
+        //console.log(diffInDays);
     }
 
     $scope.closeVisitModal = function () {
