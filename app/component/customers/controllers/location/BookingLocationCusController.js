@@ -1,7 +1,7 @@
 travel_app.controller('BookingLocationCusController', function ($scope, $sce, $timeout, $location, $rootScope, $window, $routeParams, AuthService, LocalStorageService, BookingLocationCusService, TourDetailCusService, LocationDetailCusService, GenerateCodePayService) {
 
-    let user = AuthService.getUser();
-    let visitLocationId = JSON.parse(atob($routeParams.id));
+    const user = AuthService.getUser();
+    const visitLocationId = JSON.parse(atob($routeParams.id));
     $scope.locationDetailIdBase64 = $routeParams.id;
 
     $scope.locationQr = encodeURIComponent('bé ơi từ từ, bé bé bé ơi từ từ'); //mã hóa
@@ -32,21 +32,13 @@ travel_app.controller('BookingLocationCusController', function ($scope, $sce, $t
     }
 
     $scope.bookingLocation = {
-        id: null,
-        userId: null,
-        visitLocationId: visitLocationId,
-        customerName: null,
-        customerCitizenCard: null,
-        customerPhone: null,
-        customerEmail: null,
-        capacityAdult: null,
-        capacityKid: null,
-        capacityBaby: null,
-        orderTotal: null,
-        paymentMethod: null,
-        orderCode: null,
-        orderNote: null
-    }
+        userId: user ? user.id : null,
+        visitLocationId,
+        customerName: user ? user.fullName : null,
+        customerCitizenCard: user ? user.citizenCard : null,
+        customerPhone: user ? user.phone : null,
+        customerEmail: user ? user.email : null,
+    };
 
     function errorCallback() {
         $location.path('/admin/internal-server-error')
@@ -157,14 +149,16 @@ travel_app.controller('BookingLocationCusController', function ($scope, $sce, $t
 
             $scope.orderVisitLocation = {
                 id: GenerateCodePayService.generateCodeBooking('VPO', visitLocationId),
+                userId: $scope.bookingLocation.userId,
                 visitLocationId: visitLocationId,
                 customerName: $scope.bookingLocation.customerName,
                 customerPhone: $scope.bookingLocation.customerPhone,
                 customerEmail: $scope.bookingLocation.customerEmail,
+                customerCitizenCard: $scope.bookingLocation.customerCitizenCard,
                 capacityAdult: $scope.tickets.adultTickets,
                 capacityKid: $scope.tickets.childrenTickets,
                 checkIn: $scope.tickets.departureDate,
-                orderTotal: $scope.totalPrice,
+                orderTotal: $scope.tickets.totalPrice,
                 paymentMethod: 0, //vay
                 dateCreated: new Date(),
                 orderStatus: 0, //chờ thánh toán
@@ -181,6 +175,7 @@ travel_app.controller('BookingLocationCusController', function ($scope, $sce, $t
                 if (repo.status === 200) {
                     $timeout(() => {
                         let orderVisitLocation = repo.data.data;
+                        console.log(orderVisitLocation)
                         let encryptDataOrderVisitLocation = LocalStorageService.encryptData(orderVisitLocation, 'encryptDataOrderVisitLocation');
                         LocalStorageService.set('orderVisitLocation', encryptDataOrderVisitLocation);
                         toastAlert('success', 'Đặt vé tham quan thành công !');
@@ -211,14 +206,16 @@ travel_app.controller('BookingLocationCusController', function ($scope, $sce, $t
 
             $scope.orderVisitLocation = {
                 id: GenerateCodePayService.generateCodeBooking('VNPAY', visitLocationId),
+                userId: $scope.bookingLocation.userId,
                 visitLocationId: visitLocationId,
                 customerName: $scope.bookingLocation.customerName,
                 customerPhone: $scope.bookingLocation.customerPhone,
                 customerEmail: $scope.bookingLocation.customerEmail,
+                customerCitizenCard: $scope.bookingLocation.customerCitizenCard,
                 capacityAdult: $scope.tickets.adultTickets,
                 capacityKid: $scope.tickets.childrenTickets,
                 checkIn: $scope.tickets.departureDate,
-                orderTotal: $scope.totalPrice,
+                orderTotal: $scope.tickets.totalPrice,
                 paymentMethod: 1, //vnp
                 dateCreated: new Date(),
                 orderStatus: 1, //đã thánh toán
