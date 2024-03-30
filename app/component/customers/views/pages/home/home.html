@@ -81,7 +81,9 @@
                                 <li><a href="#">(4.9)</a></li>
                             </ul>
                             <h4 class="title">
-                                <a href="/tours/tour-detail/{{detail.id}}">{{ detail.toursByTourId.tourName }}</a>
+                                <a href="#" ng-click="redirectPage('/tours/tour-detail/', detail.id)">
+                                    {{ detail.toursByTourId.tourName }}
+                                </a>
                             </h4>
                             <p class="location">
                                 <span class="fas fa-map-marker-alt"></span>

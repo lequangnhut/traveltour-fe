@@ -115,7 +115,8 @@
                         <div class="tab-pane fade active show" id="nav-home" role="tabpanel"
                              aria-labelledby="nav-home-tab">
 
-                            <div class="place-content-wrap mb-4 wow fadeInUp visit-parent-class" ng-bind-html="tourDetailDescription"
+                            <div class="place-content-wrap mb-4 wow fadeInUp visit-parent-class"
+                                 ng-bind-html="tourDetailDescription"
                                  style="text-align: justify; white-space: pre-line; font-family: 'Roboto',sans-serif;">
                             </div>
                             <div class="place-content-wrap mb-4 wow fadeInUp"
@@ -656,7 +657,7 @@
                                 <div class="booking-guest-box mb-20">
                                     <h6 class="mb-20">Vé</h6>
                                     <div class="booking-item">
-                                        <label>Người lớn (18 tuổi) {{ tourDetail.unitPrice | vnCurrency }}</label>
+                                        <label>Người lớn (trên 90cm) {{ tourDetail.unitPrice | vnCurrency }}</label>
                                         <div class="bk-item booking-user">
                                             <span class="fas fa-user"></span>
                                             <select class="wide-select"
@@ -677,8 +678,7 @@
                                         </div>
                                     </div>
                                     <div class="booking-item">
-                                        <label>Trẻ em (13-17
-                                            tuổi) {{ tourDetail.unitPrice * 0.3 | vnCurrency }}</label>
+                                        <label>Trẻ em (dưới 90cm) {{ tourDetail.unitPrice * 0.3 | vnCurrency }}</label>
                                         <div class="bk-item booking-user">
                                             <span class="fas fa-user"></span>
                                             <select class="wide-select"
@@ -696,7 +696,7 @@
                                         </div>
                                     </div>
                                     <div class="booking-item">
-                                        <label>Em bé (Dưới 2 tuổi) 0đ</label>
+                                        <label>Em bé 0đ</label>
                                         <div class="bk-item booking-user">
                                             <span class="fas fa-user"></span>
                                             <select class="wide-select"

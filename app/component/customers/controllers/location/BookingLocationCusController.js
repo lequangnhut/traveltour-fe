@@ -122,13 +122,6 @@ travel_app.controller('BookingLocationCusController', function ($scope, $sce, $t
                 $scope.paymentMomo();
             }
         }
-
-        /**
-         * click vào để show ra form thêm thông tin khách hàng
-         */
-        $scope.showFormImportInfo = function () {
-            $scope.showForm = !$scope.showForm;
-        }
     }
 
     $scope.init();

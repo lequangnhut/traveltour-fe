@@ -188,11 +188,35 @@
                                             Địa chỉ email không đúng định dạng !
                                         </small>
                                     </div>
-                                    <div class="show-form">
-                                        <a href="" class="text-green" ng-click="showFormImportInfo()">
+
+                                    <div class="row mb-3" ng-if="user !== null">
+                                        <div class="col-6">
+                                            <label class="form-check-label" for="customer_tq">
+                                                <input type="radio"
+                                                       class="form-check-input"
+                                                       name="category_customer"
+                                                       id="customer_tq"
+                                                >
+                                                Tôi là khách tham quan
+                                            </label>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-check-label" for="customer">
+                                                <input type="radio"
+                                                       class="form-check-input"
+                                                       name="category_customer"
+                                                       id="customer"
+                                                >
+                                                Tôi đặt cho người khác
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="show-form" ng-if="totalQuantityTicket > 1">
+                                        <a href="#" class="text-green" ng-click="showFormImportInfo()">
                                             Nhập thêm thông tin cho {{ totalQuantity }} khách hàng
-                                            <i class="fa-solid fa-angle-down"></i>
                                         </a>
+                                        <i class="text-green" ng-bind-html="getChangeIconTour()"></i>
                                     </div>
                                 </div>
                             </div>
@@ -404,7 +428,7 @@
                                     </label>
                                     <div class="bk-item booking-user">
                                         <span class="fw-medium">
-                                            {{ totalQuantity }} vé
+                                            {{ totalQuantityTicket }} vé
                                         </span>
                                     </div>
                                 </div>

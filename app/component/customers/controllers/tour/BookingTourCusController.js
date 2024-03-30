@@ -17,7 +17,7 @@ travel_app.controller('BookingTourCusController',
         $scope.bookingCustomerList = [];
 
         $scope.paymentMethods = {
-            VNPay: "TravelTour chấp nhận thanh toán bằng VNPay. Với hạn mức lên đến 30.000.000 VNĐ",
+            VNPay: "TravelTour chấp nhận thanh toán bằng VNPay. Với hạn mức lên đến 20.000.000 VNĐ",
             ZaloPay: "TravelTour chấp nhận thanh toán bằng ZaloPay.",
             Momo: "TravelTour chấp nhận thanh toán bằng Ví điện tử Momo. (*) Hạn mức tối đa là 20.000.000 VNĐ",
             Travel: "Quý khách vui lòng đến các văn phòng TravelTour để thanh toán và nhận vé."
@@ -62,22 +62,21 @@ travel_app.controller('BookingTourCusController',
         }
 
         $scope.init = function () {
-            let dataBooking = LocalStorageService.get('dataBooking');
-            let bookingTicket = LocalStorageService.get('bookingTicket');
+            let dataBooking = LocalStorageService.decryptLocalData('dataBooking', 'encryptDataBooking');
 
-            if (dataBooking === null && bookingTicket === null) {
-                toastAlert('warning', 'Booking không tồn tại !');
-                $location.path('/home');
+            if (dataBooking === null) {
+                centerAlert('Cảnh báo', 'Chúng tôi nhận thấy bạn đang truy cập bất thường vào trang này, vui lòng rời khỏi !', 'warning');
+                $location.path('/tours');
                 return;
             }
 
-            $scope.ticket = LocalStorageService.get('dataBooking').ticket;
-            $scope.totalPrice = LocalStorageService.get('dataBooking').totalPrice;
-            $scope.tourDetail = LocalStorageService.get('dataBooking').tourDetail;
-            $scope.provinceName = LocalStorageService.get('dataBooking').provinceName;
+            $scope.ticket = dataBooking.ticket;
+            $scope.totalPrice = dataBooking.totalPrice;
+            $scope.tourDetail = dataBooking.tourDetail;
+            $scope.provinceName = dataBooking.provinceName;
 
-            $scope.totalQuantity = Object.values($scope.ticket).reduce((total, value) => total + parseInt(value), 0);
-            $scope.ticketArray = Array.from({length: $scope.totalQuantity}, (_, index) => index);
+            $scope.totalQuantityTicket = Object.values($scope.ticket).reduce((total, value) => total + parseInt(value), 0);
+            $scope.ticketArray = Array.from({length: $scope.totalQuantityTicket}, (_, index) => index);
 
             /**
              * Hàm này dùng để tính discount code
@@ -95,7 +94,7 @@ travel_app.controller('BookingTourCusController',
                 } else if ($scope.checkPrivatePolicy === false) {
                     centerAlert('Xác nhận !', 'Vui lòng chấp nhận điều khoản, điều kiện.', 'warning')
                 } else {
-                    LocalStorageService.set('serviceCustomer', $scope.service);
+                    LocalStorageService.encryptLocalData($scope.service, 'serviceCustomer', 'encryptServiceCustomer');
                     $location.path('/tours/tour-detail/' + btoa(JSON.stringify($scope.tourDetail.id)) + '/booking-tour/customer-information');
                 }
             };
@@ -116,7 +115,7 @@ travel_app.controller('BookingTourCusController',
              * Phương thức lấy hình thức thanh toán so sánh để thanh toán
              */
             $scope.submitBooking = function () {
-                let paymentMethod = LocalStorageService.get('serviceCustomer').paymentMethod;
+                let paymentMethod = LocalStorageService.decryptLocalData('serviceCustomer', 'encryptServiceCustomer').paymentMethod;
 
                 if (paymentMethod === 'Travel') {
                     $scope.paymentTravel();
@@ -137,6 +136,20 @@ travel_app.controller('BookingTourCusController',
             $scope.showFormImportInfo = function () {
                 $scope.showForm = !$scope.showForm;
             }
+
+            /**
+             * Phưương thức thay đổi icon khi nhấn vào xem thêm bên tour
+             */
+            $scope.getChangeIconTour = function () {
+                if ($scope.showForm) {
+                    if ($scope.showForm === -1) {
+                        return $sce.trustAsHtml('<svg class="svg-inline--fa fa-angle-down" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"></path></svg>');
+                    } else {
+                        return $sce.trustAsHtml('<svg class="svg-inline--fa fa-angle-up" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M352 352c-8.188 0-16.38-3.125-22.62-9.375L192 205.3l-137.4 137.4c-12.5 12.5-32.75 12.5-45.25 0s-12.5-32.75 0-45.25l160-160c12.5-12.5 32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25C368.4 348.9 360.2 352 352 352z"></path></svg>');
+                    }
+                }
+                return $sce.trustAsHtml('<svg class="svg-inline--fa fa-angle-down" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"></path></svg>');
+            };
 
             /**
              * Phương thức thêm tất cả người dùng vào csdl
@@ -200,7 +213,9 @@ travel_app.controller('BookingTourCusController',
                 BookingTourCusService.createBookTour(bookingDto).then(function successCallBack(response) {
                     if (response.status === 200) {
                         let bookingTicket = response.data.data.bookingToursDto;
-                        LocalStorageService.set('bookingTicket', bookingTicket);
+
+                        LocalStorageService.encryptLocalData(bookingDto, 'bookingDto', 'encryptBookingDto');
+                        LocalStorageService.encryptLocalData(bookingTicket, 'bookingTicket', 'encryptBookingTicket');
 
                         toastAlert('success', 'Đặt tour thành công !');
                         $location.path('/tours/tour-detail/booking-tour/customer-information/payment-success');
@@ -248,8 +263,8 @@ travel_app.controller('BookingTourCusController',
 
                 BookingTourCusService.redirectVNPay(bookingDto).then(function successCallBack(response) {
                     if (response.status === 200) {
-                        LocalStorageService.set('bookingDto', bookingDto);
-                        LocalStorageService.set('bookingTicket', bookingDto.bookingToursDto);
+                        LocalStorageService.encryptLocalData(bookingDto, 'bookingDto', 'encryptBookingDto');
+                        LocalStorageService.encryptLocalData(bookingDto.bookingToursDto, 'bookingTicket', 'encryptBookingTicket');
 
                         $window.location.href = response.data.redirectUrl;
                         $scope.bookingCustomerList.splice(0, $scope.bookingCustomerList.length);
@@ -296,8 +311,8 @@ travel_app.controller('BookingTourCusController',
 
                 BookingTourCusService.redirectMomo(bookingDto).then(function successCallBack(response) {
                     if (response.status === 200) {
-                        LocalStorageService.set('bookingDto', bookingDto);
-                        LocalStorageService.set('bookingTicket', bookingDto.bookingToursDto);
+                        LocalStorageService.encryptLocalData(bookingDto, 'bookingDto', 'encryptBookingDto');
+                        LocalStorageService.encryptLocalData(bookingDto.bookingToursDto, 'bookingTicket', 'encryptBookingTicket');
 
                         $window.location.href = response.data.redirectUrl;
                         $scope.bookingCustomerList.splice(0, $scope.bookingCustomerList.length);
@@ -359,7 +374,10 @@ travel_app.controller('BookingTourCusController',
         }
 
         $scope.$on('$routeChangeStart', function (event, next, current) {
-            if (next.controller !== 'BookingTourCusController' && next.controller !== 'LoginController') {
+            if (next.controller !== 'BookingTourCusController' && next.controller !== 'BookingTourSuccessCusController' && next.controller !== 'LoginController') {
+                LocalStorageService.remove('dataBooking');
+                LocalStorageService.remove('bookingDto');
+                LocalStorageService.remove('bookingTicket');
                 LocalStorageService.remove('redirectAfterLogin');
             }
         });

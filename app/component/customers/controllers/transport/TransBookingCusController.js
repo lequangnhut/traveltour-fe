@@ -139,8 +139,7 @@ travel_app.controller('TransBookingCusController',
                             seatNumber: seatNumber
                         }
                         LocalStorageService.set('dataBookingTransportSuccess', dataBookingTransportSuccess);
-
-                        $location.path('/drive-move/drive-transport-detail/booking-confirmation/booking-successfully');
+                        $window.location.href = '/drive-move/drive-transport-detail/booking-confirmation/booking-successfully';
                     } else {
                         $location.path('/admin/page-not-found');
                     }

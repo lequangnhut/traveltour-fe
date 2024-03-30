@@ -1,0 +1,99 @@
+.order-content .booking-success {
+    margin-top: 50px;
+    padding: 25px 40px;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+}
+
+.order-content .booking-success > p {
+    line-height: 28px;
+}
+
+.booking-success p {
+    margin: 0 0 10px;
+}
+
+.order-content .booking-success .title-line {
+    margin-bottom: 15px;
+}
+
+.booking-success .title-line {
+    color: #01c675;
+    position: relative;
+    display: block;
+}
+
+.booking-success .title-line:after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 100%;
+    background-color: #01c675;
+    position: absolute;
+    bottom: 4px;
+    z-index: -1;
+}
+
+.booking-success .title-line, .title-line-2 span {
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.booking-success .title-line span {
+    background-color: #fff;
+    padding-right: 50px;
+}
+
+.order-content .booking-success .list-dot {
+    padding-left: 25px;
+}
+
+.booking-success .list-dot {
+    list-style: none;
+    margin: 0;
+}
+
+.internal-bank .list-content, .list-dot {
+    padding: 0;
+}
+
+.order-content .booking-success .list-dot li {
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.order-content .booking-success .title-line {
+    margin-bottom: 15px;
+}
+
+.order-content .booking-success .list-dot li.wide {
+    width: 100%;
+}
+
+.booking-success .list-dot li {
+    position: relative;
+}
+
+.booking-success .list-dot li:before {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #e1e1e1;
+    position: absolute;
+    left: -12px;
+    top: 12px;
+}
+
+.booking-success .table-wrapper {
+    overflow: auto;
+}
+
+.order-content .notice {
+    font-style: italic;
+    color: #00f;
+}

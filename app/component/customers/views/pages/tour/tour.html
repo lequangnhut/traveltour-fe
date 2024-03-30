@@ -184,7 +184,9 @@
                                             </a>
                                         </span>
                                             <h3 class="fw-medium">
-                                                <a href="#">{{ tour.toursByTourId.tourName }}</a>
+                                                <a href="#" ng-click="redirectPage('/tours/tour-detail/', tour.id)">
+                                                    {{ tour.toursByTourId.tourName }}
+                                                </a>
                                             </h3>
                                             <div class="d-flex align-items-center mb-3"
                                                  style="border-bottom: 1px solid rgba(29, 35, 31, 0.1);">

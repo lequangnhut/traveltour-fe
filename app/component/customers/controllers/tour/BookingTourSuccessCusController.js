@@ -1,18 +1,21 @@
 travel_app.controller('BookingTourSuccessCusController', function ($scope, $location, $routeParams, LocalStorageService) {
 
     $scope.init = function () {
-        let dataBooking = LocalStorageService.get('dataBooking');
-        let bookingTicket = LocalStorageService.get('bookingTicket');
+        let dataBooking = LocalStorageService.decryptLocalData('dataBooking', 'encryptDataBooking');
+        let bookingDto = LocalStorageService.decryptLocalData('bookingDto', 'encryptBookingDto');
+        let bookingTicket = LocalStorageService.decryptLocalData('bookingTicket', 'encryptBookingTicket');
 
-        if (dataBooking === null && bookingTicket === null) {
-            toastAlert('warning', 'Booking không tồn tại !');
+        if (dataBooking === null && bookingTicket === null && bookingDto == null) {
+            centerAlert('Cảnh báo', 'Chúng tôi nhận thấy bạn đang truy cập bất thường vào trang này, vui lòng rời khỏi !', 'warning');
             $location.path('/tours');
             return;
         }
 
         $scope.ticket = dataBooking.ticket;
+        $scope.amountTicket = parseInt($scope.ticket.adults) + parseInt($scope.ticket.children) + parseInt($scope.ticket.baby);
         $scope.tourDetail = dataBooking.tourDetail;
         $scope.provinceName = dataBooking.provinceName;
+        $scope.dataCustomers = bookingDto.bookingTourCustomersDto;
         $scope.bookingTicket = bookingTicket;
 
         if ($routeParams.orderStatus && $routeParams.paymentMethod) {
@@ -33,9 +36,12 @@ travel_app.controller('BookingTourSuccessCusController', function ($scope, $loca
 
     $scope.init();
 
-    $scope.$on('$destroy', function () {
-        LocalStorageService.remove('dataBooking');
-        LocalStorageService.remove('bookingTicket');
-        LocalStorageService.remove('paymentProcessed');
+    $scope.$on('$routeChangeStart', function (event, next, current) {
+        if (next.controller !== 'BookingTourSuccessCusController') {
+            LocalStorageService.remove('dataBooking');
+            LocalStorageService.remove('bookingDto');
+            LocalStorageService.remove('bookingTicket');
+            LocalStorageService.remove('serviceCustomer');
+        }
     });
 })

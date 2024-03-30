@@ -2,6 +2,7 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
     $scope.isLoading = true;
+    $scope.showFormTourAgent = false;
 
     $scope.tourDetail = {
         tourDetailId: null,
@@ -113,6 +114,27 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
             })
             .catch(errorCallback);
     }
+
+    /**
+     * click vào để show ra form thêm thông tin khách hàng
+     */
+    $scope.showFormTourDetailAgent = function () {
+        $scope.showFormTourAgent = !$scope.showFormTourAgent;
+    }
+
+    /**
+     * Phương thức thay đổi icon khi nhấn vào xem thêm bên tour detail agent
+     */
+    $scope.getChangeIconTourAgent = function () {
+        if ($scope.showFormTourAgent) {
+            if ($scope.showFormTourAgent === -1) {
+                return $sce.trustAsHtml('<svg class="svg-inline--fa fa-angle-down" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"></path></svg>');
+            } else {
+                return $sce.trustAsHtml('<svg class="svg-inline--fa fa-angle-up" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M352 352c-8.188 0-16.38-3.125-22.62-9.375L192 205.3l-137.4 137.4c-12.5 12.5-32.75 12.5-45.25 0s-12.5-32.75 0-45.25l160-160c12.5-12.5 32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25C368.4 348.9 360.2 352 352 352z"></path></svg>');
+            }
+        }
+        return $sce.trustAsHtml('<svg class="svg-inline--fa fa-angle-down" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"></path></svg>');
+    };
 
     /**
      * Phương thức đóng modal

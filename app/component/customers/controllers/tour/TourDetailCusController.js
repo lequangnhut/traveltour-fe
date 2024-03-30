@@ -344,7 +344,7 @@ travel_app.controller('TourDetailCusController',
                         provinceName: $scope.provinceName
                     }
 
-                    LocalStorageService.set('dataBooking', dataBooking);
+                    LocalStorageService.encryptLocalData(dataBooking, 'dataBooking', 'encryptDataBooking');
                     $location.path('/tours/tour-detail/' + btoa(JSON.stringify(tourDetailId)) + '/booking-tour');
                 }
             }
