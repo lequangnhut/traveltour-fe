@@ -1,7 +1,7 @@
-travel_app.controller("BookingTransCustomerController", function ($scope, $location, $window, $routeParams, HistoryOrderServiceCUS) {
+travel_app.controller("BookingTransCustomerController", function ($scope, $location, $window, $routeParams, HistoryOrderServiceCUS, Base64ObjectService) {
     $scope.isLoading = true;
 
-    let userId = $routeParams.id;
+    let userId = Base64ObjectService.decodeObject($routeParams.id);
 
     $scope.mess = ''
 
@@ -84,7 +84,7 @@ travel_app.controller("BookingTransCustomerController", function ($scope, $locat
 
     $scope.getBookingTourTransList();
 
-    $scope.getChangeTransStatus = function(){
+    $scope.getChangeTransStatus = function () {
         $scope.getBookingTourTransList();
     }
 
@@ -108,7 +108,7 @@ travel_app.controller("BookingTransCustomerController", function ($scope, $locat
 
         }
 
-        if(data.orderStatus === 0 && data.paymentMethod === 0){
+        if (data.orderStatus === 0 && data.paymentMethod === 0) {
             $scope.mess = "Bạn có muốn hủy vé không ?";
             return
         }
@@ -117,10 +117,10 @@ travel_app.controller("BookingTransCustomerController", function ($scope, $locat
         var departureDate = new Date(data.transportationSchedules.departureTime);
         var currentDateTime = currentDate.getTime();
         var departureDateTime = departureDate.getTime();
-        var diffInDays = Math.ceil((departureDateTime - currentDateTime) / (1000 * 60 * 60 * 24))-1;
+        var diffInDays = Math.ceil((departureDateTime - currentDateTime) / (1000 * 60 * 60 * 24)) - 1;
         if (diffInDays >= 2 && diffInDays <= 3) {
             $scope.mess = "Chi phí hủy là 30% trên tổng giá trị đơn. Bạn có muốn hủy vé không ?";
-        }else if (diffInDays <= 1) {
+        } else if (diffInDays <= 1) {
             $scope.mess = "Chi phí hủy là 70% trên tổng giá trị đơn. Bạn có muốn hủy vé không ?";
         } else {
             $scope.mess = "Bạn có muốn hủy vé không ?";
@@ -134,15 +134,16 @@ travel_app.controller("BookingTransCustomerController", function ($scope, $locat
 
     $scope.cancelBookingTransOrder = function (data) {
         function confirmDeleteType() {
-                $scope.isLoading = true;
-                HistoryOrderServiceCUS.cancelTrans(data.id).then(function successCallback(response) {
-                    centerAlert('Thành công !', 'Đã hủy booking, mời người dùng check mail !', 'success');
-                    $('#transModal').modal('hide'); // Đóng modal khi thành công
-                    $scope.getBookingTourTransList();
-                }, errorCallback).finally(function () {
-                    $scope.isLoading = false;
-                });
-            }
+            $scope.isLoading = true;
+            HistoryOrderServiceCUS.cancelTrans(data.id).then(function successCallback(response) {
+                centerAlert('Thành công !', 'Đã hủy booking, mời người dùng check mail !', 'success');
+                $('#transModal').modal('hide'); // Đóng modal khi thành công
+                $scope.getBookingTourTransList();
+            }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+        }
+
         confirmAlert($scope.mess, confirmDeleteType);
     };
 })

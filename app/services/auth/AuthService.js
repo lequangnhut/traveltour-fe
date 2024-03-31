@@ -1,4 +1,4 @@
-travel_app.service('AuthService', function ($http, $window) {
+travel_app.service('AuthService', function ($http, $window, LocalStorageService) {
 
     let API_AUTH = BASE_API + 'auth/';
 
@@ -110,20 +110,20 @@ travel_app.service('AuthService', function ($http, $window) {
      * @message Get and Set Data in local stored
      */
     this.setAuthData = function (token, user) {
-        $window.localStorage.setItem('token', token);
-        $window.localStorage.setItem('user', JSON.stringify(user));
+        LocalStorageService.encryptLocalData(token, 'token', 'encryptToken');
+        LocalStorageService.encryptLocalData(JSON.stringify(user), 'user', 'encryptUser');
     };
 
     this.clearAuthData = function () {
-        $window.localStorage.removeItem('token');
-        $window.localStorage.removeItem('user');
+        LocalStorageService.remove('token');
+        LocalStorageService.remove('user');
     };
 
     this.getToken = function () {
-        return $window.localStorage.getItem('token');
+        return LocalStorageService.decryptLocalData('token', 'encryptToken');
     };
 
     this.getUser = function () {
-        return JSON.parse($window.localStorage.getItem('user'));
+        return JSON.parse(LocalStorageService.decryptLocalData('user', 'encryptUser'));
     };
 });

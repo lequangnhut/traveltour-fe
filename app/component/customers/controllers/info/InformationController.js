@@ -1,4 +1,4 @@
-travel_app.controller("InformationController", function ($scope, $location, $window, $routeParams, $timeout, $rootScope, $http, CustomerServiceAD, LocalStorageService, AuthService, HistoryOrderServiceCUS) {
+travel_app.controller("InformationController", function ($scope, $location, $window, $routeParams, $timeout, Base64ObjectService, $rootScope, $http, CustomerServiceAD, LocalStorageService, AuthService, HistoryOrderServiceCUS) {
     $scope.isLoading = true;
 
     const fileName = "default.jpg";
@@ -29,7 +29,8 @@ travel_app.controller("InformationController", function ($scope, $location, $win
         confirmPass: null
     }
 
-    let userId = $routeParams.id;
+    $scope.userIdEncrypt = $routeParams.id;
+    let userId = Base64ObjectService.decodeObject($routeParams.id);
 
     $scope.emailError = false;
     $scope.phoneError = false;
@@ -100,22 +101,22 @@ travel_app.controller("InformationController", function ($scope, $location, $win
      * Kiểm tra thông tin đầu vào
      */
     $scope.checkPhoneCustomer = function () {
-        if($scope.customer.phone == $rootScope.phonenow){
+        if ($scope.customer.phone == $rootScope.phonenow) {
             $scope.phoneError = false;
             return;
         }
         AuthService.checkExistPhone($scope.customer.phone)
             .then(function successCallback(response) {
-                if (response.status === 200){
+                if (response.status === 200) {
                     $scope.phoneError = response.data.exists;
-                }else{
+                } else {
                     $scope.phoneError = response.data.exists;
                 }
             });
     };
 
     $scope.checkCardCustomer = function () {
-        if($scope.customer.citizenCard == $rootScope.cardnow){
+        if ($scope.customer.citizenCard == $rootScope.cardnow) {
             $scope.cardError = false;
             return;
         }
@@ -170,6 +171,7 @@ travel_app.controller("InformationController", function ($scope, $location, $win
             });
         }
     }
+
     //==================================================================================================
     /** Các function xử lý hình ảnh */
     $scope.uploadCustomerAvatar = function (file) {
@@ -216,7 +218,7 @@ travel_app.controller("InformationController", function ($scope, $location, $win
             dataCustomer.append("customerAvatar", $scope.customerAvatarNoCloud);
             updateInfo(userId, dataCustomer);
         } else {
-            if($scope.customer.avatar === null){
+            if ($scope.customer.avatar === null) {
                 $scope.customer.avatar = 'https://t3.ftcdn.net/jpg/05/60/26/08/360_F_560260880_O1V3Qm2cNO5HWjN66mBh2NrlPHNHOUxW.jpg'
             }
             urlToFile($scope.customer.avatar, fileName, mimeType).then(file => {
@@ -225,15 +227,17 @@ travel_app.controller("InformationController", function ($scope, $location, $win
                 updateInfo(userId, dataCustomer);
             }, errorCallback);
         }
-    };
+    }
 
     const updateInfo = (userId, dataCustomer) => {
         $scope.isLoading = true;
         CustomerServiceAD.updateCustomer(userId, dataCustomer).then(function successCallback(response) {
             if (response.status === 200) {
+                let user = response.data.data;
+                $window.location.href = '/information/' + Base64ObjectService.encodeObject(userId);
+
+                LocalStorageService.encryptLocalData(JSON.stringify(user), 'user', 'encryptUser');
                 toastAlert('success', 'Cập nhật thành công !');
-                LocalStorageService.set('user', response.data.data);
-                $window.location.href = '/information/' + userId;
             } else {
                 $location.path('/admin/page-not-found');
             }
@@ -247,12 +251,14 @@ travel_app.controller("InformationController", function ($scope, $location, $win
 
     const confirmUpdatePhone = () => {
         $scope.isLoading = true;
+
         CustomerServiceAD.updatePhone($scope.customer.id, $scope.customer.phone).then(function successCallback(response) {
             if (response.status === 200) {
-                toastAlert('success', 'Cập nhật thành công !');
-                LocalStorageService.set('user', response.data.data);
-                $window.location.href = '/information/' + $scope.customer.id;
+                let user = response.data.data;
+                $window.location.href = '/information/' + Base64ObjectService.encodeObject($scope.customer.id);
 
+                LocalStorageService.encryptLocalData(JSON.stringify(user), 'user', 'encryptUser');
+                toastAlert('success', 'Cập nhật thành công !');
             } else {
                 $location.path('/admin/page-not-found');
             }
@@ -372,14 +378,14 @@ travel_app.controller("InformationController", function ($scope, $location, $win
                 $scope.totalElements = response.data.data.totalElements;
 
                 for (let i = 0; i < $scope.bookingTourList.length; i++) {
-                        HistoryOrderServiceCUS.getTourDetails($scope.bookingTourList[i].tourDetailId).then(function (tourDetail) {
-                            if (tourDetail) {
-                                $scope.bookingTourList[i].startDate = tourDetail.data.data.departureDate;
-                                $scope.bookingTourList[i].endDate = tourDetail.data.data.arrivalDate;
-                            } else {
-                                console.error("tourDetail is undefined or null");
-                            }
-                        });
+                    HistoryOrderServiceCUS.getTourDetails($scope.bookingTourList[i].tourDetailId).then(function (tourDetail) {
+                        if (tourDetail) {
+                            $scope.bookingTourList[i].startDate = tourDetail.data.data.departureDate;
+                            $scope.bookingTourList[i].endDate = tourDetail.data.data.arrivalDate;
+                        } else {
+                            console.error("tourDetail is undefined or null");
+                        }
+                    });
                 }
             }, errorCallback).finally(function () {
             $scope.isLoading = false;
@@ -388,7 +394,7 @@ travel_app.controller("InformationController", function ($scope, $location, $win
 
     $scope.getTourBookingList();
 
-    $scope.getChangeStatus = function(){
+    $scope.getChangeStatus = function () {
         $scope.getTourBookingList();
     }
 
@@ -399,7 +405,7 @@ travel_app.controller("InformationController", function ($scope, $location, $win
         // var currentDate = new Date();  // Ngày hiện tại
         // var departureDate = new Date(data.startDate);  // Ngày xuất phát
 
-        if(data.orderStatus === 0 && data.paymentMethod === 0){
+        if (data.orderStatus === 0 && data.paymentMethod === 0) {
             $scope.mess = "Bạn có muốn hủy tour không ?";
             return
         }
@@ -420,9 +426,9 @@ travel_app.controller("InformationController", function ($scope, $location, $win
             $scope.mess = "Chi phí hủy tour là 30% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
         } else if (diffInDays >= 8 && diffInDays <= 14) {
             $scope.mess = "Chi phí hủy tour là 50% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        }else if (diffInDays >= 2 && diffInDays <= 7) {
+        } else if (diffInDays >= 2 && diffInDays <= 7) {
             $scope.mess = "Chi phí hủy tour là 80% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
-        }else if (diffInDays <= 1) {
+        } else if (diffInDays <= 1) {
             $scope.mess = "Chi phí hủy tour là 100% trên tổng giá trị đơn. Bạn có muốn hủy tour không ?";
         } else {
             $scope.mess = "Bạn có muốn hủy tour không ?";
@@ -454,6 +460,7 @@ travel_app.controller("InformationController", function ($scope, $location, $win
                 $scope.isLoading = false;
             });
         }
+
         confirmAlert($scope.mess, confirmDeleteType);
     };
 })

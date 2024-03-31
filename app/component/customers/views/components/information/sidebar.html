@@ -1,28 +1,25 @@
 <!-- Sidebar -->
-<div class="position-sticky" ng-controller="MainController">
+<div class="position-sticky">
     <ul class="nav flex-column" style="font-size: 16px">
         <!-- Thông tin cá nhân -->
-        <li class="nav-item active bg-light fw-medium">
-            <a class="nav-link text-dark" href="/information/{{user.id}}">
+        <li class="nav-item" ng-class="{ 'active bg-light fw-medium': isActiveInformation('/information/') }">
+            <a class="nav-link text-dark"
+               href="#"
+               ng-click="redirectPage('/information/', user.id)"
+            >
                 Thông tin tài khoản
             </a>
         </li>
         <!-- Đổi mật khẩu -->
-        <li class="nav-item">
-            <a class="nav-link text-dark" href="/information/change-password/{{user.id}}">
+        <li class="nav-item" ng-class="{ 'active bg-light fw-medium': isActiveInformation('/change-password/') }">
+            <a class="nav-link text-dark" href="#" ng-click="redirectPage('/change-password/', user.id)">
                 Đổi mật khẩu
             </a>
         </li>
         <!--  Lịch sử đi tour -->
-        <li class="nav-item">
-            <a class="nav-link text-dark" href="/information/history-order/{{user.id}}">
+        <li class="nav-item" ng-class="{ 'active bg-light fw-medium': isActiveInformation('/history-order/') }">
+            <a class="nav-link text-dark" href="#" ng-click="redirectPage('/history-order/', user.id)">
                 Lịch sử giao dịch
-            </a>
-        </li>
-        <!-- Lịch trình -->
-        <li class="nav-item">
-            <a class="nav-link text-dark" href="#">
-                Lịch trình
             </a>
         </li>
         <!-- Đăng xuất -->

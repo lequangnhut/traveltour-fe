@@ -41,6 +41,8 @@ travel_app.controller('RegisterAgencyCusController', function ($scope, $location
                     $scope.emailDisabled = true;
                     $scope.isCountingDown = true;
                     LocalStorageService.set('emailLocal', agenciesData.email);
+
+                    centerAlert('Thành công !', 'Chúng tôi vừa gửi cho bạn một email chứa OTP để xác thực! vui lòng vào mail để kiểm tra', 'success');
                 } else {
                     $location.path('/admin/page-not-found');
                 }

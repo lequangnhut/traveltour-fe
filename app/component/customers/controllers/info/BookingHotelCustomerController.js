@@ -1,7 +1,7 @@
-travel_app.controller("BookingHotelCustomerController", function ($scope, $location, $window, $routeParams, HistoryOrderServiceCUS) {
+travel_app.controller("BookingHotelCustomerController", function ($scope, $location, $window, $routeParams, HistoryOrderServiceCUS, Base64ObjectService) {
     $scope.isLoading = true;
 
-    let userId = $routeParams.id;
+    let userId = Base64ObjectService.decodeObject($routeParams.id);
 
     $scope.mess = ''
     $scope.cancelWithFee = false;
@@ -82,12 +82,12 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $locat
                     HistoryOrderServiceCUS.getHotels($scope.bookingTourHotelList[i].orderHotelDetailsById[0].roomTypeId)
                         .then(function (hotels) {
                             //console.log(hotels)
-                        if (hotels) {
-                            $scope.bookingTourHotelList[i].hotel = hotels.data.data;
-                        } else {
-                            console.error("tourDetail is undefined or null");
-                        }
-                    });
+                            if (hotels) {
+                                $scope.bookingTourHotelList[i].hotel = hotels.data.data;
+                            } else {
+                                console.error("tourDetail is undefined or null");
+                            }
+                        });
 
                 }
 
@@ -98,7 +98,7 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $locat
 
     $scope.getBookingTourHotelList();
 
-    $scope.getChangeHotelStatus = function(){
+    $scope.getChangeHotelStatus = function () {
         $scope.getBookingTourHotelList();
     }
 
@@ -132,8 +132,8 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $locat
             promises.push(promise);
         }
 
-        Promise.all(promises).then(function() {
-            if((data.orderStatus === 0 && data.paymentMethod === 'TTTT') || $scope.cancelWithFee === false){
+        Promise.all(promises).then(function () {
+            if ((data.orderStatus === 0 && data.paymentMethod === 'TTTT') || $scope.cancelWithFee === false) {
                 $scope.mess = "Bạn có muốn hủy phòng không ?";
                 return;
             }
@@ -147,7 +147,7 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $locat
 
         if (diffInDays >= 2 && diffInDays <= 4) {
             $scope.mess = "Chi phí hủy là 50% trên tổng giá trị đơn. Bạn có muốn hủy phòng không ?";
-        }else if (diffInDays <= 1) {
+        } else if (diffInDays <= 1) {
             $scope.mess = "Chi phí hủy là 100% trên tổng giá trị đơn. Bạn có muốn hủy phòng không ?";
         } else {
             $scope.mess = "Bạn có muốn hủy phòng không ?";
@@ -171,6 +171,7 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $locat
                 $scope.isLoading = false;
             });
         }
+
         confirmAlert($scope.mess, confirmDeleteType);
     };
 

@@ -1,10 +1,8 @@
-travel_app.controller('ForgotPwController', function ($scope, $window, $routeParams, $location, ForgotPwService) {
+travel_app.controller('ForgotPwController', function ($scope, $location, ForgotPwService) {
     $scope.email = null;
     $scope.captchaImage = '';
     $scope.emailError = false;
     $scope.capCodeError = false;
-
-    const token = $routeParams.token;
 
     function errorCallback() {
         $location.path('/admin/internal-server-error')
@@ -26,27 +24,24 @@ travel_app.controller('ForgotPwController', function ($scope, $window, $routePar
 
     $scope.checkInputCaptcha = function () {
         ForgotPwService.checkCaptcha($scope.users.captcha).then(function successCallback(response) {
-                $scope.capCodeError = response.data.exists;
-            });
+            $scope.capCodeError = response.data.exists;
+        });
     };
 
     $scope.checkInputEmail = function () {
         ForgotPwService.checkEMail($scope.users.email).then(function successCallback(response) {
-                $scope.emailError = response.data.exists;
-            });
+            $scope.emailError = response.data.exists;
+        });
     };
-
 
     $scope.submitFormForgot = function () {
         $scope.isLoading = true;
         ForgotPwService.emailForgot($scope.users.email, $scope.users)
-                    .then(function successCallback(response) {
-                        $location.path("/home");
-                        centerAlert('Thành công !', 'Mời người dùng kiểm tra mail !', 'success');
-                    }, errorCallback).finally(function () {
+            .then(function successCallback(response) {
+                $location.path("/home");
+                centerAlert('Thành công !', 'Mời người dùng kiểm tra mail !', 'success');
+            }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
-           }
-
-
+    }
 });

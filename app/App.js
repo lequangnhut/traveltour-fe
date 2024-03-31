@@ -662,7 +662,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
                 }
             }
         })
-        .when('/information/change-password/:id', {
+        .when('/change-password/:id', {
             templateUrl: 'app/component/customers/views/pages/info/change-password.html',
             controller: 'InformationController',
             resolve: {
@@ -673,7 +673,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
                 }
             }
         })
-        .when('/information/history-order/:id', {
+        .when('/history-order/:id', {
             templateUrl: 'app/component/customers/views/pages/info/history-order.html',
             controller: 'InformationController',
             resolve: {

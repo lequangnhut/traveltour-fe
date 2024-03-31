@@ -92,29 +92,20 @@
         margin-right: 10px;
     }
 </style>
-<!--====== Start Breadcrumb Section ======-->
-<section class="page-banner overlay pt-170 pb-200 bg_cover"
-         style="background-image: url('https://digwallpapers.com/wallpapers/full/6/a/0/42640-3840x2160-nature-computer-background-photo-desktop-4k.jpg');">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="page-banner-content text-center text-white">
-                    <h1 class="page-title">Lịch sử giao dịch</h1>
-                    <ul class="breadcrumb-link text-white">
-                        <li><a href="/home">Trang chủ</a></li>
-                        <li class="active">Lịch sử giao dịch</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section><!--====== End Breadcrumb Section ======-->
 <div ng-include="'app/component/utils/loading-html.html'"></div>
 
-<section id="information-section" style="margin-top: 50px">
+<section id="information-section" style="margin-top: 80px">
     <div class="container mb-4">
-        <div class="">
-            <div class="fs-3 mb-2 fw-bolder" style="color: #1e1e1e; font-weight: 500">Lịch sử giao dịch người dùng</div>
+        <ul class="d-flex mb-3">
+            <li>
+                <a href="/information/{{ userIdEncrypt }}" class="fw-medium">Thông tin cá nhân</a>
+                <i class="fa-solid fa-chevron-right" style="font-size: 14px"></i>
+            </li>
+            &nbsp;
+            <li class="fw-medium">Lịch sử giao dịch</li>
+        </ul>
+        <div>
+            <h4 class="mb-4 fs-3 fw-bold">Lịch sử giao dịch người dùng</h4>
             <main class="col-md-12 ms-sm-auto col-lg-12 mt-3">
                 <div class="row">
                     <div class="col-xl-12">
@@ -219,7 +210,7 @@
                                         <td style="text-align: justify;">{{ btl.id }}</td>
                                         <td style="text-align: justify;">{{ btl.toursByTourId.tourName }}</td>
                                         <td>{{ (btl.startDate | vietnameseDateTime) || 'Đang cập nhật' }}</td>
-                                        <td>{{ (btl.dateCreated | vietnameseDateTime)}}</td>
+                                        <td>{{ (btl.dateCreated | vietnameseDateTime) }}</td>
                                         <td ng-if="btl.orderStatus == 0">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <span class="status-warning"></span>
@@ -257,9 +248,9 @@
                                 </table>
                                 <div class="container mt-4 mb-4">
                                     <div class="col-12">
-                                        <div class="fs-3 mb-3 fw-bolder" style="color: #1e1e1e; font-weight: 500">Chính
-                                            sách hủy dịch vụ du lịch của Travel Tour
-                                        </div>
+                                        <h4 class="fs-3 mb-3 fw-bold">
+                                            Chính sách hủy dịch vụ du lịch của Travel Tour
+                                        </h4>
                                         <div class="mb-2" style="text-align: justify;">
                                             <h5 class="mb-2" style="color: #504d4d"><i
                                                     class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Điều kiện hủy
@@ -292,12 +283,15 @@
                                     </div>
                                 </div>
                                 <!-- Modal Booking Tour-->
-                                <div class="modal fade" id="tourModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="tourModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                     aria-hidden="true">
                                     <div class="modal-dialog modal-lg modal-dialog-centered">
                                         <div class="modal-content" style="border:none; width:100%">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Thông tin dịch vụ tour</h5>
-                                                <button type="button" class="close" data-dismiss="modal" ng-click="closeTourModal()"
+                                                <h5 class="modal-title" id="exampleModalLabel">Thông tin dịch vụ
+                                                    tour</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        ng-click="closeTourModal()"
                                                         style="background-color:#63ab45;color:white">
                                                     <span aria-hidden="true"><i class="fa fa-close"></i></span>
                                                 </button>
@@ -306,36 +300,42 @@
                                                 <div class="row g-0">
                                                     <div class="col-md-12 border-right">
                                                         <div class="status p-3">
-                                                            <table class="table table-borderless" style="border-right:groove">
+                                                            <table class="table table-borderless"
+                                                                   style="border-right:groove">
                                                                 <tbody>
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">Mã booking</span>
-                                                                            <span class="subheadings">{{bookingTour.id}}</span>
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">Mã booking</span>
+                                                                            <span class="subheadings">{{ bookingTour.id }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">Ngày tạo đơn</span>
-                                                                            <span class="subheadings">{{bookingTour.dateCreated | vietnameseDateTime}}</span>
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">Ngày tạo đơn</span>
+                                                                            <span class="subheadings">{{ bookingTour.dateCreated | vietnameseDateTime }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Email khách hàng</span>
-                                                                            <span class="subheadings">{{bookingTour.customerEmail}}</span>
+                                                                            <span class="subheadings">{{ bookingTour.customerEmail }}</span>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td style="max-width: 100px;">
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Tên tour</span>
-                                                                            <span class="subheadings" ng-click="closeTourModal()">
-                                                                                {{bookingTour.toursByTourId.tourName}}
+                                                                            <span class="subheadings"
+                                                                                  ng-click="closeTourModal()">
+                                                                                {{ bookingTour.toursByTourId.tourName }}
                                                                             </span>
                                                                             <span class="subheadings">
                                                                                 {{ bookingTour.startDate | calculateDaysAndNights:bookingTour.endDate }}
@@ -344,30 +344,34 @@
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Ngày đi</span>
-                                                                            <span class="subheadings">{{bookingTour.startDate | vietnameseDateTime}}</span>
+                                                                            <span class="subheadings">{{ bookingTour.startDate | vietnameseDateTime }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Ngày về</span>
-                                                                            <span class="subheadings">{{bookingTour.endDate | vietnameseDateTime}}</span>
+                                                                            <span class="subheadings">{{ bookingTour.endDate | vietnameseDateTime }}</span>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Đơn giá</span>
-                                                                            <span class="subheadings">{{bookingTour.tourDetailsByTourDetailId.unitPrice | vnCurrency}}</span>
+                                                                            <span class="subheadings">{{ bookingTour.tourDetailsByTourDetailId.unitPrice | vnCurrency }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td colspan="2">
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Số lượng vé</span>
                                                                             <span class="subheadings">{{ (bookingTour.capacityAdult || 0) + ' x Người lớn, ' + (bookingTour.capacityKid || 0) + ' x Trẻ em, ' + (bookingTour.capacityBaby || 0) + ' x Em bé' }}</span>
                                                                         </div>
@@ -376,30 +380,40 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Giá trị đơn</span>
-                                                                            <span class="subheadings">{{bookingTour.orderTotal | vnCurrency }}</span>
+                                                                            <span class="subheadings">{{ bookingTour.orderTotal | vnCurrency }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 HTTToán</span>
-                                                                            <span class="subheadings" ng-if="bookingTour.paymentMethod === 0">Thanh toán tại quầy</span>
-                                                                            <span class="subheadings" ng-if="bookingTour.paymentMethod === 1">Thanh toán VNPay</span>
-                                                                            <span class="subheadings" ng-if="bookingTour.paymentMethod === 2">Thanh toán ZaloPay</span>
-                                                                            <span class="subheadings" ng-if="bookingTour.paymentMethod === 3">Thanh toán Momo</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingTour.paymentMethod === 0">Thanh toán tại quầy</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingTour.paymentMethod === 1">Thanh toán VNPay</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingTour.paymentMethod === 2">Thanh toán ZaloPay</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingTour.paymentMethod === 3">Thanh toán Momo</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Trạng thái</span>
-                                                                            <span class="subheadings" ng-if="bookingTour.orderStatus === 0"><i
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingTour.orderStatus === 0"><i
                                                                                     class="dots bg-warning"></i> Chờ thanh toán</span>
-                                                                            <span class="subheadings" ng-if="bookingTour.orderStatus === 1"><i
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingTour.orderStatus === 1"><i
                                                                                     class="dots bg-success"></i> Đã thanh toán</span>
-                                                                            <span class="subheadings" ng-if="bookingTour.orderStatus === 2"><i
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingTour.orderStatus === 2"><i
                                                                                     class="dots bg-danger"></i> Đã hủy</span>
                                                                         </div>
                                                                     </td>
@@ -409,7 +423,8 @@
                                                             <div class="d-flex">
                                                                 <button class="btn btn-cancel"
                                                                         ng-disabled="bookingTour.orderStatus === 2 || isDepartureDatePassed(bookingTour.startDate)"
-                                                                        ng-click="cancelBooking(bookingTour)" style="margin-right:20px">
+                                                                        ng-click="cancelBooking(bookingTour)"
+                                                                        style="margin-right:20px">
                                                                     <i class="fa-solid fa-trash"></i> Hủy đơn
                                                                 </button>
                                                                 <button class="btn btn-back" data-bs-dismiss="modal"
@@ -500,9 +515,9 @@
                                     <tr ng-repeat="h in bookingTourHotelList">
                                         <td>{{ $index + 1 }}</td>
                                         <td style="text-align: justify;">{{ h.id }}</td>
-                                        <td style="text-align: justify;">{{  h.hotel.hotelName }}</td>
-                                        <td>{{  h.checkIn | vietnameseDateTime}}</td>
-                                        <td>{{  h.checkOut | vietnameseDateTime}}</td>
+                                        <td style="text-align: justify;">{{ h.hotel.hotelName }}</td>
+                                        <td>{{ h.checkIn | vietnameseDateTime }}</td>
+                                        <td>{{ h.checkOut | vietnameseDateTime }}</td>
                                         <td ng-if="h.orderStatus == 0">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <span class="status-warning"></span>
@@ -599,94 +614,118 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Mã booking</span>
-                                                                            <span class="subheadings">{{bookingHotel.id}}</span>
+                                                                            <span class="subheadings">{{ bookingHotel.id }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Ngày tạo đơn</span>
-                                                                            <span class="subheadings">{{bookingHotel.dateCreated | vietnameseDateTime}}</span>
+                                                                            <span class="subheadings">{{ bookingHotel.dateCreated | vietnameseDateTime }}</span>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td style="max-width: 100px;">
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Tên khách sạn</span>
-                                                                            <span class="subheadings">{{bookingHotel.hotel.hotelName}}</span>
-<!--                                                                            <a class="subheadings"-->
-<!--                                                                               ng-click="closeHotelModal()"-->
-<!--                                                                               href="/hotel/hotel-detail/{{ bookingHotel.hotel.id }}"-->
-<!--                                                                               title="Xem chi tiết"></a>-->
+                                                                            <span class="subheadings">{{ bookingHotel.hotel.hotelName }}</span>
+                                                                            <!--                                                                            <a class="subheadings"-->
+                                                                            <!--                                                                               ng-click="closeHotelModal()"-->
+                                                                            <!--                                                                               href="/hotel/hotel-detail/{{ bookingHotel.hotel.id }}"-->
+                                                                            <!--                                                                               title="Xem chi tiết"></a>-->
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Ngày check-in</span>
-                                                                            <span class="subheadings">{{bookingHotel.checkIn | vietnameseDateTime}}</span>
+                                                                            <span class="subheadings">{{ bookingHotel.checkIn | vietnameseDateTime }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Ngày check-out</span>
-                                                                            <span class="subheadings">{{bookingHotel.checkOut | vietnameseDateTime}}</span>
+                                                                            <span class="subheadings">{{ bookingHotel.checkOut | vietnameseDateTime }}</span>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Tên khách hàng</span>
-                                                                            <span class="subheadings">{{bookingHotel.customerName}}</span>
+                                                                            <span class="subheadings">{{ bookingHotel.customerName }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Email khách hàng</span>
-                                                                            <span class="subheadings">{{bookingHotel.customerEmail}}</span>
+                                                                            <span class="subheadings">{{ bookingHotel.customerEmail }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Số điện thoại</span>
-                                                                            <span class="subheadings">{{bookingHotel.customerPhone}}</span>
+                                                                            <span class="subheadings">{{ bookingHotel.customerPhone }}</span>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td colspan="3">
                                                                         <div class="d-flex flex-column">
-                                                                            <table class="table" style="border-top: inset;border-bottom: inherit;">
+                                                                            <table class="table"
+                                                                                   style="border-top: inset;border-bottom: inherit;">
                                                                                 <thead>
                                                                                 <tr>
                                                                                     <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
-                                                                                        STT</th>
+                                                                                        STT
+                                                                                    </th>
                                                                                     <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
-                                                                                        Tên phòng</th>
+                                                                                        Tên phòng
+                                                                                    </th>
                                                                                     <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
-                                                                                        Giá phòng</th>
+                                                                                        Giá phòng
+                                                                                    </th>
                                                                                     <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
-                                                                                        Số lượng</th>
+                                                                                        Số lượng
+                                                                                    </th>
                                                                                     <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
-                                                                                        Thành tiền</th>
+                                                                                        Thành tiền
+                                                                                    </th>
                                                                                 </tr>
                                                                                 </thead>
                                                                                 <tbody>
                                                                                 <tr ng-repeat="rtt in roomTypeListCustomer">
-                                                                                    <td style="text-align: center;" class="subheadings">{{$index + 1}}</td>
-                                                                                    <td style="text-align: center;" class="subheadings">{{rtt.roomTypes.roomTypeName}}</td>
-                                                                                    <td style="text-align: center;" class="subheadings">{{rtt.roomTypes.price | vnCurrency }}</td>
-                                                                                    <td style="text-align: center;" class="subheadings">{{rtt.amount}}</td>
-                                                                                    <td style="text-align: center;" class="subheadings">{{(rtt.roomTypes.price * rtt.amount) | vnCurrency }}</td>
+                                                                                    <td style="text-align: center;"
+                                                                                        class="subheadings">{{ $index + 1 }}
+                                                                                    </td>
+                                                                                    <td style="text-align: center;"
+                                                                                        class="subheadings">{{ rtt.roomTypes.roomTypeName }}
+                                                                                    </td>
+                                                                                    <td style="text-align: center;"
+                                                                                        class="subheadings">{{ rtt.roomTypes.price | vnCurrency }}
+                                                                                    </td>
+                                                                                    <td style="text-align: center;"
+                                                                                        class="subheadings">{{ rtt.amount }}
+                                                                                    </td>
+                                                                                    <td style="text-align: center;"
+                                                                                        class="subheadings">{{ (rtt.roomTypes.price * rtt.amount) | vnCurrency }}
+                                                                                    </td>
                                                                                 </tr>
                                                                                 </tbody>
                                                                             </table>
@@ -696,14 +735,16 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Giá trị đơn</span>
-                                                                            <span class="subheadings">{{bookingHotel.orderTotal | vnCurrency }}</span>
+                                                                            <span class="subheadings">{{ bookingHotel.orderTotal | vnCurrency }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 HTTToán</span>
                                                                             <span class="subheadings"
                                                                                   ng-if="bookingHotel.paymentMethod === 'Momo'">Ví điện tử Momo</span>
@@ -717,7 +758,8 @@
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Trạng thái</span>
                                                                             <span class="subheadings"
                                                                                   ng-if="bookingHotel.orderStatus === 0"><i
@@ -754,7 +796,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane face" id="nav-vehicle" role="tabpanel" aria-labelledby="nav-vehicle"
-                                 style="border-left:none"  ng-controller="BookingTransCustomerController">
+                                 style="border-left:none" ng-controller="BookingTransCustomerController">
                                 <nav aria-label="Page navigation" style="float: right; margin-bottom: 20px;"
                                      class="d-flex">
                                     <div style="margin-right: 20px">
@@ -828,9 +870,9 @@
                                     <tr ng-repeat="t in bookingTourTransList">
                                         <td>{{ $index + 1 }}</td>
                                         <td style="text-align: justify;">{{ t.id }}</td>
-                                        <td style="text-align: justify;">{{  (t.transportationSchedules.fromLocation) + ' - ' + (t.transportationSchedules.toLocation) }}</td>
-                                        <td>{{  t.transportationSchedules.departureTime | vietnameseDateTime}}</td>
-                                        <td>{{  t.transportationSchedules.arrivalTime | vietnameseDateTime}}</td>
+                                        <td style="text-align: justify;">{{ (t.transportationSchedules.fromLocation) + ' - ' + (t.transportationSchedules.toLocation) }}</td>
+                                        <td>{{ t.transportationSchedules.departureTime | vietnameseDateTime }}</td>
+                                        <td>{{ t.transportationSchedules.arrivalTime | vietnameseDateTime }}</td>
                                         <td ng-if="t.orderStatus == 0">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <span class="status-warning"></span>
@@ -873,7 +915,8 @@
                                         </div>
                                         <div class="mb-2" style="text-align: justify;">
                                             <h5 class="mb-2" style="color: #504d4d"><i
-                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Điều kiện hủy vé xe:</h5>
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Điều kiện hủy vé
+                                                xe:</h5>
                                             <p>- Hủy vé trong vòng 24 giờ hoặc ngay ngày khởi hành, phải trả 70%
                                                 giá trị đơn hàng.</p>
                                             <p>- Hủy vé trước ngày khởi hành từ 2 - 3 ngày, phải trả 30% giá
@@ -887,7 +930,8 @@
                                             <p>- Chỉ được phép miễn phí hoàn tiền đối với các loại vé thuộc diện được
                                                 miễn phí hoàn tiền.</p>
                                             <p>- Tiến trình hoàn tiền cho hủy vé xe khách có thể mất 10 ngày tính từ
-                                                thời điểm TravelTour nhận được của quý khách và chấp thuận yêu cầu hoàn tiền hoàn chỉnh dựa
+                                                thời điểm TravelTour nhận được của quý khách và chấp thuận yêu cầu hoàn
+                                                tiền hoàn chỉnh dựa
                                                 trên các điều khoản và điều kiện áp dụng.</p>
                                             <p>- Các đơn hàng trong ngày lễ, tết sẽ áp dụng điều kiện hủy riêng.</p>
                                         </div>
@@ -918,87 +962,100 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Mã booking</span>
-                                                                            <span class="subheadings">{{bookingTrans.id}}</span>
+                                                                            <span class="subheadings">{{ bookingTrans.id }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Ngày tạo đơn</span>
-                                                                            <span class="subheadings">{{bookingTrans.dateCreated | vietnameseDateTime}}</span>
+                                                                            <span class="subheadings">{{ bookingTrans.dateCreated | vietnameseDateTime }}</span>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Chuyến xe</span>
-                                                                            <span class="subheadings">{{(bookingTrans.transportationSchedules.fromLocation) + ' - ' + (bookingTrans.transportationSchedules.toLocation)}}</span>
+                                                                            <span class="subheadings">{{ (bookingTrans.transportationSchedules.fromLocation) + ' - ' + (bookingTrans.transportationSchedules.toLocation) }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Bắt đầu</span>
-                                                                            <span class="subheadings">{{bookingTrans.transportationSchedules.departureTime | vietnameseDateTime}}</span>
+                                                                            <span class="subheadings">{{ bookingTrans.transportationSchedules.departureTime | vietnameseDateTime }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Kết thúc</span>
-                                                                            <span class="subheadings">{{bookingTrans.transportationSchedules.arrivalTime | vietnameseDateTime}}</span>
+                                                                            <span class="subheadings">{{ bookingTrans.transportationSchedules.arrivalTime | vietnameseDateTime }}</span>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Tên khách hàng</span>
-                                                                            <span class="subheadings">{{bookingTrans.customerName}}</span>
+                                                                            <span class="subheadings">{{ bookingTrans.customerName }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Email</span>
-                                                                            <span class="subheadings">{{bookingTrans.customerEmail}}</span>
+                                                                            <span class="subheadings">{{ bookingTrans.customerEmail }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Số điện thoại</span>
-                                                                            <span class="subheadings">{{bookingTrans.customerPhone}}</span>
+                                                                            <span class="subheadings">{{ bookingTrans.customerPhone }}</span>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Nhà xe</span>
-                                                                            <span class="subheadings">{{bookingTrans.transportationBrands.transportationBrandName}}</span>
+                                                                            <span class="subheadings">{{ bookingTrans.transportationBrands.transportationBrandName }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Đơn giá</span>
-                                                                            <span class="subheadings">{{bookingTrans.transportationSchedules.unitPrice | vnCurrency }}</span>
+                                                                            <span class="subheadings">{{ bookingTrans.transportationSchedules.unitPrice | vnCurrency }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">Số vé (x{{bookingTrans.amountTicket}})</span>
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">Số vé (x{{ bookingTrans.amountTicket }}
+                                                                                )</span>
                                                                             <!-- Hiển thị danh sách ghế -->
                                                                             <p class="subheadings d-flex">
-                                                                                <span ng-repeat="seat in ticketListCustomer" style="margin-right: 5px;">
-                                                                                    Ghế {{ seat.transportationScheduleSeats.seatNumber }}{{$last ? '' : ', '}}
+                                                                                <span ng-repeat="seat in ticketListCustomer"
+                                                                                      style="margin-right: 5px;">
+                                                                                    Ghế {{ seat.transportationScheduleSeats.seatNumber }}{{ $last ? '' : ', ' }}
                                                                                 </span>
                                                                             </p>
                                                                         </div>
@@ -1007,24 +1064,31 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Tổng tiền</span>
-                                                                            <span class="subheadings">{{bookingTrans.orderTotal | vnCurrency }}</span>
+                                                                            <span class="subheadings">{{ bookingTrans.orderTotal | vnCurrency }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 HTTToán</span>
-                                                                            <span class="subheadings" ng-if="bookingTrans.paymentMethod === 0">Thanh toán tại quầy</span>
-                                                                            <span class="subheadings" ng-if="bookingTrans.paymentMethod === 1">Thanh toán VNPay</span>
-                                                                            <span class="subheadings" ng-if="bookingTrans.paymentMethod === 2">Thanh toán ZaloPay</span>
-                                                                            <span class="subheadings" ng-if="bookingTrans.paymentMethod === 3">Thanh toán Momo</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingTrans.paymentMethod === 0">Thanh toán tại quầy</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingTrans.paymentMethod === 1">Thanh toán VNPay</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingTrans.paymentMethod === 2">Thanh toán ZaloPay</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingTrans.paymentMethod === 3">Thanh toán Momo</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Trạng thái</span>
                                                                             <span class="subheadings"
                                                                                   ng-if="bookingTrans.orderStatus === 0"><i
@@ -1135,9 +1199,9 @@
                                     <tr ng-repeat="ov in bookingTourVisitList">
                                         <td>{{ $index + 1 }}</td>
                                         <td style="text-align: justify;">{{ ov.id }}</td>
-                                        <td style="text-align: justify;">{{  ov.visitLocationsByVisitLocationId.visitLocationName }}</td>
-                                        <td>{{  ov.checkIn | vietnameseDateTime}}</td>
-                                        <td>{{  ov.dateCreated | vietnameseDateTime}}</td>
+                                        <td style="text-align: justify;">{{ ov.visitLocationsByVisitLocationId.visitLocationName }}</td>
+                                        <td>{{ ov.checkIn | vietnameseDateTime }}</td>
+                                        <td>{{ ov.dateCreated | vietnameseDateTime }}</td>
                                         <td ng-if="ov.orderStatus == 0">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <span class="status-warning"></span>
@@ -1180,7 +1244,8 @@
                                         </div>
                                         <div class="mb-2" style="text-align: justify;">
                                             <h5 class="mb-2" style="color: #504d4d"><i
-                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Điều kiện hủy vé tham quan giải trí:</h5>
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Điều kiện hủy vé
+                                                tham quan giải trí:</h5>
                                             <p>- Hủy vé trong vòng 24 giờ hoặc ngay ngày được in trên vé, phải trả 80%
                                                 giá trị đơn hàng.</p>
                                             <p>- Hủy vé trước thời gian được in trên vé từ 2 - 3 ngày, phải trả 50% giá
@@ -1193,8 +1258,10 @@
                                                     class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Lưu ý:</h5>
                                             <p>- Chỉ được phép miễn phí hoàn tiền đối với các loại vé thuộc diện được
                                                 miễn phí hoàn tiền.</p>
-                                            <p>- Tiến trình hoàn tiền cho huy vé các khu tham quan có thể mất 10 ngày tính từ
-                                                thời điểm TravelTour nhận được của quý khách và chấp thuận yêu cầu hoàn tiền hoàn chỉnh dựa
+                                            <p>- Tiến trình hoàn tiền cho huy vé các khu tham quan có thể mất 10 ngày
+                                                tính từ
+                                                thời điểm TravelTour nhận được của quý khách và chấp thuận yêu cầu hoàn
+                                                tiền hoàn chỉnh dựa
                                                 trên các điều khoản và điều kiện áp dụng.</p>
                                             <p>- Các đơn hàng trong ngày lễ, tết sẽ áp dụng điều kiện hủy riêng.</p>
                                         </div>
@@ -1206,7 +1273,8 @@
                                     <div class="modal-dialog modal-lg modal-dialog-centered">
                                         <div class="modal-content" style="border:none; width:100%">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel4">Thông tin dịch vụ tham quan giải trí</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel4">Thông tin dịch vụ tham
+                                                    quan giải trí</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                         ng-click="closeVisitModal()"
                                                         style="background-color:#63ab45;color:white">
@@ -1223,90 +1291,114 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Mã booking</span>
-                                                                            <span class="subheadings">{{bookingVisit.id}}</span>
+                                                                            <span class="subheadings">{{ bookingVisit.id }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Ngày tạo đơn</span>
-                                                                            <span class="subheadings">{{bookingVisit.dateCreated | vietnameseDateTime}}</span>
+                                                                            <span class="subheadings">{{ bookingVisit.dateCreated | vietnameseDateTime }}</span>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Địa danh tham quan</span>
-                                                                            <span class="subheadings">{{bookingVisit.visitLocationsByVisitLocationId.visitLocationName}}</span>
+                                                                            <span class="subheadings">{{ bookingVisit.visitLocationsByVisitLocationId.visitLocationName }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Địa chỉ</span>
-                                                                            <span class="subheadings">{{bookingVisit.visitLocationsByVisitLocationId.province}}</span>
+                                                                            <span class="subheadings">{{ bookingVisit.visitLocationsByVisitLocationId.province }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Ngày check-in</span>
-                                                                            <span class="subheadings">{{bookingVisit.checkIn | vietnameseDateTime}}</span>
+                                                                            <span class="subheadings">{{ bookingVisit.checkIn | vietnameseDateTime }}</span>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Tên khách hàng</span>
-                                                                            <span class="subheadings">{{bookingVisit.customerName}}</span>
+                                                                            <span class="subheadings">{{ bookingVisit.customerName }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Email khách hàng</span>
-                                                                            <span class="subheadings">{{bookingVisit.customerEmail}}</span>
+                                                                            <span class="subheadings">{{ bookingVisit.customerEmail }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Số điện thoại</span>
-                                                                            <span class="subheadings">{{bookingVisit.customerPhone}}</span>
+                                                                            <span class="subheadings">{{ bookingVisit.customerPhone }}</span>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td colspan="3">
                                                                         <div class="d-flex flex-column">
-                                                                            <table class="table" style="border-top: inset;border-bottom: inherit;">
+                                                                            <table class="table"
+                                                                                   style="border-top: inset;border-bottom: inherit;">
                                                                                 <thead>
                                                                                 <tr>
                                                                                     <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
-                                                                                        STT</th>
+                                                                                        STT
+                                                                                    </th>
                                                                                     <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
-                                                                                        Loại vé</th>
+                                                                                        Loại vé
+                                                                                    </th>
                                                                                     <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
-                                                                                        Giá vé</th>
+                                                                                        Giá vé
+                                                                                    </th>
                                                                                     <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
-                                                                                        Số lượng</th>
+                                                                                        Số lượng
+                                                                                    </th>
                                                                                     <th style="font-size: larger; color: #727179;text-align: center;font-weight: 500">
-                                                                                        Thành tiền</th>
+                                                                                        Thành tiền
+                                                                                    </th>
                                                                                 </tr>
                                                                                 </thead>
                                                                                 <tbody>
                                                                                 <tr ng-repeat="ticket in ticketListCustomer">
-                                                                                    <td style="text-align: center;" class="subheadings">{{$index + 1}}</td>
-                                                                                    <td style="text-align: center;" class="subheadings">{{ticket.visitLocationTickets.ticketTypeName}}</td>
-                                                                                    <td style="text-align: center;" class="subheadings">{{ticket.visitLocationTickets.unitPrice | vnCurrency }}</td>
-                                                                                    <td style="text-align: center;" class="subheadings">{{ticket.amount}}</td>
-                                                                                    <td style="text-align: center;" class="subheadings">{{(ticket.visitLocationTickets.unitPrice * ticket.amount) | vnCurrency }}</td>
+                                                                                    <td style="text-align: center;"
+                                                                                        class="subheadings">{{ $index + 1 }}
+                                                                                    </td>
+                                                                                    <td style="text-align: center;"
+                                                                                        class="subheadings">{{ ticket.visitLocationTickets.ticketTypeName }}
+                                                                                    </td>
+                                                                                    <td style="text-align: center;"
+                                                                                        class="subheadings">{{ ticket.visitLocationTickets.unitPrice | vnCurrency }}
+                                                                                    </td>
+                                                                                    <td style="text-align: center;"
+                                                                                        class="subheadings">{{ ticket.amount }}
+                                                                                    </td>
+                                                                                    <td style="text-align: center;"
+                                                                                        class="subheadings">{{ (ticket.visitLocationTickets.unitPrice * ticket.amount) | vnCurrency }}
+                                                                                    </td>
                                                                                 </tr>
                                                                                 </tbody>
                                                                             </table>
@@ -1316,14 +1408,16 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Giá trị đơn</span>
-                                                                            <span class="subheadings">{{bookingVisit.orderTotal | vnCurrency }}</span>
+                                                                            <span class="subheadings">{{ bookingVisit.orderTotal | vnCurrency }}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                                <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                                <span class="heading d-block"
+                                                                                      style="font-size: larger;color: #727179;">
                                                                                     HTTToán</span>
                                                                             <span class="subheadings"
                                                                                   ng-if="bookingVisit.paymentMethod === 0">Thanh toán tại quầy</span>
@@ -1337,7 +1431,8 @@
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex flex-column">
-                                                                            <span class="heading d-block" style="font-size: larger;color: #727179;">
+                                                                            <span class="heading d-block"
+                                                                                  style="font-size: larger;color: #727179;">
                                                                                 Trạng thái</span>
                                                                             <span class="subheadings"
                                                                                   ng-if="bookingVisit.orderStatus === 0"><i

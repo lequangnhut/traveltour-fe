@@ -48,6 +48,13 @@ travel_app.controller('MainController',
             };
 
             /**
+             * Set active cho file sidebar bên customer information
+             */
+            $scope.isActiveInformation = function (viewLocation) {
+                return $location.path().indexOf(viewLocation) !== -1;
+            };
+
+            /**
              * Mở image bự hơn trong modal
              */
             $scope.openImageModal = function (imageUrl) {
