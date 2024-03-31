@@ -1,17 +1,15 @@
 travel_app.controller('BookingLocationSuccessCusController', function ($scope, $location, $routeParams, BookingLocationCusService, LocationDetailCusService, LocalStorageService) {
 
-    function getVisitLocationId() {
-        let id = $routeParams.id;
+    const decodeToId = (id) => {
         try {
-            let decodedId = atob(id);
-            return JSON.parse(decodedId);
+            return atob(id);
         } catch (error) {
             return id;
         }
     }
 
-    let visitLocationId = getVisitLocationId();
-    let orderVisitId = $location.search().orderVisitId;
+    let visitLocationId = decodeToId($routeParams.id);
+    let orderVisitId = decodeToId($routeParams.orderVisitId);
 
     function errorCallback() {
         $location.path('/admin/internal-server-error')
@@ -19,8 +17,6 @@ travel_app.controller('BookingLocationSuccessCusController', function ($scope, $
 
     $scope.init = function () {
         let decryptedDataBookingLocation = LocalStorageService.decryptLocalData('dataBookingLocation', 'encryptDataBookingLocation');
-        console.log(decryptedDataBookingLocation)
-
         let decryptedDataOrderVisitLocation = LocalStorageService.decryptLocalData('orderVisitLocation', 'encryptDataOrderVisitLocation');
 
         if (decryptedDataBookingLocation === null || decryptedDataBookingLocation === undefined) {
@@ -31,7 +27,6 @@ travel_app.controller('BookingLocationSuccessCusController', function ($scope, $
             toastAlert('success', 'Đặt vé tham quan thành công !');
         }
 
-        console.log(decryptedDataOrderVisitLocation)
         $scope.tickets = decryptedDataBookingLocation;
         $scope.locationDetail = decryptedDataOrderVisitLocation;
 
@@ -39,7 +34,6 @@ travel_app.controller('BookingLocationSuccessCusController', function ($scope, $
             LocationDetailCusService.findById(visitLocationId).then((response) => {
                 if (response.status === 200) {
                     $scope.locationDetail = response.data.data;
-                    console.log($scope.locationDetail)
                 } else {
                     $location.path('/admin/page-not-found')
                 }
@@ -52,7 +46,6 @@ travel_app.controller('BookingLocationSuccessCusController', function ($scope, $
             BookingLocationCusService.findById(orderVisitId).then((response) => {
                 if (response.status === 200) {
                     $scope.orderVisitLocation = response.data.data;
-                    console.log($scope.orderVisitLocation)
                 } else {
                     $location.path('/admin/page-not-found')
                 }

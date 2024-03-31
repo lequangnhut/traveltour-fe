@@ -12,16 +12,13 @@ travel_app.service('BookingLocationCusService', function ($http, $q) {
         });
     }
 
-    this.redirectMomo = function (tourDetailId, bookingTourId, ticketAdult, ticketChildren) {
+    this.redirectMomo = function (data) {
         return $http({
             method: 'POST',
             url: API_BOOKING + 'momo/submit-payment',
-            params: {
-                tourDetailId: tourDetailId,
-                bookingTourId: bookingTourId,
-                ticketAdult: ticketAdult,
-                ticketChildren: ticketChildren
-            }
+            headers: {'Content-Type': undefined},
+            data: data,
+            transformRequest: angular.identity
         });
     }
 

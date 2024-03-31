@@ -28,16 +28,6 @@
                     </div>
                 </div>
                 <div class="col-md-5">
-                    <!--====== Product Dropdown ======-->
-<!--                    <div class="product-dropdown float-md-end d-flex justify-content-end align-items-center">-->
-<!--                        <span class="m-3 fw-medium">Sắp xếp</span>-->
-<!--                        <select class="wide" ng-model="filler.sort" ng-change="findAllRoomTypesByFillerClick()">-->
-<!--                            <option value="">Mặc định</option>-->
-<!--                            <option value="01">Giá tăng dần</option>-->
-<!--                            <option value="02">Giá giảm dần</option>-->
-<!--                            <option value="03">Đánh giá tốt nhất</option>-->
-<!--                        </select>-->
-<!--                    </div>-->
                 </div>
             </div>
         </div>
@@ -58,7 +48,8 @@
                                     <span>{{ location.agenciesByAgenciesId.nameAgency }}</span>
                                 </h6>
                                 <h3 class="title text-capitalize">
-                                    <a href="/tourism-location/tourism-location-detail/{{location.id}}">
+                                    <a href="#"
+                                       ng-click="redirectPage('/tourism-location/tourism-location-detail/',location.id)">
                                         {{ location.visitLocationName }}
                                     </a>
                                 </h3>
@@ -70,7 +61,8 @@
                                     <span ng-if="ticket.unitPrice">- {{ ticket.unitPrice | vnCurrency }}</span>
                                 </span>
                                 </div>
-                                <a ng-click="redirectVisitLocationDetail(location.id)" class="main-btn filled-btn detail-link">
+                                <a ng-click="redirectVisitLocationDetail(location.id)"
+                                   class="main-btn filled-btn detail-link">
                                     Xem chi tiết
                                     <svg class="svg-inline--fa fa-paper-plane" aria-hidden="true" focusable="false"
                                          data-prefix="fas" data-icon="paper-plane" role="img"
@@ -124,14 +116,17 @@
                     <!--=== Search Widget ===-->
                     <div class="sidebar-widget-area">
                         <div class="sidebar-widget search-widget mb-30 wow fadeInUp p-0">
-                            <form>
-                                <div class="form_group">
-                                    <label><span class="fas fa-search"></span></label>
-                                    <input type="text" class="form_control" placeholder="Tìm kiếm..."
-                                           ng-model="filters.searchTerm">
-                                </div>
-                            </form>
+                            <input type="text" list="datalistOptionsLocation"
+                                   class="form-control"
+                                   id="locationFilter"
+                                   ng-model="filters.searchTerm"
+                                   placeholder="Tìm kiếm...">
+                            <datalist id="datalistOptionsLocation">
+                                <option ng-repeat="visitLocationData in filteredDataList"
+                                        value="{{visitLocationData}}">
+                            </datalist>
                         </div>
+
                     </div><!--=== Search Widget ===-->
 
                     <div class="img-holder position-relative">

@@ -792,10 +792,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/booking-location/booking-location-check-info.html',
             controller: 'BookingLocationSuccessCusController'
         })
-        .when('/tourism-location/tourism-location-detail/:id/booking-location/customer-information/check-information/payment-failure', {
-            templateUrl: 'app/component/customers/views/pages/booking-location/booking-location-check-info.html',
-            controller: 'BookingLocationSuccessCusController'
-        })
 
         /**
          * Register Agencies

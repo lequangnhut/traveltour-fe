@@ -169,7 +169,7 @@ travel_app.controller('BookingLocationCusController', function ($scope, $sce, $t
                         let orderVisitLocation = repo.data.data;
                         LocalStorageService.encryptLocalData(orderVisitLocation, 'orderVisitLocation', 'encryptDataOrderVisitLocation');
                         toastAlert('success', 'Đặt vé tham quan thành công !');
-                        $location.path('/tourism-location/tourism-location-detail/' + btoa(JSON.stringify(visitLocationId)) + '/booking-location/customer-information/check-information');
+                        $location.path('/tourism-location/tourism-location-detail/' + btoa(visitLocationId) + '/booking-location/customer-information/check-information');
                     }, 0)
                 } else {
                     $location.path('/admin/page-not-found')
@@ -244,33 +244,43 @@ travel_app.controller('BookingLocationCusController', function ($scope, $sce, $t
             }
         }
 
-        let ticket = $scope.ticket;
-        let email = $scope.bookingLocation.customerEmail;
-        let totalPrice = $scope.totalPrice;
-        let tourDetail = $scope.tourDetail;
-        let bookingTourId = GenerateCodePayService.generateCodeBooking('MOMO', tourDetail.id);
-
-        $scope.bookingLocation.id = bookingTourId;
-        $scope.bookingLocation.capacityAdult = ticket.adults;
-        $scope.bookingLocation.capacityKid = ticket.children;
-        $scope.bookingLocation.capacityBaby = ticket.baby;
-        $scope.bookingLocation.orderTotal = totalPrice;
-        $scope.bookingLocation.paymentMethod = 3; // 3: MOMO
-        $scope.bookingLocation.orderCode = GenerateCodePayService.generateCodePayment('MOMO');
-
-        function confirmBookLocation() {
+        const confirmBookLocation = () => {
             $scope.isLoading = true;
 
-            BookingLocationCusService.redirectMomo(tourDetail.id, bookingTourId, ticket.adults, ticket.children).then(function successCallBack(response) {
-                if (response.status === 200) {
-                    LocalStorageService.set('bookingDto', bookingDto);
-                    LocalStorageService.set('bookingTicket', bookingDto.bookingToursDto);
+            $scope.orderVisitLocation = {
+                id: GenerateCodePayService.generateCodeBooking('MOMO', visitLocationId),
+                userId: $scope.bookingLocation.userId,
+                visitLocationId: visitLocationId,
+                customerName: $scope.bookingLocation.customerName,
+                customerPhone: $scope.bookingLocation.customerPhone,
+                customerEmail: $scope.bookingLocation.customerEmail,
+                customerCitizenCard: $scope.bookingLocation.customerCitizenCard,
+                capacityAdult: $scope.tickets.adultTickets,
+                capacityKid: $scope.tickets.childrenTickets,
+                checkIn: $scope.tickets.departureDate,
+                orderTotal: $scope.tickets.totalPrice,
+                paymentMethod: 3, //Momo
+                dateCreated: new Date(),
+                orderStatus: 1, //đã thánh toán
+                orderCode: GenerateCodePayService.generateCodePayment('MOMO'),
+                orderNote: $scope.bookingLocation.orderNote
+            }
 
-                    $window.location.href = response.data.redirectUrl;
+            let orderVisitLocation = $scope.orderVisitLocation;
+            const dataOrderVisitLocation = new FormData();
+
+            dataOrderVisitLocation.append("orderVisitsDto", new Blob([JSON.stringify(orderVisitLocation)], {type: "application/json"}));
+
+            BookingLocationCusService.redirectMomo(dataOrderVisitLocation).then((repo) => {
+                if (repo.status === 200) {
+                    $timeout(() => {
+                        LocalStorageService.set('orderVisitLocation', repo);
+                        $window.location.href = repo.data.redirectUrl;
+                    }, 0)
                 } else {
                     $location.path('/admin/page-not-found')
                 }
-            }, errorCallback).finally(function () {
+            }, errorCallback).finally(() => {
                 $scope.isLoading = false;
             });
         }
@@ -279,42 +289,43 @@ travel_app.controller('BookingLocationCusController', function ($scope, $sce, $t
     }
 
     $scope.paymentZaLoPay = function () {
-        if (user !== null) {
-            if (user.roles.some(role => role.nameRole === 'ROLE_CUSTOMER')) {
-                $scope.bookingLocation.userId = user.id;
-            } else {
-                LocalStorageService.remove('user');
-            }
-        }
-
-        let ticket = $scope.ticket;
-        let email = $scope.bookingLocation.customerEmail;
-        let totalPrice = $scope.totalPrice;
-        let tourDetail = $scope.tourDetail;
-        let bookingTourId = GenerateCodePayService.generateCodeBooking('ZALOPAY', tourDetail.id);
-
-        $scope.bookingLocation.id = bookingTourId;
-        $scope.bookingLocation.capacityAdult = ticket.adults;
-        $scope.bookingLocation.capacityKid = ticket.children;
-        $scope.bookingLocation.capacityBaby = ticket.baby;
-        $scope.bookingLocation.orderTotal = totalPrice;
-        $scope.bookingLocation.paymentMethod = 2; // 2: ZALOPAY
-        $scope.bookingLocation.orderCode = GenerateCodePayService.generateCodePayment('ZALOPAY');
-
-        function confirmBookLocation() {
+        const confirmBookLocation = () => {
             $scope.isLoading = true;
 
-            let paymentData = {
-                amount: totalPrice, bookingTourId: bookingTourId
+            $scope.orderVisitLocation = {
+                id: GenerateCodePayService.generateCodeBooking('ZALOPAY', visitLocationId),
+                userId: $scope.bookingLocation.userId,
+                visitLocationId: visitLocationId,
+                customerName: $scope.bookingLocation.customerName,
+                customerPhone: $scope.bookingLocation.customerPhone,
+                customerEmail: $scope.bookingLocation.customerEmail,
+                customerCitizenCard: $scope.bookingLocation.customerCitizenCard,
+                capacityAdult: $scope.tickets.adultTickets,
+                capacityKid: $scope.tickets.childrenTickets,
+                checkIn: $scope.tickets.departureDate,
+                orderTotal: $scope.tickets.totalPrice,
+                paymentMethod: 2, //Zalo payment
+                dateCreated: new Date(),
+                orderStatus: 1, //đã thánh toán
+                orderCode: GenerateCodePayService.generateCodePayment('ZALOPAY'),
+                orderNote: $scope.bookingLocation.orderNote
             }
 
-            BookingLocationCusService.redirectZALOPay(paymentData).then(function successCallBack(response) {
-                if (response.status === 200) {
-                    $window.location.href = response.data.data;
+            let orderVisitLocation = $scope.orderVisitLocation;
+            const dataOrderVisitLocation = new FormData();
+
+            dataOrderVisitLocation.append("orderVisitsDto", new Blob([JSON.stringify(orderVisitLocation)], {type: "application/json"}));
+
+            BookingLocationCusService.redirectZALOPay(dataOrderVisitLocation).then((repo) => {
+                if (repo.status === 200) {
+                    $timeout(() => {
+                        LocalStorageService.set('orderVisitLocation', repo);
+                        $window.location.href = repo.data.redirectUrl;
+                    }, 0)
                 } else {
                     $location.path('/admin/page-not-found')
                 }
-            }, errorCallback).finally(function () {
+            }, errorCallback).finally(() => {
                 $scope.isLoading = false;
             });
         }
@@ -322,9 +333,11 @@ travel_app.controller('BookingLocationCusController', function ($scope, $sce, $t
         confirmAlert('Bạn có chắc chắn địa chỉ email: ' + $scope.bookingLocation.customerEmail + ' là chính xác không ?', confirmBookLocation);
     }
 
+
     $scope.$on('$routeChangeStart', function (event, next, current) {
         if (next.controller !== 'BookingLocationCusController' && next.controller !== 'LoginController') {
             LocalStorageService.remove('redirectAfterLogin');
         }
     });
-});
+})
+;
