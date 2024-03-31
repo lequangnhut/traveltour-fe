@@ -79,6 +79,15 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
         TourCusService.getAllTourDetail().then(function (response) {
             if (response.status === 200) {
                 $scope.tourDetailDataList = response.data.data;
+                $scope.filteredDataList = $scope.tourDetailDataList.slice(0, 5);
+
+                $scope.$watch('filters.searchTerm', function (newVal) {
+                    if (newVal && newVal.trim() !== '') {
+                        $scope.filteredDataList = $filter('filter')($scope.tourDetailDataList, newVal).slice(0, 5);
+                    } else {
+                        $scope.filteredDataList = $scope.tourDetailDataList.slice(0, 5);
+                    }
+                });
             } else {
                 $location.path('/admin/page-not-found')
             }

@@ -1,4 +1,4 @@
-travel_app.controller('TransportCusController', function ($scope, $location, MapBoxService, TransportCusService, TransportationBrandServiceAD, TransportationTypeServiceAD) {
+travel_app.controller('TransportCusController', function ($scope, $filter, $location, MapBoxService, TransportCusService, TransportationBrandServiceAD, TransportationTypeServiceAD) {
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
     $scope.currentPage = 0;
@@ -58,6 +58,14 @@ travel_app.controller('TransportCusController', function ($scope, $location, Map
             $scope.transportationTypeList = repo;
         }), fetchData(TransportCusService.getAllTransportCusDataList, (repo) => {
             $scope.transportationDataList = repo.uniqueDataList;
+            $scope.filteredDataList = $scope.transportationDataList.slice(0, 5);
+            $scope.$watch('filters.searchTerm', function (newVal) {
+                if (newVal && newVal.trim() !== '') {
+                    $scope.filteredDataList = $filter('filter')($scope.transportationDataList, newVal).slice(0, 5);
+                } else {
+                    $scope.filteredDataList = $scope.transportationDataList.slice(0, 5);
+                }
+            });
             $scope.fromLocationList = repo.fromLocationList;
             $scope.toLocationList = repo.toLocationList;
         })

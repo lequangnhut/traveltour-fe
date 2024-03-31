@@ -35,4 +35,11 @@ travel_app.service('LocationCusService', function ($http) {
             url: API_LOCATION + 'find-all-location-type'
         });
     }
+
+    this.getDataList = () => {
+        return $http({
+            method: 'GET',
+            url: API_LOCATION + 'get-location-customer-data-list',
+        });
+    };
 })

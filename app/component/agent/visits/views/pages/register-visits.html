@@ -477,8 +477,7 @@
                                             'is-valid': register_visits.adult.$touched && (register_visits.adult.$valid || isAdultPriceValid())}"
                                        format-price-input
                                        ng-keypress="onPriceKeyPress($event); checkAdultPriceFormat()"
-                                       ng-disabled="!ticketTypes.adult"
-                                       required>
+                                       ng-disabled="!ticketTypes.adult">
                                 <small class="text-danger"
                                        ng-show="register_visits.adult.$touched && register_visits.adult.$error.required">
                                     Giá không được bỏ trống!
@@ -517,8 +516,7 @@
                                             'is-valid': register_visits.child.$touched && (register_visits.child.$valid || isChildPriceValid())}"
                                        format-price-input
                                        ng-keypress="onPriceKeyPress($event); checkChildPriceFormat()"
-                                       ng-disabled="!ticketTypes.child"
-                                       required>
+                                       ng-disabled="!ticketTypes.child">
                                 <small class="text-danger"
                                        ng-show="register_visits.child.$touched && register_visits.child.$error.required">
                                     Giá không được bỏ trống!

@@ -1,7 +1,4 @@
 
-<style>
-
-</style>
 <!--====== Start Place Details Section ======-->
 <section class="place-details-section">
     <!--====== Start Breadcrumb Section ======-->
@@ -486,7 +483,7 @@
                 <div class="col-xl-4 sticky-right-column">
                     <!--=== Sidebar Widget Area ===-->
                     <div class="sidebar-widget-area pt-45 pl-lg-30">
-                        <div class="sidebar-widget booking-info-widget wow fadeInUp mb-40">
+                        <div class="sidebar-widget booking-info-widget wow fadeInUp mb-40" ng-if="tickets.adultPrice || tickets.adultPrice">
                             <h4 class="widget-title">Đặt vé ngay</h4>
                             <ul class="info-list">
                                 <li ng-if="tickets.adultPrice">
@@ -531,18 +528,7 @@
                                         </span>
                                     </span>
                                 </li>
-                                <li ng-if="tickets.freePrice !== 0">
-                                    <span class="d-flex align-items-center bd-highlight">
-                                       <span class="fas fa-user-circle"></span>
-                                        Miễn phí
-                                        <span class="ms-auto bd-highlight" style="width: 70px">
-                                            <input type="number" class="form-control" ng-model="tickets.freeTickets"
-                                                   ng-change="calculateTotalPrice()"
-                                                   ng-blur="onQuantityBlurChildren(tickets)" min="0" max="99"
-                                                   oninput="validity.valid||(value='');">
-                                        </span>
-                                    </span>
-                                </li>
+
                                 <div class="booking-total mb-20">
                                     <div class="total">
                                         <label>Tạm tính ({{ tickets.totalTickets }}) vé</label>
@@ -568,18 +554,6 @@
                                 </div>
                             </ul>
                         </div>
-
-                        <!--=== Call Tour Widget ===-->
-                        <div class="sidebar-widget booking-form-widget wow fadeInUp mb-40">
-                            <div class="img-holder position-relative" style="padding-top: 45px">
-                                <button type="button"
-                                        style="position: absolute;width: 250px; top: 50%; left: 50%; transform: translate(-50%, -50%);"
-                                        class="btn btn-green" data-toggle="modal" data-target="#formTourModal"
-                                        ng-click="showCallTourModal()">Bạn có đề xuất gì không ?
-                                </button>
-                            </div>
-                        </div>
-                        <!--=== Call Tour Widget ===-->
 
                         <!--=== Recent Place Widget ===-->
                         <div class="sidebar-widget recent-place-widget mb-40 wow fadeInUp">
