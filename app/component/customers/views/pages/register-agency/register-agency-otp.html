@@ -114,7 +114,7 @@
                                            class="form-control"
                                            ng-model="agencies.otp"
                                            ng-class="{ 'is-invalid': registerAgency.otp.$invalid && registerAgency.otp.$touched,
-                                                        'is-valid': registerAgency.otp.$valid && registerAgency.otp.$touched }"
+                                                        'is-valid': registerAgency.otp.$valid && registerAgency.otp.$touched}"
                                            ng-pattern="/^\d{6}$/"
                                            placeholder="Nhập mã OTP"
                                     >
@@ -124,7 +124,7 @@
                                     </small>
                                     <small class="text-danger"
                                            ng-show="registerAgency.otp.$touched && registerAgency.otp.$error.pattern">
-                                        Mã OTP không đúng định dạng !
+                                        Mã OTP không hợp lệ !
                                     </small>
                                 </div>
 
