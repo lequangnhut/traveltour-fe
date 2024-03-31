@@ -212,10 +212,8 @@ travel_app.controller('BookingTourCusController',
 
                 BookingTourCusService.createBookTour(bookingDto).then(function successCallBack(response) {
                     if (response.status === 200) {
-                        let bookingTicket = response.data.data.bookingToursDto;
-
                         LocalStorageService.encryptLocalData(bookingDto, 'bookingDto', 'encryptBookingDto');
-                        LocalStorageService.encryptLocalData(bookingTicket, 'bookingTicket', 'encryptBookingTicket');
+                        LocalStorageService.encryptLocalData(bookingDto.bookingToursDto, 'bookingTicket', 'encryptBookingTicket');
 
                         toastAlert('success', 'Đặt tour thành công !');
                         $location.path('/tours/tour-detail/booking-tour/customer-information/payment-success');

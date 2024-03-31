@@ -224,48 +224,46 @@
                             <div class="sidebar-widget category-widget mb-30" ng-show="showForm"
                                  ng-repeat="(key, value) in ticketArray">
                                 <h4 class="widget-title fs-6">Thông tin hành khách #{{ key + 1 }}</h4>
-                                <div class="mb-3">
+                                <div class="row mb-3">
                                     <!-- Input Họ và tên -->
-                                    <div class="mb-3">
+                                    <div class="col-12 mb-3">
                                         <label for="customerFullName{{ key }}" class="form-label">Họ và tên</label>
                                         <input type="text"
                                                id="customerFullName{{ key }}"
                                                class="form-control"
-                                               name="customerNameKH{{ key }}"
+                                               name="customerName{{ key }}"
                                                ng-model="bookings_tour_customer['customerName' + key]"
                                                placeholder="VD: Nguyen Van A"
                                                ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
                                         >
                                         <!-- Thông báo lỗi -->
                                         <small class="text-danger"
-                                               ng-show="bookingCustomerForm['customerNameKH' + key].$touched && bookingCustomerForm['customerNameKH' + key].$error.required">
+                                               ng-show="bookingCustomerForm['customerName' + key].$touched && bookingCustomerForm['customerName' + key].$error.required">
                                             Vui lòng nhập họ và tên !
                                         </small>
                                         <small class="text-danger"
-                                               ng-show="bookingCustomerForm['customerNameKH' + key].$touched && bookingCustomerForm['customerNameKH' + key].$error.pattern">
+                                               ng-show="bookingCustomerForm['customerName' + key].$touched && bookingCustomerForm['customerName' + key].$error.pattern">
                                             Họ và tên không đúng định dạng !
                                         </small>
                                     </div>
-                                </div>
 
-                                <div class="row mb-3">
                                     <!-- Input Ngày sinh -->
                                     <div class="col-6 mb-3">
                                         <label for="customerBirth{{ key }}" class="form-label">Ngày sinh</label>
                                         <input type="date"
                                                id="customerBirth{{ key }}"
                                                class="form-control"
-                                               name="customerBirthKH{{ key }}"
+                                               name="customerBirth{{ key }}"
                                                ng-model="bookings_tour_customer['customerBirth' + key]"
                                         >
                                         <!-- Thông báo lỗi -->
                                         <small class="text-danger"
-                                               ng-show="bookingCustomerForm['customerBirthKH' + key].$touched && bookingCustomerForm['customerBirthKH' + key].$error.required">
+                                               ng-show="bookingCustomerForm['customerBirth' + key].$touched && bookingCustomerForm['customerBirth' + key].$error.required">
                                             Vui lòng chọn ngày sinh !
                                         </small>
                                         <small class="text-danger"
                                                ng-show="isBirthDateInvalid(bookings_tour_customer['customerBirth' + key])">
-                                            {{ bookingCustomerForm['customerBirthKH' + key].$error.required ? 'Vui lòng chọn ngày sinh!' : 'Ngày sinh không hợp lệ!' }}
+                                            {{ bookingCustomerForm['customerBirth' + key].$error.required ? 'Vui lòng chọn ngày sinh!' : 'Ngày sinh không hợp lệ!' }}
                                         </small>
                                     </div>
                                     <!-- Input Số điện thoại -->
@@ -274,7 +272,7 @@
                                             động</label>
                                         <input type="tel"
                                                id="customerPhone{{ key }}"
-                                               name="customerPhoneKH{{ key }}"
+                                               name="customerPhone{{ key }}"
                                                maxlength="10"
                                                class="form-control"
                                                ng-model="bookings_tour_customer['customerPhone' + key]"
@@ -283,11 +281,11 @@
                                         >
                                         <!-- Thông báo lỗi -->
                                         <small class="text-danger"
-                                               ng-show="bookingCustomerForm['customerPhoneKH' + key].$touched && bookingCustomerForm['customerPhoneKH' + key].$error.required">
+                                               ng-show="bookingCustomerForm['customerPhone' + key].$touched && bookingCustomerForm['customerPhone' + key].$error.required">
                                             Vui lòng nhập số điện thoại !
                                         </small>
                                         <small class="text-danger"
-                                               ng-show="bookingCustomerForm['customerPhoneKH' + key].$touched && bookingCustomerForm['customerPhoneKH' + key].$error.pattern">
+                                               ng-show="bookingCustomerForm['customerPhone' + key].$touched && bookingCustomerForm['customerPhone' + key].$error.pattern">
                                             Số điện thoại không đúng định dạng !
                                         </small>
                                     </div>
