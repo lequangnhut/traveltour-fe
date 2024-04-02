@@ -185,7 +185,6 @@ travel_app.controller('TransportationSchedulesControllerAD',
         $scope.filterAllMedia = () => {
             TransportationScheduleServiceAD.getAllTransportationSchedules($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.transportationSearch, $scope.filters)
                 .then((response) => {
-                    console.log(response)
                     transportationData(response);
                     if (response.data.status === '204') {
                         toastAlert('warning', 'Không tìm thấy dữ liệu !');

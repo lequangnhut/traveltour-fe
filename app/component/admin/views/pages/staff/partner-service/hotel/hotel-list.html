@@ -22,7 +22,7 @@
     <div class="">
         <div class="card card-customer">
             <div class="row" style="margin: 20px 16px 20px 16px">
-                <div class="col-xl-6 col-md-6 col-sm-6 order-1 order-sm-1">
+                <div class="col-xl-3 col-md-4 col-sm-6 order-1 order-sm-1">
                     Bạn muốn tìm kiếm gì ?
                     <div class="input-group mb-3 mt-1">
                         <span class="input-group-text" id="basic-addon1"><i
@@ -31,11 +31,6 @@
                                ng-change="searchHotelServiceByKey()" aria-label="Username"
                                aria-describedby="basic-addon1">
                     </div>
-                </div>
-                <div class="col-xl-6 col-md-6 col-sm-6 order-0 order-sm-2">
-                    <span ng-click="refreshSearch()">
-                    <i class="fa-solid fa-arrows-rotate float-end"></i>
-                    </span>
                 </div>
                 <div class="col-xl-3 col-md-4 col-sm-6 mb-3 order-2 order-sm-3">
                     <label class="form-label">Địa điểm</label>
@@ -145,8 +140,6 @@
                 <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
-                    <th><span><input class="form-check-input checkbox-all" type="checkbox" value=""></span>
-                    </th>
                     <th>#</th>
                     <th class="cursor-pointer" ng-click="sortData('hotelName')">
                         <div class="icon-left">Tên khách sạn
@@ -173,7 +166,6 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="hotelService in hotelServiceList">
-                    <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
                     <td>{{ $index + 1 }}</td>
                     <td class=ext-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="{{ hotelService.hotelName }}">

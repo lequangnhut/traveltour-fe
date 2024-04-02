@@ -1,6 +1,6 @@
 travel_app.controller('VisitLocationControllerAD',
     function ($scope, $sce, $routeParams, $location, $timeout, $http, VisitLocationServiceAD,
-              TourDetailsServiceAD) {
+              TourDetailsServiceAD, LocalStorageService) {
         $scope.isLoading = true;
         $scope.visitLocationList = [];
 
@@ -21,6 +21,32 @@ travel_app.controller('VisitLocationControllerAD',
 
         $scope.toggleDetails = (visitLocation) => {
             visitLocation.showDetails = !visitLocation.showDetails;
+        };
+
+        $scope.getCurrentDate = () => {
+            let currentDate = new Date();
+            const year = currentDate.getFullYear();
+            let month = currentDate.getMonth() + 1;
+            let day = currentDate.getDate();
+
+            if (month < 10) {
+                month = '0' + month;
+            }
+            if (day < 10) {
+                day = '0' + day;
+            }
+
+            return year + '-' + month + '-' + day;
+        };
+
+        $scope.checkDate = () => {
+            console.log($scope.departureDate)
+            const currentDate = new Date();
+            if ($scope.departureDate === undefined) {
+                console.log(123)
+                $scope.departureDate = currentDate;
+                toastAlert('warning', 'Không được nhập ngày quá khứ!');
+            }
         };
 
         $scope.setPage = (page) => {
@@ -178,8 +204,10 @@ travel_app.controller('VisitLocationControllerAD',
         $scope.openModal = (visitLocation) => {
             $('#modal-tour-detail').modal('show');
             $scope.visitLocationModal = visitLocation;
-            if (!visitLocation) return;
-
+            $scope.tickets = visitLocation.visitLocationTicketsById;
+            $scope.departureDate = new Date();
+            $scope.showBookButton = ($scope.tickets.length === 1 && $scope.tickets[0].ticketTypeName.toLowerCase() === 'miễn phí vé');
+            $scope.hasFreeTicket = $scope.tickets.some(ticket => ticket.ticketTypeName.toLowerCase() === 'miễn phí vé');
         }
 
         let ConfirmTicketSelection = (visitLocationId) => {
@@ -209,8 +237,8 @@ travel_app.controller('VisitLocationControllerAD',
                 visitLocationName: $scope.visitLocationModal.visitLocationName
             }
 
-            sessionStorage.setItem('selectedTickets', JSON.stringify(selectedTickets));
-            sessionStorage.setItem('infoVisitLocation', JSON.stringify(infoVisitLocation));
+            LocalStorageService.encryptLocalData(selectedTickets, 'selectedTickets', 'encryptSelectedTickets');
+            LocalStorageService.encryptLocalData(infoVisitLocation, 'infoVisitLocation', 'encryptInfoVisitLocation');
 
             $timeout(() => {
                 $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/visit-location-list/${visitLocationId}/visit-location-payment`);

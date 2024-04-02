@@ -4,6 +4,7 @@ travel_app.controller('VisitInformationControllerAD', function ($scope, $sce, $l
     let searchTimeout;
 
     $scope.bookingTourVisitList = [];
+    $scope.payment = 0;
     $scope.currentPage = 0;
     $scope.pageSize = 5;
 
@@ -104,25 +105,16 @@ travel_app.controller('VisitInformationControllerAD', function ($scope, $sce, $l
     $scope.deactivateBookingTourVisit = (visitId) => {
         const confirm = () => {
             VisitInformationServiceAD.deactivate($scope.tourDetailId, visitId, $scope.orderVisitStatus).then(() => {
-                toastAlert('success', 'Hủy thành công !');
-                $scope.closeModal();
-                $scope.getBookingTourVisitList();
+                $timeout(() => {
+                    toastAlert('success', 'Hủy thành công !');
+                    $scope.orderVisitStatus = '2';
+                    $scope.closeModal();
+                    $scope.getBookingTourVisitList();
+                }, 0)
             }, errorCallback);
         }
 
         confirmAlert('Bạn có chắc chắn muốn hủy đơn này không ?', confirm);
-    }
-
-    $scope.restoreBookingTourVisit = (visitId) => {
-        const confirm = () => {
-            VisitInformationServiceAD.restore($scope.tourDetailId, visitId, $scope.orderVisitStatus).then(() => {
-                toastAlert('success', 'Khôi phục thành công !');
-                $scope.closeModal();
-                $scope.getBookingTourVisitList();
-            }, errorCallback);
-        }
-
-        confirmAlert('Bạn có chắc chắn muốn khôi phục đơn này không ?', confirm);
     }
 
     $scope.getBookingTourVisitList();
@@ -132,31 +124,44 @@ travel_app.controller('VisitInformationControllerAD', function ($scope, $sce, $l
      */
     $scope.openModal = (visit) => {
         $('#modal-order-visit').modal('show');
-
         $scope.visit = visit;
         if (!$scope.tourDetailId && !visit.id) return;
 
         VisitInformationServiceAD.getAllByTourDetailIdAndVisitId($scope.tourDetailId, visit.id, $scope.orderVisitStatus)
             .then(response => {
                 if (response.status === 200) {
-                    $scope.orderVisitDetailList = response.data.data;
+                    $timeout(() => {
+                        $scope.orderVisitDetailList = response.data.data;
 
-                    let orderCustomer = $scope.orderVisitDetailList[0].orderVisitsByOrderVisitId;
+                        let orderCustomer = $scope.orderVisitDetailList[0].orderVisitsByOrderVisitId;
+                        $scope.totalPrice = $scope.orderVisitDetailList[0].orderVisitsByOrderVisitId.orderTotal;
 
-                    $scope.tourGuide = {
-                        customerName: orderCustomer.customerName,
-                        customerEmail: orderCustomer.customerEmail,
-                        customerPhone: orderCustomer.customerPhone,
-                        paymentMethod: orderCustomer.paymentMethod,
-                        orderStatus: orderCustomer.orderStatus
-                    };
+                        $scope.tourGuide = {
+                            customerName: orderCustomer.customerName,
+                            customerEmail: orderCustomer.customerEmail,
+                            customerPhone: orderCustomer.customerPhone,
+                            paymentMethod: orderCustomer.paymentMethod,
+                            orderStatus: orderCustomer.orderStatus
+                        };
+                    },0)
+
                 }
             }, errorCallback);
     }
 
-    $scope.openModalPay = () => {
-        $scope.closeModal()
-        $('#modal-pay').modal('show');
+    $scope.pay = () => {
+        const confirm = () => {
+            VisitInformationServiceAD.pay($scope.tourDetailId, $scope.visit.id, $scope.orderVisitStatus, $scope.payment).then(() => {
+                $timeout(() => {
+                    toastAlert('success', 'Thanh toán thành công !');
+                    $scope.closeModal()
+                    $scope.orderVisitStatus = '1';
+                    $scope.getBookingTourVisitList();
+                }, 0)
+            }, errorCallback);
+        }
+
+        confirmAlert('Bạn có chắc chắn muốn thanh toán khách sạn này không ?', confirm);
     }
 
     /**

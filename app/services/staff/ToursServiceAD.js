@@ -7,11 +7,12 @@ travel_app.service('ToursServiceAD', function ($http, $q) {
     this.findAllTours = function (page, size, sortBy, sortDir, searchTerm) {
         const deferred = $q.defer();
         $http({
-            method: 'GET', url: API_TOUR + 'find-all-tours', params: {
+            method: 'GET', url: API_TOUR + 'find-all-tours',
+            params: {
                 page: page || 0,
                 size: size || 5,
-                sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
+                sortBy: sortBy || 'dateCreated',
+                sortDir: sortDir || 'DESC',
                 searchTerm: searchTerm || ''
             }
         }).then(deferred.resolve, deferred.reject);

@@ -10,7 +10,7 @@ travel_app.service('TransportationScheduleServiceAD', function ($http, $q) {
                 page: page || 0,
                 size: size || 10,
                 sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
+                sortDir: sortDir || 'DESC',
                 transportationSearch: JSON.stringify(transportationSearch),
                 filters: JSON.stringify(filters)
             }

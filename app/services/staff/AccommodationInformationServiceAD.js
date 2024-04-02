@@ -9,8 +9,8 @@ travel_app.service('AccommodationInformationServiceAD', function ($http, $q) {
             params: {
                 page: page || 0,
                 size: size || 10,
-                sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
+                sortBy: sortBy || 'dateCreated',
+                sortDir: sortDir || 'DESC',
                 tourDetailId: tourDetailId || null,
                 orderHotelStatus: orderHotelStatus || 1,
                 searchTerm: searchTerm || null
@@ -45,15 +45,16 @@ travel_app.service('AccommodationInformationServiceAD', function ($http, $q) {
         return deferred.promise;
     };
 
-    this.restore = function (tourDetailId, hotelId) {
+    this.pay = function (tourDetailId, hotelId, payment) {
         const deferred = $q.defer();
         $http({
             method: 'PUT',
-            url: API + `restore-booking-tour-hotel-by-tour-detail-id-and-hotel-id`,
+            url: API + `pay-booking-tour-hotel-by-tour-detail-id-and-hotel-id`,
             params:
                 {
                     tourDetailId: tourDetailId,
-                    hotelId: hotelId
+                    hotelId: hotelId,
+                    payment: payment
                 }
         }).then(function (response) {
             deferred.resolve(response);

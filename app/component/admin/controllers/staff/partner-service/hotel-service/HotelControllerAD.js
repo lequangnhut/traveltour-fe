@@ -1,7 +1,7 @@
 travel_app.controller('HotelServiceControllerAD',
     function ($scope, $sce, $routeParams, $location, $timeout, $http, HotelServiceServiceAD,
               TourDetailsServiceAD, ToursServiceAD, TourTripsServiceAD, HotelTypeServiceServiceAD,
-              RoomTypeServiceServiceAD) {
+              RoomTypeServiceServiceAD, LocalStorageService) {
         $scope.isLoading = true;
         let currentDate = new Date();
 
@@ -326,15 +326,10 @@ travel_app.controller('HotelServiceControllerAD',
                 address: address
             };
 
-            sessionStorage.setItem('infoHotel', JSON.stringify(infoHotel));
+            LocalStorageService.encryptLocalData(infoHotel, 'infoHotel', 'encryptInfoHotel')
             $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/hotel-list/${hotelServiceId}/room-type-list`);
         };
 
-
-        $scope.refreshSearch = () => {
-            $scope.searchTerm = ''
-            $scope.searchHotels = {}
-        }
 
         const errorCallback = () => {
             $location.path('/admin/internal-server-error')

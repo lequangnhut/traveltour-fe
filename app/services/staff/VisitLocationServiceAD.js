@@ -8,8 +8,8 @@ travel_app.service('VisitLocationServiceAD', function ($http, $q) {
             params: {
                 page: page || 0,
                 size: size || 10,
-                sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
+                sortBy: sortBy || 'dateCreated',
+                sortDir: sortDir || 'DESC',
                 searchTerm: searchTerm || '',
                 location: location || null
             }

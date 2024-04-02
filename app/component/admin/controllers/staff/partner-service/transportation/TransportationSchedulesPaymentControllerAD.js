@@ -1,12 +1,11 @@
 travel_app.controller('TransportationSchedulesPaymentControllerAD',
-    function ($scope, $sce, $routeParams, $location, $timeout, $http, TransportationScheduleServiceAD, TourDetailsServiceAD,
+    function ($scope, $sce, $routeParams, $location, $timeout, $http, GenerateCodePayService, TransportationScheduleServiceAD, TourDetailsServiceAD,
               CustomerServiceAD, OrderTransportationServiceAD) {
         $scope.isLoading = true;
         $scope.showActivities = false;
         const tourDetailId = $routeParams.tourDetailId;
         $scope.tourDetailId = tourDetailId;
         const transportationScheduleId = $routeParams.transportationScheduleId;
-        $scope.payment = {method: '0'};
         $scope.tourGuide = {};
 
         if (tourDetailId !== undefined && tourDetailId !== null && tourDetailId !== "") {
@@ -24,6 +23,7 @@ travel_app.controller('TransportationSchedulesPaymentControllerAD',
 
         const Confirm = () => {
             let orderTransportation = {
+                id: GenerateCodePayService.generateCodeBookingStaff(transportationScheduleId),
                 userId: $scope.tourGuide.id,
                 transportationScheduleId: transportationScheduleId,
                 customerName: $scope.tourGuide.fullName,
@@ -32,9 +32,9 @@ travel_app.controller('TransportationSchedulesPaymentControllerAD',
                 customerEmail: $scope.tourGuide.email,
                 amountTicket: $scope.transportationSchedules.bookedSeat,
                 orderTotal: $scope.transportationSchedules.unitPrice,
-                paymentMethod: $scope.payment.method !== '0',
+                paymentMethod: 0,
                 dateCreated: new Date(),
-                orderStatus: $scope.payment.method,
+                orderStatus: 0,
             }
 
             const dataOrderTransportation = new FormData();
@@ -54,9 +54,6 @@ travel_app.controller('TransportationSchedulesPaymentControllerAD',
                 Confirm()
             });
         }
-        $scope.toggleActivities = () => {
-            $scope.showActivities = $scope.payment.method === '1';
-        };
 
         const errorCallback = () => {
             $location.path('/admin/internal-server-error')

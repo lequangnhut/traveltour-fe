@@ -92,8 +92,6 @@
                 <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
-                    <th><span><input class="form-check-input checkbox-all" type="checkbox" value=""></span>
-                    </th>
                     <th>#</th>
                     <th class="cursor-pointer" ng-click="sortData('id')">
                         <div class="icon-left">ID
@@ -130,7 +128,6 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="customer in customerList">
-                    <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ customer.id }}</td>
                     <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"

@@ -135,7 +135,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="h in bookingTourHotelList">
-                    <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
+                    <td>{{ $index + 1 }}</td>
                     <td>{{ h.id }}</td>
                     <td class=ext-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="{{ h.hotelName }}">
@@ -224,36 +224,23 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Thông tin người đặt</h5>
                                     <div class="mb-3">
-                                        <label for="fullName" class="form-label">Họ và tên của bạn <span
+                                        <label class="form-label">Họ và tên của bạn <span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" ng-model="tourGuide.fullName"
-                                               id="fullName"
-                                               placeholder="Nguyễn Văn A" required>
-                                        <div class="invalid-feedback">
-                                            Vui lòng nhập họ của bạn.
-                                        </div>
+                                        <input disabled type="text" class="form-control" ng-model="tourGuide.fullName">
+
                                     </div>
                                     <!-- Form Row 2 for Email -->
                                     <div class="mb-3">
-                                        <label for="email" class="form-label">email của bạn <span
+                                        <label class="form-label">email của bạn <span
                                                 class="text-danger">*</span></label>
-                                        <input type="email" class="form-control" ng-model="tourGuide.email" id="email"
-                                               placeholder="example@gmail.com" required>
-                                        <div class="invalid-feedback">
-                                            Vui lòng nhập email của bạn.
-                                        </div>
+                                        <input disabled type="email" class="form-control" ng-model="tourGuide.email">
+
                                     </div>
                                     <!-- Form Row 3 for Phone Number -->
                                     <div class="mb-3">
-                                        <label for="phoneNumber" class="form-label">số điện thoại của bạn <span
+                                        <label class="form-label">số điện thoại của bạn <span
                                                 class="text-danger">*</span></label>
-                                        <input type="tel" class="form-control" ng-model="tourGuide.phone"
-                                               id="phoneNumber"
-                                               placeholder="0375780079"
-                                               required>
-                                        <div class="invalid-feedback">
-                                            Vui lòng nhập số điện thoại của bạn.
-                                        </div>
+                                        <input disabled type="tel" class="form-control" ng-model="tourGuide.phone">
                                     </div>
                                 </div>
                             </div>
@@ -263,22 +250,36 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Thông tin thanh toán</h5>
                                     <div class="mb-3">
-                                        <p class="m-2"><span class="fw-medium">Phương thức: </span>
-                                            {{ tourGuide.paymentMethod === true ? 'thanh toán bằng thẻ ngân hàng.' : 'thanh toán bằng tiền mặt.' }}
-                                        </p>
+                                        <label for="pay" class="form-label">Chọn phương thức thanh toán</label>
+                                        <select id="pay" class="form-control" ng-model="payment">
+                                            <option selected value="TTTT">Thanh toán tiền mặt</option>
+                                            <option value="VNPay">Thanh toán VNPay</option>
+                                            <option value="ZaloPay">Thanh toán ZaloPay</option>
+                                            <option value="Momo">Thanh toán Momo</option>
+                                        </select>
                                     </div>
-                                    <div class="mb-3">
-                                        <p class="m-2 fw-medium">Trạng thái:
-                                            <span class="fw-medium color-warning" ng-if="tourGuide.orderStatus == 0">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p class="mx-2 my-1 fw-medium">Trạng thái:
+                                                <span class="fw-medium color-warning"
+                                                      ng-if="tourGuide.orderStatus == 0">
                                             Chờ thanh toán
                                         </span>
-                                            <span class="fw-medium color-green" ng-if="tourGuide.orderStatus == 1">
+                                                <span class="fw-medium color-green" ng-if="tourGuide.orderStatus == 1">
                                             Đã thanh toán
                                         </span>
-                                            <span class="fw-medium color-danger" ng-if="tourGuide.orderStatus == 2">
+                                                <span class="fw-medium color-danger" ng-if="tourGuide.orderStatus == 2">
                                             Hủy giao dịch
                                         </span>
-                                        </p>
+                                            </p>
+                                        </div>
+                                        <div class=" col-12 pe-0">
+                                            <p class="mx-2 my-1 fw-medium float-right">Tổng tiền:
+                                                <span class="fw-medium color-green">
+                                            {{totalPrice | vnCurrency}}
+                                        </span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -288,35 +289,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal" ng-if="tourGuide.orderStatus == 0"
-                        ng-click="openModalPay()">Thanh toán
+                        ng-click="pay()">Thanh toán
                 </button>
-<!--                <button type="button" class="btn btn-green" data-dismiss="modal" ng-if="tourGuide.orderStatus == 2"-->
-<!--                        ng-click="restoreBookingTourHotel()">Khôi phục đơn-->
-<!--                </button>-->
                 <button type="button" class="btn btn-danger" data-dismiss="modal" ng-if="tourGuide.orderStatus != 2"
                         ng-click="deactivateBookingTourHotel()">Hủy đơn
-                </button>
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Thoát</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--modal-->
-<div class="modal fade" id="modal-pay" tabindex="-1" role="dialog" aria-labelledby="payModalLabel" aria-label="Pay"
-     aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-white">
-                <h5 class="modal-title" id="payModalLabel">Thanh toán</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Chưa có thanh toán được.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal"
-                        ng-click="">Xác nhận thanh toán
                 </button>
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Thoát</button>
             </div>

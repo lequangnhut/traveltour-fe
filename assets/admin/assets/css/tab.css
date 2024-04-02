@@ -1,0 +1,19 @@
+.nav-pills .nav-link {
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #495057;
+    border-radius: 0; /* Bỏ border-radius */
+}
+
+.nav-pills .nav-link.active {
+    border-color: #28a745;
+    color: #28a745;
+    font-weight: bold;
+    background-color: transparent;
+    border-radius: 0; /* Bỏ border-radius */
+}
+
+p.mb-3:hover a.ng-scope {
+    text-decoration: none; /* Loại bỏ gạch chân */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Hiệu ứng nền mờ */
+}

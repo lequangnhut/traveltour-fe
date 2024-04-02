@@ -1,4 +1,3 @@
-
 <div class="container mt-4">
     <div class="header-control mb-3">
         <div class="header-control-center">
@@ -80,6 +79,90 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-lg-6 ps-2">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form method="post" role="form" name="hotelForm">
+                        <h5 class="card-title">Thông tin của bạn để hoàn tất quá trình đặt phòng</h5>
+                        <div class="col-12 mb-3">
+                            <label for="full_name" class="form-label">Họ và tên
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text"
+                                   id="full_name"
+                                   class="form-control"
+                                   name="fullName"
+                                   ng-model="tourGuide.fullName"
+                                   placeholder="VD: Nguyen Van A"
+                                   ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                   ng-class="{ 'is-invalid': hotelForm.fullName.$invalid && hotelForm.fullName.$touched,
+                                                'is-valid': hotelForm.fullName.$valid && hotelForm.fullName.$touched }"
+                                   ng-change="codeQrOnChange()"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="hotelForm.fullName.$touched && hotelForm.fullName.$error.required">
+                                Vui lòng nhập họ và tên !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="hotelForm.fullName.$touched && hotelForm.fullName.$error.pattern">
+                                Họ và tên không đúng định dạng !
+                            </small>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label for="phone" class="form-label">Điện thoại di động<span
+                                    class="text-danger">*</span></label>
+                            <input type="tel"
+                                   id="phone"
+                                   name="phone"
+                                   maxlength="10"
+                                   class="form-control"
+                                   ng-model="tourGuide.phone"
+                                   ng-class="{ 'is-invalid': hotelForm.phone.$invalid && hotelForm.phone.$touched, 'is-valid': hotelForm.phone.$valid && hotelForm.phone.$touched }"
+                                   ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                                   ng-change="codeQrOnChange()"
+                                   placeholder="VD: 0918298029"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="hotelForm.phone.$touched && hotelForm.phone.$error.required">
+                                Vui lòng nhập số điện thoại !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="hotelForm.phone.$touched && hotelForm.phone.$error.pattern">
+                                Số điện thoại không đúng định dạng !
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="email"
+                                   id="email"
+                                   class="form-control"
+                                   name="email"
+                                   ng-model="tourGuide.email"
+                                   ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                                   placeholder="VD: example@gmail.com"
+                                   ng-class="{ 'is-invalid': hotelForm.email.$invalid && hotelForm.email.$touched, 'is-valid': hotelForm.email.$valid && hotelForm.email.$touched }"
+                                   ng-change="codeQrOnChange()"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="hotelForm.email.$touched && hotelForm.email.$error.required">
+                                Vui lòng nhập địa chỉ email !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="hotelForm.email.$touched && hotelForm.email.$error.pattern">
+                                Địa chỉ email không đúng định dạng !
+                            </small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <!-- Delivery Time Section -->
             <div class="card mb-3">
                 <div class="card-body">
@@ -99,412 +182,9 @@
                     </ul>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6 ps-2">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Thông tin của bạn để hoàn tất quá trình đặt phòng</h5>
-                    <div class="mb-3">
-                        <label for="fullName" class="form-label">Họ và tên của bạn <span
-                                class="text-danger">*</span></label>
-                        <input type="text" class="form-control" ng-model="tourGuide.fullName" id="fullName"
-                               placeholder="Nguyễn Văn A" required>
-                        <div class="invalid-feedback">
-                            Vui lòng nhập họ của bạn.
-                        </div>
-                    </div>
-                    <!-- Form Row 2 for Email -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label">email của bạn <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" ng-model="tourGuide.email" id="email"
-                               placeholder="example@gmail.com" required>
-                    </div>
-                    <!-- Form Row 3 for Phone Number -->
-                    <div class="mb-3">
-                        <label for="phoneNumber" class="form-label">số điện thoại của bạn <span
-                                class="text-danger">*</span></label>
-                        <input type="tel" class="form-control" ng-model="tourGuide.phone" id="phoneNumber"
-                               placeholder="0375780079"
-                               required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label d-block mb-2">Bạn đặt phòng cho ai <span
-                                class="text-danger">*</span></label>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="bookingFor" id="myself" value="myself"
-                                   checked>
-                            <label class="form-check-label" for="myself">
-                                Tôi là khách lưu trú chính
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="bookingFor" id="someoneElse"
-                                   value="someoneElse">
-                            <label class="form-check-label" for="someoneElse">
-                                Tôi đặt phòng này cho người khác
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Payment Information Section -->
-            <div class="card mb-3">
-                <div class="card-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="title-information mb-3">
-                                    <h5>Phương thức thanh toán</h5>
-                                    <p>Vui lòng chọn phương thức thanh toán</p>
-                                </div>
-                            </div>
-                            <div class="col-xl-12">
-                                <div class="blog-details-wrapper pr-lg-50">
-                                    <div class="sidebar-widget-area">
-                                        <!--=== Category Widget ===-->
-                                        <div class="sidebar-widget category-widget mb-30 wow fadeInUp">
-                                            <h4 class="widget-title"
-                                                style="font-size: 1rem; font-family: Montserrat, sans-serif;">Chọn một
-                                                trong các phương thức sau:</h4>
-                                            <hr>
-                                            <div class="mb-3 row">
-                                                <div class="col-lg-4 col-md-4 col-6 mt-2">
-                                                    <div class="form-group">
-                                                        <input type="text"
-                                                               class="form-control input-payment"
-                                                               name="discountCode"
-                                                               ng-model="service.discountCode"
-                                                               placeholder="Mã khuyến mãi"
-                                                        >
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2 col-md-3 col-6 p-0 mt-2">
-                                                    <button type="button" style="height: 37px; width: 110px"
-                                                            ng-click="submitDiscountCode()"
-                                                            class="btn btn-green fw-medium p-2 ps-4 px-4"
-                                                    >
-                                                        ÁP DỤNG
-                                                    </button>
-                                                </div>
-                                                <div class="col-md-6 col-sm-5 col-xs-12">
-                                                    <ul class="text-danger mt-2 list-unstyled float-end ms-5"
-                                                        style="font-size: 1rem; font-family: Montserrat, sans-serif;">
-                                                        <li>Chỉ áp dụng cho thanh toán online.</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-3 col-md-3 col-6 mb-3 d-flex justify-content-center align-items-center">
-                                                <label class="card card-payment rounded-4" payment-method="VNPay"
-                                                       ng-click="showContent('VNPay')"
-                                                       ng-class="{ 'selected': selectedPaymentMethod === 'VNPay' }">
-                                                    <input type="radio"
-                                                           class="form-check-input d-none"
-                                                           name="paymentMethod"
-                                                           ng-model="service.paymentMethod"
-                                                           value="VNPay"
-                                                           required
-                                                    >
-                                                    <div>
-                                                        <div class="image-payment d-flex justify-content-center">
-                                                            <img src="/assets/customers/images/payment/vnpay.png"
-                                                                 class="img-fluid rounded-3" width="100"
-                                                                 style="border: 1px solid #f0f0f0"
-                                                                 alt=""
-                                                            >
-                                                        </div>
-                                                    </div>
-                                                </label>
-                                            </div>
-                                            <div class="col-lg-3 col-md-3 col-6 mb-3 d-flex justify-content-center align-items-center">
-                                                <label class="card card-payment rounded-4" payment-method="ZaloPay"
-                                                       ng-click="showContent('ZaloPay')"
-                                                       ng-class="{ 'selected': selectedPaymentMethod === 'ZaloPay' }">
-                                                    <input type="radio"
-                                                           class="form-check-input d-none"
-                                                           name="paymentMethod"
-                                                           ng-model="service.paymentMethod"
-                                                           value="ZaloPay"
-                                                           required
-                                                    >
-                                                    <div class="image-payment d-flex justify-content-center">
-                                                        <img src="/assets/customers/images/payment/zalopay.jpg"
-                                                             class="img-fluid rounded-3" width="100"
-                                                             alt=""
-                                                        >
-                                                    </div>
-                                                </label>
-                                            </div>
-                                            <div class="col-lg-3 col-md-3 col-6 mb-3 d-flex justify-content-center align-items-center">
-                                                <label class="card card-payment rounded-4" payment-method="Momo"
-                                                       ng-click="showContent('Momo')"
-                                                       ng-class="{ 'selected': selectedPaymentMethod === 'Momo' }">
-                                                    <input type="radio"
-                                                           class="form-check-input d-none"
-                                                           name="paymentMethod"
-                                                           ng-model="service.paymentMethod"
-                                                           value="Momo"
-                                                           required
-                                                    >
-                                                    <div class="image-payment d-flex justify-content-center">
-                                                        <img src="/assets/customers/images/payment/momo.webp"
-                                                             class="img-fluid rounded-3" width="100"
-                                                             alt=""
-                                                        >
-                                                    </div>
-                                                </label>
-                                            </div>
-                                            <div class="col-lg-3 col-md-3 col-6 mb-3 d-flex justify-content-center align-items-center">
-                                                <label class="card card-payment rounded-4" payment-method="Travel"
-                                                       ng-click="showContent('Travel')"
-                                                       ng-class="{ 'selected': selectedPaymentMethod === 'Travel' }">
-                                                    <input type="radio"
-                                                           class="form-check-input d-none"
-                                                           name="paymentMethod"
-                                                           ng-model="service.paymentMethod"
-                                                           value="Travel"
-                                                           required
-                                                    >
-                                                    <div class="image-payment d-flex justify-content-center">
-                                                        <img src="/assets/customers/images/payment/vanphong.png"
-                                                             class="img-fluid rounded-3" width="100"
-                                                             alt=""
-                                                        >
-                                                    </div>
-                                                </label>
-                                            </div>
-
-                                            <div class="col-12 padding-payment" ng-show="selectedPaymentMethod"
-                                                 ng-class="{ 'ng-hide-add': !selectedPaymentMethod, 'ng-hide-remove': selectedPaymentMethod }">
-                                                <div class="fw-light sidebar-widget category-widget pt-3 pb-1 px-5"
-                                                     ng-bind-html="selectedContent">
-                                                </div>
-                                            </div>
-
-                                            <div class="private-policy mt-4">
-                                                <div class="mb-3">
-                                                    <label class="form-check-label">
-                                                        <input type="checkbox"
-                                                               class="form-check-input"
-                                                               ng-model="checkPrivatePolicy"
-                                                        >
-                                                        Tôi đã đọc và đồng ý
-                                                        <strong class="fw-medium text-green">
-                                                            <a href="/payment-policy">điều khoản</a>
-                                                        </strong>
-                                                    </label>
-                                                    <br>
-                                                    <div style="width:100%;height:250px;overflow-y: scroll;padding: 10px;margin:0;border: 1px solid #ccc;border-right: 2px solid #ccc;">
-                                                        <p>Điều khoản này là sự thoả thuận đồng ý của quý khách khi sử
-                                                            dụng dịch vụ
-                                                            thanh toán trên trang web <a href="">TravelTour</a>
-                                                            của Công ty Dịch vụ Lữ hành TravelTour (Lữ hành TravelTour)
-                                                            và những
-                                                            trang web của bên thứ ba. Việc quý khách đánh dấu vào ô
-                                                            “Đồng ý” và nhấp
-                                                            chuột vào thanh “Chấp nhận” nghĩa là quý khách đồng ý tất cả
-                                                            các điều khoản
-                                                            thỏa thuận trong các trang web này.</p>
-
-                                                        <p>&nbsp;</p>
-
-                                                        <p><strong>Giải thích từ ngữ</strong></p>
-
-                                                        <p>Điều khoản: là những điều quy định giữa Lữ hành TravelTour và
-                                                            quý
-                                                            khách</p>
-
-                                                        <p>Bên thứ ba: là những đơn vị liên kết với Lữ hành TravelTour
-                                                            (OnePay,
-                                                            Vietcombank) nhằm hỗ trợ việc thanh toán qua mạng cho quý
-                                                            khách</p>
-
-                                                        <p>Vé điện tử: là những thông tin và hành trình của quý khách
-                                                            cho chuyến đi được
-                                                            thể hiện trên một trang giấy mà quý khách có thể in ra
-                                                            được</p>
-
-                                                        <p><strong>Về sở hữu bản quyền</strong></p>
-
-                                                        <p>Trang web <a href="">TravelTour</a>
-                                                            thuộc quyền sở hữu của Lữ hành TravelTour và được bảo vệ
-                                                            theo luật bản
-                                                            quyền, quý khách chỉ được sử dụng trang web này với mục đích
-                                                            xem thông tin
-                                                            và đăng ký thanh toán online cho cá nhân chứ không được sử
-                                                            dụng cho bất cứ
-                                                            mục đích thương mại nào khác.</p>
-
-                                                        <p>Việc lấy nội dung để tham khảo, làm tài liệu cho nghiên cứu
-                                                            phải ghi rõ ràng
-                                                            nguồn lấy từ nội dung trang web Lữ hành TravelTour. Không
-                                                            được sử dụng
-                                                            các logo, các nhãn hiệu&nbsp;Lữ hành Lữ hành TravelTour dưới
-                                                            mọi hình
-                                                            thức nếu chưa có sự đồng ý của&nbsp;Lữ hành&nbsp;TravelTour
-                                                            bằng văn
-                                                            bản.</p>
-
-                                                        <p><strong>Về thông tin khách hàng</strong></p>
-
-                                                        <p>Khi đăng ký thanh toán qua mạng, quý khách sẽ được yêu cầu
-                                                            cung cấp một số
-                                                            thông tin cá nhân và thông tin tài khoản.</p>
-
-                                                        <p>Đối với thông tin cá nhân: Những thông tin này chỉ để phục vụ
-                                                            cho nhu cầu xác
-                                                            nhận sự mua dịch vụ của quý khách và sẽ hiển thị những nội
-                                                            dung cần thiết
-                                                            trên vé điện tử. Lữ hành TravelTour cũng sẽ sử dụng những
-                                                            thông tin liên
-                                                            lạc này để gửi đến quý khách những sự kiện, những tin tức
-                                                            khuyến mãi và
-                                                            những ưu đãi đặc biệt nếu quý khách đồng ý. Những thông tin
-                                                            này của quý
-                                                            khách sẽ được Lữ hành TravelTour bảo mật và không tiết lộ
-                                                            cho bên thứ ba
-                                                            biết ngoại trừ sự đồng ý của quý khách hoặc là phải tiết lộ
-                                                            theo sự tuân thủ
-                                                            luật pháp quy định.</p>
-
-                                                        <p>Đối với thông tin tài khoản: Những thông tin này sẽ được Lữ
-                                                            hành
-                                                            TravelTour và bên thứ ba áp dụng những biện pháp bảo mật cao
-                                                            nhất do các
-                                                            hệ thống thanh toán nổi tiếng trên thế giới như Visa và
-                                                            MasterCard cung cấp
-                                                            nhằm đảm bảo sự an toàn tuyệt đối của thông tin tài khoản
-                                                            quý khách.</p>
-
-                                                        <p><strong>Về trang web liên kết</strong></p>
-
-                                                        <p>Các trang web của Lữ hành TravelTour có chứa những liên hệ
-                                                            kết nối với
-                                                            trang web của bên thứ ba. Việc liên kết trang web của bên
-                                                            thứ ba này nhằm
-                                                            chỉ cung cấp những sự tiện lợi cho quý khách chứ không phải
-                                                            là sự tán thành,
-                                                            chấp nhận những nội dung, thông tin sản phẩm của những trang
-                                                            web bên thứ ba.
-                                                            Lữ hành TravelTour sẽ không chiu trách nhiệm về bất cứ trách
-                                                            nhiệm pháp
-                                                            lý nào liên quan đến những thông tin gì trong các trang web
-                                                            bên thứ ba.</p>
-
-                                                        <p><strong>Về hủy tour</strong></p>
-
-                                                        <p>Trong trường hợp hủy tour, quý khách vui lòng gửi email thông
-                                                            báo hủy tour
-                                                            đến Lữ hành TravelTour. Lữ hành TravelTour sẽ trao đổi và
-                                                            xác nhận lại
-                                                            tất cả các thông tin của quý khách. Khi hoàn tất việc xác
-                                                            nhận thông tin, Lữ
-                                                            hành TravelTour sẽ hoàn tiền vào đúng tài khoản quý khách đã
-                                                            thanh toán
-                                                            sau khi trừ các khoản lệ phí hủy tour. Lệ phí hủy tour sẽ
-                                                            tùy thuộc vào từng
-                                                            tour tuyến quý khách đăng ký.</p>
-
-                                                        <p><strong>Trách nhiệm của Lữ hành TravelTour</strong></p>
-
-                                                        <p>Lữ hành TravelTour có nhiệm vụ bảo mật và lưu trữ an toàn các
-                                                            thông tin
-                                                            của quý khách với sự nghiêm túc cao nhất.</p>
-
-                                                        <p>Giải quyết những thắc mắc, sai sót, vi phạm mà quý khách gặp
-                                                            phải trong quá
-                                                            trình thanh toán nếu do lỗi của Lữ hành TravelTour.</p>
-
-                                                        <p>Đảm bảo thực hiện đầy đủ mọi dịch vụ theo đúng chương trình
-                                                            mà quý khách đăng
-                                                            ký. Tuy nhiên chúng tôi có toàn quyền thay đổi lộ trình hoặc
-                                                            hủy bỏ chuyến
-                                                            đi du lịch bất cứ lúc nào mà chúng tôi thấy cần thiết vì sự
-                                                            an toàn cho quý
-                                                            khách.</p>
-
-                                                        <p>Mọi thay đổi nếu có sẽ được thông báo nhanh chóng cho quý
-                                                            khách ngay trước
-                                                            ngày khởi hành hoặc ngay sau khi phát hiện những phát
-                                                            sinh.</p>
-
-                                                        <p><strong>Trường hợp miễm trách nhiệm đối với Lữ hành
-                                                            TravelTour</strong>
-                                                        </p>
-
-                                                        <p>Lữ hành TravelTour không chịu trách nhiệm về tất cả những
-                                                            thông tin mà quý
-                                                            khách cung cấp bởi chúng tôi không dễ dàng xác nhận chính
-                                                            xác quý khách nào
-                                                            đăng ký thông tin.</p>
-
-                                                        <p>Lữ hành TravelTour không chịu trách nhiệm về việc thông tin
-                                                            của quý khách
-                                                            bị lấy cắp nếu như việc lấy cắp được thực hiện từ máy của
-                                                            quý khách do bị
-                                                            nhiễm virus máy tính hay do nguyên nhân nào khác.</p>
-
-                                                        <p>Lữ hành TravelTour không chịu trách nhiệm đối với quý khách
-                                                            nếu xảy ra
-                                                            việc hệ thống máy tính của quý khách bị hư hại trong khi
-                                                            đang thanh toán
-                                                            hoặc bị can thiệp liên quan tới việc sử dụng một trang bên
-                                                            ngoài.</p>
-
-                                                        <p>Lữ hành TravelTour không chịu trách nhiệm về việc mất dữ liệu
-                                                            thông tin
-                                                            của quý khách do sự cố khách quan như: thiên tai, hạn hán,
-                                                            hỏa hoạn, chiến
-                                                            tranh,…</p>
-
-                                                        <p><strong>Trách nhiệm của khách hàng</strong></p>
-
-                                                        <p>Quý khách cam kết hoàn toàn chịu trách nhiệm về các thông tin
-                                                            cá nhân, thông
-                                                            tin thẻ tín dụng đã được khai báo là trung thực, chính xác.
-                                                            Nếu có sai sót,
-                                                            giả mạo hay tranh chấp phát sinh thì Lữ hành TravelTour có
-                                                            quyền hủy tour
-                                                            đã mua của quý khách.</p>
-
-                                                        <p>Quý khách có nhiệm vụ kiểm tra thông tin tài khoản để kịp
-                                                            thời để báo cho Lữ
-                                                            hành TravelTour nếu có những sự cố. Thời hạn trong vòng 30
-                                                            ngày tính từ
-                                                            ngày thanh toán, Lữ hành TravelTour sẽ không nhận giải quyết
-                                                            bất cứ kiếu
-                                                            nại nào từ việc thanh toán.</p>
-
-                                                        <p>Quý khách không sử dụng các nội dung của trang web do Lữ hành
-                                                            TravelTour
-                                                            quản lý cho mục đích thương mại nếu như chưa có sự đồng
-                                                            ý.</p>
-
-                                                        <p>Quý khách cần tự áp dụng cài đặt các biện pháp phòng ngừa để
-                                                            bảo đảm rằng bất
-                                                            cứ lựa chọn nào của quý khách khi sử dụng các trang web của
-                                                            Lữ hành
-                                                            TravelTour không bị virus hoặc bất cứ mối đe dọa nào khác từ
-                                                            ngoài có thể
-                                                            can thiệp hoặc gây hư hại cho hệ thống máy tính của quý
-                                                            khách.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
             <!-- Submit Button -->
             <div class="float-end mb-2">
-                <button ng-click="ConfirmationOfCompleteBooking()"   class="btn btn-success" type="submit">Hoàn tất đặt
+                <button ng-click="ConfirmationOfCompleteBooking()" ng-disabled="hotelForm.$invalid" class="btn btn-success" type="submit">Hoàn tất đặt
                     phòng
                 </button>
             </div>

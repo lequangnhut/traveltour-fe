@@ -4,6 +4,7 @@ travel_app.controller('TransportationInformationControllerAD', function ($scope,
     let searchTimeout;
 
     $scope.bookingTourTransportationSchedulesList = [];
+    $scope.payment = 0;
     $scope.currentPage = 0;
     $scope.pageSize = 5;
 
@@ -104,25 +105,16 @@ travel_app.controller('TransportationInformationControllerAD', function ($scope,
     $scope.deactivateBookingTourTransportationSchedules = (transportationScheduleId) => {
         const confirm = () => {
             TransportationInformationServiceAD.deactivate(transportationScheduleId).then(() => {
-                toastAlert('success', 'Hủy thành công !');
-                $('#modal-order-transportation-schedule').modal('hide');
-                $scope.getBookingTourTransportationSchedulesList();
+                $timeout(() => {
+                    toastAlert('success', 'Hủy thành công !');
+                    $('#modal-order-transportation-schedule').modal('hide');
+                    $scope.orderStatus = '2';
+                    $scope.getBookingTourTransportationSchedulesList();
+                }, 0)
             }, errorCallback);
         }
 
         confirmAlert('Bạn có chắc chắn muốn hủy đơn này không ?', confirm);
-    }
-
-    $scope.restoreBookingTourTransportationSchedules = (transportationScheduleId) => {
-        const confirm = () => {
-            TransportationInformationServiceAD.restore(transportationScheduleId).then((repo) => {
-                toastAlert('success', 'Khôi phục thành công !');
-                $('#modal-order-transportation-schedule').modal('hide');
-                $scope.getBookingTourTransportationSchedulesList();
-            }, errorCallback);
-        }
-
-        confirmAlert('Bạn có chắc chắn muốn khôi phục đơn này không ?', confirm);
     }
 
     $scope.getBookingTourTransportationSchedulesList();
@@ -131,14 +123,26 @@ travel_app.controller('TransportationInformationControllerAD', function ($scope,
      * Phương thức mở modal
      */
     $scope.openModal = (data) => {
+        console.log(data)
         $('#modal-order-transportation-schedule').modal('show');
         $scope.transportationSchedule = data;
+        $scope.transportationScheduleId = data.id;
         $scope.tourGuide = data.orderTransportationsById[0];
     }
 
-    $scope.openModalPay = () => {
-        $scope.closeModal()
-        $('#modal-pay').modal('show');
+    $scope.pay = () => {
+        const confirm = () => {
+            TransportationInformationServiceAD.pay($scope.transportationScheduleId, $scope.payment).then(() => {
+                $timeout(() => {
+                    toastAlert('success', 'Thanh toán thành công !');
+                    $scope.closeModal()
+                    $scope.orderStatus = '1';
+                    $scope.getBookingTourTransportationSchedulesList();
+                }, 0)
+            }, errorCallback);
+        }
+
+        confirmAlert('Bạn có chắc chắn muốn thanh toán khách sạn này không ?', confirm);
     }
 
     /**

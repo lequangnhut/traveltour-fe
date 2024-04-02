@@ -9,8 +9,8 @@ travel_app.service('BookingTourServiceAD', function ($http, $q) {
             params: {
                 page: page || 0,
                 size: size || 10,
-                sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
+                sortBy: sortBy || 'dateCreated',
+                sortDir: sortDir || 'DESC',
                 orderStatus: orderStatus || 0,
                 searchTerm: searchTerm || null
             }

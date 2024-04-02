@@ -271,35 +271,33 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr ng-repeat="vl in visitLocationModal.visitLocationTicketsById">
-                                            <td><span><input class="form-check-input" type="checkbox"
-                                                             ng-model="vl.isChecked"
-                                                             ng-change="onCheckChanged(vl)"></span></td>
+                                        <tr ng-if="hasFreeTicket">
+                                            <td colspan="4">Trong khu tham quan có khu vực miễn phí.</td>
+                                        </tr>
+                                        <tr ng-repeat="ticket in tickets" ng-if="!hasFreeTicket">
+                                            <td><input class="form-check-input" type="checkbox"
+                                                       ng-model="ticket.isChecked" ng-change="onCheckChanged(ticket)">
+                                            </td>
                                             <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip"
                                                 data-bs-placement="top">
-                                                {{ vl.ticketTypeName }}
+                                                {{ ticket.ticketTypeName }}
                                             </td>
-
-                                            <td>{{ vl.unitPrice | vnCurrency }}</td>
-                                            <td style="width: 105px">
-                                                <input type="number" class="form-control" ng-model="vl.quantity"
-                                                       ng-disabled="!vl.isChecked"
-                                                       min="1" max="999">
+                                            <td>{{ ticket.unitPrice | vnCurrency }}</td>
+                                            <td>
+                                                <input type="number" class="form-control" ng-model="ticket.quantity"
+                                                       ng-disabled="!ticket.isChecked" min="1" max="100">
                                             </td>
-                                        </tr>
-                                        <tr ng-if="tourDetailList.length === 0">
-                                            <td colspan="14">Chưa có vé.</td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="card-footer pb-3 pt-1 px-3">
+                                <div class="card-footer pb-3 pt-1 px-3" ng-show="!showBookButton">
                                     <div class="row">
                                         <div class="col-md-6 pe-0">
                                             <label class="form-label">Ngày đi <span class="text-danger">*</span></label>
                                             <input id="departureDateInput" class="form-control"
                                                    ng-model="departureDate"
-                                                   type="datetime-local"/>
+                                                   type="date" min="{{getCurrentDate()}}" ng-blur="checkDate()"/>
                                         </div>
                                         <div class="col-md-6">
                                             <a ng-click="bookTickets(visitLocationModal.id)"

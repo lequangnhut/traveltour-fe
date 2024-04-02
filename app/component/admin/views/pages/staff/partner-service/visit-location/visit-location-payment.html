@@ -70,111 +70,80 @@
         <div class="col-lg-6 ps-2">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Thông tin của bạn để hoàn tất quá trình đặt vé</h5>
-                    <div class="mb-3">
-                        <label for="fullName" class="form-label">Họ và tên của bạn <span
-                                class="text-danger">*</span></label>
-                        <input type="text" class="form-control" ng-model="tourGuide.fullName" id="fullName"
-                               placeholder="Nguyễn Văn A" required>
-                        <div class="invalid-feedback">
-                            Vui lòng nhập họ của bạn.
-                        </div>
-                    </div>
-                    <!-- Form Row 2 for Email -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label">email của bạn <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" ng-model="tourGuide.email" id="email"
-                               placeholder="example@gmail.com" required>
-                        <div class="invalid-feedback">
-                            Vui lòng nhập email của bạn.
-                        </div>
-                    </div>
-                    <!-- Form Row 3 for Phone Number -->
-                    <div class="mb-3">
-                        <label for="phoneNumber" class="form-label">số điện thoại của bạn <span
-                                class="text-danger">*</span></label>
-                        <input type="tel" class="form-control" ng-model="tourGuide.phone" id="phoneNumber"
-                               placeholder="0375780079"
-                               required>
-                        <div class="invalid-feedback">
-                            Vui lòng nhập số điện thoại của bạn.
-                        </div>
-                    </div>
-                    <!-- Radio buttons for Booking for -->
-                    <div class="mb-3">
-                        <label class="form-label d-block mb-2">Bạn đặt vé cho ai <span
-                                class="text-danger">*</span></label>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="bookingFor" id="myself" value="myself"
-                                   checked>
-                            <label class="form-check-label" for="myself">
-                                Tôi là đặt cho tôi
+                    <form method="post" role="form" name="locationForm">
+                        <h5 class="card-title">Thông tin của bạn để hoàn tất quá trình đặt vé</h5>
+                        <div class="col-12 mb-3">
+                            <label for="full_name" class="form-label">Họ và tên
+                                <span class="text-danger">*</span>
                             </label>
+                            <input type="text"
+                                   id="full_name"
+                                   class="form-control"
+                                   name="fullName"
+                                   ng-model="tourGuide.fullName"
+                                   placeholder="VD: Nguyen Van A"
+                                   ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                   ng-class="{ 'is-invalid': locationForm.fullName.$invalid && locationForm.fullName.$touched, 'is-valid': locationForm.fullName.$valid && locationForm.fullName.$touched }"
+                                   ng-change="codeQrOnChange()"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="locationForm.fullName.$touched && locationForm.fullName.$error.required">
+                                Vui lòng nhập họ và tên !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="locationForm.fullName.$touched && locationForm.fullName.$error.pattern">
+                                Họ và tên không đúng định dạng !
+                            </small>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="bookingFor" id="someoneElse"
-                                   value="someoneElse">
-                            <label class="form-check-label" for="someoneElse">
-                                Tôi đặt vé này cho người khác
+
+                        <div class="col-12 mb-3">
+                            <label for="phone" class="form-label">Điện thoại di động<span
+                                    class="text-danger">*</span></label>
+                            <input type="tel"
+                                   id="phone"
+                                   name="phone"
+                                   maxlength="10"
+                                   class="form-control"
+                                   ng-model="tourGuide.phone"
+                                   ng-class="{ 'is-invalid': locationForm.phone.$invalid && locationForm.phone.$touched, 'is-valid': locationForm.phone.$valid && locationForm.phone.$touched }"
+                                   ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                                   ng-change="codeQrOnChange()"
+                                   placeholder="VD: 0918298029"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="locationForm.phone.$touched && locationForm.phone.$error.required">
+                                Vui lòng nhập số điện thoại !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="locationForm.phone.$touched && locationForm.phone.$error.pattern">
+                                Số điện thoại không đúng định dạng !
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email
+                                <span class="text-danger">*</span>
                             </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Payment Information Section -->
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Thông tin thanh toán</h5>
-                    <div class="mb-3">
-                        <label for="paymentMethod" class="form-label">Chọn phương thức thanh toán</label>
-                        <select class="form-select" id="paymentMethod" ng-model="payment.method"
-                                ng-change="toggleActivities()" required>
-                            <option selected value="0">Thanh toán sau khi trả phòng</option>
-                            <option value="1">Thanh toán qua thẻ nhân hàng</option>
-                        </select>
-                    </div>
-
-                    <form ng-show="showActivities">
-                        <h5 class="card-title">Thông tin tài khoản</h5>
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label for="accountName" class="form-label required">Tên chủ thẻ <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="accountName" placeholder="Tên chủ thẻ"
-                                       required>
-                                <div class="invalid-feedback">
-                                    Vui lòng nhập tên chủ thẻ.
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="cardNumber" class="form-label required">Số thẻ <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="cardNumber" placeholder="Số thẻ" required>
-                                <div class="invalid-feedback">
-                                    Vui lòng nhập số thẻ.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row g-3 mb-4">
-                            <div class="col-md-6">
-                                <label for="expirationDate" class="form-label required">Ngày hết hạn <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="expirationDate" placeholder="MM/YY"
-                                       required>
-                                <div class="invalid-feedback">
-                                    Vui lòng nhập ngày hết hạn thẻ.
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="cvc" class="form-label required">CVC <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="cvc" placeholder="CVC" required>
-                                <div class="invalid-feedback">
-                                    Vui lòng nhập CVC.
-                                </div>
-                            </div>
+                            <input type="email"
+                                   id="email"
+                                   class="form-control"
+                                   name="email"
+                                   ng-model="tourGuide.email"
+                                   ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                                   placeholder="VD: example@gmail.com"
+                                   ng-class="{ 'is-invalid': locationForm.email.$invalid && locationForm.email.$touched, 'is-valid': locationForm.email.$valid && locationForm.email.$touched }"
+                                   ng-change="codeQrOnChange()"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="locationForm.email.$touched && locationForm.email.$error.required">
+                                Vui lòng nhập địa chỉ email !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="locationForm.email.$touched && locationForm.email.$error.pattern">
+                                Địa chỉ email không đúng định dạng !
+                            </small>
                         </div>
                     </form>
                 </div>
@@ -197,7 +166,7 @@
 
             <!-- Submit Button -->
             <div class="float-end mb-2">
-                <button ng-click="confirmCompletionOfTicketPurchase()" class="btn btn-success" type="submit">Hoàn tất
+                <button ng-click="confirmCompletionOfTicketPurchase()" ng-disabled="locationForm.$invalid" class="btn btn-success" type="submit">Hoàn tất
                     đặt vé
                 </button>
             </div>

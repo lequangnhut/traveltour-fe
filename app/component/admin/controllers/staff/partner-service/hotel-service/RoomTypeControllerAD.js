@@ -1,7 +1,7 @@
 travel_app.controller('RoomTypeControllerAD',
     function ($scope, $sce, $routeParams, $location, $timeout, $http, HotelServiceServiceAD,
               TourDetailsServiceAD, ToursServiceAD, TourTripsServiceAD, HotelTypeServiceServiceAD,
-              RoomTypeServiceServiceAD) {
+              RoomTypeServiceServiceAD, LocalStorageService) {
         $scope.isLoading = true;
 
         const tourDetailId = $routeParams.tourDetailId;
@@ -10,8 +10,8 @@ travel_app.controller('RoomTypeControllerAD',
         $scope.tourDetailId = tourDetailId;
         $scope.hotelId = hotelId;
 
-        let checkIn = JSON.parse(sessionStorage.getItem('infoHotel')).departureDate
-        let checkOut = JSON.parse(sessionStorage.getItem('infoHotel')).arrivalDate
+        let checkIn = LocalStorageService.decryptLocalData('infoHotel', 'encryptInfoHotel').departureDate;
+        let checkOut = LocalStorageService.decryptLocalData('infoHotel', 'encryptInfoHotel').arrivalDate
 
         $scope.tourInfo = {
             tourName: null,
@@ -272,7 +272,7 @@ travel_app.controller('RoomTypeControllerAD',
                 return;
             }
 
-            sessionStorage.setItem('selectedRooms', JSON.stringify(selectedRooms));
+            LocalStorageService.encryptLocalData(selectedRooms, 'selectedRooms', 'encryptSelectedRooms');
             $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/hotel-list/${hotelId}/room-type-list/hotel-payment`);
         };
 

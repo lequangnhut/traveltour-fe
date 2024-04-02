@@ -28,13 +28,13 @@ travel_app.controller('LocationDetailCusController', function ($scope, $location
         return year + '-' + month + '-' + day;
     };
 
-    $scope.checkDate = () => {
-        const currentDate = new Date();
-        if ($scope.tickets.departureDate === undefined) {
-            $scope.tickets.departureDate = currentDate;
-            toastAlert('warning', 'Không được nhập ngày quá khứ!');
-        }
-    };
+        $scope.checkDate = () => {
+            const currentDate = new Date();
+            if ($scope.tickets.departureDate === undefined) {
+                $scope.tickets.departureDate = currentDate;
+                toastAlert('warning', 'Không được nhập ngày quá khứ!');
+            }
+        };
 
     $scope.calculateTotalPrice = () => {
         $scope.tickets.totalPrice = ($scope.tickets.adultTickets * $scope.tickets.adultPrice) + ($scope.tickets.childrenTickets * $scope.tickets.childrenPrice);

@@ -9,8 +9,8 @@ travel_app.service('VisitInformationServiceAD', function ($http, $q) {
             params: {
                 page: page || 0,
                 size: size || 10,
-                sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
+                sortBy: sortBy || 'dateCreated',
+                sortDir: sortDir || 'DESC',
                 tourDetailId: tourDetailId || null,
                 orderVisitStatus: orderVisitStatus || 1,
                 searchTerm: searchTerm || null
@@ -46,16 +46,17 @@ travel_app.service('VisitInformationServiceAD', function ($http, $q) {
         return deferred.promise;
     };
 
-    this.restore = function (tourDetailId, visitId, orderVisitStatus) {
+    this.pay = function (tourDetailId, visitId, orderVisitStatus, payment) {
         const deferred = $q.defer();
         $http({
             method: 'PUT',
-            url: API + `restore-booking-tour-visit-by-tour-detail-id-and-visit-id`,
+            url: API + `pay-booking-tour-visit-by-tour-detail-id-and-visit-id`,
             params:
                 {
                     tourDetailId: tourDetailId,
                     visitId: visitId,
-                    orderVisitStatus: orderVisitStatus
+                    orderVisitStatus: orderVisitStatus,
+                    payment: payment
                 }
         }).then(function (response) {
             deferred.resolve(response);

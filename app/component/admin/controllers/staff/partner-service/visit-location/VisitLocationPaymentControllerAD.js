@@ -1,6 +1,6 @@
 travel_app.controller('VisitLocationPaymentControllerAD',
     function ($scope, $sce, $routeParams, $location, $timeout, $http, VisitLocationServiceAD, CustomerServiceAD,
-              OrderVisitServiceAD, OrderVisitDetailServiceAD, TourDetailsServiceAD) {
+              OrderVisitServiceAD, OrderVisitDetailServiceAD, TourDetailsServiceAD, GenerateCodePayService, LocalStorageService) {
         $scope.isLoading = true;
         $scope.showActivities = false;
         const tourDetailId = $routeParams.tourDetailId;
@@ -8,8 +8,8 @@ travel_app.controller('VisitLocationPaymentControllerAD',
         $scope.payment = {method: '0'};
         $scope.tourGuide = {};
         $scope.orderVisitLocation = {};
-        $scope.selectedTickets = JSON.parse(sessionStorage.getItem('selectedTickets')) || [];
-        $scope.infoVisitLocation = JSON.parse(sessionStorage.getItem('infoVisitLocation')) || {};
+        $scope.selectedTickets = LocalStorageService.decryptLocalData('selectedTickets', 'encryptSelectedTickets') || [];
+        $scope.infoVisitLocation = LocalStorageService.decryptLocalData('infoVisitLocation', 'encryptInfoVisitLocation') || {};
         $scope.totalBeforeTax = 0;
         $scope.VATRate = 0; // 8% VAT
         $scope.discountRate = 0; // 0% Discount for now
@@ -39,6 +39,7 @@ travel_app.controller('VisitLocationPaymentControllerAD',
 
         $scope.confirmCompletionOfTicketPurchase = () => {
             $scope.orderVisitLocation = {
+                id: GenerateCodePayService.generateCodeBookingStaff(visitLocationId),
                 userId: $scope.tourGuide.id,
                 visitLocationId: visitLocationId,
                 customerName: $scope.tourGuide.fullName,
@@ -49,9 +50,10 @@ travel_app.controller('VisitLocationPaymentControllerAD',
                 capacityKid: $scope.infoVisitLocation.capacityKid,
                 checkIn: $scope.infoVisitLocation.checkIn,
                 orderTotal: $scope.total,
-                paymentMethod: $scope.payment.method !== '0',
+                paymentMethod: 0,
                 dateCreated: new Date(),
-                orderStatus: $scope.payment.method,
+                orderStatus: 0,
+                orderCode: GenerateCodePayService.generateCodePaymentStaff()
             }
 
             let orderVisitLocation = $scope.orderVisitLocation;
@@ -61,6 +63,7 @@ travel_app.controller('VisitLocationPaymentControllerAD',
             dataOrderVisitLocation.append("tourDetailId", tourDetailId);
 
             OrderVisitServiceAD.createOrderVisit(dataOrderVisitLocation).then((repo) => {
+                console.log(repo)
                 let orderVisitLocationId = repo.data.data.id;
 
                 $scope.selectedTickets.forEach(item => {

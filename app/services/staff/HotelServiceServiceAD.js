@@ -11,8 +11,8 @@ travel_app.service('HotelServiceServiceAD', function ($http, $q) {
             params: {
                 page: page || 0,
                 size: size || 5,
-                sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
+                sortBy: sortBy || 'dateCreated',
+                sortDir: sortDir || 'DESC',
                 searchTerm: searchTerm || null,
                 location: location || null,
                 departureDate: departureDate || null,

@@ -106,10 +106,6 @@
                 <thead>
                 <tr class="bg-light">
                     <th>#</th>
-                    <th class="cursor-pointer">
-                        <div class="icon-left">STT
-                        </div>
-                    </th>
                     <th class="cursor-pointer" ng-click="sortData('customerName')">
                         <div class="icon-left">Tên khách hàng
                             <span class="sorting-icon" ng-bind-html="getSortIcon('customerName')"></span>
@@ -130,7 +126,6 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="btc in bookingTourCustomerList">
-                    <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
                     <td>{{ $index + 1 }}</td>
                     <td class=ext-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="{{ btc.customerName }}">
