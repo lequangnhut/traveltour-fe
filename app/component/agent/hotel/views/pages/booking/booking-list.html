@@ -133,31 +133,51 @@
             <table class="table table-responsive text-center">
                 <thead>
                 <tr class="bg-light">
-                    <th><input class="form-check-input" type="checkbox" ng-model="selectAllChecked" ng-click="selectAll()"></th>
-                    <th scope="col" class="cursor-pointer" ># <i class="fa-solid fa-sort"></i></th>
-                    <th scope="col" class="cursor-pointer" ng-click="sortData('id')">ID <i class="fa-solid fa-sort"></i></th>
-                    <th scope="col" class="cursor-pointer" ng-click="sortData('roomTypeName')">Loại phòng <i class="fa-solid fa-sort"></i></th>
-                    <th scope="col" class="cursor-pointer" ng-click="sortData('amountRoom')">Số lượng <i class="fa-solid fa-sort"></i></th>
-                    <th scope="col" class="cursor-pointer" ng-click="sortData('capacityAdults')">Số người lớn <i class="fa-solid fa-sort"></i></th>
-                    <th scope="col" class="cursor-pointer" ng-click="sortData('capacityChildren')">Số trẻ em <i class="fa-solid fa-sort"></i></th>
-                    <th scope="col" class="cursor-pointer" ng-click="sortData('id')">Loại giường<i class="fa-solid fa-sort"></i></th>
-                    <th scope="col" class="cursor-pointer" ng-click="sortData('price')">Giá phòng <i class="fa-solid fa-sort"></i></th>
-                    <th scope="col" class="cursor-pointer" >Thao tác</th>
+                    <th scope="col" class="cursor-pointer"># <i class="fa-solid fa-sort"></i></th>
+                    <th scope="col" class="cursor-pointer" ng-click="sortData('id')">ID <i class="fa-solid fa-sort"></i>
+                    </th>
+                    <th scope="col" class="cursor-pointer" ng-click="sortData('customerName')">Tên khách hàng <i
+                            class="fa-solid fa-sort"></i></th>
+                    <th scope="col" class="cursor-pointer" ng-click="sortData('customerPhone')">Số điện thoại <i
+                            class="fa-solid fa-sort"></i></th>
+                    <th scope="col" class="cursor-pointer" ng-click="sortData('capacityAdult')">Số người lớn <i
+                            class="fa-solid fa-sort"></i></th>
+                    <th scope="col" class="cursor-pointer" ng-click="sortData('capacityKid')">Số trẻ em <i
+                            class="fa-solid fa-sort"></i></th>
+                    <th scope="col" class="cursor-pointer" ng-click="sortData('checkIn')">Giờ vào<i
+                            class="fa-solid fa-sort"></i></th>
+                    <th scope="col" class="cursor-pointer" ng-click="sortData('checkOut')">Giờ ra<i
+                            class="fa-solid fa-sort"></i></th>
+                    <th scope="col" class="cursor-pointer" ng-click="sortData('price')">Trạng thái<i
+                            class="fa-solid fa-sort"></i></th>
+                    <th scope="col" class="cursor-pointer">Thao tác</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="roomType in roomTypes">
-                    <td><input class="form-check-input" type="checkbox" ng-model="roomType.isSelected" ng-click="toggleSelection(roomType)"></td>
+                <tr ng-repeat="order in orderHotels">
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ roomType.id }}</td>
-                    <td>{{ roomType.roomTypeName }}</td>
-                    <td>{{ roomType.amountRoom }}</td>
-                    <td>{{ roomType.capacityAdults }}</td>
-                    <td>{{ roomType.capacityChildren }}</td>
-                    <td>{{ getBedTypeName(roomType.roomBedsById[0].bedTypeId) }}</td>
-                    <td>{{ formatCurrency(roomType.price) }}</td>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.customerName }}</td>
+                    <td>{{ order.customerPhone }}</td>
+                    <td>{{ order.capacityAdult }}</td>
+                    <td>{{ order.capacityKid }}</td>
+                    <td>{{ order.checkIn | formatDate }}</td>
+                    <td>{{ order.checkOut | formatDate }}</td>
+                    <td>
+                        <span class="status-dot"
+                              ng-class="{ 'text-warning': order.orderStatus === 0, 'text-success': order.orderStatus === 1, 'text-primary': order.orderStatus === 2, 'text-danger': order.orderStatus === 3, 'text-secondary': order.orderStatus === 4 }">
+        <i class="fas fa-circle" style="font-size: 8px"></i>
+    </span>
+                        <span ng-if="order.orderStatus === 0">Chưa thanh toán</span>
+                        <span ng-if="order.orderStatus === 1">Đã thanh toán</span>
+                        <span ng-if="order.orderStatus === 2">Đã xác nhận</span>
+                        <span ng-if="order.orderStatus === 3">Hoàn tất</span>
+                        <span ng-if="order.orderStatus === 4">Đã hủy</span>
+
+                    </td>
                     <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                        <button class="btn text-info" ng-click="openModal(roomType.id)"><i class="fa-regular fa-eye"></i></button>
+                        <button class="btn text-info" ng-click="openModal(roomType.id)"><i
+                                class="fa-regular fa-eye"></i></button>
                     </td>
                 </tr>
                 <tr ng-if="roomTypes.length === 0">
@@ -167,7 +187,9 @@
             </table>
             <div class="card-footer">
                 <div class="">
-                    <button class="btn text-danger float-start" ng-click="deleteSelectedItems()" ng-show="showDeleteButton" ng-disabled="selectedItems.length === 0">Xóa Tất Cả</button>
+                    <button class="btn text-danger float-start" ng-click="deleteSelectedItems()"
+                            ng-show="showDeleteButton" ng-disabled="selectedItems.length === 0">Xóa Tất Cả
+                    </button>
                     <div class="float-end">
                         {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                     </div>

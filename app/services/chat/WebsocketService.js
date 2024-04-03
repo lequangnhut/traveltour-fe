@@ -15,8 +15,6 @@ travel_app.service('WebSocketService', ['$rootScope', function($rootScope) {
             }, function(error) {
                 console.error("Error:", error);
             });
-        } else {
-            console.error("User or user information is missing.");
         }
     };
 

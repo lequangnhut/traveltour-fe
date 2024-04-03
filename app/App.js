@@ -732,6 +732,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/hotel/payment-hotel.html',
             controller: 'PaymentHotelController'
         })
+        .when("/hotel/hotel-details/payment/payment-successful/:orderStatus/:paymentMethod/:orderId", {
+            templateUrl: 'app/component/customers/views/pages/hotel/payment-hotel-success.html',
+            controller: 'PaymentSuccessHotelController'
+        })
         .when('/chat', {
             templateUrl: 'app/component/customers/views/pages/chat/chat.html',
             controller: 'ChatCustomerController',

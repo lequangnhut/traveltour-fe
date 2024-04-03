@@ -39,6 +39,8 @@
         <link rel="stylesheet" href="/assets/customers/css/visit-location.css">
         <link rel="stylesheet" href="/assets/customers/css/tour/booking-tour.css">
         <link href="/node_modules/mapbox-gl/dist/mapbox-gl.css" type="text/css" rel="stylesheet">
+        <link href="/node_modules/owl.carousel/dist/assets/owl.carousel.css" type="text/css" rel="stylesheet">
+        <link href="/node_modules/owl.carousel/dist/assets/owl.theme.default.css" type="text/css" rel="stylesheet">
 
         <script src="/assets/customers/vendor/jquery-3.6.0.min.js"></script>
         <script src="/assets/customers/vendor/slick/slick.min.js"></script>
@@ -56,6 +58,7 @@
         <script src="/lib/websocket/sockjs.min.js"></script>
         <script src="/lib/websocket/stomp.min.js"></script>
         <script src="/lib/angularjs/crypto-js.min.js"></script>
+        <script src="/node_modules/owl.carousel/dist/owl.carousel.js"></script>
     </div>
 
     <div ng-cloak ng-if="isManagerPage()">
@@ -101,7 +104,7 @@
         <script src="/assets/admin/assets/vendors/is/is.min.js"></script>
         <script src="/assets/admin/assets/vendors/fontawesome/all.min.js"></script>
         <script src="/assets/admin/assets/vendors/lodash/lodash.min.js"></script>
-        <script src="/assets/admin/lib/polyfill.io/v3/polyfill.min58be.js?features=window.scroll"></script>
+<!--        <script src="/assets/admin/lib/polyfill.io/v3/polyfill.min58be.js?features=window.scroll"></script>-->
         <script src="/assets/admin/assets/vendors/list.js/list.min.js"></script>
         <script src="/assets/admin/assets/vendors/feather-icons/feather.min.js"></script>
         <script src="/assets/admin/assets/vendors/dayjs/dayjs.min.js"></script>
@@ -113,6 +116,8 @@
         <script src="/lib/moment/moment.min.js"></script>
         <script src="/lib/websocket/sockjs.min.js"></script>
         <script src="/lib/websocket/stomp.min.js"></script>
+        <script src="/node_modules/owl.carousel/dist/owl.carousel.js"></script>
+
 
         <script>
             var phoenixIsRTL = window.config.config.phoenixIsRTL;
@@ -1629,6 +1634,7 @@
 <script src="/app/directives/PaymentMethod.js"></script>
 <script src="/app/directives/ResizeMap.js"></script>
 <script src="/app/directives/PaymentEmailInput.js"></script>
+<script src="/app/directives/owlCarousel.js"></script>
 
 <!--====== Service Utils ======-->
 <script src="app/services/auth/AuthService.js"></script>
@@ -1688,7 +1694,7 @@
 <script src="app/services/staff/CustomersGoOnTourServiceAD.js"></script>
 <script src="app/services/staff/BillServiceAD.js"></script>
 <script src="app/services/staff/PrintService.js"></script>
-
+<script src="app/services/agent/OrderHotelServiceAG.js"></script>
 <!--====== Agent Service ======-->
 <script src="app/services/agent/TransportBrandServiceAG.js"></script>
 <script src="app/services/agent/AgenciesServiceAG.js"></script>
@@ -1842,6 +1848,7 @@
 <script src="app/component/customers/controllers/hotel/HotelDetailController.js"></script>
 <script src="app/component/customers/controllers/hotel/PaymentHotelController.js"></script>
 <script src="app/component/customers/controllers/chat/ChatCustomerController.js"></script>
+<script src="app/component/customers/controllers/hotel/PaymentSuccessHotelController.js"></script>
 
 <!--====== Controller Customer Transport ======-->
 <script src="app/component/customers/controllers/transport/TransportCusController.js"></script>

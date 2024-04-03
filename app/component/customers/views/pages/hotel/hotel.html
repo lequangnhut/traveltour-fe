@@ -55,8 +55,6 @@
                                 class="btn btn-green" data-toggle="modal" data-target="#mapModal"
                                 ng-click="showMapModal()">Hiển thị trên Bản Đồ
                         </button>
-
-
                     </div>
                     <div class="content">
                         <div class="find-item mb-3">
@@ -67,8 +65,6 @@
                                        min="100000"
                                        max="30000000" step="100000">
                                 <p>{{ filler.priceFilter | number:0 }} VND</p>
-
-
                             </div>
                         </div>
                         <div class="find-item mb-3">
@@ -194,9 +190,9 @@
                 <div class="mb-3 w-100">
                     <div class="row single-event-item">
                         <div class="col-md-2">
-                            <label for="locationFilter" class="form-label">Địa điểm</label>
+                            <label for="locationFilter" class="form-label">Tìm kiếm</label>
                             <input type="text" class="form-control" id="locationFilter"
-                                   ng-model="filler.locationFilter">
+                                   ng-model="filler.locationFilter" ng-change="performSearch()" >
                         </div>
                         <div class="col-md-3">
                             <label for="checkInDateFiller" class="form-label">Ngày nhận phòng</label>
@@ -355,12 +351,10 @@
                                     <i class="fa-solid fa-circle "></i>
                                 </span>
                             </li>
-
                             <!-- Pagination Numbers -->
                             <li class="m-1" ng-repeat="n in getPaginationRange()">
                                 <a ng-class="{active: n === filler.page}" ng-click="setPage(n)">{{ n + 1 }}</a>
                             </li>
-
                             <!-- Ellipsis at the end -->
                             <li class="m-1" ng-if="filler.page < totalPages - 3 && totalPages > 5">
                                 <span style="font-size: 4px">
@@ -369,7 +363,6 @@
                                     <i class="fa-solid fa-circle "></i>
                                 </span>
                             </li>
-
                             <!-- Next Page -->
                             <li class="m-1" ng-class="{disabled: filler.page === totalPages - 1}">
                                 <a href="#" ng-click="setPage(filler.page + 1)"><span class="fas fa-arrow-right"></span></a>
