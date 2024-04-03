@@ -9,7 +9,14 @@
             </div>
         </div>
     </div>
-
+    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/hotel">Khách sạn</a></li>
+            <li class="breadcrumb-item"><a href="/hotel">Chi tiết khách sạn</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Thanh toán</li>
+        </ol>
+    </nav>
     <div class="row">
         <div class="col-lg-4 pe-2">
             <div class="card mb-3">
@@ -151,26 +158,22 @@
                                 Vui lòng nhập số điện thoại của bạn!
                             </small>
                         </div>
-                        <!-- Form Row 3 for Phone Number -->
-                        <div class="mb-3">
-                            <label for="customerCitizenCard" class="form-label fw-medium">Số căn cước của bạn <span
+                        <div class="mb-3 ">
+                            <label for="customerCitizenCard" class="form-label fw-medium">Bạn đặt phòng cho ai?<span
                                     class="text-danger">*</span></label>
-                            <input type="tel" class="form-control"
-                                   id="customerCitizenCard"
-                                   name="customerCitizenCard"
-                                   ng-model="paymentHotelCustomer.customerCitizenCard"
-                                   ng-class="{ 'is-invalid': paymentForm.customerCitizenCard.$invalid && paymentForm.customerCitizenCard.$touched,
-                                            'is-valid': paymentForm.customerCitizenCard.$valid && paymentForm.customerCitizenCard.$touched }"
-                                   required>
-                            <small class="text-danger"
-                                   ng-show="paymentForm.customerCitizenCard.$touched && paymentForm.customerCitizenCard.$error.required">
-                                Vui lòng nhập số căn cước của bạn!
-                            </small>
+                           <div class="d-flex align-items-center">
+                               <input type="radio" ng-model="visibilityOption" ng-value="'hide'" ng-change="toggleCardVisibility(visibilityOption)" />
+                               <label class="mx-2">Đặt cho bản thân</label>
+                               <div class="mx-2"></div>
+                               <input type="radio" ng-model="visibilityOption" ng-value="'show'" ng-change="toggleCardVisibility(visibilityOption)" />
+                               <label class="mx-2">Đặt cho người khác</label>
+                           </div>
+
                         </div>
                     </div>
                 </div>
 
-                <div class="card mb-3">
+                <div class="card mb-3" ng-show="isCardVisible">
                     <div class="card-header bg-green d-flex align-items-center">
                         <h5 class="card-title">Nhập thông tin các phòng mà bạn chọn</h5>
                     </div>
@@ -224,20 +227,10 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="customerOrderDetailsName{{$index}}" class="form-label fw-medium">Họ và tên
-                                                của bạn
-                                                <span
-                                                        class="text-danger">*</span></label>
+                                                của khách </label>
                                             <input type="text" class="form-control"
                                                    id="customerOrderDetailsName{{$index}}"
-                                                   name="customerOrderDetailsName{{$index}}"
-                                                   ng-model="roomType.paymentHotelCustomer.customerName"
-                                                   ng-class="{ 'is-invalid': paymentForm['customerOrderDetailsName' + $index].$invalid && paymentForm['customerOrderDetailsName' + $index].$touched,
-                   'is-valid': paymentForm['customerOrderDetailsName' + $index].$valid && paymentForm['customerOrderDetailsName' + $index].$touched }"
-                                                   required>
-                                            <small class="text-danger"
-                                                   ng-show="paymentForm['customerOrderDetailsName' + $index].$touched && paymentForm['customerOrderDetailsName' + $index].$error.required">
-                                                Vui lòng nhập tên người nhận phòng!
-                                            </small>
+                                                   ng-model="roomType.paymentHotelCustomer.customerName"/>
 
                                         </div>
                                     </div>
@@ -318,7 +311,11 @@
                             </li>
                             <li class="d-flex align-items-start">
                                 <i class="fa-solid fa-check text-success me-2 mt-1"></i>
-                                <span>Bạn có thể hủy phòng trước 10 ngày tính từ ngày nhận phòng {{ freeCancelDate | date:'dd-MM-yyyy' }}</span>
+                                <span>Bạn có thể hủy phòng trước 5 ngày tính từ ngày nhận phòng {{ freeCancelDate | date:'dd-MM-yyyy' }}</span>
+                            </li>
+                            <li class="d-flex align-items-start">
+                                <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                <span>Bạn vui lòng thanh toán trước ngày nhận phòng để khách sạn sắp xếp phòng cho bạn</span>
                             </li>
                         </ul>
                     </div>

@@ -1,18 +1,64 @@
+<div ng-include="'app/component/customers/views/components/loader-search.html'"></div>
 <!--====== Start Blog Details Section ======-->
 <section class="blog-details-section pt-100 pb-70">
     <div class="container">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/home">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="/hotel">Khách sạn</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chi tiết khách sạn</li>
+            </ol>
+        </nav>
         <div class="row">
             <div class="col-xl-9">
                 <!--=== Blog Details Wrapper ===-->
                 <div class="blog-details-wrapper pr-lg-50">
                     <div class="blog-post mb-60 wow fadeInUp">
                         <div class="post-thumbnail">
-                            <img src="/assets/customers/images/blog/blog-demo.png" alt="Blog Image">
+                            <div class="row mb-3">
+                                <div class="col-8">
+                                    <img ng-src="{{ roomTypes[0].roomTypeAvatar }}" style="height: 100%"
+                                         alt="Main Image">
+                                </div>
+                                <div class="col-4">
+                                    <div class="">
+                                        <div style="height: 50%">
+                                            <img class="img-fluid mb-3" ng-src="{{ listImageroomType[4].roomTypeImg }}"
+                                                 alt="Main Image" loading="lazy" ng-if="listImageroomType[4]">
+                                        </div>
+                                        <div style="height: 50%">
+                                            <img class="img-fluid" ng-src="{{ listImageroomType[5].roomTypeImg }}"
+                                                 alt="Main Image" loading="lazy" ng-if="listImageroomType[5]">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" ng-repeat="image in listImageroomType.slice(0, 3)">
+                                    <div class="thumbnail" ng-if="image">
+                                        <img ng-src="{{ image.roomTypeImg }}" class="mb-3" style="height: 130px"
+                                             alt="{{ image.roomTypeImg }}" loading="lazy">
+                                    </div>
+                                </div>
+                                <div class="col-3 hover-bg-image" style="cursor: pointer"
+                                     ng-show="listImageroomType.length > 5" ng-if="listImageroomType[6]" ng-click="showImageHotelModal()">
+                                    <div class="thumbnail position-relative w-100 h-100">
+                                        <div class="div">
+                                            <img ng-src="{{listImageroomType[6].roomTypeImg}}" style="height: 130px"
+                                                 alt="More Images" class="position-absolute mb-3" loading="lazy">
+                                            <p class="position-absolute text-white fs-4 center-position">
+                                                + {{ listImageroomType.length - 6 }} ảnh</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                         <div class="post-meta text-center pt-25 pb-15 mb-25">
                             <span><span class="fas fa-user"></span><a href="#">Matthew N. Davis</a></span>
                             <span><span class="fas fa-calendar-alt"></span><a href="#">November 23,2022</a></span>
-                            <span><span class="fas fa-comment"></span><a ng-click="redirectToChatHotel(roomTypes[0].hotelsByHotelId.agenciesId)">Nhắn tin</a></span>
+                            <span><span class="fas fa-comment cursor-pointer"></span><a
+                                    ng-click="redirectToChatHotel(roomTypes[0].hotelsByHotelId.agenciesId)">Nhắn tin</a></span>
                         </div>
                         <div class="main-post">
                             <div class="entry-content">
@@ -21,13 +67,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="sidebar-widget category-widget mb-30 wow fadeInUp">
-                                            <div class="h5">Các tiện nghi của khách sạn</div>
-                                            <div ng-repeat="roomUtilitiesHotels in roomTypes[0].hotelsByHotelId.placeUtilities">
-                                                <ul class="category-nav">
-                                                    <li><a href="#">{{ roomUtilitiesHotels.placeUtilitiesName }}</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -67,47 +107,39 @@
                                         </div>
                                     </div>
                                 </div>
-                                <blockquote>
-                                    <table class="table" style="font-size: 12px">
+                                <blockquote class="fs-content">
+                                    <table class="table custom-table">
                                         <thead>
                                         <tr class="btn-green">
-                                            <td>Loại chỗ nghỉ</td>
-                                            <td>Số lượng khách</td>
-                                            <td>Giá hôm nay</td>
-                                            <td>Các lựa chọn</td>
-                                            <td>Chọn phòng</td>
-                                            <td></td>
+                                            <th>Loại chỗ nghỉ</th>
+                                            <th>Số lượng khách</th>
+                                            <th>Giá hôm nay</th>
+                                            <th>Các lựa chọn</th>
+                                            <th>Chọn phòng</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody ng-repeat="roomType in roomTypes">
                                         <tr>
                                             <td>
-                                                <div class="h5">{{ roomType.roomTypeName }}</div>
-                                                <div>Loại
-                                                    giường: {{ getRoomBedsName(roomType.roomBedsById[0].bedTypeId) }}
-                                                </div>
-                                                <div ng-if="roomType.amountRoom <= 10 && roomType.amountRoom > 0"
-                                                     class="text-danger fw-medium">
-                                                    <i class="fa-solid fa-exclamation"></i> Chỉ
-                                                    còn {{ roomType.amountRoom }} phòng với giá này trên trang của chúng
-                                                    tôi
-                                                </div>
-                                                <div ng-if="roomType.amountRoom === 0"
-                                                     class="text-danger fw-medium">
-                                                    <i class="fa-solid fa-exclamation"></i> Phòng này đã hết, Nhưng bạn
-                                                    có
-                                                    thể chọn phòng khác của khách sạn
+                                                <div class="room-type">
+                                                    <div class="h5 text-green" ng-click="showInfoRoomType(roomType.id)">{{ roomType.roomTypeName }}</div>
+                                                    <div>Loại giường: {{ getRoomBedsName(roomType.roomBedsById[0].bedTypeId) }}</div>
+                                                    <div ng-repeat="roomUtilities in roomType.roomUtilities">
+                                                        <ul class="nav flex-column">
+                                                            <li class="nav-item"><i class="fas fa-check-circle"></i>
+                                                                <span ng-bind="roomUtilities.roomUtilitiesName"></span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div>{{ filler.capacityAdultsFilter }} người lớn</div>
-                                                <div>{{ filler.capacityChildrenFilter }} trẻ em</div>
+                                                <div>{{ roomType.capacityAdults }} người lớn</div>
+                                                <div>{{ roomType.capacityChildren }} trẻ em</div>
                                             </td>
                                             <td>
-                                                <div class="h6"
-                                                     style="width: 150px">{{ roomType.price | removeCurrencySymbol }}
-                                                    VND
-                                                </div>
+                                                <div class="h6">{{ roomType.price | removeCurrencySymbol }} VND</div>
                                                 <div>Đã bao gồm thuế và phí</div>
                                             </td>
                                             <td>
@@ -117,23 +149,23 @@
                                                 <div ng-if="roomType.freeCancellation" class="text-green">
                                                     <i class="fa-solid fa-check"></i> Miễn phí hủy phòng
                                                 </div>
+                                                <div ng-if="roomType.amountRoom <= 10 && roomType.amountRoom > 0" class="text-danger fw-medium">
+                                                    <i class="fa-solid fa-exclamation"></i> Chỉ còn {{ roomType.amountRoom }} phòng với giá này trên trang của chúng tôi
+                                                </div>
+                                                <div ng-if="roomType.amountRoom === 0" class="text-danger fw-medium">
+                                                    <i class="fa-solid fa-exclamation"></i> Phòng này đã hết, Nhưng bạn có thể chọn phòng khác của khách sạn
+                                                </div>
                                             </td>
                                             <td>
-                                                <select class="form-select" aria-label="selectAmountRoom"
-                                                        style="font-size: 13px; width: 60px"
-                                                        ng-model="roomType.amountRoomSelected"
-                                                        ng-change="selectedRoomType(roomType.amountRoomSelected, roomType)"
-                                                        ng-options="room as room + '' + ' (' + (room * roomType.price | removeCurrencySymbol) + ' VND)' for room in generateRoomNumbers(roomType.amountRoom)">
+                                                <select class="form-select" aria-label="selectAmountRoom" style="font-size: 13px; width: 60px" ng-model="roomType.amountRoomSelected" ng-change="selectedRoomType(roomType.amountRoomSelected, roomType)" ng-options="room as room + '' + ' (' + (room * roomType.price | removeCurrencySymbol) + ' VND)' for room in generateRoomNumbers(roomType.amountRoom)">
                                                     <option value="">0</option>
                                                 </select>
                                             </td>
                                         </tr>
-                                        <tr>
-
-                                        </tr>
                                         </tbody>
                                     </table>
                                 </blockquote>
+
                             </div>
                         </div>
                         <div class="cart mt-5" ng-if="roomTypeSelected.length > 0 ">
@@ -150,8 +182,8 @@
                                 <tbody>
                                 <tr ng-repeat="roomType in roomTypeSelected">
                                     <th class="d-flex">
-                                        <img src="{{roomType.roomTypeAvatar}}" class="img-fluid" width="100"
-                                             onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
+                                        <img ng-src="{{roomType.roomTypeAvatar}}" class="img-fluid" width="100"
+                                             onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'" alt="roomTypeAvatar"/>
                                         <div style="margin-left: 10px">
                                             <div class="h5">{{ roomType.roomTypeName }}</div>
                                             <p class="fw-light">{{ getRoomBedsName(roomType.roomBedsById[0].bedTypeId) }}</p>
@@ -187,7 +219,8 @@
                                         </div>
                                         <div class="h6">{{ roomTypeSelected[0].hotelsByHotelId.freeCancellationDate | date: 'dd/MM/yyyy' }}</div>
                                     <td colspan="1" class="text-end">
-                                        <button class="btn btn-green" ng-click="paymentHotelNow()">Thanh toán ngay</button>
+                                        <button class="btn btn-green" ng-click="paymentHotelNow()">Thanh toán ngay
+                                        </button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -352,21 +385,22 @@
                 <div class="sidebar-widget-area">
                     <!--=== Category Widget ===-->
                     <div class="sidebar-widget category-widget mb-30 wow fadeInUp">
-                        <h4 class="widget-title">Liên hệ đặt khách sạn</h4>
+                        <p class="fw-medium">Điểm nổi bật của khách sạn</p>
                         <ul class="category-nav">
-                            <li><a href="#">Dịch vụ khách sạn an toàn<span class="fas fa-arrow-right"></span></a></li>
-                            <li><a href="#">Hotline: 19008622<span class="fas fa-arrow-right"></span></a></li>
-                            <li><a href="#">Email: TravelTour&#64;gmail.com<span class="fas fa-arrow-right"></span></a>
+                            <li ng-repeat="roomUtilitiesHotels in roomTypes[0].hotelsByHotelId.placeUtilities">
+                                <p style="font-size: 13px">
+                                    <span render-html html-text="roomUtilitiesHotels.placeUtilitiesIcon"> <i class="fas fa-check-circle"></i></span>
+                                    <span ng-bind="roomUtilitiesHotels.placeUtilitiesName"></span>
+                                </p>
                             </li>
-                            <li><a href="#">Địa chỉ: Ninh Kiều Cần Thơ<span class="fas fa-arrow-right"></span></a></li>
                         </ul>
                     </div>
                     <!--=== Recent Post Widget ===-->
                     <div class="sidebar-widget recent-post-widget mb-40 wow fadeInUp">
-                        <h4 class="widget-title">Khách sạn vừa xem</h4>
+                        <h4 class="widget-title">Phòng vừa xem</h4>
                         <ul class="recent-post-list">
-                            <li class="post-thumbnail-content" ng-repeat="roomType in roomTypeViewed"
-                                ng-if="roomTypeViewed.length >= 0">
+                            <li class="post-thumbnail-content fs-content" ng-repeat="roomType in roomTypeViewed"
+                                ng-if="roomTypeViewed.length >= 0" >
                                 <img src="{{roomType.roomTypeId.roomTypeAvatar}}" class="img-fluid object-fit-cover"
                                      style="max-width: 80px; max-height: 80px"
                                      onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
@@ -458,3 +492,95 @@
         </div>
     </div>
 </section><!--====== End Gallery Section ======-->
+
+<div id="imageHotelModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-scrollable" style="max-width: 90%; height: 90vh">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mapModalLabel" ng-bind="roomTypes[0].hotelsByHotelId.hotelName"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button style="margin: 24px 24px 0 0" type="button" class="btn-close" data-dismiss="modal"
+                            ng-click="closeImageHotelModal()"></button>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <ul class="nav justify-content-center">
+                    <li class="nav-item text-center" ng-class="{ 'active': activeTabIndex === -1 }" ng-click="updateRoomImages(-1)">
+                        <img src="{{roomTypes[0].hotelsByHotelId.hotelAvatar}}" class="img-fluid object-fit-cover" style="max-width: 80px; max-height: 80px; border-radius: 8px">
+                        <a class="nav-link active" aria-current="page" href="#">Tổng quan</a>
+                    </li>
+                    <li class="nav-item text-center" ng-class="{ 'active': $index === activeTabIndex }" ng-click="updateRoomImages($index)" ng-repeat="roomType in roomTypes">
+                        <img src="{{roomType.roomTypeAvatar}}" class="img-fluid object-fit-cover" style="max-width: 80px; max-height: 80px; border-radius: 8px">
+                        <a class="nav-link text-black" ng-bind="roomType.roomTypeName"></a>
+                    </li>
+                </ul>
+                <div class="hotel-image">
+                    <div class="row">
+                        <div class="image-list col-xl-3 mb-4" ng-repeat="image in listImage">
+                            <img loading="lazy" src="{{image.roomTypeImg}}" class="img-fluid object-fit-cover" style="width: 100%; max-height: 300px; border-radius: 8px" alt="image-hotel">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3 d-flex justify-content-center pb-5">
+                <button type="button" class="btn btn-green" style="padding: 8px 50px; border-radius: 30px"
+                        ng-click="closeImageHotelModal()">Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="infoRoomType" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-scrollable" style="max-width: 80%; height: 80vh">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="" ng-bind="roomTypes[0].hotelsByHotelId.hotelName"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button style="margin: 24px 24px 0 0" type="button" class="btn-close" data-dismiss="modal"
+                            ng-click="closeInfoRoomTypeModal()"></button>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <div class="hotel-image">
+                    <div class="row">
+                        <div class="image-list col-lg-6 mb-4">
+                            <div class="owl-carousel" owl-carousel>
+                                <div class="item" ng-repeat="image in infoRoomType.roomImagesById">
+                                    <img ng-src="{{image.roomTypeImg}}" style="max-height: 500px" alt="image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 px-2">
+                            <div class="h5">Các dịch vụ của khách sạn mà bạn có</div>
+                            <ul>
+                                <li ng-repeat="service in infoRoomType.hotelsByHotelId.placeUtilities">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div><i class="fas fa-check-circle"></i> <span
+                                                ng-bind="service.placeUtilitiesName"></span></div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="h5">Các dịch vụ của phòng này</div>
+                            <ul>
+                                <li ng-repeat="service in infoRoomType.roomUtilities">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div><i class="fas fa-check-circle"></i> <span
+                                                ng-bind="service.roomUtilitiesName"></span></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3 d-flex justify-content-center pb-5">
+                <button type="button" class="btn btn-green" style="padding: 8px 50px; border-radius: 30px"
+                        ng-click="closeInfoRoomTypeModal()">Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

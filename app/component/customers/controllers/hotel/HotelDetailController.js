@@ -1,6 +1,7 @@
-travel_app.controller('HotelDetailController', function ($scope, $anchorScroll, $window, $routeParams, $location, HotelServiceCT, RoomTypeServiceCT, AgenciesServiceAG, Base64ObjectService) {
+travel_app.controller('HotelDetailController', function ($scope, $anchorScroll,$timeout, $window, $sce, $routeParams, $location, HotelServiceCT, RoomTypeServiceCT,LocalStorageService, AgenciesServiceAG, Base64ObjectService) {
     $scope.encryptedData = $routeParams.encryptedData;
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
+    var user = JSON.parse(window.localStorage.getItem('user'));
 
     $anchorScroll();
 
@@ -79,6 +80,9 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll, 
     $scope.filler.checkOutDateFiller = new Date($scope.filler.checkOutDateFiller);
     console.log(JSON.parse(atob($scope.encryptedData)))
 
+    $scope.activeTabIndex = 0;
+
+    $scope.listImage = {}
     $scope.$on('$routeChangeSuccess', function () {
         $('.slider-active-5-item').slick({
             dots: false,
@@ -114,12 +118,22 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll, 
      * Phương thức tìm kiếm loại phòng qua các điều kiện lọc
      */
     RoomTypeServiceCT.findAllRoomTypesByEncryptedData($scope.encryptedData).then(function successCallback(response) {
+        $scope.listImageroomType = []
         $scope.loading = true;
         if (response.status === 200) {
             $scope.roomTypes = response.data.data;
             $scope.countSize = response.data.totalPages;
+            console.log(response.data.data)
             $scope.encryptedData = btoa(JSON.stringify($scope.filler));
+
+            $scope.countRoomTypeImage = 0
             console.log($scope.roomTypes)
+            $scope.roomTypes.forEach(function (roomType) {
+                console.log(roomType.roomImagesById.length)
+                $scope.countRoomTypeImage += roomType.roomImagesById.length;
+                $scope.listImageroomType.push(...roomType.roomImagesById);
+                $scope.listImage = $scope.listImageroomType
+            })
         } else {
             $location.path('/admin/internal-server-error');
         }
@@ -130,8 +144,9 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll, 
     /**
      * Phương thức tìm kiếm loại phòng qua các điều kiện lọc
      */
+
     $scope.searchRoomTypes = function () {
-        RoomTypeServiceCT.findAllRoomTypesByEncryptedData($scope.encryptedData).then(function successCallback(response) {
+        RoomTypeServiceCT.findAllRoomTypesByEncryptedData().then(function successCallback(response) {
             $scope.loading = true;
             if (response.status === 200) {
                 $scope.roomTypes = response.data.data;
@@ -266,8 +281,7 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll, 
                 $scope.roomTypeSelected[index].amountRoomSelected = selectedRoomType;
             }
         }
-
-        console.log($scope.roomTypeSelected);
+        console.log($scope.roomTypeSelected)
     };
 
 
@@ -305,13 +319,99 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll, 
             if (response.status === 200) {
                 $scope.agencyId = response.data.data.userId;
                 var encodedId  = btoa($scope.agencyId);
-                console.log($scope.agencyId)
-                $window.location.href = '/chat/' + encodedId;
+                console.log(user)
+                if(user == null) {
+                    LocalStorageService.set("redirectAfterLogin", "/hotel/hotel-details");
+                    $location.path('/sign-in');
+                }else{
+                    $window.location.href = '/chat/' + encodedId;
+                }
+
             } else {
                 $location.path('/admin/internal-server-error');
             }
         })
 
     }
+
+    this.mainImage = 'main-image.jpg'; // Ảnh chính mặc định
+
+    this.thumbnailImages = [
+        { src: 'image1.jpg', alt: 'Thumbnail 1' },
+        { src: 'image2.jpg', alt: 'Thumbnail 2' },
+        { src: 'image3.jpg', alt: 'Thumbnail 3' },
+        { src: 'image4.jpg', alt: 'Thumbnail 4' }
+    ];
+
+    this.changeMainImage = function(imageSrc) {
+        this.mainImage = imageSrc;
+    };
+
+
+    $scope.trustHtmls = function(html) {
+        $timeout(function() {
+            return $sce.trustAsHtml(html);
+        }, 100)
+
+    };
+
+    /**
+     * Phương thức hiển thị modal
+     */
+    $scope.showImageHotelModal = function () {
+        $('#imageHotelModal').modal('show');
+    };
+
+    /**
+     * Phương thức đóng modal
+     */
+    $scope.closeImageHotelModal = function () {
+        $('#imageHotelModal').modal('hide');
+    };
+
+    $scope.updateRoomImages = function(roomTypeIndex) {
+        $scope.loading = true;
+        console.log(roomTypeIndex);
+
+        var promise = new Promise(function(resolve, reject) {
+            if (roomTypeIndex === -1) {
+                $scope.listImage = $scope.listImageroomType;
+                resolve();
+            } else {
+                $scope.listImage = $scope.roomTypes[roomTypeIndex].roomImagesById;
+                resolve();
+            }
+        });
+
+        promise.then(function() {
+            $scope.loading = false;
+        });
+    };
+
+
+    /**
+     * Phương thức đóng modal
+     */
+    $scope.closeInfoRoomTypeModal = function () {
+        $('#infoRoomType').modal('hide');
+    };
+
+    $scope.showInfoRoomType = function (id) {
+        $('#infoRoomType').modal('show');
+
+        return new Promise(function(resolve, reject) {
+            var roomType = $scope.roomTypes.find(function(roomType) {
+                return roomType.id === id;
+            });
+            console.log(roomType)
+
+            if (roomType) {
+                $scope.infoRoomType = roomType;
+                resolve(roomType);
+            } else {
+                reject('Không tìm thấy phòng với ID: ' + id);
+            }
+        })
+    };
 
 });

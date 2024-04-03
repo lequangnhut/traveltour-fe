@@ -37825,3 +37825,11 @@ a[href].bg-200:hover, a[href].bg-200:focus {
     cursor: -webkit-grabbing;
     cursor: grabbing
 }
+
+.order-status {
+    display: flex;
+    align-items: center;
+}
+.status-dot {
+    margin-right: 8px;
+}

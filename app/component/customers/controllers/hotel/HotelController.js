@@ -604,6 +604,27 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
     }
     $scope.findAllRoomTypesByFillerClick()
 
+    var performSearchPromise;
+    $scope.performSearch = function() {
+        if (performSearchPromise) {
+            clearTimeout(performSearchPromise);
+        }
+        performSearchPromise = setTimeout(function() {
+            HotelServiceCT.findAllRoomTypesByFillter($scope.filler).then(function successCallback(response) {
+                if (response.status === 200) {
+                    $scope.roomTypes = response.data.data;
+                    $scope.totalPages = Math.ceil(response.data.totalPages / $scope.filler.size);
+                    $scope.countSize = response.data.totalPages;
+                    $scope.daysBetween = Math.floor(($scope.filler.checkOutDateFiller - $scope.filler.checkInDateFiller) / (1000 * 60 * 60 * 24));
+                    $scope.addMarkers($scope.roomTypes);
+                    $scope.encryptedData = btoa(JSON.stringify($scope.filler));
+                } else {
+                    $location.path('/admin/internal-server-error');
+                }
+            });
+        }, 500); // Delay 500ms trước khi gửi yêu cầu tìm kiếm
+    };
+
     /**
      * Phương thức thay đổi id loại khách sạn thành tên loại khách sạn
      * @param hotelTypeId

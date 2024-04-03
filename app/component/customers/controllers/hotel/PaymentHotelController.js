@@ -1,4 +1,4 @@
-travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll, $window,$location, $timeout, $routeParams, $rootScope,AuthService, WebSocketService, LocalStorageService,GenerateCodePayService, OrderHotelService, Base64ObjectService, HotelServiceCT, RoomTypeServiceCT, PaymentMethodServiceCT) {
+travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll, $window, $location, $timeout, $routeParams, $rootScope, AuthService, WebSocketService, LocalStorageService, GenerateCodePayService, OrderHotelService, Base64ObjectService, HotelServiceCT, RoomTypeServiceCT, PaymentMethodServiceCT) {
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
     $anchorScroll();
@@ -148,18 +148,18 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
 
         // Ngày hủy miễn phí
         $scope.checkInDateFiller = new Date($scope.filler.checkInDateFiller); // Chuyển đổi sang kiểu Date
-        $scope.freeCancelDate = new Date($scope.checkInDateFiller.setDate($scope.checkInDateFiller.getDate() - 10)); // Trừ 10 ngày
+        $scope.freeCancelDate = new Date($scope.checkInDateFiller.setDate($scope.checkInDateFiller.getDate() - 5)); // Trừ 10 ngày
 
         // Tính số ngày còn lại đến ngày hủy miễn phí
         $scope.remainingDays = Math.ceil(($scope.freeCancelDate - $scope.currentDate) / (1000 * 60 * 60 * 24));
 
         $scope.cancellationFee = 0;
-        if ($scope.remainingDays > 10) {
+        if ($scope.remainingDays > 5) {
             $scope.cancellationFee = 0;
-        } else if ($scope.remainingDays > 7) {
-            $scope.cancellationFee = 30;
-        } else if ($scope.remainingDays > 5) {
-            $scope.cancellationFee = 70;
+        } else if ($scope.remainingDays > 4) {
+            $scope.cancellationFee = 50;
+        } else if ($scope.remainingDays > 1) {
+            $scope.cancellationFee = 80;
         } else {
             $scope.cancellationFee = 100;
         }
@@ -178,25 +178,17 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
         }
     })
 
-    // window.addEventListener('beforeunload', function (event) {
-    //     var confirmationMessage = "Bạn có chắc chắn muốn rời khỏi trang?";
-    //
-    //     (event || window.event).returnValue = confirmationMessage;
-    //     return confirmationMessage;
-    // });
-
-    // window.addEventListener('popstate', function (event) {
-    //     var confirmationMessage = "Bạn có chắc chắn muốn rời khỏi trang?";
-    //     if (!confirm(confirmationMessage)) {
-    //         history.pushState(null, null, window.location.href);
-    //         event.preventDefault();
-    //     }
-    // });
-
     $scope.changePaymentMethod = function (paymentMethod) {
         $scope.paymentHotelCustomer.paymentMethod = paymentMethod;
-        console.log($scope.paymentHotelCustomer);
+        console.log($scope.paymentHotelCustomer.paymentMethod);
     }
+
+    $scope.visibilityOption = 'hide';
+
+    $scope.toggleCardVisibility = function (value) {
+        $scope.isCardVisible = (value === 'show');
+    };
+
 
     $scope.submitPaymentHotel = function (paymentMethod) {
         if (paymentMethod === 'TTTT') {
@@ -216,7 +208,7 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
     $scope.directPayment = function () {
         $scope.isLoading = true;
         $scope.orderRoomType = {
-            id: GenerateCodePayService.generateCodeBooking($scope.paymentHotelCustomer.paymentMethods, $scope.roomTypes.id),
+            id: GenerateCodePayService.generateCodePayment($scope.paymentHotelCustomer.paymentMethod),
             customerName: $scope.paymentHotelCustomer.customerName,
             customerCitizenCard: $scope.paymentHotelCustomer.customerCitizenCard,
             customerPhone: $scope.paymentHotelCustomer.customerPhone,
@@ -238,35 +230,51 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
             }
         }
 
-        $scope.orderDetailsHotel = $scope.roomTypes.map(function(roomType) {
-            return {
+        $scope.orderDetailsHotel = $scope.roomTypes.map(function (roomType) {
+            var orderDetail = {
                 roomTypeId: roomType.id,
-                customerName: roomType.paymentHotelCustomer.customerName,
-                customerEmail: roomType.paymentHotelCustomer.customerEmail,
-                amount: roomType.amountRoomSelected,
+                amount: roomType.amountRoomSelected
             };
+
+            if ($scope.visibilityOption === 'show') {
+                orderDetail.customerName = roomType.paymentHotelCustomer.customerName;
+                orderDetail.customerEmail = roomType.paymentHotelCustomer.customerEmail;
+            }
+
+            return orderDetail;
         });
 
-
-        console.log($scope.orderRoomType);
-        console.log($scope.orderDetailsHotel);
         OrderHotelService.createOrderHotel($scope.orderRoomType, $scope.orderDetailsHotel).then(function successCallBack(response) {
-            if (response.status === 200) {
-                WebSocketService.sendMessage('createOrder');
+            if (response.data.status === '200') {
+                let baseUrl = response.data.data
                 toastAlert('success', 'Đặt khách sạn thành công !');
-                $location.path('/hotel');
+                $scope.playSuccessSound()
+                $location.path(baseUrl);
+            } else if (response.data.status === '400') {
+                Swal.fire({
+                    icon: "error",
+                    title: "Đặt phòng thất bại",
+                    text: response.data.message,
+                });
+                $scope.playErrorSound()
+                $location.path('/hotel')
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Đặt phòng thất bại",
+                    text: 'Vui lòng thử lại sau ít phút',
+                });
+                $scope.playErrorSound()
             }
         }).finally(function () {
             $scope.isLoading = false;
         });
-
-
     }
 
     $scope.paymentVNPay = function () {
         $scope.isLoading = true;
         $scope.orderRoomType = {
-            id: GenerateCodePayService.generateCodeBooking($scope.paymentHotelCustomer.paymentMethods, $scope.roomTypes.id),
+            id: GenerateCodePayService.generateCodePayment($scope.paymentHotelCustomer.paymentMethod),
             customerName: $scope.paymentHotelCustomer.customerName,
             customerCitizenCard: $scope.paymentHotelCustomer.customerCitizenCard,
             customerPhone: $scope.paymentHotelCustomer.customerPhone,
@@ -288,14 +296,18 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
             }
         }
 
-        $scope.orderDetailsHotel = $scope.roomTypes.map(function(roomType) {
-            return {
+        $scope.orderDetailsHotel = $scope.roomTypes.map(function (roomType) {
+            var orderDetail = {
                 roomTypeId: roomType.id,
-                customerName: roomType.paymentHotelCustomer.customerName,
-                customerEmail: roomType.paymentHotelCustomer.customerEmail,
-                amount: roomType.amountRoomSelected,
-                unitPrice: roomType.price
+                amount: roomType.amountRoomSelected
             };
+
+            if ($scope.visibilityOption === 'show') {
+                orderDetail.customerName = roomType.paymentHotelCustomer.customerName;
+                orderDetail.customerEmail = roomType.paymentHotelCustomer.customerEmail;
+            }
+
+            return orderDetail;
         });
 
 
@@ -304,7 +316,23 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
         OrderHotelService.createOrderHotelWithVNPay($scope.orderRoomType, $scope.orderDetailsHotel).then(function successCallBack(response) {
             if (response.status === 200) {
                 $window.location.href = response.data.redirectUrl;
+            } else if (response.status === 400) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Đặt phòng thất bại",
+                    text: "Phòng này đã có người nhanh tay hơn đặt trước bạn rồi, nhưng đừng lo bạn có thể chọn phòng khác",
+                });
+                $scope.playErrorSound()
+                $location.path('/hotel')
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Xảy ra lỗi khi đặt phòng",
+                    text: "Bạn có thể thử lại sau ít phút hoặc liên hệ với chúng tôi",
+                });
+                $scope.playErrorSound()
             }
+            console.log(response)
         }).finally(function () {
             $scope.isLoading = false;
         });
