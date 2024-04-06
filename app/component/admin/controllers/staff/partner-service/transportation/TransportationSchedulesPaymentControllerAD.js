@@ -23,7 +23,7 @@ travel_app.controller('TransportationSchedulesPaymentControllerAD',
 
         const Confirm = () => {
             let orderTransportation = {
-                id: GenerateCodePayService.generateCodeBookingStaff(transportationScheduleId),
+                id: GenerateCodePayService.generateCodeBooking('VPO', transportationScheduleId),
                 userId: $scope.tourGuide.id,
                 transportationScheduleId: transportationScheduleId,
                 customerName: $scope.tourGuide.fullName,
@@ -35,6 +35,7 @@ travel_app.controller('TransportationSchedulesPaymentControllerAD',
                 paymentMethod: 0,
                 dateCreated: new Date(),
                 orderStatus: 0,
+                orderCode: GenerateCodePayService.generateCodePayment('VPO')
             }
 
             const dataOrderTransportation = new FormData();

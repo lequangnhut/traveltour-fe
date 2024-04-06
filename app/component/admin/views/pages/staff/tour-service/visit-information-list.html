@@ -260,14 +260,21 @@
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <h5 class="card-title">Thông tin thanh toán</h5>
-                                    <div class="mb-3">
-                                        <label for="pay" class="form-label">Chọn phương thức thanh toán</label>
-                                        <select id="pay" class="form-control" ng-model="payment">
-                                            <option selected ng-value="0">Thanh toán tiền mặt</option>
-                                            <option ng-value="1">Thanh toán VNPay</option>
-                                            <option ng-value="2">Thanh toán ZaloPay</option>
-                                            <option ng-value="3">Thanh toán Momo</option>
-                                        </select>
+                                    <div class="">
+                                        <div class=" col-12 pe-0">
+                                            <p class="mx-2 my-1 fw-medium float-right">Phương thức thanh toán:
+                                                <span class="fw-medium color-green">
+                                            Thanh toán tiền mặt
+                                        </span>
+                                            </p>
+                                        </div>
+                                        <!--                                        <label for="pay" class="form-label">Chọn phương thức thanh toán</label>-->
+                                        <!--                                        <select id="pay" class="form-control" ng-model="payment">-->
+                                        <!--                                            <option selected ng-value="0">Thanh toán tiền mặt</option>-->
+                                        <!--                                            <option ng-value="1">Thanh toán VNPay</option>-->
+                                        <!--                                            <option ng-value="2">Thanh toán ZaloPay</option>-->
+                                        <!--                                            <option ng-value="3">Thanh toán Momo</option>-->
+                                        <!--                                        </select>-->
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
@@ -304,34 +311,6 @@
                 </button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal" ng-if="tourGuide.orderStatus != 2"
                         ng-click="deactivateBookingTourVisit(visit.id)">Hủy đơn
-                </button>
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Thoát</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--modal-->
-<div class="modal" id="modal-pay" tabindex="-1" role="dialog" aria-labelledby="payModalLabel" aria-label="Pay"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-white">
-                <h5 class="modal-title" id="payModalLabel">Thanh toán</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <label for="pay" class="form-label">Chọn phương thức thanh toán</label>
-                <select id="pay" class="form-control" ng-model="payment">
-                    <option selected ng-value="0">Thanh toán tiền mặt</option>
-                    <option ng-value="1">Thanh toán VNPay</option>
-                    <option ng-value="2">Thanh toán ZaloPay</option>
-                    <option ng-value="3">Thanh toán Momo</option>
-                </select>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal"
-                        ng-click="pay()">Xác nhận thanh toán
                 </button>
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Thoát</button>
             </div>

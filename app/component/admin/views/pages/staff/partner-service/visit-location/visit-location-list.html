@@ -107,11 +107,6 @@
                 <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
-                    <th>
-                        <span>
-                            <input class="form-check-input checkbox-all" type="checkbox" value="">
-                        </span>
-                    </th>
                     <th>#</th>
                     <th>
                         <div class="icon-left">Ảnh
@@ -137,7 +132,6 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="visitLocation in visitLocationList">
-                    <td><span><input class="form-check-input" type="checkbox" value=""></span></td>
                     <td>{{ $index + 1 }}</td>
                     <td>
                         <img ng-src="{{ visitLocation.visitLocationImage || 'Đang tải...' }}"

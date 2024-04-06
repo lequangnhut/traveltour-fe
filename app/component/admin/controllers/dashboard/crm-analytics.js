@@ -1,4 +1,4 @@
-travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $timeout, $interval, RevenueServiceAD) {
+travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $location, $timeout, $interval, RevenueServiceAD, RevenueServiceStaff, ToursTypeServiceAD) {
 
     const {merge: merge} = window._;
     const echartSetOption = (e, t, o, n) => {
@@ -17,22 +17,19 @@ travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $timeou
             "phoenixTheme" === n && e.setOption(window._.merge(o(), t));
         }));
     };
-    const echartTabs = document.querySelectorAll("[data-tab-has-echarts]");
-    echartTabs && echartTabs.forEach((e => {
-        e.addEventListener("shown.bs.tab", (e => {
-            const t = e.target, {hash: o} = t, n = o || t.dataset.bsTarget,
-                r = document.getElementById(n.substring(1))?.querySelector("[data-echart-tab]");
-            r && window.echarts.init(r).resize();
-        }));
-    }));
 
-    const emailCampaignReportsChartInit = () => {
+    const chartBarInit = async () => {
         const {getColor: t, getData: a, toggleColor: e} = window.phoenix.utils,
             r = document.querySelector(".echart-email-campaign-report"), o = (t, a = "MMM DD") => {
                 const e = t[1],
-                    r = `<div class='ms-1'>\n          <h6 class="text-700"><span class="fas fa-circle me-1 fs--2" style="color:${e.borderColor ? e.borderColor : e.color}"></span>\n            ${e.axisValue} : ${"object" == typeof e.value ? e.value[1] : e.value}\n          </h6>\n        </div>`;
-                return `<div>\n              <p class='mb-2 text-600'>\n                ${e.seriesName}\n              </p>\n              ${r}\n            </div>`
-            }, i = [0, 1466, 966, 0], l = [{value: 2832, itemStyle: {color: t("primary-300")}}, 1366, 500, 966];
+                    r = `<div class='ms-1'>          
+                                    <h6 class="text-700">
+                                        <span class="fas fa-circle me-1 fs--2" style="color:${e.borderColor ? e.borderColor : e.color}"></span>
+                                        ${e.axisValue} : ${"object" == typeof e.value ? e.value[1] : e.value}
+                                    </h6>
+                               </div>`;
+                return `<div><p class='mb-2 text-600'> ${e.seriesName} </p>${r}</div>`
+            }, i = [0, 0, 0, 0], l = await columnChart(t);
         if (r) {
             const s = a(r, "echarts"), n = echarts.init(r);
             echartSetOption(n, s, (() => ({
@@ -50,7 +47,7 @@ travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $timeou
                 },
                 xAxis: {
                     type: "category",
-                    data: ["Total Emails", "Sent", "Bounce", "Delivered"],
+                    data: $scope.yearList,
                     splitLine: {show: !1},
                     axisLabel: {
                         color: t("gray-900"),
@@ -64,17 +61,20 @@ travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $timeou
                     axisTick: !1
                 },
                 yAxis: {
-                    type: "value",
-                    splitLine: {lineStyle: {color: t("gray-200")}},
+                    type: 'value',
+                    splitLine: { lineStyle: { color: t("gray-200") } },
                     axisLabel: {
                         color: t("gray-900"),
                         fontFamily: "Nunito Sans",
                         fontWeight: 700,
                         fontSize: 12.8,
-                        margin: 24
+                        margin: 24,
+                        formatter: function(value) {
+                            return formatNumberWithK(value);
+                        },
                     },
-                    interval: 500
                 },
+
                 series: [{
                     name: "Placeholder",
                     type: "bar",
@@ -86,7 +86,7 @@ travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $timeou
                     emphasis: {itemStyle: {borderColor: "transparent", color: "transparent"}},
                     data: i
                 }, {
-                    name: "Email Campaign",
+                    name: "Doanh Thu Trong Năm",
                     type: "bar",
                     stack: "Total",
                     itemStyle: {color: t("primary-200")},
@@ -97,7 +97,9 @@ travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $timeou
                         color: e(t("gray-1100"), t("gray-200")),
                         fontWeight: "normal",
                         fontSize: "12.8px",
-                        formatter: t => `${t.value.toLocaleString()}`
+                        formatter: function (params) {
+                            return formatNumberWithK(params.value);
+                        }
                     }
                 }],
                 grid: {right: "0", left: 6, bottom: 10, top: "5%", containLabel: !0},
@@ -113,251 +115,6 @@ travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $timeou
                 },
                 md: {series: [{barWidth: "56px"}], xAxis: {axisLabel: {show: !1}}},
                 lg: {series: [{barWidth: "64px"}], xAxis: {axisLabel: {show: !0, formatter: t => `${t.slice(0, 11)}`}}}
-            });
-        }
-    };
-
-    const socialMarketingRadarChartInit = () => {
-        const {getColor: a, getData: e, rgbaColor: r, toggleColor: t} = window.phoenix.utils,
-            o = document.querySelector(".echart-social-marketing-radar");
-        if (o) {
-            const i = e(o, "echarts"), n = echarts.init(o);
-            echartSetOption(n, i, (() => ({
-                color: [a("primary-300"), a("warning-300")],
-                tooltip: {
-                    trigger: "item",
-                    padding: [7, 10],
-                    backgroundColor: a("gray-100"),
-                    borderColor: a("gray-300"),
-                    textStyle: {color: a("gray-900"), fontSize: 12.8, fontFamily: "Nunito Sans"},
-                    borderWidth: 1,
-                    transitionDuration: 0
-                },
-                radar: {
-                    splitNumber: 5,
-                    axisNameGap: 10,
-                    radius: "87%",
-                    splitLine: {lineStyle: {color: a("gray-200")}},
-                    splitArea: {
-                        show: !0,
-                        areaStyle: {
-                            shadowBlur: .5,
-                            color: [t(a("gray-100"), a("gray-100")), t(a("gray-soft"), a("gray-200"))]
-                        }
-                    },
-                    axisLine: {show: !0, lineStyle: {color: a("gray-200")}},
-                    name: {textStyle: {color: a("gray-700"), fontWeight: 800, fontSize: 10.2}},
-                    indicator: [{name: "SAT", max: 5e3}, {name: "FRI", max: 5e3}, {name: "THU", max: 5e3}, {
-                        name: "WED",
-                        max: 5e3
-                    }, {name: "TUE", max: 5e3}, {name: "MON", max: 5e3}, {name: "SUN", max: 5e3}]
-                },
-                series: [{
-                    name: "Budget vs spending",
-                    type: "radar",
-                    symbol: "emptyCircle",
-                    symbolSize: 6,
-                    data: [{
-                        value: [2100, 2300, 1600, 3700, 3e3, 2500, 2500],
-                        name: "Offline Marketing",
-                        itemStyle: {color: a("primary-300")},
-                        areaStyle: {color: r(a("primary-300"), .3)}
-                    }, {
-                        value: [3e3, 1600, 3700, 500, 3700, 3e3, 3200],
-                        name: "Online Marketing",
-                        areaStyle: {color: r(a("warning-300"), .3)},
-                        itemStyle: {color: a("warning-300")}
-                    }]
-                }],
-                grid: {top: 10, left: 0}
-            })), {md: {radar: {radius: "74%"}}, xl: {radar: {radius: "85%"}}});
-        }
-    };
-
-    const salesTrendsChartInit = () => {
-        const {getColor: e, getData: t, getPastDates: o, rgbaColor: a, toggleColor: r} = window.phoenix.utils,
-            i = document.querySelector(".echart-sales-trends"), n = (e, t = "MMM DD") => {
-                let o = "";
-                return e.forEach((e => {
-                    o += `<div class='ms-1'>\n          <h6 class="text-700"><span class="fas fa-circle me-1 fs--2" style="color:${e.color}"></span>\n            ${e.seriesName} : ${"object" == typeof e.value ? e.value[1] : e.value}\n          </h6>\n        </div>`;
-                })), `<div>\n              <p class='mb-2 text-600'>\n                ${window.dayjs(e[0].axisValue).isValid() ? window.dayjs(e[0].axisValue).format("DD MMM, YYYY") : e[0].axisValue}\n              </p>\n              ${o}\n            </div>`
-            }, l = o(7), s = [2e3, 5700, 3700, 5500, 8e3, 4e3, 5500], c = [10500, 9e3, 7e3, 9e3, 10400, 7500, 9300];
-        if (i) {
-            const o = t(i, "echarts"), d = window.echarts.init(i);
-            echartSetOption(d, o, (() => ({
-                color: [e("primary-200"), e("information-300")],
-                tooltip: {
-                    trigger: "axis",
-                    padding: [7, 10],
-                    backgroundColor: e("gray-100"),
-                    borderColor: e("gray-300"),
-                    textStyle: {color: e("dark")},
-                    borderWidth: 1,
-                    transitionDuration: 0,
-                    axisPointer: {type: "none"},
-                    formatter: n
-                },
-                xAxis: {
-                    type: "category",
-                    data: l,
-                    axisLabel: {
-                        color: e("gray-900"),
-                        formatter: e => window.dayjs(e).format("ddd"),
-                        fontFamily: "Nunito Sans",
-                        fontWeight: 400,
-                        fontSize: 12.8,
-                        margin: 16
-                    },
-                    axisLine: {lineStyle: {color: e("gray-200")}},
-                    axisTick: !1
-                },
-                yAxis: {
-                    type: "value",
-                    splitLine: {lineStyle: {color: e("gray-200")}},
-                    axisLabel: {
-                        color: e("gray-900"),
-                        fontFamily: "Nunito Sans",
-                        fontWeight: 700,
-                        fontSize: 12.8,
-                        margin: 24,
-                        formatter: e => e / 1e3 + "k"
-                    }
-                },
-                series: [{
-                    name: "Revenue",
-                    type: "bar",
-                    barWidth: "16px",
-                    label: {show: !1},
-                    itemStyle: {color: r(e("primary-200"), e("primary")), borderRadius: [4, 4, 0, 0]},
-                    data: c
-                }, {
-                    name: "Profit",
-                    type: "line",
-                    symbol: "circle",
-                    symbolSize: 11,
-                    itemStyle: {color: e("information-300"), borderColor: r(e("white"), e("dark")), borderWidth: 2},
-                    areaStyle: {
-                        color: {
-                            type: "linear",
-                            x: 0,
-                            y: 0,
-                            x2: 0,
-                            y2: 1,
-                            colorStops: [{offset: 0, color: a(e("information-300"), .2)}, {
-                                offset: 1,
-                                color: a(e("information-300"), .2)
-                            }]
-                        }
-                    },
-                    data: s
-                }],
-                grid: {right: "0", left: "0", bottom: 0, top: 10, containLabel: !0},
-                animation: !1
-            })));
-        }
-    };
-
-    const callCampaignChartInit = () => {
-        const {getColor: a, getData: o, getPastDates: t, rgbaColor: e} = window.phoenix.utils,
-            i = document.querySelector(".echart-call-campaign"), r = (a, o = "MMM DD") => {
-                let t = "";
-                return a.forEach((a => {
-                    t += `<div class='ms-1'>\n          <h6 class="text-700"><span class="fas fa-circle me-1 fs--2" style="color:${a.color}"></span>\n            ${a.seriesName} : ${"object" == typeof a.value ? a.value[1] : a.value}\n          </h6>\n        </div>`;
-                })), `<div>\n              <p class='mb-2 text-600'>\n                ${window.dayjs(a[0].axisValue).isValid() ? window.dayjs(a[0].axisValue).format("DD MMM, YYYY") : a[0].axisValue}\n              </p>\n              ${t}\n            </div>`
-            }, l = t(7), n = [8e3, 7700, 5900, 10100, 5100, 6e3, 4300];
-        if (i) {
-            const t = o(i, "echarts"), s = window.echarts.init(i);
-            echartSetOption(s, t, (() => ({
-                color: [a("primary-200"), a("information-300")],
-                tooltip: {
-                    trigger: "axis",
-                    padding: [7, 10],
-                    backgroundColor: a("gray-100"),
-                    borderColor: a("gray-300"),
-                    textStyle: {color: a("dark")},
-                    borderWidth: 1,
-                    transitionDuration: 0,
-                    axisPointer: {type: "none"},
-                    formatter: r
-                },
-                xAxis: [{
-                    type: "category",
-                    data: l,
-                    boundaryGap: !1,
-                    splitLine: {show: !0, lineStyle: {color: a("gray-200")}},
-                    axisLabel: {
-                        color: a("gray-900"),
-                        showMaxLabel: !1,
-                        showMinLabel: !0,
-                        align: "left",
-                        formatter: a => window.dayjs(a).format("ddd"),
-                        fontFamily: "Nunito Sans",
-                        fontWeight: 400,
-                        fontSize: 12.8,
-                        margin: 16
-                    },
-                    axisLine: {lineStyle: {color: a("gray-200")}},
-                    axisTick: !1
-                }, {
-                    type: "category",
-                    data: l,
-                    boundaryGap: !1,
-                    splitLine: {show: !0, lineStyle: {color: a("gray-200")}},
-                    axisLabel: {
-                        color: a("gray-900"),
-                        interval: 130,
-                        showMaxLabel: !0,
-                        showMinLabel: !1,
-                        align: "right",
-                        formatter: a => window.dayjs(a).format("ddd"),
-                        fontFamily: "Nunito Sans",
-                        fontWeight: 400,
-                        fontSize: 12.8,
-                        margin: 16
-                    },
-                    position: "bottom",
-                    axisLine: {lineStyle: {color: a("gray-200")}},
-                    axisTick: !1
-                }],
-                yAxis: {
-                    type: "value",
-                    axisLine: {lineStyle: {color: a("gray-200")}},
-                    splitLine: {lineStyle: {color: a("gray-200")}},
-                    axisLabel: {
-                        color: a("gray-900"),
-                        fontFamily: "Nunito Sans",
-                        fontWeight: 700,
-                        fontSize: 12.8,
-                        margin: 16,
-                        formatter: a => a / 1e3 + "k"
-                    }
-                },
-                series: [{
-                    name: "Campaign",
-                    type: "line",
-                    smooth: .4,
-                    symbolSize: 11,
-                    itemStyle: {color: a("primary")},
-                    areaStyle: {
-                        color: {
-                            type: "linear",
-                            x: 0,
-                            y: 0,
-                            x2: 0,
-                            y2: 1,
-                            colorStops: [{offset: 0, color: e(a("primary-300"), .2)}, {
-                                offset: 1,
-                                color: e(a("primary-300"), .2)
-                            }]
-                        }
-                    },
-                    data: n
-                }],
-                grid: {right: "8", left: 6, bottom: "-10", top: 10, containLabel: !0},
-                animation: !1
-            })), {
-                xs: {xAxis: [{}, {axisLabel: {showMaxLabel: !1}}]},
-                sm: {xAxis: [{}, {axisLabel: {showMaxLabel: !0}}]}
             });
         }
     };
@@ -472,7 +229,7 @@ travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $timeou
             title: "Click for Google",
             url: "http://google.com/",
             start: `${currentYear}-${prevMonth}-10`,
-            description: "Applications are open for the New Media Writing Prize 2020. The New Media Writing Prize (NMWP) showcases exciting and inventive stories and poetry that integrate a variety of formats, platforms, and digital media.",
+            description: "Applications are open for the New Media Writing Prize 2020. The New Media Writing Prize (NMWP) showcases exciting and inventive stories and poetry that integrate a letiety of formats, platforms, and digital media.",
             className: "text-primary"
         }];
 
@@ -558,15 +315,12 @@ travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $timeou
     };
 
     const {docReady: docReady} = window.phoenix.utils;
-    docReady(emailCampaignReportsChartInit), docReady(socialMarketingRadarChartInit), docReady(salesTrendsChartInit), docReady(callCampaignChartInit), docReady(appCalendarInit);
+    docReady(chartBarInit), docReady(appCalendarInit);
 
     // Gọi hàm khởi tạo biểu đồ khi trang được load
     $rootScope.$on('$routeChangeSuccess', function () {
         $timeout(function () {
-            emailCampaignReportsChartInit();
-            socialMarketingRadarChartInit();
-            salesTrendsChartInit();
-            callCampaignChartInit();
+            chartBarInit();
             appCalendarInit();
         });
     });
@@ -581,8 +335,8 @@ travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $timeou
         currentTime: new Date().toLocaleTimeString()
     };
 
-    $interval(function() {
-        var now = new Date();
+    $interval(function () {
+        let now = new Date();
         $scope.clock.currentDate = now.toLocaleDateString();
         $scope.clock.currentTime = now.toLocaleTimeString();
     }, 1000);
@@ -598,5 +352,164 @@ travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $timeou
         });
     };
 
+
+    const columnChart = async (t) => {
+        $scope.isLoading = true;
+
+        let xValues = [];
+        let yValues = [];
+        let maxValue = 200;
+
+        await RevenueServiceStaff.getAllRevenueYear4()
+            .then(function (response) {
+                const chartData = response.data.data;
+
+                chartData.forEach(item => {
+                    xValues.push(item.year);
+                    yValues.push(item.totalRevenue);
+                });
+                maxValue = Math.max(...yValues);
+                const lastIndex = yValues.length - 1;
+                const lastValue = yValues[lastIndex];
+                yValues[lastIndex] = {value: lastValue, itemStyle: {color: t("primary-300")}};
+            }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+
+        $scope.yearList = xValues;
+        $scope.totalRevenue = yValues;
+
+        const roundMaxRevenue = (maxRevenue) => {
+            let roundedMax = Math.ceil(maxRevenue / 2) * 2;
+
+            let roundedValue = Math.pow(10, Math.floor(Math.log10(roundedMax))) / 2;
+            return Math.round(roundedMax / roundedValue) * roundedValue;
+        };
+        $scope.maxRevenue = roundMaxRevenue(maxValue) / 5;
+
+        return yValues;
+    };
+
+    function formatNumberWithK(value) {
+        const thousands = value / 1000;
+        const formatted = new Intl.NumberFormat('en-US', {
+            maximumFractionDigits: 0
+        }).format(thousands);
+        return `${formatted} k`;
+    }
+
     $scope.getAllCount();
-});
+
+    $scope.labels = ['T1', 'T2', 'T3', 'T4', 'T6', 'T7', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
+    $scope.data = [];
+    $scope.tourTypeId = null;
+    $scope.year = new Date().getFullYear();
+
+    $scope.options = {
+        plugins: {
+            legend: {
+                display: false,
+            },
+            tooltip: {
+                mode: 'index',
+                intersect: false
+            }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+            duration: 2000
+        },
+        hover: {
+            mode: 'nearest',
+            intersect: true
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                type: 'linear',
+                display: true,
+                position: 'left',
+            },
+        },
+        elements: {
+            line: {
+                tension: 0.4,
+                borderWidth: 1.5,
+
+            }
+        }
+    };
+
+    ToursTypeServiceAD.getAllTourTypes().then((response) => {
+        $scope.tourTypesList = response.data;
+    });
+    RevenueServiceStaff.getAllYear().then((response) => {
+        $scope.selectYearList = response.data.data;
+    });
+
+
+    const updateChart = () => {
+        const ctx = document.getElementById('line').getContext('2d');
+
+        if ($scope.chart) {
+            $scope.chart.data.labels = $scope.labels;
+            $scope.chart.data.datasets[0].data = $scope.data;
+            $scope.chart.update();
+        } else {
+            // Nếu chưa tồn tại, tạo mới biểu đồ
+            $scope.chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: $scope.labels,
+                    datasets: [{
+                        data: $scope.data,
+                        borderColor: '#ff6384',
+                        backgroundColor: function(context) {
+                            let chartArea = context.chart.chartArea;
+                            if (!chartArea) {
+                                return 'rgba(255, 99, 132, 0.2)';
+                            }
+                            let gradientStroke = context.chart.ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+                            gradientStroke.addColorStop(0, 'rgba(255, 99, 132, 0.2)');
+                            gradientStroke.addColorStop(1, 'rgba(255, 159, 64, 0.2)');
+                            return gradientStroke;
+                        },
+                        fill: true
+                    }]
+                },
+                options: $scope.options
+            });
+
+        }
+    }
+
+    $scope.getRevenueByTourTypeIdAndYear = function () {
+        RevenueServiceStaff.getAllRevenueByTourTypeIdAndYear($scope.tourTypeId, $scope.year)
+            .then((response) => {
+                if (response.data.status === '200') {
+                    $scope.data = response.data.data;
+                } else {
+                    $scope.data = new Array(12).fill(0);
+                }
+                updateChart();
+            })
+            .catch((error) => {
+                console.error('Lỗi khi gọi API', error);
+                $scope.data = new Array(12).fill(0);
+                updateChart();
+            });
+    };
+
+
+    angular.element(document).ready(function () {
+        $scope.getRevenueByTourTypeIdAndYear();
+    });
+
+    $scope.$watchGroup(['tourTypeId', 'year'], function (newValues, oldValues) {
+        if (newValues !== oldValues) {
+            $scope.getRevenueByTourTypeIdAndYear();
+        }
+    });
+
+})
