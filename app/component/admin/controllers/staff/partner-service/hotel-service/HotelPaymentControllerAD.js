@@ -50,7 +50,7 @@ travel_app.controller('HotelPaymentControllerAD',
             $scope.isLoading = true;
 
             $scope.orderHotel = {
-                id: GenerateCodePayService.generateCodeBookingStaff($scope.hotelId),
+                id: GenerateCodePayService.generateCodeBooking('VPO',$scope.hotelId),
                 userId: $scope.tourGuide.id,
                 customerName: $scope.tourGuide.fullName,
                 customerCitizenCard: $scope.tourGuide.citizenCard,
@@ -64,6 +64,7 @@ travel_app.controller('HotelPaymentControllerAD',
                 paymentMethod: 'TTTT',
                 dateCreated: new Date(),
                 orderStatus: 0, //cho thanh toan
+                orderCode: GenerateCodePayService.generateCodePayment('VPO')
             }
 
             let orderHotel = $scope.orderHotel;

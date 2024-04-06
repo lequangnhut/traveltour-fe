@@ -22,13 +22,16 @@ travel_app.service('BookingLocationCusService', function ($http, $q) {
         });
     }
 
-    this.redirectZALOPay = function (paymentData) {
+    this.redirectZALOPay = function (data) {
         return $http({
             method: 'POST',
             url: API_BOOKING + 'zalopay/submit-payment',
-            data: paymentData
+            headers: {'Content-Type': undefined},
+            data: data,
+            transformRequest: angular.identity
         });
     }
+
 
     this.createBookLocation = function (data) {
         return $http({

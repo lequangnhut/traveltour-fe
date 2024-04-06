@@ -39,7 +39,7 @@ travel_app.controller('VisitLocationPaymentControllerAD',
 
         $scope.confirmCompletionOfTicketPurchase = () => {
             $scope.orderVisitLocation = {
-                id: GenerateCodePayService.generateCodeBookingStaff(visitLocationId),
+                id: GenerateCodePayService.generateCodeBooking('VPO', visitLocationId),
                 userId: $scope.tourGuide.id,
                 visitLocationId: visitLocationId,
                 customerName: $scope.tourGuide.fullName,
@@ -53,7 +53,7 @@ travel_app.controller('VisitLocationPaymentControllerAD',
                 paymentMethod: 0,
                 dateCreated: new Date(),
                 orderStatus: 0,
-                orderCode: GenerateCodePayService.generateCodePaymentStaff()
+                orderCode: GenerateCodePayService.generateCodePayment('VPO')
             }
 
             let orderVisitLocation = $scope.orderVisitLocation;

@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <div class="row" >
+        <div class="row">
             <div class="col-4">
                 <div class="card">
                     <div class="card-header fw-medium text-center fs-5" style="background: #E3E6ED">
@@ -128,6 +128,14 @@
                             </span>
                                     <span class="fw-medium ms-2">Thanh toán bằng Ví Momo</span>
                                 </div>
+                                <div class="item-content mb-3 d-flex justify-content-center align-items-center"
+                                     ng-if="paymentMethodTour === 'ZALOPAY'">
+                            <span class="fw-medium">
+                                <img src="/assets/customers/images/payment/zalopay.jpg" width="40" class="img-fluid"
+                                     alt="">
+                            </span>
+                                    <span class="fw-medium ms-2">Thanh toán bằng Ví ZaloPay</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -178,4 +186,5 @@
                 </div>
             </div>
         </div>
+    </div>
 </section><!--====== Giao dịch thành công ======-->

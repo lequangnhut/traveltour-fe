@@ -16,6 +16,15 @@ travel_app.controller('BookingLocationSuccessCusController', function ($scope, $
     }
 
     $scope.init = function () {
+
+        if ($routeParams.orderStatus && $routeParams.paymentMethod) {
+            $scope.orderStatus = parseInt(decodeToId($routeParams.orderStatus));
+            $scope.paymentMethodTour = $routeParams.paymentMethod;
+        } else {
+            $scope.orderStatus = 0;
+            $scope.paymentMethodTour = 'VPO';
+        }
+
         let decryptedDataBookingLocation = LocalStorageService.decryptLocalData('dataBookingLocation', 'encryptDataBookingLocation');
         let decryptedDataOrderVisitLocation = LocalStorageService.decryptLocalData('orderVisitLocation', 'encryptDataOrderVisitLocation');
 
@@ -24,7 +33,11 @@ travel_app.controller('BookingLocationSuccessCusController', function ($scope, $
             $location.path('/tourism-location');
             return;
         } else {
-            toastAlert('success', 'Đặt vé tham quan thành công !');
+            if ($scope.orderStatus === 2) {
+                toastAlert('warning', 'Đặt vé tham quan thất bại !');
+            } else {
+                toastAlert('success', 'Đặt vé tham quan thành công !');
+            }
         }
 
         $scope.tickets = decryptedDataBookingLocation;
@@ -57,16 +70,9 @@ travel_app.controller('BookingLocationSuccessCusController', function ($scope, $
         }
     }
 
-    if ($routeParams.orderStatus && $routeParams.paymentMethod) {
-        $scope.orderStatus = parseInt($routeParams.orderStatus);
-        $scope.paymentMethodTour = $routeParams.paymentMethod;
-    } else {
-        $scope.orderStatus = 0;
-        $scope.paymentMethodTour = 'VPO';
-    }
-
     $scope.$on('$destroy', function () {
         LocalStorageService.remove('dataBookingLocation');
+        LocalStorageService.remove('orderVisitLocation');
     });
 
     $scope.init();
