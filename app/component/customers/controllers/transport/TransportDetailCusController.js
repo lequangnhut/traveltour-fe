@@ -1,7 +1,6 @@
 travel_app.controller('TransportDetailCusController',
-    function ($scope, $location, $sce, $routeParams, TransportCusService, TransportServiceAG, TransportBrandServiceAG, LocalStorageService) {
-        $scope.encryptedBrandId = $routeParams.brandId;
-        let brandId = JSON.parse(atob($scope.encryptedBrandId));
+    function ($scope, $location, $sce, $routeParams, TransportCusService, TransportServiceAG, TransportBrandServiceAG, LocalStorageService, Base64ObjectService) {
+        let brandId = Base64ObjectService.decodeObject($routeParams.brandId);
 
         $scope.currentPage = 0;
         $scope.pageSize = 10;
@@ -68,15 +67,21 @@ travel_app.controller('TransportDetailCusController',
              */
             TransportCusService.findAllTransportScheduleCus($scope.currentPage, $scope.pageSize, brandId).then(function (response) {
                 if (response.status === 200) {
-                    $scope.transportSchedule = response.data.data.content;
+                    if (response.data && response.data.data && response.data.data.content) {
+                        $scope.transportSchedule = response.data.data.content;
 
-                    $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                    $scope.totalElements = response.data.data.totalElements;
+                        $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
+                        $scope.totalElements = response.data.data.totalElements;
 
-                    $scope.transportSchedule.forEach(function (schedule) {
-                        $scope.seatSelections[schedule.id] = {};
-                        $scope.schedulePrices.push(0);
-                    });
+                        $scope.transportSchedule.forEach(function (schedule) {
+                            $scope.seatSelections[schedule.id] = {};
+                            $scope.schedulePrices.push(0);
+                        });
+                    } else {
+                        $scope.transportSchedule = [];
+                        $scope.totalPages = 0;
+                        $scope.totalElements = 0;
+                    }
                 } else {
                     $location.path('/admin/page-not-found');
                 }

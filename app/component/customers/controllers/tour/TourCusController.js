@@ -38,13 +38,6 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
         }
     };
 
-    /**
-     * phương thức chuyển đến tour detail
-     */
-    $scope.redirectTourDetail = function (tourDetailId) {
-        $location.path('/tours/tour-detail/' + btoa(JSON.stringify(tourDetailId)));
-    }
-
     $scope.init = function () {
         $scope.isLoading = true;
 

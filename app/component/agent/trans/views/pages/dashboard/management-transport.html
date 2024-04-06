@@ -1,20 +1,14 @@
-<!--====== Start Preloader ======-->
-<div class="preloader" ng-show="isLoading">
-    <div class="loader">
-        <div class="pre-shadow"></div>
-        <div class="pre-box"></div>
-    </div>
-    <div class="bg"></div>
-</div><!--====== End Preloader ======-->
-
 <section id="dashboard-hotel">
-    <div class="container">
+    <div class="container-fluid">
         <header>
             <div class="bg">
                 <div class="">
                     <div class="h3 fw-bold text-uppercase mb-5 color-green">Danh sách nhà xe</div>
                 </div>
-                <div class="list-hotel">
+
+                <div ng-include="'app/component/utils/loading-component.html'"></div>
+
+                <div class="list-hotel" ng-if="!isLoading">
                     <div class="list-hotel-item">
                         <div class="row">
                             <div class="col-xl-4 mb-4" ng-repeat="trans in transportations">
@@ -63,11 +57,9 @@
                             <div class="card">
                                 <div class="card-header">
                                     <div class="h4 fw-medium mb-3">Tôi đã có nhà xe của mình</div>
-                                    <div class="">Chào mừng bạn đã đến với trang quản lý nhà xe của mình. Hãy quản
-                                        lý
-                                        thông tin nhà xe, cập nhật các tiện ích, và tận hưởng trải nghiệm quản lý
-                                        hiệu
-                                        quả từ TravelTour.
+                                    <div class="">Chào mừng bạn đã đến với trang quản lý nhà xe của chúng tôi. Hãy cập
+                                        nhật thông tin chi tiết của nhà xe, bổ sung các tiện ích mới và tận hưởng trải
+                                        nghiệm quản lý hiệu quả cùng TravelTour.
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-end">

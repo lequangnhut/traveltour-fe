@@ -134,6 +134,22 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
 
         /**
+         * Admin request booking transport
+         */
+        .when('/admin/request-booking-car', {
+            templateUrl: 'app/component/admin/views/pages/staff/request-car/booking-car.html',
+            controller: 'RequestCarControllerAD'
+        })
+        .when('/admin/request-booking-car/create-request-booking', {
+            templateUrl: 'app/component/admin/views/pages/staff/request-car/booking-car-add.html',
+            controller: 'RequestCarControllerAD'
+        })
+        .when('/admin/request-booking-car/update-request-booking/:requestCarId', {
+            templateUrl: 'app/component/admin/views/pages/staff/request-car/booking-car-edit.html',
+            controller: 'RequestCarControllerAD'
+        })
+
+        /**
          * Admin Schedule Management
          */
         .when('/admin/booking-list', {
@@ -332,6 +348,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/dashboard/management-transport.html',
             controller: 'ListTransportBrandControllerAG'
         })
+
+        /**
+         * Transport brand
+         */
         .when('/business/transport/home/create-transport', {
             templateUrl: 'app/component/agent/trans/views/pages/transport-brand/create-transport.html',
             controller: 'RegisterTransControllerAG'
@@ -340,6 +360,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/transport-brand/update-transport.html',
             controller: 'RegisterTransControllerAG'
         })
+
+        /**
+         * Transportation
+         */
         .when('/business/transport/transport-management', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-list.html',
             controller: 'TransportControllerAG'
@@ -356,6 +380,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-update.html',
             controller: 'TransportControllerAG'
         })
+
+        /**
+         * Order Transport
+         */
         .when('/business/transport/schedules-management/order-transport-management/:scheduleId', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-list.html',
             controller: 'OrderTransportControllerAG'
@@ -368,6 +396,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-update.html',
             controller: 'OrderTransportControllerAG'
         })
+
+        /**
+         * Transport Schedule Management
+         */
         .when('/business/transport/schedules-management', {
             templateUrl: 'app/component/agent/trans/views/pages/schedules/schedules-list.html',
             controller: 'SchedulesControllerAG'
@@ -379,6 +411,18 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/business/transport/schedules-management/update-schedules/:id', {
             templateUrl: 'app/component/agent/trans/views/pages/schedules/schedules-update.html',
             controller: 'SchedulesControllerAG'
+        })
+
+        /**
+         * Transport Request Car From TravelTour
+         */
+        .when('/business/transport/notification-request-car', {
+            templateUrl: 'app/component/agent/trans/views/pages/request-car/notification-request-car.html',
+            controller: 'RequestCarControllerAG'
+        })
+        .when('/business/transport/notification-request-car/select-car/:requestCarId', {
+            templateUrl: 'app/component/agent/trans/views/pages/request-car/select-car.html',
+            controller: 'SelectCarControllerAG'
         })
 
         /**

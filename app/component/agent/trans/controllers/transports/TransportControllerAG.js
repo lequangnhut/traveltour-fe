@@ -321,8 +321,9 @@ travel_app.controller('TransportControllerAG',
                 transportData.append('transportTypeImg', file);
             });
             transportData.append('transportationImg', transportationImg);
+            transportData.append('selectedUtilities', new Blob([JSON.stringify($scope.selectedUtilities)], {type: 'application/json'}));
 
-            TransportServiceAG.create(transportData, $scope.selectedUtilities).then(function successCallback() {
+            TransportServiceAG.create(transportData).then(function successCallback() {
                 toastAlert('success', 'Thêm mới thành công !')
                 $location.path('/business/transport/transport-management');
             }, errorCallback).finally(function () {
@@ -348,8 +349,9 @@ travel_app.controller('TransportControllerAG',
                 transportData.append('transportTypeImg', file);
             });
             transportData.append('transportationImg', transportationImg);
+            transportData.append('selectedUtilities', new Blob([JSON.stringify($scope.selectedUtilities)], {type: 'application/json'}));
 
-            TransportServiceAG.update(transportData, $scope.selectedUtilities).then(function successCallback() {
+            TransportServiceAG.update(transportData).then(function successCallback() {
                 toastAlert('success', 'Cập nhật thành công !');
                 $location.path('/business/transport/transport-management');
             }, errorCallback).finally(function () {

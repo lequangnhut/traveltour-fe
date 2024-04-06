@@ -12,6 +12,10 @@ travel_app.filter('phoneNumber', function () {
 
 travel_app.filter('trustHtml', ['$sce', function ($sce) {
     return function (html) {
-        return $sce.trustAsHtml(html);
+        if (typeof html === 'string') {
+            return $sce.trustAsHtml(html);
+        } else {
+            return html;
+        }
     };
 }]);

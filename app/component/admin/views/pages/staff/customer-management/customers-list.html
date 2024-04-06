@@ -137,11 +137,11 @@
                         title="{{ customer.email }}">
                         {{ customer.email }}
                     </td>
-                    <td>{{ customer.phone }}</td>
-                    <td>{{ customer.birth | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ customer.phone || 'Chưa có dữ liệu' }}</td>
+                    <td>{{ customer.birth || 'Chưa có dữ liệu' | date: 'dd/MM/yyyy' }}</td>
                     <td>{{ customer.gender === 1 ? 'Nam' : (customer.gender === 2 ? 'Nữ' : 'Khác') }}</td>
                     <td class="d-flex align-items-center justify-content-center">
-                        <a href="admin/customer-list/customer-update/{{customer.id}}"
+                        <a href="#" ng-click="redirectPage('/admin/customer-list/customer-update/', customer.id)"
                            role="button" class="fs-1 btn text-warning px-2">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>

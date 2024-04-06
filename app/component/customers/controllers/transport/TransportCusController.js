@@ -1,150 +1,201 @@
-travel_app.controller('TransportCusController', function ($scope, $filter, $location, MapBoxService, TransportCusService, TransportationBrandServiceAD, TransportationTypeServiceAD) {
-    mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
+travel_app.controller('TransportCusController',
+    function ($scope, $filter, $location, MapBoxService, TransportCusService, TransportationBrandServiceAD, TransportationTypeServiceAD) {
+        mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
-    $scope.currentPage = 0;
-    $scope.pageSize = 10;
+        $scope.currentPage = 0;
+        $scope.pageSize = 10;
 
-    $scope.transportationSearch = {}
+        $scope.transportationSearch = {}
 
-    $scope.showMoreTransportationBrand = false;
-    $scope.limitTransportationBrand = 5;
+        $scope.showMoreTransportationBrand = false;
+        $scope.limitTransportationBrand = 5;
 
-    $scope.showMoreTransportationType = false;
-    $scope.limitTransportationType = 5;
+        $scope.showMoreTransportationType = false;
+        $scope.limitTransportationType = 5;
 
-    $scope.limitTransportType = 5;
+        $scope.limitTransportType = 5;
 
-    $scope.markerAllTransport = [];
-    $scope.markerTransport = [];
+        $scope.markerAllTransport = [];
+        $scope.markerTransport = [];
 
-    $scope.ratings = [{id: 1, label: 'Trên 1 sao'}, {id: 2, label: 'Trên 2 sao'}, {id: 3, label: 'Trên 3 sao'}, {
-        id: 4, label: 'Trên 4 sao'
-    }, {id: 5, label: 'Trên 5 sao'}];
+        $scope.ratings = [{id: 1, label: 'Trên 1 sao'}, {id: 2, label: 'Trên 2 sao'}, {id: 3, label: 'Trên 3 sao'}, {
+            id: 4, label: 'Trên 4 sao'
+        }, {id: 5, label: 'Trên 5 sao'}];
 
-    $scope.filters = {
-        searchTerm: null,
-        fromLocation: null,
-        toLocation: null,
-        checkInDateFiller: new Date(),
-        price: 15000000,
-        mediaTypeList: [],
-        listOfVehicleManufacturers: [],
-    };
+        $scope.filters = {
+            searchTerm: null,
+            fromLocation: null,
+            toLocation: null,
+            checkInDateFiller: new Date(),
+            price: 15000000,
+            mediaTypeList: [],
+            listOfVehicleManufacturers: [],
+        };
 
-    const dataList = (response) => {
-        $scope.transportBrand = response !== null ? response.content : [];
-        $scope.totalPages = response !== null ? Math.ceil(response.totalElements / $scope.pageSize) : 0;
-        $scope.totalElements = response !== null ? response.totalElements : 0;
-    };
+        const dataList = (response) => {
+            $scope.transportBrand = response !== null ? response.content : [];
+            $scope.totalPages = response !== null ? Math.ceil(response.totalElements / $scope.pageSize) : 0;
+            $scope.totalElements = response !== null ? response.totalElements : 0;
+        };
 
-    const fetchData = (serviceFunc, successCallback) => {
-        return serviceFunc().then((response) => {
-            if (response.status === 200) {
-                successCallback(response.data.data);
-            } else {
-                $location.path('/admin/page-not-found');
+        const fetchData = (serviceFunc, successCallback) => {
+            return serviceFunc().then((response) => {
+                if (response.status === 200) {
+                    successCallback(response.data.data);
+                } else {
+                    $location.path('/admin/page-not-found');
+                }
+            });
+        }
+
+        $scope.init = function () {
+            $scope.isLoading = true;
+
+            Promise.all([fetchData(TransportCusService.findAllTransportBrandCus.bind(null, $scope.currentPage, $scope.pageSize), (repo) => {
+                dataList(repo);
+            }), fetchData(TransportationBrandServiceAD.getAllTransportationBrands, (repo) => {
+                $scope.transportationBrandList = repo;
+            }), fetchData(TransportationTypeServiceAD.getAllTransportationTypes, (repo) => {
+                $scope.transportationTypeList = repo;
+            }), fetchData(TransportCusService.getAllTransportCusDataList, (repo) => {
+                $scope.transportationDataList = repo.uniqueDataList;
+                $scope.filteredDataList = $scope.transportationDataList.slice(0, 5);
+                $scope.$watch('filters.searchTerm', function (newVal) {
+                    if (newVal && newVal.trim() !== '') {
+                        $scope.filteredDataList = $filter('filter')($scope.transportationDataList, newVal).slice(0, 5);
+                    } else {
+                        $scope.filteredDataList = $scope.transportationDataList.slice(0, 5);
+                    }
+                });
+                $scope.fromLocationList = repo.fromLocationList;
+                $scope.toLocationList = repo.toLocationList;
+            })
+            ]).finally(function () {
+                $scope.$apply(function () {
+                    $scope.isLoading = false;
+                });
+            });
+
+            /**
+             * Phương thức mở model
+             */
+            $scope.openModalAllTransport = function () {
+                let modelMap = $('#modalMapAllTransport').modal('show');
+
+                TransportCusService.findAllTransportBrandCus($scope.currentPage, $scope.pageSize).then(function (response) {
+                    if (response.status === 200) {
+                        modelMap.on('shown.bs.modal', function () {
+                            let transportBrand = response.data.data.content;
+                            $scope.initMapAllTransport();
+                            $scope.addMarkerAllTransport(transportBrand);
+                        });
+                    } else {
+                        $location.path('/admin/page-not-found');
+                    }
+                });
             }
-        });
-    }
 
-    $scope.init = function () {
-        $scope.isLoading = true;
+            $scope.openModalTransport = function (transportBrandId) {
+                let modelMap = $('#modalMapTransport').modal('show');
 
-        Promise.all([fetchData(TransportCusService.findAllTransportBrandCus.bind(null, $scope.currentPage, $scope.pageSize), (repo) => {
-            dataList(repo);
-        }), fetchData(TransportationBrandServiceAD.getAllTransportationBrands, (repo) => {
-            $scope.transportationBrandList = repo;
-        }), fetchData(TransportationTypeServiceAD.getAllTransportationTypes, (repo) => {
-            $scope.transportationTypeList = repo;
-        }), fetchData(TransportCusService.getAllTransportCusDataList, (repo) => {
-            $scope.transportationDataList = repo.uniqueDataList;
-            $scope.filteredDataList = $scope.transportationDataList.slice(0, 5);
-            $scope.$watch('filters.searchTerm', function (newVal) {
-                if (newVal && newVal.trim() !== '') {
-                    $scope.filteredDataList = $filter('filter')($scope.transportationDataList, newVal).slice(0, 5);
-                } else {
-                    $scope.filteredDataList = $scope.transportationDataList.slice(0, 5);
-                }
-            });
-            $scope.fromLocationList = repo.fromLocationList;
-            $scope.toLocationList = repo.toLocationList;
-        })
-        ]).finally(function () {
-            $scope.$apply(function () {
-                $scope.isLoading = false;
-            });
-        });
+                TransportCusService.findAllTransportBrandByIdCus(transportBrandId).then(function (response) {
+                    if (response.status === 200) {
+                        modelMap.on('shown.bs.modal', function () {
+                            let transportBrand = response.data.data;
+                            $scope.initMapTransport();
+                            $scope.addMarkerTransport(transportBrand);
+                        });
+                    } else {
+                        $location.path('/admin/page-not-found');
+                    }
+                });
 
-        /**
-         * Phương thức mở model
-         */
-        $scope.openModalAllTransport = function () {
-            let modelMap = $('#modalMapAllTransport').modal('show');
+                modelMap.on('shown.bs.modal', function () {
+                    $scope.initMapTransport();
+                });
+            }
 
-            TransportCusService.findAllTransportBrandCus($scope.currentPage, $scope.pageSize).then(function (response) {
-                if (response.status === 200) {
-                    modelMap.on('shown.bs.modal', function () {
-                        let transportBrand = response.data.data.content;
-                        $scope.initMapAllTransport();
-                        $scope.addMarkerAllTransport(transportBrand);
+            /**
+             * Khởi tạo map
+             */
+            $scope.initMapAllTransport = function () {
+                $scope.mapAllTransport = new mapboxgl.Map({
+                    container: 'mapAllTransport',
+                    style: 'mapbox://styles/mapbox/streets-v12',
+                    center: [106.6297, 10.8231],
+                    zoom: 9
+                });
+            }
+
+            $scope.initMapTransport = function () {
+                $scope.mapTransport = new mapboxgl.Map({
+                    container: 'mapTransport',
+                    style: 'mapbox://styles/mapbox/streets-v12',
+                    center: [106.6297, 10.8231],
+                    zoom: 9
+                });
+            }
+
+            /**
+             * Phương thức thêm marker lên bản đồ
+             * @param transportBrand
+             */
+            $scope.addMarkerAllTransport = function (transportBrand) {
+                $scope.removeMarkerAllTransport()
+                var bounds = new mapboxgl.LngLatBounds();
+
+                for (const brand of transportBrand) {
+                    let address = brand.transportationBrandAddress;
+
+                    let iconUrl = '/assets/customers/images/icon/maker.png';
+                    let el = document.createElement('div');
+                    el.className = 'marker';
+                    el.style.backgroundImage = `url(${iconUrl})`;
+                    el.style.width = '40px';
+                    el.style.height = '40px';
+                    el.style.backgroundSize = '100%';
+
+                    let popupContent = createPopupContent(brand);
+
+                    MapBoxService.geocodeAddress(address, function (error, addressCoordinates) {
+                        if (!error) {
+                            let popup = new mapboxgl.Popup({
+                                offset: 15,
+                                closeButton: true,
+                                closeOnClick: false,
+                                closeOnClickOutside: true,
+                                maxWidth: '800px',
+                                minWidth: '600px'
+                            }).setHTML(popupContent);
+
+                            var marker = new mapboxgl.Marker(el)
+                                .setLngLat(addressCoordinates)
+                                .setPopup(popup)
+                                .addTo($scope.mapAllTransport);
+
+                            let closeButton = popup._content.querySelector('.mapboxgl-popup-close-button');
+                            if (closeButton) {
+                                closeButton.style.fontSize = '30px';
+                                closeButton.style.width = '40px';
+                                closeButton.style.height = '40px';
+                                closeButton.style.lineHeight = '40px';
+                            }
+
+                            $scope.markerAllTransport.push(marker);
+
+                            bounds.extend(addressCoordinates);
+                            $scope.mapAllTransport.fitBounds(bounds, {padding: 20});
+                        } else {
+                            console.error("Lỗi khi lấy tọa độ của điểm đến:", error);
+                        }
                     });
-                } else {
-                    $location.path('/admin/page-not-found');
                 }
-            });
-        }
+            };
 
-        $scope.openModalTransport = function (transportBrandId) {
-            let modelMap = $('#modalMapTransport').modal('show');
-
-            TransportCusService.findAllTransportBrandByIdCus(transportBrandId).then(function (response) {
-                if (response.status === 200) {
-                    modelMap.on('shown.bs.modal', function () {
-                        let transportBrand = response.data.data;
-                        $scope.initMapTransport();
-                        $scope.addMarkerTransport(transportBrand);
-                    });
-                } else {
-                    $location.path('/admin/page-not-found');
-                }
-            });
-
-            modelMap.on('shown.bs.modal', function () {
-                $scope.initMapTransport();
-            });
-        }
-
-        /**
-         * Khởi tạo map
-         */
-        $scope.initMapAllTransport = function () {
-            $scope.mapAllTransport = new mapboxgl.Map({
-                container: 'mapAllTransport',
-                style: 'mapbox://styles/mapbox/streets-v12',
-                center: [106.6297, 10.8231],
-                zoom: 9
-            });
-        }
-
-        $scope.initMapTransport = function () {
-            $scope.mapTransport = new mapboxgl.Map({
-                container: 'mapTransport',
-                style: 'mapbox://styles/mapbox/streets-v12',
-                center: [106.6297, 10.8231],
-                zoom: 9
-            });
-        }
-
-        /**
-         * Phương thức thêm marker lên bản đồ
-         * @param transportBrand
-         */
-        $scope.addMarkerAllTransport = function (transportBrand) {
-            $scope.removeMarkerAllTransport()
-            var bounds = new mapboxgl.LngLatBounds();
-
-            for (const brand of transportBrand) {
-                let address = brand.transportationBrandAddress;
+            $scope.addMarkerTransport = function (transportBrand) {
+                $scope.removeMarkerTransport();
+                let bounds = new mapboxgl.LngLatBounds();
+                let address = transportBrand.transportationBrandAddress;
 
                 let iconUrl = '/assets/customers/images/icon/maker.png';
                 let el = document.createElement('div');
@@ -154,23 +205,23 @@ travel_app.controller('TransportCusController', function ($scope, $filter, $loca
                 el.style.height = '40px';
                 el.style.backgroundSize = '100%';
 
-                let popupContent = createPopupContent(brand);
+                let popupContent = createPopupContent(transportBrand);
 
-                MapBoxService.geocodeAddress(address, function (error, addressCoordinates) {
+                let popup = new mapboxgl.Popup({
+                    offset: 15,
+                    closeButton: true,
+                    closeOnClick: false,
+                    closeOnClickOutside: true,
+                    maxWidth: '800px',
+                    minWidth: '600px'
+                }).setHTML(popupContent);
+
+                MapBoxService.geocodeAddress(address, function (error, toCoordinates) {
                     if (!error) {
-                        let popup = new mapboxgl.Popup({
-                            offset: 15,
-                            closeButton: true,
-                            closeOnClick: false,
-                            closeOnClickOutside: true,
-                            maxWidth: '800px',
-                            minWidth: '600px'
-                        }).setHTML(popupContent);
-
-                        var marker = new mapboxgl.Marker(el)
-                            .setLngLat(addressCoordinates)
+                        let marker = new mapboxgl.Marker(el)
+                            .setLngLat(toCoordinates)
                             .setPopup(popup)
-                            .addTo($scope.mapAllTransport);
+                            .addTo($scope.mapTransport);
 
                         let closeButton = popup._content.querySelector('.mapboxgl-popup-close-button');
                         if (closeButton) {
@@ -180,194 +231,136 @@ travel_app.controller('TransportCusController', function ($scope, $filter, $loca
                             closeButton.style.lineHeight = '40px';
                         }
 
-                        $scope.markerAllTransport.push(marker);
+                        $scope.markerTransport.push(marker);
 
-                        bounds.extend(addressCoordinates);
-                        $scope.mapAllTransport.fitBounds(bounds, {padding: 20});
+                        bounds.extend(toCoordinates);
+                        $scope.mapTransport.fitBounds(bounds, {padding: 20});
                     } else {
                         console.error("Lỗi khi lấy tọa độ của điểm đến:", error);
                     }
                 });
-            }
-        };
+            };
 
-        $scope.addMarkerTransport = function (transportBrand) {
-            $scope.removeMarkerTransport();
-            let bounds = new mapboxgl.LngLatBounds();
-            let address = transportBrand.transportationBrandAddress;
-
-            let iconUrl = '/assets/customers/images/icon/maker.png';
-            let el = document.createElement('div');
-            el.className = 'marker';
-            el.style.backgroundImage = `url(${iconUrl})`;
-            el.style.width = '40px';
-            el.style.height = '40px';
-            el.style.backgroundSize = '100%';
-
-            let popupContent = createPopupContent(transportBrand);
-
-            let popup = new mapboxgl.Popup({
-                offset: 15,
-                closeButton: true,
-                closeOnClick: false,
-                closeOnClickOutside: true,
-                maxWidth: '800px',
-                minWidth: '600px'
-            }).setHTML(popupContent);
-
-            MapBoxService.geocodeAddress(address, function (error, toCoordinates) {
-                if (!error) {
-                    let marker = new mapboxgl.Marker(el)
-                        .setLngLat(toCoordinates)
-                        .setPopup(popup)
-                        .addTo($scope.mapTransport);
-
-                    let closeButton = popup._content.querySelector('.mapboxgl-popup-close-button');
-                    if (closeButton) {
-                        closeButton.style.fontSize = '30px';
-                        closeButton.style.width = '40px';
-                        closeButton.style.height = '40px';
-                        closeButton.style.lineHeight = '40px';
-                    }
-
-                    $scope.markerTransport.push(marker);
-
-                    bounds.extend(toCoordinates);
-                    $scope.mapTransport.fitBounds(bounds, {padding: 20});
-                } else {
-                    console.error("Lỗi khi lấy tọa độ của điểm đến:", error);
+            /**
+             * Phương thức xóa marker trên bản đồ
+             */
+            $scope.removeMarkerAllTransport = function () {
+                if ($scope.markerAllTransport.length > 0) {
+                    $scope.markerAllTransport.forEach(function (marker) {
+                        marker.remove();
+                    });
+                    $scope.markerAllTransport = [];
                 }
-            });
+            };
+
+            $scope.removeMarkerTransport = function () {
+                if ($scope.markerTransport.length > 0) {
+                    $scope.markerTransport.forEach(function (marker) {
+                        marker.remove();
+                    });
+                    $scope.markerTransport = [];
+                }
+            };
+        }
+
+        //show tiện ích
+        $scope.showMoreItemsTransportationBrand = () => {
+            $scope.limitTransportationBrand = $scope.transportationBrandList.length;
+            $scope.showMoreTransportationBrand = true;
         };
+
+        $scope.showLessItemsTransportationBrand = () => {
+            $scope.limitTransportationBrand = 5;
+            $scope.showMoreTransportationBrand = false;
+        };
+
+        $scope.showMoreItemsTransportationType = () => {
+            $scope.limitTransportationType = $scope.transportationTypeList.length;
+            $scope.showMoreTransportationType = true;
+        };
+
+        $scope.showLessItemsTransportationType = () => {
+            $scope.limitTransportationType = 5;
+            $scope.showMoreTransportationType = false;
+        };
+
+        //thêm danh sách lọc
+        $scope.ChooseFromAVarietyOfVehicles = (id) => {
+            let index = $scope.filters.mediaTypeList.indexOf(id);
+            if (index === -1) {
+                $scope.filters.mediaTypeList.push(id);
+            } else {
+                $scope.filters.mediaTypeList.splice(index, 1);
+            }
+        };
+
+        $scope.ChooseFromManyCarBrands = (id) => {
+            let index = $scope.filters.listOfVehicleManufacturers.indexOf(id);
+            if (index === -1) {
+                $scope.filters.listOfVehicleManufacturers.push(id);
+            } else {
+                $scope.filters.listOfVehicleManufacturers.splice(index, 1);
+            }
+        };
+
+        $scope.filterAllTransportCus = () => {
+            $scope.isLoading = true;
+            fetchData(TransportCusService.findAllTransportCustomerByFilters.bind(null, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.filters), (response) => {
+                dataList(response);
+                if (response === null) {
+                    toastAlert('warning', 'Không tìm thấy dữ liệu !');
+                }
+            }).finally(function () {
+                $scope.isLoading = false;
+            })
+
+        }
 
         /**
-         * Phương thức xóa marker trên bản đồ
+         * Phân trang
          */
-        $scope.removeMarkerAllTransport = function () {
-            if ($scope.markerAllTransport.length > 0) {
-                $scope.markerAllTransport.forEach(function (marker) {
-                    marker.remove();
-                });
-                $scope.markerAllTransport = [];
+        $scope.setPage = function (page) {
+            if (page >= 0 && page < $scope.totalPages) {
+                $scope.currentPage = page;
+                $scope.init();
             }
         };
 
-        $scope.removeMarkerTransport = function () {
-            if ($scope.markerTransport.length > 0) {
-                $scope.markerTransport.forEach(function (marker) {
-                    marker.remove();
-                });
-                $scope.markerTransport = [];
+        $scope.getPaginationRange = function () {
+            const range = [];
+            let start, end;
+
+            if ($scope.totalPages <= 3) {
+                start = 0;
+                end = $scope.totalPages;
+            } else {
+                start = Math.max(0, $scope.currentPage - 1);
+                end = Math.min(start + 3, $scope.totalPages);
+
+                if (end === $scope.totalPages) {
+                    start = $scope.totalPages - 3;
+                }
             }
+
+            for (let i = start; i < end; i++) {
+                range.push(i);
+            }
+
+            return range;
         };
 
-        /**
-         * phương thức chuyển đến transport detail
-         */
-        $scope.detailTransport = function (brandId) {
-            $scope.encryptedBrandId = btoa(JSON.stringify(brandId));
-            $location.path('/drive-move/drive-transport-detail/' + $scope.encryptedBrandId);
-        }
-    }
-
-    //show tiện ích
-    $scope.showMoreItemsTransportationBrand = () => {
-        $scope.limitTransportationBrand = $scope.transportationBrandList.length;
-        $scope.showMoreTransportationBrand = true;
-    };
-
-    $scope.showLessItemsTransportationBrand = () => {
-        $scope.limitTransportationBrand = 5;
-        $scope.showMoreTransportationBrand = false;
-    };
-
-    $scope.showMoreItemsTransportationType = () => {
-        $scope.limitTransportationType = $scope.transportationTypeList.length;
-        $scope.showMoreTransportationType = true;
-    };
-
-    $scope.showLessItemsTransportationType = () => {
-        $scope.limitTransportationType = 5;
-        $scope.showMoreTransportationType = false;
-    };
-
-    //thêm danh sách lọc
-    $scope.ChooseFromAVarietyOfVehicles = (id) => {
-        let index = $scope.filters.mediaTypeList.indexOf(id);
-        if (index === -1) {
-            $scope.filters.mediaTypeList.push(id);
-        } else {
-            $scope.filters.mediaTypeList.splice(index, 1);
-        }
-    };
-
-    $scope.ChooseFromManyCarBrands = (id) => {
-        let index = $scope.filters.listOfVehicleManufacturers.indexOf(id);
-        if (index === -1) {
-            $scope.filters.listOfVehicleManufacturers.push(id);
-        } else {
-            $scope.filters.listOfVehicleManufacturers.splice(index, 1);
-        }
-    };
-
-    $scope.filterAllTransportCus = () => {
-        $scope.isLoading = true;
-        fetchData(TransportCusService.findAllTransportCustomerByFilters.bind(null, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.filters), (response) => {
-            dataList(response);
-            if (response === null) {
-                toastAlert('warning', 'Không tìm thấy dữ liệu !');
-            }
-        }).finally(function () {
-            $scope.isLoading = false;
-        })
-
-    }
-
-    /**
-     * Phân trang
-     */
-    $scope.setPage = function (page) {
-        if (page >= 0 && page < $scope.totalPages) {
-            $scope.currentPage = page;
+        $scope.pageSizeChanged = function () {
+            $scope.currentPage = 0;
             $scope.init();
-        }
-    };
+        };
 
-    $scope.getPaginationRange = function () {
-        const range = [];
-        let start, end;
-
-        if ($scope.totalPages <= 3) {
-            start = 0;
-            end = $scope.totalPages;
-        } else {
-            start = Math.max(0, $scope.currentPage - 1);
-            end = Math.min(start + 3, $scope.totalPages);
-
-            if (end === $scope.totalPages) {
-                start = $scope.totalPages - 3;
-            }
-        }
-
-        for (let i = start; i < end; i++) {
-            range.push(i);
-        }
-
-        return range;
-    };
-
-    $scope.pageSizeChanged = function () {
-        $scope.currentPage = 0;
         $scope.init();
-    };
 
-    $scope.init();
-
-    function createPopupContent(brand) {
-        return `
+        function createPopupContent(brand) {
+            return `
                         <div class="m-1 row">
                             <div class="img-holder col-xl-3 col-lg-4 p-0">
-                                <img src="${brand.transportationBrandImg}" style="height: 170px"
+                                <img src="${brand.transportationBrandImg}" style="height: 120px" class="rounded-3"
                                      onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
                             </div>
                             <div class="col-xl-9 col-lg-8">
@@ -446,10 +439,10 @@ travel_app.controller('TransportCusController', function ($scope, $filter, $loca
                             </div>
                         </div>
         `;
-    }
+        }
 
-    $(document).on('click', '.redirectTransportDetail', function () {
-        $('#modalMapTransport').modal('hide');
-        $('#modalMapAllTransport').modal('hide');
+        $(document).on('click', '.redirectTransportDetail', function () {
+            $('#modalMapTransport').modal('hide');
+            $('#modalMapAllTransport').modal('hide');
+        });
     });
-});

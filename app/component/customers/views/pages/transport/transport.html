@@ -221,7 +221,7 @@
                     <div ng-repeat="brand in transportBrand" ng-if="transportBrand.length > 0">
                         <div class="single-event-item mb-30 wow fadeInUp row">
                             <div class="img-holder col-xl-3 col-lg-4 p-0">
-                                <img ng-src="{{ brand.transportationBrandImg }}" style="height: 170px"
+                                <img ng-src="{{ brand.transportationBrandImg }}" style="height: 135px"
                                      onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
                             </div>
                             <div class=" col-xl-9 col-lg-8">
@@ -299,7 +299,8 @@
                                             </div>
                                             <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
                                                 <div class="box">
-                                                    <a href="#" ng-click="detailTransport(brand.id)"
+                                                    <a href="#"
+                                                       ng-click="redirectPage('/drive-move/drive-transport-detail/', brand.id)"
                                                        class="btn btn-green w-100 mt-3">
                                                         Đặt vé
                                                     </a>

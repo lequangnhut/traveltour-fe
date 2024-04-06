@@ -71,19 +71,19 @@ travel_app.service('TransportServiceAG', function ($http) {
         })
     }
 
-    this.create = function (transportationsDto, selectedUtilities) {
+    this.create = function (transportationsDto) {
         return $http({
             method: 'POST',
-            url: API_TRANS + 'create-transportation/' + selectedUtilities,
+            url: API_TRANS + 'create-transportation',
             headers: {'Content-Type': undefined},
             data: transportationsDto
         })
     }
 
-    this.update = function (transportationsDto, selectedUtilities) {
+    this.update = function (transportationsDto) {
         return $http({
             method: 'PUT',
-            url: API_TRANS + 'update-transportation/' + selectedUtilities,
+            url: API_TRANS + 'update-transportation',
             headers: {'Content-Type': undefined},
             data: transportationsDto
         })

@@ -1,4 +1,4 @@
-travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $location, $rootScope, $routeParams, $timeout, $http, CustomerServiceAD, AuthService, LocalStorageService) {
+travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $location, $rootScope, $routeParams, $timeout, $http, Base64ObjectService, CustomerServiceAD, AuthService, LocalStorageService) {
     $scope.isLoading = true;
 
     const fileName = "default.jpg";
@@ -25,7 +25,7 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
     $scope.pageSize = 5;
 
     let searchTimeout;
-    let customerId = $routeParams.id;
+    let customerId = Base64ObjectService.decodeObject($routeParams.id);
 
     $scope.emailError = false;
     $scope.phoneError = false;
@@ -245,19 +245,24 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
 
     //form update
     $scope.updateCustomerSubmit = () => {
-        $scope.isLoading = true;
-        const dataCustomer = new FormData();
-        if ($scope.hasImage) {
-            dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
-            dataCustomer.append("customerAvatar", $scope.customerAvatarNoCloud);
-            updateCustomer(customerId, dataCustomer);
-        } else {
-            urlToFile($scope.customer.avatar, fileName, mimeType).then(file => {
+        function confirmUpdate() {
+            $scope.isLoading = true;
+
+            const dataCustomer = new FormData();
+            if ($scope.hasImage) {
                 dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
-                dataCustomer.append("customerAvatar", file);
+                dataCustomer.append("customerAvatar", $scope.customerAvatarNoCloud);
                 updateCustomer(customerId, dataCustomer);
-            }, errorCallback);
+            } else {
+                urlToFile($scope.customer.avatar, fileName, mimeType).then(file => {
+                    dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
+                    dataCustomer.append("customerAvatar", file);
+                    updateCustomer(customerId, dataCustomer);
+                }, errorCallback);
+            }
         }
+
+        confirmAlert('Bạn có chắc chắn muốn cập nhật khách hàng không ?', confirmUpdate);
     };
 
     const updateCustomer = (customerId, dataCustomer) => {
@@ -288,7 +293,7 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
      * * Của Thuynhdpc04763
      */
     $scope.checkDuplicateThisPhone = () => {
-        if ($scope.customer.phone == $rootScope.phonenow) {
+        if ($scope.customer.phone === $rootScope.phonenow) {
             $scope.phoneError = false;
             return;
         }
@@ -303,7 +308,7 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
     };
 
     $scope.checkDuplicateCard = () => {
-        if ($scope.customer.citizenCard == $rootScope.cardnow) {
+        if ($scope.customer.citizenCard === $rootScope.cardnow) {
             $scope.cardError = false;
             return;
         }
@@ -333,11 +338,14 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
 
     const updateInfo = (customerId, dataCustomer) => {
         $scope.isLoading = true;
+
         CustomerServiceAD.updateCustomer(customerId, dataCustomer).then((response) => {
             if (response.status === 200) {
-                toastAlert('success', 'Cập nhật thành công !');
-                LocalStorageService.set('user', response.data.data);
+                let user = response.data.data;
                 let userRoles = response.data.data.roles;
+
+                LocalStorageService.encryptLocalData(JSON.stringify(user), 'user', 'encryptUser');
+                toastAlert('success', 'Cập nhật thành công !');
 
                 if (hasAdminRole(userRoles)) {
                     $window.location.href = '/admin/dashboard';

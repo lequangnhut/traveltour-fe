@@ -102,7 +102,7 @@
                                     {{ detail.departureDate | calculateDaysAndNights:detail.arrivalDate }}
                                 </span>
                                 <span>
-                                    <a href="#" ng-click="redirectTourDetail(detail.id)">Chi tiết
+                                    <a href="#" ng-click="redirectPage('/tours/tour-detail/', detail.id)">Chi tiết
                                         <span class="fas fa-long-arrow-right"></span>
                                     </a>
                                 </span>
@@ -548,7 +548,8 @@
             <div class="single-service-item mb-40">
                 <div class="content">
                     <h3 class="title"><a href="#">Mường Thanh Hotel</a></h3>
-                    <p>Khách sạn hạng sang cao cấp nhất, nằm ở các thành phố lớn và trung tâm du lịch nổi tiếng trong nước và quốc tế.</p>
+                    <p>Khách sạn hạng sang cao cấp nhất, nằm ở các thành phố lớn và trung tâm du lịch nổi tiếng trong
+                        nước và quốc tế.</p>
                     <div class="meta">
                         <span class="icon"><i class="flaticon-blanket"></i></span>
                         <span class="icon"><i class="flaticon-cat"></i></span>

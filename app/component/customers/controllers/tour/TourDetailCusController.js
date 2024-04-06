@@ -1,5 +1,5 @@
 travel_app.controller('TourDetailCusController',
-    function ($scope, $location, $sce, $timeout, $filter, $routeParams, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailCusService, MapBoxService, ToursServiceAD) {
+    function ($scope, $location, $sce, $timeout, $filter, $routeParams, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailCusService, MapBoxService, ToursServiceAD, Base64ObjectService) {
         mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
         $scope.markerTrips = [];
@@ -33,7 +33,7 @@ travel_app.controller('TourDetailCusController',
             baby: '0'
         }
 
-        const tourDetailId = JSON.parse(atob($routeParams.id));
+        const tourDetailId = Base64ObjectService.decodeObject($routeParams.id);
 
         function errorCallback() {
             $location.path('/admin/internal-server-error')
@@ -345,7 +345,7 @@ travel_app.controller('TourDetailCusController',
                     }
 
                     LocalStorageService.encryptLocalData(dataBooking, 'dataBooking', 'encryptDataBooking');
-                    $location.path('/tours/tour-detail/' + btoa(JSON.stringify(tourDetailId)) + '/booking-tour');
+                    $location.path('/tours/tour-detail/' + Base64ObjectService.encodeObject(tourDetailId) + '/booking-tour');
                 }
             }
         }

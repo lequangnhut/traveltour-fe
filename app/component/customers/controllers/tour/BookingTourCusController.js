@@ -1,8 +1,8 @@
 travel_app.controller('BookingTourCusController',
-    function ($scope, $sce, $location, $rootScope, $window, $routeParams, AuthService, LocalStorageService, BookingTourCusService, TourDetailCusService, GenerateCodePayService) {
+    function ($scope, $sce, $location, $rootScope, $window, $routeParams, AuthService, LocalStorageService, BookingTourCusService, TourDetailCusService, GenerateCodePayService, Base64ObjectService) {
 
         let user = AuthService.getUser();
-        let tourDetailId = JSON.parse(atob($routeParams.id));
+        let tourDetailId = Base64ObjectService.decodeObject($routeParams.id);
         $scope.tourDetailIdBase64 = $routeParams.id;
 
         if (!user) {
@@ -95,7 +95,7 @@ travel_app.controller('BookingTourCusController',
                     centerAlert('Xác nhận !', 'Vui lòng chấp nhận điều khoản, điều kiện.', 'warning')
                 } else {
                     LocalStorageService.encryptLocalData($scope.service, 'serviceCustomer', 'encryptServiceCustomer');
-                    $location.path('/tours/tour-detail/' + btoa(JSON.stringify($scope.tourDetail.id)) + '/booking-tour/customer-information');
+                    $location.path('/tours/tour-detail/' + $scope.tourDetailIdBase64 + '/booking-tour/customer-information');
                 }
             };
 

@@ -39,6 +39,8 @@
         <link rel="stylesheet" href="/assets/customers/css/visit-location.css">
         <link rel="stylesheet" href="/assets/customers/css/tour/booking-tour.css">
         <link href="/node_modules/mapbox-gl/dist/mapbox-gl.css" type="text/css" rel="stylesheet">
+        <link href="/node_modules/owl.carousel/dist/assets/owl.carousel.css" type="text/css" rel="stylesheet">
+        <link href="/node_modules/owl.carousel/dist/assets/owl.theme.default.css" type="text/css" rel="stylesheet">
 
         <script src="/assets/customers/vendor/jquery-3.6.0.min.js"></script>
         <script src="/assets/customers/vendor/slick/slick.min.js"></script>
@@ -56,6 +58,7 @@
         <script src="/lib/websocket/sockjs.min.js"></script>
         <script src="/lib/websocket/stomp.min.js"></script>
         <script src="/lib/angularjs/crypto-js.min.js"></script>
+        <script src="/node_modules/owl.carousel/dist/owl.carousel.js"></script>
     </div>
 
     <div ng-cloak ng-if="isManagerPage()">
@@ -83,6 +86,7 @@
         <link href="/assets/admin/assets/css/user.min.css" type="text/css" rel="stylesheet" id="user-style-default">
         <link href="/assets/admin/assets/css/register-business.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/theme-table.css" type="text/css" rel="stylesheet">
+        <link href="/assets/admin/assets/css/request-car/select-car-agent.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/upload.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/welcome.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/editor.css" type="text/css" rel="stylesheet">
@@ -94,6 +98,7 @@
         <link href="/assets/admin/assets/css/transportation.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/scroll-hidden.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/tab.css" type="text/css" rel="stylesheet">
+        <link href="/assets/admin/assets/vendors/swiper/swiper-bundle.min.css" rel="stylesheet"/>
 
         <script src="/assets/admin/assets/vendors/popper/popper.min.js"></script>
         <script src="/assets/admin/assets/vendors/bootstrap/bootstrap.min.js"></script>
@@ -101,7 +106,7 @@
         <script src="/assets/admin/assets/vendors/is/is.min.js"></script>
         <script src="/assets/admin/assets/vendors/fontawesome/all.min.js"></script>
         <script src="/assets/admin/assets/vendors/lodash/lodash.min.js"></script>
-<!--        <script src="/assets/admin/lib/polyfill.io/v3/polyfill.min58be.js?features=window.scroll"></script>-->
+        <!--        <script src="/assets/admin/lib/polyfill.io/v3/polyfill.min58be.js?features=window.scroll"></script>-->
         <script src="/assets/admin/assets/vendors/list.js/list.min.js"></script>
         <script src="/assets/admin/assets/vendors/feather-icons/feather.min.js"></script>
         <script src="/assets/admin/assets/vendors/dayjs/dayjs.min.js"></script>
@@ -113,8 +118,9 @@
         <script src="/lib/moment/moment.min.js"></script>
         <script src="/lib/websocket/sockjs.min.js"></script>
         <script src="/lib/websocket/stomp.min.js"></script>
+        <script src="/node_modules/owl.carousel/dist/owl.carousel.js"></script>
+        <script src="/assets/admin/assets/vendors/swiper/swiper-bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 
         <script>
             var phoenixIsRTL = window.config.config.phoenixIsRTL;
@@ -295,64 +301,106 @@
                                 </div>
 
                                 <!-- label-->
-                                <p class="navbar-vertical-label">DỊCH VỤ THEO TOUR</p>
+                                <p class="navbar-vertical-label">YÊU CẦU ĐẶT XE</p>
                                 <hr class="navbar-vertical-line"/>
 
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'accommodation-information-list'}"
-                                       ng-click="setActiveNavItem('accommodation-information-list')"
-                                       href="/admin/accommodation-information-list"
-                                       role="button">
+                                    <a class="nav-link label-1"
+                                       ng-class="{ 'active': activeNavItem === 'request-car'}"
+                                       ng-click="setActiveNavItem('request-car')"
+                                       href="/admin/request-booking-car"
+                                    >
                                         <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon">
-                                            </div>
+                                            <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                                <span data-feather="credit-card"></span>
+                                               <i class="fa-regular fa-newspaper"></i>
                                             </span>
-                                            <span class="nav-link-text">Thông tin lưu trú</span>
-                                            <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
-                                                  style="font-size: 6px"></span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Xem yêu cầu đặt xe</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
 
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
+                                       ng-class="{ 'active': activeNavItem === 'request-car-successfully'}"
+                                       ng-click="setActiveNavItem('request-car-successfully')"
+                                       href="/admin/request-booking-car-successfully"
+                                    >
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                               <i class="fa-solid fa-warehouse"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Xe chờ hoạt động</span>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- label-->
+                                <p class="navbar-vertical-label">DỊCH VỤ THEO TOUR</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1"
+                                       ng-class="{ 'active': activeNavItem === 'accommodation-information-list'}"
+                                       ng-click="setActiveNavItem('accommodation-information-list')"
+                                       href="/admin/accommodation-information-list"
+                                    >
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                                <span data-feather="credit-card"></span>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Thông tin lưu trú</span>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'transportation-information-list'}"
                                        ng-click="setActiveNavItem('transportation-information-list')"
                                        href="/admin/transportation-information-list"
-                                       role="button">
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon">
                                             </div>
                                             <span class="nav-link-icon">
                                                 <span data-feather="truck"></span>
                                             </span>
-                                            <span class="nav-link-text">Thông tin phương tiện</span>
-                                            <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
-                                                  style="font-size: 6px"></span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Thông tin phương tiện</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
 
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'visit-information-list'}"
                                        ng-click="setActiveNavItem('visit-information-list')"
-                                       href="/admin/visit-information-list">
+                                       href="/admin/visit-information-list"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon">
                                             </div>
                                             <span class="nav-link-icon">
                                                 <span data-feather="instagram"></span>
                                             </span>
-                                            <span class="nav-link-text">Thông tin điểm tham quan</span>
-                                            <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
-                                                  style="font-size: 6px"></span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Thông tin điểm tham quan</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -366,57 +414,16 @@
                                     <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'booking-list'}"
                                        ng-click="setActiveNavItem('booking-list')"
-                                       href="/admin/booking-list">
+                                       href="/admin/booking-list"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
                                                 <span data-feather="list"></span>
                                             </span>
                                             <span class="nav-link-text-wrapper">
-                                                <span class="nav-link-text">Danh sách booking</span>
+                                                <span class="nav-link-text">Danh sách đặt tour</span>
                                             </span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- label-->
-                                <p class="navbar-vertical-label">LỊCH TRÌNH DI CHUYỂN</p>
-                                <hr class="navbar-vertical-line"/>
-
-                                <!-- label-->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
-                                       ng-class="{ 'active': activeNavItem === 'tour-is-going-list'}"
-                                       ng-click="setActiveNavItem('tour-is-going-list')"
-                                       href="/admin/tour-is-going-list"
-                                       role="button">
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon">
-                                            </div>
-                                            <span class="nav-link-icon">
-                                            <span data-feather="hard-drive"></span>
-                                        </span>
-                                            <span class="nav-link-text">Các tour đang đi</span>
-                                            <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
-                                                  style="font-size: 6px"></span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- label-->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link label-1"
-                                       ng-class="{ 'active': activeNavItem === 'customer-go-on-list'}"
-                                       ng-click="setActiveNavItem('customer-go-on-list')"
-                                       href="/admin/customer-go-on-list">
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span class="nav-link-icon">
-                                            <span data-feather="compass"></span>
-                                        </span>
-                                            <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Khách hàng đi tour</span>
-                                        </span>
                                         </div>
                                     </a>
                                 </div>
@@ -444,23 +451,67 @@
                                 </div>
 
                                 <!-- label-->
+                                <p class="navbar-vertical-label">LỊCH TRÌNH DI CHUYỂN</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1"
+                                       ng-class="{ 'active': activeNavItem === 'tour-is-going-list'}"
+                                       ng-click="setActiveNavItem('tour-is-going-list')"
+                                       href="/admin/tour-is-going-list"
+                                    >
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                                <span data-feather="hard-drive"></span>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Các tour đang đi</span>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1"
+                                       ng-class="{ 'active': activeNavItem === 'customer-go-on-list'}"
+                                       ng-click="setActiveNavItem('customer-go-on-list')"
+                                       href="/admin/customer-go-on-list"
+                                    >
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                                <span data-feather="compass"></span>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Khách hàng đi tour</span>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- label-->
                                 <p class="navbar-vertical-label">QUẢN LÝ KHÁCH HÀNG</p>
                                 <hr class="navbar-vertical-line"/>
 
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'customer-list'}"
                                        ng-click="setActiveNavItem('customer-list')"
                                        href="/admin/customer-list"
-                                       role="button">
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon">
                                             </div>
                                             <span class="nav-link-icon">
                                                 <span data-feather="users"></span>
                                             </span>
-                                            <span class="nav-link-text">Thông tin khách hàng</span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Thông tin khách hàng</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -968,7 +1019,30 @@
                                             <span data-feather="map"></span>
                                         </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Danh sách chuyến đi</span>
+                                            <span class="nav-link-text">Danh sách lịch trình</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- label-->
+                                <p class="navbar-vertical-label text-uppercase">Đề xuất từ Travel Tour</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1"
+                                       ng-click="setActiveNavItem('request-car-agent')"
+                                       ng-class="{ 'active': activeNavItem === 'request-car-agent'}"
+                                       href="/business/transport/notification-request-car"
+                                    >
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                            <i class="fa-regular fa-comments"></i>
+                                        </span>
+                                            <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Yêu cầu về chuyến xe</span>
                                         </span>
                                         </div>
                                     </a>
@@ -1691,8 +1765,9 @@
 <script src="app/services/staff/CustomersGoOnTourServiceAD.js"></script>
 <script src="app/services/staff/BillServiceAD.js"></script>
 <script src="app/services/staff/PrintService.js"></script>
+<script src="app/services/agent/OrderHotelServiceAG.js"></script>
 <script src="app/services/staff/RevenueServiceStaff.js"></script>
-
+<script src="app/services/staff/RequestCarServiceAD.js"></script>
 
 <!--====== Agent Service ======-->
 <script src="app/services/agent/TransportBrandServiceAG.js"></script>
@@ -1710,6 +1785,7 @@
 <script src="app/services/agent/VisitLocationTicketServiceAG.js"></script>
 <script src="app/services/agent/OrderVisitServiceAG.js"></script>
 <script src="app/services/agent/RoomImagesService.js"></script>
+<script src="app/services/agent/RequestCarServiceAG.js"></script>
 
 <!--====== Service Customer Tour ======-->
 <script src="app/services/customer/tour/TourCusService.js"></script>
@@ -1797,6 +1873,7 @@
 <script src="app/component/admin/controllers/staff/partner-service/transportation/TransportationSchedulesPaymentControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/travel-schedule/TourIsGoingControllerAD.js"></script>
 <script src="app/component/admin/controllers/staff/travel-schedule/CustomersGoOnTourControllerAD.js"></script>
+<script src="app/component/admin/controllers/staff/request-book-car/RequestCarControllerAD.js"></script>
 
 <!--====== Controller Agent ======-->
 <script src="app/component/agent/business/SelectTypeControllerAG.js"></script>
@@ -1809,6 +1886,8 @@
 <script src="app/component/agent/trans/controllers/transports/TransportControllerAG.js"></script>
 <script src="app/component/agent/trans/controllers/schedules/SchedulesControllerAG.js"></script>
 <script src="app/component/agent/trans/controllers/dashboard/ListTransportBrandControllerAG.js"></script>
+<script src="app/component/agent/trans/controllers/request-car/RequestCarControllerAG.js"></script>
+<script src="app/component/agent/trans/controllers/request-car/SelectCarControllerAG.js"></script>
 
 <!--====== Controller Agent Hotel ======-->
 <script src="app/component/agent/hotel/controllers/RegisterHotelControllerAG.js"></script>

@@ -1,0 +1,605 @@
+<style>
+    .modal::-webkit-scrollbar {
+        width: 0;
+        display: none;
+    }
+
+    .modal {
+        overflow-y: auto;
+    }
+</style>
+
+<div class="container">
+    <div class="header-control mb-4">
+        <div class="header-control-center">
+            <div class="d-flex justify-content-between align-items-center row">
+                <div class="col-xl-12 mt-3">
+                    <h3 class="color-green fw-bold text-uppercase">Xem lại yêu cầu tìm kiếm xe</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="">
+        <div class="card card-customer">
+            <div class="row" style="margin: 20px 16px 20px 16px">
+                <div class="col-xl-4">
+                    Bạn muốn tìm kiếm gì ?
+                    <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i
+                                    class="fa-solid fa-magnifying-glass bg-light"></i></span>
+                        <input type="text" class="form-control" placeholder="Tìm kiếm" ng-model="searchTerm"
+                               ng-change="searchCustomers()"
+                               aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
+                     style="margin: 16px 0 0 0">
+                    <a href="/admin/request-booking-car/create-request-booking" class="btn btn-primary"><i
+                            class="fa-solid fa-plus" style="margin-right: 10px"></i> Tạo yêu cầu tìm xe
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-include="'app/component/utils/loading-component.html'"></div>
+
+    <div class="mb-4" style="margin: 20px 0 20px 0" ng-if="!isLoading || requestCarList.length > 0">
+        <div class="row">
+            <div class="col-xl-9">
+                <div class="card card-customer mb-3" ng-repeat="requestCar in requestCarList track by $index">
+                    <div class="mb-30 row">
+                        <div class="col-xl-3 col-lg-4 ps-5 pt-3">
+                            <img ng-src="{{ requestCar.toursByTourId.tourImg }}" class="img-fluid rounded-3"
+                                 style="width: 100%;" alt="img-request-car"
+                                 onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
+                        </div>
+                        <div class=" col-xl-9 p-3 col-lg-8">
+                            <div class="meta row">
+                                <div class="col-lg-8 p-0">
+                                    <div>
+                                        <span>
+                                            <a class="fw-medium text-success text-decoration-none"
+                                               ng-if="!requestCar.isAccepted">
+                                                <i class="fa-regular fa-circle-question"></i>
+                                                Đang trong thời gian chờ nộp yêu cầu
+                                            </a>
+                                            <a class="fw-medium text-danger text-decoration-none"
+                                               ng-if="requestCar.isAccepted">
+                                                <i class="fa-regular fa-circle-question"></i>
+                                                Thời gian nộp yêu cầu đã kết thúc.
+                                            </a>
+                                        </span>
+                                        <h3 class="fw-medium">
+                                            <a href="#" class="text-dark text-decoration-none">
+                                                {{ requestCar.toursByTourId.tourName }}
+                                            </a>
+                                        </h3>
+                                        <div class="d-flex align-items-center mb-2"
+                                             style="border-bottom: 1px solid rgba(29, 35, 31, 0.1);">
+                                            <div class="location text-orange" style="font-size: 14px">
+                                                <p class="text-warning mb-1">
+                                                    <i class="fa-solid fa-earth-americas"></i>
+                                                    {{ requestCar.requestCarNoted }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="roomTypeByHotel mb-3"
+                                         style="padding-left: 10px ;border-left: 1px solid rgba(29, 35, 31, 0.1)">
+                                        <div style="font-size: 14px; line-height: 20px">
+                                            <p class="mb-1">
+                                                Thời gian tạo yêu cầu:
+                                                <span class="fw-bold">
+                                                    {{ requestCar.dateCreated | vietnameseDateTime }}
+                                                </span>
+                                            </p>
+                                            <p class="mb-1">
+                                                Thời gian kết thúc yêu cầu:
+                                                <span class="fw-bold">
+                                                    7 ngày trước khi tour bắt đầu
+                                                </span>
+                                            </p>
+                                            <p class="mb-2">
+                                                Số lượng khách:
+                                                <span class="fw-bold">{{ requestCar.amountCustomer }}</span> khách
+                                                -
+                                                Loại xe:
+                                                <span class="fw-bold" ng-if="requestCar.isTransportBed === true">
+                                                    Xe giường nằm
+                                                </span>
+                                                <span class="fw-bold" ng-if="requestCar.isTransportBed === false">
+                                                    Xe ghế ngồi
+                                                </span>
+                                            </p>
+                                            <p class="mb-1">
+                                                Điểm đi:
+                                                <span class="fw-bold">{{ requestCar.fromLocation }}</span>
+                                            </p>
+                                            <p class="mb-1">
+                                                Điểm đến: <span class="fw-bold">{{ requestCar.toLocation }}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="infoHotel h-100 w-100 position-relative row">
+                                        <div class="rating col-xl-12 col-lg-12 col-sm-6 col-6">
+                                            <div class="float-end" style="font-size: 14px; line-height: 20px">
+                                                <div class="d-flex align-content-center">
+                                                    <div class="float-end m-2">
+                                                        <p class="mb-0">Nhà xe</p>
+                                                        <p>chờ duyệt</p>
+                                                    </div>
+                                                    <div class="rating-content float-end">
+                                                        <div class="btn-green text-center cursor-pointer"
+                                                             ng-click="openModalRequestCarList(requestCar.id)"
+                                                             style="width: 50px; height: 50px; line-height: 50px; border-radius: 8px">
+                                                            <span class="fw-medium fs-2">
+                                                                <i class="fa-regular fa-file-lines"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
+                                            <div class="box">
+                                                <a href="#"
+                                                   ng-click="redirectPage('/admin/request-booking-car/update-request-booking/', requestCar.id)"
+                                                   class="btn btn-success w-100 mt-3">
+                                                    Sửa yêu cầu
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-12 pt-0 px-0">
+                <div class="card border-0 w-100 pt-3">
+                    <div class="single-event-item mb-30 wow fadeInUp">
+                        <div class="img-holder px-3">
+                            <img class="w-100 rounded-3" src="/assets/customers/images/event/event-1.jpg"
+                                 alt="Event Image">
+                        </div>
+                        <div class="form-customer px-3 pt-5">
+                            <div class="find-item mb-3">
+                                <p class="fw-medium mb-2 ms-2">Ngân sách của bạn</p>
+                                <div class="findHotelType">
+                                    <label for="rangePrice" class="form-label">Chọn ngân sách:</label>
+                                    <input type="range" class="form-range" id="rangePrice" ng-model="filters.price"
+                                           min="100000"
+                                           max="20000000" step="10000">
+                                    <p>{{ filters.price | number:'0' }} VND</p>
+                                </div>
+                            </div>
+                            <div class="form-customer find-item mb-3">
+                                <p class="fw-medium mb-2 ms-2">Loại phương tiện</p>
+                                <div class="findHotelType"
+                                     ng-repeat="tt in transportationTypeList | limitTo: limitTransportationType">
+                                    <div class="form-check ms-3">
+                                        <input class="form-check-input" type="checkbox"
+                                               value="{{tt.transportationTypeName}}"
+                                               id="{{tt.id}}"
+                                               ng-model="tt.checked"
+                                               ng-change="ChooseFromAVarietyOfVehicles(tt.id)">
+                                        <label class="form-check-label" for="{{tt.id}}">
+                                            {{ tt.transportationTypeName }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <button class="btn text-green"
+                                        ng-show="transportationBrandList.length > 5 && !showMoreTransportationType"
+                                        ng-click="showMoreItemsTransportationType()">Hiển thị thêm <i
+                                        class="fa-solid fa-angle-down"></i></button>
+                                <button class="btn text-green" ng-show="showMoreTransportationType"
+                                        ng-click="showLessItemsTransportationType()">Ẩn bớt <i
+                                        class="fa-solid fa-angle-up"></i>
+                                </button>
+                            </div>
+                            <div class="form-customer find-item mb-3">
+                                <p class="fw-medium mb-2 ms-2">Hãng phương tiện</p>
+                                <div class="findHotelType"
+                                     ng-repeat="tb in transportationBrandList | limitTo: limitTransportationBrand">
+                                    <div class="form-check ms-3">
+                                        <input class="form-check-input" type="checkbox"
+                                               value="{{tb.transportationBrandName}}"
+                                               id="{{tb.id}}"
+                                               ng-model="tb.checked"
+                                               ng-change="ChooseFromManyCarBrands(tb.id)">
+                                        <label class="form-check-label" for="{{tb.id}}">
+                                            {{ tb.transportationBrandName }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <button class="btn text-green"
+                                        ng-show="transportationBrandList.length > 5 && !showMoreTransportationBrand"
+                                        ng-click="showMoreItemsTransportationBrand()">Hiển thị thêm <i
+                                        class="fa-solid fa-angle-down"></i></button>
+                                <button class="btn text-green" ng-show="showMoreTransportationBrand"
+                                        ng-click="showLessItemsTransportationBrand()">Ẩn bớt <i
+                                        class="fa-solid fa-angle-up"></i>
+                                </button>
+                            </div>
+                            <div class="find-item mb-3">
+                                <p class="fw-medium mb-2 ms-2">Xếp hạng xe</p>
+                                <div class="findHotelType">
+                                    <div class="form-check ms-3" ng-repeat="rating in ratings">
+                                        <input class="form-check-input" type="radio" name="rating"
+                                               ng-model="$parent.selectedRating" ng-value="rating.id"
+                                               id="{{ 'rating-' + rating.id }}">
+                                        <label class="form-check-label"
+                                               for="{{ 'rating-' + rating.id }}">{{ rating.label }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="find-item mb-3 d-flex justify-content-center mt-3">
+                                <button type="button" class="btn btn-success" ng-click="filterAllMedia()">Lọc yêu cầu
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="div" ng-if="requestCarList.length <= 0">
+            <div class="d-flex justify-content-center align-items-center mt-3">
+                Hiện tại bạn chưa có yêu cầu nào
+            </div>
+        </div>
+
+        <div class="row" ng-if="requestCarList.length > 0">
+            <div class="col-lg-12">
+                <ul class="gowilds-pagination wow fadeInUp text-center d-flex align-items-center justify-content-center">
+                    <!-- Previous Page -->
+                    <li class="m-1" ng-class="{disabled: currentPage === 0}">
+                        <a href="#" ng-click="setPageRequestCar(0)"><span class="fas fa-arrow-left"></span></a>
+                    </li>
+
+                    <!-- Ellipsis at the beginning -->
+                    <li class="m-1" ng-if="currentPage > 2 && totalPages > 5">
+                                <span style="font-size: 4px">
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                </span>
+                    </li>
+
+                    <!-- Pagination Numbers -->
+                    <li class="m-1" ng-repeat="n in getPaginationRangeRequestCar()">
+                        <a ng-class="{active: n === currentPage}" ng-click="setPageRequestCar(n)">{{ n + 1 }}</a>
+                    </li>
+
+                    <!-- Ellipsis at the end -->
+                    <li class="m-1" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                <span style="font-size: 4px">
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                </span>
+                    </li>
+
+                    <!-- Next Page -->
+                    <li class="m-1" ng-class="{disabled: currentPage === totalPages - 1}">
+                        <a href="#" ng-click="setPageRequestCar(totalPages - 1)"><span
+                                class="fas fa-arrow-right"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="request-car-list" tabindex="-1" aria-labelledby="request-car-list-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="request-car-list-label">Danh sách xe chờ duyệt cho tour</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pb-0 pt-0">
+                <div ng-include="'app/component/utils/loading-component.html'"></div>
+
+                <div class="m-3" ng-if="!isLoading || requestCarList.length > 0">
+                    <div class="single-event-item transport-card-item row">
+                        <div class="card card-customer mb-3"
+                             ng-repeat="requestCarDetail in requestCarDetailList track by $index">
+                            <div class="row">
+                                <div class="col-xl-3 col-lg-4 ps-3 pt-3">
+                                    <img ng-src="{{ requestCarDetail.transportations.transportationImg }}"
+                                         class="img-fluid rounded-3"
+                                         style="width: 100%;" alt="img-request-car"
+                                         onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
+                                </div>
+                                <div class=" col-xl-9 p-3 pb-2 col-lg-8">
+                                    <div class="meta row">
+                                        <div class="col-lg-8 p-0">
+                                            <div>
+                                                <span>
+                                                    <i class="fa-solid fa-bus"></i>
+                                                    <a class="fw-bold text-decoration-none text-dark"
+                                                       ng-if="requestCarDetail.transportations.isTransportBed">
+                                                        {{ requestCarDetail.transportationTypes.transportationTypeName + ' (' + requestCarDetail.transportations.amountSeat + ' giường)' }}
+                                                    </a>
+                                                    <a class="fw-bold text-decoration-none text-dark"
+                                                       ng-if="!requestCarDetail.transportations.isTransportBed">
+                                                        {{ requestCarDetail.transportationTypes.transportationTypeName + ' (' + requestCarDetail.transportations.amountSeat + ' ghế)' }}
+                                                    </a>
+                                                </span>
+                                                <h3 class="fw-medium mb-2">
+                                                    <a href="#" class="text-dark text-decoration-none">
+                                                        {{ requestCarDetail.transportationBrands.transportationBrandName }}
+                                                    </a>
+                                                </h3>
+                                                <div class="d-flex align-items-center mb-2"
+                                                     style="border-bottom: 1px solid rgba(29, 35, 31, 0.1);">
+                                                    <div class="location text-orange" style="font-size: 14px">
+                                                        <p class="text-warning mb-1">
+                                                            <i class="fa-solid fa-phone"></i>
+                                                            Số điện thoại: {{ agencies[$index].phone }}
+                                                        </p>
+                                                        <p class="text-warning mb-1">
+                                                            <i class="fa-solid fa-earth-americas"></i>
+                                                            Website:
+                                                            <a href="https://{{ agencies[$index].urlWebsite }}"
+                                                               class="text-warning">
+                                                                {{ agencies[$index].urlWebsite }}
+                                                            </a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="roomTypeByHotel mb-3"
+                                                 style="padding-left: 10px ;border-left: 1px solid rgba(29, 35, 31, 0.1)">
+                                                <div style="font-size: 14px; line-height: 20px">
+                                                    <p class="mb-3">
+                                                        <span class="fas fa-map-marker-alt color-green"></span>
+                                                        Địa
+                                                        chỉ: {{ requestCarDetail.transportationBrands.transportationBrandAddress }}
+                                                    </p>
+                                                    <div class="color-green">
+                                                        <i class="fa-solid fa-check"></i> Xe có WIFI miễn phí
+                                                    </div>
+                                                    <div class="color-green">
+                                                        <i class="fa-solid fa-check"></i> Không cần thanh toán trước
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="infoHotel h-100 w-100 position-relative row">
+                                                <div class="rating col-xl-12 col-lg-12 col-sm-6 col-6">
+                                                    <div class="float-end" style="font-size: 14px; line-height: 20px">
+                                                        <div class="d-flex align-content-center">
+                                                            <div class="float-end m-2">
+                                                                <p class="mb-0">Đánh giá</p>
+                                                                <p>Rất tốt</p>
+                                                            </div>
+                                                            <div class="rating-content float-end">
+                                                                <div class="btn-green text-center cursor-pointer"
+                                                                     style="width: 50px; height: 50px; line-height: 50px; border-radius: 8px">
+                                                                    <span class="fw-medium fs-2">
+                                                                        4.9
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
+                                                    <div class="box">
+                                                        <a href="#" role="button" class="btn btn-success w-100 ms-3">
+                                                            Duyệt xe
+                                                        </a>
+                                                        <a href="#" ng-click="toggleRequestDetail($index)"
+                                                           class="btn w-100 ms-3 mt-2 p-0">
+                                                            Xem chi tiết
+                                                            <i ng-bind-html="getChangeIconRequestDetail($index)"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3" ng-if="activeTransportInfoTab === $index">
+                                    <ul class="nav nav-underline" id="nav-tab-transport-{{$index}}" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active"
+                                               id="nav-image-tab-{{$index}}"
+                                               data-bs-toggle="tab"
+                                               href="#nav-image-{{$index}}"
+                                               role="tab"
+                                               aria-controls="tab-home"
+                                               aria-selected="true">Hình ảnh
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link"
+                                               id="nav-until-tab-{{$index}}"
+                                               data-bs-toggle="tab"
+                                               href="#nav-until-{{$index}}"
+                                               role="tab"
+                                               aria-controls="tab-profile"
+                                               aria-selected="false">Tiện ích
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link"
+                                               id="nav-rate-tab-{{$index}}"
+                                               data-bs-toggle="tab"
+                                               href="#nav-policy-{{$index}}"
+                                               role="tab"
+                                               aria-controls="tab-contact"
+                                               aria-selected="false">Chính sách
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link"
+                                               id="nav-rate-tab-{{$index}}"
+                                               data-bs-toggle="tab"
+                                               href="#nav-rate-{{$index}}"
+                                               role="tab"
+                                               aria-controls="tab-contact"
+                                               aria-selected="false">Chính sách
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content mt-3" id="nav-tab-transport-content-{{$index}}">
+                                        <div class="tab-pane fade show active" id="nav-image-{{$index}}" role="tabpanel"
+                                             aria-labelledby="nav-image-tab-{{$index}}">
+                                            <div ng-init="carouselId = 'carousel-' + $index">
+                                                <div class="carousel slide"
+                                                     id="carouselControl-{{$index}}"
+                                                     data-ride="carousel">
+                                                    <div class="carousel-inner rounded">
+                                                        <div class="carousel-item"
+                                                             ng-class="{ 'active': $first }"
+                                                             ng-repeat="img in requestCarDetail.transportations.transportationImagesById">
+                                                            <img class="d-block w-100 rounded-2"
+                                                                 ng-src="{{ img.imagePath }}"
+                                                                 height="480"
+                                                                 onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"
+                                                                 alt="Image trans">
+                                                        </div>
+                                                    </div>
+
+                                                    <button class="carousel-control-prev" type="button"
+                                                            data-bs-target="#carouselControl-{{$index}}"
+                                                            data-bs-slide="prev">
+                                                        <span class="carousel-control-prev-icon"
+                                                              aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </button>
+                                                    <button class="carousel-control-next" type="button"
+                                                            data-bs-target="#carouselControl-{{$index}}"
+                                                            data-bs-slide="next">
+                                                        <span class="carousel-control-next-icon"
+                                                              aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="row p-2">
+                                                <div class="col-3 mb-3 p-1"
+                                                     ng-repeat="img in requestCarDetail.transportations.transportationImagesById">
+                                                    <div class="img-banner-carousel">
+                                                        <img ng-src="{{ img.imagePath }}" width="100" src=""
+                                                             style="height: 130px; width: 100%"
+                                                             class="img-fluid rounded-2" alt="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="nav-until-{{$index}}" role="tabpanel"
+                                             aria-labelledby="nav-until-tab-{{$index}}">
+                                            <div class="card border-0 bg-light rounded-0"
+                                                 ng-repeat="util in transportUtilities[$index]">
+                                                <div class="p-3" style="background: #f8f9fa">
+                                                    <div class="img-until d-flex align-content-center">
+                                                        <img ng-src="{{ util.icon }}" class="img-fluid rounded-2"
+                                                             width="44" alt="">
+                                                        <p class="fs-1 m-0 fw-bold p-2">{{ util.title }}</p>
+                                                    </div>
+                                                    <p>{{ util.description }}</p>
+                                                </div>
+                                                <div style="height: 1px; background: rgb(192, 192, 192); width: 100%"></div>
+                                            </div>
+                                            <div class="d-flex justify-content-center"
+                                                 ng-if="!transportUtilities[$index] || transportUtilities[$index].length === 0">
+                                                Hiện tại chúng tôi chưa lấy được tiện ích của nhà xe này.
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="nav-policy-{{$index}}" role="tabpanel"
+                                             aria-labelledby="nav-policy-tab-{{$index}}">
+                                            <div ng-bind-html="requestCarDetail.transportationBrands.transportationBrandPolicy | trustHtml"
+                                                 style="text-align: justify; white-space: pre-line; font-family: 'Roboto',sans-serif;">
+                                            </div>
+                                            <div class="place-content-wrap mb-4 wow fadeInUp"
+                                                 ng-if="!requestCarDetail.transportationBrands.transportationBrandPolicy">
+                                                Hiện tại nhà xe chưa quy định chính sách.
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="nav-rate-{{$index}}" role="tabpanel"
+                                             aria-labelledby="nav-rate-tab-{{$index}}">
+                                            Chổ này là đánh giá
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="div mb-30" ng-if="requestCarDetailList.length === 0">
+                        <div class="d-flex justify-content-center align-items-center">
+                            Hiện tại chưa có nhà xe nào gửi yêu cầu đến bạn.
+                        </div>
+                    </div>
+
+                    <!-- Phân trang -->
+                    <div class="col-lg-12" ng-if="requestCarDetailList.length !== 0">
+                        <ul class="gowilds-pagination text-center d-flex align-items-center justify-content-center">
+                            <!-- Previous Page -->
+                            <li class="m-1" ng-class="{disabled: currentPageDetail === 0}">
+                                <a href="#" ng-click="setPageRequestCarDetail(0)"><span
+                                        class="fas fa-arrow-left"></span></a>
+                            </li>
+
+                            <!-- Ellipsis at the beginning -->
+                            <li class="m-1" ng-if="currentPageDetail > 2 && totalPagesDetail > 5">
+                                <span style="font-size: 4px">
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                </span>
+                            </li>
+
+                            <!-- Pagination Numbers -->
+                            <li class="m-1" ng-repeat="n in getPaginationRangeRequestCarDetail()">
+                                <a ng-class="{active: n === currentPageDetail}"
+                                   ng-click="setPageRequestCarDetail(n)">{{ n + 1 }}</a>
+                            </li>
+
+                            <!-- Ellipsis at the end -->
+                            <li class="m-1" ng-if="currentPageDetail < totalPagesDetail - 3 && totalPagesDetail > 5">
+                                <span style="font-size: 4px">
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                </span>
+                            </li>
+
+                            <!-- Next Page -->
+                            <li class="m-1" ng-class="{disabled: currentPageDetail === totalPagesDetail - 1}">
+                                <a href="#" ng-click="setPageRequestCarDetail(totalPagesDetail - 1)"><span
+                                        class="fas fa-arrow-right"></span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Thoát
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
