@@ -6,8 +6,7 @@ travel_app.controller('SelectCarControllerAG',
         $scope.requestCarDetail = {
             id: null,
             requestCarId: $scope.requestCarId,
-            transportationId: null,
-            unitPrice: null
+            transportationScheduleId: null
         }
 
         $scope.init = function () {
@@ -16,9 +15,9 @@ travel_app.controller('SelectCarControllerAG',
              */
             $scope.isLoading = true;
 
-            RequestCarServiceAG.findAllTransportServiceByBrandId($scope.brandId).then(function (response) {
+            RequestCarServiceAG.findAllTransportScheduleServiceByBrandId($scope.brandId).then(function (response) {
                 if (response.status === 200) {
-                    $scope.transportationList = response.data.data;
+                    $scope.transportationScheduleList = response.data.data;
                 } else {
                     $location.path('/admin/page-not-found');
                 }
@@ -94,7 +93,6 @@ travel_app.controller('SelectCarControllerAG',
 
             $scope.checkTransportBrandSubmitted = function () {
                 let requestCarId = $scope.requestCarId;
-                let transportationId = $scope.transportation.id;
                 let transportBrandId = $scope.brandId;
 
                 return new Promise(function (resolve) {
@@ -106,33 +104,37 @@ travel_app.controller('SelectCarControllerAG',
         }
 
         $scope.submitRequestCarToStaff = function () {
-            $scope.requestCarDetail.transportationId = $scope.transportation.id;
+            $scope.transportationScheduleList.forEach(function (schedule) {
+                if (schedule.transportationId === $scope.transportation.id) {
+                    $scope.requestCarDetail.transportationScheduleId = schedule.id;
 
-            $scope.checkTransportBrandSubmitted().then(function (isSubmitted) {
-                if (!isSubmitted) {
-                    function confirmSubmit() {
-                        $scope.isLoading = true;
+                    $scope.checkTransportBrandSubmitted().then(function (isSubmitted) {
+                        if (!isSubmitted) {
+                            function confirmSubmit() {
+                                $scope.isLoading = true;
 
-                        RequestCarServiceAG.submitRequestCarDetail($scope.requestCarDetail).then(function (response) {
-                            if (response.status === 200) {
-                                $location.path('/business/transport/notification-request-car');
-                                $('#modal-transport-detail').modal('hide');
-                                centerAlert('Thành công', 'TravelTour đã nhận được yêu cầu gửi từ bạn. Chúng tôi sẽ xử lý yêu cầu của bạn trong vòng 72h tới.', 'success')
-                            } else {
-                                $location.path('/admin/page-not-found');
+                                RequestCarServiceAG.submitRequestCarDetail($scope.requestCarDetail).then(function (response) {
+                                    if (response.status === 200) {
+                                        $location.path('/business/transport/notification-request-car');
+                                        $('#modal-transport-detail').modal('hide');
+                                        centerAlert('Thành công', 'TravelTour đã nhận được yêu cầu gửi từ bạn. Chúng tôi sẽ xử lý yêu cầu của bạn trong vòng 72h tới.', 'success')
+                                    } else {
+                                        $location.path('/admin/page-not-found');
+                                    }
+                                }).finally(function () {
+                                    $scope.isLoading = false;
+                                });
                             }
-                        }).finally(function () {
-                            $scope.isLoading = false;
-                        });
-                    }
 
-                    confirmAlert('Bạn có chắc chắn muốn gửi dữ liệu này cho TravelTour không ?', confirmSubmit);
-                } else {
-                    centerAlert('Không thành công !', 'Chúng tôi nhận thấy bạn đã nộp hồ sơ trong vài ngày gần đây, ' +
-                        'vui lòng không nộp lại cho đến khi yêu cầu này kết thúc.', 'warning');
+                            confirmAlert('Bạn có chắc chắn muốn gửi dữ liệu này cho TravelTour không ?', confirmSubmit);
+                        } else {
+                            centerAlert('Không thành công !', 'Chúng tôi nhận thấy bạn đã nộp hồ sơ trong vài ngày gần đây, ' +
+                                'vui lòng không nộp lại cho đến khi yêu cầu này kết thúc.', 'warning');
+                        }
+                    }).catch(function (error) {
+                        console.error("Có lỗi xảy ra khi kiểm tra trạng thái:", error);
+                    });
                 }
-            }).catch(function (error) {
-                console.error("Có lỗi xảy ra khi kiểm tra trạng thái:", error);
             });
         }
 

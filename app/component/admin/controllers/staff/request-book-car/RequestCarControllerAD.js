@@ -154,20 +154,32 @@ travel_app.controller('RequestCarControllerAD',
              */
             $scope.getTransportUtilities = function (index) {
                 $scope.transportUtilities = [];
-                let requestCarDetail = $scope.requestCarDetailList[index];
+                let transportationId = $scope.requestCarDetailList[index].transportations.id;
 
-                requestCarDetail.transportations.transportUtilities.forEach(function (utilId) {
-                    TransportServiceAG.findByTransportUtilityId(utilId).then(function (response) {
-                        if (response.status === 200) {
-                            if (!$scope.transportUtilities[index]) {
-                                $scope.transportUtilities[index] = [];
-                            }
-                            $scope.transportUtilities[index].push(response.data.data);
-                        } else {
-                            $location.path('/admin/page-not-found');
+                TransportServiceAG.findByTransportId(transportationId).then(function (response) {
+                    if (response.status === 200) {
+                        if (!$scope.transportUtilities[index]) {
+                            $scope.transportUtilities[index] = [];
                         }
-                    });
-                });
+
+                        let transportUtilities = response.data.data.transportUtilities;
+
+                        transportUtilities.forEach(function (utilId) {
+                            TransportServiceAG.findByTransportUtilityId(utilId).then(function (response) {
+                                if (response.status === 200) {
+                                    if (!$scope.transportUtilities[index]) {
+                                        $scope.transportUtilities[index] = [];
+                                    }
+                                    $scope.transportUtilities[index].push(response.data.data);
+                                } else {
+                                    $location.path('/admin/page-not-found');
+                                }
+                            });
+                        });
+                    } else {
+                        $location.path('/admin/page-not-found');
+                    }
+                })
             };
 
             /**

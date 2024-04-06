@@ -32,10 +32,10 @@ travel_app.service('RequestCarServiceAG', function ($http) {
         });
     }
 
-    this.findAllTransportServiceByBrandId = function (transportBrandId) {
+    this.findAllTransportScheduleServiceByBrandId = function (transportBrandId) {
         return $http({
             method: 'GET',
-            url: API_REQUEST_CAR + 'find-all-transport-by-transport-brand-id/' + transportBrandId
+            url: API_REQUEST_CAR + 'find-all-transport-schedule-by-transport-brand-id/' + transportBrandId
         })
     }
 

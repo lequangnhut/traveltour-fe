@@ -27,18 +27,22 @@
 
     <div class="mb-4" style="margin: 20px 0 20px 0">
         <div class="row">
-            <div class="col-lg-4 mb-3" ng-repeat="transport in transportationList">
+            <div class="col-lg-4 mb-3" ng-repeat="transportSchedule in transportationScheduleList">
                 <div class="card-request-car">
                     <div class="content-request-schedule p-3">
                         <h3 class="title-request-schedule">
-                            <p class="fw-medium fs-1" ng-if="!transport.isTransportBed">
-                                Xe ghế ngồi - {{ transport.amountSeat }} chổ
+                            <p class="fw-medium fs-1" ng-if="!transportSchedule.transportations.isTransportBed">
+                                Xe ghế ngồi - {{ transportSchedule.transportations.amountSeat }} chổ
                             </p>
-                            <p class="fw-medium fs-1" ng-if="transport.isTransportBed">
-                                Xe giường nằm - {{ transport.amountSeat }} giường
+                            <p class="fw-medium fs-1" ng-if="transportSchedule.transportations.isTransportBed">
+                                Xe giường nằm - {{ transportSchedule.transportations.amountSeat }} giường
+                            </p>
+                            <p class="fw-medium fs-1">
+                                Giá tiền: {{ transportSchedule.unitPrice | vnCurrency }}
                             </p>
                             <a class="text-dark fw-medium mb-3 text-decoration-none">
-                                {{ transport.id }} - {{ transport.licensePlate }}
+                                {{ transportSchedule.transportations.id }}
+                                - {{ transportSchedule.transportations.licensePlate }}
                             </a>
                         </h3>
 
@@ -48,18 +52,18 @@
                             <span class="icon"><i class="flaticon-tent"></i></span>
                             <span class="icon"><i class="flaticon-fire"></i></span>
                         </div>
-                        <a href="#" class="icon-btn" ng-click="openModal(transport.id)">
+                        <a href="#" class="icon-btn" ng-click="openModal(transportSchedule.transportations.id)">
                             <span class="fas fa-arrow-right"></span>
                         </a>
                     </div>
                     <div class="img-holder">
-                        <img ng-src="{{ transport.transportationImg }}" alt="Service Image">
+                        <img ng-src="{{ transportSchedule.transportations.transportationImg }}" alt="Service Image">
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="div" ng-if="transportationList.length <= 0">
+        <div class="div" ng-if="transportationScheduleList.length <= 0">
             <div class="d-flex justify-content-center align-items-center mt-3">
                 Hiện tại nhà xe của bạn chưa có xe, vui lòng tạo xe.
             </div>
@@ -181,33 +185,6 @@
                                     </p>
                                 </div>
                             </div>
-
-                            <div class="card">
-                                <div class="card-body p-3">
-                                    <form method="post" name="formSubmitRequest" ng-click="">
-                                        <div class="form-group">
-                                            <label for="unitPrice" class="form-label">
-                                                TỔNG GIÁ TIỀN <strong class="text-danger">*</strong>
-                                            </label>
-                                            <input type="text"
-                                                   class="form-control"
-                                                   name="unitPrice"
-                                                   id="unitPrice"
-                                                   ng-model="requestCarDetail.unitPrice"
-                                                   ng-class="{ 'is-invalid': formSubmitRequest.unitPrice.$invalid && formSubmitRequest.unitPrice.$touched,
-                                                                'is-valid': formSubmitRequest.unitPrice.$valid && formSubmitRequest.unitPrice.$touched }"
-                                                   vietnam-currency-input
-                                                   placeholder="Tổng giá tiền cho chuyến đi..."
-                                                   required
-                                            >
-                                            <small class="text-danger"
-                                                   ng-show="formSubmitRequest.unitPrice.$touched && formSubmitRequest.unitPrice.$error.required">
-                                                Vui lòng nhập giá tiền để gửi yêu cầu !
-                                            </small>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
                         </div>
 
                         <div class="col-12 mb-5 mt-5 p-3">
@@ -236,7 +213,6 @@
                 <button type="button"
                         class="btn btn-success"
                         ng-click="submitRequestCarToStaff()"
-                        ng-disabled="formSubmitRequest.$invalid"
                 >
                     Gửi yêu cầu
                 </button>
