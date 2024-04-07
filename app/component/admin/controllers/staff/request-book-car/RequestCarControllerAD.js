@@ -1,5 +1,7 @@
 travel_app.controller('RequestCarControllerAD',
-    function ($scope, $location, $routeParams, $sce, $timeout, TransportServiceAG, Base64ObjectService, AgencyServiceAD, RequestCarServiceAD) {
+    function ($scope, $location, $routeParams, $sce, $timeout, TransportServiceAG, GenerateCodePayService, Base64ObjectService, AgencyServiceAD, AuthService, RequestCarServiceAD) {
+        const user = AuthService.getUser();
+
         $scope.currentPage = 0; // Trang hiện tại
         $scope.pageSize = 10; // Số lượng tours trên mỗi trang
 
@@ -7,6 +9,7 @@ travel_app.controller('RequestCarControllerAD',
         $scope.pageSizeDetail = 10; // Số lượng tours trên mỗi trang
 
         $scope.agencies = [];
+        $scope.transportations = [];
         $scope.transportUtilities = [];
 
         $scope.requestCarId = Base64ObjectService.decodeObject($routeParams.requestCarId);
@@ -106,10 +109,19 @@ travel_app.controller('RequestCarControllerAD',
 
                         $scope.requestCarDetailList.forEach(function (requestCarDetail) {
                             let agenciesId = requestCarDetail.transportationBrands.agenciesId;
+                            let transportationId = requestCarDetail.transportations.id;
 
                             AgencyServiceAD.findAgencieById(agenciesId).then(function (response) {
                                 if (response.status === 200) {
                                     $scope.agencies.push(response.data.data);
+                                } else {
+                                    $location.path('/admin/page-not-found');
+                                }
+                            });
+
+                            TransportServiceAG.findByTransportId(transportationId).then(function (response) {
+                                if (response.status === 200) {
+                                    $scope.transportations.push(response.data.data.transportGetDataDto);
                                 } else {
                                     $location.path('/admin/page-not-found');
                                 }
@@ -257,6 +269,9 @@ travel_app.controller('RequestCarControllerAD',
             };
         }
 
+        /**
+         * Tạo yêu cầu gửi đến nhà xe
+         */
         $scope.createRequestCar = function () {
             $scope.isLoading = true;
 
@@ -272,6 +287,9 @@ travel_app.controller('RequestCarControllerAD',
             });
         }
 
+        /**
+         * Cập nhật yêu cầu
+         */
         $scope.updateRequestCar = function () {
             function confirmUpdate() {
                 $scope.isLoading = true;
@@ -289,6 +307,39 @@ travel_app.controller('RequestCarControllerAD',
             }
 
             confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdate);
+        }
+
+        $scope.acceptRequestCar = function (requestCarDetailId, licensePlate, scheduleId) {
+            let orderTransportation = {
+                id: GenerateCodePayService.generateCodeBooking('VPO', scheduleId),
+                userId: user.id,
+                paymentMethod: 0,
+                dateCreated: new Date(),
+                orderStatus: 0,
+                orderCode: GenerateCodePayService.generateCodePayment('VPO')
+            }
+
+            function confirmAccept() {
+                $scope.isLoading = true;
+
+                let formData = new FormData();
+                formData.append("requestCarDetailId", requestCarDetailId);
+                formData.append("orderTransportationsDto", new Blob([JSON.stringify(orderTransportation)], {type: "application/json"}));
+
+                RequestCarServiceAD.acceptRequestCarService(formData).then(function (response) {
+                    if (response.status === 200) {
+                        $('#request-car-list').modal('hide');
+                        centerAlert('Thành công !', 'Bạn đã duyệt xe ' + licensePlate + ' thành công !', 'success');
+                        $scope.init();
+                    } else {
+                        $location.path('/admin/page-not-found');
+                    }
+                }).finally(function () {
+                    $scope.isLoading = false;
+                });
+            }
+
+            confirmAlert('Bạn có chắc chắn muốn duyệt xe ' + licensePlate + ' ?', confirmAccept);
         }
 
         $scope.init();

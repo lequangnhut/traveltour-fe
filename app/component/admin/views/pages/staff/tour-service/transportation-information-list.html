@@ -157,7 +157,7 @@
                     </td>
                     <td>{{ btsl.transportationsByTransportationId.licensePlate }}</td>
                     <td>{{ btsl.bookedSeat }}</td>
-                    <td>{{ btsl.unitPrice }}</td>
+                    <td>{{ btsl.unitPrice | vnCurrency }}</td>
                     <td class="d-flex align-items-center justify-content-center">
                         <button class="fs-1 btn text-info px-2" ng-click="openModal(btsl)">
                             <i class="fa-regular fa-eye"></i>
@@ -203,32 +203,72 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="card-body pt-5">
+                                                <p class="card-text fw-medium mb-1">Thông tin đơn hàng</p>
+                                                <p class="card-title mb-1">
+                                                    Mã đơn hàng:
+                                                    <span class="fw-medium">
+                                                        {{ transportationSchedule.orderTransportationsById[0].id }}
+                                                    </span>
+                                                </p>
+                                                <p class="card-title mb-3">
+                                                    Ngày tạo:
+                                                    <span class="fw-medium">
+                                                        {{ transportationSchedule.orderTransportationsById[0].dateCreated | vietnameseDateTime }}
+                                                    </span>
+                                                </p>
                                                 <p class="card-text fw-medium mb-1">Phương tiện</p>
-                                                <p class="card-title fw-medium mb-1">
-                                                    Hãng: {{ transportationSchedule.transportationBrandsByTransportationBrandId.transportationBrandName }}</p>
-                                                <p class="card-title fw-medium mb-1">
-                                                    Loại: {{ transportationSchedule.transportationTypesByTransportationTypeId.transportationTypeName }}</p>
-                                                <p class="card-title mb-1">biển
-                                                    số: {{ transportationSchedule.transportationsByTransportationId.licensePlate }}</p>
-                                                <p class="card-title fw-medium mb-3">số chỗ
-                                                    ngồi: {{ transportationSchedule.transportationsByTransportationId.amountSeat }}</p>
+                                                <p class="card-title mb-1">
+                                                    Hãng:
+                                                    <span class="fw-medium">
+                                                        {{ transportationSchedule.transportationBrandsByTransportationBrandId.transportationBrandName }}
+                                                    </span>
+                                                </p>
+                                                <p class="card-title mb-1">
+                                                    Loại:
+                                                    <span class="fw-medium">
+                                                        {{ transportationSchedule.transportationTypesByTransportationTypeId.transportationTypeName }}
+                                                    </span>
+                                                </p>
+                                                <p class="card-title mb-1">
+                                                    Biển số:
+                                                    <span class="fw-medium">
+                                                        {{ transportationSchedule.transportationsByTransportationId.licensePlate }}
+                                                    </span>
+                                                </p>
+                                                <p class="card-title mb-3">
+                                                    Số chỗ ngồi:
+                                                    <span class="fw-medium">
+                                                        {{ transportationSchedule.transportationsByTransportationId.amountSeat }}
+                                                    </span>
+                                                </p>
                                                 <p class="card-text fw-medium mb-1">Chuyến đi</p>
                                                 <ul class="ps-0">
                                                     <li class="d-flex align-items-start mb-2">
                                                         <i class="fa-solid fa-check text-success me-2 mt-1"></i>
-                                                        <span>Đi từ <span
-                                                                class="fw-medium">{{ transportationSchedule.fromLocation }}</span>  đến
-                                                                        <span class="fw-medium">{{ transportationSchedule.toLocation }}</span></span>
+                                                        <span>Đi từ
+                                                            <span class="fw-medium">
+                                                                {{ transportationSchedule.fromLocation }}
+                                                            </span>  đến
+                                                            <span class="fw-medium">
+                                                                {{ transportationSchedule.toLocation }}
+                                                            </span>
+                                                        </span>
                                                     </li>
                                                     <li class="d-flex align-items-start mb-2">
                                                         <i class="fa-solid fa-check text-success me-2 mt-1"></i>
-                                                        <span>ngày khởi hành: <span
-                                                                class="fw-medium"> {{ transportationSchedule.departureTime | dateWithTimeFormat }}</span></span>
+                                                        <span>Ngày khởi hành:
+                                                            <span class="fw-medium">
+                                                                {{ transportationSchedule.departureTime | dateWithTimeFormat }}
+                                                            </span>
+                                                        </span>
                                                     </li>
                                                     <li class="d-flex align-items-start mb-2">
                                                         <i class="fa-solid fa-check text-success me-2 mt-1"></i>
-                                                        <span>ngày về: <span
-                                                                class="fw-medium">{{ transportationSchedule.arrivalTime | dateWithTimeFormat }}</span></span>
+                                                        <span>Ngày về:
+                                                            <span class="fw-medium">
+                                                                {{ transportationSchedule.arrivalTime | dateWithTimeFormat }}
+                                                            </span>
+                                                        </span>
                                                     </li>
                                                 </ul>
 
@@ -298,13 +338,6 @@
                                         </span>
                                             </p>
                                         </div>
-                                        <!--                                        <label for="pay" class="form-label">Chọn phương thức thanh toán</label>-->
-                                        <!--                                        <select id="pay" class="form-control" ng-model="payment">-->
-                                        <!--                                            <option selected ng-value="0">Thanh toán tiền mặt</option>-->
-                                        <!--                                            <option ng-value="1">Thanh toán VNPay</option>-->
-                                        <!--                                            <option ng-value="2">Thanh toán ZaloPay</option>-->
-                                        <!--                                            <option ng-value="3">Thanh toán Momo</option>-->
-                                        <!--                                        </select>-->
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
@@ -336,10 +369,11 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-green" data-dismiss="modal" ng-if="tourGuide.orderStatus == 0"
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-if="tourGuide.orderStatus == 0"
                         ng-click="pay()">Thanh toán
                 </button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-if="tourGuide.orderStatus != 2"
+                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        ng-if="tourGuide.orderStatus != 2 && tourGuide.orderStatus != 1"
                         ng-click="deactivateBookingTourTransportationSchedules(transportationSchedule.id)">Hủy đơn
                 </button>
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Thoát</button>

@@ -57,4 +57,13 @@ travel_app.service('RequestCarServiceAD', function ($http) {
             data: requestCarDto
         });
     };
+
+    this.acceptRequestCarService = function (formData) {
+        return $http({
+            method: 'POST',
+            url: API_REQUEST_CAR + 'accept-request-car',
+            headers: {'Content-Type': undefined},
+            data: formData
+        });
+    };
 })

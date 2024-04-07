@@ -9,17 +9,21 @@ travel_app.controller('ListTransportBrandControllerAG',
             $scope.isLoading = true;
 
             $timeout(function () {
-                let agencyId = $scope.agencies.id;
-
-                if (agencyId !== undefined && agencyId !== null && agencyId !== "") {
-                    TransportBrandServiceAG.findAllByAgencyId(agencyId).then(function successCallback(response) {
-                        $scope.transportations = response.data;
-                    }, errorCallback).finally(function () {
-                        $scope.isLoading = false;
-                    });
+                if ($scope.agencies && $scope.agencies.id) {
+                    TransportBrandServiceAG.findAllByAgencyId($scope.agencies.id)
+                        .then(function successCallback(response) {
+                            $scope.transportations = response.data;
+                        })
+                        .catch(errorCallback)
+                        .finally(function () {
+                            $scope.isLoading = false;
+                        });
+                } else {
+                    console.error('Agencies data is not available');
+                    $scope.isLoading = false;
                 }
-            }, 100)
-        }
+            }, 150);
+        };
 
         $scope.init();
     });

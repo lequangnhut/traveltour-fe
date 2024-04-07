@@ -147,11 +147,18 @@
                                         </div>
                                         <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
                                             <div class="box">
-                                                <a href="#"
-                                                   ng-click="redirectPage('/admin/request-booking-car/update-request-booking/', requestCar.id)"
-                                                   class="btn btn-success w-100 mt-3">
+                                                <button type="button"
+                                                        ng-if="!requestCar.isAccepted"
+                                                        ng-click="redirectPage('/admin/request-booking-car/update-request-booking/', requestCar.id)"
+                                                        class="btn btn-success w-100 mt-3">
                                                     Sửa yêu cầu
-                                                </a>
+                                                </button>
+                                                <button type="button"
+                                                        ng-if="requestCar.isAccepted"
+                                                        disabled
+                                                        class="btn btn-success w-100 mt-3">
+                                                    Đã có xe
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -328,11 +335,11 @@
                                                     <i class="fa-solid fa-bus"></i>
                                                     <a class="fw-bold text-decoration-none text-dark"
                                                        ng-if="requestCarDetail.transportations.isTransportBed">
-                                                        {{ requestCarDetail.transportationTypes.transportationTypeName + ' (' + requestCarDetail.transportations.amountSeat + ' giường)' }}
+                                                        {{ requestCarDetail.transportationTypes.transportationTypeName + ' (' + transportations[$index].amountSeat + ' giường)' }}
                                                     </a>
                                                     <a class="fw-bold text-decoration-none text-dark"
                                                        ng-if="!requestCarDetail.transportations.isTransportBed">
-                                                        {{ requestCarDetail.transportationTypes.transportationTypeName + ' (' + requestCarDetail.transportations.amountSeat + ' ghế)' }}
+                                                        {{ requestCarDetail.transportationTypes.transportationTypeName + ' (' + transportations[$index].amountSeat + ' ghế)' }}
                                                     </a>
                                                 </span>
                                                 <h3 class="fw-medium mb-2">
@@ -398,9 +405,19 @@
                                                 </div>
                                                 <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
                                                     <div class="box">
-                                                        <a href="#" role="button" class="btn btn-success w-100 ms-3">
+                                                        <button type="button"
+                                                                ng-if="!requestCarDetail.isAccepted"
+                                                                ng-click="acceptRequestCar(requestCarDetail.id, transportations[$index].licensePlate, requestCarDetail.transportationScheduleId)"
+                                                                class="btn btn-success w-100 ms-3"
+                                                        >
                                                             Duyệt xe
-                                                        </a>
+                                                        </button>
+                                                        <button type="button"
+                                                                ng-if="requestCarDetail.isAccepted"
+                                                                disabled
+                                                                class="btn btn-success w-100 ms-3">
+                                                            Đã có xe
+                                                        </button>
                                                         <a href="#" ng-click="toggleRequestDetail($index)"
                                                            class="btn w-100 ms-3 mt-2 p-0">
                                                             Xem chi tiết

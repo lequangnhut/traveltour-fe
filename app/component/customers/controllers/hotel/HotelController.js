@@ -213,12 +213,12 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         var maxOffset = 0.001; // Độ lệch tối đa
 
         for (const roomType of roomTypes) {
-            const iconUrl = '/assets/customers/images/hotel/placeholder.png';
+            const iconUrl = '/assets/customers/images/icon/maker.png';
             const el = document.createElement('div');
             el.className = 'marker';
             el.style.backgroundImage = `url(${iconUrl})`;
-            el.style.width = '30px';
-            el.style.height = '30px';
+            el.style.width = '40px';
+            el.style.height = '40px';
             el.style.backgroundSize = '100%';
 
             var popupContent = createPopupContent(roomType);
@@ -275,7 +275,7 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         $scope.removeMarkersById();
         var bounds = new mapboxgl.LngLatBounds(); // Khởi tạo bounds
 
-        const iconUrl = '/assets/customers/images/hotel/placeholder.png';
+        const iconUrl = '/assets/customers/images/icon/maker.png';
         const el = document.createElement('div');
         el.className = 'marker';
         el.style.backgroundImage = `url(${iconUrl})`;
@@ -605,11 +605,11 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
     $scope.findAllRoomTypesByFillerClick()
 
     var performSearchPromise;
-    $scope.performSearch = function() {
+    $scope.performSearch = function () {
         if (performSearchPromise) {
             clearTimeout(performSearchPromise);
         }
-        performSearchPromise = setTimeout(function() {
+        performSearchPromise = setTimeout(function () {
             HotelServiceCT.findAllRoomTypesByFillter($scope.filler).then(function successCallback(response) {
                 if (response.status === 200) {
                     $scope.roomTypes = response.data.data;

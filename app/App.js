@@ -1,6 +1,6 @@
 let travel_app = angular.module('travel_app', ['ngRoute', 'ngFileUpload', 'ja.qr']);
 
-let BASE_API = 'http://localhost:8080/api/v1/'
+let BASE_API = 'https://traveltourworld.id.vn/api/v1/'
 
 travel_app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
