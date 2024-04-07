@@ -1,7 +1,9 @@
-travel_app.controller('HotelDetailController', function ($scope, $anchorScroll,$timeout, $window, $sce, $routeParams, $location, HotelServiceCT, RoomTypeServiceCT,LocalStorageService, AgenciesServiceAG, Base64ObjectService) {
+travel_app.controller('HotelDetailController', function ($scope, $anchorScroll,$timeout, $window, $sce, $routeParams, $location, AuthService, UserLikeService, HotelServiceCT, RoomTypeServiceCT,LocalStorageService, AgenciesServiceAG, Base64ObjectService) {
     $scope.encryptedData = $routeParams.encryptedData;
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
-    var user = JSON.parse(window.localStorage.getItem('user'));
+
+    let user = null
+    user = AuthService.getUser();
 
     $anchorScroll();
 
@@ -118,22 +120,23 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll,$
      * Phương thức tìm kiếm loại phòng qua các điều kiện lọc
      */
     RoomTypeServiceCT.findAllRoomTypesByEncryptedData($scope.encryptedData).then(function successCallback(response) {
+
         $scope.listImageroomType = []
         $scope.loading = true;
+
         if (response.status === 200) {
             $scope.roomTypes = response.data.data;
             $scope.countSize = response.data.totalPages;
-            console.log(response.data.data)
             $scope.encryptedData = btoa(JSON.stringify($scope.filler));
 
             $scope.countRoomTypeImage = 0
-            console.log($scope.roomTypes)
+
             $scope.roomTypes.forEach(function (roomType) {
-                console.log(roomType.roomImagesById.length)
                 $scope.countRoomTypeImage += roomType.roomImagesById.length;
                 $scope.listImageroomType.push(...roomType.roomImagesById);
                 $scope.listImage = $scope.listImageroomType
             })
+            $scope.checkIsLikeHotel($scope.roomTypes[0].hotelsByHotelId.id)
         } else {
             $location.path('/admin/internal-server-error');
         }
@@ -412,6 +415,33 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll,$
                 reject('Không tìm thấy phòng với ID: ' + id);
             }
         })
+    };
+
+    $scope.likeHotel = function (serviceId) {
+        $scope.category = 1
+        if (user != null && user) {
+            UserLikeService.saveLike(serviceId, $scope.category, user.id).then(function (response) {
+                if (response.status === 200) {
+                    toastAlert('success', response.data.message)
+                    $scope.checkIsLikeHotel(serviceId)
+                } else {
+                    toastAlert('error', response.data.message)
+                }
+            })
+        } else {
+            toastAlert('error', "Vui lòng đăng nhập để thích khách sạn này")
+        }
+    }
+    $scope.isLikeHotel = false;
+    $scope.checkIsLikeHotel = async function (serviceId) {
+        try {
+            const response = await UserLikeService.findUserLikeByCategoryIdAndServiceId(serviceId, user.id);
+            if (response.status === 200 && response.data.status === "200") {
+                $scope.isLikeHotel = response.data.data;
+                $scope.$apply();
+            }
+        } catch (error) {
+        }
     };
 
 });

@@ -1,6 +1,7 @@
-travel_app.controller('LocationDetailCusController', function ($scope, $location, LocationDetailCusService, LocationCusService, $sce, $routeParams, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, MapBoxService, ToursServiceAD) {
+travel_app.controller('LocationDetailCusController', function ($scope, $location, LocationDetailCusService, UserLikeService, AuthService, LocationCusService, $sce, $routeParams, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, MapBoxService, ToursServiceAD) {
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
-
+    let user = null
+    user = AuthService.getUser();
     $scope.tickets = {
         departureDate: new Date(),
         adultTickets: 1,
@@ -66,7 +67,7 @@ travel_app.controller('LocationDetailCusController', function ($scope, $location
         LocationDetailCusService.findById(visitLocationId).then((response) => {
             if (response.status === 200) {
                 $scope.locationDetail = response.data.data;
-
+                $scope.checkIsLikeLocation($scope.locationDetail.id)
                 // Giả định rằng visitLocationTicketsById là mảng và không rỗng
                 const tickets = $scope.locationDetail.visitLocationTicketsById || [];
                 let adultPrice = 0, childrenPrice = 0;
@@ -231,6 +232,34 @@ travel_app.controller('LocationDetailCusController', function ($scope, $location
             mapElement.scrollIntoView({behavior: 'smooth', block: 'center'});
         }
     };
+
+    $scope.likeLocation = function (serviceId) {
+        $scope.category = 3
+        if (user != null && user) {
+            UserLikeService.saveLike(serviceId, $scope.category, user.id).then(function (response) {
+                if (response.status === 200) {
+                    toastAlert('success', response.data.message)
+                    $scope.checkIsLikeLocation(serviceId)
+                } else {
+                    toastAlert('error', response.data.message)
+                }
+            })
+        } else {
+            toastAlert('error', "Vui lòng đăng nhập để thích khách sạn này")
+        }
+    }
+    $scope.isLikeLocation = false;
+    $scope.checkIsLikeLocation = async function (serviceId) {
+        try {
+            const response = await UserLikeService.findUserLikeByCategoryIdAndServiceId(serviceId, user.id);
+            if (response.status === 200 && response.data.status === "200") {
+                $scope.isLikeLocation = response.data.data;
+                $scope.$apply();
+            }
+        } catch (error) {
+        }
+    };
+
 
     $scope.init();
 

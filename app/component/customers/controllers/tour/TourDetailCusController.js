@@ -1,6 +1,9 @@
 travel_app.controller('TourDetailCusController',
-    function ($scope, $location, $sce, $timeout, $filter, $routeParams, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailCusService, MapBoxService, ToursServiceAD, Base64ObjectService) {
-        mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
+    function ($scope, $location, $sce, $timeout, $filter, $routeParams, LocalStorageService, UserLikeService, AuthService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailCusService, MapBoxService, ToursServiceAD, Base64ObjectService) {
+        let user = null
+        user = AuthService.getUser();
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
         $scope.markerTrips = [];
         $scope.coordinateTrips = [];
@@ -52,7 +55,7 @@ travel_app.controller('TourDetailCusController',
                     let arrivalDate = new Date($scope.tourDetail.arrivalDate);
 
                     $scope.tourDetail.numberOfDays = Math.ceil((arrivalDate - departureDate) / (1000 * 60 * 60 * 24));
-
+                    $scope.checkIsLikeTour($scope.tourDetail.toursByTourId.id)
                     $scope.initMapSchedules();
                     $scope.updateTotalPrice();
                 } else {
@@ -636,5 +639,33 @@ travel_app.controller('TourDetailCusController',
         };
         $scope.closeFormModal = function () {
             $('#formTourModal').modal('hide');
+        };
+
+
+        $scope.likeTour = function (serviceId) {
+            $scope.category = 0
+            if (user != null && user) {
+                UserLikeService.saveLike(serviceId, $scope.category, user.id).then(function (response) {
+                    if (response.status === 200) {
+                        toastAlert('success', response.data.message)
+                        $scope.checkIsLikeTour(serviceId)
+                    } else {
+                        toastAlert('error', response.data.message)
+                    }
+                })
+            } else {
+                toastAlert('error', "Vui lòng đăng nhập để thích khách sạn này")
+            }
+        }
+        $scope.isLikeTour = false;
+        $scope.checkIsLikeTour = async function (serviceId) {
+            try {
+                const response = await UserLikeService.findUserLikeByCategoryIdAndServiceId(serviceId, user.id);
+                if (response.status === 200 && response.data.status === "200") {
+                    $scope.isLikeTour = response.data.data;
+                    $scope.$apply();
+                }
+            } catch (error) {
+            }
         };
     });
