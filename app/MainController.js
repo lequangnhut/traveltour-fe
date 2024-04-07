@@ -227,7 +227,6 @@ travel_app.controller('MainController',
                 '/business/register-transports',
                 '/business/register-visit',
                 '/business/register-business',
-                '/business/register-hotel',
                 '/business/register-business-success',
                 '/business/select-type',
                 '/business/hotel/home',
@@ -251,7 +250,9 @@ travel_app.controller('MainController',
             ) {
                 return true;
             }
-
+            if ($location.path() === '/business/register-hotel') {
+                return true
+            }
             return $scope.isActive(hiddenPaths);
         };
 
@@ -288,6 +289,9 @@ travel_app.controller('MainController',
                 locationPath.includes('/admin/change-password/')
             ) {
                 return {'margin': '0'};
+            }
+            if ($location.path() === '/business/register-hotel') {
+                return {'margin': '0'}
             }
 
             return $scope.isActive(marginPaths) ? {'margin': '0'} : {};

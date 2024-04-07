@@ -2168,5 +2168,13 @@
     right: 10px;
 }
 
+.hidden-hotel-description{
+    width: 100%;
+    height: 90px;
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
+}
+
 
 

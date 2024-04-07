@@ -71,7 +71,6 @@ travel_app.controller("RegisterHotelControllerAG", function (
     $scope.isListImageSelected = false;
     $scope.checkboxRoomType = []
 
-    $scope.pageLoaded = false;
 
     function errorCallback(error) {
         toastAlert('error', "Máy chủ không tồn tại !");
@@ -315,8 +314,6 @@ travel_app.controller("RegisterHotelControllerAG", function (
         $scope.checkboxCountRoomType = $scope.checkboxRoomType.filter(function (checkbox) {
             return checkbox.checked;
         }).length;
-        $scope.pageLoaded = true;
-        console.log($scope.pageLoaded)
     };
 
     /**
@@ -387,6 +384,6 @@ travel_app.controller("RegisterHotelControllerAG", function (
         })
     }
 
-    console.log($scope.pageLoaded);
     $scope.init();
+
 })
