@@ -1,6 +1,8 @@
 travel_app.controller('TransportDetailCusController',
-    function ($scope, $location, $sce, $routeParams, TransportCusService, TransportServiceAG, TransportBrandServiceAG, LocalStorageService, Base64ObjectService) {
+    function ($scope, $location, $sce, $routeParams,UserLikeService, AuthService, TransportCusService, TransportServiceAG, TransportBrandServiceAG, LocalStorageService, Base64ObjectService) {
         let brandId = Base64ObjectService.decodeObject($routeParams.brandId);
+        let user = null
+        user = AuthService.getUser();
 
         $scope.currentPage = 0;
         $scope.pageSize = 10;
@@ -82,6 +84,7 @@ travel_app.controller('TransportDetailCusController',
                         $scope.totalPages = 0;
                         $scope.totalElements = 0;
                     }
+
                 } else {
                     $location.path('/admin/page-not-found');
                 }
@@ -95,6 +98,7 @@ travel_app.controller('TransportDetailCusController',
             TransportBrandServiceAG.findByTransportBrandId(brandId).then(function (response) {
                 if (response.status === 200) {
                     $scope.transportBrand = response.data.data;
+                    $scope.checkIsLikeTransportationBrand($scope.transportBrand.id)
                 } else {
                     $location.path('/admin/page-not-found');
                 }
@@ -281,6 +285,33 @@ travel_app.controller('TransportDetailCusController',
         $scope.pageSizeChanged = function () {
             $scope.currentPage = 0;
             $scope.init();
+        };
+
+        $scope.likeTransportationBrand = function (serviceId) {
+            $scope.category = 2
+            if (user != null && user) {
+                UserLikeService.saveLike(serviceId, $scope.category, user.id).then(function (response) {
+                    if (response.status === 200) {
+                        toastAlert('success', response.data.message)
+                        $scope.checkIsLikeTransportationBrand(serviceId)
+                    } else {
+                        toastAlert('error', response.data.message)
+                    }
+                })
+            } else {
+                toastAlert('error', "Vui lòng đăng nhập để thích khách sạn này")
+            }
+        }
+        $scope.isLikeTransportationBrand = false;
+        $scope.checkIsLikeTransportationBrand = async function (serviceId) {
+            try {
+                const response = await UserLikeService.findUserLikeByCategoryIdAndServiceId(serviceId, user.id);
+                if (response.status === 200 && response.data.status === "200") {
+                    $scope.isLikeTransportationBrand = response.data.data;
+                    $scope.$apply();
+                }
+            } catch (error) {
+            }
         };
 
         $scope.init();

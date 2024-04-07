@@ -728,6 +728,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
                 }
             }
         })
+        .when('/favourites/:id', {
+            templateUrl: 'app/component/customers/views/pages/info/favourite.html',
+            controller: 'FavoritesController',
+        })
         .when('/order-visit', {
             templateUrl: 'app/component/customers/views/pages/tour/booking.html',
             controller: ''

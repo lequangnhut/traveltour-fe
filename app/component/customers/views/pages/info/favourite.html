@@ -1,0 +1,133 @@
+<section id="information-section" style="margin-top: 80px">
+    <div class="container mb-4">
+        <ul class="d-flex mb-3">
+            <li>
+                <a href="/information/{{ userIdEncrypt }}" class="fw-medium">Thông tin cá nhân</a>
+                <i class="fa-solid fa-chevron-right" style="font-size: 14px"></i>
+            </li>
+            &nbsp;
+            <li class="fw-medium">Danh sách thích</li>
+        </ul>
+        <div>
+            <h4 class="mb-4 fs-3 fw-bold"></h4>
+            <main class="col-md-12 ms-sm-auto col-lg-12 mt-3">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <nav class="">
+                            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                                <button ng-class="{active: selectedTab === 0}" ng-click="selectTab(0)" class="nav-link active fw-medium text-green" id="nav-tour-tab" data-bs-toggle="tab" data-bs-target="#nav-tour" type="button" role="tab" aria-controls="nav-tour" aria-selected="true">Tour du lịch
+                                </button>
+                                <button ng-class="{active: selectedTab === 1}" ng-click="selectTab(1)" class="nav-link fw-medium text-green" id="nav-hotel-map" data-bs-toggle="tab" aria-selected="false">Khách sạn
+                                </button>
+                                <button ng-class="{active: selectedTab === 2}" ng-click="selectTab(2)" class="nav-link fw-medium text-green" id="nav-vehicle-map" data-bs-toggle="tab" data-bs-target="#nav-vehicle" type="button" role="tab" aria-controls="nav-vehicle" aria-selected="false">Phương tiện
+                                </button>
+                                <button ng-class="{active: selectedTab === 3}" ng-click="selectTab(3)" class="nav-link fw-medium text-green" id="nav-visit-map" data-bs-toggle="tab" data-bs-target="#nav-visit" type="button" role="tab" aria-controls="nav-visit" aria-selected="false">Tham quan
+                                </button>
+                            </div>
+                        </nav>
+
+                        <div class="tab-content">
+                            <div ng-show="selectedTab === 0">
+                                <div class="row">
+                                    <div class="col-lg-4" ng-repeat="tour in tours" ng-if="tours.length > 0">
+                                        <div class="single-service-item mb-40 m-2" tabindex="0" data-slick-index="2" aria-hidden="false" >
+                                            <div class="content">
+                                                <h3 class="title"><a href="#" tabindex="0" ng-bind="tour.tourName">Azerai Hotel</a></h3>
+                                                <p class="hidden-hotel-description" ng-if="tour.tourDescription" ng-bind="tour.tourDescription"></p>
+                                                <p class="hidden-hotel-description" ng-if="!tour.tourDescription">Không có mô tả</p>
+                                                <div class="meta">
+                                                    <span class="icon"><i class="flaticon-blanket"></i></span>
+                                                    <span class="icon"><i class="flaticon-cat"></i></span>
+                                                    <span class="icon"><i class="flaticon-tent"></i></span>
+                                                    <span class="icon"><i class="flaticon-fire"></i></span>
+                                                </div>
+                                                <a href="#" class="icon-btn" tabindex="0"><svg class="svg-inline--fa fa-arrow-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M438.6 278.6l-160 160C272.4 444.9 264.2 448 256 448s-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L338.8 288H32C14.33 288 .0016 273.7 .0016 256S14.33 224 32 224h306.8l-105.4-105.4c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160C451.1 245.9 451.1 266.1 438.6 278.6z">
+                                                </path></svg><!-- <span class="fas fa-arrow-right"></span> Font Awesome fontawesome.com --></a>
+                                            </div>
+                                            <div class="img-holder">
+                                                <img src="{{tour.tourImg}}" class="img-fluid" style="height: 200px" alt="Service Image">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-center" ng-if="tours.length <= 0">Không có dữ liệu</p>
+                                </div>
+                            </div>
+                            <div ng-show="selectedTab === 1">
+                                <div class="row">
+                                    <div class="col-lg-4" ng-repeat="hotel in hotels" ng-if="hotels.length > 0">
+                                        <div class="single-service-item mb-40 m-2" tabindex="0" data-slick-index="2" aria-hidden="false" >
+                                            <div class="content">
+                                                <h3 class="title"><a href="#" tabindex="0" ng-bind="hotel.hotelName">Azerai Hotel</a></h3>
+                                                <p class="hidden-hotel-description" ng-if="hotel.tourDescription !== null" ng-bind="hotel.hotelDescription"></p>
+                                                <p class="hidden-hotel-description" ng-if="hotel.tourDescription === null">Không có mô tả</p>
+                                                <div class="meta">
+                                                    <span class="icon"><i class="flaticon-blanket"></i></span>
+                                                    <span class="icon"><i class="flaticon-cat"></i></span>
+                                                    <span class="icon"><i class="flaticon-tent"></i></span>
+                                                    <span class="icon"><i class="flaticon-fire"></i></span>
+                                                </div>
+                                                <a href="#" class="icon-btn" tabindex="0"><svg class="svg-inline--fa fa-arrow-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M438.6 278.6l-160 160C272.4 444.9 264.2 448 256 448s-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L338.8 288H32C14.33 288 .0016 273.7 .0016 256S14.33 224 32 224h306.8l-105.4-105.4c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160C451.1 245.9 451.1 266.1 438.6 278.6z"></path></svg><!-- <span class="fas fa-arrow-right"></span> Font Awesome fontawesome.com --></a>
+                                            </div>
+                                            <div class="img-holder">
+                                                <img src="{{hotel.hotelAvatar}}" class="img-fluid" alt="Service Image">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-center" ng-if="hotels.length <= 0">Không có dữ liệu</p>
+                                </div>
+                            </div>
+                            <div ng-show="selectedTab === 2">
+                                <div class="row">
+                                    <div class="col-lg-4" ng-repeat="transportationBrand in transportationBrands" ng-if="transportationBrands.length > 0">
+                                        <div class="single-service-item mb-40 m-2" tabindex="0" data-slick-index="2" aria-hidden="false">
+                                            <div class="content">
+                                                <h3 class="title"><a href="#" tabindex="0" ng-bind="transportationBrand.transportationBrandName">Azerai Hotel</a></h3>
+                                                <p class="hidden-hotel-description" ng-bind="transportationBrand.transportationBrandAddress"></p>
+                                                <div class="meta">
+                                                    <span class="icon"><i class="flaticon-blanket"></i></span>
+                                                    <span class="icon"><i class="flaticon-cat"></i></span>
+                                                    <span class="icon"><i class="flaticon-tent"></i></span>
+                                                    <span class="icon"><i class="flaticon-fire"></i></span>
+                                                </div>
+                                                <a href="#" class="icon-btn" tabindex="0"><svg class="svg-inline--fa fa-arrow-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M438.6 278.6l-160 160C272.4 444.9 264.2 448 256 448s-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L338.8 288H32C14.33 288 .0016 273.7 .0016 256S14.33 224 32 224h306.8l-105.4-105.4c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160C451.1 245.9 451.1 266.1 438.6 278.6z"></path></svg><!-- <span class="fas fa-arrow-right"></span> Font Awesome fontawesome.com --></a>
+                                            </div>
+                                            <div class="img-holder">
+                                                <img src="{{transportationBrand.transportationBrandImg}}" alt="Service Image">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <p class="text-center" ng-if="transportationBrands.length <= 0">Không có dữ liệu</p>
+                                </div>
+                            </div>
+                            <div ng-show="selectedTab === 3">
+                                <div class="row">
+                                    <div class="col-lg-4" ng-repeat="visitLocation in visitLocations" ng-if="visitLocations.length > 0">
+                                        <div class="single-service-item mb-40 m-2" tabindex="0"  data-slick-index="2" aria-hidden="false" >
+                                            <div class="content">
+                                                <h3 class="title"><a href="#" tabindex="0" ng-bind="visitLocation.visitLocationName">Azerai Hotel</a></h3>
+                                                <p>Azerai Cần Thơ Resort là khu nghỉ dưỡng khách sạn cao cấp đầu tiên tại Đồng bằng sông Cửu
+                                                    Long</p>
+                                                <div class="meta">
+                                                    <span class="icon"><i class="flaticon-blanket"></i></span>
+                                                    <span class="icon"><i class="flaticon-cat"></i></span>
+                                                    <span class="icon"><i class="flaticon-tent"></i></span>
+                                                    <span class="icon"><i class="flaticon-fire"></i></span>
+                                                </div>
+                                                <a href="#" class="icon-btn" tabindex="0"><svg class="svg-inline--fa fa-arrow-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M438.6 278.6l-160 160C272.4 444.9 264.2 448 256 448s-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L338.8 288H32C14.33 288 .0016 273.7 .0016 256S14.33 224 32 224h306.8l-105.4-105.4c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160C451.1 245.9 451.1 266.1 438.6 278.6z"></path></svg><!-- <span class="fas fa-arrow-right"></span> Font Awesome fontawesome.com --></a>
+                                            </div>
+                                            <div class="img-holder">
+                                                <img src="{{visitLocation.visitLocationImage}}" class="img-fluid" alt="Service Image">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-center" ng-if="visitLocations.length <= 0">Không có dữ liệu</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</section>
