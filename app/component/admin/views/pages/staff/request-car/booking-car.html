@@ -147,6 +147,9 @@
                                         </div>
                                         <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
                                             <div class="box">
+                                                 <span class="fw-bold text-danger fs--1">
+                                                    Đã có {{ requestCar.requestCarDetailsById.length }} doanh nghiệp gửi yêu cầu
+                                                </span>
                                                 <button type="button"
                                                         ng-if="!requestCar.isAccepted"
                                                         ng-click="redirectPage('/admin/request-booking-car/update-request-booking/', requestCar.id)"
@@ -335,11 +338,11 @@
                                                     <i class="fa-solid fa-bus"></i>
                                                     <a class="fw-bold text-decoration-none text-dark"
                                                        ng-if="requestCarDetail.transportations.isTransportBed">
-                                                        {{ requestCarDetail.transportationTypes.transportationTypeName + ' (' + transportations[$index].amountSeat + ' giường)' }}
+                                                        {{ requestCarDetail.transportationTypes.transportationTypeName + ' (' + requestCarDetail.transportations.amountSeat + ' giường)' || 'Đang tải...' }}
                                                     </a>
                                                     <a class="fw-bold text-decoration-none text-dark"
                                                        ng-if="!requestCarDetail.transportations.isTransportBed">
-                                                        {{ requestCarDetail.transportationTypes.transportationTypeName + ' (' + transportations[$index].amountSeat + ' ghế)' }}
+                                                        {{ requestCarDetail.transportationTypes.transportationTypeName + ' (' + requestCarDetail.transportations.amountSeat + ' ghế)' || 'Đang tải...' }}
                                                     </a>
                                                 </span>
                                                 <h3 class="fw-medium mb-2">
@@ -352,7 +355,7 @@
                                                     <div class="location text-orange" style="font-size: 14px">
                                                         <p class="text-warning mb-1">
                                                             <i class="fa-solid fa-phone"></i>
-                                                            Số điện thoại: {{ agencies[$index].phone }}
+                                                            Số điện thoại: {{ agencies[$index].phone | phoneNumber }}
                                                         </p>
                                                         <p class="text-warning mb-1">
                                                             <i class="fa-solid fa-earth-americas"></i>
@@ -369,10 +372,22 @@
                                             <div class="roomTypeByHotel mb-3"
                                                  style="padding-left: 10px ;border-left: 1px solid rgba(29, 35, 31, 0.1)">
                                                 <div style="font-size: 14px; line-height: 20px">
+                                                    <p class="mb-1">
+                                                        Biển số xe:
+                                                        <span class="fw-bold">
+                                                            {{ requestCarDetail.transportations.licensePlate || 'Đang tải...' }}
+                                                        </span>
+                                                    </p>
+                                                    <p class="mb-1">
+                                                        Thời gian nộp yêu cầu:
+                                                        <span class="fw-bold">
+                                                            {{ requestCarDetail.dateCreated | vietnameseDateTime }}
+                                                        </span>
+                                                    </p>
                                                     <p class="mb-3">
                                                         <span class="fas fa-map-marker-alt color-green"></span>
-                                                        Địa
-                                                        chỉ: {{ requestCarDetail.transportationBrands.transportationBrandAddress }}
+                                                        Địa chỉ:
+                                                        {{ requestCarDetail.transportationBrands.transportationBrandAddress }}
                                                     </p>
                                                     <div class="color-green">
                                                         <i class="fa-solid fa-check"></i> Xe có WIFI miễn phí
@@ -406,14 +421,14 @@
                                                 <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
                                                     <div class="box">
                                                         <button type="button"
-                                                                ng-if="!requestCarDetail.isAccepted"
-                                                                ng-click="acceptRequestCar(requestCarDetail.id, transportations[$index].licensePlate, requestCarDetail.transportationScheduleId)"
+                                                                ng-if="!requestCarDetail.requestCar.isAccepted"
+                                                                ng-click="acceptRequestCar(requestCarDetail.id, requestCarDetail.transportations.licensePlate, requestCarDetail.transportationScheduleId)"
                                                                 class="btn btn-success w-100 ms-3"
                                                         >
                                                             Duyệt xe
                                                         </button>
                                                         <button type="button"
-                                                                ng-if="requestCarDetail.isAccepted"
+                                                                ng-if="requestCarDetail.requestCar.isAccepted"
                                                                 disabled
                                                                 class="btn btn-success w-100 ms-3">
                                                             Đã có xe

@@ -1510,13 +1510,15 @@
                                 <div class="overflow-auto scrollbar">
                                     <ul class="nav d-flex flex-column mb-2 pb-1">
                                         <li class="nav-item">
-                                            <a class="nav-link px-3" href="admin/information-update/{{user.id}}">
+                                            <a class="nav-link px-3 cursor-pointer"
+                                               ng-click="redirectPage('/admin/information-update/', user.id)">
                                                 <span class="me-2 text-900" data-feather="user"></span>
                                                 <span>Thông tin cá nhân</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link px-3" href="admin/change-password/{{user.id}}">
+                                            <a class="nav-link px-3 cursor-pointer"
+                                               ng-click="redirectPage('/admin/change-password/', user.id)">
                                                 <span class="me-2 text-900" data-feather="key"></span>
                                                 <span>Đổi mật khẩu</span>
                                             </a>

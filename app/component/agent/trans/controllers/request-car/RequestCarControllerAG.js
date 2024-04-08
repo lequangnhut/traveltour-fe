@@ -15,6 +15,9 @@ travel_app.controller('RequestCarControllerAG',
         $scope.init = function () {
             $scope.isLoading = true;
 
+            /**
+             * Danh sách tất cả hồ sơ ứng tuyển
+             */
             RequestCarServiceAG.findAllRequestCarServiceAgent($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function (response) {
                 if (response.status === 200) {
                     if (response.data.data === null || response.data.data.content.length === 0) {
@@ -25,12 +28,33 @@ travel_app.controller('RequestCarControllerAG',
                     $scope.requestCarList = response.data.data.content;
                     $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                     $scope.totalElements = response.data.data.totalElements; // Tổng số phần tử
+
+                    $scope.requestCarList.forEach(function (requestCar) {
+                        $scope.checkTransportBrandSubmitted(requestCar);
+                    })
                 } else {
                     $location.path('/admin/page-not-found');
                 }
             }).finally(function () {
                 $scope.isLoading = false;
             });
+
+            /**
+             * Xét điều kiện xem có nộp yêu cầu chưa
+             * @param requestCar
+             */
+            $scope.checkTransportBrandSubmitted = function (requestCar) {
+                let requestCarId = requestCar.id;
+                let transportBrandId = $scope.brandId;
+
+                RequestCarServiceAG.findRequestCarSubmittedServiceAgent(requestCarId, transportBrandId).then(function (response) {
+                    if (response.status === 200) {
+                        requestCar.isSubmiited = response.data.data;
+                    } else {
+                        $location.path('/admin/page-not-found');
+                    }
+                });
+            }
 
             /**
              * Tìm tên thương hiệu phương tiện bằng brandId
@@ -315,6 +339,8 @@ travel_app.controller('RequestCarControllerAG',
                             let totalDistance = (data.routes[0].distance / 1000).toFixed(2);
 
                             function redirectScheduleCreate() {
+                                // set tour detail để tạo lịch trình
+                                LocalStorageService.encryptLocalData($scope.tourDetail, 'tourDetail', 'encryptTourDetail');
                                 $window.location.href = '/business/transport/schedules-management/create-schedules';
                             }
 

@@ -5,6 +5,7 @@ travel_app.controller('SchedulesControllerAG',
         let searchTimeout;
         let brandId = LocalStorageService.get('brandId');
         let scheduleId = Base64ObjectService.decodeObject($routeParams.id);
+        let tourDetail = LocalStorageService.decryptLocalData('tourDetail', 'encryptTourDetail');
 
         $scope.dateError = null;
 
@@ -27,10 +28,10 @@ travel_app.controller('SchedulesControllerAG',
             transportationId: null,
             fromLocation: null,
             toLocation: null,
-            fromAddress: null,
-            toAddress: null,
-            departureTime: null,
-            arrivalTime: null,
+            fromAddress: tourDetail ? tourDetail.fromLocation : null,
+            toAddress: tourDetail ? tourDetail.toLocation : null,
+            departureTime: tourDetail ? new Date(tourDetail.departureDate) : null,
+            arrivalTime: tourDetail ? new Date(tourDetail.arrivalDate) : null,
             unitPrice: null,
             priceFormat: null,
             bookedSeat: null,
@@ -39,7 +40,7 @@ travel_app.controller('SchedulesControllerAG',
             isActive: null,
             isStatus: null,
             scheduleNote: null
-        }
+        };
 
         function errorCallback() {
             $location.path('/admin/internal-server-error')
@@ -297,6 +298,7 @@ travel_app.controller('SchedulesControllerAG',
             SchedulesServiceAG.create(transportationSchedulesDto).then(function () {
                 $location.path('/business/transport/schedules-management');
                 toastAlert('success', 'Thêm mới thành công !');
+                LocalStorageService.remove('tourDetail');
             }, errorCallback).finally(function () {
                 $scope.isLoading = false;
             });

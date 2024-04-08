@@ -9,7 +9,7 @@ travel_app.service('RequestCarServiceAD', function ($http) {
                 page: page || 0,
                 size: size || 10,
                 sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
+                sortDir: sortDir || 'desc',
             }
         });
     };
@@ -23,7 +23,7 @@ travel_app.service('RequestCarServiceAD', function ($http) {
                 page: page || 0,
                 size: size || 10,
                 sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
+                sortDir: sortDir || 'desc',
             }
         });
     };

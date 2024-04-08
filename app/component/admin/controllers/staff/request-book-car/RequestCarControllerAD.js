@@ -105,6 +105,7 @@ travel_app.controller('RequestCarControllerAD',
                         }
 
                         $scope.requestCarDetailList = response.data.data.content;
+                        console.log($scope.requestCarDetailList)
                         $scope.totalPagesDetail = Math.ceil(response.data.data.totalElements / $scope.pageSizeDetail);
 
                         $scope.requestCarDetailList.forEach(function (requestCarDetail) {
@@ -121,7 +122,7 @@ travel_app.controller('RequestCarControllerAD',
 
                             TransportServiceAG.findByTransportId(transportationId).then(function (response) {
                                 if (response.status === 200) {
-                                    $scope.transportations.push(response.data.data.transportGetDataDto);
+                                    requestCarDetail.transportations = response.data.data.transportGetDataDto;
                                 } else {
                                     $location.path('/admin/page-not-found');
                                 }

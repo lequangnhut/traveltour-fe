@@ -53,6 +53,11 @@
                                                     <i class="fa-solid fa-earth-americas"></i>
                                                     {{ requestCar.requestCarNoted }}
                                                 </p>
+
+                                                <p class="fw-bold text-success mb-1" ng-if="requestCar.isSubmiited === true">
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Bạn đã nộp yêu cầu
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -88,7 +93,7 @@
                                                 Điểm đi:
                                                 <span class="fw-bold">{{ requestCar.fromLocation }}</span>
                                             </p>
-                                            <p class="mb-1">
+                                            <p class="mb-2">
                                                 Điểm đến: <span class="fw-bold">{{ requestCar.toLocation }}</span>
                                             </p>
                                         </div>
@@ -105,7 +110,15 @@
                                                     </div>
                                                     <div class="rating-content float-end">
                                                         <div class="btn-green text-center cursor-pointer"
+                                                             ng-if="!requestCar.isAccepted"
                                                              ng-click="showModalMapRequestCar(requestCar.tourDetailId)"
+                                                             style="width: 50px; height: 50px; line-height: 50px; border-radius: 8px">
+                                                            <span class="fw-medium fs-2">
+                                                                <i class="fa-solid fa-map-location-dot"></i>
+                                                            </span>
+                                                        </div>
+                                                        <div class="btn-green bg-light-secondary text-center cursor-pointer"
+                                                             ng-if="requestCar.isAccepted"
                                                              style="width: 50px; height: 50px; line-height: 50px; border-radius: 8px">
                                                             <span class="fw-medium fs-2">
                                                                 <i class="fa-solid fa-map-location-dot"></i>
@@ -117,7 +130,7 @@
                                         </div>
                                         <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
                                             <div class="box">
-                                                <span class="fw-bold text-danger"
+                                                <span class="fw-bold text-danger fs--1"
                                                       ng-if="requestCar.requestCarDetailsById.length >= 5">
                                                     Đã có {{ requestCar.requestCarDetailsById.length }} doanh nghiệp gửi yêu cầu
                                                 </span>
