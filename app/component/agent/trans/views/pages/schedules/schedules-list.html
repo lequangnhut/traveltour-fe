@@ -11,6 +11,19 @@
         </div>
     </div>
 
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active cursor-pointer" id="pills-false-tab" data-bs-toggle="pill" role="tab"
+               ng-class="{active: currentTab === 'permanent'}"
+               ng-click="changeTab('permanent', false)">Xe tuyến cố định</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link cursor-pointer" id="pills-true-tab" data-bs-toggle="pill" role="tab"
+               ng-class="{active: currentTab === 'contract'}"
+               ng-click="changeTab('contract', true)">Xe hợp đồng</a>
+        </li>
+    </ul>
+
     <div class="">
         <div class="card card-customer">
             <div class="row" style="margin: 20px 16px 20px 16px">
@@ -41,14 +54,181 @@
         </div>
     </div>
 
-
-    <div class="table-components table-responsive mb-5">
+    <div class="table-components table-responsive mb-5" ng-show="currentTab === 'permanent'">
         <div class="card table-responsive table-customer">
             <div class="card-header ">
                 <div class="row">
                     <div class="h4 col-lg-5 d-flex align-items-center h-100">
                         <div class="d-flex align-items-center">
-                            <span class="h4">Danh sách chuyến đi</span>
+                            <span class="h4">Danh sách xe tuyến cố định</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end align-items-baseline col-lg-2">
+                        <select class="form-select" aria-label="Default select example"
+                                ng-model="pageSize"
+                                ng-init="pageSize='5'"
+                                ng-change="pageSizeChanged()">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                        </select>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
+                        <nav aria-label="Page navigation example float-end">
+                            <ul class="pagination justify-content-center align-items-center">
+                                <!-- Previous Page -->
+                                <li class="page-item cursor-pointer" ng-class="{disabled: currentPage === 0}">
+                                    <a class="page-link" ng-click="setPage(0)">
+                                        <i class="fa-solid fa-angles-left"></i>
+                                    </a>
+                                </li>
+
+                                <!-- Ellipsis at the beginning -->
+                                <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                    <span class="page-link">...</span>
+                                </li>
+
+                                <!-- Pagination Numbers -->
+                                <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
+                                    ng-class="{active: n === currentPage}">
+                                    <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                </li>
+
+                                <!-- Ellipsis at the end -->
+                                <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                    <span class="page-link">...</span>
+                                </li>
+
+                                <!-- Next Page -->
+                                <li class="page-item cursor-pointer"
+                                    ng-class="{disabled: currentPage === totalPages - 1}">
+                                    <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                        <i class="fa-solid fa-angles-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-responsive text-center">
+                <div ng-include="'app/component/utils/loading-table.html'"></div>
+                <thead>
+                <tr class="bg-light">
+                    <th>#</th>
+                    <th ng-click="sortData('id')">
+                        <div class="icon-left">ID
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                        </div>
+                    </th>
+                    <th ng-click="sortData('transportationId')">
+                        <div class="icon-left">Phương tiện
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('transportationId')"></span>
+                        </div>
+                    </th>
+                    <th ng-click="sortData('fromLocation')">
+                        <div class="icon-left">Điểm đi
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('fromLocation')"></span>
+                        </div>
+                    </th>
+                    <th ng-click="sortData('toLocation')">
+                        <div class="icon-left">Điểm đến
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('toLocation')"></span>
+                        </div>
+                    </th>
+                    <th ng-click="sortData('bookedSeat')">
+                        <div class="icon-left">Số chổ ngồi
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('bookedSeat')"></span>
+                        </div>
+                    </th>
+                    <th ng-click="sortData('bookedSeat')">
+                        <div class="icon-left">Đã đặt
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('bookedSeat')"></span>
+                        </div>
+                    </th>
+                    <th ng-click="sortData('unitPrice')">
+                        <div class="icon-left">Đơn giá
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('unitPrice')"></span>
+                        </div>
+                    </th>
+                    <th ng-click="sortData('isStatus')">
+                        <div class="icon-left">Trạng thái
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('isStatus')"></span>
+                        </div>
+                    </th>
+                    <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="schedule in transportationSchedules">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ schedule.id }}</td>
+                    <td>{{ transportation[schedule.transportationId].licensePlate || 'Đang tải...' }}</td>
+                    <td>{{ schedule.fromLocation }}</td>
+                    <td>{{ schedule.toLocation }}</td>
+                    <td>{{ transportation[schedule.transportationId].amountSeat + ' Chỗ' || 'Đang tải...' }}</td>
+                    <td>{{ schedule.bookedSeat + ' Chỗ' }}</td>
+                    <td>{{ schedule.unitPrice | vnCurrency }}</td>
+                    <td ng-if="schedule.isStatus == 0">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <span class="status-warning"></span>
+                            <span class="text-status-warning">Chờ vận hành</span>
+                        </div>
+                    </td>
+                    <td ng-if="schedule.isStatus == 1">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <span class="status-success"></span>
+                            <span class="text-status-success">Đang vận hành</span>
+                        </div>
+                    </td>
+                    <td ng-if="schedule.isStatus == 2">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <span class="status-success"></span>
+                            <span class="text-status-success">Đã hoàn tất</span>
+                        </div>
+                    </td>
+                    <td ng-if="schedule.isStatus == 3">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <span class="status-error"></span>
+                            <span class="text-status-error">Hủy chuyến đi</span>
+                        </div>
+                    </td>
+                    <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                        <a href="#"
+                           ng-click="redirectPage('/business/transport/schedules-management/update-schedules/', schedule.id)"
+                           role="button" class="fs-1 px-2 btn text-warning">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <a href="#"
+                           ng-click="redirectPage('/business/transport/schedules-management/order-transport-management/', schedule.id)"
+                           role="button" class="fs-1 btn text-primary px-2" title="Vé của khách hàng">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </a>
+                        <a href="#" ng-click="deleteSchedule(schedule.id, schedule.fromLocation, schedule.toLocation)"
+                           role="button" class="fs-1 px-2 btn text-danger">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-if="transportationSchedules.length === 0">
+                    <td colspan="10">Không có dữ liệu chuyến đi.</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="card-footer">
+                <div class="d-flex justify-content-end">
+                    {{ getDisplayRange() }} trong tổng số {{ totalElements }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-components table-responsive mb-5" ng-show="currentTab === 'contract'">
+        <div class="card table-responsive table-customer">
+            <div class="card-header ">
+                <div class="row">
+                    <div class="h4 col-lg-5 d-flex align-items-center h-100">
+                        <div class="d-flex align-items-center">
+                            <span class="h4">Danh sách xe hợp đồng</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end align-items-baseline col-lg-2">

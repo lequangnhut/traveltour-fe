@@ -8,8 +8,8 @@ travel_app.service('TransportServiceAG', function ($http) {
             params: {
                 page: page || 0,
                 size: size || 5,
-                sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
+                sortBy: sortBy || 'dateCreated',
+                sortDir: sortDir || 'desc',
                 searchTerm: searchTerm || ''
             }
         })

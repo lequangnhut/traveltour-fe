@@ -14,6 +14,8 @@ travel_app.controller('SchedulesControllerAG',
 
         $scope.isLoading = true;
 
+        $scope.tripType = true;
+        $scope.currentTab = 'permanent';
         $scope.currentPage = 0;
         $scope.pageSize = 5;
 
@@ -142,16 +144,29 @@ travel_app.controller('SchedulesControllerAG',
             $scope.checkDuplicateTransportSchedule();
         }
 
-        $scope.init = function () {
-            SchedulesServiceAG.findAllSchedules(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function (response) {
-                $scope.transportationSchedules = response.data.content;
-                $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
-                $scope.totalElements = response.data.totalElements;
+        $scope.changeTab = (tab, tripType) => {
+            $scope.currentTab = tab;
+            $scope.tripType = tripType;
+            $scope.init();
+        };
 
-                response.data.content.forEach(transportation => {
-                    $scope.findTransportation(transportation.transportationId);
-                });
-            }, errorCallback).finally(function () {
+        $scope.init = function () {
+            /**
+             * Tìm tất cả chuyến xe bằng loại xe (tripType)
+             */
+            SchedulesServiceAG.findAllByTripType(brandId, $scope.tripType, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function (response) {
+                if (response.status === 200) {
+                    $scope.transportationSchedules = response.data.data.content;
+                    $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
+                    $scope.totalElements = response.data.data.totalElements;
+
+                    response.data.data.content.forEach(transportation => {
+                        $scope.findTransportation(transportation.transportationId);
+                    });
+                } else {
+                    $location.path('/admin/page-not-found');
+                }
+            }).finally(function () {
                 $scope.isLoading = false;
             });
 

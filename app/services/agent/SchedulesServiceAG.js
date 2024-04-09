@@ -1,11 +1,12 @@
 travel_app.service('SchedulesServiceAG', function ($http) {
     let API_SCHEDULE = BASE_API + 'agent/transportation-schedules/';
 
-    this.findAllSchedules = function (transportBrandId, page, size, sortBy, sortDir, searchTerm) {
+    this.findAllByTripType = function (transportBrandId, tripType, page, size, sortBy, sortDir, searchTerm) {
         return $http({
             method: 'GET',
-            url: API_SCHEDULE + 'find-all-schedules/' + transportBrandId,
+            url: API_SCHEDULE + 'find-all-schedule-by-trip-type/' + tripType,
             params: {
+                transportBrandId: transportBrandId,
                 page: page || 0,
                 size: size || 5,
                 sortBy: sortBy || 'id',

@@ -43,8 +43,8 @@
                         required
                 >
                     <option value="" disabled selected>Chọn loại vé</option>
-                    <option value="true" ng-selected="schedules.tripType === true">Khách hợp đồng</option>
-                    <option value="false" ng-selected="schedules.tripType === false">Khách lẻ</option>
+                    <option value="true" ng-selected="schedules.tripType === true">Tuyến hợp đồng</option>
+                    <option value="false" ng-selected="schedules.tripType === false">Tuyến cố định</option>
                 </select>
                 <small class="text-danger"
                        ng-show="form_trip.tripType.$touched && form_trip.tripType.$error.required">
@@ -203,7 +203,7 @@
             </div>
 
             <div class="col-md-6">
-                <label class="form-label">ĐƠN GIÁ</label>
+                <label class="form-label">Giá tiền / Đơn giá</label>
                 <input type="text"
                        class="form-control"
                        placeholder="100.000 đ"
