@@ -45,11 +45,6 @@ travel_app.controller('RequestCarControllerAD',
              */
             RequestCarServiceAD.findAllRequestCarService($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
                 .then((response) => {
-                    if (response.data.data === null || response.data.data.content.length === 0) {
-                        $scope.setPage(Math.max(0, $scope.currentPage - 1));
-                        return
-                    }
-
                     $scope.requestCarList = response.data.data !== null ? response.data.data.content : [];
                     $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                 }).finally(() => {
@@ -99,18 +94,14 @@ travel_app.controller('RequestCarControllerAD',
 
                 RequestCarServiceAD.findAllRequestCarDetailService(requestCarId, $scope.currentPageDetail, $scope.pageSizeDetail, $scope.sortBy, $scope.sortDir)
                     .then((response) => {
-                        if (response.data.data === null || response.data.data.content.length === 0) {
-                            $scope.setPage(Math.max(0, $scope.currentPageDetail - 1));
-                            return
-                        }
-
                         $scope.requestCarDetailList = response.data.data.content;
-                        console.log($scope.requestCarDetailList)
                         $scope.totalPagesDetail = Math.ceil(response.data.data.totalElements / $scope.pageSizeDetail);
 
                         $scope.requestCarDetailList.forEach(function (requestCarDetail) {
                             let agenciesId = requestCarDetail.transportationBrands.agenciesId;
                             let transportationId = requestCarDetail.transportations.id;
+                            let transportationScheduleId = requestCarDetail.transportationScheduleId;
+                            let requestCarId = requestCarDetail.requestCarId;
 
                             AgencyServiceAD.findAgencieById(agenciesId).then(function (response) {
                                 if (response.status === 200) {
@@ -127,6 +118,22 @@ travel_app.controller('RequestCarControllerAD',
                                     $location.path('/admin/page-not-found');
                                 }
                             });
+
+                            RequestCarServiceAD.findRequestCarDetailSubmittedService(transportationScheduleId).then(function (response) {
+                                if (response.status === 200) {
+                                    requestCarDetail.isSubmiited = response.data.data;
+                                } else {
+                                    $location.path('/admin/page-not-found');
+                                }
+                            })
+
+                            RequestCarServiceAD.findCarSubmittedService(requestCarId, transportationScheduleId).then(function (response) {
+                                if (response.status === 200) {
+                                    requestCarDetail.isCarSubmitted = response.data.data;
+                                } else {
+                                    $location.path('/admin/page-not-found');
+                                }
+                            })
                         })
                     }).finally(() => {
                     $scope.isLoading = false;

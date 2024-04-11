@@ -34,10 +34,18 @@ travel_app.controller('MainController',
              * Hàm để di chuyển trang encode mã
              * @param objId
              * @param url
+             * @param navItem
              */
-            $scope.redirectPage = function (url, objId) {
-                let objIdEncode = Base64ObjectService.encodeObject(objId);
-                $location.path(url + objIdEncode);
+            $scope.redirectPage = function (url, objId, navItem) {
+                if (navItem) {
+                    let objIdEncode = Base64ObjectService.encodeObject(objId);
+                    $location.path(url + objIdEncode);
+                    $scope.setActiveNavItem(navItem);
+                } else {
+                    let objIdEncode = Base64ObjectService.encodeObject(objId);
+                    $location.path(url + objIdEncode);
+                }
+
             }
 
             /**

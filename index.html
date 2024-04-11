@@ -665,7 +665,7 @@
                                        href="/admin/type/transport-utilities-list">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-van-shuttle"></i>
+                                            <i class="fa-solid fa-bus"></i>
                                             <span class="nav-link-text-wrapper">&nbsp;&nbsp;
                                             <span class="nav-link-text">Danh mục tiện ích xe khách</span>
                                         </span>
@@ -1031,6 +1031,25 @@
                                 </div>
 
                                 <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1"
+                                       ng-click="setActiveNavItem('history-request-car')"
+                                       ng-class="{ 'active': activeNavItem === 'history-request-car'}"
+                                       href="/business/transport/history-request-car"
+                                    >
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                            <i class="fa-solid fa-clock-rotate-left"></i>
+                                        </span>
+                                            <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Lịch sử gửi yêu cầu</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- label-->
                                 <p class="navbar-vertical-label text-uppercase">Công cụ</p>
                                 <hr class="navbar-vertical-line"/>
 
@@ -1197,7 +1216,7 @@
                         <div class="d-flex align-items-center">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex align-items-center">
-                                    <img src="/assets/admin/assets/img/icons/logo.png" alt="logo" width="40"/>
+                                    <img src="/assets/admin/assets/img/icons/logo.png" alt="logo" style="width: 40px"/>
                                     <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">TravelTour</p>
                                 </div>
                             </div>
@@ -1872,6 +1891,7 @@
 <script src="app/component/agent/trans/controllers/schedules/SchedulesControllerAG.js"></script>
 <script src="app/component/agent/trans/controllers/dashboard/ListTransportBrandControllerAG.js"></script>
 <script src="app/component/agent/trans/controllers/request-car/RequestCarControllerAG.js"></script>
+<script src="app/component/agent/trans/controllers/request-car/HistoryRequestCarControllerAG.js"></script>
 <script src="app/component/agent/trans/controllers/request-car/SelectCarControllerAG.js"></script>
 
 <!--====== Controller Agent Hotel ======-->

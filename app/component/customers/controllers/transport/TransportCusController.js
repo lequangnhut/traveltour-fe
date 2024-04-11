@@ -142,7 +142,8 @@ travel_app.controller('TransportCusController',
              * @param transportBrand
              */
             $scope.addMarkerAllTransport = function (transportBrand) {
-                $scope.removeMarkerAllTransport()
+                $scope.removeMarkerAllTransport();
+
                 var bounds = new mapboxgl.LngLatBounds();
 
                 for (const brand of transportBrand) {
@@ -194,8 +195,7 @@ travel_app.controller('TransportCusController',
             };
 
             $scope.addMarkerTransport = function (transportBrand) {
-                $scope.removeMarkerTransport();
-                let bounds = new mapboxgl.LngLatBounds();
+                var bounds = new mapboxgl.LngLatBounds();
                 let address = transportBrand.transportationBrandAddress;
 
                 let iconUrl = '/assets/customers/images/icon/maker.png';
@@ -219,6 +219,8 @@ travel_app.controller('TransportCusController',
 
                 MapBoxService.geocodeAddress(address, function (error, toCoordinates) {
                     if (!error) {
+                        $scope.removeMarkerTransport();
+
                         let marker = new mapboxgl.Marker(el)
                             .setLngLat(toCoordinates)
                             .setPopup(popup)

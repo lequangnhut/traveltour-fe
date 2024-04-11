@@ -424,6 +424,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/trans/views/pages/request-car/select-car.html',
             controller: 'SelectCarControllerAG'
         })
+        .when('/business/transport/history-request-car', {
+            templateUrl: 'app/component/agent/trans/views/pages/request-car/history-request-car.html',
+            controller: 'HistoryRequestCarControllerAG'
+        })
 
         /**
          * Agent Visit

@@ -14,6 +14,21 @@ travel_app.service('RequestCarServiceAG', function ($http) {
         })
     }
 
+    this.findAllHistoryRequestCarServiceAgent = function (transportBrandId, acceptedRequest, page, size, sortBy, sortDir) {
+        return $http({
+            method: 'GET',
+            url: API_REQUEST_CAR + 'find-all-history-request-car',
+            params: {
+                transportBrandId: transportBrandId,
+                acceptedRequest: acceptedRequest,
+                page: page || 0,
+                size: size || 10,
+                sortBy: sortBy || 'id',
+                sortDir: sortDir || 'desc',
+            }
+        })
+    }
+
     this.findRequestCarByIdServiceAgent = function (requestCarId) {
         return $http({
             method: 'GET',
@@ -44,6 +59,16 @@ travel_app.service('RequestCarServiceAG', function ($http) {
             method: 'POST',
             url: API_REQUEST_CAR + 'submit-request-car-to-staff',
             data: requestCarDetailDto
+        })
+    }
+
+    this.cancelRequestCarDetail = function (requestCarDetailId) {
+        return $http({
+            method: 'POST',
+            url: API_REQUEST_CAR + 'cancel-request-car-to-staff',
+            params: {
+                requestCarDetailId: requestCarDetailId
+            }
         })
     }
 })

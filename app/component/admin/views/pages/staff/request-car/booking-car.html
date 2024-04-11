@@ -53,7 +53,7 @@
                     <div class="mb-30 row">
                         <div class="col-xl-3 col-lg-4 ps-5 pt-3">
                             <img ng-src="{{ requestCar.toursByTourId.tourImg }}" class="img-fluid rounded-3"
-                                 style="width: 100%;" alt="img-request-car"
+                                 style="width: 100%; height: 120px" alt="img-request-car"
                                  onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
                         </div>
                         <div class=" col-xl-9 p-3 col-lg-8">
@@ -74,7 +74,9 @@
                                         </span>
                                         <h3 class="fw-medium">
                                             <a href="#" class="text-dark text-decoration-none">
-                                                {{ requestCar.toursByTourId.tourName }}
+                                                {{ requestCar.tourDetailId }}
+                                                - {{ requestCar.toursByTourId.tourName }}
+                                                - {{ requestCar.departureDate | formatDate }}
                                             </a>
                                         </h3>
                                         <div class="d-flex align-items-center mb-2"
@@ -148,9 +150,6 @@
                                         </div>
                                         <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
                                             <div class="box">
-                                                 <span class="fw-bold text-danger fs--1">
-                                                    Đã có {{ requestCar.requestCarDetailsById.length }} doanh nghiệp gửi yêu cầu
-                                                </span>
                                                 <button type="button"
                                                         ng-if="!requestCar.isAccepted"
                                                         ng-click="redirectPage('/admin/request-booking-car/update-request-booking/', requestCar.id)"
@@ -161,7 +160,7 @@
                                                         ng-if="requestCar.isAccepted"
                                                         disabled
                                                         class="btn btn-success w-100 mt-3">
-                                                    Đã có xe
+                                                    Đã duyệt xe
                                                 </button>
                                             </div>
                                         </div>
@@ -336,6 +335,11 @@
                                     <div class="meta row">
                                         <div class="col-lg-8 p-0">
                                             <div>
+                                                <p class="fw-bold text-success mb-0"
+                                                   ng-if="requestCarDetail.isCarSubmitted">
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Xe khách sẽ được sử dụng cho tour.
+                                                </p>
                                                 <span>
                                                     <i class="fa-solid fa-bus"></i>
                                                     <a class="fw-bold text-decoration-none text-dark"
@@ -400,9 +404,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-4 p-0">
                                             <div class="infoHotel h-100 w-100 position-relative row">
-                                                <div class="rating col-xl-12 col-lg-12 col-sm-6 col-6">
+                                                <div class="rating col-xl-12 col-lg-12 col-sm-6 col-6 pe-0">
                                                     <div class="float-end" style="font-size: 14px; line-height: 20px">
                                                         <div class="d-flex align-content-center">
                                                             <div class="float-end m-2">
@@ -420,23 +424,41 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
-                                                    <div class="box">
+                                                <div class="price position-absolute bottom-0 end-0 mb-3 ms-4 col-xl-12 col-lg-12 col-sm-6 col-6 p-0">
+                                                    <div class="mb-2">
+                                                        <h5 class="float-end px-0">
+                                                            <span class="mb-2 float-end fw-normal fs--1">
+                                                                Giá được gửi từ nhà xe
+                                                            </span>
+                                                            <br>
+                                                            <span class="mb-2 float-end">
+                                                                {{ requestCarDetail.transportationSchedules.unitPrice | vnCurrency }}
+                                                            </span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="box ms-3">
                                                         <button type="button"
-                                                                ng-if="!requestCarDetail.requestCar.isAccepted"
+                                                                ng-if="!requestCarDetail.requestCar.isAccepted && !requestCarDetail.isSubmiited"
                                                                 ng-click="acceptRequestCar(requestCarDetail.id, requestCarDetail.transportations.licensePlate, requestCarDetail.transportationScheduleId)"
-                                                                class="btn btn-success w-100 ms-3"
+                                                                class="btn btn-success w-100"
                                                         >
                                                             Duyệt xe
                                                         </button>
                                                         <button type="button"
                                                                 ng-if="requestCarDetail.requestCar.isAccepted"
                                                                 disabled
-                                                                class="btn btn-success w-100 ms-3">
-                                                            Đã có xe
+                                                                class="btn btn-success w-100">
+                                                            Đã duyệt xe
+                                                        </button>
+                                                        <button type="button"
+                                                                ng-if="!requestCarDetail.requestCar.isAccepted && requestCarDetail.isSubmiited"
+                                                                disabled
+                                                                class="btn btn-success w-100"
+                                                        >
+                                                            Đã được sử dụng
                                                         </button>
                                                         <a href="#" ng-click="toggleRequestDetail($index)"
-                                                           class="btn w-100 ms-3 mt-2 p-0">
+                                                           class="btn w-100 mt-2 ps-3 p-0">
                                                             Xem chi tiết
                                                             <i ng-bind-html="getChangeIconRequestDetail($index)"></i>
                                                         </a>
@@ -628,7 +650,13 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer d-flex justify-content-start align-content-center">
+                 <span class="fw-bold text-danger fs--1 me-auto mb-0" ng-if="requestCarDetailList.length === 0">
+                    Chưa có doanh nghiệp nào gửi yêu cầu.
+                </span>
+                <span class="fw-bold text-danger fs--1 me-auto mb-0" ng-if="requestCarDetailList.length !== 0">
+                    Có {{ requestCarDetailList.length }} doanh nghiệp gửi yêu cầu cho tour này.
+                </span>
                 <button type="button" class="btn" data-bs-dismiss="modal">
                     <i class="fa-solid fa-arrow-left"></i>
                     Thoát

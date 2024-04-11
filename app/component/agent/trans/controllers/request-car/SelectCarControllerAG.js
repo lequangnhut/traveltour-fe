@@ -128,8 +128,8 @@ travel_app.controller('SelectCarControllerAG',
 
                             confirmAlert('Bạn có chắc chắn muốn gửi dữ liệu này cho TravelTour không ?', confirmSubmit);
                         } else {
-                            centerAlert('Không thành công !', 'Chúng tôi nhận thấy bạn đã nộp hồ sơ trong vài ngày gần đây, ' +
-                                'vui lòng không nộp lại cho đến khi yêu cầu này kết thúc.', 'warning');
+                            centerAlert('Không thành công !', 'Chúng tôi nhận thấy bạn đã nộp hồ sơ gần đây, ' +
+                                'vui lòng không nộp lại cho đến khi yêu cầu này kết thúc. Hoặc bạn có thể hủy và gửi lại.', 'warning');
                         }
                     }).catch(function (error) {
                         console.error("Có lỗi xảy ra khi kiểm tra trạng thái:", error);

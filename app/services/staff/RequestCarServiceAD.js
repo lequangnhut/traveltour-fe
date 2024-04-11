@@ -28,6 +28,27 @@ travel_app.service('RequestCarServiceAD', function ($http) {
         });
     };
 
+    this.findRequestCarDetailSubmittedService = function (transportationScheduleId) {
+        return $http({
+            method: 'GET',
+            url: API_REQUEST_CAR + 'find-request-car-detail-submitted',
+            params: {
+                transportationScheduleId: transportationScheduleId,
+            }
+        });
+    }
+
+    this.findCarSubmittedService = function (requestCarId, transportationScheduleId) {
+        return $http({
+            method: 'GET',
+            url: API_REQUEST_CAR + 'find-car-submitted',
+            params: {
+                requestCarId: requestCarId,
+                transportationScheduleId: transportationScheduleId,
+            }
+        });
+    }
+
     this.findAllTourDetailUseRequestCarService = function () {
         return $http({
             method: 'GET',

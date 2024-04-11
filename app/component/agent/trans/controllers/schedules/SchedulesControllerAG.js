@@ -14,7 +14,7 @@ travel_app.controller('SchedulesControllerAG',
 
         $scope.isLoading = true;
 
-        $scope.tripType = true;
+        $scope.tripType = false;
         $scope.currentTab = 'permanent';
         $scope.currentPage = 0;
         $scope.pageSize = 5;
