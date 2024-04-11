@@ -1,5 +1,5 @@
 travel_app.controller('TransportDetailCusController',
-    function ($scope, $location, $sce, $routeParams,UserLikeService, AuthService, TransportCusService, TransportServiceAG, TransportBrandServiceAG, LocalStorageService, Base64ObjectService) {
+    function ($scope, $location, $sce, $routeParams, UserLikeService, AuthService ,TransportCusService, TransportServiceAG, TransportBrandServiceAG, LocalStorageService, Base64ObjectService) {
         let brandId = Base64ObjectService.decodeObject($routeParams.brandId);
         let user = null
         user = AuthService.getUser();
@@ -18,6 +18,32 @@ travel_app.controller('TransportDetailCusController',
 
         $scope.activeTransportInfoTab = -1;
         $scope.activeTransportBookingTab = -1;
+
+        $scope.filters = LocalStorageService.decryptLocalData('filtersTransportation', 'encryptFiltersTransportation');
+
+        if ($scope.filters !== null) {
+            if ($scope.filters.checkInDateFiller !== null) {
+                $scope.filters.checkInDateFiller = new Date($scope.filters.checkInDateFiller);
+            } else {
+                $scope.filters.checkInDateFiller = new Date();
+            }
+        } else {
+            $scope.filters = {
+                checkInDateFiller: new Date()
+            };
+        }
+
+        console.log($scope.filters)
+
+        const fetchData = (serviceFunc, successCallback) => {
+            return serviceFunc().then((response) => {
+                if (response.status === 200) {
+                    successCallback(response.data.data);
+                } else {
+                    $location.path('/admin/page-not-found');
+                }
+            });
+        }
 
         /**
          * Phưương thức mở tab xem thêm bên dưới
@@ -64,10 +90,26 @@ travel_app.controller('TransportDetailCusController',
         $scope.init = function () {
             $scope.isLoading = true;
 
+            fetchData(TransportCusService.getAllTransportCusDataList, (repo) => {
+                if (repo === null) return;
+                $scope.transportationDataList = repo.uniqueDataList;
+                $scope.filteredDataList = $scope.transportationDataList.slice(0, 5);
+                $scope.$watch('filters.searchTerm', function (newVal) {
+                    if (newVal && newVal.trim() !== '') {
+                        $scope.filteredDataList = $filter('filter')($scope.transportationDataList, newVal).slice(0, 5);
+                    } else {
+                        $scope.filteredDataList = $scope.transportationDataList.slice(0, 5);
+                    }
+                });
+                $scope.fromLocationList = repo.fromLocationList;
+                $scope.toLocationList = repo.toLocationList;
+            })
+
             /**
              * Hiển thị tất cả các xe có vé
              */
-            TransportCusService.findAllTransportScheduleCus($scope.currentPage, $scope.pageSize, brandId).then(function (response) {
+            TransportCusService.findAllTransportScheduleCus($scope.currentPage, $scope.pageSize,$scope.filters, brandId).then(function (response) {
+                console.log(response)
                 if (response.status === 200) {
                     if (response.data && response.data.data && response.data.data.content) {
                         $scope.transportSchedule = response.data.data.content;

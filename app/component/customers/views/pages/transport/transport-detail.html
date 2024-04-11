@@ -47,34 +47,30 @@
         <div class="row">
             <div class="col-xl-8">
                 <div class="mb-3 w-100">
-                    <div class="row single-event-item">
+                    <div class="row single-event-item d-flex align-items-end">
                         <div class="col-md-4">
-                            <label for="locationFilter" class="form-label">Địa điểm đi</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="locationFilter"
-                                   ng-model="filler.locationFilter"
-                                   placeholder="Nhập nơi bạn muốn đến..."
-                            >
+                            <label for="fromLocation" class="form-label">Điểm đi</label>
+                            <select class="form-control" id="fromLocation"
+                                    ng-model="filters.fromLocation" ng-change="validateDates()">
+                                <option selected value="">Chọn điểm đi</option>
+                                <option ng-repeat="fl in fromLocationList" value="{{ fl }}">{{ fl }}</option>
+                            </select>
                         </div>
                         <div class="col-md-4">
-                            <label for="checkInDateFiller" class="form-label">Ngày đi</label>
+                            <label for="toLocation" class="form-label">Điểm dến</label>
+                            <select class="form-control" id="toLocation"
+                                    ng-model="filters.toLocation" ng-change="validateDates()">
+                                <option selected value="">Chọn điểm đến</option>
+                                <option ng-repeat="tl in toLocationList" value="{{tl}}">{{ tl }}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="checkInDateFiller" class="form-label">Ngày đi (dự kiến)</label>
                             <input type="date" class="form-control" id="checkInDateFiller"
-                                   ng-model="filler.checkInDateFiller" ng-change="validateDates()">
-                            <span class="text-danger" ng-if="errorCheckInDateFiller">
-                                {{ errorCheckInDateFiller }}
-                            </span>
+                                   ng-model="filters.checkInDateFiller" ng-change="validateDates()">
                         </div>
-                        <div class="col-md-4">
-                            <label for="checkOutDateFiller" class="form-label">Ngày về</label>
-                            <input type="date" class="form-control" id="checkOutDateFiller"
-                                   ng-model="filler.checkOutDateFiller" ng-change="validateDates()">
-                            <span class="text-danger" ng-if="errorCheckOutDateFiller">
-                                {{ errorCheckOutDateFiller }}
-                            </span>
-                        </div>
-                        <div class="d-flex justify-content-end mt-3">
-                            <button type="button" class="btn btn-green" ng-click=""><i
+                        <div class="d-flex justify-content-end mt-3 col-md-12">
+                            <button type="button" class="btn btn-green" ng-click="filterAllTransportCus()"><i
                                     class="fa-solid fa-magnifying-glass"></i> Tìm chuyến xe
                             </button>
                         </div>

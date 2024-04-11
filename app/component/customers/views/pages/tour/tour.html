@@ -130,38 +130,58 @@
             <div class="col-xl-9 col-md-12">
                 <div class="mb-5 w-100">
                     <div class="row single-event-item d-flex align-items-end">
-                        <div class="col-md-6">
-                            <label for="locationFilter" class="form-label">Tìm kiếm</label>
-                            <input type="text" list="datalistOptionsTour"
+                        <div class="col-md-5 mb-2">
+                            <label for="departToArrive" class="form-label">Khởi hành đến</label>
+                            <input type="text" list="datalistOptionDepartureArrives"
                                    class="form-control"
-                                   id="locationFilter"
-                                   ng-model="filters.searchTerm"
+                                   id="departToArrive"
+                                   ng-model="filters.departureArrives"
                                    placeholder="Nhập nơi bạn muốn đến..."
                             >
-                            <datalist id="datalistOptionsTour">
+                            <datalist id="datalistOptionDepartureArrives">
                                 <option ng-repeat="visitLocationData in filteredDataList"
                                         value="{{visitLocationData}}">
                             </datalist>
 
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-5 mb-2">
+                            <label for="departure" class="form-label">Điểm khởi hành</label>
+                            <input type="text" list="datalistOptionDepartureFrom"
+                                   class="form-control"
+                                   id="departure"
+                                   ng-model="filters.departureFrom"
+                                   placeholder="Nhập nơi bạn muốn đến..."
+                            >
+                            <datalist id="datalistOptionDepartureFrom">
+                                <option ng-repeat="visitLocationData in filteredDataList"
+                                        value="{{visitLocationData}}">
+                            </datalist>
+                        </div>
+
+                        <div class="col-md-5">
                             <label for="checkInDateFiller" class="form-label">Ngày đi (dự kiến)</label>
                             <input type="date" class="form-control" id="checkInDateFiller"
-                                   ng-model="filters.checkInDateFiller" ng-change="validateDates()">
+                                   ng-model="filters.departure" ng-change="validateDates()">
 
                         </div>
+                        <div class="col-md-5">
+                            <label for="checkInDateFiller" class="form-label">Số người</label>
+                            <input type="text" class="form-control" id=""
+                                   ng-model="filters.numberOfPeople" ng-change="validateDates()">
+                        </div>
+
                         <div class="col-md-2">
                             <button type="button" class="btn btn-green float-end" ng-click="filterAllTour()"><i
                                     class="fa-solid fa-magnifying-glass"></i> Tìm tour
                             </button>
                         </div>
-                        <div class="col-md-6"></div>
-                        <div class="col-md-4">
-                           <span class="text-danger" ng-if="errorCheckInDateFiller">
-                                {{ errorCheckInDateFiller }}
-                            </span>
-                        </div>
-                        <div class="col-md-2"></div>
+<!--                        <div class="col-md-6"></div>-->
+<!--                        <div class="col-md-4">-->
+<!--                           <span class="text-danger" ng-if="errorCheckInDateFiller">-->
+<!--                                {{ errorCheckInDateFiller }}-->
+<!--                            </span>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-2"></div>-->
                     </div>
                 </div>
 

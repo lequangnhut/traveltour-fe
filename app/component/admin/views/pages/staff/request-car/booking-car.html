@@ -48,6 +48,7 @@
     <div class="mb-4" style="margin: 20px 0 20px 0" ng-if="!isLoading || requestCarList.length > 0">
         <div class="row">
             <div class="col-xl-9">
+                <div class="mb-4 text-center" ng-if="requestCarList.length === 0">Trang không có dữ liệu</div>
                 <div class="card card-customer mb-3" ng-repeat="requestCar in requestCarList track by $index">
                     <div class="mb-30 row">
                         <div class="col-xl-3 col-lg-4 ps-5 pt-3">
@@ -306,6 +307,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 <!-- Modal -->

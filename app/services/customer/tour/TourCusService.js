@@ -19,12 +19,15 @@ travel_app.service('TourCusService', function ($http) {
             params: {
                 page: page || 0,
                 size: size || 10,
-                sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
+                sortBy: sortBy || 'dateCreated',
+                sortDir: sortDir || 'DESC',
                 price: filters.price || null,
                 tourTypeList: filters.tourTypeList || null,
                 checkInDateFiller: filters.checkInDateFiller || null,
-                searchTerm: filters.searchTerm || null,
+                departureArrives: filters.departureArrives || null,
+                departureFrom: filters.departureFrom || null,
+                numberOfPeople: filters.numberOfPeople || null,
+                departure: filters.departure || null,
             }
         });
     };
