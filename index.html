@@ -38,6 +38,7 @@
         <link rel="stylesheet" href="/assets/customers/css/tour/tour-detail.css">
         <link rel="stylesheet" href="/assets/customers/css/visit-location.css">
         <link rel="stylesheet" href="/assets/customers/css/tour/booking-tour.css">
+        <link href="/assets/admin/assets/css/icon.css" type="text/css" rel="stylesheet">
         <link href="/node_modules/mapbox-gl/dist/mapbox-gl.css" type="text/css" rel="stylesheet">
         <link href="/node_modules/owl.carousel/dist/assets/owl.carousel.css" type="text/css" rel="stylesheet">
         <link href="/node_modules/owl.carousel/dist/assets/owl.theme.default.css" type="text/css" rel="stylesheet">
@@ -1188,6 +1189,76 @@
                                     </a>
                                 </div>
                             </div>
+
+                            <div ng-if="hasRole('ROLE_GUIDE')" ng-cloak>
+                                <!-- label-->
+                                <p class="navbar-vertical-label">DANH SÁCH TOUR</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'guide-perfect'}"
+                                       ng-click="setActiveNavItem('guide-perfect')"
+                                       href="/admin/guide-perfect">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <i class="fa-solid fa-circle-check"></i>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Các tour đã đi</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'guide-continuos'}"
+                                       ng-click="setActiveNavItem('guide-continuos')"
+                                       href="/admin/guide-continuous">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <i class="fa-solid fa-person-walking-luggage"></i>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Các tour đang đi</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'guide-future'}"
+                                       ng-click="setActiveNavItem('guide-future')"
+                                       href="/admin/guide-future">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <i class="fa-regular fa-hourglass-half"></i>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Các tour chưa đi</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'guide-cancel'}"
+                                       ng-click="setActiveNavItem('guide-cancel')"
+                                       href="/admin/guide-cancel">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <i class="fa-solid fa-rectangle-xmark"></i>
+                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text">Các tour đã hủy</span>
+                                        </span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -1295,7 +1366,7 @@
                         </div>
                     </li>
 
-                    <li class="nav-item dropdown">
+                    <li  ng-if="!hasRole('ROLE_ADMIN')" class="nav-item dropdown">
                         <a class="nav-link" href="#" style="min-width: 2.5rem" role="button" data-bs-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside">
                             <span data-feather="bell" style="height:20px;width:20px;"></span>
@@ -1855,6 +1926,7 @@
 <script src="app/component/admin/controllers/admin-form/post/TransBrandPostController.js"></script>
 <script src="app/component/admin/controllers/admin-form/post/TransportationPostController.js"></script>
 <script src="app/component/admin/controllers/admin-form/post/VisitPostController.js"></script>
+<script src="app/component/admin/controllers/auth/ChangePassAdminController.js"></script>
 
 <!--====== Controller Staff ======-->
 <script src="app/component/admin/controllers/staff/tour-management/BasicTourControllerAD.js"></script>

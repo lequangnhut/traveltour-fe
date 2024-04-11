@@ -173,7 +173,8 @@ travel_app.controller('MainController',
                 '/sign-in',
                 '/sign-up',
                 '/forgot-password',
-                '/login-admin'
+                '/login-admin',
+                '/admin-forgot-password'
             ];
             // Kiểm tra đường dẫn chứa id phía sau
             if (
@@ -244,6 +245,8 @@ travel_app.controller('MainController',
                 '/admin/page-not-found',
                 '/admin/internal-server-error',
                 '/admin/page-forbidden',
+                '/admin-forgot-password',
+                '/admin-account/forgot-pass',
                 '/business/hotel/home/hotel/create',
                 '/business/transport/home/create-transport',
                 '/business/visit/home/create-visit-location'
@@ -255,7 +258,8 @@ travel_app.controller('MainController',
                 locationPath.includes('/business/transport/home/update-transport/') ||
                 locationPath.includes('/business/visit/home/update-visit-location/') ||
                 locationPath.includes('/admin/information-update/') ||
-                locationPath.includes('/admin/change-password/')
+                locationPath.includes('/admin/change-password/')||
+                locationPath.includes('/admin-account/forgot-pass/')
             ) {
                 return true;
             }
@@ -282,6 +286,8 @@ travel_app.controller('MainController',
                 '/admin/page-not-found',
                 '/admin/internal-server-error',
                 '/admin/page-forbidden',
+                '/admin-forgot-password',
+                '/admin-account/forgot-pass',
                 '/business/hotel/home/hotel/create',
                 '/business/transport/home/create-transport',
                 '/business/visit/home/create-visit-location'
@@ -293,7 +299,8 @@ travel_app.controller('MainController',
                 locationPath.includes('/business/transport/home/update-transport/') ||
                 locationPath.includes('/business/visit/home/update-visit-location/',) ||
                 locationPath.includes('/admin/information-update/') ||
-                locationPath.includes('/admin/change-password/')
+                locationPath.includes('/admin/change-password/')||
+                locationPath.includes('/admin-account/forgot-pass/')
             ) {
                 return {'margin': '0'};
             }
@@ -306,11 +313,20 @@ travel_app.controller('MainController',
          * @returns {boolean}
          */
         $scope.hideHeader = function () {
+            const locationPath = $location.path();
             const hidePaths = [
                 '/admin/page-not-found',
                 '/admin/internal-server-error',
-                '/admin/page-forbidden'
+                '/admin/page-forbidden',
+                '/admin-forgot-password',
+                '/admin-account/forgot-pass'
             ];
+            // Kiểm tra đường dẫn chứa id phía sau
+            if (
+                locationPath.includes('/admin-account/forgot-pass/')
+            ) {
+                return true;
+            }
             return $scope.isActive(hidePaths);
         }
 

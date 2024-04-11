@@ -865,6 +865,26 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
 
         /**
+         * Guide
+         */
+        .when('/admin/guide-perfect', {
+            templateUrl: 'app/component/admin/views/pages/guide/guide-perfect.html',
+            controller: ''
+        })
+        .when('/admin/guide-continuous', {
+            templateUrl: 'app/component/admin/views/pages/guide/guide-continuous.html',
+            controller: ''
+        })
+        .when('/admin/guide-future', {
+            templateUrl: 'app/component/admin/views/pages/guide/guide-future.html',
+            controller: ''
+        })
+        .when('/admin/guide-cancel', {
+            templateUrl: 'app/component/admin/views/pages/guide/guide-cancel.html',
+            controller: ''
+        })
+
+        /**
          * Authentication
          */
         .when('/sign-in', {
@@ -879,6 +899,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/customers/views/pages/password/forgot.html',
             controller: 'ForgotPwController'
         })
+        .when('/admin-forgot-password', {
+            templateUrl: 'app/component/admin/views/pages/password/forgot.html',
+            controller: 'ForgotPwController'
+        })
         .when('/verify-success/:token', {
             templateUrl: 'app/component/customers/views/pages/auth/verify-success.html',
             controller: 'VerifyEmail'
@@ -890,6 +914,14 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/account/forgot-pass/:verifyCode', {
             templateUrl: 'app/component/customers/views/pages/password/new-password.html',
             controller: 'ChangePwController'
+        })
+        .when('/admin-account/forgot-pass', {
+            templateUrl: 'app/component/admin/views/pages/password/failed-time.html',
+            controller: ''
+        })
+        .when('/admin-account/forgot-pass/:verifyCode', {
+            templateUrl: 'app/component/admin/views/pages/password/new-password.html',
+            controller: 'ChangePassAdminController'
         })
         .when('/', {
             redirectTo: '/home'
