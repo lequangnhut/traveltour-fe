@@ -52,7 +52,7 @@
                            ng-class="{ 'is-invalid': customerForm.email.$invalid, 'is-valid': customerForm.email.$valid && !emailError }"
                            ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
                            ng-change="checkDuplicateEmail()"
-                           readonly
+                           readonly disabled
                     >
                     <small class="text-danger"
                            ng-show="customerForm.email.$error.required">
@@ -201,10 +201,8 @@
                         ng-if="!hasRole('ROLE_AGENT_TRANSPORT') || !hasRole('ROLE_AGENT_HOTEL') || !hasRole('ROLE_AGENT_PLACE')">
                     <a class="btn" href="/admin/dashboard">Trở về</a>
                 </button>
-                <button type="submit"
-                        ng-disabled="customerForm.$invalid || emailError || phoneError || cardError"
-                        class="btn btn-submit fw-bold"
-                >
+                <button type="submit" ng-disabled="customerForm.$invalid || emailError || phoneError || cardError"
+                        class="btn btn-submit fw-bold">
                     Cập nhật
                 </button>
             </div>

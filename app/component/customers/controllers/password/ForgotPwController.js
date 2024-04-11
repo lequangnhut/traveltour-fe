@@ -44,4 +44,22 @@ travel_app.controller('ForgotPwController', function ($scope, $location, ForgotP
             $scope.isLoading = false;
         });
     }
+
+    //ADMIN
+    $scope.checkInputEmailAdmin = function () {
+        ForgotPwService.checkEMailAdmin($scope.users.email).then(function successCallback(response) {
+            $scope.emailError = response.data.exists;
+        });
+    };
+
+    $scope.submitFormForgotAdmin = function () {
+        $scope.isLoading = true;
+        ForgotPwService.emailForgotAdmin($scope.users.email, $scope.users)
+            .then(function successCallback(response) {
+                $location.path("/login-admin");
+                centerAlert('Thành công !', 'Mời người dùng kiểm tra mail !', 'success');
+            }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
+    }
 });

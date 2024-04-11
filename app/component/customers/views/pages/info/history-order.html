@@ -196,10 +196,20 @@
                                     <thead>
                                     <tr>
                                         <th scope="col" style="font-weight: 500">#</th>
-                                        <th scope="col" style="font-weight: 500">Mã đơn</th>
+                                        <th ng-click="sortData('id')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Mã đơn
+                                                <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                                            </div>
+                                        </th>
                                         <th scope="col" style="font-weight: 500">Tên tour</th>
-                                        <th scope="col" style="font-weight: 500">Ngày xuất phát</th>
-                                        <th scope="col" style="font-weight: 500">Ngày tạo đơn</th>
+                                        <th scope="col" style="font-weight: 500">
+                                            Ngày xuất phát
+                                        </th>
+                                        <th ng-click="sortData('dateCreated')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Ngày tạo đơn
+                                                <span class="sorting-icon" ng-bind-html="getSortIcon('dateCreated')"></span>
+                                            </div>
+                                        </th>
                                         <th scope="col" style="font-weight: 500">Trạng thái</th>
                                         <th scope="col" style="font-weight: 500">Thao tác</th>
                                     </tr>
@@ -503,10 +513,22 @@
                                     <thead>
                                     <tr>
                                         <th scope="col" style="font-weight: 500">#</th>
-                                        <th scope="col" style="font-weight: 500">Mã đơn</th>
+                                        <th ng-click="sortData('id')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Mã đơn
+                                                <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                                            </div>
+                                        </th>
                                         <th scope="col" style="font-weight: 500">Tên khách sạn</th>
-                                        <th scope="col" style="font-weight: 500">Ngày check-in</th>
-                                        <th scope="col" style="font-weight: 500">Ngày check-out</th>
+                                        <th ng-click="sortData('checkIn')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Ngày check-in
+                                                <span class="sorting-icon" ng-bind-html="getSortIcon('checkIn')"></span>
+                                            </div>
+                                        </th>
+                                        <th ng-click="sortData('checkOut')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Ngày check-out
+                                                <span class="sorting-icon" ng-bind-html="getSortIcon('checkOut')"></span>
+                                            </div>
+                                        </th>
                                         <th scope="col" style="font-weight: 500">Trạng thái</th>
                                         <th scope="col" style="font-weight: 500">Thao tác</th>
                                     </tr>
@@ -858,7 +880,11 @@
                                     <thead>
                                     <tr>
                                         <th scope="col" style="font-weight: 500">#</th>
-                                        <th scope="col" style="font-weight: 500">Mã đơn</th>
+                                        <th ng-click="sortData('id')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Mã đơn
+                                                <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                                            </div>
+                                        </th>
                                         <th scope="col" style="font-weight: 500">Chuyến xe</th>
                                         <th scope="col" style="font-weight: 500">Bắt đầu</th>
                                         <th scope="col" style="font-weight: 500">Kết thúc</th>
@@ -1187,10 +1213,22 @@
                                     <thead>
                                     <tr>
                                         <th scope="col" style="font-weight: 500">#</th>
-                                        <th scope="col" style="font-weight: 500">Mã đơn</th>
+                                        <th ng-click="sortData('id')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Mã đơn
+                                                <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                                            </div>
+                                        </th>
                                         <th scope="col" style="font-weight: 500">Địa danh</th>
-                                        <th scope="col" style="font-weight: 500">Ngày check-in</th>
-                                        <th scope="col" style="font-weight: 500">Ngày tạo đơn</th>
+                                        <th ng-click="sortData('checkIn')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Ngày check-in
+                                                <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                                            </div>
+                                        </th>
+                                        <th ng-click="sortData('dateCreated')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Ngày tạo đơn
+                                                <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                                            </div>
+                                        </th>
                                         <th scope="col" style="font-weight: 500">Trạng thái</th>
                                         <th scope="col" style="font-weight: 500">Thao tác</th>
                                     </tr>
