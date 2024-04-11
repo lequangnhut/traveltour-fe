@@ -1,5 +1,5 @@
 travel_app.controller('TransportCusController',
-    function ($scope, $filter, $location, MapBoxService, TransportCusService, TransportationBrandServiceAD, TransportationTypeServiceAD) {
+    function ($scope, $filter, $location, MapBoxService, TransportCusService, LocalStorageService, TransportationBrandServiceAD, TransportationTypeServiceAD) {
         mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
         $scope.currentPage = 0;
@@ -58,6 +58,7 @@ travel_app.controller('TransportCusController',
             }), fetchData(TransportationTypeServiceAD.getAllTransportationTypes, (repo) => {
                 $scope.transportationTypeList = repo;
             }), fetchData(TransportCusService.getAllTransportCusDataList, (repo) => {
+                if (repo === null) return;
                 $scope.transportationDataList = repo.uniqueDataList;
                 $scope.filteredDataList = $scope.transportationDataList.slice(0, 5);
                 $scope.$watch('filters.searchTerm', function (newVal) {
@@ -305,6 +306,9 @@ travel_app.controller('TransportCusController',
 
         $scope.filterAllTransportCus = () => {
             $scope.isLoading = true;
+
+            LocalStorageService.encryptLocalData($scope.filters, 'filtersTransportation', 'encryptFiltersTransportation');
+
             fetchData(TransportCusService.findAllTransportCustomerByFilters.bind(null, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.filters), (response) => {
                 dataList(response);
                 if (response === null) {

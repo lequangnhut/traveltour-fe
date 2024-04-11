@@ -1,6 +1,6 @@
-travel_app.controller('TourCusController', function ($scope, $location, $filter, TourCusService, TourDetailCusService, MapBoxService, ToursServiceAD) {
+travel_app.controller('TourCusController', function ($scope, $location, $filter, LocalStorageService, TourCusService, TourDetailCusService, MapBoxService, ToursServiceAD) {
     $scope.currentPage = 0;
-    $scope.pageSize = 9;
+    $scope.pageSize = 10;
 
     $scope.showMoreTourType = false;
     $scope.limitTourType = 5;
@@ -15,11 +15,21 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
         {id: 5, label: 'Trên 5 sao'}
     ];
 
-    $scope.filters = {
+    let filters = LocalStorageService.decryptLocalData('filtersTour', 'encryptFiltersTour');
+
+    let defaultFilters = {
         price: 15000000,
         tourTypeList: [],
-        checkInDateFiller: new Date(),
-        searchTerm: null,
+        departureArrives: null,
+        departureFrom: null,
+        numberOfPeople: 2,
+        departure: new Date()
+    };
+
+    $scope.filters = filters ? { ...defaultFilters, ...filters } : defaultFilters;
+
+    if (typeof $scope.filters.departure === 'string') {
+        $scope.filters.departure = new Date($scope.filters.departure);
     }
 
     function errorCallback() {
@@ -38,26 +48,67 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
         }
     };
 
+    $scope.getCurrentDate = () => {
+        let currentDate = new Date();
+        const year = currentDate.getFullYear();
+        let month = currentDate.getMonth() + 1;
+        let day = currentDate.getDate();
+
+        if (month < 10) {
+            month = '0' + month;
+        }
+        if (day < 10) {
+            day = '0' + day;
+        }
+
+        return year + '-' + month + '-' + day;
+    };
+
+    $scope.checkDate = () => {
+        const currentDate = new Date();
+        if ($scope.filters.departure === undefined) {
+            $scope.filters.departure = currentDate;
+            toastAlert('warning', 'Không được nhập ngày quá khứ!');
+        }
+    };
+
+    $scope.onQuantityChange = (filters) => {
+        filters.numberOfPeople = parseInt(filters.numberOfPeople, 10) || 0;
+        if (filters.numberOfPeople > 999) {
+            filters.numberOfPeople = 999;
+        }
+    };
+
+    $scope.onQuantityBlur = (filters) => {
+        if (filters.numberOfPeople === null || filters.numberOfPeople === '' || filters.numberOfPeople < 1) {
+            filters.numberOfPeople = 1;
+        }
+    };
+
     $scope.init = function () {
         $scope.isLoading = true;
 
-        TourCusService.findAllTourDetailCustomer($scope.currentPage, $scope.pageSize).then(function (response) {
-            if (response.status === 200) {
-                $scope.tourDetail = response.data.data.content;
+        TourCusService.findAllTourDetailCustomerByFilters($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.filters)
+            .then((response) => {
+                if (response.status === 200) {
+                    $scope.tourDetail = response.data.data !== null ? response.data.data.content : [];
+                    $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
+                    $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
 
-                $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                $scope.totalElements = response.data.data.totalElements;
+                    if (response.data.status === '204') {
+                        toastAlert('warning', 'Không tìm thấy dữ liệu !');
+                        return
+                    }
+                    angular.forEach($scope.tourDetail, function (detail) {
+                        let departureDate = new Date(detail.departureDate);
+                        let arrivalDate = new Date(detail.arrivalDate);
 
-                angular.forEach($scope.tourDetail, function (detail) {
-                    let departureDate = new Date(detail.departureDate);
-                    let arrivalDate = new Date(detail.arrivalDate);
-
-                    detail.numberOfDays = Math.ceil((arrivalDate - departureDate) / (1000 * 60 * 60 * 24));
-                });
-            } else {
-                $location.path('/admin/page-not-found')
-            }
-        }, errorCallback).finally(function () {
+                        detail.numberOfDays = Math.ceil((arrivalDate - departureDate) / (1000 * 60 * 60 * 24));
+                    });
+                } else {
+                    $location.path('/admin/page-not-found')
+                }
+            }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
 
@@ -397,7 +448,6 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
 
     $scope.showCallTourModal = function () {
         ToursServiceAD.findAllToursSelect().then(function (response) {
-            console.log(response)
             $scope.tourBasicList = response.data.data;
         }, errorCallback);
         $('#formTourModal').modal('show');

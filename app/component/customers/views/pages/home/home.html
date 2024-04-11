@@ -22,26 +22,38 @@
         <div class="booking-form-wrapper p-r z-2">
             <form class="booking-form-two">
                 <div class="form_group">
-                    <span>Điểm đi</span>
-                    <label><span class="fas fa-plane-departure"></span></label>
-                    <input type="text" class="form_control datepicker" placeholder="Điểm đi">
-                </div>
-                <div class="form_group">
-                    <span>Điểm đến</span>
+                    <span>Khởi hành đến</span>
                     <label><span class="fas fa-plane-arrival"></span></label>
-                    <input type="text" class="form_control datepicker" placeholder="Điểm đến">
+                    <input list="datalistOptionDepartureArrives" ng-model="filters.departureArrives" type="text"
+                           class="form_control datepicker" style="padding-right: 50px;" placeholder="Bạn muốn đi đâu?">
+                    <datalist id="datalistOptionDepartureArrives">
+                        <option ng-repeat="departureArrive in departureArrives"
+                                value="{{departureArrive}}">
+                    </datalist>
                 </div>
                 <div class="form_group">
-                    <span>Khách hàng</span>
+                    <span>Điểm khởi hành</span>
+                    <label><span class="fas fa-plane-departure"></span></label>
+                    <input list="datalistOptionDepartureFrom" ng-model="filters.departureFrom" type="text"
+                           class="form_control datepicker" style="padding-right: 50px;" placeholder="Điểm đến">
+                    <datalist id="datalistOptionDepartureFrom">
+                        <option ng-repeat="df in departureFrom"
+                                value="{{df}}">
+                    </datalist>
+                </div>
+                <div class="form_group">
+                    <span>Số người</span>
                     <label><span class="fas fa-user"></span></label>
-                    <input type="text" class="form_control" placeholder="Khách hàng" name="text">
+                    <input ng-model="filters.numberOfPeople" type="text" class="form_control" placeholder="Số khách hàng"
+                           ng-change="onQuantityChange(filters)" ng-blur="onQuantityBlur(filters)" min="1"
+                           oninput="validity.valid||(value='');">
                 </div>
                 <div class="form_group">
                     <span>Ngày đi</span>
-                    <input type="date" class="form_control" placeholder="Ngày đi" name="text">
+                    <input ng-model="filters.departure" type="date" class="form_control" placeholder="Ngày đi" min="{{getCurrentDate()}}"/>
                 </div>
                 <div class="form_group">
-                    <button class="booking-btn" type="submit">Xác nhận
+                    <button class="booking-btn" ng-click="filterAllTour()" type="submit">Xác nhận
                         <span class="fas fa-angle-double-right"></span>
                     </button>
                 </div>

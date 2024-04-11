@@ -34,7 +34,7 @@ travel_app.service('TransportCusService', function ($http) {
                 page: page || 0,
                 size: size || 10,
                 sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
+                sortDir: sortDir || 'DESC',
                 price: filters.price || null,
                 listOfVehicleManufacturers: filters.listOfVehicleManufacturers || null,
                 mediaTypeList: filters.mediaTypeList || null,
@@ -53,13 +53,19 @@ travel_app.service('TransportCusService', function ($http) {
         });
     };
 
-    this.findAllTransportScheduleCus = function (page, size, brandId) {
+    this.findAllTransportScheduleCus = function (page, size, filters, brandId) {
         return $http({
             method: 'GET',
             url: API_TRANSPORT + 'find-all-transport-schedule/' + brandId,
             params: {
                 page: page || 0,
                 size: size || 10,
+                price: filters.price || null,
+                listOfVehicleManufacturers: filters.listOfVehicleManufacturers || null,
+                mediaTypeList: filters.mediaTypeList || null,
+                fromLocation: filters.fromLocation || null,
+                toLocation: filters.toLocation || null,
+                checkInDateFiller: filters.checkInDateFiller || null,
             }
         });
     };

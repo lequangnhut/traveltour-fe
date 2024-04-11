@@ -50,7 +50,7 @@ travel_app.controller('RequestCarControllerAD',
                         return
                     }
 
-                    $scope.requestCarList = response.data.data.content;
+                    $scope.requestCarList = response.data.data !== null ? response.data.data.content : [];
                     $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                 }).finally(() => {
                 $scope.isLoading = false;

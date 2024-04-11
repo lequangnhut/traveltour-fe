@@ -1,6 +1,13 @@
-travel_app.controller('HomeCusController', function ($scope, $window, $location, HomeCusService, AuthService, NotificationService) {
+travel_app.controller('HomeCusController', function ($scope, $window, $location, LocalStorageService, HomeCusService, AuthService, NotificationService) {
     $scope.currentPage = 0;
-    $scope.pageSize = 10;
+    $scope.pageSize = 9;
+
+    $scope.filters = {
+        departureArrives: null,
+        departureFrom: null,
+        numberOfPeople: 2,
+        departure: new Date()
+    }
 
     function errorCallback() {
         $location.path('/admin/internal-server-error')
@@ -25,19 +32,84 @@ travel_app.controller('HomeCusController', function ($scope, $window, $location,
         AuthService.userLoginGoogle().then(function (response) {
             if (response.status === 200) {
                 let user = response.data.data;
-                let roles = response.data.data.roles;
-
-                for (let i = 0; i < roles.length; i++) {
-                    if (roles[i].nameRole !== 'ROLE_CUSTOMER') {
-                        toastAlert('warning', 'Không đủ quyền truy cập !');
-                    } else {
-                        AuthService.setAuthData('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuaHV0LnRoYW50aGllbjE3QGdtYWlsLmNvbSIsInJvbGVzIjpbIlJPTEVfQ1VTVE9NRVIiXSwiaWF0IjoxNzEwMjg2NDMzLCJleHAiOjE3MTAzMjI0MzN9.WlVSDbXUTzhszu_K8KOzsAMikSb7tzMCSg3Qu0JvXpI', user);
-                        $window.location.href = '/home';
-                        NotificationService.setNotification('success', 'Đăng nhập thành công !');
+                if (user !== null) {
+                    let roles = response.data.data.roles;
+                    for (let i = 0; i < roles.length; i++) {
+                        if (roles[i].nameRole !== 'ROLE_CUSTOMER') {
+                            toastAlert('warning', 'Không đủ quyền truy cập !');
+                        } else {
+                            AuthService.setAuthData('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuaHV0LnRoYW50aGllbjE3QGdtYWlsLmNvbSIsInJvbGVzIjpbIlJPTEVfQ1VTVE9NRVIiXSwiaWF0IjoxNzEwMjg2NDMzLCJleHAiOjE3MTAzMjI0MzN9.WlVSDbXUTzhszu_K8KOzsAMikSb7tzMCSg3Qu0JvXpI', user);
+                            $window.location.href = '/home';
+                            NotificationService.setNotification('success', 'Đăng nhập thành công !');
+                        }
                     }
                 }
             }
         }, errorCallback);
+
+        HomeCusService.getAllDataList().then((response) => {
+            if (response.status === 200) {
+                const updateLists = (newVal) => {
+                    let filteredArrives = response.data.data.departureArrives;
+                    let filteredFrom = response.data.data.departureFrom;
+                    if (newVal && newVal.trim() !== '') {
+                        filteredArrives = $filter('filter')(filteredArrives, newVal);
+                        filteredFrom = $filter('filter')(filteredFrom, newVal);
+                    }
+                    $scope.departureArrives = filteredArrives.slice(0, 5);
+                    $scope.departureFrom = filteredFrom.slice(0, 5);
+                };
+
+                $scope.$watch('filters.searchTerm', updateLists);
+
+                updateLists();
+
+            } else {
+                $location.path('/admin/page-not-found')
+            }
+        }, errorCallback);
+    }
+
+    $scope.getCurrentDate = () => {
+        let currentDate = new Date();
+        const year = currentDate.getFullYear();
+        let month = currentDate.getMonth() + 1;
+        let day = currentDate.getDate();
+
+        if (month < 10) {
+            month = '0' + month;
+        }
+        if (day < 10) {
+            day = '0' + day;
+        }
+
+        return year + '-' + month + '-' + day;
+    };
+
+    $scope.onQuantityChange = (filters) => {
+        filters.numberOfPeople = parseInt(filters.numberOfPeople, 10) || 0;
+        if (filters.numberOfPeople > 999) {
+            filters.numberOfPeople = 999;
+        }
+    };
+
+    $scope.onQuantityBlur = (filters) => {
+        if (filters.numberOfPeople === null || filters.numberOfPeople === '' || filters.numberOfPeople < 1) {
+            filters.numberOfPeople = 1;
+        }
+    };
+
+    $scope.filterAllTour = () => {
+
+        if ($scope.filters.departureArrives === null) {
+            centerAlert('Thông báo !', 'Vui lòng nhập nơi muốn đến !', 'warning');
+            return;
+        } else if ($scope.filters.departure === undefined) {
+            centerAlert('Thông báo !', 'Không được nhập ngày quá khứ!', 'warning');
+            return;
+        }
+        LocalStorageService.encryptLocalData($scope.filters, 'filtersTour', 'encryptFiltersTour');
+        $location.path('/tours');
     }
 
     /**
