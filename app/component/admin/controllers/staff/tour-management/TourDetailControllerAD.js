@@ -728,4 +728,9 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
 
         confirmAlert('Bạn có chắc chắn muốn xóa tour ' + tourDetailId + ' không ?', confirmDeleteTour);
     }
+
+    $scope.openImageModalTourDetail = (imageUrl) => {
+        document.getElementById('modalImage').src = imageUrl;
+        $('#imageModal').modal('show');
+    };
 });

@@ -101,6 +101,10 @@
                             <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
+                    <th>
+                        <div class="icon-left">Ảnh
+                        </div>
+                    </th>
                     <th class="cursor-pointer" ng-click="sortData('tourId')">
                         <div class="icon-left">Tên tour
                             <span class="sorting-icon" ng-bind-html="getSortIcon('tourId')"></span>
@@ -138,10 +142,15 @@
                 <tr ng-repeat="tourDetail in tourDetailList">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ tourDetail.id }}</td>
+                    <td>
+                        <img ng-src="{{tourDetail.tourDetailImagesById[0].tourDetailImg}}" class="cursor-pointer" alt="avatar"
+                             width="55" height="30" title="Xem ảnh xe" ng-click="openImageModalTourDetail(tourDetail.tourDetailImagesById[0].tourDetailImg)"
+                             onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
+                    </td>
                     <td>{{ tourDetail.toursByTourId.tourName }}</td>
                     <td>{{ tourDetail.numberOfGuests }}</td>
                     <td>{{ tourDetail.fromLocation }}</td>
-                    <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
+                    <td class="text-truncate" style="max-width: 130px;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="{{ tourDetail.toLocation }}">
                         {{ tourDetail.toLocation }}
                     </td>
@@ -395,6 +404,22 @@
                         ng-click="deleteTourDetail(tourDetail.id)">Xóa
                 </button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Ảnh tour chi tiết</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" class="img-fluid"
+                     onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
             </div>
         </div>
     </div>

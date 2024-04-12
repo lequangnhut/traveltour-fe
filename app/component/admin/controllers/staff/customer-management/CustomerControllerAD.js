@@ -1,9 +1,5 @@
 travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $location, $rootScope, $routeParams, $timeout, $http, Base64ObjectService, CustomerServiceAD, AuthService, LocalStorageService) {
     $scope.isLoading = true;
-
-    const fileName = "default.jpg";
-    const mimeType = "image/jpeg";
-
     $scope.hasImage = false;
 
     $scope.customer = {
@@ -19,8 +15,6 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
         isActive: null
     }
 
-
-    $scope.customerList = [];
     $scope.currentPage = 0;
     $scope.pageSize = 5;
 
@@ -237,12 +231,6 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
         });
     };
 
-    const urlToFile = (url, fileName, mimeType) => {
-        return fetch(url)
-            .then(response => response.blob())
-            .then(blob => new File([blob], fileName, {type: mimeType}));
-    }
-
     //form update
     $scope.updateCustomerSubmit = () => {
         function confirmUpdate() {
@@ -254,11 +242,9 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
                 dataCustomer.append("customerAvatar", $scope.customerAvatarNoCloud);
                 updateCustomer(customerId, dataCustomer);
             } else {
-                urlToFile($scope.customer.avatar, fileName, mimeType).then(file => {
-                    dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
-                    dataCustomer.append("customerAvatar", file);
-                    updateCustomer(customerId, dataCustomer);
-                }, errorCallback);
+                dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
+                dataCustomer.append("customerAvatar", null);
+                updateCustomer(customerId, dataCustomer);
             }
         }
 

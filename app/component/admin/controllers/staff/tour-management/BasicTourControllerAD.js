@@ -1,14 +1,9 @@
 travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location, $routeParams, $timeout, ToursServiceAD, ToursTypeServiceAD) {
     $scope.isLoading = true;
-
-    const fileName = "default.jpg";
-    const mimeType = "image/jpeg";
-
     $scope.hasImage = false;
 
-    $scope.tourBasicList = []; // Biến để lưu danh sách tours
-    $scope.currentPage = 0; // Trang hiện tại
-    $scope.pageSize = 5; // Số lượng tours trên mỗi trang
+    $scope.currentPage = 0;
+    $scope.pageSize = 5;
 
 
     // Đối tượng tourBasic mới cho form tour
@@ -194,12 +189,6 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location
         });
     };
 
-    const urlToFile = (url, fileName, mimeType) => {
-        return fetch(url)
-            .then(response => response.blob())
-            .then(blob => new File([blob], fileName, {type: mimeType}));
-    }
-
     //form update
     $scope.updateTourSubmit = () => {
         const confirmUpdate = () => {
@@ -211,11 +200,9 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location
                 dataTour.append("tourImg", $scope.tourImgNoCloud);
                 updateTour(tourId, dataTour);
             } else {
-                urlToFile($scope.tourBasic.tourImg, fileName, mimeType).then(file => {
-                    dataTour.append("toursDto", new Blob([JSON.stringify($scope.tourBasic)], {type: "application/json"}));
-                    dataTour.append("tourImg", file);
-                    updateTour(tourId, dataTour);
-                }, errorCallback);
+                dataTour.append("toursDto", new Blob([JSON.stringify($scope.tourBasic)], {type: "application/json"}));
+                dataTour.append("tourImg", null);
+                updateTour(tourId, dataTour);
             }
         }
 
@@ -231,7 +218,6 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location
         });
     }
 
-
     //delete
     /**
      * Gọi api delete tour
@@ -246,4 +232,9 @@ travel_app.controller('BasicTourControllerAD', function ($scope, $sce, $location
 
         confirmAlert('Bạn có chắc chắn muốn xóa tour ' + tourName + ' không ?', confirmDeleteTour);
     }
+
+    $scope.openImageModalTour = (imageUrl) => {
+        document.getElementById('modalImage').src = imageUrl;
+        $('#imageModal').modal('show');
+    };
 });

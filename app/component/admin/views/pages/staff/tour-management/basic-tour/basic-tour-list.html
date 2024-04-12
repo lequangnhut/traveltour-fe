@@ -100,6 +100,10 @@
                             <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
+                    <th>
+                        <div class="icon-left">Ảnh
+                        </div>
+                    </th>
                     <th class="cursor-pointer" ng-click="sortData('tourName')">
                         <div class="icon-left">
                             Tên tour
@@ -125,6 +129,11 @@
                 <tr ng-repeat="tour in tourBasicList">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ tour.id }}</td>
+                    <td>
+                        <img ng-src="{{tour.tourImg}}" class="cursor-pointer" alt="avatar"
+                             width="60" height="35" title="Xem ảnh xe" ng-click="openImageModalTour(tour.tourImg)"
+                             onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
+                    </td>
                     <td>{{ tour.tourName }}</td>
                     <td>{{ tourTypeNames[tour.tourTypeId] || 'Đang tải...' }}</td>
                     <td>{{ tour.dateCreated | vietnameseDateTime }}</td>
@@ -153,3 +162,18 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Ảnh tour</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" class="img-fluid"
+                onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
+            </div>
+        </div>
+    </div>
+</div>
