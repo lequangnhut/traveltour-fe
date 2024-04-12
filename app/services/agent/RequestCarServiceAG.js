@@ -47,6 +47,16 @@ travel_app.service('RequestCarServiceAG', function ($http) {
         });
     }
 
+    this.findCarIsSubmittedServiceAgent = function (transportationScheduleId) {
+        return $http({
+            method: 'GET',
+            url: API_REQUEST_CAR + 'find-car-is-submitted',
+            params: {
+                transportationScheduleId: transportationScheduleId
+            }
+        });
+    }
+
     this.findAllTransportScheduleServiceByBrandId = function (transportBrandId) {
         return $http({
             method: 'GET',
@@ -62,12 +72,13 @@ travel_app.service('RequestCarServiceAG', function ($http) {
         })
     }
 
-    this.cancelRequestCarDetail = function (requestCarDetailId) {
+    this.cancelRequestCarDetail = function (requestCarDetailId, transportationScheduleId) {
         return $http({
             method: 'POST',
             url: API_REQUEST_CAR + 'cancel-request-car-to-staff',
             params: {
-                requestCarDetailId: requestCarDetailId
+                requestCarDetailId: requestCarDetailId,
+                transportationScheduleId: transportationScheduleId
             }
         })
     }

@@ -1,5 +1,5 @@
 travel_app.controller('SelectCarControllerAG',
-    function ($scope, $location, $filter, $routeParams, TransportServiceAG, RequestCarServiceAG, TourDetailsServiceAD, LocalStorageService, Base64ObjectService) {
+    function ($scope, $location, $filter, $routeParams, TransportServiceAG, TransportationScheduleServiceAD, RequestCarServiceAG, TourDetailsServiceAD, LocalStorageService, Base64ObjectService) {
         $scope.brandId = LocalStorageService.get('brandId');
         $scope.requestCarId = Base64ObjectService.decodeObject($routeParams.requestCarId);
 
@@ -38,9 +38,29 @@ travel_app.controller('SelectCarControllerAG',
             });
 
             /**
+             * API tìm kiếm tour detail để fill thông tin lên cho doanh nghiệp xem để tìm xe thích hợp
+             */
+            RequestCarServiceAG.findRequestCarByIdServiceAgent($scope.requestCarId).then(function (response) {
+                if (response.status === 200) {
+                    let tourDetailId = response.data.data.tourDetailId;
+                    $scope.requestCar = response.data.data;
+
+                    TourDetailsServiceAD.findTourDetailById(tourDetailId).then(function (response) {
+                        if (response.status === 200) {
+                            $scope.tourDetail = response.data.data;
+                        } else {
+                            $location.path('/admin/page-not-found');
+                        }
+                    });
+                } else {
+                    $location.path('/admin/page-not-found');
+                }
+            });
+
+            /**
              * Phương thức mở modal chọn xe
              */
-            $scope.openModal = function (transportId) {
+            $scope.openModal = function (transportId, transportationScheduleId) {
                 $('#modal-transport-detail').modal('show');
                 $scope.transportation = {};
                 $scope.transportUtilityModal = [];
@@ -68,22 +88,23 @@ travel_app.controller('SelectCarControllerAG',
                             $location.path('/admin/page-not-found');
                         }
                     });
+                }
 
+                if (transportationScheduleId !== undefined && transportationScheduleId !== null && transportationScheduleId !== "") {
                     /**
-                     * API tìm kiếm tour detail để fill thông tin lên cho doanh nghiệp xem để tìm xe thích hợp
+                     * API tìm kiếm xe đã được duyệt hồ sơ hay chưa
                      */
-                    RequestCarServiceAG.findRequestCarByIdServiceAgent($scope.requestCarId).then(function (response) {
+                    RequestCarServiceAG.findCarIsSubmittedServiceAgent(transportationScheduleId).then(function (response) {
                         if (response.status === 200) {
-                            let tourDetailId = response.data.data.tourDetailId;
-                            $scope.requestCar = response.data.data;
+                            $scope.isSubmiited = response.data.data;
+                        } else {
+                            $location.path('/admin/page-not-found');
+                        }
+                    });
 
-                            TourDetailsServiceAD.findTourDetailById(tourDetailId).then(function (response) {
-                                if (response.status === 200) {
-                                    $scope.tourDetail = response.data.data;
-                                } else {
-                                    $location.path('/admin/page-not-found');
-                                }
-                            });
+                    TransportationScheduleServiceAD.findById(transportationScheduleId).then(function (response) {
+                        if (response.status === 200) {
+                            $scope.transportationSchedule = response.data.data;
                         } else {
                             $location.path('/admin/page-not-found');
                         }

@@ -146,19 +146,19 @@
             <div class="col-6">
                 <label class="form-label" for="is-accepted">Trạng thái yêu cầu</label>
                 <select class="form-control"
-                        name="isAccepted"
-                        ng-model="requestCar.isAccepted"
-                        ng-class="{ 'is-invalid': formBookingCar.isAccepted.$invalid && formBookingCar.isAccepted.$touched,
-                                    'is-valid': formBookingCar.isAccepted.$valid && formBookingCar.isAccepted.$touched }"
+                        name="isActive"
+                        ng-model="requestCar.isActive"
+                        ng-class="{ 'is-invalid': formBookingCar.isActive.$invalid && formBookingCar.isActive.$touched,
+                                    'is-valid': formBookingCar.isActive.$valid && formBookingCar.isActive.$touched }"
                         id="is-accepted"
                         required
                 >
                     <option value="" disabled selected>Chọn loại chổ ngồi</option>
-                    <option value="false" ng-selected="requestCar.isAccepted === false">Đang yêu cầu</option>
-                    <option value="true" ng-selected="requestCar.isAccepted === true">Khóa yêu cầu</option>
+                    <option value="true" ng-selected="requestCar.isActive === true">Mở yêu cầu</option>
+                    <option value="false" ng-selected="requestCar.isActive === false">Khóa yêu cầu</option>
                 </select>
                 <small class="text-danger"
-                       ng-show="formBookingCar.isAccepted.$touched && formBookingCar.isAccepted.$error.required">
+                       ng-show="formBookingCar.isActive.$touched && formBookingCar.isActive.$error.required">
                     Vui lòng chọn trạng thái yêu cầu !
                 </small>
             </div>

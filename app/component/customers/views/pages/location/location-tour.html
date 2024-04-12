@@ -1,23 +1,33 @@
 <!--====== Start Breadcrumb Section ======-->
-<section class="page-banner overlay pt-170 pb-170 bg_cover"
-         style="background-image: url(/assets/customers/images/bg/banner-1.jpg);">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="page-banner-content text-center text-white">
-                    <h1 class="page-title">Địa Điểm Tham Quan</h1>
-                    <ul class="breadcrumb-link text-white">
-                        <li><a href="/home">Trang chủ</a></li>
-                        <li class="active">Tham quan</li>
-                    </ul>
-                </div>
+<section class="page-banner overlay bg_cover">
+    <div id="carousel-tour" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/assets/customers/images/background-banner/tour-6.png" class="d-block w-100"
+                     style="height: 500px" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="/assets/customers/images/background-banner/tour-5.png" class="d-block w-100"
+                     style="height: 500px" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="/assets/customers/images/background-banner/tour-1.png" class="d-block w-100"
+                     style="height: 500px" alt="...">
             </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-tour" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel-tour" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
 </section><!--====== End Breadcrumb Section ======-->
 
 <!--====== Start Blog Section ======-->
-<section class="blog-list-section pt-100 pb-70">
+<section class="blog-list-section pt-50 pb-100">
     <div class="container">
         <!--====== Products Filter ======-->
         <div class="page-item-filter mb-40 wow fadeInUp">
@@ -113,23 +123,7 @@
 
             <div class="col-xl-3 col-md-12">
                 <div class="single-event-item mb-30 wow fadeInUp">
-                    <!--=== Search Widget ===-->
-                    <div class="sidebar-widget-area">
-                        <div class="sidebar-widget search-widget mb-30 wow fadeInUp p-0">
-                            <input type="text" list="datalistOptionsLocation"
-                                   class="form-control"
-                                   id="locationFilter"
-                                   ng-model="filters.searchTerm"
-                                   placeholder="Tìm kiếm...">
-                            <datalist id="datalistOptionsLocation">
-                                <option ng-repeat="visitLocationData in filteredDataList"
-                                        value="{{visitLocationData}}">
-                            </datalist>
-                        </div>
-
-                    </div><!--=== Search Widget ===-->
-
-                    <div class="img-holder position-relative">
+                    <div class="img-holder position-relative mb-30">
                         <img src="/assets/customers/images/hotel/map-image-customer.png" alt="map-image-customer.png">
 
                         <button type="button"
@@ -141,8 +135,22 @@
                         </button>
                     </div>
 
-                    <div class="content">
+                    <!--=== Search Widget ===-->
+                    <div class="sidebar-widget-area">
+                        <div class="sidebar-widget search-widget wow fadeInUp p-0">
+                            <input type="text" list="datalistOptionsLocation"
+                                   class="form-control"
+                                   id="locationFilter"
+                                   ng-model="filters.searchTerm"
+                                   placeholder="Tìm kiếm...">
+                            <datalist id="datalistOptionsLocation">
+                                <option ng-repeat="visitLocationData in filteredDataList"
+                                        value="{{visitLocationData}}">
+                            </datalist>
+                        </div>
+                    </div><!--=== Search Widget ===-->
 
+                    <div class="content">
                         <div class="find-item mb-3">
                             <p class="fw-medium">Ngân sách của bạn</p>
                             <div class="findHotelType">
@@ -230,27 +238,28 @@
 
 <!--====== Start CTA Section ======-->
 <section class="cta-bg overlay bg_cover pt-150 pb-150"
-         style="background-image: url(/assets/customers/images/bg/cta-bg2.jpg);">
+         style="background-image: url(/assets/customers/images/background-banner/tour-6.png);">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-xl-7 col-lg-8">
                 <!--=== CTA Content Box ===-->
                 <div class="cta-content-box text-white wow fadeInLeft">
-                    <h2 class="mb-35">Bạn đã sẵn sàng cho chuyến du lịch của mình!</h2>
-                    <a href="" class="main-btn primary-btn">Để Lại thông tin
+                    <h2 class="mb-35">Bạn đã sẵn sàng cho chuyến du lịch của mình chưa ?</h2>
+                    <button href="/tour" class="main-btn primary-btn">Đặt tour ngay
                         <svg class="svg-inline--fa fa-paper-plane" aria-hidden="true" focusable="false"
                              data-prefix="fas" data-icon="paper-plane" role="img"
                              xmlns="http://www.w3.org/2000/svg" viewBox="-50 -23 680 520" data-fa-i2svg="">
                             <path fill="currentColor"
                                   d="M511.6 36.86l-64 415.1c-1.5 9.734-7.375 18.22-15.97 23.05c-4.844 2.719-10.27 4.097-15.68 4.097c-4.188 0-8.319-.8154-12.29-2.472l-122.6-51.1l-50.86 76.29C226.3 508.5 219.8 512 212.8 512C201.3 512 192 502.7 192 491.2v-96.18c0-7.115 2.372-14.03 6.742-19.64L416 96l-293.7 264.3L19.69 317.5C8.438 312.8 .8125 302.2 .0625 289.1s5.469-23.72 16.06-29.77l448-255.1c10.69-6.109 23.88-5.547 34 1.406S513.5 24.72 511.6 36.86z"></path>
                         </svg>
-                    </a>
+                    </button>
                 </div>
             </div>
             <div class="col-xl-5 col-lg-4">
                 <div class="play-box text-lg-end text-center wow fadeInRight">
-                    <a href="https://www.youtube.com/watch?v=ibuUmMhD2Pg" class="video-popup"><span
-                            class="fas fa-play"></span></a>
+                    <a href="https://www.youtube.com/watch?v=Au6LqK1UH8g" class="video-popup">
+                        <span class="fas fa-play"></span>
+                    </a>
                 </div>
             </div>
         </div>

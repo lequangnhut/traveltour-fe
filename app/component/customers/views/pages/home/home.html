@@ -1,6 +1,6 @@
 <!--====== Start Breadcrumb Section ======-->
 <section class="page-banner overlay pt-170 pb-220 bg_cover"
-         style="background-image: url(/assets/customers/images/bg/page-bg-1.png);">
+         style="background-image: url(/assets/customers/images/background-banner/tour-9.png);">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-10">
@@ -44,13 +44,15 @@
                 <div class="form_group">
                     <span>Số người</span>
                     <label><span class="fas fa-user"></span></label>
-                    <input ng-model="filters.numberOfPeople" type="text" class="form_control" placeholder="Số khách hàng"
+                    <input ng-model="filters.numberOfPeople" type="text" class="form_control"
+                           placeholder="Số khách hàng"
                            ng-change="onQuantityChange(filters)" ng-blur="onQuantityBlur(filters)" min="1"
                            oninput="validity.valid||(value='');">
                 </div>
                 <div class="form_group">
                     <span>Ngày đi</span>
-                    <input ng-model="filters.departure" type="date" class="form_control" placeholder="Ngày đi" min="{{getCurrentDate()}}"/>
+                    <input ng-model="filters.departure" type="date" class="form_control" placeholder="Ngày đi"
+                           min="{{getCurrentDate()}}"/>
                 </div>
                 <div class="form_group">
                     <button class="booking-btn" ng-click="filterAllTour()" type="submit">Xác nhận
@@ -106,7 +108,7 @@
                             </p>
                             <p class="price">
                                 <span class="far fa-money-bill-alt"></span>
-                                Giá từ: <span class="fw-medium">{{ detail.unitPrice | vnCurrency }}</span>
+                                Giá chỉ từ: <span class="fw-medium">{{ detail.unitPrice | vnCurrency }}</span>
                             </p>
                             <div class="meta">
                                 <span>
@@ -123,7 +125,12 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-xl-4 col-md-6 col-sm-12 places-column" ng-if="tourDetail.length <= 0">
+                Hiện tại chúng tôi chưa có tour.
+            </div>
         </div>
+
         <div class="row">
             <div class="col-lg-12">
                 <!--=== Gowilds Pagination ===-->
@@ -457,25 +464,23 @@
                         <div class="tab-pane fade" id="tab6">
                             <div class="row align-items-center">
                                 <div class="col-md-6">
-                                    <!--=== Activity Cotent Box ===-->
+                                    <!--=== Activity Content Box ===-->
                                     <div class="activity-content-box pl-lg-40">
                                         <div class="icon">
                                             <i class="flaticon-camp"></i>
                                         </div>
-                                        <h3 class="title">Real Adventure & Enjoy
-                                            Your Dream Tours</h3>
-                                        <p>Sit amet consectetur velit integer tincidunt
-                                            scelerisque. Sodales volutpat neque fermeny
-                                            malesuada scelerisque massa lacus</p>
+                                        <h3 class="title">Khám phá & nghỉ dưỡng</h3>
+                                        <p>Uy tín luôn được chúng tôi đặt lên hàng đầu.
+                                            Vì chất lượng của du lịch Việt Nam.</p>
                                         <ul class="check-list">
-                                            <li><span class="far fa-check-circle"></span>Family Camping</li>
-                                            <li><span class="far fa-check-circle"></span>Couple Camping</li>
-                                            <li><span class="far fa-check-circle"></span>Wild Camping</li>
+                                            <li><span class="far fa-check-circle"></span>Công tác</li>
+                                            <li><span class="far fa-check-circle"></span>Nghĩ dưỡng</li>
+                                            <li><span class="far fa-check-circle"></span>Tuần trăng mật</li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <!--=== Activity Image ===-->
+                                <div class="col-md-6">
+                                    <!--=== Activity Image Box ===-->
                                     <div class="activity-image-box">
                                         <img src="/assets/customers/images/gallery/activity.jpg" class="radius-12"
                                              alt="Image">

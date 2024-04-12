@@ -18,7 +18,7 @@
                 <select class="form-select"
                         name="transportationId"
                         ng-class="{ 'is-invalid': form_trip.transportationId.$invalid && form_trip.transportationId.$touched, 'is-valid': form_trip.transportationId.$valid && form_trip.transportationId.$touched }"
-                        ng-options="transport.id as transport.id + ' - ' +  transport.licensePlate + ' - ' + transport.amountSeat + ' Chổ' for transport in transportations"
+                        ng-options="transport.id as (transport.id + ' - ' + transport.licensePlate + ' - ' + transport.amountSeat + ' Chổ' + ' - ' + (transport.isTransportBed ? 'Xe giường nằm' : 'Xe ghế ngồi')) for transport in transportations"
                         ng-change="onTransportationIdChange()"
                         ng-model="schedules.transportationId"
                         disabled
@@ -233,27 +233,7 @@
                 >
             </div>
 
-            <div class="col-6">
-                <label class="form-label">TRẠNG THÁI CHUYẾN ĐI</label>
-                <select class="form-select"
-                        name="isStatus"
-                        ng-class="{ 'is-invalid': form_trip.isStatus.$invalid && form_trip.isStatus.$touched, 'is-valid': form_trip.isStatus.$valid && form_trip.isStatus.$touched }"
-                        ng-disabled="schedules.isStatus === 1 || schedules.isStatus === 2"
-                        ng-model="schedules.isStatus"
-                        required
-                >
-                    <option value="" disabled selected>Chọn trạng thái</option>
-                    <option value="0" ng-selected="schedules.isStatus === 0">Chờ vận hành</option>
-                    <option value="1" ng-selected="schedules.isStatus === 1">Đang vận hành</option>
-                    <option value="2" ng-selected="schedules.isStatus === 2">Đã hoàn thành</option>
-                </select>
-                <small class="text-danger"
-                       ng-show="form_trip.isStatus.$touched && form_trip.isStatus.$error.required">
-                    Vui lòng chọn trạng thái !
-                </small>
-            </div>
-
-            <div class="col-6">
+            <div class="col-12">
                 <label class="form-label">TRẠNG THÁI HOẠT ĐỘNG</label>
                 <select class="form-select"
                         name="isActive"

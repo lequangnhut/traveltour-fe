@@ -498,7 +498,7 @@ travel_app.controller('TourDetailCusController',
             let tourDetail = $scope.tourDetail;
 
             if (type === 'start') {
-                popupContent = 'Công ty dịch vụ lữ hành TravelTour';
+                popupContent = 'Điểm bắt đầu';
             } else if (type === 'end') {
                 popupContent = createPopupContent(tourDetail);
             } else if (type === 'waypoint') {
@@ -544,7 +544,7 @@ travel_app.controller('TourDetailCusController',
             let formattedDate = $filter('formatDate')(tourDetail.departureDate);
             return `    <div class="m-1 mb-30 row">
                         <div class="img-holder col-xl-3 col-lg-4 p-0">
-                            <img src="${tourDetail.toursByTourId.tourImg}" class="rounded-3" style="height: 170px"
+                            <img src="${tourDetail.toursByTourId.tourImg}" class="rounded-3" style="height: 130px"
                                  onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
                         </div>
                         <div class=" col-xl-9 col-lg-8">

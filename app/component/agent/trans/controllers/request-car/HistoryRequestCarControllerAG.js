@@ -160,11 +160,11 @@ travel_app.controller('HistoryRequestCarControllerAG',
         /**
          * Phương thức hủy yêu cầu đi xe
          */
-        $scope.cancelRequestCar = function (requestCarDetailId, fromLocation, toLocation) {
+        $scope.cancelRequestCar = function (requestCarDetailId, transportationScheduleId, fromLocation, toLocation) {
             function confirmCancel() {
                 $scope.isLoading = true;
 
-                RequestCarServiceAG.cancelRequestCarDetail(requestCarDetailId).then(function (response) {
+                RequestCarServiceAG.cancelRequestCarDetail(requestCarDetailId, transportationScheduleId).then(function (response) {
                     if (response.status === 200) {
                         $scope.findAllHistoryRequestCarAgent();
                         centerAlert('Thành công', `Hủy yêu cầu cho chuyến đi từ ${fromLocation} đến ${toLocation} thành công!`, 'success');

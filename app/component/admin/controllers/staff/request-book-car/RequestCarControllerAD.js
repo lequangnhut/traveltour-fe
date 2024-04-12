@@ -22,6 +22,7 @@ travel_app.controller('RequestCarControllerAD',
             toLocation: null,
             departureDate: null,
             arrivalDate: null,
+            isActive: null,
             isTransportBed: null,
             requestCarNoted: null
         }
@@ -317,6 +318,9 @@ travel_app.controller('RequestCarControllerAD',
             confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdate);
         }
 
+        /**
+         * API để duyệt xe
+         */
         $scope.acceptRequestCar = function (requestCarDetailId, licensePlate, scheduleId) {
             let orderTransportation = {
                 id: GenerateCodePayService.generateCodeBooking('VPO', scheduleId),
@@ -347,7 +351,7 @@ travel_app.controller('RequestCarControllerAD',
                 });
             }
 
-            confirmAlert('Bạn có chắc chắn muốn duyệt xe ' + licensePlate + ' ?', confirmAccept);
+            confirmAlert('Sau khi bạn duyệt thì yêu cầu này sẽ bị khóa. Bạn có chắc chắn muốn duyệt xe ' + licensePlate + ' ? ', confirmAccept);
         }
 
         $scope.init();

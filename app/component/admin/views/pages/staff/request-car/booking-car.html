@@ -64,12 +64,12 @@
                                             <a class="fw-medium text-success text-decoration-none"
                                                ng-if="!requestCar.isAccepted">
                                                 <i class="fa-regular fa-circle-question"></i>
-                                                Đang trong thời gian chờ nộp yêu cầu
+                                                Đang trong thời gian chờ xe nộp yêu cầu
                                             </a>
                                             <a class="fw-medium text-danger text-decoration-none"
                                                ng-if="requestCar.isAccepted">
                                                 <i class="fa-regular fa-circle-question"></i>
-                                                Thời gian nộp yêu cầu đã kết thúc.
+                                                Thời gian chờ xe nộp yêu cầu đã kết thúc.
                                             </a>
                                         </span>
                                         <h3 class="fw-medium">
@@ -150,11 +150,14 @@
                                         </div>
                                         <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
                                             <div class="box">
+                                                 <span class="fw-bold text-danger fs--1 float-end" ng-if="!requestCar.isActive">
+                                                    Yêu cầu này đang tạm khóa
+                                                </span>
                                                 <button type="button"
                                                         ng-if="!requestCar.isAccepted"
                                                         ng-click="redirectPage('/admin/request-booking-car/update-request-booking/', requestCar.id)"
                                                         class="btn btn-success w-100 mt-3">
-                                                    Sửa yêu cầu
+                                                    Cập nhật yêu cầu
                                                 </button>
                                                 <button type="button"
                                                         ng-if="requestCar.isAccepted"

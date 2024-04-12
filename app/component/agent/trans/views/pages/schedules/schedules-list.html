@@ -361,6 +361,18 @@
                             <span class="text-status-error">Hủy chuyến đi</span>
                         </div>
                     </td>
+                    <td ng-if="schedule.isStatus == 4">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <span class="status-warning"></span>
+                            <span class="text-status-warning">Chuyến đi đang trống</span>
+                        </div>
+                    </td>
+                    <td ng-if="schedule.isStatus == 5">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <span class="status-warning"></span>
+                            <span class="text-status-warning">Đang đợi duyệt</span>
+                        </div>
+                    </td>
                     <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
                         <a href="#"
                            ng-click="redirectPage('/business/transport/schedules-management/update-schedules/', schedule.id)"

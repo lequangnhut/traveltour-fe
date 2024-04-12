@@ -19,7 +19,7 @@
                 <select class="form-select"
                         name="transportationId"
                         ng-class="{ 'is-invalid': form_trips.transportationId.$invalid && form_trips.transportationId.$touched, 'is-valid': form_trips.transportationId.$valid && form_trips.transportationId.$touched }"
-                        ng-options="transport.id as transport.id + ' - ' +  transport.licensePlate + ' - ' + transport.amountSeat + ' Chổ' for transport in transportations"
+                        ng-options="transport.id as (transport.id + ' - ' + transport.licensePlate + ' - ' + transport.amountSeat + ' Chổ' + ' - ' + (transport.isTransportBed ? 'Xe giường nằm' : 'Xe ghế ngồi')) for transport in transportations"
                         ng-change="onTransportationIdChange()"
                         ng-model="schedules.transportationId"
                         required

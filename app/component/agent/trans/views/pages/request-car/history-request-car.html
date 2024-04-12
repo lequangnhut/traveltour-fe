@@ -61,9 +61,9 @@
                                         </span>
                                         <h3 class="fw-medium">
                                             <a href="#" class="text-dark text-decoration-none">
-                                                {{ requestCar.tourDetailId }}
-                                                - {{ requestCar.toursByTourId.tourName }}
-                                                - {{ requestCar.departureDate | formatDate }}
+                                                {{ history.requestCar.tourDetailId }}
+                                                - {{ history.toursByTourId.tourName }}
+                                                - {{ history.requestCar.departureDate | formatDate }}
                                             </a>
                                         </h3>
                                         <div class="d-flex align-items-center mb-2"
@@ -74,13 +74,13 @@
                                                     {{ history.requestCar.requestCarNoted }}
                                                 </p>
 
-                                                <p class="fw-bold text-success mb-1"
+                                                <p class="text-success mb-1"
                                                    ng-if="history.requestCar.isSubmiited === true">
                                                     <i class="fa-solid fa-check"></i>
-                                                    Bạn đã nộp yêu cầu
+                                                    Bạn đã nộp yêu cầu thành công - vui lòng đợi xem xét
                                                 </p>
 
-                                                <p class="fw-bold text-success mb-1 cursor-pointer"
+                                                <p class="fw-bold text-info mb-1 cursor-pointer"
                                                    ng-click="openModalCheckCar(history.transportations.id)">
                                                     <i class="fa-solid fa-bus-simple"></i>
                                                     Xem phương tiện đã gửi yêu cầu
@@ -172,7 +172,7 @@
                                                     Đã có {{ history.requestCar.requestCarDetailsById.length }} doanh nghiệp gửi yêu cầu
                                                 </span>
                                                 <a role="button" ng-if="!history.requestCar.isAccepted"
-                                                   ng-click="cancelRequestCar(history.id, history.requestCar.fromLocation, history.requestCar.toLocation)"
+                                                   ng-click="cancelRequestCar(history.id, history.transportationSchedules.id, history.requestCar.fromLocation, history.requestCar.toLocation)"
                                                    class="btn btn-success w-100 cursor-pointer"
                                                 >
                                                     Hủy yêu cầu
@@ -267,7 +267,8 @@
                                         </span>
                                         <h3 class="fw-medium">
                                             <a href="#" class="text-dark text-decoration-none">
-                                                {{ history.toursByTourId.tourName }}
+                                                {{ history.requestCar.tourDetailId }}
+                                                - {{ history.toursByTourId.tourName }}
                                                 - {{ history.requestCar.departureDate | formatDate }}
                                             </a>
                                         </h3>
@@ -279,12 +280,12 @@
                                                     {{ history.requestCar.requestCarNoted }}
                                                 </p>
 
-                                                <p class="fw-bold text-success mb-1">
+                                                <p class="text-success mb-1">
                                                     <i class="fa-solid fa-check"></i>
                                                     Yêu cầu của bạn đã được duyệt
                                                 </p>
 
-                                                <p class="fw-bold text-success mb-1 cursor-pointer"
+                                                <p class="fw-bold text-info mb-1 cursor-pointer"
                                                    ng-click="openModalCheckCar(history.transportations.id)">
                                                     <i class="fa-solid fa-bus-simple"></i>
                                                     Xem phương tiện đã gửi yêu cầu
@@ -461,7 +462,8 @@
                                         </span>
                                         <h3 class="fw-medium">
                                             <a href="#" class="text-dark text-decoration-none">
-                                                {{ history.toursByTourId.tourName }}
+                                                {{ history.requestCar.tourDetailId }}
+                                                - {{ history.toursByTourId.tourName }}
                                                 - {{ history.requestCar.departureDate | formatDate }}
                                             </a>
                                         </h3>
@@ -473,11 +475,11 @@
                                                     {{ history.requestCar.requestCarNoted }}
                                                 </p>
 
-                                                <p class="fw-bold text-danger mb-1">
+                                                <p class="text-danger mb-1">
                                                     <i class="fa-solid fa-check"></i>
                                                     Bạn đã hủy yêu cầu
                                                 </p>
-                                                <p class="fw-bold text-success mb-1 cursor-pointer"
+                                                <p class="fw-bold text-info mb-1 cursor-pointer"
                                                    ng-click="openModalCheckCar(history.transportations.id)">
                                                     <i class="fa-solid fa-bus-simple"></i>
                                                     Xem phương tiện đã gửi yêu cầu
