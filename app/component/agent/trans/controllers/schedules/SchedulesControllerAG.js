@@ -1,5 +1,5 @@
 travel_app.controller('SchedulesControllerAG',
-    function ($scope, $timeout, $sce, $filter, $location, $routeParams, $http, LocalStorageService, Base64ObjectService, SchedulesServiceAG, TransportServiceAG, MapBoxService) {
+    function ($scope, $timeout, $sce, $filter, $location, $routeParams, $http, LocalStorageService, Base64ObjectService, TransportationScheduleServiceAD, SchedulesServiceAG, TransportServiceAG, MapBoxService) {
         mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
         let searchTimeout;
@@ -9,7 +9,7 @@ travel_app.controller('SchedulesControllerAG',
 
         $scope.dateError = null;
 
-        $scope.transportation = {};
+        $scope.transportationList = {};
         $scope.provinces = [];
 
         $scope.isLoading = true;
@@ -156,7 +156,7 @@ travel_app.controller('SchedulesControllerAG',
              */
             SchedulesServiceAG.findAllByTripType(brandId, $scope.tripType, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function (response) {
                 if (response.status === 200) {
-                    $scope.transportationSchedules = response.data.data.content;
+                    $scope.transportationScheduleList = response.data.data.content;
                     $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                     $scope.totalElements = response.data.data.totalElements;
 
@@ -179,7 +179,7 @@ travel_app.controller('SchedulesControllerAG',
                 searchTimeout = $timeout(function () {
                     SchedulesServiceAG.findAllSchedules(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
                         .then(function (response) {
-                            $scope.transportationSchedules = response.data.content;
+                            $scope.transportationScheduleList = response.data.content;
                             $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
                             $scope.totalElements = response.data.totalElements;
                         }, errorCallback).finally(function () {
@@ -205,9 +205,9 @@ travel_app.controller('SchedulesControllerAG',
              * @param transportId
              */
             $scope.findTransportation = function (transportId) {
-                if (!$scope.transportation[transportId]) {
+                if (!$scope.transportationList[transportId]) {
                     SchedulesServiceAG.findTransportByTransportId(transportId).then(function (response) {
-                        $scope.transportation[transportId] = response.data.data;
+                        $scope.transportationList[transportId] = response.data.data;
                     }, errorCallback);
                 }
             }
@@ -235,6 +235,49 @@ travel_app.controller('SchedulesControllerAG',
                         $location.path('/admin/page-not-found');
                     }
                 }, errorCallback);
+            }
+
+            /**
+             * Modal xem thông tin chi tiết của chuyến đi
+             */
+            $scope.modalDetailSchedule = function (transportationId, transportationScheduleId) {
+                $('#modal-schedule-detail').modal('show');
+                $scope.transportation = {};
+                $scope.transportUtilityModal = [];
+
+                if (transportationId !== undefined && transportationId !== null && transportationId !== "") {
+                    TransportServiceAG.findByTransportId(transportationId).then(function successCallback(response) {
+                        if (response.status === 200) {
+                            $scope.transportation = response.data.data.transportGetDataDto;
+                            $scope.transportUtilAPI = response.data.data.transportUtilities;
+                            $scope.transportationImages = response.data.data.transportGetDataDto.transportationImagesById;
+                            $scope.transportBrand = response.data.data.transportGetDataDto.transportationBrandsByTransportationBrandId;
+                            $scope.transportType = response.data.data.transportGetDataDto.transportationTypesByTransportationTypeId;
+
+                            $scope.transportUtilAPI.some(function (utilId) {
+                                TransportServiceAG.findByTransportUtilityId(utilId).then(function (response) {
+                                    if (response.status === 200) {
+                                        $scope.transportUtilityModal.push(response.data.data)
+                                    } else {
+                                        $location.path('/admin/page-not-found');
+                                    }
+                                });
+                            });
+                        } else {
+                            $location.path('/admin/page-not-found');
+                        }
+                    });
+                }
+
+                if (transportationScheduleId !== undefined && transportationScheduleId !== null && transportationScheduleId !== "") {
+                    TransportationScheduleServiceAD.findById(transportationScheduleId).then(function (response) {
+                        if (response.status === 200) {
+                            $scope.transportationSchedule = response.data.data;
+                        } else {
+                            $location.path('/admin/page-not-found');
+                        }
+                    });
+                }
             }
         }
 
@@ -349,6 +392,7 @@ travel_app.controller('SchedulesControllerAG',
                 SchedulesServiceAG.delete(scheduleId).then(function () {
                     $location.path('/business/transport/schedules-management');
                     toastAlert('success', 'Xóa chuyến đi thành công !');
+                    $('#modal-schedule-detail').modal('hide');
                     $scope.init();
                 }, errorCallback).finally(function () {
                     $scope.isLoading = false;

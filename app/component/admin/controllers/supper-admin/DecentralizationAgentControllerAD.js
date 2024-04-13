@@ -102,6 +102,12 @@ travel_app.controller('DecentralizationControllerAgentAD', function ($scope, $sc
                         $scope.userRoleAgent = response.data.content;
                         $scope.totalPages = Math.ceil(response.data.totalElements / $scope.pageSize);
                         $scope.totalElements = response.data.totalElements;
+
+                        $scope.userRoleAgent.forEach(function (userRoleAgent) {
+                            $scope.originalRoles[userRoleAgent.id] = userRoleAgent.roles.map(function (role) {
+                                return role.nameRole;
+                            });
+                        });
                     }, errorCallback).finally(function () {
                     $scope.isLoading = false;
                 });

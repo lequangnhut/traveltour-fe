@@ -204,16 +204,10 @@
                                         <div class="col-12">
                                             <div class="card-body pt-5">
                                                 <p class="card-text fw-medium mb-1">Thông tin đơn hàng</p>
-                                                <p class="card-title mb-1">
+                                                <p class="card-title mb-3">
                                                     Mã đơn hàng:
                                                     <span class="fw-medium">
                                                         {{ transportationSchedule.orderTransportationsById[0].id }}
-                                                    </span>
-                                                </p>
-                                                <p class="card-title mb-3">
-                                                    Ngày tạo:
-                                                    <span class="fw-medium">
-                                                        {{ transportationSchedule.orderTransportationsById[0].dateCreated | vietnameseDateTime }}
                                                     </span>
                                                 </p>
                                                 <p class="card-text fw-medium mb-1">Phương tiện</p>
@@ -275,21 +269,21 @@
                                                 <p class="m-2 fw-medium">
                                                     Trạng thái:
                                                     <span class="fw-bold color-warning"
-                                                          ng-if="transportationSchedule.isStatus === 0">
-                                                                    Chờ vận hành
-                                                            </span>
+                                                          ng-if="transportationSchedule.isStatus === 4">
+                                                        Chuyến đi đang trống
+                                                    </span>
                                                     <span class="fw-bold color-green"
-                                                          ng-if="transportationSchedule.isStatus === 1">
-                                                                Đang vận hành
-                                                            </span>
+                                                          ng-if="transportationSchedule.isStatus === 5">
+                                                        Đang đợi duyệt
+                                                    </span>
                                                     <span class="fw-bold color-green"
-                                                          ng-if="transportationSchedule.isStatus === 2">
-                                                                Đã hoàn thành
-                                                            </span>
+                                                          ng-if="transportationSchedule.isStatus === 6">
+                                                        Đã được duyệt
+                                                    </span>
                                                     <span class="fw-bold color-danger"
-                                                          ng-if="transportationSchedule.isStatus === 3">
-                                                                Hủy chuyến đi
-                                                            </span>
+                                                          ng-if="transportationSchedule.isStatus === 7">
+                                                        Từ chối duyệt
+                                                    </span>
                                                 </p>
                                             </div>
                                         </div>
@@ -344,21 +338,27 @@
                                             <p class="mx-2 my-1 fw-medium">Trạng thái:
                                                 <span class="fw-medium color-warning"
                                                       ng-if="tourGuide.orderStatus == 0">
-                                            Chờ thanh toán
-                                        </span>
+                                                    Chờ thanh toán
+                                                </span>
                                                 <span class="fw-medium color-green" ng-if="tourGuide.orderStatus == 1">
-                                            Đã thanh toán
-                                        </span>
+                                                    Đã thanh toán
+                                                </span>
                                                 <span class="fw-medium color-danger" ng-if="tourGuide.orderStatus == 2">
-                                            Hủy giao dịch
-                                        </span>
+                                                    Hủy giao dịch
+                                                </span>
+                                            </p>
+                                            <p class="mx-2 my-1 fw-medium" ng-if="tourGuide.orderStatus == 1">
+                                                Thời gian thanh toán:
+                                                <span class="fw-medium color-green">
+                                                    {{ tourGuide.dateCreated | vietnameseDateTime }}
+                                                </span>
                                             </p>
                                         </div>
                                         <div class=" col-12 pe-0">
                                             <p class="mx-2 my-1 fw-medium float-right">Tổng tiền:
                                                 <span class="fw-medium color-green">
-                                            {{ transportationSchedule.unitPrice | vnCurrency }}
-                                        </span>
+                                                    {{ transportationSchedule.unitPrice | vnCurrency }}
+                                                </span>
                                             </p>
                                         </div>
                                     </div>

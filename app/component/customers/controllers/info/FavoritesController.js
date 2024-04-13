@@ -1,7 +1,8 @@
-travel_app.controller("FavoritesController", function ($scope, $location, $timeout, AuthService, UserLikeService) {
-    let user = null
+travel_app.controller("FavoritesController", function ($scope, $routeParams, $location, $timeout, AuthService, UserLikeService) {
+    let user;
     user = AuthService.getUser();
 
+    $scope.userIdEncrypt = $routeParams.id;
     $scope.tours = {}
     $scope.hotels = {}
     $scope.transportationBrands = {}
@@ -17,7 +18,6 @@ travel_app.controller("FavoritesController", function ($scope, $location, $timeo
         UserLikeService.findAllUserLikeByUserId(user.id).then(function (response) {
             if (response.status === 200) {
                 if (response.data.status === "200") {
-                    console.log(response.data)
                     $scope.tours = response.data.data.tours
                     $scope.hotels = response.data.data.hotels
                     $scope.transportationBrands = response.data.data.transportationBrands
@@ -28,5 +28,4 @@ travel_app.controller("FavoritesController", function ($scope, $location, $timeo
     } else {
         console.log("lỗi")
     }
-
 })

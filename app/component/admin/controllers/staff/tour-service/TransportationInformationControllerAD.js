@@ -123,7 +123,6 @@ travel_app.controller('TransportationInformationControllerAD', function ($scope,
      * Phương thức mở modal
      */
     $scope.openModal = (data) => {
-        console.log(data)
         $('#modal-order-transportation-schedule').modal('show');
         $scope.transportationSchedule = data;
         $scope.transportationScheduleId = data.id;
@@ -142,7 +141,7 @@ travel_app.controller('TransportationInformationControllerAD', function ($scope,
             }, errorCallback);
         }
 
-        confirmAlert('Bạn có chắc chắn muốn thanh toán khách sạn này không ?', confirm);
+        confirmAlert('Bạn có chắc chắn muốn thanh toán không ?', confirm);
     }
 
     /**

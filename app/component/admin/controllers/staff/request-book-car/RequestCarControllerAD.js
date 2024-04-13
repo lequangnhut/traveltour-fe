@@ -321,7 +321,7 @@ travel_app.controller('RequestCarControllerAD',
         /**
          * API để duyệt xe
          */
-        $scope.acceptRequestCar = function (requestCarDetailId, licensePlate, scheduleId) {
+        $scope.acceptRequestCar = function (requestCarDetailId, requestCarId, licensePlate, scheduleId) {
             let orderTransportation = {
                 id: GenerateCodePayService.generateCodeBooking('VPO', scheduleId),
                 userId: user.id,
@@ -336,6 +336,7 @@ travel_app.controller('RequestCarControllerAD',
 
                 let formData = new FormData();
                 formData.append("requestCarDetailId", requestCarDetailId);
+                formData.append("requestCarId", requestCarId);
                 formData.append("orderTransportationsDto", new Blob([JSON.stringify(orderTransportation)], {type: "application/json"}));
 
                 RequestCarServiceAD.acceptRequestCarService(formData).then(function (response) {
@@ -351,7 +352,7 @@ travel_app.controller('RequestCarControllerAD',
                 });
             }
 
-            confirmAlert('Sau khi bạn duyệt thì yêu cầu này sẽ bị khóa. Bạn có chắc chắn muốn duyệt xe ' + licensePlate + ' ? ', confirmAccept);
+            confirmAlert('Sau khi bạn duyệt xe thành công thì yêu cầu này sẽ bị khóa. Bạn có chắc chắn muốn duyệt xe ' + licensePlate + ' ? ', confirmAccept);
         }
 
         $scope.init();

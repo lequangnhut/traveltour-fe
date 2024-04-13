@@ -1,5 +1,5 @@
 travel_app.controller('HistoryRequestCarControllerAG',
-    function ($scope, $location, $timeout, $window, $filter, $routeParams, RequestCarServiceAG, TransportServiceAG, LocalStorageService) {
+    function ($scope, $location, $timeout, $window, $filter, $routeParams, RequestCarServiceAG, TransportationScheduleServiceAD, TransportServiceAG, LocalStorageService) {
         $scope.brandId = LocalStorageService.get('brandId');
 
         $scope.currentTab = 'submitted';
@@ -126,7 +126,7 @@ travel_app.controller('HistoryRequestCarControllerAG',
             /**
              * Phương thức mở modal chọn xe
              */
-            $scope.openModalCheckCar = function (transportId) {
+            $scope.openModalCheckCar = function (transportId, transportationScheduleId) {
                 $('#modal-transport-detail').modal('show');
                 $scope.transportation = {};
                 $scope.transportUtilityModal = [];
@@ -149,6 +149,16 @@ travel_app.controller('HistoryRequestCarControllerAG',
                                     }
                                 });
                             });
+                        } else {
+                            $location.path('/admin/page-not-found');
+                        }
+                    });
+                }
+
+                if (transportationScheduleId !== undefined && transportationScheduleId !== null && transportationScheduleId !== "") {
+                    TransportationScheduleServiceAD.findById(transportationScheduleId).then(function (response) {
+                        if (response.status === 200) {
+                            $scope.transportationSchedule = response.data.data;
                         } else {
                             $location.path('/admin/page-not-found');
                         }

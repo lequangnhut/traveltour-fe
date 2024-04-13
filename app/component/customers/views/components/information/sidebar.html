@@ -17,15 +17,15 @@
             </a>
         </li>
         <!--  Lịch sử đi tour -->
+        <li class="nav-item" ng-class="{ 'active bg-light fw-medium': isActiveInformation('/favourites/') }">
+            <a class="nav-link text-dark" href="#" ng-click="redirectPage('/favourites/', user.id)">
+                Danh sách yêu thích
+            </a>
+        </li>
+        <!--  Lịch sử đi tour -->
         <li class="nav-item" ng-class="{ 'active bg-light fw-medium': isActiveInformation('/history-order/') }">
             <a class="nav-link text-dark" href="#" ng-click="redirectPage('/history-order/', user.id)">
                 Lịch sử giao dịch
-            </a>
-        </li>
-        <!-- Đăng xuất -->
-        <li class="nav-item">
-            <a class="nav-link text-dark" href="#" ng-click="logoutAuth()">
-                Đăng xuất
             </a>
         </li>
     </ul>

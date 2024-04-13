@@ -48,7 +48,9 @@
     <div class="mb-4" style="margin: 20px 0 20px 0" ng-if="!isLoading || requestCarList.length > 0">
         <div class="row">
             <div class="col-xl-9">
-                <div class="mb-4 text-center" ng-if="requestCarList.length === 0">Trang không có dữ liệu</div>
+                <div class="mb-4 text-center" ng-if="requestCarList.length === 0">
+                    Hiện tại chưa có yêu cầu nào được tạo.
+                </div>
                 <div class="card card-customer mb-3" ng-repeat="requestCar in requestCarList track by $index">
                     <div class="mb-30 row">
                         <div class="col-xl-3 col-lg-4 ps-5 pt-3">
@@ -150,7 +152,8 @@
                                         </div>
                                         <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
                                             <div class="box">
-                                                 <span class="fw-bold text-danger fs--1 float-end" ng-if="!requestCar.isActive">
+                                                 <span class="fw-bold text-danger fs--1 float-end"
+                                                       ng-if="!requestCar.isActive">
                                                     Yêu cầu này đang tạm khóa
                                                 </span>
                                                 <button type="button"
@@ -163,7 +166,7 @@
                                                         ng-if="requestCar.isAccepted"
                                                         disabled
                                                         class="btn btn-success w-100 mt-3">
-                                                    Đã duyệt xe
+                                                    Yêu cầu đã khóa
                                                 </button>
                                             </div>
                                         </div>
@@ -341,7 +344,9 @@
                                                 <p class="fw-bold text-success mb-0"
                                                    ng-if="requestCarDetail.isCarSubmitted">
                                                     <i class="fa-solid fa-check"></i>
-                                                    Xe khách sẽ được sử dụng cho tour.
+                                                    Xe khách
+                                                    {{ requestCarDetail.transportations.licensePlate || 'Đang tải...' }}
+                                                    sẽ được sử dụng cho tour.
                                                 </p>
                                                 <span>
                                                     <i class="fa-solid fa-bus"></i>
@@ -442,7 +447,7 @@
                                                     <div class="box ms-3">
                                                         <button type="button"
                                                                 ng-if="!requestCarDetail.requestCar.isAccepted && !requestCarDetail.isSubmiited"
-                                                                ng-click="acceptRequestCar(requestCarDetail.id, requestCarDetail.transportations.licensePlate, requestCarDetail.transportationScheduleId)"
+                                                                ng-click="acceptRequestCar(requestCarDetail.id, requestCarDetail.requestCar.id, requestCarDetail.transportations.licensePlate, requestCarDetail.transportationScheduleId)"
                                                                 class="btn btn-success w-100"
                                                         >
                                                             Duyệt xe
@@ -451,7 +456,7 @@
                                                                 ng-if="requestCarDetail.requestCar.isAccepted"
                                                                 disabled
                                                                 class="btn btn-success w-100">
-                                                            Đã duyệt xe
+                                                            Yêu cầu đã khóa
                                                         </button>
                                                         <button type="button"
                                                                 ng-if="!requestCarDetail.requestCar.isAccepted && requestCarDetail.isSubmiited"
@@ -460,8 +465,8 @@
                                                         >
                                                             Đã được sử dụng
                                                         </button>
-                                                        <a href="#" ng-click="toggleRequestDetail($index)"
-                                                           class="btn w-100 mt-2 ps-3 p-0">
+                                                        <a ng-click="toggleRequestDetail($index)"
+                                                           class="btn w-100 mt-2 ps-3 p-0 cursor-pointer">
                                                             Xem chi tiết
                                                             <i ng-bind-html="getChangeIconRequestDetail($index)"></i>
                                                         </a>
@@ -589,7 +594,7 @@
                                             <div ng-bind-html="requestCarDetail.transportationBrands.transportationBrandPolicy | trustHtml"
                                                  style="text-align: justify; white-space: pre-line; font-family: 'Roboto',sans-serif;">
                                             </div>
-                                            <div class="place-content-wrap mb-4 wow fadeInUp"
+                                            <div class="place-content-wrap text-center mb-4"
                                                  ng-if="!requestCarDetail.transportationBrands.transportationBrandPolicy">
                                                 Hiện tại nhà xe chưa quy định chính sách.
                                             </div>

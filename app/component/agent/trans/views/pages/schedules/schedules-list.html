@@ -160,13 +160,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="schedule in transportationSchedules">
+                <tr ng-repeat="schedule in transportationScheduleList">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ schedule.id }}</td>
-                    <td>{{ transportation[schedule.transportationId].licensePlate || 'Đang tải...' }}</td>
+                    <td>{{ transportationList[schedule.transportationId].licensePlate || 'Đang tải...' }}</td>
                     <td>{{ schedule.fromLocation }}</td>
                     <td>{{ schedule.toLocation }}</td>
-                    <td>{{ transportation[schedule.transportationId].amountSeat + ' Chỗ' || 'Đang tải...' }}</td>
+                    <td>{{ transportationList[schedule.transportationId].amountSeat + ' Chỗ' || 'Đang tải...' }}</td>
                     <td>{{ schedule.bookedSeat + ' Chỗ' }}</td>
                     <td>{{ schedule.unitPrice | vnCurrency }}</td>
                     <td ng-if="schedule.isStatus == 0">
@@ -210,7 +210,7 @@
                         </a>
                     </td>
                 </tr>
-                <tr ng-if="transportationSchedules.length === 0">
+                <tr ng-if="transportationScheduleList.length === 0">
                     <td colspan="10">Không có dữ liệu chuyến đi.</td>
                 </tr>
                 </tbody>
@@ -328,69 +328,61 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="schedule in transportationSchedules">
+                <tr ng-repeat="schedule in transportationScheduleList">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ schedule.id }}</td>
-                    <td>{{ transportation[schedule.transportationId].licensePlate || 'Đang tải...' }}</td>
+                    <td>{{ transportationList[schedule.transportationId].licensePlate || 'Đang tải...' }}</td>
                     <td>{{ schedule.fromLocation }}</td>
                     <td>{{ schedule.toLocation }}</td>
-                    <td>{{ transportation[schedule.transportationId].amountSeat + ' Chỗ' || 'Đang tải...' }}</td>
+                    <td>{{ transportationList[schedule.transportationId].amountSeat + ' Chỗ' || 'Đang tải...' }}</td>
                     <td>{{ schedule.bookedSeat + ' Chỗ' }}</td>
                     <td>{{ schedule.unitPrice | vnCurrency }}</td>
-                    <td ng-if="schedule.isStatus == 0">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <span class="status-warning"></span>
-                            <span class="text-status-warning">Chờ vận hành</span>
-                        </div>
-                    </td>
-                    <td ng-if="schedule.isStatus == 1">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <span class="status-success"></span>
-                            <span class="text-status-success">Đang vận hành</span>
-                        </div>
-                    </td>
-                    <td ng-if="schedule.isStatus == 2">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <span class="status-success"></span>
-                            <span class="text-status-success">Đã hoàn tất</span>
-                        </div>
-                    </td>
-                    <td ng-if="schedule.isStatus == 3">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <span class="status-error"></span>
-                            <span class="text-status-error">Hủy chuyến đi</span>
-                        </div>
-                    </td>
-                    <td ng-if="schedule.isStatus == 4">
+                    <td ng-if="schedule.isStatus === 4">
                         <div class="d-flex align-items-center justify-content-center">
                             <span class="status-warning"></span>
                             <span class="text-status-warning">Chuyến đi đang trống</span>
                         </div>
                     </td>
-                    <td ng-if="schedule.isStatus == 5">
+                    <td ng-if="schedule.isStatus === 5">
                         <div class="d-flex align-items-center justify-content-center">
                             <span class="status-warning"></span>
                             <span class="text-status-warning">Đang đợi duyệt</span>
                         </div>
                     </td>
-                    <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                    <td ng-if="schedule.isStatus === 6">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <span class="status-success"></span>
+                            <span class="text-status-success">Đã được duyệt</span>
+                        </div>
+                    </td>
+                    <td ng-if="schedule.isStatus === 7">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <span class="status-error"></span>
+                            <span class="text-status-error">Từ chối duyệt</span>
+                        </div>
+                    </td>
+                    <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px"
+                        ng-if="schedule.isStatus === 4">
                         <a href="#"
                            ng-click="redirectPage('/business/transport/schedules-management/update-schedules/', schedule.id)"
                            role="button" class="fs-1 px-2 btn text-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
-                        <a href="#"
-                           ng-click="redirectPage('/business/transport/schedules-management/order-transport-management/', schedule.id)"
-                           role="button" class="fs-1 btn text-primary px-2" title="Vé của khách hàng">
-                            <i class="fa-solid fa-clipboard-list"></i>
                         </a>
                         <a href="#" ng-click="deleteSchedule(schedule.id, schedule.fromLocation, schedule.toLocation)"
                            role="button" class="fs-1 px-2 btn text-danger">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
+                    <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px"
+                        ng-if="schedule.isStatus === 5 || schedule.isStatus === 6 || schedule.isStatus === 7">
+                        <button type="button" class="btn text-info"
+                                ng-click="modalDetailSchedule(transportationList[schedule.transportationId].id, schedule.id)">
+                            <i class="fa-regular fa-eye"></i>
+                            Xem thông tin
+                        </button>
+                    </td>
                 </tr>
-                <tr ng-if="transportationSchedules.length === 0">
+                <tr ng-if="transportationScheduleList.length === 0">
                     <td colspan="10">Không có dữ liệu chuyến đi.</td>
                 </tr>
                 </tbody>
@@ -399,6 +391,185 @@
                 <div class="d-flex justify-content-end">
                     {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal xem thông tin chi tiết của xe -->
+<div class="modal fade" id="modal-schedule-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-white">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Chi tiết phượng tiện - {{ transportation.licensePlate }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card mb-3">
+                                <img class="img-fluid rounded-2" ng-src="{{ transportation.transportationImg }}"
+                                     style="height: 500px"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header p-3 fw-bold">
+                                    Thông tin xe khách
+                                </div>
+                                <div class="card-body p-3">
+                                    <p class="m-2 fw-medium">Mã xe khách: <span
+                                            class="fw-medium">{{ transportation.id }}</span></p>
+                                    <p class="m-2 fw-medium">Biển số xe: <span
+                                            class="fw-medium">{{ transportation.licensePlate }}</span></p>
+                                    <p class="m-2 fw-medium">Số ghế ngồi: <span
+                                            class="fw-medium">{{ transportation.amountSeat }} Chổ</span></p>
+                                    <p class="m-2 fw-medium">Loại chổ ngồi:
+                                        <span class="fw-normal"
+                                              ng-if="transportation.isTransportBed === false">
+                                                Xe ghế ngồi
+                                        </span>
+                                        <span class="fw-normal"
+                                              ng-if="transportation.isTransportBed === true">
+                                                Xe giường nằm
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Loại xe: <span
+                                            class="fw-normal">{{ transportType.transportationTypeName }}</span></p>
+                                    <p class="m-2 fw-medium">
+                                        Trạng thái:
+                                        <span class="fw-medium color-green"
+                                              ng-if="transportation.isActive === true">
+                                                Đang hoạt động
+                                        </span>
+                                        <span class="fw-medium color-green"
+                                              ng-if="transportation.isActive === false">
+                                                Ngưng hoạt động
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header p-3 fw-bold">
+                                    Các tiện ích của xe
+                                </div>
+                                <div class="card-body p-3">
+                                    <div ng-repeat="util in transportUtilityModal">
+                                        <li class="m-2">{{ util.title }}</li>
+                                    </div>
+                                    <div class="d-flex justify-content-center"
+                                         ng-if="transportUtilityModal.length === 0">
+                                        Xe <span class="fw-medium">&nbsp;{{ transportation.licensePlate }}&nbsp;</span>
+                                        chưa có tiện ích.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header p-3 fw-bold">
+                                    Thông tin chuyến đi của bạn
+                                </div>
+                                <div class="card-body p-3">
+                                    <p class="m-2 fw-medium">Mã chuyến đi:
+                                        <span class="fw-medium">
+                                            {{ transportationSchedule.id }}
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Điểm đi:
+                                        <span class="fw-medium text-warning">
+                                            {{ transportationSchedule.fromAddress }}
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Điểm đến:
+                                        <span class="fw-medium text-warning">
+                                            {{ transportationSchedule.toAddress }}
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Ngày / giờ đi:
+                                        <span class="fw-medium text-warning">
+                                            {{ transportationSchedule.departureTime | vietnameseDateTime }}
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Ngày / giờ về:
+                                        <span class="fw-medium text-warning">
+                                            {{ transportationSchedule.arrivalTime | vietnameseDateTime }}
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Ghi chú:
+                                        <span class="fw-medium text-success"
+                                              ng-if="transportationSchedule.scheduleNote">
+                                            {{ transportationSchedule.scheduleNote }}
+                                        </span>
+                                        <span class="fw-medium text-dark"
+                                              ng-if="!transportationSchedule.scheduleNote">
+                                            Không có nội dung ghi chú.
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Trạng thái:
+                                        <span class="fw-medium text-warning"
+                                              ng-if="transportationSchedule.isStatus === 4">
+                                                Chuyến đi đang trống
+                                        </span>
+                                        <span class="fw-medium text-warning"
+                                              ng-if="transportationSchedule.isStatus === 5">
+                                                Đang đợi duyệt
+                                        </span>
+                                        <span class="fw-medium text-success"
+                                              ng-if="transportationSchedule.isStatus === 6">
+                                                Đã được duyệt
+                                        </span>
+                                        <span class="fw-medium text-danger"
+                                              ng-if="transportationSchedule.isStatus === 7">
+                                                Từ chối duyệt
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Tổng tiền:
+                                        <span class="fw-medium text-success">
+                                            {{ transportationSchedule.unitPrice | vnCurrency }}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-5 mt-5 p-3">
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-xl-3 p-1" ng-repeat="img in transportationImages">
+                                            <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px"
+                                                 ng-src="{{img.imagePath}}"/>
+                                        </div>
+                                        <div class="col-12" ng-if="transportationImages.length === 0">
+                                            Không có hình ảnh.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Thoát
+                </button>
+                <button type="button"
+                        class="btn btn-success"
+                        ng-click="deleteSchedule(transportationSchedule.id, transportationSchedule.fromLocation, transportationSchedule.toLocation)"
+                        ng-if="transportationSchedule.isStatus === 4 || transportationSchedule.isStatus === 7"
+                >
+                    Xóa lịch trình
+                </button>
             </div>
         </div>
     </div>

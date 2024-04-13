@@ -28,6 +28,11 @@
                ng-class="{active: currentTab === 'cancel'}"
                ng-click="changeTab('cancel', 2)">Yêu cầu đã hủy</a>
         </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link cursor-pointer" role="tab" data-bs-toggle="pill"
+               ng-class="{active: currentTab === 'reject'}"
+               ng-click="changeTab('reject', 3)">Yêu cầu bị từ chối</a>
+        </li>
     </ul>
 
     <div ng-include="'app/component/utils/loading-component.html'"></div>
@@ -74,6 +79,14 @@
                                                     {{ history.requestCar.requestCarNoted }}
                                                 </p>
 
+                                                <p class="text-dark mb-1"
+                                                   ng-if="history.requestCar.isSubmiited === true">
+                                                    Nộp yêu cầu vào lúc:
+                                                    <span class="fw-bold">
+                                                        {{ history.dateCreated | vietnameseDateTime }}
+                                                    </span>
+                                                </p>
+
                                                 <p class="text-success mb-1"
                                                    ng-if="history.requestCar.isSubmiited === true">
                                                     <i class="fa-solid fa-check"></i>
@@ -81,7 +94,7 @@
                                                 </p>
 
                                                 <p class="fw-bold text-info mb-1 cursor-pointer"
-                                                   ng-click="openModalCheckCar(history.transportations.id)">
+                                                   ng-click="openModalCheckCar(history.transportations.id, history.transportationScheduleId)">
                                                     <i class="fa-solid fa-bus-simple"></i>
                                                     Xem phương tiện đã gửi yêu cầu
                                                 </p>
@@ -281,12 +294,19 @@
                                                 </p>
 
                                                 <p class="text-success mb-1">
+                                                    Duyệt yêu cầu vào lúc:
+                                                    <span class="fw-bold">
+                                                        {{ history.dateCreated | vietnameseDateTime }}
+                                                    </span>
+                                                </p>
+
+                                                <p class="text-success mb-1">
                                                     <i class="fa-solid fa-check"></i>
                                                     Yêu cầu của bạn đã được duyệt
                                                 </p>
 
                                                 <p class="fw-bold text-info mb-1 cursor-pointer"
-                                                   ng-click="openModalCheckCar(history.transportations.id)">
+                                                   ng-click="openModalCheckCar(history.transportations.id, history.transportationScheduleId)">
                                                     <i class="fa-solid fa-bus-simple"></i>
                                                     Xem phương tiện đã gửi yêu cầu
                                                 </p>
@@ -475,12 +495,227 @@
                                                     {{ history.requestCar.requestCarNoted }}
                                                 </p>
 
+                                                <p class="text-dark mb-1">
+                                                    Hủy yêu cầu vào lúc:
+                                                    <span class="fw-bold">
+                                                        {{ history.dateCreated | vietnameseDateTime }}
+                                                    </span>
+                                                </p>
+
                                                 <p class="text-danger mb-1">
                                                     <i class="fa-solid fa-check"></i>
                                                     Bạn đã hủy yêu cầu
                                                 </p>
+
                                                 <p class="fw-bold text-info mb-1 cursor-pointer"
-                                                   ng-click="openModalCheckCar(history.transportations.id)">
+                                                   ng-click="openModalCheckCar(history.transportations.id, history.transportationScheduleId)">
+                                                    <i class="fa-solid fa-bus-simple"></i>
+                                                    Xem phương tiện đã gửi yêu cầu
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="roomTypeByHotel mb-3"
+                                         style="padding-left: 10px ;border-left: 1px solid rgba(29, 35, 31, 0.1)">
+                                        <div style="font-size: 14px; line-height: 20px">
+                                            <p class="mb-1">
+                                                Thời gian tạo yêu cầu:
+                                                <span class="fw-bold">
+                                                   {{ history.requestCar.dateCreated | vietnameseDateTime }}
+                                                </span>
+                                            </p>
+                                            <p class="mb-1">
+                                                Thời gian hết hạn yêu cầu:
+                                                <span class="fw-bold">
+                                                   7 ngày trước khi tour bắt đầu
+                                                </span>
+                                            </p>
+                                            <p class="mb-2">
+                                                Số lượng khách:
+                                                <span class="fw-bold">{{ history.requestCar.amountCustomer }}</span>
+                                                khách
+                                                -
+                                                Loại xe:
+                                                <span class="fw-bold"
+                                                      ng-if="history.requestCar.isTransportBed === true">
+                                                    Xe giường nằm
+                                                </span>
+                                                <span class="fw-bold"
+                                                      ng-if="history.requestCar.isTransportBed === false">
+                                                    Xe ghế ngồi
+                                                </span>
+                                            </p>
+                                            <p class="mb-1">
+                                                Điểm đi:
+                                                <span class="fw-bold">
+                                                    {{ history.requestCar.fromLocation }}
+                                                </span>
+                                            </p>
+                                            <p class="mb-2">
+                                                Điểm đến:
+                                                <span class="fw-bold">
+                                                    {{ history.requestCar.toLocation }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="infoHotel h-100 w-100 position-relative row">
+                                        <div class="rating col-xl-12 col-lg-12 col-sm-6 col-6">
+                                            <div class="float-end" style="font-size: 14px; line-height: 20px">
+                                                <div class="d-flex align-content-center">
+                                                    <div class="float-end m-2">
+                                                        <p class="mb-0">Rất tốt</p>
+                                                        <p>133 đánh giá</p>
+                                                    </div>
+                                                    <div class="rating-content float-end">
+                                                        <div class="btn-green text-center cursor-default"
+                                                             style="width: 50px; height: 50px; line-height: 50px; border-radius: 8px">
+                                                            <span class="fw-medium fs-2">
+                                                                4.9
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="price position-absolute bottom-0 end-0 mb-3 ms-4 col-xl-12 col-lg-12 col-sm-6 col-6 p-0">
+                                            <div class="mb-2">
+                                                <h5 class="float-end px-0">
+                                                    <span class="mb-2 float-end fw-normal fs--1">
+                                                        Giá được gửi từ nhà xe
+                                                    </span>
+                                                    <br>
+                                                    <span class="mb-2 float-end">
+                                                        {{ history.transportationSchedules.unitPrice | vnCurrency }}
+                                                    </span>
+                                                </h5>
+                                            </div>
+                                            <div class="box">
+                                                <button type="button" class="btn btn-success w-100"
+                                                        ng-click="redirectPage('/business/transport/notification-request-car/select-car/', history.requestCar.id, 'request-car-agent')"
+                                                        ng-if="history.requestCar.isAccepted === false">
+                                                    Gửi lại yêu cầu
+                                                </button>
+                                                <button type="button" class="btn btn-success w-100" disabled
+                                                        ng-if="history.requestCar.isAccepted === true">
+                                                    Yêu cầu đã khóa
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="div" ng-if="historyRequestCarList.length <= 0">
+            <div class="d-flex justify-content-center align-items-center mt-3">
+                Hiện tại bạn chưa hủy yêu cầu nào tại&nbsp;<strong>TravelTour</strong>.
+            </div>
+        </div>
+
+        <div class="row" ng-if="historyRequestCarList.length > 0">
+            <div class="col-lg-12">
+                <ul class="gowilds-pagination wow fadeInUp text-center d-flex align-items-center justify-content-center">
+                    <!-- Previous Page -->
+                    <li class="m-1" ng-class="{disabled: currentPage === 0}">
+                        <a href="#" ng-click="setPage(0)"><span class="fas fa-arrow-left"></span></a>
+                    </li>
+
+                    <!-- Ellipsis at the beginning -->
+                    <li class="m-1" ng-if="currentPage > 2 && totalPages > 5">
+                                <span style="font-size: 4px">
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                </span>
+                    </li>
+
+                    <!-- Pagination Numbers -->
+                    <li class="m-1" ng-repeat="n in getPaginationRange()">
+                        <a ng-class="{active: n === currentPage}" ng-click="setPage(n)">{{ n + 1 }}</a>
+                    </li>
+
+                    <!-- Ellipsis at the end -->
+                    <li class="m-1" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                <span style="font-size: 4px">
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                    <i class="fa-solid fa-circle "></i>
+                                </span>
+                    </li>
+
+                    <!-- Next Page -->
+                    <li class="m-1" ng-class="{disabled: currentPage === totalPages - 1}">
+                        <a href="#" ng-click="setPage(totalPages - 1)"><span class="fas fa-arrow-right"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-4" style="margin: 20px 0 20px 0" ng-show="currentTab === 'reject'"
+         ng-if="!isLoading || historyRequestCarList.length > 0">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card card-customer mb-3" ng-repeat="history in historyRequestCarList">
+                    <div class="mb-30 row">
+                        <div class="col-xl-3 col-lg-4 ps-5 pt-3">
+                            <img ng-src="{{ history.toursByTourId.tourImg }}" class="img-fluid rounded-3"
+                                 style="width: 100%; height: 140px;" alt="img-request-car"
+                                 onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
+                        </div>
+                        <div class=" col-xl-9 p-3 col-lg-8">
+                            <div class="meta row">
+                                <div class="col-lg-9 p-0">
+                                    <div>
+                                        <span>
+                                            <a class="fw-medium text-success text-decoration-none"
+                                               ng-if="!history.requestCar.isAccepted">
+                                                <i class="fa-regular fa-circle-question"></i>
+                                                Đang trong thời gian chờ nộp yêu cầu
+                                            </a>
+                                            <a class="fw-medium text-danger text-decoration-none"
+                                               ng-if="history.requestCar.isAccepted">
+                                                <i class="fa-regular fa-circle-question"></i>
+                                                Thời gian nộp yêu cầu đã kết thúc.
+                                            </a>
+                                        </span>
+                                        <h3 class="fw-medium">
+                                            <a href="#" class="text-dark text-decoration-none">
+                                                {{ history.requestCar.tourDetailId }}
+                                                - {{ history.toursByTourId.tourName }}
+                                                - {{ history.requestCar.departureDate | formatDate }}
+                                            </a>
+                                        </h3>
+                                        <div class="d-flex align-items-center mb-2"
+                                             style="border-bottom: 1px solid rgba(29, 35, 31, 0.1);">
+                                            <div class="location text-orange" style="font-size: 14px">
+                                                <p class="text-warning mb-1">
+                                                    <i class="fa-solid fa-earth-americas"></i>
+                                                    {{ history.requestCar.requestCarNoted }}
+                                                </p>
+
+                                                <p class="text-dark mb-1">
+                                                    Từ chối yêu cầu vào lúc:
+                                                    <span class="fw-bold">
+                                                        {{ history.dateCreated | vietnameseDateTime }}
+                                                    </span>
+                                                </p>
+
+                                                <p class="text-danger mb-1">
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Yêu cầu của bạn đã bị từ chối.
+                                                </p>
+
+                                                <p class="fw-bold text-info mb-1 cursor-pointer"
+                                                   ng-click="openModalCheckCar(history.transportations.id, history.transportationScheduleId)">
                                                     <i class="fa-solid fa-bus-simple"></i>
                                                     Xem phương tiện đã gửi yêu cầu
                                                 </p>
@@ -691,10 +926,8 @@
                                     </p>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-md-6">
-                            <div class="card mb-3">
+                            <div class="card">
                                 <div class="card-header p-3 fw-bold">
                                     Các tiện ích của xe
                                 </div>
@@ -707,6 +940,46 @@
                                         Xe <span class="fw-medium">&nbsp;{{ transportation.licensePlate }}&nbsp;</span>
                                         chưa có tiện ích.
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header p-3 fw-bold">
+                                    Thông tin chuyến đi của bạn
+                                </div>
+                                <div class="card-body p-3">
+                                    <p class="m-2 fw-medium">Mã chuyến đi:
+                                        <span class="fw-medium">
+                                            {{ transportationSchedule.id }}
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Điểm đi:
+                                        <span class="fw-medium text-warning">
+                                            {{ transportationSchedule.fromAddress }}
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Điểm đến:
+                                        <span class="fw-medium text-warning">
+                                            {{ transportationSchedule.toAddress }}
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Loại xe:
+                                        <span class="fw-medium text-warning"
+                                              ng-if="requestCar.isTransportBed === false">
+                                                Xe ghế ngồi
+                                        </span>
+                                        <span class="fw-medium text-warning"
+                                              ng-if="requestCar.isTransportBed === true">
+                                                Xe giường nằm
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Tổng tiền:
+                                        <span class="fw-medium text-success">
+                                            {{ transportationSchedule.unitPrice | vnCurrency }}
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
