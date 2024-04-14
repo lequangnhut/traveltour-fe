@@ -67,7 +67,7 @@
                                 </li>
 
                                 <!-- Pagination Numbers -->
-                                <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
                                     ng-class="{active: n === currentPage}">
                                     <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
                                 </li>
@@ -130,7 +130,7 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ tour.id }}</td>
                     <td>
-                        <img ng-src="{{tour.tourImg}}" class="cursor-pointer" alt="avatar"
+                        <img ng-src="{{tour.tourImg}}" class="cursor-pointer" alt="avatar" loading="lazy"
                              width="60" height="35" title="Xem ảnh xe" ng-click="openImageModalTour(tour.tourImg)"
                              onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
                     </td>
@@ -138,7 +138,7 @@
                     <td>{{ tourTypeNames[tour.tourTypeId] || 'Đang tải...' }}</td>
                     <td>{{ tour.dateCreated | vietnameseDateTime }}</td>
                     <td class="d-flex align-items-center justify-content-center">
-                        <a href="admin/basic-tour-list/basic-tour-update/{{tour.id}}"
+                        <a ng-click="redirectPage('/admin/basic-tour-list/basic-tour-update/', tour.id)"
                            role="button" class="fs-1 btn text-warning px-3">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
@@ -172,7 +172,7 @@
             </div>
             <div class="modal-body">
                 <img id="modalImage" class="img-fluid"
-                onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
+                     onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
             </div>
         </div>
     </div>

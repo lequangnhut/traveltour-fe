@@ -1,10 +1,13 @@
 travel_app.controller('TripsTourControllerAD',
-    function ($scope, $sce, $location, $routeParams, $timeout, TourTripsServiceAD, TourDetailsServiceAD, MapBoxService, FormatDateService, TransportationTypeServiceAD) {
+    function ($scope, $sce, $location, $routeParams, $timeout, TourTripsServiceAD, TourDetailsServiceAD, MapBoxService, FormatDateService, TransportationTypeServiceAD, Base64ObjectService) {
         mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
         $scope.isLoading = true;
 
+        // id tour detail mã hóa
+        $scope.tourDetailIdEncode = $routeParams.tourDetailId;
+
         $scope.tourTrips = {
-            tourDetailId: $routeParams.tourDetailId,
+            tourDetailId: Base64ObjectService.decodeObject($scope.tourDetailIdEncode),
             transportationTypeId: null,
             placeName: null,
             placeImage: null,
@@ -19,7 +22,7 @@ travel_app.controller('TripsTourControllerAD',
         $scope.currentPage = 0; // Trang hiện tại
         $scope.pageSize = 5; // Số lượng tours trên mỗi trang
 
-        let tourTripsId = $routeParams.tourTripsId;
+        let tourTripsId = Base64ObjectService.decodeObject($routeParams.tourTripsId);
         let tourDetailId = $scope.tourTrips.tourDetailId;
 
         $scope.tourName = '';
@@ -324,7 +327,7 @@ travel_app.controller('TripsTourControllerAD',
 
             TourTripsServiceAD.createTrips(dataTourTrips).then(() => {
                 toastAlert('success', 'Thêm mới thành công !');
-                $location.path('/admin/detail-tour-list/trips-tour-list/' + $scope.tourTrips.tourDetailId);
+                $location.path('/admin/detail-tour-list/trips-tour-list/' + Base64ObjectService.encodeObject($scope.tourTrips.tourDetailId));
             }, errorCallback).finally(() => {
                 $scope.isLoading = false;
             });
@@ -344,7 +347,7 @@ travel_app.controller('TripsTourControllerAD',
 
                 TourTripsServiceAD.updateTrips(tourTripsId, dataTourTrips, timeGo).then(() => {
                     toastAlert('success', 'Cập nhật thành công !');
-                    $location.path('/admin/detail-tour-list/trips-tour-list/' + $scope.tourTrips.tourDetailId);
+                    $location.path('/admin/detail-tour-list/trips-tour-list/' + Base64ObjectService.encodeObject($scope.tourTrips.tourDetailId));
                 }, errorCallback).finally(() => {
                     $scope.isLoading = false;
                 });

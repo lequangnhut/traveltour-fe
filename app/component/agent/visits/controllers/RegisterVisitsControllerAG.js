@@ -416,7 +416,7 @@ travel_app.controller('RegisterVisitsControllerAG',
                         $scope.submitAPIVisit('create', '/business/visit/home');
                     }
                 } else {
-                    $scope.submitAPIVisit('create');
+                    $scope.submitAPIVisit('create', '/business/visit/home');
                 }
             }, errorCallback);
         }

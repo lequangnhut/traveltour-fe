@@ -84,7 +84,7 @@
                                 </li>
 
                                 <!-- Pagination Numbers -->
-                                <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
                                     ng-class="{active: n === currentPage}">
                                     <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
                                 </li>

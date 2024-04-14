@@ -227,9 +227,9 @@ travel_app.controller('DecentralizationControllerAgentAD', function ($scope, $sc
      * Gọi api delete staff
      */
     $scope.deleteAccountAgent = function (userId, fullName) {
-        $scope.isLoading = true;
-
         function confirmDeleteStaff() {
+            $scope.isLoading = true;
+
             AccountServiceAD.delete(userId).then(function successCallback() {
                 toastAlert('success', 'Xóa tài khoản thành công !');
                 $location.path('/admin/decentralized-agent-management');

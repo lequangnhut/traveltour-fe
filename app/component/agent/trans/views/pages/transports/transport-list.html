@@ -197,7 +197,7 @@
                         <div class="col-12">
                             <div class="card mb-3">
                                 <img class="img-fluid rounded-2" ng-src="{{ transportation.transportationImg }}"
-                                     style="height: 500px"/>
+                                     loading="lazy" style="height: 500px"/>
                             </div>
                         </div>
 
@@ -297,7 +297,7 @@
                                     <div class="row">
                                         <div class="col-xl-3 p-1" ng-repeat="img in transportationImages">
                                             <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px"
-                                                 ng-src="{{img.imagePath}}"/>
+                                                 loading="lazy" ng-src="{{img.imagePath}}"/>
                                         </div>
                                         <div class="col-12" ng-if="transportationImages.length === 0">
                                             Không có hình ảnh.

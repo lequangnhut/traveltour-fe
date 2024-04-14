@@ -15,7 +15,7 @@ travel_app.controller('SchedulesControllerAG',
         $scope.isLoading = true;
 
         $scope.tripType = false;
-        $scope.currentTab = 'permanent';
+        $scope.currentTab = LocalStorageService.get('currentTabSchedules') || 'permanent';
         $scope.currentPage = 0;
         $scope.pageSize = 5;
 
@@ -144,11 +144,23 @@ travel_app.controller('SchedulesControllerAG',
             $scope.checkDuplicateTransportSchedule();
         }
 
+        /**
+         * Phương thức chuyển đổi tab
+         * @param tab
+         * @param tripType
+         */
         $scope.changeTab = (tab, tripType) => {
             $scope.currentTab = tab;
             $scope.tripType = tripType;
             $scope.init();
+            LocalStorageService.set('currentTabSchedules', tab);
         };
+
+        if ($scope.currentTab === 'contract') {
+            $scope.changeTab('contract', true);
+        } else {
+            $scope.changeTab('permanent', false);
+        }
 
         $scope.init = function () {
             /**

@@ -1,4 +1,4 @@
-travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $location, $routeParams, $timeout, $http, MapBoxService, TourDetailsServiceAD, ToursServiceAD, AccountServiceAD) {
+travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $location, $routeParams, $timeout, $http, MapBoxService, TourDetailsServiceAD, ToursServiceAD, AccountServiceAD, Base64ObjectService) {
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
     $scope.isLoading = true;
@@ -27,7 +27,7 @@ travel_app.controller('TourDetailControllerAD', function ($scope, $sce, $q, $loc
     $scope.currentPage = 0; // Trang hiện tại
     $scope.pageSize = 5; // Số lượng tours trên mỗi trang
 
-    let tourDetailId = $routeParams.id;
+    let tourDetailId = Base64ObjectService.decodeObject($routeParams.id);
 
     $scope.dataProvince = [];
     $scope.provinceBreak = [];

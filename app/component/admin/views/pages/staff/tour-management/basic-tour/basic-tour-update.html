@@ -69,7 +69,7 @@
             <!-- Display the selected image -->
             <div ng-if="tourBasic.tourImg !== null" class="m-0">
                 <label for="imagePreview" class="form-label">Ảnh hiện tại</label> <br>
-                <img id="imagePreview" ng-src="{{ getCurrentImageSource() }}" alt="Current Image"
+                <img id="imagePreview" loading="lazy" ng-src="{{ getCurrentImageSource() }}" alt="Current Image"
                      style="max-width: 100px;">
             </div>
 

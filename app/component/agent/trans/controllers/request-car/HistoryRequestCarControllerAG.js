@@ -2,7 +2,7 @@ travel_app.controller('HistoryRequestCarControllerAG',
     function ($scope, $location, $timeout, $window, $filter, $routeParams, RequestCarServiceAG, TransportationScheduleServiceAD, TransportServiceAG, LocalStorageService) {
         $scope.brandId = LocalStorageService.get('brandId');
 
-        $scope.currentTab = 'submitted';
+        $scope.currentTab = LocalStorageService.get('currentTabHistoryRequestCar') || 'submitted';
         $scope.acceptedRequest = 0;
 
         $scope.currentPage = 0; // Trang hiện tại
@@ -12,9 +12,20 @@ travel_app.controller('HistoryRequestCarControllerAG',
             if ($scope.currentTab !== tab || $scope.acceptedRequest !== isAccepted) {
                 $scope.currentTab = tab;
                 $scope.acceptedRequest = isAccepted;
-                $scope.findAllHistoryRequestCarAgent();
+                $scope.init();
+                LocalStorageService.set('currentTabHistoryRequestCar', tab);
             }
         };
+
+        if ($scope.currentTab === 'submitted') {
+            $scope.changeTab('submitted', 0);
+        } else if ($scope.currentTab === 'approve') {
+            $scope.changeTab('approve', 1);
+        } else if ($scope.currentTab === 'cancel') {
+            $scope.changeTab('cancel', 2);
+        } else if ($scope.currentTab === 'reject') {
+            $scope.changeTab('reject', 3);
+        }
 
         $scope.init = function () {
             $scope.isLoading = true;
@@ -22,31 +33,28 @@ travel_app.controller('HistoryRequestCarControllerAG',
             /**
              * Danh sách tất cả lịch sử đã ứng tuyển
              */
-            $scope.findAllHistoryRequestCarAgent = function () {
-                $scope.isLoading = true;
-                $scope.historyRequestCarList = [];
+            $scope.historyRequestCarList = [];
 
-                RequestCarServiceAG.findAllHistoryRequestCarServiceAgent($scope.brandId, $scope.acceptedRequest, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function (response) {
-                    if (response.status === 200) {
-                        if (response.data.data === null || response.data.data.content.length === 0) {
-                            $scope.setPage(Math.max(0, $scope.currentPage - 1));
-                            return
-                        }
-
-                        $scope.historyRequestCarList = response.data.data.content;
-                        $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                        $scope.totalElements = response.data.data.totalElements; // Tổng số phần tử
-
-                        $scope.historyRequestCarList.forEach(function (requestCar) {
-                            $scope.checkTransportBrandSubmitted(requestCar);
-                        })
-                    } else {
-                        $location.path('/admin/page-not-found');
+            RequestCarServiceAG.findAllHistoryRequestCarServiceAgent($scope.brandId, $scope.acceptedRequest, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function (response) {
+                if (response.status === 200) {
+                    if (response.data.data === null || response.data.data.content.length === 0) {
+                        $scope.setPage(Math.max(0, $scope.currentPage - 1));
+                        return
                     }
-                }).finally(function () {
-                    $scope.isLoading = false;
-                });
-            }
+
+                    $scope.historyRequestCarList = response.data.data.content;
+                    $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
+                    $scope.totalElements = response.data.data.totalElements; // Tổng số phần tử
+
+                    $scope.historyRequestCarList.forEach(function (requestCar) {
+                        $scope.checkTransportBrandSubmitted(requestCar);
+                    })
+                } else {
+                    $location.path('/admin/page-not-found');
+                }
+            }).finally(function () {
+                $scope.isLoading = false;
+            });
 
             /**
              * Xét điều kiện xem có nộp yêu cầu chưa
@@ -84,7 +92,7 @@ travel_app.controller('HistoryRequestCarControllerAG',
             $scope.setPage = (page) => {
                 if (page >= 0 && page < $scope.totalPages) {
                     $scope.currentPage = page;
-                    $scope.findAllHistoryRequestCarAgent();
+                    $scope.init();
                 }
             };
 
@@ -116,7 +124,7 @@ travel_app.controller('HistoryRequestCarControllerAG',
 
             $scope.pageSizeChanged = () => {
                 $scope.currentPage = 0; // Đặt lại về trang đầu tiên
-                $scope.findAllHistoryRequestCarAgent(); // Tải lại dữ liệu với kích thước trang mới
+                $scope.init(); // Tải lại dữ liệu với kích thước trang mới
             };
 
             $scope.getDisplayRange = () => {
@@ -176,7 +184,7 @@ travel_app.controller('HistoryRequestCarControllerAG',
 
                 RequestCarServiceAG.cancelRequestCarDetail(requestCarDetailId, transportationScheduleId).then(function (response) {
                     if (response.status === 200) {
-                        $scope.findAllHistoryRequestCarAgent();
+                        $scope.init();
                         centerAlert('Thành công', `Hủy yêu cầu cho chuyến đi từ ${fromLocation} đến ${toLocation} thành công!`, 'success');
                     } else {
                         $location.path('/admin/page-not-found');
@@ -190,5 +198,4 @@ travel_app.controller('HistoryRequestCarControllerAG',
         }
 
         $scope.init();
-        $scope.findAllHistoryRequestCarAgent();
     });

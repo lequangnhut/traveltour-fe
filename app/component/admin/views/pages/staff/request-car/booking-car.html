@@ -55,7 +55,7 @@
                     <div class="mb-30 row">
                         <div class="col-xl-3 col-lg-4 ps-5 pt-3">
                             <img ng-src="{{ requestCar.toursByTourId.tourImg }}" class="img-fluid rounded-3"
-                                 style="width: 100%; height: 120px" alt="img-request-car"
+                                 style="width: 100%; height: 120px" alt="img-request-car" loading="lazy"
                                  onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
                         </div>
                         <div class=" col-xl-9 p-3 col-lg-8">
@@ -183,7 +183,7 @@
                     <div class="single-event-item mb-30 wow fadeInUp">
                         <div class="img-holder px-3">
                             <img class="w-100 rounded-3" src="/assets/customers/images/event/event-1.jpg"
-                                 alt="Event Image">
+                                 alt="Event Image" loading="lazy">
                         </div>
                         <div class="form-customer px-3 pt-5">
                             <div class="find-item mb-3">
@@ -334,7 +334,7 @@
                                 <div class="col-xl-3 col-lg-4 ps-3 pt-3">
                                     <img ng-src="{{ requestCarDetail.transportations.transportationImg }}"
                                          class="img-fluid rounded-3"
-                                         style="width: 100%;" alt="img-request-car"
+                                         style="width: 100%;" alt="img-request-car" loading="lazy"
                                          onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
                                 </div>
                                 <div class=" col-xl-9 p-3 pb-2 col-lg-8">
@@ -534,7 +534,7 @@
                                                              ng-repeat="img in requestCarDetail.transportations.transportationImagesById">
                                                             <img class="d-block w-100 rounded-2"
                                                                  ng-src="{{ img.imagePath }}"
-                                                                 height="480"
+                                                                 height="480" loading="lazy"
                                                                  onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"
                                                                  alt="Image trans">
                                                         </div>
@@ -562,7 +562,7 @@
                                                      ng-repeat="img in requestCarDetail.transportations.transportationImagesById">
                                                     <div class="img-banner-carousel">
                                                         <img ng-src="{{ img.imagePath }}" width="100" src=""
-                                                             style="height: 130px; width: 100%"
+                                                             style="height: 130px; width: 100%" loading="lazy"
                                                              class="img-fluid rounded-2" alt="">
                                                     </div>
                                                 </div>
@@ -576,7 +576,7 @@
                                                 <div class="p-3" style="background: #f8f9fa">
                                                     <div class="img-until d-flex align-content-center">
                                                         <img ng-src="{{ util.icon }}" class="img-fluid rounded-2"
-                                                             width="44" alt="">
+                                                             width="44" alt="" loading="lazy">
                                                         <p class="fs-1 m-0 fw-bold p-2">{{ util.title }}</p>
                                                     </div>
                                                     <p>{{ util.description }}</p>

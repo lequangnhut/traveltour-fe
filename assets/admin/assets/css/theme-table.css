@@ -328,3 +328,44 @@
         transform: translate(24px, 0);
     }
 }
+
+/* CCS cho tile khi hover vào span ở template của admin */
+table .table-title td span[title] {
+    position: relative;
+    display: inline-block;
+}
+
+.hide-title[title] {
+    display: none;
+}
+
+table .table-title td span[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%; /* Hiển thị title bên trên */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.44);
+    color: #fff;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+table .table-title td span[title]:hover::before {
+    content: "";
+    position: absolute;
+    bottom: 53%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-style: solid;
+    border-width: 5px;
+    border-color: rgba(0, 0, 0, 0.44) transparent transparent transparent;
+}
+
+table .table-title td span[title]:hover::after,
+table .table-title td span[title]:hover::before {
+    opacity: 1;
+}

@@ -67,7 +67,7 @@
                                 </li>
 
                                 <!-- Pagination Numbers -->
-                                <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
                                     ng-class="{active: n === currentPage}">
                                     <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
                                 </li>
@@ -127,15 +127,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="customer in customerList">
+                <tr ng-repeat="customer in customerList" class="table-title">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ customer.id }}</td>
                     <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="{{ customer.fullName }}">{{ customer.fullName }}
                     </td>
-                    <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="{{ customer.email }}">
-                        {{ customer.email }}
+                    <td>
+                        <span title="{{ customer.email }}">
+                            <span>{{ customer.email | limitTo: 15 }}</span>
+                            <span ng-show="customer.email > 15">...</span>
+                        </span>
                     </td>
                     <td>{{ customer.phone || 'Chưa có dữ liệu' }}</td>
                     <td>{{ customer.birth || 'Chưa có dữ liệu' | date: 'dd/MM/yyyy' }}</td>

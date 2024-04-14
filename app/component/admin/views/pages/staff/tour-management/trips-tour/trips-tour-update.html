@@ -136,6 +136,7 @@
                          class="img-fluid rounded-1 cursor-pointer"
                          width="100"
                          alt="avatar ảnh"
+                         loading="lazy"
                          ng-click="openImageModal(tourTrips.placeImage)"
                     >
                 </div>
@@ -164,7 +165,10 @@
 
             <div class="col-12 d-flex justify-content-end mt-5">
                 <button class="btn" type="button" style="margin-right: 20px">
-                    <a class="btn" href="/admin/detail-tour-list/trips-tour-list/{{tourTrips.tourDetailId}}">Trở về</a>
+                    <a class="btn cursor-pointer"
+                       ng-click="redirectPage('/admin/detail-tour-list/trips-tour-list/', tourTrips.tourDetailId)">
+                        Trở về
+                    </a>
                 </button>
                 <button type="submit" class="btn btn-submit fw-bold">
                     Cập nhật
@@ -216,7 +220,8 @@
                                  style="position: absolute; top: 10px; left: 10px; z-index: 100;">
                                 <ul class="list-group">
                                     <li class="list-group-item cursor-pointer"
-                                        ng-repeat="location in suggestedLocations" ng-click="selectLocationTourTrips(location)">
+                                        ng-repeat="location in suggestedLocations"
+                                        ng-click="selectLocationTourTrips(location)">
                                         {{ location }}
                                     </li>
                                 </ul>

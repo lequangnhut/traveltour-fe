@@ -320,6 +320,7 @@ travel_app.controller('RequestCarControllerAG',
                             function redirectScheduleCreate() {
                                 // set tour detail để tạo lịch trình
                                 LocalStorageService.encryptLocalData($scope.tourDetail, 'tourDetail', 'encryptTourDetail');
+                                LocalStorageService.set('currentTabSchedules', 'contract');
                                 $window.location.href = '/business/transport/schedules-management/create-schedules';
                                 $scope.setActiveNavItem('trips-list');
                             }

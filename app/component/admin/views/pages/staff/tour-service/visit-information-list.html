@@ -84,7 +84,7 @@
                                 </li>
 
                                 <!-- Pagination Numbers -->
-                                <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
                                     ng-class="{active: n === currentPage}">
                                     <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
                                 </li>
@@ -237,21 +237,24 @@
                                     <div class="mb-3">
                                         <label class="form-label">Họ và tên của bạn <span
                                                 class="text-danger">*</span></label>
-                                        <input disabled type="text" class="form-control" ng-model="tourGuide.customerName">
+                                        <input disabled type="text" class="form-control"
+                                               ng-model="tourGuide.customerName">
 
                                     </div>
                                     <!-- Form Row 2 for Email -->
                                     <div class="mb-3">
                                         <label class="form-label">email của bạn <span
                                                 class="text-danger">*</span></label>
-                                        <input disabled type="email" class="form-control" ng-model="tourGuide.customerEmail">
+                                        <input disabled type="email" class="form-control"
+                                               ng-model="tourGuide.customerEmail">
 
                                     </div>
                                     <!-- Form Row 3 for Phone Number -->
                                     <div class="mb-3">
                                         <label class="form-label">số điện thoại của bạn <span
                                                 class="text-danger">*</span></label>
-                                        <input disabled type="tel" class="form-control" ng-model="tourGuide.customerPhone">
+                                        <input disabled type="tel" class="form-control"
+                                               ng-model="tourGuide.customerPhone">
                                     </div>
                                 </div>
                             </div>

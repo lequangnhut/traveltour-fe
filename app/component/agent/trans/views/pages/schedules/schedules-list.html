@@ -13,7 +13,7 @@
 
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
-            <a class="nav-link active cursor-pointer" id="pills-false-tab" data-bs-toggle="pill" role="tab"
+            <a class="nav-link cursor-pointer" id="pills-false-tab" data-bs-toggle="pill" role="tab"
                ng-class="{active: currentTab === 'permanent'}"
                ng-click="changeTab('permanent', false)">Xe tuyến cố định</a>
         </li>
@@ -160,12 +160,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="schedule in transportationScheduleList">
+                <tr ng-repeat="schedule in transportationScheduleList" class="table-title">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ schedule.id }}</td>
                     <td>{{ transportationList[schedule.transportationId].licensePlate || 'Đang tải...' }}</td>
-                    <td>{{ schedule.fromLocation }}</td>
-                    <td>{{ schedule.toLocation }}</td>
+                    <td>
+                        <span title="{{ schedule.fromLocation }}">
+                            <span>{{ schedule.fromLocation | limitTo: 8 }}</span>
+                            <span ng-show="schedule.fromLocation.length > 8">...</span>
+                        </span>
+                    </td>
+                    <td>
+                        <span title="{{ schedule.toLocation }}">
+                            <span>{{ schedule.toLocation | limitTo: 8 }}</span>
+                            <span ng-show="schedule.toLocation.length > 8">...</span>
+                        </span>
+                    </td>
                     <td>{{ transportationList[schedule.transportationId].amountSeat + ' Chỗ' || 'Đang tải...' }}</td>
                     <td>{{ schedule.bookedSeat + ' Chỗ' }}</td>
                     <td>{{ schedule.unitPrice | vnCurrency }}</td>
@@ -328,12 +338,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="schedule in transportationScheduleList">
+                <tr ng-repeat="schedule in transportationScheduleList" class="table-title">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ schedule.id }}</td>
                     <td>{{ transportationList[schedule.transportationId].licensePlate || 'Đang tải...' }}</td>
-                    <td>{{ schedule.fromLocation }}</td>
-                    <td>{{ schedule.toLocation }}</td>
+                    <td>
+                        <span title="{{ schedule.fromLocation }}">
+                            <span>{{ schedule.fromLocation | limitTo: 8 }}</span>
+                            <span ng-show="schedule.fromLocation.length > 8">...</span>
+                        </span>
+                    </td>
+                    <td>
+                        <span title="{{ schedule.toLocation }}">
+                            <span>{{ schedule.toLocation | limitTo: 8 }}</span>
+                            <span ng-show="schedule.toLocation.length > 8">...</span>
+                        </span>
+                    </td>
                     <td>{{ transportationList[schedule.transportationId].amountSeat + ' Chỗ' || 'Đang tải...' }}</td>
                     <td>{{ schedule.bookedSeat + ' Chỗ' }}</td>
                     <td>{{ schedule.unitPrice | vnCurrency }}</td>
@@ -546,7 +566,7 @@
                                     <div class="row">
                                         <div class="col-xl-3 p-1" ng-repeat="img in transportationImages">
                                             <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px"
-                                                 ng-src="{{img.imagePath}}"/>
+                                                 loading="lazy" ng-src="{{img.imagePath}}"/>
                                         </div>
                                         <div class="col-12" ng-if="transportationImages.length === 0">
                                             Không có hình ảnh.

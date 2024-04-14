@@ -81,7 +81,8 @@
                                 </li>
 
                                 <!-- Next Page -->
-                                <li class="page-item cursor-pointer" ng-class="{disabled: currentPage === totalPages - 1}">
+                                <li class="page-item cursor-pointer"
+                                    ng-class="{disabled: currentPage === totalPages - 1}">
                                     <a class="page-link" ng-click="setPage(totalPages - 1)">
                                         <i class="fa-solid fa-angles-right"></i>
                                     </a>
@@ -139,20 +140,28 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="tourDetail in tourDetailList">
+                <tr ng-repeat="tourDetail in tourDetailList" class="table-title">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ tourDetail.id }}</td>
                     <td>
-                        <img ng-src="{{tourDetail.tourDetailImagesById[0].tourDetailImg}}" class="cursor-pointer" alt="avatar"
-                             width="55" height="30" title="Xem ảnh xe" ng-click="openImageModalTourDetail(tourDetail.tourDetailImagesById[0].tourDetailImg)"
+                        <img ng-src="{{tourDetail.tourDetailImagesById[0].tourDetailImg}}" class="cursor-pointer"
+                             alt="avatar" width="55" height="30" title="Xem ảnh xe" loading="lazy"
+                             ng-click="openImageModalTourDetail(tourDetail.tourDetailImagesById[0].tourDetailImg)"
                              onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
                     </td>
-                    <td>{{ tourDetail.toursByTourId.tourName }}</td>
+                    <td>
+                        <span title="{{ tourDetail.toursByTourId.tourName }}">
+                            <span>{{ tourDetail.toursByTourId.tourName | limitTo: 15 }}</span>
+                            <span ng-show="tourDetail.toursByTourId.tourName.length > 15">...</span>
+                        </span>
+                    </td>
                     <td>{{ tourDetail.numberOfGuests }}</td>
                     <td>{{ tourDetail.fromLocation }}</td>
-                    <td class="text-truncate" style="max-width: 130px;" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="{{ tourDetail.toLocation }}">
-                        {{ tourDetail.toLocation }}
+                    <td>
+                        <span title="{{ tourDetail.toLocation }}">
+                            <span>{{ tourDetail.toLocation | limitTo: 15 }}</span>
+                            <span ng-show="tourDetail.toLocation.length > 15">...</span>
+                        </span>
                     </td>
                     <td>{{ tourDetail.unitPrice | vnCurrency }}</td>
                     <td ng-if="tourDetail.tourDetailStatus == 1">
@@ -186,8 +195,8 @@
                         >
                             <i class="fa-regular fa-eye"></i>
                         </button>
-                        <a href="/admin/detail-tour-list/trips-tour-list/{{tourDetail.id}}"
-                           role="button" class="fs-1 btn text-primary px-2" title="Lịch trình tour">
+                        <a ng-click="redirectPage('/admin/detail-tour-list/trips-tour-list/', tourDetail.id)"
+                           role="button" class="fs-1 btn text-primary px-2 cursor-pointer" title="Lịch trình tour">
                             <i class="fa-solid fa-calendar-days"></i>
                         </a>
                         <a href="/admin/detail-tour-list/{{tourDetail.id}}/service-list"
@@ -260,10 +269,11 @@
                                         </span>
                                     </p>
                                 </div>
-                                <div class="card-footer d-flex justify-content-center p-3">
-                                    <a href="/admin/basic-tour-list/basic-tour-update/{{ tourDetail.toursByTourId.id }}"
-                                       ng-click="closeModal()"
-                                       class="btn btn-green">Cập nhật thông tin tour</a>
+                                <div class="card-footer d-flex justify-content-center p-3" data-bs-dismiss="modal">
+                                    <a ng-click="redirectPage('/admin/basic-tour-list/basic-tour-update/', tourDetail.toursByTourId.id)"
+                                       class="btn btn-green cursor-pointer">
+                                        Cập nhật thông tin tour
+                                    </a>
                                 </div>
                             </div>
 
@@ -371,9 +381,10 @@
                                         </span>
                                     </p>
                                 </div>
-                                <div class="card-footer d-flex justify-content-center p-3">
-                                    <a role="button" href="admin/detail-tour-list/detail-tour-update/{{tourDetail.id}}"
-                                       ng-click="closeModal()" class="btn btn-green">
+                                <div class="card-footer d-flex justify-content-center p-3" data-bs-dismiss="modal">
+                                    <a role="button" class="btn btn-green"
+                                       ng-click="redirectPage('/admin/detail-tour-list/detail-tour-update/', tourDetail.id)"
+                                    >
                                         Cập nhật tour chi tiết
                                     </a>
                                 </div>
@@ -386,14 +397,15 @@
                                     <div class="row">
                                         <div class="col-xl-3 p-1" ng-repeat="img in tourDetailImage">
                                             <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px"
-                                                 ng-src="{{img.tourDetailImg}}"/>
+                                                 loading="lazy" ng-src="{{img.tourDetailImg}}"/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-center align-items-center">
-                                <a href="/admin/detail-tour-list/image-tour/{{ tourDetail.id }}"
-                                   ng-click="closeModal()" class="btn btn-green">Chỉnh sửa hình ảnh</a>
+                            <div class="d-flex justify-content-center align-items-center" data-bs-dismiss="modal">
+                                <a role="button" class="btn btn-green"
+                                   ng-click="redirectPage('/admin/detail-tour-list/image-tour/', tourDetail.id)"
+                                >Chỉnh sửa hình ảnh</a>
                             </div>
                         </div>
                     </div>

@@ -258,8 +258,15 @@ travel_app.controller('MainController',
                 locationPath.includes('/business/transport/home/update-transport/') ||
                 locationPath.includes('/business/visit/home/update-visit-location/') ||
                 locationPath.includes('/admin/information-update/') ||
-                locationPath.includes('/admin/change-password/')||
+                locationPath.includes('/admin/change-password/') ||
                 locationPath.includes('/admin-account/forgot-pass/')
+            ) {
+                return true;
+            }
+
+            if (
+                $location.path() === '/business/transport/home' ||
+                $location.path() === '/business/select-type'
             ) {
                 return true;
             }
@@ -299,8 +306,15 @@ travel_app.controller('MainController',
                 locationPath.includes('/business/transport/home/update-transport/') ||
                 locationPath.includes('/business/visit/home/update-visit-location/',) ||
                 locationPath.includes('/admin/information-update/') ||
-                locationPath.includes('/admin/change-password/')||
+                locationPath.includes('/admin/change-password/') ||
                 locationPath.includes('/admin-account/forgot-pass/')
+            ) {
+                return {'margin': '0'};
+            }
+
+            if (
+                $location.path() === '/business/transport/home' ||
+                $location.path() === '/business/select-type'
             ) {
                 return {'margin': '0'};
             }
@@ -327,6 +341,7 @@ travel_app.controller('MainController',
             ) {
                 return true;
             }
+
             return $scope.isActive(hidePaths);
         }
 

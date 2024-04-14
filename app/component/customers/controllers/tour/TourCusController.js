@@ -26,7 +26,7 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
         departure: new Date()
     };
 
-    $scope.filters = filters ? { ...defaultFilters, ...filters } : defaultFilters;
+    $scope.filters = filters ? {...defaultFilters, ...filters} : defaultFilters;
 
     if (typeof $scope.filters.departure === 'string') {
         $scope.filters.departure = new Date($scope.filters.departure);
@@ -436,7 +436,9 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
                                                 <div class="fw-bold text-end" style="font-size: 20px">
                                                     ${$scope.formatPrice(tourDetail.unitPrice)} ₫
                                                 </div>
-                                                <a href="#" id="redirectTourDetail" class="btn btn-green w-100 mt-3">Xem chi tiết</a>
+                                                <a href="#" id="redirectTourDetail" class="btn btn-green w-100 mt-3" data-bs-dismiss="modal">
+                                                    Xem chi tiết
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -455,4 +457,8 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
     $scope.closeFormModal = function () {
         $('#formTourModal').modal('hide');
     };
+
+    $scope.$on("$destroy", function () {
+        LocalStorageService.remove('filtersTour');
+    });
 });
