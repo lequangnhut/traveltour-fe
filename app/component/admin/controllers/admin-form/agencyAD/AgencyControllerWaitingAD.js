@@ -3,20 +3,21 @@ travel_app.controller('AgencyControllerWaitingAD', function ($scope, $location, 
     $scope.hasImage = false;
     $scope.loading = true;
     $scope.count = 0;
+
     // Biến để lưu danh sách tỉnh thành
     $scope.provinces = [];
     $scope.districts = [];
     $scope.wards = [];
+
     // Biến để lưu danh sách doanh nghiệp
     $scope.typeList = [];
+
     // Trang hiện tại
     $scope.currentPage = 0;
+
     // Số lượng tours trên mỗi trang
     $scope.pageSize = 5;
-    // Đối tượng duyệt dữ liệu cho các form mới cho form tour
-    // $scope.formType = {
-    //     bedTypeName : null
-    // };
+
     $scope.agent = {
         nameAgency: null,
         representativeName: null,
@@ -164,7 +165,6 @@ travel_app.controller('AgencyControllerWaitingAD', function ($scope, $location, 
                 $scope.isLoading = false;
             });
         }
-        ;
     }
 
     function confirmAccept() {
@@ -182,7 +182,6 @@ travel_app.controller('AgencyControllerWaitingAD', function ($scope, $location, 
         confirmAlert('Bạn có chắc chắn muốn phê duyệt hồ sơ này không ?', confirmAccept);
     }
 
-
     function confirmDeny() {
         AgencyServiceAD.deniedAgency($scope.agent.id).then(function successCallback() {
             toastAlert('success', 'Từ chối hồ sơ thành công !');
@@ -196,5 +195,4 @@ travel_app.controller('AgencyControllerWaitingAD', function ($scope, $location, 
     $scope.deniedThisAgency = function () {
         confirmAlert('Bạn có chắc chắn muốn từ chối hồ sơ này không ?', confirmDeny);
     }
-
 });

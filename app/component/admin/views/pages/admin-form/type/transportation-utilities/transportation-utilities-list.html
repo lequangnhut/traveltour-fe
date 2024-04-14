@@ -124,23 +124,23 @@
                 <tr ng-repeat="util in transportUtilityData">
                     <td>{{ $index + 1 }}</td>
                     <td>
-                        <img ng-src="{{ util.icon }}" class="img-fluid" width="40" alt="icon demo">
+                        <img ng-src="{{ util.icon }}" class="img-fluid" width="40" alt="icon demo" loading="lazy">
                     </td>
                     <td>{{ util.title }}</td>
                     <td>{{ util.description }}</td>
                     <td class="d-flex align-items-center justify-content-center">
-                        <a href="/admin/type/transport-utilities-list/transport-utilities-update/{{util.id}}"
-                           role="button" class="fs-1 btn text-warning px-2">
+                        <a ng-click="redirectPage('/admin/type/transport-utilities-list/transport-utilities-update/', util.id)"
+                           role="button" class="fs-1 btn text-warning px-2 cursor-pointer">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a href="#" ng-click="deleteTransportUtility(util.id)"
-                           role="button" class="fs-1 btn text-danger px-2">
+                        <a ng-click="deleteTransportUtility(util.id)"
+                           role="button" class="fs-1 btn text-danger px-2 cursor-pointer">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
                 </tr>
                 <tr ng-if="transportUtilityData.length === 0">
-                    <td colspan="8">Không có dữ liệu.</td>
+                    <td colspan="8">Trang này không có dữ liệu.</td>
                 </tr>
                 </tbody>
             </table>

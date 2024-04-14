@@ -1,4 +1,4 @@
-travel_app.controller('AgencyControllerInactiveAD', function ($scope, $location, $sce, $rootScope, $routeParams, $timeout, AgencyServiceAD,AgenciesServiceAG) {
+travel_app.controller('AgencyControllerInactiveAD', function ($scope, $location, $sce, $rootScope, $routeParams, $timeout, AgencyServiceAD) {
 
     $scope.hasImage = false;
     $scope.count = 0;
@@ -90,7 +90,8 @@ travel_app.controller('AgencyControllerInactiveAD', function ($scope, $location,
                     $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                     $scope.totalElementsFalse = response.data.data.totalElements;
                 }
-            }, errorCallback).finally(function () {$scope.isLoading = false;
+            }, errorCallback).finally(function () {
+            $scope.isLoading = false;
         });
 
         if (typeId !== undefined && typeId !== null && typeId !== "") {
@@ -100,7 +101,7 @@ travel_app.controller('AgencyControllerInactiveAD', function ($scope, $location,
                         $scope.agent = response.data.data;
                         $rootScope.namenow = $scope.agent.bedTypeName;
                     }
-                }, errorCallback).finally(function (){
+                }, errorCallback).finally(function () {
                 $scope.isLoading = false;
             });
         }
@@ -144,16 +145,18 @@ travel_app.controller('AgencyControllerInactiveAD', function ($scope, $location,
 
     $scope.restoreThisAgency = function (typeId) {
         $scope.isLoading = true;
+
         function confirmRestoreTour() {
             $scope.isLoading = true;
             AgencyServiceAD.restoreAgency(typeId).then(function successCallback() {
                 toastAlert('success', 'Khôi phục thành công !');
                 $scope.getTypeList();
-            }, errorCallback).finally(function (){
+            }, errorCallback).finally(function () {
                 $scope.isLoading = false;
             });
         }
-        confirmAlert('Bạn có chắc chắn muốn khôi phục hoạt động này không ?', confirmRestoreTour);
+
+        confirmAlert('Bạn có chắc chắn muốn khôi phục hoạt động cho này không ?', confirmRestoreTour);
     }
 
     $scope.openModalFalse = function (typeId) {
@@ -173,7 +176,5 @@ travel_app.controller('AgencyControllerInactiveAD', function ($scope, $location,
                 $scope.isLoading = false;
             });
         }
-        ;
     }
-
 });

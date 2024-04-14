@@ -1,26 +1,28 @@
-<div ng-include="'app/component/utils/loading-html.html'"></div>
-
 <style>
-    .close:focus{
-
+    .close:focus {
         outline: 1px dotted #fff !important;
     }
+
     .modal-body {
 
         padding: 0rem !important;
     }
-    .fa-close{
+
+    .fa-close {
         color: #fff;
     }
-    .heading{
+
+    .heading {
 
         font-weight: 500 !important;
     }
-    .subheadings{
+
+    .subheadings {
         margin-top: 3px;
         font-size: 14px;
         color: #9c27b0;
     }
+
     .dots {
         height: 10px;
         width: 10px;
@@ -29,11 +31,13 @@
         display: inline-block;
         margin-right: 5px;
     }
-    .gallery img{
+
+    .gallery img {
 
         margin-right: 10px;
     }
-    .fs-9{
+
+    .fs-9 {
         font-size: 9px;
     }
 
@@ -82,30 +86,32 @@
 
 <div class="container">
     <div class="header-control mb-4">
-        <nav aria-label="breadcrumb" ng-if="roomList.length > 0">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="/admin/post/hotel-post-list">Danh sách khách sạn</a></li>
-                <li class="breadcrumb-item" style="width: 150px"><p>Danh sách phòng</p></li>
-            </ol>
-        </nav>
-        <div class="header-control-center mb-3">
-            <div class="d-flex justify-content-between align-items-center row ">
+        <div class="header-control-center">
+            <div class="d-flex justify-content-between align-items-center row">
                 <div class="col-xl-6 mt-3">
                     <h3 class="color-green fw-bold mb-3">DANH SÁCH LOẠI PHÒNG</h3>
                 </div>
             </div>
         </div>
+
+        <nav aria-label="breadcrumb mb-4">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="/admin/post/hotel-post-list">Danh sách khách sạn</a></li>
+                <li class="breadcrumb-item" style="width: 150px"><p>Danh sách phòng</p></li>
+            </ol>
+        </nav>
+
         <div class="">
             <div class="card card-customer">
                 <div class="row" style="margin: 20px 16px 20px 16px">
                     <div class="col-xl-4">
                         Bạn muốn tìm kiếm gì ?
                         <div class="input-group mb-3">
-          <span class="input-group-text" id="basic-addon1">
-            <a href="#" class="bg-light text-dark">
-              <i class="fa-solid fa-magnifying-glass bg-light"></i>
-            </a>
-          </span>
+                            <span class="input-group-text" id="basic-addon1">
+                               <a href="#" class="bg-light text-dark">
+                                   <i class="fa-solid fa-magnifying-glass bg-light"></i>
+                               </a>
+                            </span>
                             <input type="text" class="form-control"
                                    placeholder="Nhập tên phòng cần tìm"
                                    ng-model="searchTerm" ng-change="searchName()">
@@ -146,7 +152,7 @@
                             </select>
                         </div>
                         <div class="d-flex align-items-center justify-content-end h-100 col-lg-2">
-                            <nav aria-label="Page navigation example float-end">
+                            <nav aria-label="Page navigation example float-end" ng-if="roomList.length > 0">
                                 <ul class="pagination justify-content-center align-items-center">
                                     <li class="page-item" ng-class="{disabled: currentPage === 0}">
                                         <a class="page-link" ng-click="setPage(0)">
@@ -159,9 +165,9 @@
                                     </li>
 
                                     <!-- Pagination Numbers -->
-                                    <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                    <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
                                         ng-class="{active: n === currentPage}">
-                                        <a class="page-link" ng-click="setPage(n)">{{n + 1}}</a>
+                                        <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
                                     </li>
 
                                     <!-- Ellipsis at the end -->
@@ -181,7 +187,7 @@
                     </div>
                 </div>
                 <table class="table table-responsive text-center">
-<!--                    <div ng-include="'app/component/utils/loading-table.html'"></div>-->
+                    <div ng-include="'app/component/utils/loading-table.html'"></div>
                     <thead>
                     <tr class="bg-light">
                         <th scope="col"># <i class="fa-solid fa-sort"></i></th>
@@ -210,10 +216,10 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="rt in roomList">
-                        <td style="font-size: small">{{$index + 1}}</td>
-                        <td>{{rt.roomTypeName}}</td>
-                        <td>{{rt.amountRoom}}</td>
-                        <td>{{rt.price | vnCurrency}}</td>
+                        <td style="font-size: small">{{ $index + 1 }}</td>
+                        <td>{{ rt.roomTypeName }}</td>
+                        <td>{{ rt.amountRoom }}</td>
+                        <td>{{ rt.price | vnCurrency }}</td>
                         <td>
                             <div ng-if="rt.isActive == 1" class="d-flex align-items-center justify-content-center">
                                 <span class="status-success"></span> <span class="text-status-success">Hợp lệ</span>
@@ -230,13 +236,13 @@
                         </td>
                     </tr>
                     <tr ng-if="roomList.length === 0">
-                        <td colspan="8">Không có dữ liệu.</td>
+                        <td colspan="8">Trang này không có dữ liệu.</td>
                     </tr>
                     </tbody>
                 </table>
                 <div class="card-footer">
                     <div class="d-flex justify-content-end">
-                        {{getDisplayRange()}} trong tổng số {{totalElements}}
+                        {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                     </div>
                 </div>
             </div>
@@ -259,10 +265,11 @@
                             <table class="table table-bordered">
                                 <tbody>
                                 <tr>
-                                    <td class="pt-1" colspan="2" >
+                                    <td class="pt-1" colspan="2">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block">Khách sạn quản lý</span>
-                                            <span class="subheadings" style="justify-content: center">{{room.hotelsByHotelId.hotelName || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings"
+                                                  style="justify-content: center">{{ room.hotelsByHotelId.hotelName || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -270,13 +277,13 @@
                                     <td style="width: 50%;" class="pt-1 text-center">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block">Số lượng phòng</span>
-                                            <span class="subheadings">{{room.amountRoom || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings">{{ room.amountRoom || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                     <td style="width: 50%;" class="pt-1 text-center">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block">Giá phòng</span>
-                                            <span class="subheadings">{{(room.price | vnCurrency) || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings">{{ (room.price | vnCurrency) || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -284,30 +291,32 @@
                                     <td style="width: 50%;" class="pt-1 text-center">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block">Số người lớn</span>
-                                            <span class="subheadings">{{room.capacityAdults || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings">{{ room.capacityAdults || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                     <td style="width: 50%;" class="pt-1 text-center">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block">Số trẻ em</span>
-                                            <span class="subheadings">{{room.capacityChildren || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings">{{ room.capacityChildren || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="pt-1" colspan="2" >
+                                    <td class="pt-1" colspan="2">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block">Mô tả của loại phòng</span>
-                                            <span class="subheadings" style="justify-content: center">{{room.roomTypeDescription || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings"
+                                                  style="justify-content: center">{{ room.roomTypeDescription || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="pt-1" colspan="2" >
+                                    <td class="pt-1" colspan="2">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block">Tiện ích phòng</span>
                                             <div class="row">
-                                                <span ng-repeat="u in utilities" style="padding-top: 5px;" class="subheadings col-6" >{{u.roomUtilitiesName}}</span>
+                                                <span ng-repeat="u in utilities" style="padding-top: 5px;"
+                                                      class="subheadings col-6">{{ u.roomUtilitiesName }}</span>
                                             </div>
                                         </div>
                                     </td>
@@ -322,22 +331,31 @@
                                 <div class="carousel slide carousel-fade" id="carouselExampleFade" data-ride="carousel">
                                     <div class="carousel-inner rounded">
                                         <div class="carousel-item active">
-                                            <img class="d-block" style="width: 300px; height: 160px" src="{{room.roomTypeAvatar || 'https://langem.geologia.unam.mx/wp-content/uploads/2018/04/placeholder.png'}}" alt="Third slide">
+                                            <img class="d-block" style="width: 300px; height: 160px"
+                                                 src="{{room.roomTypeAvatar || 'https://langem.geologia.unam.mx/wp-content/uploads/2018/04/placeholder.png'}}"
+                                                 alt="Third slide">
                                         </div>
                                         <div class="carousel-item" ng-repeat="img in roomImageList">
-                                            <img class="d-block" style="width: 300px; height: 160px" ng-src="{{img.roomTypeImg || 'https://langem.geologia.unam.mx/wp-content/uploads/2018/04/placeholder.png'}}" alt="First slide">
+                                            <img class="d-block" style="width: 300px; height: 160px"
+                                                 ng-src="{{img.roomTypeImg || 'https://langem.geologia.unam.mx/wp-content/uploads/2018/04/placeholder.png'}}"
+                                                 alt="First slide">
                                         </div>
                                     </div>
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev" fdprocessedid="7o4it">
+                                    <button class="carousel-control-prev" type="button"
+                                            data-bs-target="#carouselExampleFade" data-bs-slide="prev"
+                                            fdprocessedid="7o4it">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Previous</span>
                                     </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next" fdprocessedid="pheykm">
+                                    <button class="carousel-control-next" type="button"
+                                            data-bs-target="#carouselExampleFade" data-bs-slide="next"
+                                            fdprocessedid="pheykm">
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Next</span>
                                     </button>
                                 </div>
-                                <span class="d-block mb-1 mt-1 font-weight-bold" style="text-transform: uppercase; font-weight: bold">{{room.roomTypeName || 'Đang cập nhật'}}</span>
+                                <span class="d-block mb-1 mt-1 font-weight-bold"
+                                      style="text-transform: uppercase; font-weight: bold">{{ room.roomTypeName || 'Đang cập nhật' }}</span>
                             </div>
                             <div class="about-doctor">
                                 <table class="table table-bordered">
@@ -346,7 +364,7 @@
                                         <td class="pt-1" colspan="2">
                                             <div class="d-flex flex-column">
                                                 <span class="heading d-block">Mã phòng</span>
-                                                <span class="subheadings">{{room.id || 'Đang cập nhật'}}</span>
+                                                <span class="subheadings">{{ room.id || 'Đang cập nhật' }}</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -354,13 +372,13 @@
                                         <td class="pt-1">
                                             <div class="d-flex flex-column">
                                                 <span class="heading d-block">Nhận phòng</span>
-                                                <span class="subheadings">{{(room.checkinTime | convertTime) || 'Đang cập nhật'}}</span>
+                                                <span class="subheadings">{{ (room.checkinTime | convertTime) || 'Đang cập nhật' }}</span>
                                             </div>
                                         </td>
                                         <td class="pt-1">
                                             <div class="d-flex flex-column">
                                                 <span class="heading d-block">Trả phòng</span>
-                                                <span class="subheadings">{{(room.checkoutTime | convertTime) || 'Đang cập nhật'}}</span>
+                                                <span class="subheadings">{{ (room.checkoutTime | convertTime) || 'Đang cập nhật' }}</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -368,15 +386,19 @@
                                         <td class="pt-1">
                                             <div class="d-flex flex-column">
                                                 <span class="heading d-block">Gồm bữa sáng</span>
-                                                <span ng-if="room.breakfastIncluded == true" class="subheadings">Có</span>
-                                                <span ng-if="room.breakfastIncluded == false" class="subheadings">Không</span>
+                                                <span ng-if="room.breakfastIncluded == true"
+                                                      class="subheadings">Có</span>
+                                                <span ng-if="room.breakfastIncluded == false"
+                                                      class="subheadings">Không</span>
                                             </div>
                                         </td>
                                         <td class="pt-1">
                                             <div class="d-flex flex-column">
                                                 <span class="heading d-block">Miễn phí hủy</span>
-                                                <span ng-if="room.freeCancellation == true" class="subheadings">Có</span>
-                                                <span ng-if="room.freeCancellation == false" class="subheadings">Không</span>
+                                                <span ng-if="room.freeCancellation == true"
+                                                      class="subheadings">Có</span>
+                                                <span ng-if="room.freeCancellation == false"
+                                                      class="subheadings">Không</span>
                                             </div>
                                         </td>
                                     </tr>

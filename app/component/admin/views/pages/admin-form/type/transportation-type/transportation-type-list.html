@@ -29,7 +29,8 @@
                 </div>
                 <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
                      style="margin: 20px 0 0 0">
-                    <a href="/admin/type/transportation-type-list/transportation-type-create" class="btn btn-primary fw-bold">
+                    <a href="/admin/type/transportation-type-list/transportation-type-create"
+                       class="btn btn-primary fw-bold">
                         <i class="fa-solid fa-plus" style="margin-right: 10px"></i>
                         Thêm thể loại
                     </a>
@@ -72,9 +73,9 @@
                                 </li>
 
                                 <!-- Pagination Numbers -->
-                                <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
                                     ng-class="{active: n === currentPage}">
-                                    <a class="page-link" ng-click="setPage(n)">{{n + 1}}</a>
+                                    <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
                                 </li>
 
                                 <!-- Ellipsis at the end -->
@@ -97,8 +98,6 @@
                 <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
-                    <th><span><input class="form-check-input checkbox-all" type="checkbox" value="" id=""></span>
-                    </th>
                     <th scope="col"># <i class="fa-solid fa-sort"></i></th>
                     <th ng-click="sortData('id')">
                         <div class="icon-left">ID
@@ -115,29 +114,28 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="type in typeList">
-                    <td><span><input class="form-check-input" type="checkbox" value="" id=""></span></td>
-                    <td>{{$index + 1}}</td>
-                    <td>{{type.id}}</td>
-                    <td>{{type.transportationTypeName}}</td>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ type.id }}</td>
+                    <td>{{ type.transportationTypeName }}</td>
                     <td class="d-flex align-items-center justify-content-center">
-                        <a href="/admin/type/transportation-type-list/transportation-type-update/{{type.id}}"
-                           role="button" class="fs-1 btn text-warning px-2">
+                        <a ng-click="redirectPage('/admin/type/transportation-type-list/transportation-type-update/', type.id)"
+                           role="button" class="fs-1 btn text-warning px-2 cursor-pointer">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a href="" ng-click="deleteType(type.id)"
-                           role="button" class="fs-1 btn text-danger px-2">
+                        <a ng-click="deleteType(type.id)"
+                           role="button" class="fs-1 btn text-danger px-2 cursor-pointer">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
                 </tr>
                 <tr ng-if="typeList.length === 0">
-                    <td colspan="8">Không có dữ liệu.</td>
+                    <td colspan="8">Trang này không có dữ liệu.</td>
                 </tr>
                 </tbody>
             </table>
             <div class="card-footer">
                 <div class="d-flex justify-content-end">
-                    {{getDisplayRange()}} trong tổng số {{totalElements}}
+                    {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                 </div>
             </div>
         </div>

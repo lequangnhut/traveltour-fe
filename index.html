@@ -507,16 +507,19 @@
 
                                 <!-- QUẢN LÝ DOANG NGHIỆP - List-->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'agency-list'}"
                                        ng-click="setActiveNavItem('agency-list')"
-                                       href="/admin/agency/agency-list">
+                                       href="/admin/agency/agency-list"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-briefcase"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Thông tin doanh nghiệp</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                <i class="fa-solid fa-briefcase"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Thông tin doanh nghiệp</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -524,18 +527,21 @@
                                 <!-- QUẢN LÝ DOANG NGHIỆP - List-->
                                 <div class="nav-item-wrapper" ng-controller="AgencyControllerAD"
                                      ng-init="updateWaitingCount()">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'register-list'}"
                                        ng-click="setActiveNavItem('register-list')"
-                                       href="/admin/agency/agency-list-check">
+                                       href="/admin/agency/agency-list-check"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-file-signature"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Chờ phê duyệt</span>
-                                            <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
-                                                  style="font-size: 6px;margin-bottom: 4px" ng-if="count > 0">
+                                            <span class="nav-link-icon">
+                                                <i class="fa-solid fa-file-signature"></i>
                                             </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Chờ phê duyệt</span>
+                                                <span class="fa-solid fa-circle text-info ms-1 new-page-indicator"
+                                                      style="font-size: 6px;margin-bottom: 4px" ng-if="count > 0">
+                                                </span>
                                             </span>
                                         </div>
                                     </a>
@@ -546,46 +552,55 @@
                                 <hr class="navbar-vertical-line"/>
 
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'hotel-post-list'}"
                                        ng-click="setActiveNavItem('hotel-post-list')"
-                                       href="/admin/post/hotel-post-list">
+                                       href="/admin/post/hotel-post-list"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-hotel"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Thông tin khách sạn</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                <i class="fa-solid fa-hotel"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Thông tin khách sạn</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
 
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'brand-post-list'}"
                                        ng-click="setActiveNavItem('brand-post-list')"
-                                       href="/admin/post/brand-post-list">
+                                       href="/admin/post/brand-post-list"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-car"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Thông tin phương tiện</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                <i class="fa-solid fa-car"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Thông tin phương tiện</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
 
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'visit-post-list'}"
                                        ng-click="setActiveNavItem('visit-post-list')"
-                                       href="/admin/post/visit-post-list">
+                                       href="/admin/post/visit-post-list"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-hippo"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Thông tin tham quan</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                <i class="fa-solid fa-hippo"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Thông tin tham quan</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -596,126 +611,150 @@
 
                                 <!-- Thể loại tour-->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'tour-list'}"
                                        ng-click="setActiveNavItem('tour-list')"
-                                       href="/admin/type/tour-type-list">
+                                       href="/admin/type/tour-type-list"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-umbrella-beach"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Danh mục tour</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                 <i class="fa-solid fa-umbrella-beach"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Danh mục tour</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
 
                                 <!-- Thể loại lưu trú -->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'hotel-type'}"
                                        ng-click="setActiveNavItem('hotel-type')"
-                                       href="/admin/type/hotel-type-list">
+                                       href="/admin/type/hotel-type-list"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-house"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Danh mục lưu trú</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                 <i class="fa-solid fa-house"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Danh mục lưu trú</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
 
                                 <!-- Thể loại địa điểm -->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'location-type'}"
                                        ng-click="setActiveNavItem('location-type')"
-                                       href="/admin/type/visit-location-type-list">
+                                       href="/admin/type/visit-location-type-list"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-location-dot"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Danh mục địa điểm</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                 <i class="fa-solid fa-location-dot"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Danh mục địa điểm</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
 
                                 <!-- Thể loại phương tiện -->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'transportation-type'}"
                                        ng-click="setActiveNavItem('transportation-type')"
-                                       href="/admin/type/transportation-type-list">
+                                       href="/admin/type/transportation-type-list"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-van-shuttle"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Danh mục phương tiện</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                 <i class="fa-solid fa-van-shuttle"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Danh mục phương tiện</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
 
                                 <!-- Thể loại tiện ích xe -->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'transport-utilities'}"
                                        ng-click="setActiveNavItem('transport-utilities')"
-                                       href="/admin/type/transport-utilities-list">
+                                       href="/admin/type/transport-utilities-list"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-bus"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Danh mục tiện ích xe khách</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                 <i class="fa-solid fa-bus"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Danh mục tiện ích xe khách</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
 
                                 <!-- Thể loại tiện ích lưu trú -->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'hotel-utility'}"
                                        ng-click="setActiveNavItem('hotel-utility')"
-                                       href="/admin/type/hotel-utility-list">
+                                       href="/admin/type/hotel-utility-list"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-mug-saucer"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Danh mục tiện ích lưu trú</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                 <i class="fa-solid fa-mug-saucer"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Danh mục tiện ích lưu trú</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
                                 <!-- Thể loại tiện ích phòng -->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'room-utility'}"
                                        ng-click="setActiveNavItem('room-utility')"
-                                       href="/admin/type/room-utility-list">
+                                       href="/admin/type/room-utility-list"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-fan"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Danh mục tiện ích phòng</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                 <i class="fa-solid fa-fan"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Danh mục tiện ích phòng</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
                                 <!-- Thể loại tiện ích giường -->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'bed-type'}"
                                        ng-click="setActiveNavItem('bed-type')"
-                                       href="/admin/type/bed-type-list">
+                                       href="/admin/type/bed-type-list"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-bed"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Danh mục giường</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                 <i class="fa-solid fa-bed"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Danh mục giường</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -726,16 +765,19 @@
 
                                 <!-- Thể loại tiện ích lưu trú -->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'revenue'}"
                                        ng-click="setActiveNavItem('revenue')"
-                                       href="/admin/report/revenue">
+                                       href="/admin/report/revenue"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-money-bill-wave"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Doanh thu</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                <i class="fa-solid fa-money-bill-wave"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Doanh thu</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -748,10 +790,12 @@
                                        href="/admin/report/statistical">
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-chart-simple"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Thống kê</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                <i class="fa-solid fa-chart-simple"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Thống kê</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -769,11 +813,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="aperture"></span>
-                                        </span>
+                                                <span data-feather="aperture"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Chào quý doanh nghiệp</span>
-                                        </span>
+                                                <span class="nav-link-text">Chào quý doanh nghiệp</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -792,11 +836,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="book"></span>
-                                        </span>
+                                                <span data-feather="book"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Danh sách booking</span>
-                                        </span>
+                                                <span class="nav-link-text">Danh sách booking</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -811,11 +855,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="columns"></span>
-                                        </span>
+                                                <span data-feather="columns"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Quản lí phòng khách sạn</span>
-                                        </span>
+                                                <span class="nav-link-text">Quản lí phòng khách sạn</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -828,10 +872,8 @@
                                     <a class="nav-link label-1" href="/business/hotel/chat">
                                         <div class="d-flex align-items-center">
                                             <span class="nav-link-icon">
-                                            <span data-feather="message-square">
+                                                <span data-feather="message-square"></span>
                                             </span>
-
-                                        </span>
                                             <span class="nav-link-text-wrapper">
                                                 <span class="nav-link-text">Tin nhắn</span>
                                             </span>
@@ -859,11 +901,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="home"></span>
-                                        </span>
+                                                <span data-feather="home"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Giảm giá khách sạn</span>
-                                        </span>
+                                                <span class="nav-link-text">Giảm giá khách sạn</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -882,11 +924,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="bar-chart"></span>
-                                        </span>
+                                                <span data-feather="bar-chart"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Thống kê đánh giá</span>
-                                        </span>
+                                                <span class="nav-link-text">Thống kê đánh giá</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -901,11 +943,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="bar-chart-2"></span>
-                                        </span>
+                                                <span data-feather="bar-chart-2"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Thống kê khách sạn</span>
-                                        </span>
+                                                <span class="nav-link-text">Thống kê khách sạn</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -920,11 +962,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="home"></span>
-                                        </span>
+                                                <span data-feather="home"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Quản lý khách sạn</span>
-                                        </span>
+                                                <span class="nav-link-text">Quản lý khách sạn</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -935,11 +977,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="rotate-ccw"></span>
-                                        </span>
+                                                <span data-feather="rotate-ccw"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Quay về trang chủ</span>
-                                        </span>
+                                                <span class="nav-link-text">Quay về trang chủ</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -957,11 +999,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="aperture"></span>
-                                        </span>
+                                                <span data-feather="aperture"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Chào quý doanh nghiệp</span>
-                                        </span>
+                                                <span class="nav-link-text">Chào quý doanh nghiệp</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -980,11 +1022,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="inbox"></span>
-                                        </span>
+                                                <span data-feather="inbox"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Danh sách phương tiện</span>
-                                        </span>
+                                                <span class="nav-link-text">Danh sách phương tiện</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -999,11 +1041,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="map"></span>
-                                        </span>
+                                                <span data-feather="map"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Danh sách lịch trình</span>
-                                        </span>
+                                                <span class="nav-link-text">Danh sách lịch trình</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -1022,11 +1064,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <i class="fa-regular fa-comments"></i>
-                                        </span>
+                                                <i class="fa-regular fa-comments"></i>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Yêu cầu về chuyến xe</span>
-                                        </span>
+                                                <span class="nav-link-text">Yêu cầu về chuyến xe</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -1041,11 +1083,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <i class="fa-solid fa-clock-rotate-left"></i>
-                                        </span>
+                                                <i class="fa-solid fa-clock-rotate-left"></i>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Lịch sử gửi yêu cầu</span>
-                                        </span>
+                                                <span class="nav-link-text">Lịch sử gửi yêu cầu</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -1062,11 +1104,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="home"></span>
-                                        </span>
+                                                <span data-feather="home"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Quản lý phương tiện</span>
-                                        </span>
+                                                <span class="nav-link-text">Quản lý phương tiện</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -1077,11 +1119,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="rotate-ccw"></span>
-                                        </span>
+                                                <span data-feather="rotate-ccw"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Quay về trang chủ</span>
-                                        </span>
+                                                <span class="nav-link-text">Quay về trang chủ</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -1099,11 +1141,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="aperture"></span>
-                                        </span>
+                                                <span data-feather="aperture"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Chào quý doanh nghiệp</span>
-                                        </span>
+                                                <span class="nav-link-text">Chào quý doanh nghiệp</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -1122,11 +1164,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="credit-card"></span>
-                                        </span>
+                                                <span data-feather="credit-card"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Danh sách vé tham quan</span>
-                                        </span>
+                                                <span class="nav-link-text">Danh sách vé tham quan</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -1144,11 +1186,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="external-link"></span>
-                                        </span>
+                                                <span data-feather="external-link"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Danh sách booking</span>
-                                        </span>
+                                                <span class="nav-link-text">Danh sách booking</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -1165,11 +1207,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="home"></span>
-                                        </span>
+                                                <span data-feather="home"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Quản lý tham quan</span>
-                                        </span>
+                                                <span class="nav-link-text">Quản lý tham quan</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -1180,11 +1222,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                            <span data-feather="rotate-ccw"></span>
-                                        </span>
+                                                <span data-feather="rotate-ccw"></span>
+                                            </span>
                                             <span class="nav-link-text-wrapper">
-                                            <span class="nav-link-text">Quay về trang chủ</span>
-                                        </span>
+                                                <span class="nav-link-text">Quay về trang chủ</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -1197,64 +1239,76 @@
 
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'guide-perfect'}"
                                        ng-click="setActiveNavItem('guide-perfect')"
-                                       href="/admin/guide-perfect">
+                                       href="/admin/guide-perfect"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-circle-check"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Các tour đã đi</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                <i class="fa-solid fa-circle-check"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Các tour đã đi</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
 
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'guide-continuos'}"
                                        ng-click="setActiveNavItem('guide-continuos')"
-                                       href="/admin/guide-continuous">
+                                       href="/admin/guide-continuous"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-person-walking-luggage"></i>
+                                            <span class="nav-link-icon">
+                                                <i class="fa-solid fa-person-walking-luggage"></i>
+                                            </span>
                                             <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Các tour đang đi</span>
-                                        </span>
+                                                <span class="nav-link-text">Các tour đang đi</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
 
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'guide-future'}"
                                        ng-click="setActiveNavItem('guide-future')"
-                                       href="/admin/guide-future">
+                                       href="/admin/guide-future"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-regular fa-hourglass-half"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Các tour chưa đi</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                <i class="fa-regular fa-hourglass-half"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Các tour chưa đi</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
 
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1"
+                                    <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'guide-cancel'}"
                                        ng-click="setActiveNavItem('guide-cancel')"
-                                       href="/admin/guide-cancel">
+                                       href="/admin/guide-cancel"
+                                    >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
-                                            <i class="fa-solid fa-rectangle-xmark"></i>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
-                                            <span class="nav-link-text">Các tour đã hủy</span>
-                                        </span>
+                                            <span class="nav-link-icon">
+                                                <i class="fa-solid fa-rectangle-xmark"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Các tour đã hủy</span>
+                                            </span>
                                         </div>
                                     </a>
                                 </div>
@@ -1366,7 +1420,7 @@
                         </div>
                     </li>
 
-                    <li  ng-if="!hasRole('ROLE_ADMIN')" class="nav-item dropdown">
+                    <li ng-if="!hasRole('ROLE_ADMIN')" class="nav-item dropdown">
                         <a class="nav-link" href="#" style="min-width: 2.5rem" role="button" data-bs-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside">
                             <span data-feather="bell" style="height:20px;width:20px;"></span>
@@ -1462,7 +1516,7 @@
                         ng-controller="NotificationControllerAD">
                         <a class="nav-link" href="#" style="min-width: 2.5rem;" role="button" data-bs-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside">
-                            <span data-feather="bell" style="height:20px;width:20px;color:#B197FC;"></span>
+                            <span data-feather="bell" style="height:20px;width:20px;"></span>
                             <sup>
                                 <i class="fa-solid fa-circle fa-rotate-90 fa-2xs"
                                    style="color: #fe3939;" ng-if="showNotifications === true"></i>
@@ -1474,9 +1528,6 @@
                                 <div class="card-header p-2">
                                     <div class="d-flex justify-content-between">
                                         <h5 class="text-black mb-0">Thông báo</h5>
-                                        <!--                                        <button class="btn btn-link p-0 fs&#45;&#45;1 fw-normal" type="button">-->
-                                        <!--                                            Đánh dấu đã đọc-->
-                                        <!--                                        </button>-->
                                     </div>
                                 </div>
                                 <div class="card-body p-0">
@@ -1488,7 +1539,7 @@
                                             </a>
                                             <div ng-if="allNotification.length > 0"
                                                  class="px-2 px-sm-3 py-3 border-300 notification-card position-relative unread border-bottom"
-                                                 ng-style="{'background-color': notification.isSeen ? 'rgb(198 245 214 / 45%)' : 'white'}"
+                                                 ng-style="{'background-color': notification.isSeen ? 'white' : 'rgb(198 245 214 / 45%)'}"
                                                  ng-repeat="notification in visibleNotifications">
                                                 <div class="d-flex align-items-center justify-content-between position-relative"
                                                 >

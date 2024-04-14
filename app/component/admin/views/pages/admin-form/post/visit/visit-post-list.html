@@ -1,24 +1,26 @@
-<div ng-include="'app/component/utils/loading-html.html'"></div>
-
 <style>
-    .close:focus{
-
+    .close:focus {
         outline: 1px dotted #fff !important;
     }
+
     .modal-body {
 
         padding: 0rem !important;
     }
-    .fa-close{
+
+    .fa-close {
         color: #fff;
     }
-    .heading{
+
+    .heading {
         font-weight: 500 !important;
     }
-    .subheadings{
+
+    .subheadings {
         font-size: 14px;
         color: #9c27b0;
     }
+
     .dots {
         height: 10px;
         width: 10px;
@@ -27,11 +29,13 @@
         display: inline-block;
         margin-right: 5px;
     }
-    .gallery img{
+
+    .gallery img {
 
         margin-right: 10px;
     }
-    .fs-9{
+
+    .fs-9 {
         font-size: 9px;
     }
 
@@ -80,7 +84,7 @@
 
 <div class="container">
     <div class="header-control mb-4">
-        <div class="header-control-center mb-3">
+        <div class="header-control-center mb-4">
             <div class="d-flex justify-content-between align-items-center row ">
                 <div class="col-xl-6 mt-3">
                     <h3 class="color-green fw-bold">QUẢN LÝ ĐỊA ĐIỂM GIẢI TRÍ</h3>
@@ -93,11 +97,11 @@
                     <div class="col-xl-4">
                         Bạn muốn tìm kiếm gì ?
                         <div class="input-group mb-3">
-          <span class="input-group-text" id="basic-addon1">
-            <a href="#" class="bg-light text-dark">
-              <i class="fa-solid fa-magnifying-glass bg-light"></i>
-            </a>
-          </span>
+                              <span class="input-group-text" id="basic-addon1">
+                                <a href="#" class="bg-light text-dark">
+                                  <i class="fa-solid fa-magnifying-glass bg-light"></i>
+                                </a>
+                              </span>
                             <input type="text" class="form-control"
                                    placeholder="Nhập tên địa điểm cần tìm"
                                    ng-model="searchTerm" ng-change="searchName()">
@@ -138,7 +142,7 @@
                             </select>
                         </div>
                         <div class="d-flex align-items-center justify-content-end h-100 col-lg-2">
-                            <nav aria-label="Page navigation example float-end">
+                            <nav aria-label="Page navigation example float-end" ng-if="visitPostList.length > 0">
                                 <ul class="pagination justify-content-center align-items-center">
                                     <li class="page-item" ng-class="{disabled: currentPage === 0}">
                                         <a class="page-link" ng-click="setPage(0)">
@@ -151,9 +155,9 @@
                                     </li>
 
                                     <!-- Pagination Numbers -->
-                                    <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                    <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
                                         ng-class="{active: n === currentPage}">
-                                        <a class="page-link" ng-click="setPage(n)">{{n + 1}}</a>
+                                        <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
                                     </li>
 
                                     <!-- Ellipsis at the end -->
@@ -173,7 +177,7 @@
                     </div>
                 </div>
                 <table class="table table-responsive text-center">
-<!--                    <div ng-include="'app/component/utils/loading-table.html'"></div>-->
+                    <div ng-include="'app/component/utils/loading-table.html'"></div>
                     <thead>
                     <tr class="bg-light">
                         <th scope="col"># <i class="fa-solid fa-sort"></i></th>
@@ -202,15 +206,17 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="vi in visitPostList">
-                        <td style="font-size: small">{{$index + 1}}</td>
-                        <td>{{vi.id}}</td>
-                        <td>{{vi.visitLocationName || 'Đang cập nhật'}}</td>
-                        <td>{{(vi.district || 'Đang cập nhật') + ', ' + (vi.province || 'Đang cập nhật')}}</td>
+                        <td style="font-size: small">{{ $index + 1 }}</td>
+                        <td>{{ vi.id }}</td>
+                        <td>{{ vi.visitLocationName || 'Đang cập nhật' }}</td>
+                        <td>{{ (vi.district || 'Đang cập nhật') + ', ' + (vi.province || 'Đang cập nhật') }}</td>
                         <td>
-                            <div ng-if="vi.isAccepted === true" class="d-flex align-items-center justify-content-center">
+                            <div ng-if="vi.isAccepted === true"
+                                 class="d-flex align-items-center justify-content-center">
                                 <span class="status-success"></span> <span class="text-status-success">Hợp lệ</span>
                             </div>
-                            <div ng-if="vi.isAccepted === false" class="d-flex align-items-center justify-content-center">
+                            <div ng-if="vi.isAccepted === false"
+                                 class="d-flex align-items-center justify-content-center">
                                 <span class="status-error"></span> <span class="text-status-error">Không hợp lệ</span>
                             </div>
                         </td>
@@ -228,7 +234,7 @@
                 </table>
                 <div class="card-footer">
                     <div class="d-flex justify-content-end">
-                        {{getDisplayRange()}} trong tổng số {{totalElements}}
+                        {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                     </div>
                 </div>
             </div>
@@ -255,7 +261,7 @@
                                     <td style="padding-top: 0px;" colspan="2" class="pt-1">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block">Doanh nghiệp quản lý</span>
-                                            <span class="subheadings">{{locate.agencies.nameAgency || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings">{{ locate.agencies.nameAgency || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -263,7 +269,7 @@
                                     <td style="padding-top: 0px;" colspan="2" class="pt-1">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block">Địa chỉ khu tham quan</span>
-                                            <span class="subheadings">{{(locate.address || 'Đang cập nhật') + ', ' + (locate.ward || 'Đang cập nhật') + ', ' + (locate.district || 'Đang cập nhật') + ', ' + (locate.province || 'Đang cập nhật')}}</span>
+                                            <span class="subheadings">{{ (locate.address || 'Đang cập nhật') + ', ' + (locate.ward || 'Đang cập nhật') + ', ' + (locate.district || 'Đang cập nhật') + ', ' + (locate.province || 'Đang cập nhật') }}</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -271,13 +277,13 @@
                                     <td style="width: 50%; padding-top: 0px;" class="pt-1">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block">Số điện thoại</span>
-                                            <span class="subheadings">{{locate.phone || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings">{{ locate.phone || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                     <td style="width: 50%; padding-top: 0px;" class="pt-1">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block">Website</span>
-                                            <span class="subheadings">{{locate.urlWebsite || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings">{{ locate.urlWebsite || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -285,45 +291,48 @@
                                     <td style="width: 50%; padding-top: 0px;" class="pt-1">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block">Loại hình tham quan</span>
-                                            <span class="subheadings">{{locate.visitLocationTypes.visitLocationTypeName || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings">{{ locate.visitLocationTypes.visitLocationTypeName || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                     <td style="width: 50%; padding-top: 0px;" class="pt-1">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block">Ngày đăng ký</span>
-                                            <span class="subheadings">{{(locate.dateCreated | vietnameseDateTime) || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings">{{ (locate.dateCreated | vietnameseDateTime) || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <table class="table table-bordered" >
+                                    <table class="table table-bordered">
                                         <thead>
                                         <tr style="text-align: center;">
                                             <th class="heading">
-                                                STT</th>
+                                                STT
+                                            </th>
                                             <th class="heading">
-                                                Loại vé</th>
+                                                Loại vé
+                                            </th>
                                             <th class="heading">
-                                                Giá vé</th>
+                                                Giá vé
+                                            </th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            <tr style="text-align: center;" ng-repeat="tic in ticketList">
-                                                <td style="padding: 0px" class="pt-1">
-                                                    <span class="subheadings">{{$index + 1}}</span>
-                                                </td>
-                                                <td style="padding: 0px" class="pt-1">
-                                                    <span class="subheadings">{{tic.ticketTypeName || 'Đang cập nhật'}}</span>
-                                                </td>
-                                                <td style="padding: 0px" class="pt-1">
-                                                    <span class="subheadings">{{(tic.unitPrice | vnCurrency) || 'Đang cập nhật'}}</span>
-                                                </td>
-                                            </tr>
-                                            <tr style="text-align: center;" ng-if="ticketList.length === 0">
-                                                <td style="padding: 0px" colspan="3" class="pt-1">
-                                                    <span class="subheadings">Không có vé để hiển thị</span>
-                                                </td>
-                                            </tr>
+                                        <tr style="text-align: center;" ng-repeat="tic in ticketList">
+                                            <td style="padding: 0px" class="pt-1">
+                                                <span class="subheadings">{{ $index + 1 }}</span>
+                                            </td>
+                                            <td style="padding: 0px" class="pt-1">
+                                                <span class="subheadings">{{ tic.ticketTypeName || 'Đang cập nhật' }}</span>
+                                            </td>
+                                            <td style="padding: 0px" class="pt-1">
+                                                <span class="subheadings">{{ (tic.unitPrice | vnCurrency) || 'Đang cập nhật' }}</span>
+                                            </td>
+                                        </tr>
+                                        <tr style="text-align: center;" ng-if="ticketList.length === 0">
+                                            <td style="padding: 0px" colspan="3" class="pt-1">
+                                                <span class="subheadings">Không có vé để hiển thị</span>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                     <td>
@@ -335,8 +344,10 @@
                     <div class="col-md-5">
                         <div class="p-2 text-center">
                             <div class="profile">
-                                <img ng-src="{{locate.visitLocationImage || 'https://langem.geologia.unam.mx/wp-content/uploads/2018/04/placeholder.png'}}" width="180" class="img-thumbnail">
-                                <span class="d-block  mt-2 mb-2 font-weight-bold" style="text-transform: uppercase; font-weight: bold">{{locate.visitLocationName || 'Đang cập nhật'}}</span>
+                                <img ng-src="{{locate.visitLocationImage || 'https://langem.geologia.unam.mx/wp-content/uploads/2018/04/placeholder.png'}}"
+                                     width="180" class="img-thumbnail">
+                                <span class="d-block  mt-2 mb-2 font-weight-bold"
+                                      style="text-transform: uppercase; font-weight: bold">{{ locate.visitLocationName || 'Đang cập nhật' }}</span>
                             </div>
                             <div class="about-doctor">
                                 <table class="table table-bordered">
@@ -345,7 +356,7 @@
                                         <td colspan="2" class="pt-1">
                                             <div class="d-flex flex-column">
                                                 <span class="heading d-block">Mã địa điểm</span>
-                                                <span class="subheadings">{{locate.id || 'Đang cập nhật'}}</span>
+                                                <span class="subheadings">{{ locate.id || 'Đang cập nhật' }}</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -353,13 +364,13 @@
                                         <td style="padding-top: 0px;" class="pt-1">
                                             <div class="d-flex flex-column">
                                                 <span class="heading d-block">Mở cửa</span>
-                                                <span class="subheadings">{{locate.openingTime || 'Đang cập nhật'}}</span>
+                                                <span class="subheadings">{{ locate.openingTime || 'Đang cập nhật' }}</span>
                                             </div>
                                         </td>
                                         <td style="padding-top: 0px;" class="pt-1">
                                             <div class="d-flex flex-column">
                                                 <span class="heading d-block">Đóng cửa</span>
-                                                <span class="subheadings">{{locate.closingTime || 'Đang cập nhật'}}</span>
+                                                <span class="subheadings">{{ locate.closingTime || 'Đang cập nhật' }}</span>
                                             </div>
                                         </td>
                                     </tr>

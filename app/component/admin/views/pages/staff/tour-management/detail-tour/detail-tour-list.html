@@ -144,9 +144,9 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ tourDetail.id }}</td>
                     <td>
-                        <img ng-src="{{tourDetail.tourDetailImagesById[0].tourDetailImg}}" class="cursor-pointer"
-                             alt="avatar" width="55" height="30" title="Xem ảnh xe" loading="lazy"
-                             ng-click="openImageModalTourDetail(tourDetail.tourDetailImagesById[0].tourDetailImg)"
+                        <img ng-src="{{tourDetail.tourDetailImagesById[0].tourDetailImg}}" loading="lazy"
+                             class="cursor-pointer rounded-2" alt="avatar" width="55" height="30" title="Xem ảnh xe"
+                             ng-click="openImageModal(tourDetail.tourDetailImagesById[0].tourDetailImg)"
                              onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
                     </td>
                     <td>
@@ -396,7 +396,8 @@
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-xl-3 p-1" ng-repeat="img in tourDetailImage">
-                                            <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px" loading="lazy"
+                                            <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px"
+                                                 loading="lazy"
                                                  loading="lazy" ng-src="{{img.tourDetailImg}}"/>
                                         </div>
                                     </div>
@@ -423,15 +424,14 @@
 
 <!-- Modal -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="imageModalLabel">Ảnh tour chi tiết</h5>
+                <h5 class="modal-title" id="imageModalLabel">Hình ảnh tour</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <img id="modalImage" class="img-fluid"
-                     onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
+                <img src="" id="modalImage" class="img-fluid" alt="Ảnh phương tiện">
             </div>
         </div>
     </div>

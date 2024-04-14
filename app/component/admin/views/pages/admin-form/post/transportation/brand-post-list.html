@@ -1,25 +1,28 @@
-<div ng-include="'app/component/utils/loading-html.html'"></div>
-
 <style>
-    .close:focus{
+    .close:focus {
 
         outline: 1px dotted #fff !important;
     }
+
     .modal-body {
 
         padding: 0rem !important;
     }
-    .fa-close{
+
+    .fa-close {
         color: #fff;
     }
-    .heading{
+
+    .heading {
 
         font-weight: 500 !important;
     }
-    .subheadings{
+
+    .subheadings {
         font-size: 14px;
         color: #9c27b0;
     }
+
     .dots {
         height: 10px;
         width: 10px;
@@ -28,11 +31,13 @@
         display: inline-block;
         margin-right: 5px;
     }
-    .gallery img{
+
+    .gallery img {
 
         margin-right: 10px;
     }
-    .fs-9{
+
+    .fs-9 {
         font-size: 9px;
     }
 
@@ -81,7 +86,7 @@
 
 <div class="container">
     <div class="header-control mb-4">
-        <div class="header-control-center mb-3">
+        <div class="header-control-center mb-4">
             <div class="d-flex justify-content-between align-items-center row ">
                 <div class="col-xl-6 mt-3">
                     <h3 class="color-green fw-bold">QUẢN LÝ PHƯƠNG TIỆN</h3>
@@ -94,11 +99,11 @@
                     <div class="col-xl-4">
                         Bạn muốn tìm kiếm gì ?
                         <div class="input-group mb-3">
-          <span class="input-group-text" id="basic-addon1">
-            <a href="#" class="bg-light text-dark">
-              <i class="fa-solid fa-magnifying-glass bg-light"></i>
-            </a>
-          </span>
+                              <span class="input-group-text" id="basic-addon1">
+                                <a href="#" class="bg-light text-dark">
+                                  <i class="fa-solid fa-magnifying-glass bg-light"></i>
+                                </a>
+                              </span>
                             <input type="text" class="form-control"
                                    placeholder="Nhập tên hãng xe cần tìm"
                                    ng-model="searchTerm" ng-change="searchName()">
@@ -112,7 +117,7 @@
         </div>
         <div class="table-components table-responsive mb-5">
             <div class="card table-responsive table-customer">
-                <div class="card-header ">
+                <div class="card-header">
                     <div class="row">
                         <div class="mt-2 h4 col-lg-5 d-flex align-items-center h-100">
                             <div class="d-flex align-items-center">
@@ -139,7 +144,7 @@
                             </select>
                         </div>
                         <div class="d-flex align-items-center justify-content-end h-100 col-lg-2">
-                            <nav aria-label="Page navigation example float-end">
+                            <nav aria-label="Page navigation example float-end" ng-if="brandPostList.length > 0">
                                 <ul class="pagination justify-content-center align-items-center">
                                     <li class="page-item" ng-class="{disabled: currentPage === 0}">
                                         <a class="page-link" ng-click="setPage(0)">
@@ -152,9 +157,9 @@
                                     </li>
 
                                     <!-- Pagination Numbers -->
-                                    <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                    <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
                                         ng-class="{active: n === currentPage}">
-                                        <a class="page-link" ng-click="setPage(n)">{{n + 1}}</a>
+                                        <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
                                     </li>
 
                                     <!-- Ellipsis at the end -->
@@ -174,7 +179,7 @@
                     </div>
                 </div>
                 <table class="table table-responsive text-center">
-<!--                    <div ng-include="'app/component/utils/loading-table.html'"></div>-->
+                    <div ng-include="'app/component/utils/loading-table.html'"></div>
                     <thead>
                     <tr class="bg-light">
                         <th scope="col"># <i class="fa-solid fa-sort"></i></th>
@@ -203,15 +208,17 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="br in brandPostList">
-                        <td style="font-size: small">{{$index + 1}}</td>
-                        <td>{{br.transportationBrandName || 'Đang cập nhật'}}</td>
-                        <td>{{br.agencies.nameAgency || 'Đang cập nhật'}}</td>
-                        <td>{{(br.dateCreated | vietnameseDateTime) || 'Đang cập nhật'}}</td>
+                        <td style="font-size: small">{{ $index + 1 }}</td>
+                        <td>{{ br.transportationBrandName || 'Đang cập nhật' }}</td>
+                        <td>{{ br.agencies.nameAgency || 'Đang cập nhật' }}</td>
+                        <td>{{ (br.dateCreated | vietnameseDateTime) || 'Đang cập nhật' }}</td>
                         <td>
-                            <div ng-if="br.isAccepted === true" class="d-flex align-items-center justify-content-center">
+                            <div ng-if="br.isAccepted === true"
+                                 class="d-flex align-items-center justify-content-center">
                                 <span class="status-success"></span> <span class="text-status-success">Hợp lệ</span>
                             </div>
-                            <div ng-if="br.isAccepted === false" class="d-flex align-items-center justify-content-center">
+                            <div ng-if="br.isAccepted === false"
+                                 class="d-flex align-items-center justify-content-center">
                                 <span class="status-error"></span> <span class="text-status-error">Không hợp lệ</span>
                             </div>
                         </td>
@@ -220,20 +227,21 @@
                                title="Xem hồ sơ">
                                 <i class="fa-regular fa-newspaper"></i>
                             </a>
-                            <a role="button" class="fs-1 btn text-warning px-2" href="/admin/post/brand-post-list/transportation-post-list/{{br.id}}"
+                            <a role="button" class="fs-1 btn text-warning px-2 cursor-pointer"
+                               ng-click="redirectPage('/admin/post/brand-post-list/transportation-post-list/', br.id)"
                                title="Danh sách phương tiện">
                                 <i class="fa-solid fa-car-side"></i>
                             </a>
                         </td>
                     </tr>
                     <tr ng-if="brandPostList.length === 0">
-                        <td colspan="8">Không có dữ liệu.</td>
+                        <td colspan="8">Trang này không có dữ liệu.</td>
                     </tr>
                     </tbody>
                 </table>
                 <div class="card-footer">
                     <div class="d-flex justify-content-end">
-                        {{getDisplayRange()}} trong tổng số {{totalElements}}
+                        {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                     </div>
                 </div>
             </div>
@@ -255,19 +263,21 @@
                     <div class="col-md-12 border-right">
                         <div class="status p-3 pb-2">
                             <div class="profile" style="text-align-last: center;">
-                                <img src="{{brands.transportationBrandImg || 'https://langem.geologia.unam.mx/wp-content/uploads/2018/04/placeholder.png'}}" width="200" class="img-thumbnail">
+                                <img src="{{brands.transportationBrandImg || 'https://langem.geologia.unam.mx/wp-content/uploads/2018/04/placeholder.png'}}"
+                                     width="200" class="img-thumbnail">
                                 <span class="heading d-block pt-2">Tên hãng xe</span>
-                                <span class="subheadings" style="font-size: x-large;text-transform: uppercase;font-weight: 700;">{{brands.transportationBrandName || 'Đang cập nhật'}}</span>
+                                <span class="subheadings"
+                                      style="font-size: x-large;text-transform: uppercase;font-weight: 700;">{{ brands.transportationBrandName || 'Đang cập nhật' }}</span>
                             </div>
                         </div>
                         <div class="status p-3 pb-4">
                             <table class="table table-bordered">
                                 <tbody>
                                 <tr>
-                                    <td style="padding-top: 0px;" colspan="2" >
+                                    <td style="padding-top: 0px;" colspan="2">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block">Doanh nghiệp quản lý</span>
-                                            <span class="subheadings">{{brands.agencies.nameAgency || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings">{{ brands.agencies.nameAgency || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -275,13 +285,13 @@
                                     <td style="padding-top: 0px; width: 50%">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block">Mã hãng xe</span>
-                                            <span class="subheadings">{{brands.id || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings">{{ brands.id || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                     <td style="padding-top: 0px; width: 50%">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block">Ngày đăng ký</span>
-                                            <span class="subheadings">{{(brands.dateCreated | vietnameseDateTime) || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings">{{ (brands.dateCreated | vietnameseDateTime) || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                 </tr>

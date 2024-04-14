@@ -1,4 +1,4 @@
-travel_app.controller('AgencyControllerDeniedAD', function ($scope, $location, $sce, $rootScope, $routeParams, $timeout, AgencyServiceAD,AgenciesServiceAG) {
+travel_app.controller('AgencyControllerDeniedAD', function ($scope, $location, $sce, $rootScope, $routeParams, $timeout, AgencyServiceAD) {
 
     $scope.hasImage = false;
     $scope.count = 0;
@@ -90,7 +90,8 @@ travel_app.controller('AgencyControllerDeniedAD', function ($scope, $location, $
                     $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                     $scope.totalElementsDenied = response.data.data.totalElements;
                 }
-            }, errorCallback).finally(function () {$scope.isLoading = false;
+            }, errorCallback).finally(function () {
+            $scope.isLoading = false;
         });
 
         if (typeId !== undefined && typeId !== null && typeId !== "") {
@@ -100,7 +101,7 @@ travel_app.controller('AgencyControllerDeniedAD', function ($scope, $location, $
                         $scope.agent = response.data.data;
                         $rootScope.namenow = $scope.agent.bedTypeName;
                     }
-                }, errorCallback).finally(function (){
+                }, errorCallback).finally(function () {
                 $scope.isLoading = false;
             });
         }
@@ -117,10 +118,10 @@ travel_app.controller('AgencyControllerDeniedAD', function ($scope, $location, $
         searchTimeout = $timeout(function () {
             AgencyServiceAD.findAllTypeDenied($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
                 .then(function (response) {
-                    if (response.data.status === "404"){
+                    if (response.data.status === "404") {
                         $scope.typeList.length = 0;
                         $scope.totalElementsDenied = 0;
-                    }else{
+                    } else {
                         $scope.typeList = response.data.data.content;
                         $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                         $scope.totalElementsDenied = response.data.data.totalElements;
@@ -148,7 +149,5 @@ travel_app.controller('AgencyControllerDeniedAD', function ($scope, $location, $
                 $scope.isLoading = false;
             });
         }
-        ;
     }
-
 });

@@ -1,25 +1,23 @@
-<div ng-include="'app/component/utils/loading-html.html'"></div>
-
 <style>
-    .close:focus{
-
-        outline: 1px dotted #fff !important;
-    }
     .modal-body {
 
         padding: 0rem !important;
     }
-    .fa-close{
+
+    .fa-close {
         color: #fff;
     }
-    .heading{
+
+    .heading {
 
         font-weight: 500 !important;
     }
-    .subheadings{
+
+    .subheadings {
         font-size: 14px;
         color: #9c27b0;
     }
+
     .dots {
         height: 10px;
         width: 10px;
@@ -28,7 +26,8 @@
         display: inline-block;
         margin-right: 5px;
     }
-    .gallery img{
+
+    .gallery img {
 
         margin-right: 10px;
     }
@@ -78,20 +77,26 @@
 
 <div class="container">
     <div class="header-control mb-4">
-        <nav aria-label="breadcrumb" ng-if="tripList.length > 0">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="/admin/post/brand-post-list">Danh sách phương tiện</a></li>
-                <li class="breadcrumb-item"><a href="/admin/post/brand-post-list/transportation-post-list/{{linkBack}}">Danh sách xe</a></li>
-                <li class="breadcrumb-item active" style="width: 150px"><p>Lịch trình di chuyển</p></li>
-            </ol>
-        </nav>
-        <div class="header-control-center mb-3">
+        <div class="header-control-center">
             <div class="d-flex justify-content-between align-items-center row ">
                 <div class="col-xl-6 mt-3">
                     <h3 class="color-green fw-bold mb-3">DANH SÁCH CHUYẾN ĐI</h3>
                 </div>
             </div>
         </div>
+
+        <nav aria-label="breadcrumb mb-3">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="/admin/post/brand-post-list">Danh sách phương tiện</a></li>
+                <li class="breadcrumb-item">
+                    <a href="/admin/post/brand-post-list/transportation-post-list/{{brandId}}">
+                        Danh sách xe
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" style="width: 150px"><p>Lịch trình di chuyển</p></li>
+            </ol>
+        </nav>
+
         <div class="">
             <div class="card card-customer">
                 <div class="row" style="margin: 20px 16px 20px 16px">
@@ -142,7 +147,7 @@
                             </select>
                         </div>
                         <div class="d-flex align-items-center justify-content-end h-100 col-lg-2">
-                            <nav aria-label="Page navigation example float-end">
+                            <nav aria-label="Page navigation example float-end" ng-if="tripList.length > 0">
                                 <ul class="pagination justify-content-center align-items-center">
                                     <li class="page-item" ng-class="{disabled: currentPage === 0}">
                                         <a class="page-link" ng-click="setPage(0)">
@@ -155,9 +160,9 @@
                                     </li>
 
                                     <!-- Pagination Numbers -->
-                                    <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                    <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
                                         ng-class="{active: n === currentPage}">
-                                        <a class="page-link" ng-click="setPage(n)">{{n + 1}}</a>
+                                        <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
                                     </li>
 
                                     <!-- Ellipsis at the end -->
@@ -177,7 +182,7 @@
                     </div>
                 </div>
                 <table class="table table-responsive text-center">
-<!--                    <div ng-include="'app/component/utils/loading-table.html'"></div>-->
+                    <div ng-include="'app/component/utils/loading-table.html'"></div>
                     <thead>
                     <tr class="bg-light">
                         <th scope="col"># <i class="fa-solid fa-sort"></i></th>
@@ -206,15 +211,16 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="trip in tripList">
-                        <td style="font-size: small">{{$index + 1}}</td>
-                        <td>{{(trip.fromLocation || 'Đang cập nhật') + ' - ' + (trip.toLocation || 'Đang cập nhật')}}</td>
-                        <td>{{(trip.departureTime | vietnameseDateTime) || 'Đang cập nhật'}}</td>
-                        <td>{{(trip.arrivalTime  | vietnameseDateTime) || 'Đang cập nhật'}}</td>
+                        <td style="font-size: small">{{ $index + 1 }}</td>
+                        <td>{{ (trip.fromLocation || 'Đang cập nhật') + ' - ' + (trip.toLocation || 'Đang cập nhật') }}</td>
+                        <td>{{ (trip.departureTime | vietnameseDateTime) || 'Đang cập nhật' }}</td>
+                        <td>{{ (trip.arrivalTime  | vietnameseDateTime) || 'Đang cập nhật' }}</td>
                         <td>
                             <div ng-if="trip.isActive == true" class="d-flex align-items-center justify-content-center">
                                 <span class="status-success"></span> <span class="text-status-success">Hợp lệ</span>
                             </div>
-                            <div ng-if="trip.isActive == false" class="d-flex align-items-center justify-content-center">
+                            <div ng-if="trip.isActive == false"
+                                 class="d-flex align-items-center justify-content-center">
                                 <span class="status-error"></span> <span class="text-status-error">Không hợp lệ</span>
                             </div>
                         </td>
@@ -226,13 +232,13 @@
                         </td>
                     </tr>
                     <tr ng-if="tripList.length === 0">
-                        <td colspan="8">Không có dữ liệu.</td>
+                        <td colspan="8">Trang này không có dữ liệu.</td>
                     </tr>
                     </tbody>
                 </table>
                 <div class="card-footer">
                     <div class="d-flex justify-content-end">
-                        {{getDisplayRange()}} trong tổng số {{totalElements}}
+                        {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                     </div>
                 </div>
             </div>
@@ -243,7 +249,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="timeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" style="max-width: 700px;padding-top: 40px";>
+    <div class="modal-dialog modal-lg" style="max-width: 700px;padding-top: 40px" ;>
         <div class="modal-content">
             <button type="button" ng-click="closeModal()" style="width: 30px;border-radius: 50px;
                                     border: 1px solid grey;margin-top: -15px;align-self: self-end;
@@ -260,19 +266,19 @@
                                     <td class="pt-1" colspan="2">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block"><i class="fa-solid fa-briefcase"></i>&nbsp;Hãng xe quản lý</span>
-                                            <span class="subheadings mt-2">{{tripDetail.transportationsByTransportationId.transportationBrandName || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings mt-2">{{ tripDetail.transportationsByTransportationId.transportationBrandName || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                     <td class="pt-1">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block"><i class="fa-solid fa-tag"></i>&nbsp; Mã chuyến đi</span>
-                                            <span class="subheadings text-center mt-2">{{tripDetail.id || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings text-center mt-2">{{ tripDetail.id || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                     <td class="pt-1">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block"><i class="fa-regular fa-id-card"></i>&nbsp; Bảng số xe</span>
-                                            <span class="subheadings text-center mt-2">{{tripDetail.transportations.licensePlate || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings text-center mt-2">{{ tripDetail.transportations.licensePlate || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -280,25 +286,25 @@
                                     <td class="pt-1">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block"><i class="fa-solid fa-clock"></i>&nbsp; Giờ bắt đầu</span>
-                                            <span class="subheadings text-center mt-2">{{(tripDetail.departureTime | vietnameseDateTime) || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings text-center mt-2">{{ (tripDetail.departureTime | vietnameseDateTime) || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                     <td class="pt-1">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block"><i class="fa-solid fa-map-pin"></i>&nbsp; Điểm bắt đầu</span>
-                                            <span class="subheadings text-center mt-2">{{tripDetail.fromLocation || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings text-center mt-2">{{ tripDetail.fromLocation || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                     <td class="pt-1">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block"><i class="fa-solid fa-clock"></i>&nbsp; Giờ kết thúc</span>
-                                            <span class="subheadings text-center mt-2">{{(tripDetail.arrivalTime | vietnameseDateTime) || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings text-center mt-2">{{ (tripDetail.arrivalTime | vietnameseDateTime) || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                     <td class="pt-1">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block"><i class="fa-solid fa-map-pin"></i>&nbsp; Điểm kết thúc</span>
-                                            <span class="subheadings text-center mt-2">{{tripDetail.toLocation || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings text-center mt-2">{{ tripDetail.toLocation || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -312,15 +318,18 @@
                                     </td>
                                     <td class="pt-1">
                                         <div class="d-flex flex-column">
-                                            <span class="heading d-block"><i class="fa-solid fa-hand-holding-dollar"></i>&nbsp; Giá tiền</span>
-                                            <span ng-if="tripDetail.tripType == false" class="subheadings mt-2">{{((tripDetail.unitPrice | vnCurrency) + ' / vé')  || 'Đang cập nhật'}}</span>
-                                            <span ng-if="tripDetail.tripType == true" class="subheadings mt-2">{{((tripDetail.unitPrice | vnCurrency) + ' / chuyến') || 'Đang cập nhật'}}</span>
+                                            <span class="heading d-block"><i
+                                                    class="fa-solid fa-hand-holding-dollar"></i>&nbsp; Giá tiền</span>
+                                            <span ng-if="tripDetail.tripType == false"
+                                                  class="subheadings mt-2">{{ ((tripDetail.unitPrice | vnCurrency) + ' / vé') || 'Đang cập nhật' }}</span>
+                                            <span ng-if="tripDetail.tripType == true"
+                                                  class="subheadings mt-2">{{ ((tripDetail.unitPrice | vnCurrency) + ' / chuyến') || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                     <td class="pt-1">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block"><i class="fa-solid fa-ticket"></i>&nbsp; Số vé đã đặt</span>
-                                            <span class="subheadings text-center mt-2">{{tripDetail.bookedSeat || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings text-center mt-2">{{ tripDetail.bookedSeat || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -336,10 +345,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="pt-1" colspan="4" >
+                                    <td class="pt-1" colspan="4">
                                         <div class="d-flex flex-column">
                                             <span class="heading d-block"><i class="fa-solid fa-comment"></i>&nbsp; Ghi chú chuyến đi</span>
-                                            <span class="subheadings mt-2" style="justify-content: center">{{tripDetail.scheduleNote || 'Đang cập nhật'}}</span>
+                                            <span class="subheadings mt-2"
+                                                  style="justify-content: center">{{ tripDetail.scheduleNote || 'Đang cập nhật' }}</span>
                                         </div>
                                     </td>
                                 </tr>

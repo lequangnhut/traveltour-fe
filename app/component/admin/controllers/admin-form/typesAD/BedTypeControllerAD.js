@@ -1,19 +1,23 @@
-travel_app.controller('BedTypeControllerAD', function ($scope, $location, $sce, $rootScope, $routeParams, $timeout, BedTypeServiceAD) {
+travel_app.controller('BedTypeControllerAD', function ($scope, $location, $sce, $rootScope, $routeParams, $timeout, BedTypeServiceAD, Base64ObjectService) {
 
     $scope.hasImage = false;
+
     // Biến để lưu danh sách tours
     $scope.typeList = [];
+
     // Trang hiện tại
     $scope.currentPage = 0;
+
     // Số lượng tours trên mỗi trang
     $scope.pageSize = 5;
+
     // Đối tượng duyệt dữ liệu cho các form mới cho form tour
     $scope.formType = {
-        bedTypeName : null
+        bedTypeName: null
     };
 
     let searchTimeout;
-    let typeId = $routeParams.id;
+    let typeId = Base64ObjectService.decodeObject($routeParams.id);
 
     //================================================================
     function errorCallback() {
@@ -60,7 +64,8 @@ travel_app.controller('BedTypeControllerAD', function ($scope, $location, $sce, 
 
     //show list
     $scope.getTypeList = function () {
-        $scope.isLoading = true;
+        $scope.isLoading = true
+
         BedTypeServiceAD.findAllType($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
             .then(function (response) {
                 if (response.data.status === "404") {
@@ -70,7 +75,8 @@ travel_app.controller('BedTypeControllerAD', function ($scope, $location, $sce, 
                     $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                     $scope.totalElements = response.data.data.totalElements;
                 }
-            }, errorCallback).finally(function () {$scope.isLoading = false;
+            }, errorCallback).finally(function () {
+            $scope.isLoading = false;
         });
 
         if (typeId !== undefined && typeId !== null && typeId !== "") {
@@ -80,7 +86,7 @@ travel_app.controller('BedTypeControllerAD', function ($scope, $location, $sce, 
                         $scope.formType = response.data.data;
                         $rootScope.namenow = $scope.formType.bedTypeName;
                     }
-                }, errorCallback).finally(function (){
+                }, errorCallback).finally(function () {
                 $scope.isLoading = false;
             });
         }
@@ -108,9 +114,9 @@ travel_app.controller('BedTypeControllerAD', function ($scope, $location, $sce, 
         searchTimeout = $timeout(function () {
             BedTypeServiceAD.findAllType($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
                 .then(function (response) {
-                    if (response.data.status === "404"){
+                    if (response.data.status === "404") {
                         $scope.typeList.length = 0;
-                    }else{
+                    } else {
                         $scope.typeList = response.data.data.content;
                         $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                         $scope.totalElements = response.data.data.totalElements;
@@ -127,9 +133,9 @@ travel_app.controller('BedTypeControllerAD', function ($scope, $location, $sce, 
     $scope.checkDuplicateTypeName = function () {
         BedTypeServiceAD.checkExistTypeName($scope.formType.bedTypeName)
             .then(function successCallback(response) {
-                if (response.status === 200){
+                if (response.status === 200) {
                     $scope.nameError = response.data.data.exists;
-                }else{
+                } else {
                     $scope.nameError = response.data.data.exists;
                 }
             });
@@ -137,15 +143,15 @@ travel_app.controller('BedTypeControllerAD', function ($scope, $location, $sce, 
 
     //Check name cho cập nhật
     $scope.checkDuplicateTypeNameUpdate = function () {
-        if($scope.formType.bedTypeName == $rootScope.namenow){
+        if ($scope.formType.bedTypeName === $rootScope.namenow) {
             $scope.nameError = false;
             return;
         }
         BedTypeServiceAD.checkExistTypeName($scope.formType.bedTypeName)
             .then(function successCallback(response) {
-                if (response.data.data.status === 200){
+                if (response.data.data.status === 200) {
                     $scope.nameError = response.data.data.exists;
-                }else{
+                } else {
                     $scope.nameError = response.data.data.exists;
                 }
             });
@@ -158,7 +164,7 @@ travel_app.controller('BedTypeControllerAD', function ($scope, $location, $sce, 
         BedTypeServiceAD.createThisType(dataType).then(function successCallback() {
             toastAlert('success', 'Thêm mới thành công !');
             $location.path('/admin/type/bed-type-list');
-        }, errorCallback).finally(function (){
+        }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
     }
@@ -170,41 +176,45 @@ travel_app.controller('BedTypeControllerAD', function ($scope, $location, $sce, 
             toastAlert('success', 'Cập nhật thành công !');
             $location.path('/admin/type/bed-type-list');
             $scope.getTypeList();
-        }, errorCallback).finally(function (){
+        }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
     }
+
     $scope.updateType = function () {
         confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdateType);
     }
 
     // Xóa loại
     $scope.deleteType = function (typeId) {
-        $scope.isLoading = true;
         function confirmDeleteType() {
+            $scope.isLoading = true;
+
             BedTypeServiceAD.checkTypeIsWorking(typeId).then(
                 function successCallback(response) {
-                    if (response.data.status.toString() === "200"){
+                    if (response.data.status.toString() === "200") {
                         toastAlert('error', "Thể loại đang được sử dụng !");
-                    }else{
+                    } else {
                         BedTypeServiceAD.deleteThisType(typeId)
-                            .then(function (deleteResponse) {
+                            .then(function () {
                                 toastAlert('success', 'Xóa thành công !');
                                 $location.path('/admin/type/bed-type-list');
                                 //$scope.getTypeList(); - Lý do cmt là để dô nó lỗi
-                                if($scope.typeList.length < 2){
-                                    $scope.setPage($scope.currentPage-1);
-                                }else{
+                                if ($scope.typeList.length < 2) {
+                                    $scope.setPage($scope.currentPage - 1);
+                                } else {
                                     $scope.setPage($scope.currentPage);
                                 }
                             })
-                            .catch(function (deleteError) {
+                            .catch(function () {
                                 toastAlert('error', 'Lỗi khi xóa !');
                             });
-                    }},errorCallback).finally(function (){
+                    }
+                }, errorCallback).finally(function () {
                 $scope.isLoading = false;
             });
-        }confirmAlert('Bạn có chắc chắn muốn xóa không ?', confirmDeleteType);
-    };
+        }
 
+        confirmAlert('Bạn có chắc chắn muốn xóa không ?', confirmDeleteType);
+    };
 });

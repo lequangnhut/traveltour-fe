@@ -9,7 +9,7 @@ travel_app.service('TransportUtilityServiceAD', function ($http) {
                 page: page || 0,
                 size: size || 5,
                 sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
+                sortDir: sortDir || 'desc',
                 searchTerm: searchTerm || ''
             }
         });

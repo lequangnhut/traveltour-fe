@@ -25,248 +25,249 @@
 
 <div ng-include="'app/component/utils/loading-html.html'"></div>
 
-    <div class="container mt-4 mb-5">
-            <div class="header-control mb-4">
-                <div class="">
-                    <div class="d-flex align-items-center row">
-                        <div class="col-lg-6">
-                            <h3 class="color-green fw-bold text-uppercase">Cập nhật doanh nghiệp</h3>
-                        </div>
-                    </div>
+<div class="container mt-4 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-bold text-uppercase">Cập nhật doanh nghiệp</h3>
                 </div>
             </div>
-
-            <div class="card card-custom" >
-                <form class="row g-3 form-input-custom" ng-submit="updateTourSubmit()" method="POST"
-                      role="form" name="agencyform">
-                    <div class="col-12">
-                        <label for="inputNameBusiness" class="form-label">Tên doanh nghiệp</label>
-                        <input type="text"
-                               class="form-control"
-                               id="inputNameBusiness"
-                               placeholder="Công ty du lịch TravelTour"
-                               name="nameAgency"
-                               ng-model="agent.nameAgency"
-                               ng-class="{ 'is-invalid': agencyform.nameAgency.$invalid && agencyform.nameAgency.$touched, 'is-valid': agencyform.nameAgency.$valid && agencyform.nameAgency.$touched }"
-                               ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
-                               required
-                        >
-                        <small class="text-danger"
-                               ng-show="agencyform.nameAgency.$touched && agencyform.nameAgency.$error.required">
-                            Vui lòng nhập tên doanh nghiệp !
-                        </small>
-                        <small class="text-danger"
-                               ng-show="agencyform.nameAgency.$touched && agencyform.nameAgency.$error.pattern">
-                            Tên doanh nghiệp không đúng định dạng !
-                        </small>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="inputFullname" class="form-label">Tên người đại diện</label>
-                        <input type="text"
-                               class="form-control"
-                               id="inputFullname"
-                               placeholder="Nguyễn Văn A"
-                               name="representativeName"
-                               ng-model="agent.representativeName"
-                               ng-class="{ 'is-invalid': agencyform.representativeName.$invalid && agencyform.representativeName.$touched, 'is-valid': agencyform.representativeName.$valid && agencyform.representativeName.$touched }"
-                               ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
-                               required
-                        >
-                        <small class="text-danger"
-                               ng-show="agencyform.representativeName.$touched && agencyform.representativeName.$error.required">
-                            Vui lòng nhập tên người đại diện !
-                        </small>
-                        <small class="text-danger"
-                               ng-show="agencyform.representativeName.$touched && agencyform.representativeName.$error.pattern">
-                            Tên người đại diện không đúng định dạng !
-                        </small>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="inputEmail4" class="form-label">Mã số thuế</label>
-                        <input type="text"
-                               class="form-control"
-                               id="inputEmail4"
-                               placeholder="1423142144"
-                               name="taxId"
-                               ng-model="agent.taxId"
-                               ng-class="{ 'is-invalid': agencyform.taxId.$invalid && agencyform.taxId.$touched, 'is-valid': agencyform.taxId.$valid && agencyform.taxId.$touched && !taxIdError }"
-                               ng-pattern="/^\d{10,13}$/"
-                               ng-change="checkDuplicateThisTax()"
-                               required
-                        >
-                        <small class="text-danger"
-                               ng-show="agencyform.taxId.$touched && agencyform.taxId.$error.required">
-                            Vui lòng nhập mã số thuế !
-                        </small>
-                        <small class="text-danger"
-                               ng-show="agencyform.taxId.$touched && agencyform.taxId.$error.pattern">
-                            Mã số thuế không đúng định dạng !
-                        </small>
-                        <small class="text-danger" ng-show="agencyform.taxId.$touched && taxIdError">
-                            Mã số thuế đã tồn tại ở một doanh nghiệp khác !
-                        </small>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="inputPassword4" class="form-label"> Số điện thoại</label>
-                        <input type="text"
-                               class="form-control"
-                               id="inputPassword4"
-                               placeholder="0969653264"
-                               name="phone"
-                               ng-model="agent.phone"
-                               ng-class="{ 'is-invalid': agencyform.phone.$invalid && agencyform.phone.$touched, 'is-valid': agencyform.phone.$valid && agencyform.phone.$touched && !phoneError }"
-                               ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
-                               ng-change="checkDuplicateThisPhone()"
-                               required
-                        >
-                        <small class="text-danger"
-                               ng-show="agencyform.phone.$touched && agencyform.phone.$error.required">
-                            Vui lòng nhập số điện thoại !
-                        </small>
-                        <small class="text-danger"
-                               ng-show="agencyform.phone.$touched && agencyform.phone.$error.pattern">
-                            Số điện thoại không đúng định dạng !
-                        </small>
-                        <small class="text-danger" ng-show="agencyform.phone.$touched && phoneError">
-                            Số điện thoại đã tồn tại ở một doanh nghiệp khác !
-                        </small>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">URL Website</label>
-                        <input type="text"
-                               class="form-control"
-                               placeholder="https://excample.com.vn"
-                               name="urlWebsite"
-                               ng-model="agent.urlWebsite"
-                               ng-class="{ 'is-invalid': agencyform.urlWebsite.$invalid && agencyform.urlWebsite.$touched, 'is-valid': agencyform.urlWebsite.$valid && agencyform.urlWebsite.$touched }"
-                               required
-                        >
-                        <small class="text-danger"
-                               ng-show="agencyform.urlWebsite.$touched && agencyform.urlWebsite.$error.required">
-                            Vui lòng nhập website !
-                        </small>
-                        <small class="text-danger"
-                               ng-show="agencyform.urlWebsite.$touched && agencyform.urlWebsite.$error.pattern">
-                            Website không đúng định dạng !
-                        </small>
-                    </div>
-                    <div class="col-md-12">
-                        <label for="imgDocument" class="form-label">Hình ảnh</label>
-                        <input class="form-control" type="file" id="imgDocument" name="imgDocument" accept=".png, .jpg, .jpeg"
-                               ng-class="{ 'is-invalid': agencyform.imgDocument.$invalid && agencyform.imgDocument.$touched,
-                        'is-valid': agencyform.imgDocument.$valid && agencyform.imgDocument.$touched }"
-                               ngf-select="uploadTourImage($file)">
-                        <small class="text-danger"
-                               ng-show="agencyform.imgDocument.$touched && agencyform.imgDocument.$error.required">Vui
-                            lòng tải lên ảnh tour!</small>
-                    </div>
-                    <div ng-if="agent.imgDocument != null" class="col-md-12">
-                        <label for="imagePreview" class="form-label">Ảnh hiện tại</label> <br>
-                        <a href="{{agent.imgDocument}}" class="image-container">
-                            <img id="imagePreview" ng-src="{{ getCurrentImageSource() }}" alt="Current Image" style="max-width: 150px; min-height: 200px">
-                            <div class="overlay-text d-flex align-items-center justify-content-center">
-                                <i class="fa-solid fa-eye fs-3"></i>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Tỉnh/Thành phố</label>
-                        <select class="form-select"
-                                name="province"
-                                ng-class="{ 'is-invalid': agencyform.province.$invalid && agencyform.province.$touched, 'is-valid': agencyform.province.$valid && agencyform.province.$touched }"
-                                ng-options="province.Name as province.Name for province in provinces"
-                                ng-change="onProvinceChange()"
-                                ng-model="agent.province"
-                                required
-                        >
-                            <option value="001" selected>Chon tỉnh/thành phố</option>
-                        </select>
-                        <small class="text-danger"
-                               ng-show="agencyform.province.$touched && agencyform.province.$error.required">
-                            Vui lòng chọn tỉnh/thành phố.
-                        </small>
-                    </div>
-
-                    <!-- Quận huyện -->
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Quận/Huyện</label>
-                        <select class="form-select"
-                                name="districts"
-                                ng-class="{ 'is-invalid': agencyform.districts.$invalid && agencyform.districts.$touched, 'is-valid': agencyform.districts.$valid && agencyform.districts.$touched }"
-                                ng-options="district.Name as district.Name for district in districts"
-                                ng-disabled="!agent.province"
-                                ng-change="onDistrictChange()"
-                                ng-model="agent.district"
-                                required
-                        >
-                            <option value="001" selected>Chon Quận/Huyện</option>
-                        </select>
-                        <small class="text-danger"
-                               ng-show="agencyform.districts.$touched && agencyform.districts.$error.required">
-                            Vui lòng chọn quận/huyện.
-                        </small>
-                    </div>
-
-                    <!-- Phường xã -->
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Phường/Xã</label>
-                        <select class="form-select"
-                                name="ward"
-                                ng-class="{ 'is-invalid': agencyform.ward.$invalid && agencyform.ward.$touched, 'is-valid': agencyform.ward.$valid && agencyform.ward.$touched }"
-                                ng-options="ward.Name as ward.Name for ward in wards"
-                                ng-disabled="!agent.district"
-                                ng-change="onWardChange()"
-                                ng-model="agent.ward"
-                                required
-                        >
-                            <option value="" selected>Chon Phường/Xã </option>
-                        </select>
-                        <small class="text-danger"
-                               ng-show="agencyform.ward.$touched && agencyform.ward.$error.required">
-                            Vui lòng chọn phường/xã.
-                        </small>
-                    </div>
-
-                    <div class="col-md-12">
-                        <label class="form-label">Địa chỉ</label>
-                        <input type="text"
-                               class="form-control"
-                               placeholder="1234 Main St"
-                               name="address"
-                               ng-model="agent.address"
-                               ng-class="{ 'is-invalid': agencyform.address.$invalid && agencyform.address.$touched, 'is-valid': agencyform.address.$valid && agencyform.address.$touched }"
-                               required
-                        >
-                        <small class="text-danger"
-                               ng-show="agencyform.address.$touched && agencyform.address.$error.required">
-                            Vui lòng nhập địa chỉ doanh nghiệp !
-                        </small>
-                    </div>
-                    <div class="col-md-12">
-                        <label for="isActive" class="form-label">Trạng thái</label>
-                        <select id="isActive" class="form-select"
-                                name="isActive"
-                                ng-model="agent.isActive"
-                                ng-class="{ 'is-invalid': agencyform.isActive.$invalid && agencyform.isActive.$touched, 'is-valid': agencyform.isActive.$valid && agencyform.isActive.$touched }"
-                                required>
-                            <option value="" selected disabled>Chọn trang thái</option>
-                            <option ng-selected="agent.isActive === true" value="true">Đang hoạt động</option>
-                            <option ng-selected="agent.isActive === false" value="false">Ngưng hoạt động</option>
-                        </select>
-                        <small class="text-danger"
-                               ng-show="agencyform.isActive.$touched && agencyform.agencystatus.$error.required">
-                            Vui lòng chọn trạng thái !
-                        </small>
-                    </div>
-                    <div class="col-12 d-flex justify-content-end mt-5">
-                        <button class="btn" style="margin-right: 20px;" type="button">
-                            <a class="btn fw-bold" href="/admin/agency/agency-list">Trở về</a>
-                        </button>
-                        <button type="submit" class="btn btn-submit fw-bold" ng-disabled="agencyform.$invalid">Cập nhật</button>
-                    </div>
-                </form>
-            </div>
         </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" ng-submit="updateTourSubmit()" method="POST"
+              role="form" name="agencyform">
+            <div class="col-12">
+                <label for="inputNameBusiness" class="form-label">Tên doanh nghiệp</label>
+                <input type="text"
+                       class="form-control"
+                       id="inputNameBusiness"
+                       placeholder="Công ty du lịch TravelTour"
+                       name="nameAgency"
+                       ng-model="agent.nameAgency"
+                       ng-class="{ 'is-invalid': agencyform.nameAgency.$invalid && agencyform.nameAgency.$touched, 'is-valid': agencyform.nameAgency.$valid && agencyform.nameAgency.$touched }"
+                       ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="agencyform.nameAgency.$touched && agencyform.nameAgency.$error.required">
+                    Vui lòng nhập tên doanh nghiệp !
+                </small>
+                <small class="text-danger"
+                       ng-show="agencyform.nameAgency.$touched && agencyform.nameAgency.$error.pattern">
+                    Tên doanh nghiệp không đúng định dạng !
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label for="inputFullname" class="form-label">Tên người đại diện</label>
+                <input type="text"
+                       class="form-control"
+                       id="inputFullname"
+                       placeholder="Nguyễn Văn A"
+                       name="representativeName"
+                       ng-model="agent.representativeName"
+                       ng-class="{ 'is-invalid': agencyform.representativeName.$invalid && agencyform.representativeName.$touched, 'is-valid': agencyform.representativeName.$valid && agencyform.representativeName.$touched }"
+                       ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="agencyform.representativeName.$touched && agencyform.representativeName.$error.required">
+                    Vui lòng nhập tên người đại diện !
+                </small>
+                <small class="text-danger"
+                       ng-show="agencyform.representativeName.$touched && agencyform.representativeName.$error.pattern">
+                    Tên người đại diện không đúng định dạng !
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Mã số thuế</label>
+                <input type="text"
+                       class="form-control"
+                       id="inputEmail4"
+                       placeholder="1423142144"
+                       name="taxId"
+                       ng-model="agent.taxId"
+                       ng-class="{ 'is-invalid': agencyform.taxId.$invalid && agencyform.taxId.$touched, 'is-valid': agencyform.taxId.$valid && agencyform.taxId.$touched && !taxIdError }"
+                       ng-pattern="/^\d{10,13}$/"
+                       ng-change="checkDuplicateThisTax()"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="agencyform.taxId.$touched && agencyform.taxId.$error.required">
+                    Vui lòng nhập mã số thuế !
+                </small>
+                <small class="text-danger"
+                       ng-show="agencyform.taxId.$touched && agencyform.taxId.$error.pattern">
+                    Mã số thuế không đúng định dạng !
+                </small>
+                <small class="text-danger" ng-show="agencyform.taxId.$touched && taxIdError">
+                    Mã số thuế đã tồn tại ở một doanh nghiệp khác !
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label for="inputPassword4" class="form-label"> Số điện thoại</label>
+                <input type="text"
+                       class="form-control"
+                       id="inputPassword4"
+                       placeholder="0969653264"
+                       name="phone"
+                       ng-model="agent.phone"
+                       ng-class="{ 'is-invalid': agencyform.phone.$invalid && agencyform.phone.$touched, 'is-valid': agencyform.phone.$valid && agencyform.phone.$touched && !phoneError }"
+                       ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                       ng-change="checkDuplicateThisPhone()"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="agencyform.phone.$touched && agencyform.phone.$error.required">
+                    Vui lòng nhập số điện thoại !
+                </small>
+                <small class="text-danger"
+                       ng-show="agencyform.phone.$touched && agencyform.phone.$error.pattern">
+                    Số điện thoại không đúng định dạng !
+                </small>
+                <small class="text-danger" ng-show="agencyform.phone.$touched && phoneError">
+                    Số điện thoại đã tồn tại ở một doanh nghiệp khác !
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">URL Website</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="https://excample.com.vn"
+                       name="urlWebsite"
+                       ng-model="agent.urlWebsite"
+                       ng-class="{ 'is-invalid': agencyform.urlWebsite.$invalid && agencyform.urlWebsite.$touched, 'is-valid': agencyform.urlWebsite.$valid && agencyform.urlWebsite.$touched }"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="agencyform.urlWebsite.$touched && agencyform.urlWebsite.$error.required">
+                    Vui lòng nhập website !
+                </small>
+                <small class="text-danger"
+                       ng-show="agencyform.urlWebsite.$touched && agencyform.urlWebsite.$error.pattern">
+                    Website không đúng định dạng !
+                </small>
+            </div>
+            <div class="col-md-12">
+                <label for="imgDocument" class="form-label">Hình ảnh</label>
+                <input class="form-control" type="file" id="imgDocument" name="imgDocument" accept=".png, .jpg, .jpeg"
+                       ng-class="{ 'is-invalid': agencyform.imgDocument.$invalid && agencyform.imgDocument.$touched,
+                        'is-valid': agencyform.imgDocument.$valid && agencyform.imgDocument.$touched }"
+                       ngf-select="uploadTourImage($file)">
+                <small class="text-danger"
+                       ng-show="agencyform.imgDocument.$touched && agencyform.imgDocument.$error.required">Vui
+                    lòng tải lên ảnh tour!</small>
+            </div>
+            <div ng-if="agent.imgDocument != null" class="col-md-12">
+                <label for="imagePreview" class="form-label">Ảnh hiện tại</label> <br>
+                <a href="{{agent.imgDocument}}" class="image-container">
+                    <img id="imagePreview" ng-src="{{ getCurrentImageSource() }}" alt="Current Image"
+                         style="max-width: 150px; min-height: 200px">
+                    <div class="overlay-text d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-eye fs-3"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Tỉnh/Thành phố</label>
+                <select class="form-select"
+                        name="province"
+                        ng-class="{ 'is-invalid': agencyform.province.$invalid && agencyform.province.$touched, 'is-valid': agencyform.province.$valid && agencyform.province.$touched }"
+                        ng-options="province.Name as province.Name for province in provinces"
+                        ng-change="onProvinceChange()"
+                        ng-model="agent.province"
+                        required
+                >
+                    <option value="001" selected>Chon tỉnh/thành phố</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="agencyform.province.$touched && agencyform.province.$error.required">
+                    Vui lòng chọn tỉnh/thành phố.
+                </small>
+            </div>
+
+            <!-- Quận huyện -->
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Quận/Huyện</label>
+                <select class="form-select"
+                        name="districts"
+                        ng-class="{ 'is-invalid': agencyform.districts.$invalid && agencyform.districts.$touched, 'is-valid': agencyform.districts.$valid && agencyform.districts.$touched }"
+                        ng-options="district.Name as district.Name for district in districts"
+                        ng-disabled="!agent.province"
+                        ng-change="onDistrictChange()"
+                        ng-model="agent.district"
+                        required
+                >
+                    <option value="001" selected>Chon Quận/Huyện</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="agencyform.districts.$touched && agencyform.districts.$error.required">
+                    Vui lòng chọn quận/huyện.
+                </small>
+            </div>
+
+            <!-- Phường xã -->
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Phường/Xã</label>
+                <select class="form-select"
+                        name="ward"
+                        ng-class="{ 'is-invalid': agencyform.ward.$invalid && agencyform.ward.$touched, 'is-valid': agencyform.ward.$valid && agencyform.ward.$touched }"
+                        ng-options="ward.Name as ward.Name for ward in wards"
+                        ng-disabled="!agent.district"
+                        ng-change="onWardChange()"
+                        ng-model="agent.ward"
+                        required
+                >
+                    <option value="" selected>Chon Phường/Xã</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="agencyform.ward.$touched && agencyform.ward.$error.required">
+                    Vui lòng chọn phường/xã.
+                </small>
+            </div>
+
+            <div class="col-md-12">
+                <label class="form-label">Địa chỉ</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="1234 Main St"
+                       name="address"
+                       ng-model="agent.address"
+                       ng-class="{ 'is-invalid': agencyform.address.$invalid && agencyform.address.$touched, 'is-valid': agencyform.address.$valid && agencyform.address.$touched }"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="agencyform.address.$touched && agencyform.address.$error.required">
+                    Vui lòng nhập địa chỉ doanh nghiệp !
+                </small>
+            </div>
+            <div class="col-md-12">
+                <label for="isActive" class="form-label">Trạng thái</label>
+                <select id="isActive" class="form-select"
+                        name="isActive"
+                        ng-model="agent.isActive"
+                        ng-class="{ 'is-invalid': agencyform.isActive.$invalid && agencyform.isActive.$touched, 'is-valid': agencyform.isActive.$valid && agencyform.isActive.$touched }"
+                        required>
+                    <option value="" selected disabled>Chọn trang thái</option>
+                    <option ng-selected="agent.isActive === true" value="true">Đang hoạt động</option>
+                    <option ng-selected="agent.isActive === false" value="false">Ngưng hoạt động</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="agencyform.isActive.$touched && agencyform.agencystatus.$error.required">
+                    Vui lòng chọn trạng thái !
+                </small>
+            </div>
+            <div class="col-12 d-flex justify-content-end mt-5">
+                <button class="btn" style="margin-right: 20px;" type="button">
+                    <a class="btn fw-bold" href="/admin/agency/agency-list">Trở về</a>
+                </button>
+                <button type="submit" class="btn btn-submit fw-bold" ng-disabled="agencyform.$invalid">Cập nhật</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 
