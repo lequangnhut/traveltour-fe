@@ -1,46 +1,30 @@
-<script>
-    window.onload = function() {
 
-        var chart = new CanvasJS.Chart("chartContainer", {
-            animationEnabled: true,
-            title: {
-                text: "Hourly Average CPU Utilization"
-            },
-            axisX: {
-                title: "Time"
-            },
-            axisY: {
-                title: "Phần trăm",
-                suffix: "%",
-                includeZero: true
-            },
-            data: [{
-                type: "line",
-                name: "CPU Utilization",
-                connectNullData: true,
-                //nullDataLineDashType: "solid",
-                xValueType: "dateTime",
-                xValueFormatString: "DD MMM hh:mm TT",
-                yValueFormatString: "#,##0.##\"%\"",
-                dataPoints: [
-                    { x: 1501048673000, y: 35.939 },
-                    { x: 1501052273000, y: 40.896 },
-                    { x: 1501055873000, y: 56.625 },
-                    { x: 1501059473000, y: 26.003 },
-                    { x: 1501063073000, y: 20.376 },
-                    { x: 1501066673000, y: 19.774 },
-                    { x: 1501070273000, y: 23.508 },
-                    { x: 1501073873000, y: 18.577 },
-                    { x: 1501077473000, y: 15.918 },
-                    { x: 1501081073000, y: null }, // Null Data
-                    { x: 1501084673000, y: 10.314 },
-                    { x: 1501088273000, y: 10.574 }
-                ]
-            }]
-        });
-        chart.render();
-
-    }
-</script>
-
-<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white pt-6 pb-3 border-y border-300 mb-5">
+    <div class="row gx-6">
+        <div class="col-12 col-md-6 col-lg-12 col-xl-6 mb-5 mb-md-3 mb-lg-5 mb-xl-2 mb-xxl-3">
+            <div class="scrollbar row">
+                <div class="col-auto col-lg-12 mb-2 ps-5">
+                    <h4>Dữ Liệu So Sánh Giữa Năm {{ year - 1 }} Và {{ year }}</h4>
+                    <p class="text-700 mb-0">So sánh doanh thu tour theo tháng giữa năm {{ year - 1 }} và {{ year }}</p>
+                </div>
+                <div class="col-lg-9">
+                </div>
+                <div class="col-lg-3" style="margin-bottom: -40px; z-index: 1">
+                    <select class="form-select form-select-sm" ng-model="year"
+                            ng-options="y for y in selectYearList">
+                    </select>
+                </div>
+                <div class="echart-projection-actual" style="height: 450px;"></div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-12 col-xl-6 mb-5 mb-md-3 mb-lg-5 mb-xl-2 mb-xxl-3">
+            <div class="scrollbar row">
+                <div class="col-auto col-lg-12 mb-2 ps-5">
+                    <h4>Hiển thị số lượng tour đã đi và đang đi theo loại tour</h4>
+                    <p class="text-700 mb-0">Dữ liệu được hiển thị theo loại tour và số năm</p>
+                </div>
+                <div class="echart-pie-chart-example" style="min-height: 450px;"></div>
+            </div>
+        </div>
+    </div>
+</div>

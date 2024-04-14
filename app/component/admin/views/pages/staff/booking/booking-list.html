@@ -197,7 +197,7 @@
                         </select>
                     </div>
                     <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
-                        <nav aria-label="Page navigation">
+                        <nav aria-label="Page navigation" ng-if="bookingTourList.length !== 0">
                             <ul class="pagination justify-content-center align-items-center">
                                 <!-- Previous Page -->
                                 <li class="page-item" ng-class="{disabled: currentPage === 0}">
@@ -329,7 +329,7 @@
                         </select>
                     </div>
                     <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
-                        <nav aria-label="Page navigation">
+                        <nav aria-label="Page navigation" ng-if="bookingTourList.length !== 0">
                             <ul class="pagination justify-content-center align-items-center">
                                 <!-- Previous Page -->
                                 <li class="page-item" ng-class="{disabled: currentPage === 0}">
@@ -653,6 +653,14 @@
                                             Hủy giao dịch
                                         </span>
                                     </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-xl-3 p-1" ng-repeat="img in bookingTour.tourDetailsByTourDetailId.tourDetailImagesById">
+                                    <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px" loading="lazy"
+                                         ng-src="{{img.tourDetailImg}}"/>
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $location, $timeout, $interval, RevenueServiceAD, RevenueServiceStaff, ToursTypeServiceAD) {
+travel_app.controller('ChartControllerAD', function ($scope, $filter, $rootScope, $location, $timeout, $interval, RevenueServiceAD, RevenueServiceStaff, ToursTypeServiceAD) {
 
     const {merge: merge} = window._;
     const echartSetOption = (e, t, o, n) => {
@@ -25,7 +25,7 @@ travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $locati
                     r = `<div class='ms-1'>          
                                     <h6 class="text-700">
                                         <span class="fas fa-circle me-1 fs--2" style="color:${e.borderColor ? e.borderColor : e.color}"></span>
-                                        ${e.axisValue} : ${"object" == typeof e.value ? e.value[1] : e.value}
+                                        ${e.axisValue} : ${$filter('vnCurrency')(("object" == typeof e.value ? e.value[1] : e.value))}
                                     </h6>
                                </div>`;
                 return `<div><p class='mb-2 text-600'> ${e.seriesName} </p>${r}</div>`
@@ -314,8 +314,178 @@ travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $locati
         }
     };
 
+    const tooltipFormatter = (params, dateFormatter = 'MMM DD') => {
+        let tooltipItem = ``;
+        params.forEach(el => {
+            tooltipItem += `<div class='ms-1'>
+        <h6 class="text-700"><span class="fas fa-circle me-1 fs--2" style="color:${
+                el.borderColor ? el.borderColor : el.color
+            }"></span>
+          ${el.seriesName} : ${
+                typeof el.value === 'object' ? el.value[1] : el.value
+            }
+        </h6>
+      </div>`;
+        });
+        return `<div>
+            <p class='mb-2 text-600'>
+              ${
+            window.dayjs(params[0].axisValue).isValid()
+                ? window.dayjs(params[0].axisValue).format(dateFormatter)
+                : params[0].axisValue
+        }
+            </p>
+            ${tooltipItem}
+          </div>`;
+    };
+
+
+    const handleTooltipPosition = ([pos, , dom, , size]) => {
+        // only for mobile device
+        if (window.innerWidth <= 540) {
+            const tooltipHeight = dom.offsetHeight;
+            const obj = { top: pos[1] - tooltipHeight - 20 };
+            obj[pos[0] < size.viewSize[0] / 2 ? 'left' : 'right'] = 5;
+            return obj;
+        }
+        return null; // else default behaviour
+    };
+    const projectionVsActualChartInit = () => {
+        const { getColor, getData, getPastDates } = window.phoenix.utils;
+        const $projectionVsActualChartEl = document.querySelector(
+            '.echart-projection-actual'
+        );
+
+        const dates = getPastDates(10);
+
+        const data1 = [
+            44485, 20428, 47302, 45180, 31034, 46358, 26581, 36628, 38219, 43256
+        ];
+
+        const data2 = [
+            38911, 29452, 31894, 47876, 31302, 27731, 25490, 30355, 27176, 30393
+        ];
+
+        if ($projectionVsActualChartEl) {
+            const userOptions = getData($projectionVsActualChartEl, 'echarts');
+            const chart = window.echarts.init($projectionVsActualChartEl);
+
+            const getDefaultOptions = () => ({
+                color: [getColor('primary'), getColor('gray-300')],
+                tooltip: {
+                    trigger: 'axis',
+                    padding: [7, 10],
+                    backgroundColor: getColor('gray-100'),
+                    borderColor: getColor('gray-300'),
+                    textStyle: { color: getColor('dark') },
+                    borderWidth: 1,
+                    transitionDuration: 0,
+                    axisPointer: {
+                        type: 'none'
+                    },
+                    position: (...params) => handleTooltipPosition(params),
+                    formatter: params => tooltipFormatter(params)
+                },
+                legend: {
+                    data: ['Projected revenue', 'Actual revenue'],
+                    right: 'right',
+                    width: '100%',
+                    itemWidth: 16,
+                    itemHeight: 8,
+                    itemGap: 20,
+                    top: 3,
+                    inactiveColor: getColor('gray-500'),
+                    textStyle: {
+                        color: getColor('gray-900'),
+                        fontWeight: 600,
+                        fontFamily: 'Nunito Sans'
+                        // fontSize: '12.8px'
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    // boundaryGap: false,
+                    axisLabel: {
+                        color: getColor('gray-800'),
+                        formatter: value => window.dayjs(value).format('MMM DD'),
+                        interval: 3,
+                        fontFamily: 'Nunito Sans',
+                        fontWeight: 600,
+                        fontSize: 12.8
+                    },
+                    data: dates,
+                    axisLine: {
+                        lineStyle: {
+                            color: getColor('gray-300')
+                        }
+                    },
+                    axisTick: false
+                },
+                yAxis: {
+                    axisPointer: { type: 'none' },
+                    // boundaryGap: false,
+                    axisTick: 'none',
+                    splitLine: {
+                        interval: 5,
+                        lineStyle: {
+                            color: getColor('gray-200')
+                        }
+                    },
+                    axisLine: { show: false },
+                    axisLabel: {
+                        fontFamily: 'Nunito Sans',
+                        fontWeight: 600,
+                        fontSize: 12.8,
+                        color: getColor('gray-800'),
+                        margin: 20,
+                        verticalAlign: 'bottom',
+                        formatter: value => `$${value.toLocaleString()}`
+                    }
+                },
+                series: [
+                    {
+                        name: 'Projected revenue',
+                        type: 'bar',
+                        barWidth: '6px',
+                        data: data2,
+                        barGap: '30%',
+                        label: { show: false },
+                        itemStyle: {
+                            borderRadius: [2, 2, 0, 0],
+                            color: getColor('primary')
+                        }
+                    },
+                    {
+                        name: 'Actual revenue',
+                        type: 'bar',
+                        data: data1,
+                        barWidth: '6px',
+                        barGap: '30%',
+                        label: { show: false },
+                        z: 10,
+                        itemStyle: {
+                            borderRadius: [2, 2, 0, 0],
+                            color: getColor('info-100')
+                        }
+                    }
+                ],
+                grid: {
+                    right: 0,
+                    left: 3,
+                    bottom: 0,
+                    top: '15%',
+                    containLabel: true
+                },
+                animation: false
+            });
+
+            echartSetOption(chart, userOptions, getDefaultOptions);
+        }
+    };
+
     const {docReady: docReady} = window.phoenix.utils;
     docReady(chartBarInit), docReady(appCalendarInit);
+    docReady(projectionVsActualChartInit);
 
     // Gọi hàm khởi tạo biểu đồ khi trang được load
     $rootScope.$on('$routeChangeSuccess', function () {
@@ -511,5 +681,6 @@ travel_app.controller('ChartControllerAD', function ($scope, $rootScope, $locati
             $scope.getRevenueByTourTypeIdAndYear();
         }
     });
+
 
 })

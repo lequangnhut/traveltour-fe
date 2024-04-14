@@ -36,11 +36,9 @@ travel_app.controller('BookingControllerAD',
                 start = 0;
                 end = $scope.totalPages;
             } else {
-                // Hiển thị 2 trang trước và 2 trang sau trang hiện tại
                 start = Math.max(0, $scope.currentPage - 1);
                 end = Math.min(start + 3, $scope.totalPages);
 
-                // Điều chỉnh để luôn hiển thị 5 trang
                 if (end === $scope.totalPages) {
                     start = $scope.totalPages - 3;
                 }
@@ -127,6 +125,7 @@ travel_app.controller('BookingControllerAD',
                 BookingTourServiceAD.updateStatus(id).then(() => {
                     toastAlert('success', 'Duyệt thành công !');
                     $('#modal-tour-detail').modal('hide');
+                    $scope.changeTab('paid', 1);
                     $scope.getTourBookingList();
                 }, errorCallback);
             }
@@ -139,6 +138,7 @@ travel_app.controller('BookingControllerAD',
                 BookingTourServiceAD.deactivate(id).then(() => {
                     toastAlert('success', 'Hủy thành công !');
                     $('#modal-tour-detail').modal('hide');
+                    $scope.changeTab('cancelled', 2)
                     $scope.getTourBookingList();
                 }, errorCallback);
             }
