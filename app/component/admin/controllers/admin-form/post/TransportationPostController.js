@@ -8,11 +8,12 @@ travel_app.controller("TransportationPostController",
 
         $scope.mess = '';
 
-        $scope.transList = [];
-        $scope.carImageList = [];
-        $scope.currentPage = 0;
-        $scope.pageSize = 5;
-        $scope.isActive = true;
+    $scope.transList = [];
+    $scope.carImageList = [];
+    $scope.utilities = [];
+    $scope.currentPage = 0;
+    $scope.pageSize = 5;
+    $scope.isActive = true;
 
         $scope.passDate = false;
 
@@ -130,11 +131,17 @@ travel_app.controller("TransportationPostController",
             $scope.getTransportationList();
         }
 
-        $scope.openModal = function (data) {
-            $scope.car = data;
-            $scope.carImageList = data.transportationImagesById;
-            $('#transModal').modal('show');
-        }
+    $scope.openModal = function (data) {
+        $scope.car = data;
+        $scope.carImageList = data.transportationImagesById;
+        PostServiceAD.transUtility(data.id)
+            .then(function (response) {
+                $scope.utilities = response.data.data;
+            }, errorCallback).finally(function () {
+            $scope.isLoading = false;
+        });
+        $('#transModal').modal('show');
+    }
 
         $scope.closeModal = function () {
             $('#transModal').modal('hide');

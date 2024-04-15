@@ -14,7 +14,7 @@ travel_app.service('PostServiceAD', function ($http, $q) {
                 sortBy: sortBy || 'id',
                 sortDir: sortDir || 'asc',
                 searchTerm: searchTerm || '',
-                isAccepted: isAccepted || true
+                isAccepted: isAccepted || truef
             }
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
@@ -194,6 +194,13 @@ travel_app.service('PostServiceAD', function ($http, $q) {
         return $http({
             method: 'PUT',
             url: API_POST + 'accepted-visit-post/' + id
+        })
+    };
+
+    this.transUtility = function (id) {
+        return $http({
+            method: 'GET',
+            url: API_POST + 'find-trans-utility/' + id
         })
     };
 

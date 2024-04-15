@@ -12,7 +12,7 @@
     </div>
 
     <div class="card card-custom" style="padding:30px">
-        <form class="row g-3 form-input-custom" ng-submit="updateInfoSubmit()" name="customerForm"
+        <form class="row g-3 form-input-custom" ng-submit="updateAdminInfoSubmit()" name="customerForm"
               role="form">
             <div class="col-4">
                 <div class="form-floating" style="text-align: -webkit-center;">
@@ -198,7 +198,7 @@
                     <a class="btn" href="/business/select-type">Trở về</a>
                 </button>
                 <button type="button" class="btn" style="margin-right: 20px"
-                        ng-if="!hasRole('ROLE_AGENT_TRANSPORT') || !hasRole('ROLE_AGENT_HOTEL') || !hasRole('ROLE_AGENT_PLACE')">
+                        ng-if="hasRole('ROLE_ADMIN') || hasRole('ROLE_SUPERADMIN') || hasRole('ROLE_STAFF') || hasRole('ROLE_GUIDE')">
                     <a class="btn" href="/admin/dashboard">Trở về</a>
                 </button>
                 <button type="submit" ng-disabled="customerForm.$invalid || emailError || phoneError || cardError"

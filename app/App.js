@@ -710,7 +710,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/history-order/:id', {
             templateUrl: 'app/component/customers/views/pages/info/history-order.html',
-            controller: 'InformationController',
+            controller: 'BookingTourCustomerController',
             resolve: {
                 "check": function ($location, AuthService) {
                     if (!AuthService.getToken()) {

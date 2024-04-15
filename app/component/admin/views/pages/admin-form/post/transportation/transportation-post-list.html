@@ -1,3 +1,5 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
 <style>
     .close:focus {
 
@@ -297,6 +299,16 @@
                                 <tr>
                                     <td style="width: 50%;" class="pt-1" colspan="2">
                                         <div class="d-flex flex-column">
+                                            <span class="heading d-block">Tiện ích</span>
+                                            <div class="row">
+                                                <span ng-repeat="u in utilities" style="padding-top: 5px;" class="subheadings col-6" >{{u.title}}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%;" class="pt-1" colspan="1">
+                                        <div class="d-flex flex-column">
                                             <span class="heading d-block">Ngày đăng ký</span>
                                             <span class="subheadings">{{ (car.dateCreated | vietnameseDateTime) || 'Đang cập nhật' }}</span>
                                         </div>
@@ -380,3 +392,4 @@
             </div>
         </div>
     </div>
+</div>

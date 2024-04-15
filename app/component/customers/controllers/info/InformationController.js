@@ -174,11 +174,11 @@ travel_app.controller("InformationController", function ($scope, $sce, $location
 
     //==================================================================================================
     /** Các function xử lý hình ảnh */
-    $scope.uploadCustomerAvatar = function (file) {
+    $scope.uploadCustomerAvatar = (file) => {
         if (file && !file.$error) {
             let reader = new FileReader();
 
-            reader.onload = function (e) {
+            reader.onload = (e) => {
                 $scope.customer.avatar = e.target.result;
                 $scope.customerAvatarNoCloud = file;
                 $scope.hasImage = true; // Đánh dấu là đã có ảnh
@@ -189,7 +189,8 @@ travel_app.controller("InformationController", function ($scope, $sce, $location
         }
     };
 
-    $scope.getCurrentAvatarSource = function () {
+
+    $scope.getCurrentAvatarSource = () => {
         if ($scope.customer.avatar && typeof $scope.customer.avatar === 'string') {
             if ($scope.customer.avatar.startsWith('http')) {
                 $scope.customerAvatarNoCloud = $scope.customer.avatar;
@@ -210,28 +211,68 @@ travel_app.controller("InformationController", function ($scope, $sce, $location
 
     //Modal update
 
-    function confirmUpdate() {
-        const dataCustomer = new FormData();
-        $scope.isLoading = true;
-        if ($scope.hasImage) {
-            dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
-            dataCustomer.append("customerAvatar", $scope.customerAvatarNoCloud);
-            updateInfo(userId, dataCustomer);
-        } else {
-            if ($scope.customer.avatar === null) {
-                $scope.customer.avatar = 'https://t3.ftcdn.net/jpg/05/60/26/08/360_F_560260880_O1V3Qm2cNO5HWjN66mBh2NrlPHNHOUxW.jpg'
-            }
-            urlToFile($scope.customer.avatar, fileName, mimeType).then(file => {
-                dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
-                dataCustomer.append("customerAvatar", file);
-                updateInfo(userId, dataCustomer);
-            }, errorCallback);
-        }
-    }
+    // function confirmUpdate() {
+    //     const dataCustomer = new FormData();
+    //     $scope.isLoading = true;
+    //     if ($scope.hasImage) {
+    //         dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
+    //         dataCustomer.append("customerAvatar", $scope.customerAvatarNoCloud);
+    //         updateInfo(userId, dataCustomer);
+    //     } else {
+    //         if ($scope.customer.avatar === null) {
+    //             $scope.customer.avatar = 'https://t3.ftcdn.net/jpg/05/60/26/08/360_F_560260880_O1V3Qm2cNO5HWjN66mBh2NrlPHNHOUxW.jpg'
+    //         }
+    //         urlToFile($scope.customer.avatar, fileName, mimeType).then(file => {
+    //             dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
+    //             dataCustomer.append("customerAvatar", file);
+    //             updateInfo(userId, dataCustomer);
+    //         }, errorCallback);
+    //     }
+    // }
+    //
+    // const updateInfo = (userId, dataCustomer) => {
+    //     $scope.isLoading = true;
+    //     CustomerServiceAD.updateCustomer(userId, dataCustomer).then(function successCallback(response) {
+    //         if (response.status === 200) {
+    //             let user = response.data.data;
+    //             $window.location.href = '/information/' + Base64ObjectService.encodeObject(userId);
+    //
+    //             LocalStorageService.encryptLocalData(JSON.stringify(user), 'user', 'encryptUser');
+    //             toastAlert('success', 'Cập nhật thành công !');
+    //         } else {
+    //             $location.path('/admin/page-not-found');
+    //         }
+    //     }, errorCallback).finally(function () {
+    //         $scope.isLoading = false;
+    //     });
+    // }
+    // $scope.updateInfoSubmit = function () {
+    //     confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdate);
+    // }
 
-    const updateInfo = (userId, dataCustomer) => {
+    //form update
+    $scope.updateCustomerSubmit = () => {
+        function confirmUpdate() {
+            $scope.isLoading = true;
+
+            const dataCustomer = new FormData();
+            if ($scope.hasImage) {
+                dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
+                dataCustomer.append("customerAvatar", $scope.customerAvatarNoCloud);
+                updateCustomer(userId, dataCustomer);
+            } else {
+                dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
+                dataCustomer.append("customerAvatar", null);
+                updateCustomer(userId, dataCustomer);
+            }
+        }
+
+        confirmAlert('Bạn có chắc chắn muốn cập nhật khách hàng không ?', confirmUpdate);
+    };
+
+    const updateCustomer = (customerId, dataCustomer) => {
         $scope.isLoading = true;
-        CustomerServiceAD.updateCustomer(userId, dataCustomer).then(function successCallback(response) {
+        CustomerServiceAD.updateCustomer(customerId, dataCustomer).then(function successCallback(response) {
             if (response.status === 200) {
                 let user = response.data.data;
                 $window.location.href = '/information/' + Base64ObjectService.encodeObject(userId);
@@ -241,12 +282,9 @@ travel_app.controller("InformationController", function ($scope, $sce, $location
             } else {
                 $location.path('/admin/page-not-found');
             }
-        }, errorCallback).finally(function () {
+        }, errorCallback).finally(() => {
             $scope.isLoading = false;
         });
-    }
-    $scope.updateInfoSubmit = function () {
-        confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdate);
     }
 
     const confirmUpdatePhone = () => {
