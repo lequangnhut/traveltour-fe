@@ -98,11 +98,6 @@
                 <thead>
                 <tr class="bg-light">
                     <th scope="col"># <i class="fa-solid fa-sort"></i></th>
-                    <th ng-click="sortData('id')">
-                        <div class="icon-left">ID
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
-                        </div>
-                    </th>
                     <th ng-click="sortData('hotelTypeName')">
                         <div class="icon-left">Loại lưu trú
                             <span class="sorting-icon" ng-bind-html="getSortIcon('hotelTypeName')"></span>
@@ -114,7 +109,6 @@
                 <tbody>
                 <tr ng-repeat="type in typeList">
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ type.id }}</td>
                     <td>{{ type.hotelTypeName }}</td>
                     <td class="d-flex align-items-center justify-content-center">
                         <a ng-click="redirectPage('/admin/type/hotel-type-list/hotel-type-update/', type.id)"

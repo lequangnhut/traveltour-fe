@@ -1,4 +1,4 @@
-travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $location, $rootScope, $routeParams, $timeout, $http, Base64ObjectService, CustomerServiceAD, AuthService, LocalStorageService) {
+travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $location, $rootScope, $routeParams, $timeout, $http, Base64ObjectService, CustomerServiceAD, AuthService, LocalStorageService, NotificationService) {
     $scope.isLoading = true;
     $scope.hasImage = false;
 
@@ -303,50 +303,44 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
         });
     };
 
-    const confirmUpdate = () => {
-        const dataCustomer = new FormData();
-        $scope.isLoading = true;
-        if ($scope.hasImage) {
-            dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
-            dataCustomer.append("customerAvatar", $scope.customerAvatarNoCloud);
-            updateInfo(customerId, dataCustomer);
-        } else {
-            if ($scope.customer.avatar === null) {
-                $scope.customer.avatar = 'https://i.imgur.com/xm5Ufr5.jpg'
-            }
-            urlToFile($scope.customer.avatar, fileName, mimeType).then(file => {
+    $scope.updateAdminInfoSubmit = () => {
+        function confirmUpdateInfoAdmin() {
+            $scope.isLoading = true;
+
+            const dataCustomer = new FormData();
+            if ($scope.hasImage) {
                 dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
-                dataCustomer.append("customerAvatar", file);
-                updateInfo(customerId, dataCustomer);
-            }, errorCallback);
+                dataCustomer.append("customerAvatar", $scope.customerAvatarNoCloud);
+                updateInfoAdmin(customerId, dataCustomer);
+            } else {
+                dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
+                dataCustomer.append("customerAvatar", null);
+                updateInfoAdmin(customerId, dataCustomer);
+            }
         }
+        confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdateInfoAdmin);
     };
 
-    const updateInfo = (customerId, dataCustomer) => {
+    const updateInfoAdmin = (customerId, dataCustomer) => {
         $scope.isLoading = true;
-
         CustomerServiceAD.updateCustomer(customerId, dataCustomer).then((response) => {
             if (response.status === 200) {
                 let user = response.data.data;
                 let userRoles = response.data.data.roles;
-
                 LocalStorageService.encryptLocalData(JSON.stringify(user), 'user', 'encryptUser');
-                toastAlert('success', 'Cập nhật thành công !');
 
                 if (hasAdminRole(userRoles)) {
                     $window.location.href = '/admin/dashboard';
                 } else {
                     $window.location.href = '/business/select-type';
                 }
+                NotificationService.setNotification('success', 'Cập nhật thành công !');
             } else {
                 $location.path('/admin/page-not-found');
             }
         }, errorCallback).finally(() => {
             $scope.isLoading = false;
         });
-    }
-    $scope.updateInfoSubmit = () => {
-        confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdate);
     }
 
     const hasAdminRole = (roles) => {

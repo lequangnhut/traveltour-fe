@@ -99,11 +99,6 @@
                 <thead>
                 <tr class="bg-light">
                     <th scope="col"># <i class="fa-solid fa-sort"></i></th>
-                    <th ng-click="sortData('id')">
-                        <div class="icon-left">ID
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
-                        </div>
-                    </th>
                     <th ng-click="sortData('visitLocationTypeName')">
                         <div class="icon-left">Loại địa điểm
                             <span class="sorting-icon" ng-bind-html="getSortIcon('visitLocationTypeName')"></span>
@@ -115,7 +110,6 @@
                 <tbody>
                 <tr ng-repeat="type in typeList">
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ type.id }}</td>
                     <td>{{ type.visitLocationTypeName }}</td>
                     <td class="d-flex align-items-center justify-content-center">
                         <a ng-click="redirectPage('/admin/type/visit-location-type-list/visit-location-type-update/', type.id)"
