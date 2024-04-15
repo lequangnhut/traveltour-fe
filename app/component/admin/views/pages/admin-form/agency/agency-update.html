@@ -60,6 +60,7 @@
                     Tên doanh nghiệp không đúng định dạng !
                 </small>
             </div>
+
             <div class="col-md-6">
                 <label for="inputFullname" class="form-label">Tên người đại diện</label>
                 <input type="text"
@@ -81,6 +82,7 @@
                     Tên người đại diện không đúng định dạng !
                 </small>
             </div>
+
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Mã số thuế</label>
                 <input type="text"
@@ -106,6 +108,7 @@
                     Mã số thuế đã tồn tại ở một doanh nghiệp khác !
                 </small>
             </div>
+
             <div class="col-md-6">
                 <label for="inputPassword4" class="form-label"> Số điện thoại</label>
                 <input type="text"
@@ -131,6 +134,7 @@
                     Số điện thoại đã tồn tại ở một doanh nghiệp khác !
                 </small>
             </div>
+
             <div class="col-md-6">
                 <label class="form-label">URL Website</label>
                 <input type="text"
@@ -150,6 +154,7 @@
                     Website không đúng định dạng !
                 </small>
             </div>
+
             <div class="col-md-12">
                 <label for="imgDocument" class="form-label">Hình ảnh</label>
                 <input class="form-control" type="file" id="imgDocument" name="imgDocument" accept=".png, .jpg, .jpeg"
@@ -160,10 +165,11 @@
                        ng-show="agencyform.imgDocument.$touched && agencyform.imgDocument.$error.required">Vui
                     lòng tải lên ảnh tour!</small>
             </div>
+
             <div ng-if="agent.imgDocument != null" class="col-md-12">
                 <label for="imagePreview" class="form-label">Ảnh hiện tại</label> <br>
                 <a href="{{agent.imgDocument}}" class="image-container">
-                    <img id="imagePreview" ng-src="{{ getCurrentImageSource() }}" alt="Current Image"
+                    <img id="imagePreview" ng-src="{{ getCurrentImageSource() }}" loading="lazy" alt="Current Image"
                          style="max-width: 150px; min-height: 200px">
                     <div class="overlay-text d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-eye fs-3"></i>
@@ -181,7 +187,7 @@
                         ng-model="agent.province"
                         required
                 >
-                    <option value="001" selected>Chon tỉnh/thành phố</option>
+                    <option value="" disabled selected>Chon tỉnh/thành phố</option>
                 </select>
                 <small class="text-danger"
                        ng-show="agencyform.province.$touched && agencyform.province.$error.required">
@@ -201,7 +207,7 @@
                         ng-model="agent.district"
                         required
                 >
-                    <option value="001" selected>Chon Quận/Huyện</option>
+                    <option value="" disabled selected>Chon Quận/Huyện</option>
                 </select>
                 <small class="text-danger"
                        ng-show="agencyform.districts.$touched && agencyform.districts.$error.required">
@@ -221,7 +227,7 @@
                         ng-model="agent.ward"
                         required
                 >
-                    <option value="" selected>Chon Phường/Xã</option>
+                    <option value="" disabled selected>Chon Phường/Xã</option>
                 </select>
                 <small class="text-danger"
                        ng-show="agencyform.ward.$touched && agencyform.ward.$error.required">
@@ -229,7 +235,7 @@
                 </small>
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-12 mt-0">
                 <label class="form-label">Địa chỉ</label>
                 <input type="text"
                        class="form-control"
@@ -245,12 +251,14 @@
                 </small>
             </div>
             <div class="col-md-12">
-                <label for="isActive" class="form-label">Trạng thái</label>
+                <label for="isActive" class="form-label">Trạng thái hoạt động</label>
                 <select id="isActive" class="form-select"
                         name="isActive"
-                        ng-model="agent.isActive"
+                        ng-value="agent.isActive"
                         ng-class="{ 'is-invalid': agencyform.isActive.$invalid && agencyform.isActive.$touched, 'is-valid': agencyform.isActive.$valid && agencyform.isActive.$touched }"
-                        required>
+                        disabled
+                        required
+                >
                     <option value="" selected disabled>Chọn trang thái</option>
                     <option ng-selected="agent.isActive === true" value="true">Đang hoạt động</option>
                     <option ng-selected="agent.isActive === false" value="false">Ngưng hoạt động</option>
@@ -269,5 +277,3 @@
         </form>
     </div>
 </div>
-
-

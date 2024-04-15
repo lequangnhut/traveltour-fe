@@ -1,85 +1,50 @@
 travel_app.service('AgencyServiceAD', function ($http, $q) {
-
-    let API_TYPE = BASE_API + 'admin/agency/';
+    let API_AGENCIES_AD = BASE_API + 'admin/agency/';
 
     /**
-     * API show list
+     * API show list bên doanh nghiệp đã được duyệt
      */
-    this.findAllType = function (page, size, sortBy, sortDir, searchTerm) {
+    this.findAllAgenciesByIsAcceptedAD = function (isActive, page, size, sortBy, sortDir, searchTerm) {
         const deferred = $q.defer();
         $http({
             method: 'GET',
-            url: API_TYPE + 'find-all-agency-accepted',
+            url: API_AGENCIES_AD + 'find-all-agency-accepted',
             params: {
+                isActive: isActive,
                 page: page || 0,
                 size: size || 5,
                 sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
+                sortDir: sortDir || 'desc',
                 searchTerm: searchTerm || ''
             }
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
     };
 
-    this.findAllTypeWaiting = function (page, size, sortBy, sortDir, searchTerm) {
+    /**
+     * API show list bên doanh nghiệp chờ được duyệt
+     */
+    this.findAllAgenciesByIsAcceptedWaitingAD = function (isAccepted, page, size, sortBy, sortDir, searchTerm) {
         const deferred = $q.defer();
         $http({
             method: 'GET',
-            url: API_TYPE + 'find-all-agency-waiting',
+            url: API_AGENCIES_AD + 'find-all-agency-waiting',
             params: {
+                isAccepted: isAccepted,
                 page: page || 0,
                 size: size || 5,
                 sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
+                sortDir: sortDir || 'desc',
                 searchTerm: searchTerm || ''
             }
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
     };
 
-    this.findAllTypeDenied = function (page, size, sortBy, sortDir, searchTerm) {
-        const deferred = $q.defer();
-        $http({
-            method: 'GET',
-            url: API_TYPE + 'find-all-agency-denied',
-            params: {
-                page: page || 0,
-                size: size || 5,
-                sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
-                searchTerm: searchTerm || ''
-            }
-        }).then(deferred.resolve, deferred.reject);
-        return deferred.promise;
-    };
-
-    this.findAllTypeInactive = function (page, size, sortBy, sortDir, searchTerm) {
-        const deferred = $q.defer();
-        $http({
-            method: 'GET',
-            url: API_TYPE + 'find-all-agency-accepted-false',
-            params: {
-                page: page || 0,
-                size: size || 5,
-                sortBy: sortBy || 'id',
-                sortDir: sortDir || 'asc',
-                searchTerm: searchTerm || ''
-            }
-        }).then(deferred.resolve, deferred.reject);
-        return deferred.promise;
-    };
-
-    this.findAgencieById = function (id) {
+    this.findAgenciesById = function (agenciesId) {
         return $http({
             method: 'GET',
-            url: API_TYPE + 'find-by-id/' + id
-        })
-    };
-
-    this.findAgencieByIdNote = function (id) {
-        return $http({
-            method: 'GET',
-            url: API_TYPE + 'find-by-id-note/' + id
+            url: API_AGENCIES_AD + 'find-by-id/' + agenciesId
         })
     };
 
@@ -87,7 +52,7 @@ travel_app.service('AgencyServiceAD', function ($http, $q) {
         const deferred = $q.defer();
         $http({
             method: 'GET',
-            url: API_TYPE + 'count-all-agency-waiting'
+            url: API_AGENCIES_AD + 'count-all-agency-waiting'
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
     };
@@ -95,12 +60,12 @@ travel_app.service('AgencyServiceAD', function ($http, $q) {
     /**
      * API update loại
      */
-    this.updateAgency = function (id, tourData) {
+    this.updateAgency = function (agenciesId, agenciesDto) {
         const deferred = $q.defer();
         $http({
             method: 'PUT',
-            url: API_TYPE + 'update-agency/' + id,
-            data: tourData,
+            url: API_AGENCIES_AD + 'update-agency/' + agenciesId,
+            data: agenciesDto,
             headers: {'Content-Type': undefined},
             transformRequest: angular.identity
         }).then(function (response) {
@@ -114,11 +79,14 @@ travel_app.service('AgencyServiceAD', function ($http, $q) {
     /**
      * API delete loại
      */
-    this.deleteAgency = function (id) {
+    this.deleteAgency = function (agenciesId, noted) {
         const deferred = $q.defer();
         $http({
             method: 'DELETE',
-            url: API_TYPE + 'delete-agency/' + id
+            url: API_AGENCIES_AD + 'delete-agency/' + agenciesId,
+            params: {
+                noted: noted
+            }
         }).then(function (response) {
             deferred.resolve(response);
         }, function (error) {
@@ -130,11 +98,11 @@ travel_app.service('AgencyServiceAD', function ($http, $q) {
     /**
      * API khôi phục bằng id
      */
-    this.restoreAgency = function (id) {
+    this.restoreAgency = function (agenciesId) {
         const deferred = $q.defer();
         $http({
             method: 'PUT',
-            url: API_TYPE + 'restore-agency/' + id
+            url: API_AGENCIES_AD + 'restore-agency/' + agenciesId
         }).then(function (response) {
             deferred.resolve(response);
         }, function (error) {
@@ -146,25 +114,46 @@ travel_app.service('AgencyServiceAD', function ($http, $q) {
     /**
      * API tìm bằng id
      */
-    this.findById = function (id) {
+    this.findById = function (agenciesId) {
         return $http({
             method: 'GET',
-            url: API_TYPE + 'find-agency-by-id/' + id
+            url: API_AGENCIES_AD + 'find-agency-by-id/' + agenciesId
         })
     };
 
-    this.checkTypeIsWorking = function (id) {
-        return $http({
-            method: 'GET',
-            url: API_TYPE + 'check-bed-type-working/' + id,
-            param: 'id' + id
-        })
-    }
+    this.acceptAgency = function (agenciesId) {
+        const deferred = $q.defer();
+        $http({
+            method: 'PUT',
+            url: API_AGENCIES_AD + 'accepted-agency/' + agenciesId
+        }).then(function (response) {
+            deferred.resolve(response);
+        }, function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    };
+
+    this.deniedAgency = function (agenciesId, noted) {
+        const deferred = $q.defer();
+        $http({
+            method: 'PUT',
+            url: API_AGENCIES_AD + 'denied-agency/' + agenciesId,
+            params: {
+                noted: noted
+            }
+        }).then(function (response) {
+            deferred.resolve(response);
+        }, function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    };
 
     this.checkExistPhone = function (phone) {
         return $http({
             method: 'GET',
-            url: API_TYPE + 'check-duplicate-phone/' + phone,
+            url: API_AGENCIES_AD + 'check-duplicate-phone/' + phone,
             param: 'phone' + phone
         })
     }
@@ -172,34 +161,8 @@ travel_app.service('AgencyServiceAD', function ($http, $q) {
     this.checkExistTax = function (tax) {
         return $http({
             method: 'GET',
-            url: API_TYPE + 'check-duplicate-tax/' + tax,
+            url: API_AGENCIES_AD + 'check-duplicate-tax/' + tax,
             param: 'tax' + tax
         })
     }
-
-    this.acceptAgency = function (id) {
-        const deferred = $q.defer();
-        $http({
-            method: 'PUT',
-            url: API_TYPE + 'accepted-agency/' +  id,
-        }).then(function (response) {
-            deferred.resolve(response);
-        }, function (error) {
-            deferred.reject(error);
-        });
-        return deferred.promise;
-    };
-
-    this.deniedAgency = function (id) {
-        const deferred = $q.defer();
-        $http({
-            method: 'PUT',
-            url: API_TYPE + 'denied-agency/' +  id,
-        }).then(function (response) {
-            deferred.resolve(response);
-        }, function (error) {
-            deferred.reject(error);
-        });
-        return deferred.promise;
-    };
 });

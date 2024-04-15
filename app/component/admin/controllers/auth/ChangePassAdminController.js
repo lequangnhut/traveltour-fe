@@ -3,7 +3,6 @@ travel_app.controller('ChangePassAdminController', function ($scope, $window, $r
 
     $scope.init = function () {
         // Kiểm tra xem có token hay không
-        console.log("ậu á")
         if (token) {
             ForgotPwService.checkOldCodeAdmin(token)
                 .then(function successCallback(response) {
@@ -26,7 +25,6 @@ travel_app.controller('ChangePassAdminController', function ($scope, $window, $r
     $scope.toggleNewPass = function () {
         var passwordInput = document.getElementById('newPassword');
         var eyeIcon = document.getElementById('toggleNewPassword');
-
 
         if (passwordInput.type === 'password') {
             passwordInput.type = 'text';

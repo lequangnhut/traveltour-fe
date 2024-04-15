@@ -1,4 +1,4 @@
-let travel_app = angular.module('travel_app', ['ngRoute', 'ngFileUpload', 'ja.qr']);
+let travel_app = angular.module('travel_app', ['ngRoute', 'ngFileUpload']);
 
 let BASE_API = 'http://localhost:8080/api/v1/'
 
