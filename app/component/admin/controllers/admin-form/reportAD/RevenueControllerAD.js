@@ -1,19 +1,87 @@
 travel_app.controller('RevenueControllerAD', function ($scope, RevenueServiceAD) {
-    $scope.year = new Date().getFullYear();
+    $scope.yearForTheChartColumn = new Date().getFullYear();
+    $scope.yearForPieChart = new Date().getFullYear();
     $scope.currentYearData = new Array(12).fill(0);
     $scope.previousYearData = new Array(12).fill(0);
 
-    RevenueServiceAD.getAllYear().then((response) => {
-        $scope.selectYearList = response.data.data;
-    });
+    RevenueServiceAD.getAllYear().then((repo) => {
+        $scope.selectYearList = repo.data.data;
+    }).catch((err) => {
+        console.error(err);
+    })
 
     async function fetchRevenueData(year) {
         try {
             const response = await RevenueServiceAD.revenueOf12MonthsOfTheYearFromTourBooking(year);
             return response.data.data;
         } catch (error) {
-            console.error('Error fetching booking tour revenue:', error);
+            console.error(error);
             throw error;
+        }
+    }
+
+    async function fetchPercentageData(year) {
+        try {
+            const response = await RevenueServiceAD.percentageOfEachTypeOfService(year);
+            return response.data.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
+
+    const initCharts = async () => {
+        try {
+            const [revenueData, percentageData] = await Promise.all([
+                fetchRevenueData($scope.yearForTheChartColumn),
+                fetchPercentageData($scope.yearForPieChart)
+            ]);
+
+            $scope.currentYearData = revenueData.currentYearRevenue;
+            $scope.previousYearData = revenueData.previousYearIsRevenue;
+
+            $scope.hotelPercentage = percentageData.hotelPercentage;
+            $scope.visitLocationPercentage = percentageData.visitLocationPercentage;
+            $scope.transportBrandPercentage = percentageData.transportBrandPercentage;
+
+            if ($scope.currentYearData.length > 0 && $scope.previousYearData.length > 0) {
+                projectionVsActualChartInit($scope.currentYearData, $scope.previousYearData);
+            }
+
+            if ($scope.hotelPercentage !== undefined && $scope.visitLocationPercentage !== undefined && $scope.transportBrandPercentage !== undefined) {
+                pieChartInit($scope.hotelPercentage, $scope.visitLocationPercentage, $scope.transportBrandPercentage);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const updateColumnChart = async () => {
+        try {
+            const revenueData = await fetchRevenueData($scope.yearForTheChartColumn);
+            $scope.currentYearData = revenueData.currentYearRevenue;
+            $scope.previousYearData = revenueData.previousYearIsRevenue;
+
+            if ($scope.currentYearData.length > 0 && $scope.previousYearData.length > 0) {
+                projectionVsActualChartInit($scope.currentYearData, $scope.previousYearData);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const updatedPieChart = async () => {
+        try {
+            const percentageData = await fetchPercentageData($scope.yearForPieChart);
+            $scope.hotelPercentage = percentageData.hotelPercentage;
+            $scope.visitLocationPercentage = percentageData.visitLocationPercentage;
+            $scope.transportBrandPercentage = percentageData.transportBrandPercentage;
+
+            if ($scope.hotelPercentage !== undefined && $scope.visitLocationPercentage !== undefined && $scope.transportBrandPercentage !== undefined) {
+                pieChartInit($scope.hotelPercentage, $scope.visitLocationPercentage, $scope.transportBrandPercentage);
+            }
+        } catch (error) {
+            console.error(error);
         }
     }
 
@@ -33,31 +101,6 @@ travel_app.controller('RevenueControllerAD', function ($scope, RevenueServiceAD)
         })), n && s(n), i.addEventListener("clickControl", (({detail: {control: n}}) => {
             "phoenixTheme" === n && e.setOption(window._.merge(o(), t));
         }));
-    };
-
-    async function initCharts() {
-        try {
-            let repo  = await fetchRevenueData($scope.year);
-            $scope.currentYearData = repo.currentYearRevenue
-            $scope.previousYearData = repo.previousYearIsRevenue
-
-            // Khởi tạo biểu đồ khi có dữ liệu
-            if ($scope.currentYearData.length > 0 && $scope.previousYearData.length > 0) {
-                projectionVsActualChartInit($scope.currentYearData, $scope.previousYearData);
-            }
-        } catch (error) {
-            console.error('Error initializing charts:', error);
-        }
-    }
-
-    initCharts();
-
-    $scope.updateCharts = async () => {
-        try {
-            await initCharts();
-        } catch (error) {
-            console.error('Error updating charts:', error);
-        }
     };
 
     function formatNumberWithK(value) {
@@ -191,7 +234,7 @@ travel_app.controller('RevenueControllerAD', function ($scope, RevenueServiceAD)
         }
     };
 
-    const pieChartInit = () => {
+    const pieChartInit = (hotelPercentage, visitLocationPercentage, transportBrandPercentage) => {
         const {getColor, getData, rgbaColor} = window.phoenix.utils;
         const $chartEl = document.querySelector('.echart-pie-chart-example');
 
@@ -210,27 +253,28 @@ travel_app.controller('RevenueControllerAD', function ($scope, RevenueServiceAD)
                         type: 'pie',
                         radius: window.innerWidth < 530 ? '45%' : '60%',
                         label: {
-                            color: getColor('gray-700')
+                            color: getColor('gray-700'),
+                            formatter: '{b}: {c}%'
                         },
                         center: ['50%', '55%'],
                         data: [
                             {
-                                value: 120,
+                                value: hotelPercentage,
                                 name: 'Khách sạn',
                                 itemStyle: {
                                     color: getColor('danger')
                                 }
                             },
                             {
-                                value: 100,
+                                value: transportBrandPercentage,
                                 name: 'Phương tiện',
                                 itemStyle: {
                                     color: getColor('info')
                                 }
                             },
                             {
-                                value: 80,
-                                name: 'Điểm tham quan',
+                                value: visitLocationPercentage,
+                                name: 'Tham quan',
                                 itemStyle: {
                                     color: getColor('success')
                                 }
@@ -242,21 +286,32 @@ travel_app.controller('RevenueControllerAD', function ($scope, RevenueServiceAD)
                                 shadowOffsetX: 0,
                                 shadowColor: rgbaColor(getColor('gray-600'), 0.5)
                             }
-                        }
+                        },
                     }
                 ],
                 tooltip: {
                     trigger: 'item',
-                    padding: [7, 10],
-                    backgroundColor: getColor('gray-200'),
-                    borderColor: getColor('gray-300'),
-                    textStyle: {color: getColor('dark')},
+                    padding: [10, 15],
+                    backgroundColor: '#f8f9fa',
+                    borderColor: '#ced4da',
                     borderWidth: 1,
-                    transitionDuration: 0,
+                    textStyle: {
+                        color: '#343a40',
+                        fontSize: 14,
+                        fontWeight: 'bold'
+                    },
+                    transitionDuration: 0.5,
                     axisPointer: {
-                        type: 'none'
+                        type: 'shadow'
+                    },
+                    formatter: function (params) {
+                        return `<div style="display:flex; align-items:center;">
+                                    <div style="width:15px; height:15px; border-radius:50%; background-color:${params.color}; margin-right:8px;"></div>
+                                    <div>${params.name}: ${params.value}%</div>
+                                </div>`;
                     }
                 }
+
             });
 
             const responsiveOptions = {
@@ -280,9 +335,18 @@ travel_app.controller('RevenueControllerAD', function ($scope, RevenueServiceAD)
         }
     };
 
-    $scope.$watchGroup(['year'], function (newValues, oldValues) {
-        if (newValues !== oldValues) {
-            $scope.updateCharts();
+    initCharts();
+
+    $scope.$watch('yearForTheChartColumn', async (newValue, oldValue) => {
+        if (newValue !== oldValue) {
+            updateColumnChart();
+        }
+    });
+
+    // Update charts when the selected year changes for the pie chart
+    $scope.$watch('yearForPieChart', async (newValue, oldValue) => {
+        if (newValue !== oldValue) {
+            updatedPieChart();
         }
     });
 

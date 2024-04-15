@@ -10,7 +10,7 @@
                 <div class="col-lg-9">
                 </div>
                 <div class="col-lg-3" style="margin-bottom: -40px; z-index: 1">
-                    <select class="form-select form-select-sm" ng-model="year"
+                    <select class="form-select form-select-sm" ng-model="yearForTheChartColumn"
                             ng-options="y for y in selectYearList">
                     </select>
                 </div>
@@ -20,8 +20,15 @@
         <div class="col-12 col-md-6 col-lg-12 col-xl-6 mb-5 mb-md-3 mb-lg-5 mb-xl-2 mb-xxl-3">
             <div class="scrollbar row">
                 <div class="col-auto col-lg-12 mb-2 ps-5">
-                    <h4>Hiển thị số lượng tour đã đi và đang đi theo loại tour</h4>
-                    <p class="text-700 mb-0">Dữ liệu được hiển thị theo loại tour và số năm</p>
+                    <h4>Biểu đồ tỷ lệ (%) các dịch vụ du lịch đang hợp tác</h4>
+                    <p class="text-700 mb-0">Dữ liệu cập nhật các dịch vụ đang hoạt động và được thống kê theo năm</p>
+                </div>
+                <div class="col-lg-9">
+                </div>
+                <div class="col-lg-3 pe-5" style="margin-bottom: -40px; z-index: 1">
+                    <select class="form-select form-select-sm" ng-model="yearForPieChart"
+                            ng-options="y for y in selectYearList">
+                    </select>
                 </div>
                 <div class="echart-pie-chart-example" style="min-height: 450px;"></div>
             </div>

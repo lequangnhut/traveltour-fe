@@ -17,6 +17,14 @@ travel_app.service('RevenueServiceAD', function ($http, $q) {
         })
     };
 
+    this.percentageOfEachTypeOfService = function (year) {
+        return $http({
+            method: 'GET',
+            url: API_ADMIN_REVENUE + 'percentage-of-each-type-of-service',
+            params: {year: year}
+        })
+    };
+
     this.getAllYear = () => {
         const deferred = $q.defer();
         $http({
