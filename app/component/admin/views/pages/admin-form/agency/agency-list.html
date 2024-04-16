@@ -325,7 +325,7 @@
 
 <!-- Modal xem thông tin chi tiết của doanh nghiệp -->
 <div class="modal fade" id="modal-agencies" tabindex="-1" aria-labelledby="modal-agencies-label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog" style="min-width: 70%;">
+    <div class="modal-dialog modal-dialog" style="min-width: 80%;">
         <div class="modal-content" style="min-width: 100%; background-color: rgb(245,245,245)">
             <div class="modal-header" style="border-bottom: 1px solid #c6c6c6;">
                 <h3 class="modal-title justify-content-center fw-bold d-flex" style="font-size: 22px; color: black"
@@ -441,7 +441,7 @@
                                     </span>
                                 </p>
 
-                                <p class="mb-5 lh-lg ng-binding"
+                                <p class="lh-lg ng-binding" ng-class="agencies.isActive ? 'mb-5' : 'mb-3'"
                                    style="font-size: 15px;padding-left: 20px; padding-right: 20px">
                                     <strong>Trạng thái hoạt động: </strong>
                                     <span class="text-success fw-bold" ng-if="agencies.isActive">
@@ -571,14 +571,14 @@
                             ng-if="agencies.isActive"
                             data-bs-toggle="modal"
                             data-bs-target="#noted-agencies"
-                            class="btn btn-success"
+                            class="btn btn-warning"
                     >
                         Ngưng hoạt động
                     </button>
                     <button type="button"
                             ng-if="!agencies.isActive"
                             ng-click="restoreThisAgency(agencies.id, agencies.nameAgency)"
-                            class="btn btn-success"
+                            class="btn btn-warning"
                     >
                         Khôi phục hoạt động
                     </button>
@@ -611,7 +611,7 @@
                                   ng-model="agent.noted"
                                   ng-class="{ 'is-invalid': formNotedAgencies.noted.$invalid && formNotedAgencies.noted.$touched,
                                                'is-valid': formNotedAgencies.noted.$valid && formNotedAgencies.noted.$touched }"
-                                  ng-pattern="/.{100,}/"
+                                  ng-pattern="/.{25,}/"
                                   placeholder="Nhập lí do tạm ngưng hoạt động đối với doanh nghiệp {{ agencies.nameAgency }}"
                                   required
                         ></textarea>
@@ -621,7 +621,7 @@
                         </small>
                         <small class="text-danger"
                                ng-show="formNotedAgencies.noted.$error.pattern">
-                            Vui lòng nhập ít nhất 100 ký tự.
+                            Vui lòng nhập ít nhất 25 ký tự.
                         </small>
                     </div>
                 </form>

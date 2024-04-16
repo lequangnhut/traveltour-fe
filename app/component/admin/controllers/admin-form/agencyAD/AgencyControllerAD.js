@@ -51,6 +51,8 @@ travel_app.controller('AgencyControllerAD',
         $scope.changeTab = (tab, isActive) => {
             $scope.currentTab = tab;
             $scope.isActive = isActive;
+            $scope.currentPage = 0;
+            $scope.pageSize = 5;
             $scope.init();
             LocalStorageService.set('currentTabAgencies', tab);
         };

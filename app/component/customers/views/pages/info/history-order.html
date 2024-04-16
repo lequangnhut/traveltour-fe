@@ -207,7 +207,8 @@
                                         </th>
                                         <th ng-click="sortData('dateCreated')" scope="col" style="font-weight: 500">
                                             <div class="icon-left">Ngày tạo đơn
-                                                <span class="sorting-icon" ng-bind-html="getSortIcon('dateCreated')"></span>
+                                                <span class="sorting-icon"
+                                                      ng-bind-html="getSortIcon('dateCreated')"></span>
                                             </div>
                                         </th>
                                         <th scope="col" style="font-weight: 500">Trạng thái</th>
@@ -292,15 +293,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                <section ng-include="'app/component/customers/views/pages/info/modal/tour/modal-rating-tour-modal.html'"></section>
-                                <section ng-include="'app/component/customers/views/pages/info/modal/tour/modal-update-tour-visit.html'"></section>
+                                <section
+                                        ng-include="'app/component/customers/views/pages/info/modal/tour/modal-rating-tour-modal.html'"></section>
+                                <section
+                                        ng-include="'app/component/customers/views/pages/info/modal/tour/modal-update-tour-visit.html'"></section>
                                 <!-- Modal Booking Tour-->
                                 <div class="modal fade" id="tourModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                                      aria-hidden="true">
                                     <div class="modal-dialog modal-lg modal-dialog-centered">
                                         <div class="modal-content" style="border:none; width:100%">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Thông tin dịch vụ tour</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Thông tin dịch vụ
+                                                    tour</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                         ng-click="closeTourModal()"
                                                         style="background-color:#63ab45;color:white">
@@ -439,10 +443,16 @@
                                                                     <i class="fa-solid fa-trash"></i> Hủy đơn
                                                                 </button>
                                                                 <div ng-if="bookingTour.orderStatus === 1">
-                                                                    <button ng-show="!statusRating && !isBeforeSevenDays" type="button" class="btn btn-green" style="margin-right:20px" ng-click="openRatingTourModal(bookingTour)">
+                                                                    <button ng-show="!statusRating && !isBeforeSevenDays"
+                                                                            type="button" class="btn btn-green"
+                                                                            style="margin-right:20px"
+                                                                            ng-click="openRatingTourModal(bookingTour)">
                                                                         <i class="fa-solid fa-trash"></i> Đánh giá
                                                                     </button>
-                                                                    <button ng-show="statusRating && !isBeforeSevenDays" type="button" class="btn btn-green" style="margin-right:20px" ng-click="openUpdateRatingTourModal(bookingTour)">
+                                                                    <button ng-show="statusRating && !isBeforeSevenDays"
+                                                                            type="button" class="btn btn-green"
+                                                                            style="margin-right:20px"
+                                                                            ng-click="openUpdateRatingTourModal(bookingTour)">
                                                                         <i class="fa-solid fa-trash"></i> Sửa đánh giá
                                                                     </button>
                                                                 </div>
@@ -537,7 +547,8 @@
                                         </th>
                                         <th ng-click="sortData('checkOut')" scope="col" style="font-weight: 500">
                                             <div class="icon-left">Ngày check-out
-                                                <span class="sorting-icon" ng-bind-html="getSortIcon('checkOut')"></span>
+                                                <span class="sorting-icon"
+                                                      ng-bind-html="getSortIcon('checkOut')"></span>
                                             </div>
                                         </th>
                                         <th scope="col" style="font-weight: 500">Trạng thái</th>
@@ -642,8 +653,10 @@
                                     </div>
                                 </div>
                                 <!-- Modal rating hotel -->
-                                <section ng-include="'app/component/customers/views/pages/info/modal/hotel/modal-rating-hotel.html'"></section>
-                                <section ng-include="'app/component/customers/views/pages/info/modal/hotel/modal-update-rating-hotel.html'"></section>
+                                <section
+                                        ng-include="'app/component/customers/views/pages/info/modal/hotel/modal-rating-hotel.html'"></section>
+                                <section
+                                        ng-include="'app/component/customers/views/pages/info/modal/hotel/modal-update-rating-hotel.html'"></section>
                                 <!-- Modal Booking Hotel-->
                                 <div class="modal fade" id="hotelModal" tabindex="-1"
                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -837,10 +850,16 @@
                                                                     <i class="fa-solid fa-trash"></i> Hủy đơn
                                                                 </button>
                                                                 <div ng-if="bookingHotel.orderStatus === 3">
-                                                                    <button ng-show="!statusRating && !isBeforeSevenDays" type="button" class="btn btn-green" style="margin-right:20px" ng-click="openRatingHotelModal(bookingHotel)">
+                                                                    <button ng-show="!statusRating && !isBeforeSevenDays"
+                                                                            type="button" class="btn btn-green"
+                                                                            style="margin-right:20px"
+                                                                            ng-click="openRatingHotelModal(bookingHotel)">
                                                                         <i class="fa-solid fa-trash"></i> Đánh giá
                                                                     </button>
-                                                                    <button ng-show="statusRating && !isBeforeSevenDays" type="button" class="btn btn-green" style="margin-right:20px" ng-click="openUpdateRatingHotelModal(bookingHotel)">
+                                                                    <button ng-show="statusRating && !isBeforeSevenDays"
+                                                                            type="button" class="btn btn-green"
+                                                                            style="margin-right:20px"
+                                                                            ng-click="openUpdateRatingHotelModal(bookingHotel)">
                                                                         <i class="fa-solid fa-trash"></i> Sửa đánh giá
                                                                     </button>
                                                                 </div>
@@ -1003,8 +1022,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <section ng-include="'app/component/customers/views/pages/info/modal/trans/modal-rating-trans-modal.html'"></section>
-                                <section ng-include="'app/component/customers/views/pages/info/modal/trans/modal-update-rating-trans.html'"></section>
+                                <section
+                                        ng-include="'app/component/customers/views/pages/info/modal/trans/modal-rating-trans-modal.html'"></section>
+                                <section
+                                        ng-include="'app/component/customers/views/pages/info/modal/trans/modal-update-rating-trans.html'"></section>
                                 <!-- Modal Booking Trans-->
                                 <div class="modal fade" id="transModal" tabindex="-1"
                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1180,10 +1201,16 @@
                                                                     <i class="fa-solid fa-trash"></i> Hủy đơn
                                                                 </button>
                                                                 <div ng-show="bookingTrans.orderStatus === 1">
-                                                                    <button ng-show="!statusRating && !isBeforeSevenDays" type="button" class="btn btn-green" style="margin-right:20px" ng-click="openRatingTransModal(bookingTrans)">
+                                                                    <button ng-show="!statusRating && !isBeforeSevenDays"
+                                                                            type="button" class="btn btn-green"
+                                                                            style="margin-right:20px"
+                                                                            ng-click="openRatingTransModal(bookingTrans)">
                                                                         <i class="fa-solid fa-trash"></i> Đánh giá
                                                                     </button>
-                                                                    <button ng-show="statusRating && !isBeforeSevenDays" type="button" class="btn btn-green" style="margin-right:20px" ng-click="openUpdateRatingTransModal(bookingTrans)">
+                                                                    <button ng-show="statusRating && !isBeforeSevenDays"
+                                                                            type="button" class="btn btn-green"
+                                                                            style="margin-right:20px"
+                                                                            ng-click="openUpdateRatingTransModal(bookingTrans)">
                                                                         <i class="fa-solid fa-trash"></i> Sửa đánh giá
                                                                     </button>
                                                                 </div>
@@ -1355,8 +1382,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <section ng-include="'app/component/customers/views/pages/info/modal/visit/modal-rating-visit-modal.html'"></section>
-                                <section ng-include="'app/component/customers/views/pages/info/modal/visit/modal-update-rating-visit.html'"></section>
+                                <section
+                                        ng-include="'app/component/customers/views/pages/info/modal/visit/modal-rating-visit-modal.html'"></section>
+                                <section
+                                        ng-include="'app/component/customers/views/pages/info/modal/visit/modal-update-rating-visit.html'"></section>
                                 <!-- Modal Booking Visit-->
                                 <div class="modal fade" id="visitModal" tabindex="-1"
                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1546,10 +1575,16 @@
                                                                         style="margin-right:20px">
                                                                     <i class="fa-solid fa-trash"></i> Hủy đơn
                                                                 </button>
-                                                                <button ng-show="!statusRating && !isBeforeSevenDays" type="button" class="btn btn-green" style="margin-right:20px" ng-click="openRatingVisitModal(bookingVisit)">
+                                                                <button ng-show="!statusRating && !isBeforeSevenDays"
+                                                                        type="button" class="btn btn-green"
+                                                                        style="margin-right:20px"
+                                                                        ng-click="openRatingVisitModal(bookingVisit)">
                                                                     <i class="fa-solid fa-trash"></i> Đánh giá
                                                                 </button>
-                                                                <button ng-show="statusRating && !isBeforeSevenDays" type="button" class="btn btn-green" style="margin-right:20px" ng-click="openUpdateRatingVisitModal(bookingVisit)">
+                                                                <button ng-show="statusRating && !isBeforeSevenDays"
+                                                                        type="button" class="btn btn-green"
+                                                                        style="margin-right:20px"
+                                                                        ng-click="openUpdateRatingVisitModal(bookingVisit)">
                                                                     <i class="fa-solid fa-trash"></i> Sửa đánh giá
                                                                 </button>
                                                                 <button class="btn btn-back" data-bs-dismiss="modal"

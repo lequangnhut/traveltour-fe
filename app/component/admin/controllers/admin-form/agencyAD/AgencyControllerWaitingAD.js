@@ -16,8 +16,6 @@ travel_app.controller('AgencyControllerWaitingAD',
 
         // Trang hiện tại
         $scope.currentPage = 0;
-
-        // Số lượng tours trên mỗi trang
         $scope.pageSize = 5;
 
         $scope.agent = {
@@ -53,6 +51,8 @@ travel_app.controller('AgencyControllerWaitingAD',
         $scope.changeTab = (tab, isAccepted) => {
             $scope.currentTab = tab;
             $scope.isAccepted = isAccepted;
+            $scope.currentPage = 0;
+            $scope.pageSize = 5;
             $scope.init();
         };
 

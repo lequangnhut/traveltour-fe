@@ -19,12 +19,13 @@
         <!--  Lịch sử đi tour -->
         <li class="nav-item" ng-class="{ 'active bg-light fw-medium': isActiveInformation('/favourites/') }">
             <a class="nav-link text-dark" href="#" ng-click="redirectPage('/favourites/', user.id)">
+
                 Danh sách yêu thích
             </a>
         </li>
         <!--  Lịch sử đi tour -->
         <li class="nav-item" ng-class="{ 'active bg-light fw-medium': isActiveInformation('/history-order/') }">
-            <a class="nav-link text-dark" href="#" ng-click="redirectPage('/history-order/', user.id)">
+            <a class="nav-link text-dark" href="#" ng-click="redirectPage('/history-order/', user.email)">
                 Lịch sử giao dịch
             </a>
         </li>
