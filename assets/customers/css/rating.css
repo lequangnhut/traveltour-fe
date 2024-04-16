@@ -1,0 +1,39 @@
+.star-rating {
+    font-size: 35px;
+    cursor: pointer;
+}
+
+.star {
+    color: #ddd;
+    transition: color 0.3s;
+}
+
+.star.active, .star.hover {
+    color: #ffd700;
+    transition: color 0.3s;
+}
+
+.slick-prev,
+.slick-next {
+    font-size: 24px;
+    color: #000;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 9999;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+}
+
+.swiper-button-next {
+    right: 30px !important;
+}
+.swiper-button-prev {
+    left: 30px !important;
+}
+
+.color-ratings{
+    color: #F7921E
+}

@@ -292,14 +292,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                <section ng-include="'app/component/customers/views/pages/info/modal/tour/modal-rating-tour-modal.html'"></section>
+                                <section ng-include="'app/component/customers/views/pages/info/modal/tour/modal-update-tour-visit.html'"></section>
                                 <!-- Modal Booking Tour-->
                                 <div class="modal fade" id="tourModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                                      aria-hidden="true">
                                     <div class="modal-dialog modal-lg modal-dialog-centered">
                                         <div class="modal-content" style="border:none; width:100%">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Thông tin dịch vụ
-                                                    tour</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Thông tin dịch vụ tour</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                         ng-click="closeTourModal()"
                                                         style="background-color:#63ab45;color:white">
@@ -437,6 +438,14 @@
                                                                         style="margin-right:20px">
                                                                     <i class="fa-solid fa-trash"></i> Hủy đơn
                                                                 </button>
+                                                                <div ng-if="bookingTour.orderStatus === 1">
+                                                                    <button ng-show="!statusRating && !isBeforeSevenDays" type="button" class="btn btn-green" style="margin-right:20px" ng-click="openRatingTourModal(bookingTour)">
+                                                                        <i class="fa-solid fa-trash"></i> Đánh giá
+                                                                    </button>
+                                                                    <button ng-show="statusRating && !isBeforeSevenDays" type="button" class="btn btn-green" style="margin-right:20px" ng-click="openUpdateRatingTourModal(bookingTour)">
+                                                                        <i class="fa-solid fa-trash"></i> Sửa đánh giá
+                                                                    </button>
+                                                                </div>
                                                                 <button class="btn btn-back" data-bs-dismiss="modal"
                                                                         ng-click="closeTourModal()">
                                                                     <i class="fa-solid fa-circle-left"></i> Trở về
@@ -462,7 +471,9 @@
                                                 ng-change="getChangeHotelStatus()">
                                             <option value="0">Chờ thanh toán</option>
                                             <option value="1">Đã thanh toán</option>
-                                            <option value="2">Đã hủy</option>
+                                            <option value="2">Đã duyệt</option>
+                                            <option value="3">Thành công</option>
+                                            <option value="4">Thất bại</option>
                                         </select>
                                     </div>
                                     <div style="margin-right: 20px">
@@ -549,13 +560,25 @@
                                         <td ng-if="h.orderStatus == 1">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <span class="status-success"></span>
-                                                <span class="text-status-success">Đã thanh toán</span>
+                                                <span class="text-status-success">Đã thanh toán, chờ xét duyệt</span>
                                             </div>
                                         </td>
                                         <td ng-if="h.orderStatus == 2">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <span class="status-error"></span>
-                                                <span class="text-status-error">Hủy giao dịch</span>
+                                                <span class="text-status-error">Xét duyệt thành công, bạn có thể nhận phòng</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="h.orderStatus == 3">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-error"></span>
+                                                <span class="text-status-error">Thành công</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="h.orderStatus == 4">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-error"></span>
+                                                <span class="text-status-error">Đã bị hủy</span>
                                             </div>
                                         </td>
                                         <td>
@@ -568,10 +591,16 @@
                                         <td colspan="14">Hiện không có đơn chờ thanh toán.</td>
                                     </tr>
                                     <tr ng-if="bookingTourHotelList.length === 0 && orderStatus == 1">
-                                        <td colspan="14">Hiện không có đơn nào hoàn thành.</td>
+                                        <td colspan="14">Hiện không có đơn nào đã thanh toán.</td>
                                     </tr>
                                     <tr ng-if="bookingTourHotelList.length === 0 && orderStatus == 2">
-                                        <td colspan="14">Hiện không có đơn nào được hủy.</td>
+                                        <td colspan="14">Hiện không có đơn nào được duyệt.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourHotelList.length === 0 && orderStatus == 3">
+                                        <td colspan="14">Hiện không có đơn nào thành công.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourHotelList.length === 0 && orderStatus == 4">
+                                        <td colspan="14">Hiện không có đơn nào bị hủy.</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -612,6 +641,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- Modal rating hotel -->
+                                <section ng-include="'app/component/customers/views/pages/info/modal/hotel/modal-rating-hotel.html'"></section>
+                                <section ng-include="'app/component/customers/views/pages/info/modal/hotel/modal-update-rating-hotel.html'"></section>
                                 <!-- Modal Booking Hotel-->
                                 <div class="modal fade" id="hotelModal" tabindex="-1"
                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -804,6 +836,14 @@
                                                                         style="margin-right:20px">
                                                                     <i class="fa-solid fa-trash"></i> Hủy đơn
                                                                 </button>
+                                                                <div ng-if="bookingHotel.orderStatus === 3">
+                                                                    <button ng-show="!statusRating && !isBeforeSevenDays" type="button" class="btn btn-green" style="margin-right:20px" ng-click="openRatingHotelModal(bookingHotel)">
+                                                                        <i class="fa-solid fa-trash"></i> Đánh giá
+                                                                    </button>
+                                                                    <button ng-show="statusRating && !isBeforeSevenDays" type="button" class="btn btn-green" style="margin-right:20px" ng-click="openUpdateRatingHotelModal(bookingHotel)">
+                                                                        <i class="fa-solid fa-trash"></i> Sửa đánh giá
+                                                                    </button>
+                                                                </div>
                                                                 <button class="btn btn-back" data-bs-dismiss="modal"
                                                                         ng-click="closeHotelModal()">
                                                                     <i class="fa-solid fa-circle-left"></i> Trở về
@@ -963,6 +1003,8 @@
                                         </div>
                                     </div>
                                 </div>
+                                <section ng-include="'app/component/customers/views/pages/info/modal/trans/modal-rating-trans-modal.html'"></section>
+                                <section ng-include="'app/component/customers/views/pages/info/modal/trans/modal-update-rating-trans.html'"></section>
                                 <!-- Modal Booking Trans-->
                                 <div class="modal fade" id="transModal" tabindex="-1"
                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1137,6 +1179,14 @@
                                                                         style="margin-right:20px">
                                                                     <i class="fa-solid fa-trash"></i> Hủy đơn
                                                                 </button>
+                                                                <div ng-show="bookingTrans.orderStatus === 1">
+                                                                    <button ng-show="!statusRating && !isBeforeSevenDays" type="button" class="btn btn-green" style="margin-right:20px" ng-click="openRatingTransModal(bookingTrans)">
+                                                                        <i class="fa-solid fa-trash"></i> Đánh giá
+                                                                    </button>
+                                                                    <button ng-show="statusRating && !isBeforeSevenDays" type="button" class="btn btn-green" style="margin-right:20px" ng-click="openUpdateRatingTransModal(bookingTrans)">
+                                                                        <i class="fa-solid fa-trash"></i> Sửa đánh giá
+                                                                    </button>
+                                                                </div>
                                                                 <button class="btn btn-back" data-bs-dismiss="modal"
                                                                         ng-click="closeTransModal()">
                                                                     <i class="fa-solid fa-circle-left"></i> Trở về
@@ -1305,6 +1355,8 @@
                                         </div>
                                     </div>
                                 </div>
+                                <section ng-include="'app/component/customers/views/pages/info/modal/visit/modal-rating-visit-modal.html'"></section>
+                                <section ng-include="'app/component/customers/views/pages/info/modal/visit/modal-update-rating-visit.html'"></section>
                                 <!-- Modal Booking Visit-->
                                 <div class="modal fade" id="visitModal" tabindex="-1"
                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1486,12 +1538,19 @@
                                                                 </tr>
                                                                 </tbody>
                                                             </table>
+                                                            <!-- Modal rating hotel -->
                                                             <div class="d-flex">
                                                                 <button class="btn btn-cancel"
                                                                         ng-disabled="bookingVisit.orderStatus === 2 || isCheckInVisitPassed(bookingVisit.checkIn)"
                                                                         ng-click="cancelBookingVisitOrder(bookingVisit)"
                                                                         style="margin-right:20px">
                                                                     <i class="fa-solid fa-trash"></i> Hủy đơn
+                                                                </button>
+                                                                <button ng-show="!statusRating && !isBeforeSevenDays" type="button" class="btn btn-green" style="margin-right:20px" ng-click="openRatingVisitModal(bookingVisit)">
+                                                                    <i class="fa-solid fa-trash"></i> Đánh giá
+                                                                </button>
+                                                                <button ng-show="statusRating && !isBeforeSevenDays" type="button" class="btn btn-green" style="margin-right:20px" ng-click="openUpdateRatingVisitModal(bookingVisit)">
+                                                                    <i class="fa-solid fa-trash"></i> Sửa đánh giá
                                                                 </button>
                                                                 <button class="btn btn-back" data-bs-dismiss="modal"
                                                                         ng-click="closeVisitModal()">
@@ -1512,10 +1571,12 @@
             </main>
         </div>
     </div>
-
 </section>
-
 <!-- Button trigger modal -->
+
+
+
+
 
 
 

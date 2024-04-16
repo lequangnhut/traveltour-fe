@@ -1,4 +1,4 @@
-travel_app.controller("BookingHotelCustomerController", function ($scope, $sce, $location, $window, $routeParams, HistoryOrderServiceCUS, Base64ObjectService) {
+travel_app.controller("BookingHotelCustomerController", function ($scope, $sce,$timeout, $location, $window, $routeParams, UserCommentsService, SensitiveWordsService, HistoryOrderServiceCUS, Base64ObjectService) {
     $scope.isLoading = true;
 
     let userId = Base64ObjectService.decodeObject($routeParams.id);
@@ -15,6 +15,28 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $sce, 
 
     $scope.passDate = false;
 
+    // Các biến được khai báo trước
+    $scope.addClass = false;
+    $scope.errorRateComment = null;
+    $scope.selectedImage = null;
+    $scope.selectedImages = [];
+    $scope.isSubmitButtonDisabled = true;
+    $scope.imageErrors = []
+    $scope.selectedStars = 0;
+    $scope.comment = null;
+    $scope.showSuccessMessage = false;
+    $scope.rateProductList = [];
+    $scope.sensitiveWords = [];
+    $scope.inputText = ""
+    $scope.ratingService = {}
+    $scope.ratingHotel = {}
+    $scope.stars = [
+        {active: false},
+        {active: false},
+        {active: false},
+        {active: false},
+        {active: false}
+    ];
 
     /** Hàm trả trang lỗi*/
     function errorCallback() {
@@ -92,13 +114,11 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $sce, 
                     return;
                 }
                 $scope.bookingTourHotelList = response.data.data.content;
-                //console.log(response.data.data.content)
                 $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                 $scope.totalElements = response.data.data.totalElements;
                 for (let i = 0; i < $scope.bookingTourHotelList.length; i++) {
                     HistoryOrderServiceCUS.getHotels($scope.bookingTourHotelList[i].orderHotelDetailsById[0].roomTypeId)
                         .then(function (hotels) {
-                            //console.log(hotels)
                             if (hotels) {
                                 $scope.bookingTourHotelList[i].hotel = hotels.data.data;
                             } else {
@@ -130,6 +150,7 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $sce, 
 
     $scope.openHotelModal = function (data) {
         $('#hotelModal').modal('show');
+        $scope.resetRating()
         $scope.bookingHotel = data;
 
         var promises = [];
@@ -138,11 +159,10 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $sce, 
             var promise = HistoryOrderServiceCUS.getOrderDetails($scope.bookingHotel.id)
                 .then(function (rooms) {
                     $scope.roomTypeListCustomer = rooms.data.data;
-                    //console.log(rooms.data)
                     for (let j = 0; j < $scope.roomTypeListCustomer.length; j++) {
                         if ($scope.roomTypeListCustomer[j].roomTypes.freeCancellation === false) {
                             $scope.cancelWithFee = true;
-                            return; // Dừng vòng lặp khi tìm thấy phòng không được miễn hủy
+                            return;
                         }
                     }
                 });
@@ -170,11 +190,29 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $sce, 
             $scope.mess = "Bạn có muốn hủy phòng không ?";
         }
         //console.log(diffInDays);
+
+        $timeout(function() {
+            UserCommentsService.findByOrderIdRating($scope.bookingHotel.id).then(function (response) {
+                if (response.status === 200) {
+                    $scope.ratingHotel = response.data
+                    $scope.statusRating = $scope.bookingHotel.id === response.data.orderId;
+                    $scope.isBeforeSevenDays = new Date($scope.ratingHotel.dateCreated.getDate() + 7) > new Date();
+                } else if (response.status === 404) {
+                    $scope.statusRating = $scope.bookingHotel.id === response.data.orderId;
+                    $scope.isBeforeSevenDays = new Date($scope.ratingHotel.dateCreated.getDate() + 7) > new Date();
+                } else {
+                    toastAlert('error', response.data.message)
+                }
+            }).catch(function (error) {
+            })
+        },100)
     }
 
 
     $scope.closeHotelModal = function () {
         $('#hotelModal').modal('hide');
+        $scope.resetRating()
+
     };
 
     $scope.cancelBookingHotelOrder = function (data) {
@@ -192,5 +230,264 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $sce, 
         confirmAlert($scope.mess, confirmDeleteType);
     };
 
+    $scope.resetRating = function () {
+        $timeout(function () {
+            $scope.selectedStars = 0
+            if ($scope.selectedStars === 0) {
+                for (let i = 0; i < $scope.stars.length; i++) {
+                    $scope.stars[i].active = false;
+                }
+                $scope.showRateStarMessage = "";
+            }
+        })
+    }
 
+    /**
+     * Phương thức hiển thị modal đánh giá
+     * @param bookingHotel
+     */
+    $scope.openRatingHotelModal = function (bookingHotel) {
+        $('#ratingHotelModal').modal('show');
+        $('#hotelModal').modal('hide');
+        $scope.ratingService = bookingHotel;
+        $scope.selectedStars = 0
+
+        SensitiveWordsService.findAllSensitiveWords().then(function successCallback(response) {
+            if (response.status === 200) {
+                $scope.sensitiveWords = response.data;
+            } else {
+                toastAlert('error', response.data.message)
+            }
+        }).catch(function (error) {
+            toastAlert('error', error.data.message)
+        });
+        $scope.resetRating()
+            $scope.inputText = null;
+        $scope.isSubmitButtonDisabled =
+            $scope.starError !== null ||
+            $scope.errorRateComment !== null ||
+            $scope.selectedStars === 0;
+    }
+
+    /**
+     * Phương thức cập nhật lại đánh giá
+     * @param bookingHotel
+     */
+    $scope.openUpdateRatingHotelModal = function (bookingHotel) {
+        $('#ratingUpdateHotelModal').modal('show');
+        $('#hotelModal').modal('hide');
+        $scope.ratingService = bookingHotel;
+        $scope.selectedStars = 0
+
+        // Tìm từ cấm
+        SensitiveWordsService.findAllSensitiveWords().then(function successCallback(response) {
+            if (response.status === 200) {
+                $scope.sensitiveWords = response.data;
+            } else {
+                toastAlert('error', response.data.message)
+            }
+        }).catch(function (error) {
+            toastAlert('error', error.data.message)
+        });
+        $scope.resetRating()
+        $scope.inputText = null;
+        $scope.isSubmitButtonDisabled =
+            $scope.starError !== null ||
+            $scope.errorRateComment !== null ||
+            $scope.selectedStars === 0;
+    }
+
+    $scope.closeRatingHotelModal = function () {
+        $('#ratingHotelModal').modal('hide');
+    }
+
+    /**
+     * Phương thức chọn sao đánh giá sản phẩm
+     * @param index
+     */
+    $scope.toggleStar = function (index) {
+        // Đảo trạng thái active của các sao từ 1 đến index
+        for (let i = 0; i <= index; i++) {
+            $scope.stars[i].active = true;
+            $scope.starError = null;
+        }
+        for (let j = index + 1; j < $scope.stars.length; j++) {
+            $scope.stars[j].active = false;
+        }
+
+        // Đặt giá trị số sao đã chọn
+        $scope.selectedStars = index + 1;
+
+        if ($scope.selectedStars === 5) {
+            $scope.showRateStarMessage = "Rất hài lòng";
+        } else if ($scope.selectedStars === 4) {
+            $scope.showRateStarMessage = "Hài lòng";
+        } else if ($scope.selectedStars === 3) {
+            $scope.showRateStarMessage = "Bình thường";
+        } else if ($scope.selectedStars === 2) {
+            $scope.showRateStarMessage = "Tệ";
+        } else if ($scope.selectedStars === 1) {
+            $scope.showRateStarMessage = "Rất tệ";
+        } else {
+            $scope.showRateStarMessage = "";
+        }
+
+        $scope.isSubmitButtonDisabled =
+            $scope.starError !== null ||
+            $scope.errorRateComment !== null ||
+            $scope.selectedStars === 0;
+
+    };
+
+    /**
+     * Phương thức hover vào sao thì đổi màu của sao
+     * @param index
+     */
+    $scope.hoverStar = function (index) {
+        // Nếu như sao == 0 thì mới được phép hover
+        if ($scope.selectedStars === 0) {
+            for (let i = 0; i <= index; i++) {
+                $scope.stars[i].active = true;
+            }
+            for (let j = index + 1; j < $scope.stars.length; j++) {
+                $scope.stars[j].active = false;
+            }
+
+            if (index + 1 === 5) {
+                $scope.showRateStarMessage = "Rất hài lòng";
+            } else if (index + 1 === 4) {
+                $scope.showRateStarMessage = "Hài lòng";
+            } else if (index + 1 === 3) {
+                $scope.showRateStarMessage = "Bình thường";
+            } else if (index + 1 === 2) {
+                $scope.showRateStarMessage = "Tệ";
+            } else if (index + 1 === 1) {
+                $scope.showRateStarMessage = "Rất tệ";
+            } else {
+                $scope.showRateStarMessage = "Không hợp lệ";
+            }
+        }
+    };
+
+    /**
+     * Phuương thức reset lại sao khi không hover
+     */
+    $scope.resetStars = function () {
+        // Đặt lại trạng thái của tất cả các ngôi sao khi di chuột ra khỏi ngôi sao
+        if ($scope.selectedStars === 0) {
+            for (let i = 0; i < $scope.stars.length; i++) {
+                $scope.stars[i].active = false;
+            }
+            $scope.showRateStarMessage = "";
+        }
+    };
+
+    /**
+     * Phương thức kiểm tra từ cấm khi đánh giá
+     * @param inputText
+     */
+    $scope.checkSensitive = function (inputText) {
+        if (inputText !== "" && typeof inputText !== 'undefined') {
+            var lowerInputText = inputText.toLowerCase();
+
+            var isCheck = $scope.sensitiveWords.some(function (word) {
+                if (typeof word !== "string") {
+                    // Kiểm tra nếu phần tử không phải là chuỗi, bỏ qua và trả về false
+                    return false;
+                }
+                var lowerWord = word.toLowerCase();
+
+                if (lowerInputText.includes(" " + lowerWord + " ") || lowerInputText.startsWith(lowerWord + " ") || lowerInputText.endsWith(" " + lowerWord)) {
+                    return true;
+                }
+
+                if (lowerInputText.includes(lowerWord)) {
+                    var index = lowerInputText.indexOf(lowerWord);
+                    if ((index === 0 || lowerInputText[index - 1] === " ") && (index + lowerWord.length === lowerInputText.length || lowerInputText[index + lowerWord.length] === " ")) {
+                        return true;
+                    }
+                }
+
+                return false;
+            });
+
+            if (isCheck) {
+                $scope.errorRateComment = 'Phát hiện từ ngữ thô tục, vui lòng kiềm chế!';
+            } else {
+                $scope.inputText = inputText;
+                $scope.errorRateComment = null;
+            }
+
+            $scope.isSubmitButtonDisabled =
+                $scope.starError !== null ||
+                $scope.errorRateComment !== null ||
+                $scope.selectedStars === 0;
+        }
+    };
+
+
+    /**
+     * Phương thức mở model thì lưu productID
+     * @param productId
+     * @param orderId
+     */
+    $scope.openReviewModal = function (productId, orderId) {
+        $scope.selectedProductId = productId;
+        $scope.selectedOrdertId = orderId;
+    };
+
+    $scope.resetSuccessMessage = function () {
+        $scope.showSuccessMessage = false;
+    };
+
+    /**
+     * Phương thức gửi đánh giá
+     * @param status trạng thái đánh giá
+     */
+    $scope.submitRating = function (status) {
+        if(status === 'insert') {
+            $scope.data = {
+                serviceId: $scope.ratingService.hotel.id,
+                star: $scope.selectedStars,
+                content: $scope.inputText,
+                usersId: $scope.user.id,
+                orderId: $scope.ratingService.id
+            }
+            UserCommentsService.insertUserComments($scope.data).then(function (response) {
+                if (response.status === 200) {
+                    toastAlert('success', response.data.message)
+                    $('#ratingHotelModal').modal('hide');
+                    $scope.resetRating()
+
+                } else {
+                    toastAlert('error', response.data.message)
+                }
+            }).catch(function (error) {
+                toastAlert('error', error.data.message)
+            })
+        }else if(status === 'update'){
+            $scope.data = {
+                id: $scope.ratingHotel.id,
+                serviceId: $scope.ratingService.hotel.id,
+                star: $scope.selectedStars,
+                content: $scope.inputText,
+                usersId: $scope.user.id,
+                orderId: $scope.ratingService.id
+            }
+            UserCommentsService.updateUserComments($scope.data).then(function (response) {
+                if (response.status === 200) {
+                    toastAlert('success', response.data.message)
+                    $('#ratingUpdateHotelModal').modal('hide');
+
+                    $scope.resetRating()
+
+                } else {
+                    toastAlert('error', response.data.message)
+                }
+            }).catch(function (error) {
+                toastAlert('error', error.data.message)
+            })
+        }
+
+    }
 })

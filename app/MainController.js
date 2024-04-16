@@ -271,6 +271,10 @@ travel_app.controller('MainController',
                 return true;
             }
 
+            if($location.path() === "/business/register-hotel") {
+                return true;
+            }
+
             return $scope.isActive(hiddenPaths);
         };
 
@@ -319,6 +323,9 @@ travel_app.controller('MainController',
                 return {'margin': '0'};
             }
 
+            if($location.path() === "/business/register-hotel") {
+                return {'margin': '0'};
+            }
             return $scope.isActive(marginPaths) ? {'margin': '0'} : {};
         };
 

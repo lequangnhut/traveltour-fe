@@ -31,6 +31,9 @@ travel_app.controller("RegisterHotelControllerAG", function (
         districtName: null,
         wardName: null,
         floorNumber: null,
+        longitude: null,
+        latitude: null,
+        hotelDescription: null,
         avatarHotel: null,
         hotelType: null,
         agencyId: null
@@ -59,7 +62,6 @@ travel_app.controller("RegisterHotelControllerAG", function (
         checkinTime: null,
         checkoutTime: null,
         roomTypeAvatar: null,
-        roomTypeDescription: null,
         roomImagesById: [],
         roomUtilities: [],
         roomBedsById: [],
@@ -143,6 +145,8 @@ travel_app.controller("RegisterHotelControllerAG", function (
      * Băt lỗi hình ảnh đại diện khách sạn
      */
     $scope.validateAvataHotel = function (file) {
+        if (!file) return; // Đảm bảo file được truyền vào
+
         var maxImages = 1;
 
         if ($scope.hotels.avatarHotel && $scope.hotels.avatarHotel.length > maxImages) {
@@ -156,8 +160,8 @@ travel_app.controller("RegisterHotelControllerAG", function (
         } else {
             delete $scope.register_hotels.avataHotel.$error.maxSize;
         }
-
     };
+
 
     /**
      * Phương thức kiểm tra xem đã chọn vị trí trên bản đồ chưa
@@ -234,6 +238,9 @@ travel_app.controller("RegisterHotelControllerAG", function (
             $scope.currentMarker = new mapboxgl.Marker()
                 .setLngLat([$scope.longitude, $scope.latitude])
                 .addTo($scope.map);
+
+            $scope.hotels.longitude = $scope.longitude;
+            $scope.hotels.latitude = $scope.latitude;
         });
     });
 
@@ -355,7 +362,6 @@ travel_app.controller("RegisterHotelControllerAG", function (
             .map(function (checkbox) {
                 return checkbox.id;
             });
-
         console.log($scope.hotels)
         console.log($scope.roomTypes)
         console.log(selectedPlaceUtilitiesHotel)
@@ -374,17 +380,18 @@ travel_app.controller("RegisterHotelControllerAG", function (
             $scope.roomTypes.bedTypeId,
             $scope.hotels.avatarHotel,
             $scope.roomTypes.roomTypeAvatar,
-            $scope.roomTypes.listRoomTypeImg
+            $scope.roomTypes.listRoomTypeImg,
         ).then(function (response) {
             if (response.status === 200) {
                 toastAlert('success', "Đăng ký khách sạn thành công !");
-                $location.path('/business/hotel/home')
+                $location.path('/business/hotel/home');
             } else {
-                toastAlert('error', "Đăng ký khách sạn thất bại !");
+                console.log(response)
+                toastAlert('error', "Đăng ký khách sạn thất bại!");
             }
         }).finally(function () {
             $scope.isLoading = false;
-        })
+        });
     }
 
     console.log($scope.pageLoaded);

@@ -103,7 +103,7 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
         }
         await $scope.findUsersChat();
         scrollToBottom()
-        if($scope.agencyId) {
+        if ($scope.agencyId) {
             $scope.matchedUserChat = $scope.userChatsList.find(function (userChat) {
                 return userChat.userId === $scope.agencyId;
             });
@@ -123,18 +123,13 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
     $scope.findUsersChat = async function () {
         try {
             console.log(user.id, user.roles[0].nameRole);
-            stompClient.send(`/app/${user.id}/chat.findUsersChat`, {}, JSON.stringify({
+            stompClient.send(`/app/${user.id}/send-notification-order`, {}, JSON.stringify({
                 userId: user.id,
                 role: user.roles[0].nameRole
             }));
 
-            return new Promise(function (resolve, reject) {
-                stompClient.subscribe(`/user/${user.id}/chat/findUsersChat`, function (message) {
-                    $scope.userChatsList = JSON.parse(message.body);
-                    console.log($scope.userChatsList);
-                    resolve($scope.userChatsList);
-                    scrollToBottom();
-                });
+            stompClient.subscribe(`/user/${user.id}/send/send-notification-order`, function (message) {
+                $scope.userChatsList = JSON.parse(message.body);
             });
         } catch (error) {
             console.error("Error:", error);

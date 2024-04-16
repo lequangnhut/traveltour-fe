@@ -714,6 +714,88 @@
                         Hiện tại nhà xe chưa có vé xe phù hợp ! Cảm ơn bạn.
                     </div>
                 </div>
+
+                <div class="reviews-wrapper mb-60 wow fadeInUp">
+                    <div class="reviews-inner-box">
+                        <div class="rating-value">
+                            <h5>Đánh giá của khách hàng</h5>
+                            <div class="rate-score" ng-bind="ratingHotel.roundedAverageRating"></div>
+                            <ul class="ratings d-flex justify-content-center align-items-center color-ratings">
+                                <div ng-repeat="star in stars track by $index">
+                                    <span class="fas fa-star"></span>
+                                </div>
+                                <div ng-if="showHalfStar">
+                                    <span class="fas fa-star-half-alt"></span>
+                                </div>
+                                <li><a href="#" ng-bind="'(' + ratingHotel.roundedAverageRating + ')'"></a></li>
+                            </ul>
+                            <span class="reviews" ng-bind="ratingHotel.numberOfRatings + ' Đánh giá'"></span>
+                        </div>
+                        <section class="row" style="max-width: 600px">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide d-flex justify-content-center align-items-center" style="width: 500px"
+                                         ng-repeat="rating in ratingHotel.userComments.content">
+                                        <div class="text-center">
+                                            <div class="text-center d-flex justify-content-center align-items-center">
+                                                <img ng-src="{{ rating.usersByUserId.avatar }}" alt="image"
+                                                     style="width: 100px; height: 100px; border-radius: 100px"
+                                                     class="text-center">
+                                            </div>
+                                            <span class="h5">{{ rating.usersByUserId.fullName }}</span>
+                                            <ul class="ratings">
+                                                <li ng-repeat="index in [].constructor(rating.star) track by $index"><span
+                                                        class="fas fa-star"></span></li>
+                                            </ul>
+                                            <p>{{ rating.content }}</p>
+                                            <span class="time" style="font-size: 12px">
+                                                    <span class="fas fa-clock text-green"></span>
+                                                {{ rating.dateCreated | timeAgo }}
+                                                </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <!--=== Comments Area ===-->
+                <div class="comments-area wow fadeInUp">
+                    <ul class="comment-list w-100" ng-repeat="rating in ratingHotel.userComments.content">
+                        <li>
+                            <div class="comment">
+                                <div class="comment-avatar">
+                                    <img src="{{ rating.usersByUserId.avatar }}" style="border-radius: 50px"
+                                         alt="comment author">
+                                </div>
+                                <div class="comment-wrap w-100">
+                                    <div class="comment-author-content">
+                                            <span class="author-name">{{ rating.usersByUserId.fullName }}
+                                                <span class="time">
+                                                    <span class="fas fa-clock"></span>
+                                                    {{ rating.dateCreated | timeAgo }}
+                                                </span>
+                                            </span>
+                                        <ul class="comment-rating-ul">
+                                            <li>
+                                                    <span ng-repeat="index in [].constructor(rating.star) track by $index">
+                                                        <span class="fas fa-star"></span>
+                                                    </span>
+                                            </li>
+                                        </ul>
+                                        <p>{{ rating.content }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div ng-if="ratingHotel.userComments.totalElements > ratingHotel.userComments.content.numberOfElements">
+                        <button class="btn text-green text-center" ng-click="findUserComments(roomTypes[0].hotelsByHotelId.id)">Hiển thị thêm</button>
+                    </div>
+                </div>
             </div>
 
             <div class="col-xl-4">

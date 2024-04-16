@@ -1,8 +1,10 @@
+
 <div ng-include="'app/component/customers/views/components/loader-search.html'"></div>
 <!--====== Start Blog Details Section ======-->
 <section class="blog-details-section pt-100 pb-70">
     <div class="container">
-        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
+             aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/home">Trang chủ</a></li>
                 <li class="breadcrumb-item"><a href="/hotel">Khách sạn</a></li>
@@ -41,7 +43,8 @@
                                     </div>
                                 </div>
                                 <div class="col-3 hover-bg-image" style="cursor: pointer"
-                                     ng-show="listImageroomType.length > 5" ng-if="listImageroomType[6]" ng-click="showImageHotelModal()">
+                                     ng-show="listImageroomType.length > 5" ng-if="listImageroomType[6]"
+                                     ng-click="showImageHotelModal()">
                                     <div class="thumbnail position-relative w-100 h-100">
                                         <div class="div">
                                             <img ng-src="{{listImageroomType[6].roomTypeImg}}" style="height: 130px"
@@ -59,11 +62,13 @@
                             <span><span ng-click="likeHotel(roomTypes[0].hotelsByHotelId.id)">
                                 <a class="d-flex align-items-center">
                                     <i ng-if="isLikeHotel">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 16px; fill: red; padding-bottom: 4px"> <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                         style="width: 16px; fill: red; padding-bottom: 4px"> <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path
                                             d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>
                                 </i>
                                 <i ng-if="!isLikeHotel">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 16px; padding-bottom: 4px"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                         style="width: 16px; padding-bottom: 4px"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path
                                             d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8v-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5v3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20c0 0-.1-.1-.1-.1c0 0 0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5v3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2v-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"/></svg>
                                 </i>
                                 Yêu thích
@@ -135,8 +140,12 @@
                                         <tr>
                                             <td>
                                                 <div class="room-type">
-                                                    <div class="h5 text-green" ng-click="showInfoRoomType(roomType.id)">{{ roomType.roomTypeName }}</div>
-                                                    <div>Loại giường: {{ getRoomBedsName(roomType.roomBedsById[0].bedTypeId) }}</div>
+                                                    <div class="h5 text-green"
+                                                         ng-click="showInfoRoomType(roomType.id)">{{ roomType.roomTypeName }}
+                                                    </div>
+                                                    <div>Loại
+                                                        giường: {{ getRoomBedsName(roomType.roomBedsById[0].bedTypeId) }}
+                                                    </div>
                                                     <div ng-repeat="roomUtilities in roomType.roomUtilities">
                                                         <ul class="nav flex-column">
                                                             <li class="nav-item"><i class="fas fa-check-circle"></i>
@@ -161,15 +170,23 @@
                                                 <div ng-if="roomType.freeCancellation" class="text-green">
                                                     <i class="fa-solid fa-check"></i> Miễn phí hủy phòng
                                                 </div>
-                                                <div ng-if="roomType.amountRoom <= 10 && roomType.amountRoom > 0" class="text-danger fw-medium">
-                                                    <i class="fa-solid fa-exclamation"></i> Chỉ còn {{ roomType.amountRoom }} phòng với giá này trên trang của chúng tôi
+                                                <div ng-if="roomType.amountRoom <= 10 && roomType.amountRoom > 0"
+                                                     class="text-danger fw-medium">
+                                                    <i class="fa-solid fa-exclamation"></i> Chỉ
+                                                    còn {{ roomType.amountRoom }} phòng với giá này trên trang của chúng
+                                                    tôi
                                                 </div>
                                                 <div ng-if="roomType.amountRoom === 0" class="text-danger fw-medium">
-                                                    <i class="fa-solid fa-exclamation"></i> Phòng này đã hết, Nhưng bạn có thể chọn phòng khác của khách sạn
+                                                    <i class="fa-solid fa-exclamation"></i> Phòng này đã hết, Nhưng bạn
+                                                    có thể chọn phòng khác của khách sạn
                                                 </div>
                                             </td>
                                             <td>
-                                                <select class="form-select" aria-label="selectAmountRoom" style="font-size: 13px; width: 60px" ng-model="roomType.amountRoomSelected" ng-change="selectedRoomType(roomType.amountRoomSelected, roomType)" ng-options="room as room + '' + ' (' + (room * roomType.price | removeCurrencySymbol) + ' VND)' for room in generateRoomNumbers(roomType.amountRoom)">
+                                                <select class="form-select" aria-label="selectAmountRoom"
+                                                        style="font-size: 13px; width: 60px"
+                                                        ng-model="roomType.amountRoomSelected"
+                                                        ng-change="selectedRoomType(roomType.amountRoomSelected, roomType)"
+                                                        ng-options="room as room + '' + ' (' + (room * roomType.price | removeCurrencySymbol) + ' VND)' for room in generateRoomNumbers(roomType.amountRoom)">
                                                     <option value="">0</option>
                                                 </select>
                                             </td>
@@ -195,7 +212,8 @@
                                 <tr ng-repeat="roomType in roomTypeSelected">
                                     <th class="d-flex">
                                         <img ng-src="{{roomType.roomTypeAvatar}}" class="img-fluid" width="100"
-                                             onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'" alt="roomTypeAvatar"/>
+                                             onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"
+                                             alt="roomTypeAvatar"/>
                                         <div style="margin-left: 10px">
                                             <div class="h5">{{ roomType.roomTypeName }}</div>
                                             <p class="fw-light">{{ getRoomBedsName(roomType.roomBedsById[0].bedTypeId) }}</p>
@@ -254,142 +272,87 @@
                             </div>
                         </div>
                     </div>
-                    <!--===  Post Author Box  ===-->
-                    <div class="post-author-box d-flex pb-60 mb-60 wow fadeInUp">
-                        <div class="author-thumb">
-                            <img src="/assets/customers/images/blog/author-1.jpg" alt="post author">
-                        </div>
-                        <div class="author-content">
-                            <h5>Bruno R. Bouchard</h5>
-                            <span class="position">Author</span>
-                            <p>Donec duis enim ipsum odio at cursus. Fames semper enim integer epsum ultricies faucibus
-                                augue enim semper</p>
-                            <ul class="social-link">
-                                <li><a href="#"><span class="fab fa-facebook-f"></span></a></li>
-                                <li><a href="#"><span class="fab fa-twitter"></span></a></li>
-                                <li><a href="#"><span class="fab fa-instagram"></span></a></li>
-                                <li><a href="#"><span class="fab fa-linkedin-in"></span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--===  Post Navigation  ===-->
-                    <div class="post-navigation-item pb-30 mb-55 wow fadeInUp">
-                        <div class="prev-post post-nav-item d-flex mb-30">
-                            <div class="thumb">
-                                <img src="/assets/customers/images/blog/prev-post.jpg" alt="Post Thumb">
-                            </div>
-                            <div class="content">
-                                <h6><a href="#">Web Quality Assurance
-                                    Requirements To Web
-                                    Dev Risk Manage</a></h6>
-                                <span class="post-date"><a href="#"><span class="fas fa-calendar-alt"></span>November 23,2022</a></span>
-                            </div>
-                        </div>
-                        <div class="next-post post-nav-item d-flex mb-30">
-                            <div class="thumb">
-                                <img src="/assets/customers/images/blog/next-post.jpg" alt="Post Thumb">
-                            </div>
-                            <div class="content">
-                                <h6><a href="#">Deep Dive Into Wonder
-                                    World Of Displaements
-                                    Filtering</a></h6>
-                                <span class="post-date"><a href="#"><span class="fas fa-calendar-alt"></span>November 23,2022</a></span>
-                            </div>
-                        </div>
-                    </div>
-                    <!--===  Comments Area  ===-->
-                    <div class="comments-area mb-60 wow fadeInUp">
-                        <h5 class="comments-title mb-40">Popular Comments</h5>
-                        <ul class="comments-list">
-                            <li>
-                                <div class="comment">
-                                    <div class="comment-avatar">
-                                        <img src="/assets/customers/images/blog/comment-1.jpg" alt="comment author">
+                    <!--=== Đánh giá ===-->
+                    <div class="reviews-wrapper mb-60 wow fadeInUp">
+                        <div class="reviews-inner-box">
+                            <div class="rating-value">
+                                <h5>Đánh giá của khách hàng</h5>
+                                <div class="rate-score" ng-bind="ratingHotel.roundedAverageRating"></div>
+                                <ul class="ratings d-flex justify-content-center align-items-center color-ratings">
+                                    <div ng-repeat="star in stars track by $index">
+                                        <span class="fas fa-star"></span>
                                     </div>
-                                    <div class="comment-wrap">
-                                        <div class="comment-author-content">
-                                            <span class="author-name">Jonathan M. Dickinson<span class="date">September 25, 2022</span></span>
-                                            <p>Nov ut perspiciatis unde omnis iste natus sit voluptatem accusantium
-                                                doloremque
-                                                laudantium, totam rem aperiam quae abillo inventore veritatis</p>
-                                            <a href="#" class="btn-link">Reply<span
-                                                    class="fas fa-angle-double-right"></span></a>
-                                        </div>
+                                    <div ng-if="showHalfStar">
+                                        <span class="fas fa-star-half-alt"></span>
                                     </div>
-                                </div>
-                                <ul class="comment-reply">
-                                    <li>
-                                        <div class="comment">
-                                            <div class="comment-avatar">
-                                                <img src="/assets/customers/images/blog/comment-2.jpg"
-                                                     alt="comment author">
-                                            </div>
-                                            <div class="comment-wrap">
-                                                <div class="comment-author-content">
-                                                    <span class="author-name">Jonathan M. Dickinson<span class="date">September 25, 2022</span></span>
-                                                    <p>Nov ut perspiciatis unde omnis iste natus sit voluptatem
-                                                        accusantium doloremque
-                                                        laudantium, totam rem aperiam quae abillo inventore
-                                                        veritatis</p>
-                                                    <a href="#" class="btn-link">Reply<span
-                                                            class="fas fa-angle-double-right"></span></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    <li><a href="#" ng-bind="'(' + ratingHotel.roundedAverageRating + ')'"></a></li>
                                 </ul>
-                            </li>
+                                <span class="reviews" ng-bind="ratingHotel.numberOfRatings + ' Đánh giá'"></span>
+                            </div>
+                            <section class="row" style="max-width: 600px">
+                                <div class="swiper-container">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide d-flex justify-content-center align-items-center" style="width: 500px"
+                                             ng-repeat="rating in ratingHotel.userComments.content">
+                                            <div class="text-center">
+                                                <div class="text-center d-flex justify-content-center align-items-center">
+                                                    <img ng-src="{{ rating.usersByUserId.avatar }}" alt="image"
+                                                         style="width: 100px; height: 100px; border-radius: 100px"
+                                                         class="text-center">
+                                                </div>
+                                                <span class="h5">{{ rating.usersByUserId.fullName }}</span>
+                                                <ul class="ratings">
+                                                    <li ng-repeat="index in [].constructor(rating.star) track by $index"><span
+                                                            class="fas fa-star"></span></li>
+                                                </ul>
+                                                <p>{{ rating.content }}</p>
+                                                <span class="time" style="font-size: 12px">
+                                                    <span class="fas fa-clock text-green"></span>
+                                                    {{ rating.dateCreated | timeAgo }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                    <div class="swiper-pagination"></div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <!--=== Comments Area ===-->
+                    <div class="comments-area wow fadeInUp">
+                        <ul class="comment-list w-100" ng-repeat="rating in ratingHotel.userComments.content">
                             <li>
                                 <div class="comment">
                                     <div class="comment-avatar">
-                                        <img src="/assets/customers/images/blog/comment-3.jpg" alt="comment author">
+                                        <img src="{{ rating.usersByUserId.avatar }}" style="border-radius: 50px"
+                                             alt="comment author">
                                     </div>
-                                    <div class="comment-wrap">
+                                    <div class="comment-wrap w-100">
                                         <div class="comment-author-content">
-                                            <span class="author-name">Michael C. Paille<span class="date">September 25, 2022</span></span>
-                                            <p>Nov ut perspiciatis unde omnis iste natus sit voluptatem accusantium
-                                                doloremque
-                                                laudantium, totam rem aperiam quae abillo inventore veritatis</p>
-                                            <a href="#" class="btn-link">Reply<span
-                                                    class="fas fa-angle-double-right"></span></a>
+                                            <span class="author-name">{{ rating.usersByUserId.fullName }}
+                                                <span class="time">
+                                                    <span class="fas fa-clock"></span>
+                                                    {{ rating.dateCreated | timeAgo }}
+                                                </span>
+                                            </span>
+                                            <ul class="comment-rating-ul">
+                                                <li>
+                                                    <span ng-repeat="index in [].constructor(rating.star) track by $index">
+                                                        <span class="fas fa-star"></span>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                            <p>{{ rating.content }}</p>
                                         </div>
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                    </div>
-                    <!--===  Comments Form  ===-->
-                    <div class="comments-respond mb-30 wow fadeInUp" id="comment-respond">
-                        <h3 class="comments-heading">Leave a Comments</h3>
-                        <p>Send us your valuable feedback about our services</p>
-                        <form class="comment-form">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form_group">
-                                        <input type="email" class="form_control" placeholder="Email Address" name="name"
-                                               required>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form_group">
-                                        <input type="text" class="form_control" placeholder="Enter Name" name="email"
-                                               required>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form_group">
-                                        <textarea name="message" class="form_control" rows="4"
-                                                  placeholder="Write Comments"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form_group">
-                                        <button class="main-btn primary-btn">Send comments<span
-                                                class="fas fa-angle-double-right"></span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                        <div ng-if="ratingHotel.userComments.totalElements > ratingHotel.userComments.content.numberOfElements">
+                            <button class="btn text-green text-center" ng-click="findUserComments(roomTypes[0].hotelsByHotelId.id)">Hiển thị thêm</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -401,7 +364,8 @@
                         <ul class="category-nav">
                             <li ng-repeat="roomUtilitiesHotels in roomTypes[0].hotelsByHotelId.placeUtilities">
                                 <p style="font-size: 13px">
-                                    <span render-html html-text="roomUtilitiesHotels.placeUtilitiesIcon"> <i class="fas fa-check-circle"></i></span>
+                                <span render-html html-text="roomUtilitiesHotels.placeUtilitiesIcon"> <i
+                                        class="fas fa-check-circle"></i></span>
                                     <span ng-bind="roomUtilitiesHotels.placeUtilitiesName"></span>
                                 </p>
                             </li>
@@ -412,7 +376,7 @@
                         <h4 class="widget-title">Phòng vừa xem</h4>
                         <ul class="recent-post-list">
                             <li class="post-thumbnail-content fs-content" ng-repeat="roomType in roomTypeViewed"
-                                ng-if="roomTypeViewed.length >= 0" >
+                                ng-if="roomTypeViewed.length >= 0">
                                 <img src="{{roomType.roomTypeId.roomTypeAvatar}}" class="img-fluid object-fit-cover"
                                      style="max-width: 80px; max-height: 80px"
                                      onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
@@ -518,19 +482,24 @@
             </div>
             <div class="modal-body row">
                 <ul class="nav justify-content-center">
-                    <li class="nav-item text-center" ng-class="{ 'active': activeTabIndex === -1 }" ng-click="updateRoomImages(-1)">
-                        <img src="{{roomTypes[0].hotelsByHotelId.hotelAvatar}}" class="img-fluid object-fit-cover" style="max-width: 80px; max-height: 80px; border-radius: 8px">
+                    <li class="nav-item text-center" ng-class="{ 'active': activeTabIndex === -1 }"
+                        ng-click="updateRoomImages(-1)">
+                        <img src="{{roomTypes[0].hotelsByHotelId.hotelAvatar}}" class="img-fluid object-fit-cover"
+                             style="max-width: 80px; max-height: 80px; border-radius: 8px">
                         <a class="nav-link active" aria-current="page" href="#">Tổng quan</a>
                     </li>
-                    <li class="nav-item text-center" ng-class="{ 'active': $index === activeTabIndex }" ng-click="updateRoomImages($index)" ng-repeat="roomType in roomTypes">
-                        <img src="{{roomType.roomTypeAvatar}}" class="img-fluid object-fit-cover" style="max-width: 80px; max-height: 80px; border-radius: 8px">
+                    <li class="nav-item text-center" ng-class="{ 'active': $index === activeTabIndex }"
+                        ng-click="updateRoomImages($index)" ng-repeat="roomType in roomTypes">
+                        <img src="{{roomType.roomTypeAvatar}}" class="img-fluid object-fit-cover"
+                             style="max-width: 80px; max-height: 80px; border-radius: 8px">
                         <a class="nav-link text-black" ng-bind="roomType.roomTypeName"></a>
                     </li>
                 </ul>
                 <div class="hotel-image">
                     <div class="row">
                         <div class="image-list col-xl-3 mb-4" ng-repeat="image in listImage">
-                            <img loading="lazy" src="{{image.roomTypeImg}}" class="img-fluid object-fit-cover" style="width: 100%; max-height: 300px; border-radius: 8px" alt="image-hotel">
+                            <img loading="lazy" src="{{image.roomTypeImg}}" class="img-fluid object-fit-cover"
+                                 style="width: 100%; max-height: 300px; border-radius: 8px" alt="image-hotel">
                         </div>
                     </div>
                 </div>
@@ -543,7 +512,6 @@
         </div>
     </div>
 </div>
-
 <div id="infoRoomType" class="modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-scrollable" style="max-width: 80%; height: 80vh">
         <!-- Modal content-->

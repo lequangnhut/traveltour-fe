@@ -1,5 +1,5 @@
 travel_app.controller('TourDetailCusController',
-    function ($scope, $location, $sce, $timeout, $filter, $routeParams, LocalStorageService, UserLikeService, AuthService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailCusService, MapBoxService, ToursServiceAD, Base64ObjectService) {
+    function ($scope, $location, $sce, $timeout, $filter, $routeParams, LocalStorageService, UserLikeService, UserCommentsService, AuthService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailCusService, MapBoxService, ToursServiceAD, Base64ObjectService) {
         let user = null
         user = AuthService.getUser();
 
@@ -29,12 +29,17 @@ travel_app.controller('TourDetailCusController',
             toLocation: null,
             tourDetailImage: null
         };
+        $scope.size = null;
+        $scope.page = null;
 
         $scope.ticket = {
             adults: '1',
             children: '0',
             baby: '0'
         }
+
+        $scope.isIntegerCheck = true;
+        $scope.roundingStars = 0.0;
 
         const tourDetailId = Base64ObjectService.decodeObject($routeParams.id);
 
@@ -58,6 +63,7 @@ travel_app.controller('TourDetailCusController',
                     $scope.checkIsLikeTour($scope.tourDetail.toursByTourId.id)
                     $scope.initMapSchedules();
                     $scope.updateTotalPrice();
+                    $scope.findUserComments($scope.tourDetail.toursByTourId.id)
                 } else {
                     $location.path('/admin/page-not-found')
                 }
@@ -668,4 +674,57 @@ travel_app.controller('TourDetailCusController',
             } catch (error) {
             }
         };
+
+        $scope.findUserComments = function(transId) {
+            if($scope.size === null || $scope.page === null){
+                $scope.size = 10;
+                $scope.page = 0;
+                UserCommentsService.findCommentsByServiceId(transId, 'DESC', $scope.size, $scope.page).then(function(response) {
+                    console.log(response)
+                    $scope.ratingHotel = response.data;
+
+                    if ($scope.ratingHotel.roundedAverageRating % 1 !== 0) {
+                        $scope.showHalfStar = true;
+                        $scope.stars = new Array(Math.floor($scope.ratingHotel.roundedAverageRating));
+                    } else {
+                        $scope.showHalfStar = false;
+                        $scope.stars = new Array($scope.ratingHotel.roundedAverageRating);
+                    }
+                    console.log($scope.ratingStar)
+                })
+            }else {
+                $scope.size = $scope.size + 5;
+                $scope.page = $scope.page + 1;
+                UserCommentsService.findCommentsByServiceId(transId, 'DESC', $scope.size, $scope.page).then(function(response) {
+                    $scope.ratingHotel = response.data;
+
+                    if ($scope.ratingHotel.roundedAverageRating % 1 !== 0) {
+                        $scope.showHalfStar = true;
+                        $scope.stars = new Array(Math.floor($scope.ratingHotel.roundedAverageRating));
+                    } else {
+                        $scope.showHalfStar = false;
+                        $scope.stars = new Array($scope.ratingHotel.roundedAverageRating);
+                    }
+                })
+            }
+        }
+
+        $timeout(function() {
+            var swiper = new Swiper('.swiper-container', {
+                // Các tùy chọn Swiper
+                slidesPerView: 1,
+                loop: true,autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+            });
+        }, 500);
     });

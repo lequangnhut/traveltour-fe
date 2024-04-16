@@ -1,4 +1,4 @@
-travel_app.controller('LocationDetailCusController', function ($scope, $location, LocationDetailCusService, UserLikeService, AuthService, LocationCusService, $sce, $routeParams, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, MapBoxService, ToursServiceAD) {
+travel_app.controller('LocationDetailCusController', function ($scope, $location, $timeout, LocationDetailCusService, UserLikeService, AuthService, UserCommentsService, LocationCusService, $sce, $routeParams, LocalStorageService, TourTripsServiceAD, TourDetailsServiceAD, MapBoxService, ToursServiceAD) {
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
     let user = null
     user = AuthService.getUser();
@@ -100,7 +100,8 @@ travel_app.controller('LocationDetailCusController', function ($scope, $location
 
                 // Tải bản đồ dựa trên địa chỉ đầy đủ
                 $scope.loadMap(fullAddress);
-
+                console.log($scope.locationDetail)
+                $scope.findUserComments($scope.locationDetail.id)
             } else {
                 $location.path('/admin/page-not-found')
             }
@@ -263,4 +264,56 @@ travel_app.controller('LocationDetailCusController', function ($scope, $location
 
     $scope.init();
 
+    $scope.findUserComments = function(transId) {
+        if($scope.size === null || $scope.page === null){
+            $scope.size = 10;
+            $scope.page = 0;
+            UserCommentsService.findCommentsByServiceId(transId, 'DESC', $scope.size, $scope.page).then(function(response) {
+                console.log(response)
+                $scope.ratingHotel = response.data;
+
+                if ($scope.ratingHotel.roundedAverageRating % 1 !== 0) {
+                    $scope.showHalfStar = true;
+                    $scope.stars = new Array(Math.floor($scope.ratingHotel.roundedAverageRating));
+                } else {
+                    $scope.showHalfStar = false;
+                    $scope.stars = new Array($scope.ratingHotel.roundedAverageRating);
+                }
+                console.log($scope.ratingStar)
+            })
+        }else {
+            $scope.size = $scope.size + 5;
+            $scope.page = $scope.page + 1;
+            UserCommentsService.findCommentsByServiceId(transId, 'DESC', $scope.size, $scope.page).then(function(response) {
+                $scope.ratingHotel = response.data;
+
+                if ($scope.ratingHotel.roundedAverageRating % 1 !== 0) {
+                    $scope.showHalfStar = true;
+                    $scope.stars = new Array(Math.floor($scope.ratingHotel.roundedAverageRating));
+                } else {
+                    $scope.showHalfStar = false;
+                    $scope.stars = new Array($scope.ratingHotel.roundedAverageRating);
+                }
+            })
+        }
+    }
+
+    $timeout(function() {
+        var swiper = new Swiper('.swiper-container', {
+            // Các tùy chọn Swiper
+            slidesPerView: 1,
+            loop: true,autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+    }, 500);
 });

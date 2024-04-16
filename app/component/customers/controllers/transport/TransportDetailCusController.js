@@ -1,5 +1,5 @@
 travel_app.controller('TransportDetailCusController',
-    function ($scope, $location, $sce, $routeParams, UserLikeService, AuthService ,TransportCusService, TransportServiceAG, TransportBrandServiceAG, LocalStorageService, Base64ObjectService) {
+    function ($scope, $location, $sce, $routeParams, $timeout, UserLikeService, AuthService ,TransportCusService, TransportServiceAG,UserCommentsService, TransportBrandServiceAG, LocalStorageService, Base64ObjectService) {
         let brandId = Base64ObjectService.decodeObject($routeParams.brandId);
         let user = null
         user = AuthService.getUser();
@@ -32,7 +32,8 @@ travel_app.controller('TransportDetailCusController',
                 checkInDateFiller: new Date()
             };
         }
-
+        $scope.size = null;
+        $scope.page = null;
         console.log($scope.filters)
 
         const fetchData = (serviceFunc, successCallback) => {
@@ -126,6 +127,7 @@ travel_app.controller('TransportDetailCusController',
                         $scope.totalPages = 0;
                         $scope.totalElements = 0;
                     }
+                    $scope.findUserComments($scope.transportSchedule[0].transportationBrands.id)
 
                 } else {
                     $location.path('/admin/page-not-found');
@@ -355,6 +357,59 @@ travel_app.controller('TransportDetailCusController',
             } catch (error) {
             }
         };
+
+        $scope.findUserComments = function(transId) {
+            if($scope.size === null || $scope.page === null){
+                $scope.size = 10;
+                $scope.page = 0;
+                UserCommentsService.findCommentsByServiceId(transId, 'ASC', $scope.size, $scope.page).then(function(response) {
+                    console.log(response)
+                    $scope.ratingHotel = response.data;
+
+                    if ($scope.ratingHotel.roundedAverageRating % 1 !== 0) {
+                        $scope.showHalfStar = true;
+                        $scope.stars = new Array(Math.floor($scope.ratingHotel.roundedAverageRating));
+                    } else {
+                        $scope.showHalfStar = false;
+                        $scope.stars = new Array($scope.ratingHotel.roundedAverageRating);
+                    }
+                    console.log($scope.ratingStar)
+                })
+            }else {
+                $scope.size = $scope.size + 5;
+                $scope.page = $scope.page + 1;
+                UserCommentsService.findCommentsByServiceId(transId, 'ASC', $scope.size, $scope.page).then(function(response) {
+                    $scope.ratingHotel = response.data;
+
+                    if ($scope.ratingHotel.roundedAverageRating % 1 !== 0) {
+                        $scope.showHalfStar = true;
+                        $scope.stars = new Array(Math.floor($scope.ratingHotel.roundedAverageRating));
+                    } else {
+                        $scope.showHalfStar = false;
+                        $scope.stars = new Array($scope.ratingHotel.roundedAverageRating);
+                    }
+                })
+            }
+        }
+
+        $timeout(function() {
+            var swiper = new Swiper('.swiper-container', {
+                // Các tùy chọn Swiper
+                slidesPerView: 1,
+                loop: true,autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+            });
+        }, 500);
 
         $scope.init();
     });
