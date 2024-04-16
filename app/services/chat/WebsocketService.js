@@ -29,5 +29,15 @@ travel_app.service('WebSocketService', ['$rootScope', function($rootScope) {
         }
     };
 
+    service.sendNotification = function(senderId, recipientId, content) {
+        if (stompClient && stompClient.connected && senderId && recipientId) {
+            stompClient.send(`/app/${senderId}/send-notification-order`, {}, JSON.stringify({
+                senderId: senderId,
+                recipientId: recipientId,
+                content: content
+            }));
+        }
+    };
+
     return service;
 }]);

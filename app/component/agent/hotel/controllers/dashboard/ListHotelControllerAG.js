@@ -4,24 +4,24 @@ travel_app.controller('ListHotelControllerAG', function ($scope, $location, Hote
         $location.path('/admin/internal-server-error')
     }
 
-    $scope.init = function () {
-        let agencyId = $scope.agencies.id;
+    $scope.hotels = {};
 
-        if (agencyId !== undefined && agencyId !== null && agencyId !== "") {
-            HotelServiceAG.findAllByAgencyId(agencyId).then(function successCallback(response) {
-                var activeHotels = [];
+    let agencyId = $scope.agencies.id;
 
-                angular.forEach(response.data, function(hotel) {
-                    if (hotel.isDeleted === false) {
-                        activeHotels.push(hotel);
-                    }
-                });
-                $scope.hotels = activeHotels;
-            }, errorCallback);
-
-        }
+    if (agencyId !== undefined && agencyId !== null && agencyId !== "") {
+        HotelServiceAG.findAllByAgencyIdAndStatusDelete(agencyId)
+            .then(function successCallback(response) {
+                if (response.status === 200) {
+                    $scope.hotels = response.data;
+                    console.log($scope.hotels)
+                } else {
+                    toastAlert('error', response.message)
+                }
+            })
+            .catch(function (error) {
+                toastAlert('error', error.data.message)
+            });
     }
 
-    $scope.init();
 
 });

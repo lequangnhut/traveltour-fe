@@ -8,10 +8,10 @@ travel_app.service('HotelServiceAG', function ($http) {
         })
     }
 
-    this.findByAgencyId = function (agencyId) {
+    this.findAllByAgencyIdAndStatusDelete = function (agencyId) {
         return $http({
             method: 'GET',
-            url: API_HOTELS + 'find-by-agency-id/' + agencyId
+            url: API_HOTELS + 'findAllByAgencyIdAndStatusDelete/' + agencyId
         })
     }
 
@@ -90,6 +90,8 @@ travel_app.service('HotelServiceAG', function ($http) {
             ward: hotels.ward,
             address: hotels.address,
             isActive: hotels.isActive,
+            longitude: hotels.longitude,
+            latitude: hotels.latitude,
             agenciesId: hotels.agencyId,
             hotelTypeId: hotels.hotelType,
         }

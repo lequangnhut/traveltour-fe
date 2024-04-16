@@ -14,6 +14,9 @@ travel_app.controller("FavoritesController", function ($scope, $routeParams, $lo
         $scope.selectedTab = setTab;
     };
 
+    /**
+     * Phương thức hiển thị danh sách yêu thích của dịch vụ
+     */
     if (user != null && user) {
         UserLikeService.findAllUserLikeByUserId(user.id).then(function (response) {
             if (response.status === 200) {

@@ -1,4 +1,4 @@
-travel_app.controller('HotelDetailController', function ($scope, $anchorScroll,$timeout, $window, $sce, $routeParams, $location, AuthService, UserLikeService, HotelServiceCT, RoomTypeServiceCT,LocalStorageService, AgenciesServiceAG, Base64ObjectService) {
+travel_app.controller('HotelDetailController', function ($scope, $anchorScroll,$timeout, $window, $sce, $routeParams, $location, AuthService,UserCommentsService, UserLikeService, HotelServiceCT, RoomTypeServiceCT,LocalStorageService, AgenciesServiceAG, Base64ObjectService) {
     $scope.encryptedData = $routeParams.encryptedData;
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
@@ -84,6 +84,9 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll,$
 
     $scope.activeTabIndex = 0;
 
+    $scope.page = null;
+    $scope.size = null;
+
     $scope.listImage = {}
     $scope.$on('$routeChangeSuccess', function () {
         $('.slider-active-5-item').slick({
@@ -137,6 +140,7 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll,$
                 $scope.listImage = $scope.listImageroomType
             })
             $scope.checkIsLikeHotel($scope.roomTypes[0].hotelsByHotelId.id)
+            $scope.findUserComments($scope.roomTypes[0].hotelsByHotelId.id)
         } else {
             $location.path('/admin/internal-server-error');
         }
@@ -337,20 +341,6 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll,$
 
     }
 
-    this.mainImage = 'main-image.jpg'; // Ảnh chính mặc định
-
-    this.thumbnailImages = [
-        { src: 'image1.jpg', alt: 'Thumbnail 1' },
-        { src: 'image2.jpg', alt: 'Thumbnail 2' },
-        { src: 'image3.jpg', alt: 'Thumbnail 3' },
-        { src: 'image4.jpg', alt: 'Thumbnail 4' }
-    ];
-
-    this.changeMainImage = function(imageSrc) {
-        this.mainImage = imageSrc;
-    };
-
-
     $scope.trustHtmls = function(html) {
         $timeout(function() {
             return $sce.trustAsHtml(html);
@@ -444,4 +434,56 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll,$
         }
     };
 
+    $scope.findUserComments = function(transId) {
+        if($scope.size === null || $scope.page === null){
+            $scope.size = 10;
+            $scope.page = 0;
+            UserCommentsService.findCommentsByServiceId(transId, 'DESC', $scope.size, $scope.page).then(function(response) {
+                console.log(response)
+                $scope.ratingHotel = response.data;
+
+                if ($scope.ratingHotel.roundedAverageRating % 1 !== 0) {
+                    $scope.showHalfStar = true;
+                    $scope.stars = new Array(Math.floor($scope.ratingHotel.roundedAverageRating));
+                } else {
+                    $scope.showHalfStar = false;
+                    $scope.stars = new Array($scope.ratingHotel.roundedAverageRating);
+                }
+                console.log($scope.ratingStar)
+            })
+        }else {
+            $scope.size = $scope.size + 5;
+            $scope.page = $scope.page + 1;
+            UserCommentsService.findCommentsByServiceId(transId, 'DESC', $scope.size, $scope.page).then(function(response) {
+                $scope.ratingHotel = response.data;
+
+                if ($scope.ratingHotel.roundedAverageRating % 1 !== 0) {
+                    $scope.showHalfStar = true;
+                    $scope.stars = new Array(Math.floor($scope.ratingHotel.roundedAverageRating));
+                } else {
+                    $scope.showHalfStar = false;
+                    $scope.stars = new Array($scope.ratingHotel.roundedAverageRating);
+                }
+            })
+        }
+    }
+
+    $timeout(function() {
+        var swiper = new Swiper('.swiper-container', {
+            // Các tùy chọn Swiper
+            slidesPerView: 1,
+            loop: true,autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+    }, 500);
 });

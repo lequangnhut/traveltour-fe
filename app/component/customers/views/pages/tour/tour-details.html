@@ -287,358 +287,91 @@
                         </div>
                     </div>
 
-                    <!--=== Đánh giá ===-->
                     <div class="reviews-wrapper mb-60 wow fadeInUp">
                         <div class="reviews-inner-box">
                             <div class="rating-value">
                                 <h5>Đánh giá của khách hàng</h5>
-                                <div class="rate-score">4.9</div>
-                                <ul class="ratings">
-                                    <li><span class="fas fa-star"></span></li>
-                                    <li><span class="fas fa-star"></span></li>
-                                    <li><span class="fas fa-star"></span></li>
-                                    <li><span class="fas fa-star"></span></li>
-                                    <li><span class="fas fa-star"></span></li>
-                                    <li><a href="#">(4.9)</a></li>
+                                <div class="rate-score" ng-bind="ratingHotel.roundedAverageRating"></div>
+                                <ul class="ratings d-flex justify-content-center align-items-center color-ratings">
+                                    <div ng-repeat="star in stars track by $index">
+                                        <span class="fas fa-star"></span>
+                                    </div>
+                                    <div ng-if="showHalfStar">
+                                        <span class="fas fa-star-half-alt"></span>
+                                    </div>
+                                    <li><a href="#" ng-bind="'(' + ratingHotel.roundedAverageRating + ')'"></a></li>
                                 </ul>
-                                <span class="reviews">3k Đánh giá</span>
+                                <span class="reviews" ng-bind="ratingHotel.numberOfRatings + ' Đánh giá'"></span>
                             </div>
-                            <div class="reviews-progress">
-                                <div class="single-progress-bar">
-                                    <div class="progress-title">
-                                        <h6>Chất lượng <span class="rate">4.8</span></h6>
+                            <section class="row" style="max-width: 600px">
+                                <div class="swiper-container">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide slide-item d-flex justify-content-center align-items-center"
+                                             style="width: 500px"
+                                             ng-repeat="rating in ratingHotel.userComments.content">
+                                            <div class="text-center ">
+                                                <div class="text-center d-flex justify-content-center align-items-center">
+                                                    <img ng-src="{{ rating.usersByUserId.avatar }}" alt="image"
+                                                         style="width: 100px; height: 100px; border-radius: 100px"
+                                                         class="text-center">
+                                                </div>
+                                                <span class="h5">{{ rating.usersByUserId.fullName }}</span>
+                                                <ul class="ratings">
+                                                    <li ng-repeat="index in [].constructor(rating.star) track by $index"><span
+                                                            class="fas fa-star"></span></li>
+                                                </ul>
+                                                <p>{{ rating.content }}</p>
+                                                <span class="time" style="font-size: 12px">
+                                                    <span class="fas fa-clock text-green"></span>
+                                                    {{ rating.dateCreated | timeAgo }}
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="progress">
-                                        <div class="progress-bar wow slideInLeft" style="width: 85%"></div>
-                                    </div>
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                    <div class="swiper-pagination"></div>
                                 </div>
-                                <div class="single-progress-bar">
-                                    <div class="progress-title">
-                                        <h6>Thành viên đội<span class="rate">4.6</span></h6>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar wow slideInLeft" style="width: 75%"></div>
-                                    </div>
-                                </div>
-                                <div class="single-progress-bar">
-                                    <div class="progress-title">
-                                        <h6>Địa điểm<span class="rate">4.7</span></h6>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar wow slideInLeft" style="width: 90%"></div>
-                                    </div>
-                                </div>
-                                <div class="single-progress-bar">
-                                    <div class="progress-title">
-                                        <h6>Trị giá<span class="rate">4.9</span></h6>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar wow slideInLeft" style="width: 95%"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            </section>
                         </div>
                     </div>
                     <!--=== Comments Area ===-->
                     <div class="comments-area wow fadeInUp">
-                        <ul class="comment-list">
+                        <ul class="comment-list w-100" ng-repeat="rating in ratingHotel.userComments.content">
                             <li>
                                 <div class="comment">
                                     <div class="comment-avatar">
-                                        <img src="/assets/customers/images/place/comment-1.jpg"
+                                        <img src="{{ rating.usersByUserId.avatar }}" style="border-radius: 50px"
                                              alt="comment author">
                                     </div>
-                                    <div class="comment-wrap">
+                                    <div class="comment-wrap w-100">
                                         <div class="comment-author-content">
-                                            <span class="author-name">Nguyễn Văn A
-                                                        <span class="time">
-                                                            <span class="fas fa-clock"></span>
-                                                            5 phút trước
-                                                        </span>
+                                            <span class="author-name">{{ rating.usersByUserId.fullName }}
+                                                <span class="time">
+                                                    <span class="fas fa-clock"></span>
+                                                    {{ rating.dateCreated | timeAgo }}
+                                                </span>
+                                            </span>
+                                            <ul class="comment-rating-ul">
+                                                <li>
+                                                    <span ng-repeat="index in [].constructor(rating.star) track by $index">
+                                                        <span class="fas fa-star"></span>
                                                     </span>
-                                            <ul class="comment-rating-ul mb-20">
-                                                <li>
-                                                    <span class="title">Chất lượng</span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Vị trí</span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Dịch vụ</span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Đội ngũ</span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Giá</span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
                                                 </li>
                                             </ul>
-                                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                                                blanditiis
-                                                praesentium voluptatum deleniti atque corrupti quos dolores et quas
-                                                molestias excepture</p>
-                                            <a href="#" class="btn-link">Trả lời
-                                                <span class="fas fa-angle-double-right"></span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <ul class="comment-reply">
-                                    <li>
-                                        <div class="comment">
-                                            <div class="comment-avatar">
-                                                <img src="/assets/customers/images/place/comment-2.jpg"
-                                                     alt="comment author">
-                                            </div>
-                                            <div class="comment-wrap">
-                                                <div class="comment-author-content">
-                                                    <span class="author-name">Nguyễn Văn B
-                                                        <span class="time">
-                                                            <span class="fas fa-clock"></span>
-                                                            5 phút trước
-                                                        </span>
-                                                    </span>
-                                                    <ul class="comment-rating-ul mb-20">
-                                                        <li>
-                                                            <span class="title">Chất lượng</span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                        </li>
-                                                        <li>
-                                                            <span class="title">Vị trí</span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                        </li>
-                                                        <li>
-                                                            <span class="title">Dịch vụ</span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                        </li>
-                                                        <li>
-                                                            <span class="title">Đội ngũ</span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                        </li>
-                                                        <li>
-                                                            <span class="title">Giá</span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                            <span><span class="fas fa-star"></span></span>
-                                                        </li>
-                                                    </ul>
-                                                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus
-                                                        qui
-                                                        blanditiis praesentium voluptatum deleniti atque corrupti
-                                                        quos
-                                                        dolores et quas molestias excepture</p>
-                                                    <a href="#" class="btn-link">Trả lời
-                                                        <span class="fas fa-angle-double-right"></span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <ul class="comment-list">
-                            <li>
-                                <div class="comment">
-                                    <div class="comment-avatar">
-                                        <img src="/assets/customers/images/place/comment-3.jpg"
-                                             alt="comment author">
-                                    </div>
-                                    <div class="comment-wrap">
-                                        <div class="comment-author-content">
-                                            <span class="author-name">Nguyễn Văn Tèo
-                                                        <span class="time">
-                                                            <span class="fas fa-clock"></span>
-                                                            5 phút trước
-                                                        </span>
-                                                    </span>
-                                            <ul class="comment-rating-ul mb-20">
-                                                <li>
-                                                    <span class="title">Chất lượng</span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Vị trí</span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Dịch vụ</span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Đội ngũ</span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Giá</span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                    <span><span class="fas fa-star"></span></span>
-                                                </li>
-                                            </ul>
-                                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                                                blanditiis
-                                                praesentium voluptatum deleniti atque corrupti quos dolores et quas
-                                                molestias excepture</p>
-                                            <a href="#" class="btn-link">Trả lời
-                                                <span class="fas fa-angle-double-right"></span>
-                                            </a>
+                                            <p>{{ rating.content }}</p>
                                         </div>
                                     </div>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <!--===  Comments Form  ===-->
-                    <div class="comments-respond mb-30 wow fadeInUp">
-                        <h3 class="comments-heading" style="margin-bottom: 15px;">Để lại một bình luận</h3>
-                        <ul class="comment-rating-ul mb-20">
-                            <li>
-                                <span class="title">Chất lượng</span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                            </li>
-                            <li>
-                                <span class="title">Vị trí</span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                            </li>
-                            <li>
-                                <span class="title">Dịch vụ</span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                            </li>
-                            <li>
-                                <span class="title">Đội ngũ</span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                            </li>
-                            <li>
-                                <span class="title">Giá</span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                                <span><span class="fas fa-star"></span></span>
-                            </li>
-                        </ul>
-                        <form class="comment-form">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form_group">
-                                        <input type="email"
-                                               class="form_control"
-                                               placeholder="Địa chỉ email"
-                                               name="name"
-                                               required
-                                        >
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form_group">
-                                        <input type="text"
-                                               class="form_control"
-                                               placeholder="Họ và tên"
-                                               name="email"
-                                               required
-                                        >
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form_group">
-                                        <textarea name="message"
-                                                  class="form_control"
-                                                  rows="4"
-                                                  placeholder="Nhập nội dung..."
-                                        ></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form_group">
-                                        <button class="main-btn primary-btn">
-                                            Gửi nội dung
-                                            <span class="fas fa-angle-double-right"></span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                    <div ng-if="ratingHotel.userComments.totalElements > ratingHotel.userComments.content.numberOfElements">
+                        <button class="btn text-green text-center"
+                                ng-click="findUserComments(roomTypes[0].hotelsByHotelId.id)">Hiển thị thêm
+                        </button>
                     </div>
                 </div>
-
                 <div class="col-xl-4">
                     <!--=== Sidebar Widget Area ===-->
                     <div class="sidebar-widget-area pt-45 pl-lg-30">
@@ -720,7 +453,8 @@
                                         </div>
                                     </div>
                                     <div class="booking-item">
-                                        <label>Trẻ em (dưới 90cm) {{ tourDetail.unitPrice * 0.3 | vnCurrency }}</label>
+                                        <label>Trẻ em (dưới
+                                            90cm) {{ tourDetail.unitPrice * 0.3 | vnCurrency }}</label>
                                         <div class="bk-item booking-user">
                                             <span class="fas fa-user"></span>
                                             <select class="wide-select"

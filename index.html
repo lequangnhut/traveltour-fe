@@ -38,6 +38,7 @@
         <link rel="stylesheet" href="/assets/customers/css/tour/tour-detail.css">
         <link rel="stylesheet" href="/assets/customers/css/visit-location.css">
         <link rel="stylesheet" href="/assets/customers/css/tour/booking-tour.css">
+        <link rel="stylesheet" href="/assets/customers/css/rating.css">
         <link href="/assets/admin/assets/css/icon.css" type="text/css" rel="stylesheet">
         <link href="/node_modules/mapbox-gl/dist/mapbox-gl.css" type="text/css" rel="stylesheet">
         <link href="/node_modules/owl.carousel/dist/assets/owl.carousel.css" type="text/css" rel="stylesheet">
@@ -60,6 +61,9 @@
         <script src="/lib/websocket/stomp.min.js"></script>
         <script src="/lib/angularjs/crypto-js.min.js"></script>
         <script src="/node_modules/owl.carousel/dist/owl.carousel.js"></script>
+        <link rel="stylesheet" href="node_modules/swiper/dist/css/swiper.min.css"/>
+        <script src="node_modules/swiper/dist/js/swiper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     </div>
 
     <div ng-cloak ng-if="isManagerPage()">
@@ -1941,6 +1945,8 @@
 <script src="app/services/customer/ForgotPwService.js"></script>
 <script src="app/services/customer/history-order/HistoryOrderServiceCUS.js"></script>
 <script src="app/services/customer/user-like/UserLikeService.js"></script>
+<script src="app/services/customer/rating/SensitiveWordsService.js"></script>
+<script src="app/services/customer/rating/UserCommentService.js"></script>
 
 <!--====== Service Chat ======-->
 <script src="app/services/chat/UserChatService.js"></script>

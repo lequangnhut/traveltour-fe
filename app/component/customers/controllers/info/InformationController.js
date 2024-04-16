@@ -519,4 +519,5 @@ travel_app.controller("InformationController", function ($scope, $sce, $location
 
         confirmAlert($scope.mess, confirmDeleteType);
     };
+
 })
