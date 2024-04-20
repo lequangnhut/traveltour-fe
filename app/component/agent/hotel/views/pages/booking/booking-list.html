@@ -154,7 +154,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="order in orderHotels">
+                <tr ng-repeat="order in orderHotels" ng-if="orderHotels.length > 0">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ order.id }}</td>
                     <td>{{ order.customerName }}</td>
@@ -180,7 +180,7 @@
                                 class="fa-regular fa-eye"></i></button>
                     </td>
                 </tr>
-                <tr ng-if="roomTypes.length === 0">
+                <tr ng-if="orderHotels.length === 0">
                     <td colspan="14">Trang này không có dữ liệu.</td>
                 </tr>
                 </tbody>
