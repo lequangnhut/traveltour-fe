@@ -15,6 +15,7 @@ travel_app.controller('SelectTypeControllerAG',
                         HotelServiceAG.findAllByAgencyId($scope.agencies.id).then(function (response) {
                             if (response.status === 200) {
                                 $scope.hotels = response.data[0];
+                                console.log(response.data)
                             } else {
                                 $location.path('/admin/page-not-found');
                             }
