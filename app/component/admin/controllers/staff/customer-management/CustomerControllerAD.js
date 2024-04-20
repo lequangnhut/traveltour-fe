@@ -318,6 +318,7 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
                 updateInfoAdmin(customerId, dataCustomer);
             }
         }
+
         confirmAlert('Bạn có chắc chắn muốn cập nhật không ?', confirmUpdateInfoAdmin);
     };
 
@@ -331,6 +332,7 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
 
                 if (hasAdminRole(userRoles)) {
                     $window.location.href = '/admin/dashboard';
+                    $scope.setActiveNavItem('dashboard');
                 } else {
                     $window.location.href = '/business/select-type';
                 }

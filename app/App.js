@@ -872,19 +872,23 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/admin/guide-perfect', {
             templateUrl: 'app/component/admin/views/pages/guide/guide-perfect.html',
-            controller: ''
+            controller: 'GuideController'
         })
         .when('/admin/guide-continuous', {
             templateUrl: 'app/component/admin/views/pages/guide/guide-continuous.html',
-            controller: ''
+            controller: 'GuideController'
         })
         .when('/admin/guide-future', {
             templateUrl: 'app/component/admin/views/pages/guide/guide-future.html',
-            controller: ''
+            controller: 'GuideController'
         })
         .when('/admin/guide-cancel', {
             templateUrl: 'app/component/admin/views/pages/guide/guide-cancel.html',
-            controller: ''
+            controller: 'GuideController'
+        })
+        .when('/admin/guide-cancel/:id', {
+            templateUrl: 'app/component/admin/views/pages/guide/service-tour-guide.html',
+            controller: 'HotelForTourGuideController'
         })
 
         /**

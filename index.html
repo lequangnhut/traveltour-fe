@@ -72,6 +72,8 @@
         <script src="/assets/admin/assets/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
         <script src="/assets/admin/assets/vendors/simplebar/simplebar.min.js"></script>
         <script src="/assets/admin/assets/js/config.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
 
         <!--Stylesheets-->
         <link href="/assets/admin/assets/vendors/dropzone/dropzone.min.css" rel="stylesheet">
@@ -1287,8 +1289,9 @@
                                     <a class="nav-link label-1"
                                        ng-class="{ 'active': activeNavItem === 'guide-perfect'}"
                                        ng-click="setActiveNavItem('guide-perfect')"
-                                       href="/admin/guide-perfect"
-                                    >
+                                       href="/admin/guide-perfect">
+
+
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
@@ -1298,6 +1301,7 @@
                                                 <span class="nav-link-text">Các tour đã đi</span>
                                             </span>
                                         </div>
+
                                     </a>
                                 </div>
 
@@ -1313,7 +1317,7 @@
                                             <span class="nav-link-icon">
                                                 <i class="fa-solid fa-person-walking-luggage"></i>
                                             </span>
-                                            <span class="nav-link-text-wrapper">&nbsp;&nbsp;
+                                            <span class="nav-link-text-wrapper">
                                                 <span class="nav-link-text">Các tour đang đi</span>
                                             </span>
                                         </div>
@@ -1607,10 +1611,10 @@
                                                                     -
                                                                     <span>
                                                                         {{
-                                                                            notification.agenciesByAgenciesId.isAccepted === 0 ? 'Chưa đăng ký' :
-                                                                                notification.agenciesByAgenciesId.isAccepted === 1 ? 'Chờ xác nhận' :
-                                                                                    notification.agenciesByAgenciesId.isAccepted === 2 ? 'Duyệt thành công' :
-                                                                                        notification.agenciesByAgenciesId.isAccepted === 3 ? 'Duyệt thất bại' : ''
+                                                                        notification.agenciesByAgenciesId.isAccepted === 0 ? 'Chưa đăng ký' :
+                                                                            notification.agenciesByAgenciesId.isAccepted === 1 ? 'Chờ xác nhận' :
+                                                                                notification.agenciesByAgenciesId.isAccepted === 2 ? 'Duyệt thành công' :
+                                                                                    notification.agenciesByAgenciesId.isAccepted === 3 ? 'Duyệt thất bại' : ''
                                                                         }}
                                                                     </span>
                                                                 </p>
@@ -1997,6 +2001,9 @@
 <script src="app/services/chat/UserChatService.js"></script>
 <script src="app/services/chat/WebsocketService.js"></script>
 
+<!--====== Service Guide ======-->
+<script src="app/services/guide/GuideService.js"></script>
+
 <!--====== Controller Super Admin ======-->
 <script src="app/component/admin/controllers/auth/LoginControllerAD.js"></script>
 <script src="app/component/admin/controllers/dashboard/DashboardControllerAD.js"></script>
@@ -2142,6 +2149,12 @@
 <script src="app/component/customers/controllers/chat/ChatCustomerController.js"></script>
 <script src="app/component/customers/controllers/info/FavoritesController.js"></script>
 <script src="app/component/customers/controllers/info/BookingTourCustomerController.js"></script>
+
+<!--====== Controller Guide ======-->
+<script src="app/component/admin/controllers/guide/GuideController.js"></script>
+<script src="app/component/admin/controllers/guide/HotelForTourGuideController.js"></script>
+<script src="app/component/admin/controllers/guide/VisitForTourGuideController.js"></script>
+<script src="app/component/admin/controllers/guide/CarForTourGuideController.js"></script>
 
 </body>
 </html>
