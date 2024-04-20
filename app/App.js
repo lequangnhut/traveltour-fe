@@ -330,6 +330,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/hotel/views/pages/chat/chat-agency.html',
             controller: 'ChatHotelController'
         })
+        .when('/business/hotel/statistical', {
+            templateUrl: 'app/component/agent/hotel/views/pages/statistical/statistical-hotel.html',
+            controller: 'StatisticalHotelControllerAG'
+        })
 
         /**
          * Agent Transport
@@ -430,6 +434,14 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
 
         /**
+         * Transport Thống kê
+         */
+        .when('/business/transport/statistical', {
+            templateUrl: 'app/component/agent/trans/views/pages/statistical/statistical-transport.html',
+            controller: 'StatisticalTransportControllerAG'
+        })
+
+        /**
          * Agent Visit
          */
         .when('/business/register-visit', {
@@ -471,6 +483,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/business/visit/order-visit-management/update-order-visit/:id', {
             templateUrl: 'app/component/agent/visits/views/pages/bookings/booking-visit-update.html',
             controller: 'OrderVisitControllerAG'
+        })
+        .when('/business/visit/statistical', {
+            templateUrl: 'app/component/agent/visits/views/pages/statistical/statistical.html',
+            controller: 'StatisticalControllerAG'
         })
 
         /**

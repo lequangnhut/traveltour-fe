@@ -1,13 +1,12 @@
 travel_app.controller('HotelServiceControllerAD',
     function ($scope, $sce, $routeParams, $location, $timeout, $http, HotelServiceServiceAD,
               TourDetailsServiceAD, ToursServiceAD, TourTripsServiceAD, HotelTypeServiceServiceAD,
-              RoomTypeServiceServiceAD, LocalStorageService) {
+              RoomTypeServiceServiceAD, LocalStorageService, Base64ObjectService) {
         $scope.isLoading = true;
         let currentDate = new Date();
 
-        const tourDetailId = $routeParams.tourDetailId;
-        const hotelId = $routeParams.hotelId;
-        $scope.tourDetailId = tourDetailId;
+        const tourDetailId = Base64ObjectService.decodeObject($routeParams.tourDetailId);
+        const hotelId = Base64ObjectService.decodeObject($routeParams.hotelId);
 
         const now = new Date();
         const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
@@ -302,7 +301,7 @@ travel_app.controller('HotelServiceControllerAD',
         };
 
 
-        $scope.navigateToRoomTypeList = (tourDetailId, hotelServiceId, hotelName, address) => {
+        $scope.navigateToRoomTypeList = (hotelServiceId, hotelName, address) => {
 
             if (checkAndFocusInput(!$scope.searchHotels.departureDate && !$scope.searchHotels.arrivalDate, 'departureDateInput', 'Vui lòng chọn ngày đi và ngày về!') ||
                 checkAndFocusInput(!$scope.searchHotels.departureDate, 'departureDateInput', 'Vui lòng chọn ngày đi!') ||
@@ -317,6 +316,7 @@ travel_app.controller('HotelServiceControllerAD',
 
             let departureDate = new Date($scope.searchHotels.departureDate);
             let arrivalDate = new Date($scope.searchHotels.arrivalDate);
+
             const infoHotel = {
                 hotelName: hotelName,
                 departureDate: departureDate,
@@ -327,15 +327,15 @@ travel_app.controller('HotelServiceControllerAD',
             };
 
             LocalStorageService.encryptLocalData(infoHotel, 'infoHotel', 'encryptInfoHotel')
-            $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/hotel-list/${hotelServiceId}/room-type-list`);
+            const hotelIdEncode = Base64ObjectService.encodeObject(hotelServiceId);
+            $location.path(`/admin/detail-tour-list/${$routeParams.tourDetailId}/service-list/hotel-list/${hotelIdEncode}/room-type-list`);
         };
-
 
         const errorCallback = () => {
             $location.path('/admin/internal-server-error')
         }
 
-        $scope.getHotelServiceList()
-        $scope.searchHotel()
+        $scope.getHotelServiceList();
+        $scope.searchHotel();
 
     });

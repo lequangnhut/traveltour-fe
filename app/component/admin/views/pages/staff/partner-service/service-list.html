@@ -33,7 +33,7 @@
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <div class="col">
                     <div class="card h-100 shadow rounded-3">
-                        <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/hotel-list"
+                        <a ng-click="redirectWithMultipleId('/admin/detail-tour-list/:tourDetailId/service-list/hotel-list', [tourDetailId])"
                            class="text-dark text-decoration-none">
                             <img src="../../../../../../../assets/admin/assets/upload/hotel.png"
                                  class="card-img-top rounded-top-3" style="height: 200px"/>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="col">
                     <div class="card h-100 shadow rounded-3">
-                        <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/transportation-list"
+                        <a ng-click="redirectWithMultipleId('/admin/detail-tour-list/:tourDetailId/service-list/transportation-list', [tourDetailId])"
                            class="text-dark text-decoration-none">
                             <img src="../../../../../../../assets/admin/assets/upload/vehicle.png"
                                  class="card-img-top rounded-top-3" style="height: 200px"/>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="col">
                     <div class="card h-100 shadow rounded-3">
-                        <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/visit-location-list"
+                        <a ng-click="redirectWithMultipleId('/admin/detail-tour-list/:tourDetailId/service-list/visit-location-list', [tourDetailId])"
                            class="text-dark text-decoration-none">
                             <img src="../../../../../../../assets/admin/assets/upload/sightseeing.png"
                                  class="card-img-top rounded-top-3" style="height: 200px"/>

@@ -937,9 +937,9 @@
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
                                     <a class="nav-link label-1"
-                                       ng-click="setActiveNavItem('statistical-hotel')"
-                                       ng-class="{ 'active': activeNavItem === 'statistical-hotel'}"
-                                       href="/business/trip/trips-list"
+                                       ng-click="setActiveNavItem('statistical')"
+                                       ng-class="{ 'active': activeNavItem === 'statistical'}"
+                                       href="/business/hotel/statistical"
                                     >
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
@@ -947,7 +947,7 @@
                                                 <span data-feather="bar-chart-2"></span>
                                             </span>
                                             <span class="nav-link-text-wrapper">
-                                                <span class="nav-link-text">Thống kê khách sạn</span>
+                                                <span class="nav-link-text">Thống kê</span>
                                             </span>
                                         </div>
                                     </a>
@@ -1094,6 +1094,29 @@
                                 </div>
 
                                 <!-- label-->
+                                <p class="navbar-vertical-label">BÁO CÁO - THỐNG KÊ</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <!-- Thể loại tiện ích lưu trú -->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1"
+                                       ng-class="{ 'active': activeNavItem === 'revenue'}"
+                                       ng-click="setActiveNavItem('revenue')"
+                                       href="/admin/report/revenue"
+                                    >
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                                <i class="fa-solid fa-money-bill-wave"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Thống Kê</span>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- label-->
                                 <p class="navbar-vertical-label text-uppercase">Công cụ</p>
                                 <hr class="navbar-vertical-line"/>
 
@@ -1191,6 +1214,27 @@
                                             </span>
                                             <span class="nav-link-text-wrapper">
                                                 <span class="nav-link-text">Danh sách booking</span>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- label-->
+                                <p class="navbar-vertical-label">BÁO CÁO - THỐNG KÊ</p>
+                                <hr class="navbar-vertical-line"/>
+
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === '/business/visit/statistical'}"
+                                       ng-click="setActiveNavItem('/business/visit/statistical')"
+                                       href="/business/visit/statistical">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                                <i class="fa-solid fa-chart-simple"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Thống kê</span>
                                             </span>
                                         </div>
                                     </a>
@@ -1910,6 +1954,9 @@
 <script src="app/services/agent/OrderVisitServiceAG.js"></script>
 <script src="app/services/agent/RoomImagesService.js"></script>
 <script src="app/services/agent/RequestCarServiceAG.js"></script>
+<script src="app/services/agent/StatisticalHotelServiceAG.js"></script>
+<script src="app/services/agent/StatisticalTransportServiceAG.js"></script>
+<script src="app/services/agent/StatisticalVisitServiceAG.js"></script>
 
 <!--====== Service Customer Tour ======-->
 <script src="app/services/customer/tour/TourCusService.js"></script>
@@ -2016,6 +2063,7 @@
 <script src="app/component/agent/trans/controllers/request-car/RequestCarControllerAG.js"></script>
 <script src="app/component/agent/trans/controllers/request-car/HistoryRequestCarControllerAG.js"></script>
 <script src="app/component/agent/trans/controllers/request-car/SelectCarControllerAG.js"></script>
+<script src="app/component/agent/trans/controllers/statistical/StatisticalTransportControllerAG.js"></script>
 
 <!--====== Controller Agent Hotel ======-->
 <script src="app/component/agent/hotel/controllers/RegisterHotelControllerAG.js"></script>
@@ -2031,12 +2079,14 @@
 <script src="app/component/agent/hotel/controllers/booking/BookingAddControllerAG.js"></script>
 <script src="app/component/agent/hotel/controllers/booking/BookingEditControllerAG.js"></script>
 <script src="app/component/agent/hotel/controllers/chat/ChatHotelController.js"></script>
+<script src="app/component/agent/hotel/controllers/statistical/StatisticalHotelControllerAG.js"></script>
 
 <!--====== Controller Agent Visit ======-->
 <script src="app/component/agent/visits/controllers/RegisterVisitsControllerAG.js"></script>
 <script src="app/component/agent/visits/controllers/visit-ticket/VisitTicketControllerAG.js"></script>
 <script src="app/component/agent/visits/controllers/dashboard/ListVisitControllerAG.js"></script>
 <script src="app/component/agent/visits/controllers/order-visit/OrderVisitControllerAG.js"></script>
+<script src="app/component/agent/visits/controllers/statistical/StatisticalVisitControllerAG.js"></script>
 
 <!--====== Controller Customer Auth ======-->
 <script src="app/component/customers/controllers/auth/LoginController.js"></script>

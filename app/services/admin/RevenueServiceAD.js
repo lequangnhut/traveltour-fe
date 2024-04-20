@@ -37,4 +37,30 @@ travel_app.service('RevenueServiceAD', function ($http, $q) {
         });
         return deferred.promise;
     };
+
+    this.getAllYearColumn = () => {
+        const deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: API_ADMIN_REVENUE + `get-all-year-columns`,
+        }).then(function (response) {
+            deferred.resolve(response);
+        }, function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    };
+
+    this.getAllYearPie = () => {
+        const deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: API_ADMIN_REVENUE + `get-all-year-pie`,
+        }).then(function (response) {
+            deferred.resolve(response);
+        }, function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    };
 });

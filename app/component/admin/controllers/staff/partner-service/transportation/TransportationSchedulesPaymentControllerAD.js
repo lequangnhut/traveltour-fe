@@ -1,11 +1,14 @@
 travel_app.controller('TransportationSchedulesPaymentControllerAD',
     function ($scope, $sce, $routeParams, $location, $timeout, $http, GenerateCodePayService, TransportationScheduleServiceAD, TourDetailsServiceAD,
-              CustomerServiceAD, OrderTransportationServiceAD) {
+              CustomerServiceAD, OrderTransportationServiceAD, Base64ObjectService) {
+
         $scope.isLoading = true;
         $scope.showActivities = false;
-        const tourDetailId = $routeParams.tourDetailId;
-        $scope.tourDetailId = tourDetailId;
-        const transportationScheduleId = $routeParams.transportationScheduleId;
+
+        const tourDetailId = Base64ObjectService.decodeObject($routeParams.tourDetailId);
+        $scope.tourDetailId = $routeParams.tourDetailId;
+
+        const transportationScheduleId = Base64ObjectService.decodeObject($routeParams.transportationScheduleId);
         $scope.tourGuide = {};
 
         if (tourDetailId !== undefined && tourDetailId !== null && tourDetailId !== "") {
@@ -44,7 +47,7 @@ travel_app.controller('TransportationSchedulesPaymentControllerAD',
 
             OrderTransportationServiceAD.createOrderTransportation(dataOrderTransportation).then((repo) => {
                 toastAlert('success', 'Thêm mới thành công !');
-                $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/transportation-list`);
+                $location.path(`/admin/detail-tour-list/${$routeParams.tourDetailId}/service-list/transportation-list`);
             }, errorCallback).finally(() => {
                 $scope.isLoading = false;
             });
@@ -52,7 +55,7 @@ travel_app.controller('TransportationSchedulesPaymentControllerAD',
 
         $scope.ConfirmCompletionOfBooking = () => {
             confirmAlert('Bạn có chắc chắn muốn đặt xe không ?', () => {
-                Confirm()
+                Confirm();
             });
         }
 

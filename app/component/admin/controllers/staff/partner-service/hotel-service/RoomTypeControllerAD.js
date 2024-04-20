@@ -1,11 +1,11 @@
 travel_app.controller('RoomTypeControllerAD',
     function ($scope, $sce, $routeParams, $location, $timeout, $http, HotelServiceServiceAD,
               TourDetailsServiceAD, ToursServiceAD, TourTripsServiceAD, HotelTypeServiceServiceAD,
-              RoomTypeServiceServiceAD, LocalStorageService) {
+              RoomTypeServiceServiceAD, LocalStorageService, Base64ObjectService) {
         $scope.isLoading = true;
 
-        const tourDetailId = $routeParams.tourDetailId;
-        const hotelId = $routeParams.hotelId;
+        const tourDetailId = Base64ObjectService.decodeObject($routeParams.tourDetailId);
+        const hotelId = Base64ObjectService.decodeObject($routeParams.hotelId);
 
         $scope.tourDetailId = tourDetailId;
         $scope.hotelId = hotelId;
@@ -100,7 +100,7 @@ travel_app.controller('RoomTypeControllerAD',
 
                 return {
                     ...rt,
-                    roomUtilitiesNames: roomUtilitiesNames,
+                    roomUtilitiesNames: roomUtilitiesNames == [] ? 'không' : roomUtilitiesNames,
                     bedTypeNames: bedTypeNames,
                     isChecked: false
                 };
@@ -273,7 +273,7 @@ travel_app.controller('RoomTypeControllerAD',
             }
 
             LocalStorageService.encryptLocalData(selectedRooms, 'selectedRooms', 'encryptSelectedRooms');
-            $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/hotel-list/${hotelId}/room-type-list/hotel-payment`);
+            $location.path(`/admin/detail-tour-list/${$routeParams.tourDetailId}/service-list/hotel-list/${$routeParams.hotelId}/room-type-list/hotel-payment`);
         };
 
         const errorCallback = () => {

@@ -48,6 +48,25 @@ travel_app.controller('MainController',
 
             }
 
+            $scope.redirectWithMultipleId = (url, objId, navItem) => {
+                let newPath = url;
+
+                objId.forEach((id) => {
+                    if (/=+$/.test(id)) {
+                        newPath = newPath.replace(/:[^/]+/, id);
+                    } else {
+                        let encodedId = Base64ObjectService.encodeObject(id);
+                        newPath = newPath.replace(/:[^/]+/, encodedId);
+                    }
+                });
+
+                $location.path(newPath);
+
+                if (navItem) {
+                    $scope.setActiveNavItem(navItem);
+                }
+            }
+
             /**
              * Set active cho navbar trên header
              */
@@ -271,7 +290,7 @@ travel_app.controller('MainController',
                 return true;
             }
 
-            if($location.path() === "/business/register-hotel") {
+            if ($location.path() === "/business/register-hotel") {
                 return true;
             }
 
@@ -323,7 +342,7 @@ travel_app.controller('MainController',
                 return {'margin': '0'};
             }
 
-            if($location.path() === "/business/register-hotel") {
+            if ($location.path() === "/business/register-hotel") {
                 return {'margin': '0'};
             }
             return $scope.isActive(marginPaths) ? {'margin': '0'} : {};

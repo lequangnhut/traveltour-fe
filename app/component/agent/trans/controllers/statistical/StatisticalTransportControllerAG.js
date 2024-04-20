@@ -1,4 +1,4 @@
-travel_app.controller('RevenueControllerAD', function ($scope, RevenueServiceAD) {
+travel_app.controller('StatisticalTransportControllerAG', function ($scope, RevenueServiceAD, $filter, $sce, $location, $routeParams, OrderVisitServiceAG, LocalStorageService) {
     $scope.yearForTheChartColumn = new Date().getFullYear();
     $scope.yearForPieChart = new Date().getFullYear();
     $scope.currentYearData = new Array(12).fill(0);
@@ -124,7 +124,9 @@ travel_app.controller('RevenueControllerAD', function ($scope, RevenueServiceAD)
         <h6 class="text-700"><span class="fas fa-circle me-1 fs--2" style="color:${
                 el.borderColor ? el.borderColor : el.color
             }"></span>
-          ${el.seriesName} : ${$filter('vnCurrency')(("object" == typeof el.value ? el.value[1] : el.value))}
+          ${el.seriesName} : ${
+                typeof el.value === 'object' ? el.value[1] : el.value
+            }
         </h6>
       </div>`;
         });
@@ -339,6 +341,106 @@ travel_app.controller('RevenueControllerAD', function ($scope, RevenueServiceAD)
         }
     };
 
+    const stackedLineChartInit = () => {
+        const {getColor, getData} = window.phoenix.utils;
+        const $chartEl = document.querySelector('.echart-stacked-line-chart');
+        const month = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
+
+        if ($chartEl) {
+            const userOptions = getData($chartEl, 'echarts');
+            const chart = window.echarts.init($chartEl);
+            const getDefaultOptions = () => ({
+                tooltip: {
+                    trigger: 'axis',
+                    padding: [7, 10],
+                    backgroundColor: getColor('gray-100'),
+                    borderColor: getColor('gray-300'),
+                    textStyle: {color: getColor('dark')},
+                    borderWidth: 1,
+                    transitionDuration: 0,
+                    axisPointer: {
+                        type: 'none'
+                    },
+                    formatter: params => tooltipFormatter(params)
+                },
+                xAxis: {
+                    type: 'category',
+                    data: month,
+                    boundaryGap: false,
+                    axisLine: {
+                        lineStyle: {
+                            color: getColor('gray-300'),
+                            type: 'solid'
+                        }
+                    },
+                    axisTick: {show: false},
+                    axisLabel: {
+                        color: getColor('gray-400'),
+                        margin: 15,
+                        formatter: value => value.substring(0, 3)
+                    },
+                    splitLine: {
+                        show: false
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    splitLine: {
+                        lineStyle: {
+                            color: getColor('gray-200'),
+                            type: 'dashed'
+                        }
+                    },
+                    boundaryGap: false,
+                    axisLabel: {
+                        show: true,
+                        color: getColor('gray-400'),
+                        margin: 15
+                    },
+                    axisTick: {show: false},
+                    axisLine: {show: false}
+                },
+                series: [
+                    {
+                        name: 'Milk Tea',
+                        type: 'line',
+                        symbolSize: 10,
+                        itemStyle: {
+                            color: getColor('white'),
+                            borderColor: getColor('success'),
+                            borderWidth: 2
+                        },
+                        lineStyle: {
+                            color: getColor('success')
+                        },
+                        symbol: 'circle',
+                        stack: 'product',
+                        data: [220, 182, 191, 234, 290, 330, 310, 182, 191, 234, 290, 330]
+                    },
+
+                    {
+                        name: 'Cheese Brownie',
+                        type: 'line',
+                        symbolSize: 10,
+                        itemStyle: {
+                            color: getColor('white'),
+                            borderColor: getColor('warning'),
+                            borderWidth: 2
+                        },
+                        lineStyle: {
+                            color: getColor('warning')
+                        },
+                        symbol: 'circle',
+                        stack: 'product',
+                        data: [320, 332, 301, 334, 390, 330, 320, 332, 301, 334, 390, 330]
+                    },
+                ],
+                grid: {right: 10, left: 5, bottom: 5, top: 8, containLabel: true}
+            });
+            echartSetOption(chart, userOptions, getDefaultOptions);
+        }
+    };
+
     initCharts();
 
     $scope.$watch('yearForTheChartColumn', async (newValue, oldValue) => {
@@ -357,4 +459,6 @@ travel_app.controller('RevenueControllerAD', function ($scope, RevenueServiceAD)
     const {docReady: docReady} = window.phoenix.utils;
     docReady(projectionVsActualChartInit);
     docReady(pieChartInit);
+    docReady(stackedLineChartInit);
+
 });

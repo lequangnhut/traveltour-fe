@@ -1,10 +1,12 @@
 travel_app.controller('VisitLocationPaymentControllerAD',
     function ($scope, $sce, $routeParams, $location, $timeout, $http, VisitLocationServiceAD, CustomerServiceAD,
-              OrderVisitServiceAD, OrderVisitDetailServiceAD, TourDetailsServiceAD, GenerateCodePayService, LocalStorageService) {
+              OrderVisitServiceAD, OrderVisitDetailServiceAD, TourDetailsServiceAD, GenerateCodePayService,
+              LocalStorageService, Base64ObjectService) {
         $scope.isLoading = true;
         $scope.showActivities = false;
-        const tourDetailId = $routeParams.tourDetailId;
-        const visitLocationId = $routeParams.visitLocationId;
+        const tourDetailId = Base64ObjectService.decodeObject($routeParams.tourDetailId);
+        $scope.tourDetailId = $routeParams.tourDetailId;
+        const visitLocationId = Base64ObjectService.decodeObject($routeParams.visitLocationId);
         $scope.payment = {method: '0'};
         $scope.tourGuide = {};
         $scope.orderVisitLocation = {};
@@ -80,7 +82,7 @@ travel_app.controller('VisitLocationPaymentControllerAD',
                     })
                 })
                 toastAlert('success', 'Thêm mới thành công !');
-                $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/visit-location-list`);
+                $location.path(`/admin/detail-tour-list/${$routeParams.tourDetailId}/service-list/visit-location-list`);
             }, errorCallback).finally(() => {
                 $scope.isLoading = false;
             });

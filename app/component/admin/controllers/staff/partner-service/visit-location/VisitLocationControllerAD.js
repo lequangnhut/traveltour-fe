@@ -1,12 +1,10 @@
 travel_app.controller('VisitLocationControllerAD',
     function ($scope, $sce, $routeParams, $location, $timeout, $http, VisitLocationServiceAD,
-              TourDetailsServiceAD, LocalStorageService) {
+              TourDetailsServiceAD, LocalStorageService, Base64ObjectService) {
         $scope.isLoading = true;
         $scope.visitLocationList = [];
 
-        const tourDetailId = $routeParams.tourDetailId;
-        $scope.tourDetailId = tourDetailId;
-
+        const tourDetailId = Base64ObjectService.decodeObject($routeParams.tourDetailId);
         $scope.searchVisitLocation = {location: null};
         let searchTimeout;
 
@@ -241,7 +239,8 @@ travel_app.controller('VisitLocationControllerAD',
             LocalStorageService.encryptLocalData(infoVisitLocation, 'infoVisitLocation', 'encryptInfoVisitLocation');
 
             $timeout(() => {
-                $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/visit-location-list/${visitLocationId}/visit-location-payment`);
+                const visitLocationIdEncode = Base64ObjectService.encodeObject(visitLocationId);
+                $location.path(`/admin/detail-tour-list/${$routeParams.tourDetailId}/service-list/visit-location-list/${visitLocationIdEncode}/visit-location-payment`);
             }, 0);
         };
 
@@ -277,10 +276,6 @@ travel_app.controller('VisitLocationControllerAD',
                 ConfirmTicketSelection(visitLocationId);
             });
         };
-
-        const errorCallback = () => {
-            $location.path('/admin/internal-server-error')
-        }
 
         $scope.getVisitLocationList();
     });

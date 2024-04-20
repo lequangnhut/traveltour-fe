@@ -339,7 +339,6 @@ travel_app.controller('ChartControllerAD', function ($scope, $filter, $rootScope
           </div>`;
     };
 
-
     const handleTooltipPosition = ([pos, , dom, , size]) => {
         // only for mobile device
         if (window.innerWidth <= 540) {

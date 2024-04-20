@@ -1,14 +1,21 @@
 travel_app.controller('HotelPaymentControllerAD',
     function ($scope, $location, $routeParams, $sce, OrderHotelServiceAD, OrderHotelDetailServiceAD,
-              CustomerServiceAD, TourDetailsServiceAD, LocalStorageService, GenerateCodePayService) {
+              CustomerServiceAD, TourDetailsServiceAD, LocalStorageService, GenerateCodePayService,
+              Base64ObjectService) {
         $scope.showActivities = false;
-        const tourDetailId = $routeParams.tourDetailId;
-        $scope.tourDetailId = tourDetailId;
+
+        const tourDetailId = Base64ObjectService.decodeObject($routeParams.tourDetailId);
+        const hotelId = Base64ObjectService.decodeObject($routeParams.hotelId);
+
+        $scope.tourDetailId = $routeParams.tourDetailId;
         $scope.hotelId = $routeParams.hotelId;
+
         $scope.tourGuide = {};
         $scope.orderHotel = {};
+
         $scope.selectedRooms = LocalStorageService.decryptLocalData('selectedRooms', 'encryptSelectedRooms') || [];
         $scope.infoHotel = LocalStorageService.decryptLocalData('infoHotel', 'encryptInfoHotel') || {};
+
         $scope.totalBeforeTax = 0;
         $scope.VATRate = 8; // 8% VAT
         $scope.discountRate = 0; // 0% Discount for now
@@ -50,7 +57,7 @@ travel_app.controller('HotelPaymentControllerAD',
             $scope.isLoading = true;
 
             $scope.orderHotel = {
-                id: GenerateCodePayService.generateCodeBooking('VPO',$scope.hotelId),
+                id: GenerateCodePayService.generateCodeBooking('VPO',hotelId),
                 userId: $scope.tourGuide.id,
                 customerName: $scope.tourGuide.fullName,
                 customerCitizenCard: $scope.tourGuide.citizenCard,
@@ -85,7 +92,7 @@ travel_app.controller('HotelPaymentControllerAD',
                     })
                 })
                 toastAlert('success', 'Thêm mới thành công !');
-                $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/hotel-list`);
+                $location.path(`/admin/detail-tour-list/${$routeParams.tourDetailId}/service-list/hotel-list`);
             }, errorCallback).finally(() => {
                 $scope.isLoading = false;
             });

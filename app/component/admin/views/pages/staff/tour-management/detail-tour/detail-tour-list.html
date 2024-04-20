@@ -199,7 +199,7 @@
                            role="button" class="fs-1 btn text-primary px-2 cursor-pointer" title="Lịch trình tour">
                             <i class="fa-solid fa-calendar-days"></i>
                         </a>
-                        <a href="/admin/detail-tour-list/{{tourDetail.id}}/service-list"
+                        <a ng-click="redirectWithMultipleId('/admin/detail-tour-list/:tourDetailId/service-list', [tourDetail.id])"
                            role="button" class="fs-1 btn text-warning px-2" title="Dịch vụ theo tour">
                             <i class="fa-solid fa-gear"></i>
                         </a>
@@ -302,8 +302,7 @@
                                                         class="fs-1 btn text-info d-flex justify-content-center border-0"
                                                         ng-click="addOrRemoveSelectItem($index)"
                                                         ng-disabled="isButtonDisabled">
-                                                    <i class="fa-solid"
-                                                       ng-class="{'fa-plus': !item.hasData, 'fa-minus': item.hasData}"></i>
+                                                    <span ng-bind-html="item.hasData ? (item.last ? plusIconSVG : minusIconSVG) : plusIconSVG"></span>
                                                 </button>
                                             </div>
                                         </div>
@@ -397,7 +396,6 @@
                                     <div class="row">
                                         <div class="col-xl-3 p-1" ng-repeat="img in tourDetailImage">
                                             <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px"
-                                                 loading="lazy"
                                                  loading="lazy" ng-src="{{img.tourDetailImg}}"/>
                                         </div>
                                     </div>

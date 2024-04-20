@@ -1,9 +1,9 @@
 travel_app.controller('TransportationSchedulesControllerAD',
     function ($scope, $sce, $routeParams, $location, $timeout, $http, TransportationBrandServiceAD,
-              TransportationTypeServiceAD, TransportationScheduleServiceAD, TourDetailsServiceAD) {
+              TransportationTypeServiceAD, TransportationScheduleServiceAD, TourDetailsServiceAD,
+              Base64ObjectService) {
         $scope.isLoading = true;
-        $scope.tourDetailId = $routeParams.tourDetailId;
-        let tourDetailId = $scope.tourDetailId;
+        const tourDetailId = Base64ObjectService.decodeObject($routeParams.tourDetailId);
 
         $scope.transportationSearch = {}
 
@@ -124,7 +124,8 @@ travel_app.controller('TransportationSchedulesControllerAD',
                 toastAlert('warning', 'Xe đã ngừng hoạt động!')
                 return;
             }
-            $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/transportation-list/${data.id}/transportation-payment`)
+            const transportId = Base64ObjectService.encodeObject(data.id);
+            $location.path(`/admin/detail-tour-list/${$routeParams.tourDetailId}/service-list/transportation-list/${transportId}/transportation-payment`)
         }
 
         //show tiện ích
