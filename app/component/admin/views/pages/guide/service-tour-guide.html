@@ -1,0 +1,980 @@
+<style>
+    .nav-tabs .nav-link:focus, .nav-tabs .nav-link.active {
+        border-bottom: 2px solid #28a745;
+        color: #28a745;
+        font-weight: bold;
+        background-color: transparent;
+        border-radius: 0;
+    }
+
+    .nav-tabs .nav-link:hover {
+        color: #63AB45;
+    }
+
+    .text-green {
+        color: #2f2f2f;
+    }
+
+    .nav-tabs .nav-link {
+        display: block;
+
+        text-decoration: none;
+        color: #2f2f2f;
+        padding: 0.5rem 0.5rem;
+        transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+    }
+</style>
+
+<div class="container">
+    <div class="header-control mb-4">
+        <div class="header-control-center mb-4">
+            <div class="d-flex justify-content-between align-items-center row">
+                <div class="col-xl-6 mt-3">
+                    <h3 class="color-green fw-bold text-uppercase">dịch vụ trong tour</h3>
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                <button class="nav-link fw-medium active text-green" style="font-size: 15px"
+                        id="nav-hotel-map" data-bs-toggle="tab"
+                        data-bs-target="#nav-hotel" type="button" role="tab"
+                        aria-controls="nav-hotel"
+                        aria-selected="false">Khách sạn
+                </button>
+                <button class="nav-link fw-medium text-green" style="font-size: 15px"
+                        id="nav-vehicle-map" data-bs-toggle="tab"
+                        data-bs-target="#nav-vehicle" type="button" role="tab"
+                        aria-controls="nav-vehicle"
+                        aria-selected="false">Phương tiện
+                </button>
+                <button class="nav-link fw-medium text-green" id="nav-visit-map"
+                        data-bs-toggle="tab" style="font-size: 15px"
+                        data-bs-target="#nav-visit" type="button" role="tab"
+                        aria-controls="nav-visit"
+                        aria-selected="false">Tham quan
+                </button>
+            </div>
+
+
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane face active" id="nav-hotel" role="tabpanel"
+                     aria-labelledby="nav-hotel" style="border-left:none">
+                    <div class="card card-customer">
+                        <div class="row" style="margin: 20px 16px 20px 16px">
+                            <div class="col-xl-4">
+                                Bạn muốn tìm kiếm gì ?
+                                <div class="input-group mb-3">
+                            <span class="input-group-text">
+                                <a href="#" class="bg-light text-dark">
+                                    <i class="fa-solid fa-magnifying-glass bg-light"></i>
+                                </a>
+                            </span>
+                                    <input type="text" class="form-control"
+                                           placeholder="Nhập tên khách sạn cần tìm"
+                                           ng-model="searchTerm" ng-change="searchBookingTour()">
+                                </div>
+                            </div>
+                            <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
+                                 style="margin: 20px 0 0 0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-components table-responsive mb-5">
+                        <div class="card table-responsive table-customer">
+                            <div class="card-header ">
+                                <div class="row">
+                                    <div class="mt-2 h4 col-lg-5 d-flex align-items-center h-100">
+                                        <div class="d-flex align-items-center">
+                                            <span class="h4">Danh sách khách sạn</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end align-items-baseline col-lg-2">
+                                        <select class="form-select" aria-label="Default select example"
+                                                ng-model="pageSize"
+                                                ng-init="pageSize='5'"
+                                                ng-change="pageSizeChanged()">
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
+                                        <nav aria-label="Page navigation example float-end">
+                                            <ul class="pagination justify-content-center align-items-center">
+                                                <li class="page-item" ng-class="{disabled: currentPage === 0}">
+                                                    <a class="page-link" ng-click="setPage(0)">
+                                                        <i class="fa-solid fa-angles-left"></i>
+                                                    </a>
+                                                </li>
+                                                <!-- Ellipsis at the beginning -->
+                                                <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                                    <span class="page-link">...</span>
+                                                </li>
+
+                                                <!-- Pagination Numbers -->
+                                                <li class="page-item cursor-pointer"
+                                                    ng-repeat="n in getPaginationRange()"
+                                                    ng-class="{active: n === currentPage}">
+                                                    <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                                </li>
+
+                                                <!-- Ellipsis at the end -->
+                                                <li class="page-item"
+                                                    ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                                    <span class="page-link">...</span>
+                                                </li>
+
+                                                <!-- Next Page -->
+                                                <li class="page-item"
+                                                    ng-class="{disabled: currentPage === totalPages - 1}">
+                                                    <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                                        <i class="fa-solid fa-angles-right"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-responsive text-center table-striped">
+                                <div ng-include="'app/component/utils/loading-table.html'"></div>
+                                <thead>
+                                <tr class="bg-light">
+                                    <th>#</th>
+                                    <th class="cursor-pointer" ng-click="sortData('hotelName')">
+                                        <div class="icon-left">Tên khách sạn
+                                            <span class="sorting-icon"
+                                                  ng-bind-html="getSortIcon('hotelName')"></span>
+                                        </div>
+                                    </th>
+                                    <th class="cursor-pointer" ng-click="sortData('phone')">
+                                        <div class="icon-left">Số điện thoại
+                                            <span class="sorting-icon"
+                                                  ng-bind-html="getSortIcon('phone')"></span>
+                                        </div>
+                                    </th>
+                                    <th class="cursor-pointer" ng-click="sortData('province')">
+                                        <div class="icon-left">Địa điểm
+                                            <span class="sorting-icon"
+                                                  ng-bind-html="getSortIcon('province  ')"></span>
+                                        </div>
+                                    </th>
+                                    <th>Thao tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="h in bookingTourHotelList">
+                                    <td>{{ $index + 1 }}</td>
+                                    <td class=ext-truncate" style="max-width: 150px;"
+                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="{{ h.hotelName }}">
+                                        {{ h.hotelName }}
+                                    </td>
+                                    <td>{{ h.phone }}</td>
+                                    <td class="text-truncate" style="max-width: 150px;"
+                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="{{ h.ward + ', ' + h.district + ', ' +  h.province }}">
+                                        {{ h.ward + ', ' + h.district + ', ' + h.province }}
+                                    </td>
+                                    <td class="d-flex align-items-center justify-content-center">
+                                        <button class="fs-1 btn text-info px-2"
+                                                style="padding: 0px"
+                                                ng-click="openModal(h.id,modalInfo.id)">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr ng-if="bookingTourHotelList.length === 0">
+                                    <td colspan="14">Trang này không có dữ liệu.</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-end">
+                                    {{ getDisplayRange() }} trong tổng số {{ totalElements }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane face" id="nav-vehicle" role="tabpanel"
+                     aria-labelledby="nav-vehicle" style="border-left:none" ng-controller="CarForTourGuideController">
+                    <div class="card card-customer">
+                        <div class="row" style="margin: 20px 16px 20px 16px">
+                            <div class="col-xl-4">
+                                Bạn muốn tìm kiếm gì ?
+                                <div class="input-group mb-3">
+                            <span class="input-group-text">
+                                <a href="#" class="bg-light text-dark">
+                                    <i class="fa-solid fa-magnifying-glass bg-light"></i>
+                                </a>
+                            </span>
+                                    <input type="text" class="form-control"
+                                           placeholder="Nhập tên địa điểm cần tìm"
+                                           ng-model="searchTerm" ng-change="searchCarName()">
+                                </div>
+                            </div>
+                            <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
+                                 style="margin: 20px 0 0 0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-components table-responsive mb-5">
+                        <div class="card table-responsive table-customer">
+                            <div class="card-header ">
+                                <div class="row">
+                                    <div class="mt-2 h4 col-lg-5 d-flex align-items-center h-100">
+                                        <div class="d-flex align-items-center">
+                                            <span class="h4">Danh sách phương tiện</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end align-items-baseline col-lg-2">
+                                        <select class="form-select" aria-label="Default select example"
+                                                ng-model="pageSize"
+                                                ng-init="pageSize='5'"
+                                                ng-change="pageSizeChanged()">
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
+                                        <nav aria-label="Page navigation example float-end">
+                                            <ul class="pagination justify-content-center align-items-center">
+                                                <li class="page-item" ng-class="{disabled: currentPage === 0}">
+                                                    <a class="page-link" ng-click="setPage(0)">
+                                                        <i class="fa-solid fa-angles-left"></i>
+                                                    </a>
+                                                </li>
+                                                <!-- Ellipsis at the beginning -->
+                                                <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                                    <span class="page-link">...</span>
+                                                </li>
+
+                                                <!-- Pagination Numbers -->
+                                                <li class="page-item cursor-pointer"
+                                                    ng-repeat="n in getPaginationRange()"
+                                                    ng-class="{active: n === currentPage}">
+                                                    <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                                </li>
+
+                                                <!-- Ellipsis at the end -->
+                                                <li class="page-item"
+                                                    ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                                    <span class="page-link">...</span>
+                                                </li>
+
+                                                <!-- Next Page -->
+                                                <li class="page-item"
+                                                    ng-class="{disabled: currentPage === totalPages - 1}">
+                                                    <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                                        <i class="fa-solid fa-angles-right"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-responsive text-center table-striped">
+                                <div ng-include="'app/component/utils/loading-table.html'"></div>
+                                <thead>
+                                <tr class="bg-light">
+                                    <th>#</th>
+                                    <th class="cursor-pointer" ng-click="sortData('id')">
+                                        <div class="icon-left">ID
+                                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                                        </div>
+                                    </th>
+                                    <th class="cursor-pointer" ng-click="sortData('fromLocation')">
+                                        <div class="icon-left">Điểm đi
+                                            <span class="sorting-icon"
+                                                  ng-bind-html="getSortIcon('fromLocation  ')"></span>
+                                        </div>
+                                    </th>
+                                    <th class="cursor-pointer" ng-click="sortData('toLocation')">
+                                        <div class="icon-left">Điểm đến
+                                            <span class="sorting-icon"
+                                                  ng-bind-html="getSortIcon('toLocation  ')"></span>
+                                        </div>
+                                    </th>
+                                    <th class="cursor-pointer" ng-click="sortData('licensePlate')">
+                                        <div class="icon-left">Biển số xe
+                                            <span class="sorting-icon"
+                                                  ng-bind-html="getSortIcon('licensePlate')"></span>
+                                        </div>
+                                    </th>
+                                    <th class="cursor-pointer" ng-click="sortData('bookedSeat')">
+                                        <div class="icon-left">chỗ đã đặt
+                                            <span class="sorting-icon" ng-bind-html="getSortIcon('bookedSeat')"></span>
+                                        </div>
+                                    </th>
+                                    <th class="cursor-pointer" ng-click="sortData('unitPrice')">
+                                        <div class="icon-left">Giá
+                                            <span class="sorting-icon" ng-bind-html="getSortIcon('unitPrice')"></span>
+                                        </div>
+                                    </th>
+                                    <th>Thao tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="btsl in bookingTourTransportationSchedulesList">
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ btsl.id }}</td>
+                                    <td class=ext-truncate" style="max-width: 150px;" data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="{{ btsl.fromLocation }}">
+                                        {{ btsl.fromLocation }}
+                                    </td>
+                                    <td class=ext-truncate" style="max-width: 150px;" data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="{{ btsl.toLocation }}">
+                                        {{ btsl.toLocation }}
+                                    </td>
+                                    <td>{{ btsl.transportationsByTransportationId.licensePlate }}</td>
+                                    <td>{{ btsl.bookedSeat }}</td>
+                                    <td>{{ btsl.unitPrice | vnCurrency }}</td>
+                                    <td class="d-flex align-items-center justify-content-center">
+                                        <button class="fs-1 btn text-info px-2" ng-click="openCarModal(btsl)">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr ng-if="bookingTourTransportationSchedulesList.length === 0">
+                                    <td colspan="14">Trang này không có dữ liệu.</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-end">
+                                    {{ getDisplayRange() }} trong tổng số {{ totalElements }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane face" id="nav-visit" role="tabpanel"
+                     aria-labelledby="nav-visit" style="border-left:none" ng-controller="VisitForTourGuideController">
+                    <div class="card card-customer">
+                        <div class="row" style="margin: 20px 16px 20px 16px">
+                            <div class="col-xl-4">
+                                Bạn muốn tìm kiếm gì ?
+                                <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <a href="#" class="bg-light text-dark">
+                                    <i class="fa-solid fa-magnifying-glass bg-light"></i>
+                                </a>
+                            </span>
+                                    <input type="text" class="form-control"
+                                           placeholder="Nhập tên địa điểm cần tìm"
+                                           ng-model="searchTerm" ng-change="searchVisitName()">
+                                </div>
+                            </div>
+                            <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
+                                 style="margin: 20px 0 0 0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-components table-responsive mb-5">
+                        <div class="card table-responsive table-customer">
+                            <div class="card-header ">
+                                <div class="row">
+                                    <div class="mt-2 h4 col-lg-5 d-flex align-items-center h-100">
+                                        <div class="d-flex align-items-center">
+                                            <span class="h4">Danh sách địa điểm tham quan</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end align-items-baseline col-lg-2">
+                                        <select class="form-select" aria-label="Default select example"
+                                                ng-model="pageSize"
+                                                ng-init="pageSize='5'"
+                                                ng-change="pageSizeChanged()">
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
+                                        <nav aria-label="Page navigation example float-end">
+                                            <ul class="pagination justify-content-center align-items-center">
+                                                <li class="page-item" ng-class="{disabled: currentPage === 0}">
+                                                    <a class="page-link" ng-click="setPage(0)">
+                                                        <i class="fa-solid fa-angles-left"></i>
+                                                    </a>
+                                                </li>
+                                                <!-- Ellipsis at the beginning -->
+                                                <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                                    <span class="page-link">...</span>
+                                                </li>
+
+                                                <!-- Pagination Numbers -->
+                                                <li class="page-item cursor-pointer"
+                                                    ng-repeat="n in getPaginationRange()"
+                                                    ng-class="{active: n === currentPage}">
+                                                    <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                                </li>
+
+                                                <!-- Ellipsis at the end -->
+                                                <li class="page-item"
+                                                    ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                                    <span class="page-link">...</span>
+                                                </li>
+
+                                                <!-- Next Page -->
+                                                <li class="page-item"
+                                                    ng-class="{disabled: currentPage === totalPages - 1}">
+                                                    <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                                        <i class="fa-solid fa-angles-right"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-responsive text-center table-striped">
+                                <div ng-include="'app/component/utils/loading-table.html'"></div>
+                                <thead>
+                                <tr class="bg-light">
+                                    <th>#</th>
+                                    <th class="cursor-pointer" ng-click="sortData('id')">
+                                        <div class="icon-left">ID
+                                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                                        </div>
+                                    </th>
+                                    <th class="cursor-pointer" ng-click="sortData('visitLocationName')">
+                                        <div class="icon-left">Tên tham quan
+                                            <span class="sorting-icon"
+                                                  ng-bind-html="getSortIcon('visitLocationName')"></span>
+                                        </div>
+                                    </th>
+                                    <th class="cursor-pointer" ng-click="sortData('phone')">
+                                        <div class="icon-left">Số điện thoại
+                                            <span class="sorting-icon" ng-bind-html="getSortIcon('phone')"></span>
+                                        </div>
+                                    </th>
+                                    <th class="cursor-pointer" ng-click="sortData('province')">
+                                        <div class="icon-left">Địa điểm
+                                            <span class="sorting-icon" ng-bind-html="getSortIcon('province  ')"></span>
+                                        </div>
+                                    </th>
+                                    <th>Thao tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="v in bookingTourVisitList">
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ v.id }}</td>
+                                    <td class=ext-truncate" style="max-width: 150px;" data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="{{ v.visitLocationName }}">
+                                        {{ v.visitLocationName }}
+                                    </td>
+                                    <td>{{ v.phone }}</td>
+                                    <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="{{ v.ward + ', ' + v.district + ', ' +  v.province }}">
+                                        {{ v.ward + ', ' + v.district + ', ' + v.province }}
+                                    </td>
+                                    <td class="d-flex align-items-center justify-content-center">
+                                        <button class="fs-1 btn text-info px-2" ng-click="openVisitModal(v)">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr ng-if="bookingTourVisitList.length === 0">
+                                    <td colspan="14">Trang này không có dữ liệu.</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-end">
+                                    {{ getDisplayRange() }} trong tổng số {{ totalElements }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--Modal khách sạn-->
+<div class="modal fade" id="modal-order-hotel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-white">
+                <h5 class="modal-title">Thông tin dịch vụ</h5>
+                <button type="button" class="btn-close" ng-click="closeModal()" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-7 pe-2 scroll-hidden" style="max-height: 600px;">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Chi tiết đơn hàng</h5>
+                                    <hr>
+                                    <div class="row" ng-repeat="ohd in orderHotelDetailList">
+                                        <div class="col-3 pe-0">
+                                            <img class="rounded-1 w-100"
+                                                 src="{{ohd.roomTypeAvatar}}" alt=""/>
+                                        </div>
+                                        <div class="col-9">
+                                            <p class="mb-0">
+                                                <span class="fw-bold">{{ ohd.roomTypeName }}</span>
+                                                <span>({{ ohd.unitPrice | vnCurrency }}) x </span>
+                                                <span class="fw-bold">{{ ohd.totalAmount }}</span>
+                                                <span class="fw-bold float-end">{{ ohd.totalPrice | vnCurrency }}</span>
+                                            </p>
+                                            <hr>
+
+                                            <div class="d-flex justify-content-between">
+                                                <div class="">
+                                                    <p class="mb-0 d-flex justify-content-center">Ngày nhận phòng</p>
+                                                    <p class="fw-bold mb-0 d-flex justify-content-center"
+                                                       style="font-size: 13px">{{ (ohd.checkIn | date: 'dd/MM/yyyy') + ' 12-14 giờ' }}</p>
+                                                </div>
+                                                <div class="col-2 d-flex justify-content-center align-items-center px-2">
+                                                    <p class="fw-bold mb-0 text-center">{{ ohd.checkIn | calculateDaysAndNights:ohd.checkOut }}</p>
+                                                </div>
+                                                <div class="pe-3">
+                                                    <p class="mb-0 d-flex justify-content-center">Ngày trả phòng</p>
+                                                    <p class="fw-bold mb-0 d-flex justify-content-center"
+                                                       style="font-size: 13px">{{ (ohd.checkOut | date: 'dd/MM/yyyy') + ' 12 giờ' }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr ng-if="!$last" class="mt-3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 ps-2">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Thông tin người đặt</h5>
+                                    <div class="mb-3">
+                                        <label class="form-label">Họ và tên của bạn <span
+                                                class="text-danger">*</span></label>
+                                        <input disabled type="text" class="form-control" ng-model="tourGuide.fullName">
+
+                                    </div>
+                                    <!-- Form Row 2 for Email -->
+                                    <div class="mb-3">
+                                        <label class="form-label">email của bạn <span
+                                                class="text-danger">*</span></label>
+                                        <input disabled type="email" class="form-control" ng-model="tourGuide.email">
+
+                                    </div>
+                                    <!-- Form Row 3 for Phone Number -->
+                                    <div class="mb-3">
+                                        <label class="form-label">số điện thoại của bạn <span
+                                                class="text-danger">*</span></label>
+                                        <input disabled type="tel" class="form-control" ng-model="tourGuide.phone">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Payment Information Section -->
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Thông tin thanh toán</h5>
+                                    <div class="">
+                                        <div class=" col-12 pe-0">
+                                            <p class="mx-2 my-1 fw-medium float-right">Phương thức thanh toán:
+                                                <span ng-if="tourGuide.paymentMethod == 'TTTT'"
+                                                      class="fw-medium text-success">Thanh toán tiền mặt</span>
+                                                <span ng-if="tourGuide.paymentMethod == 'ZALOPAY'"
+                                                      class="fw-medium text-info">Thanh toán ZaloPay</span>
+                                                <span ng-if="tourGuide.paymentMethod == 'VNPAY'"
+                                                      class="fw-medium text-warning">Thanh toán VNPay</span>
+                                                <span ng-if="tourGuide.paymentMethod == 'MOMO'"
+                                                      class="fw-medium text-danger">Thanh toán Momo</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p class="mx-2 my-1 fw-medium">Trạng thái:
+                                                <span class="fw-medium color-warning"
+                                                      ng-if="tourGuide.orderStatus == 0">
+                                            Chờ thanh toán
+                                        </span>
+                                                <span class="fw-medium color-green" ng-if="tourGuide.orderStatus == 1">
+                                            Đã thanh toán
+                                        </span>
+                                                <span class="fw-medium color-danger" ng-if="tourGuide.orderStatus == 2">
+                                            Hủy giao dịch
+                                        </span>
+                                            </p>
+                                        </div>
+                                        <div class=" col-12 pe-0">
+                                            <p class="mx-2 my-1 fw-medium float-right">Tổng tiền:
+                                                <span class="fw-medium color-green">
+                                            {{totalPrice | vnCurrency}}
+                                        </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal phương tiện-->
+<div class="modal fade" id="modal-order-transportation-schedule" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-white">
+                <h5 class="modal-title">Thông tin dịch vụ</h5>
+                <button type="button" class="btn-close" ng-click="closeCarModal()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-6 pe-2 scroll-hidden" style="max-height: 600px;">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Chi tiết đơn hàng</h5>
+                                    <hr>
+                                    <div class="row g-0">
+                                        <div class="col-12 pt-3">
+                                            <img src="{{transportationSchedule.transportationsByTransportationId.transportationImg}}"
+                                                 class="img-fluid rounded-start rounded-3" alt="...">
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="card-body pt-5">
+                                                <p class="card-text fw-medium mb-1">Thông tin đơn hàng</p>
+                                                <p class="card-title mb-3">
+                                                    Mã đơn hàng:
+                                                    <span class="fw-medium">
+                                                        {{ transportationSchedule.orderTransportationsById[0].id }}
+                                                    </span>
+                                                </p>
+                                                <p class="card-text fw-medium mb-1">Phương tiện</p>
+                                                <p class="card-title mb-1">
+                                                    Hãng:
+                                                    <span class="fw-medium">
+                                                        {{ transportationSchedule.transportationBrandsByTransportationBrandId.transportationBrandName }}
+                                                    </span>
+                                                </p>
+                                                <p class="card-title mb-1">
+                                                    Loại:
+                                                    <span class="fw-medium">
+                                                        {{ transportationSchedule.transportationTypesByTransportationTypeId.transportationTypeName }}
+                                                    </span>
+                                                </p>
+                                                <p class="card-title mb-1">
+                                                    Biển số:
+                                                    <span class="fw-medium">
+                                                        {{ transportationSchedule.transportationsByTransportationId.licensePlate }}
+                                                    </span>
+                                                </p>
+                                                <p class="card-title mb-3">
+                                                    Số chỗ ngồi:
+                                                    <span class="fw-medium">
+                                                        {{ transportationSchedule.transportationsByTransportationId.amountSeat }}
+                                                    </span>
+                                                </p>
+                                                <p class="card-text fw-medium mb-1">Chuyến đi</p>
+                                                <ul class="ps-0">
+                                                    <li class="d-flex align-items-start mb-2">
+                                                        <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                                        <span>Đi từ
+                                                            <span class="fw-medium">
+                                                                {{ transportationSchedule.fromLocation }}
+                                                            </span>  đến
+                                                            <span class="fw-medium">
+                                                                {{ transportationSchedule.toLocation }}
+                                                            </span>
+                                                        </span>
+                                                    </li>
+                                                    <li class="d-flex align-items-start mb-2">
+                                                        <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                                        <span>Ngày khởi hành:
+                                                            <span class="fw-medium">
+                                                                {{ transportationSchedule.departureTime | dateWithTimeFormat }}
+                                                            </span>
+                                                        </span>
+                                                    </li>
+                                                    <li class="d-flex align-items-start mb-2">
+                                                        <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                                        <span>Ngày về:
+                                                            <span class="fw-medium">
+                                                                {{ transportationSchedule.arrivalTime | dateWithTimeFormat }}
+                                                            </span>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+
+                                                <p class="m-2 fw-medium">
+                                                    Trạng thái:
+                                                    <span class="fw-bold color-warning"
+                                                          ng-if="transportationSchedule.isStatus === 4">
+                                                        Chuyến đi đang trống
+                                                    </span>
+                                                    <span class="fw-bold color-green"
+                                                          ng-if="transportationSchedule.isStatus === 5">
+                                                        Đang đợi duyệt
+                                                    </span>
+                                                    <span class="fw-bold color-green"
+                                                          ng-if="transportationSchedule.isStatus === 6">
+                                                        Đã được duyệt
+                                                    </span>
+                                                    <span class="fw-bold color-danger"
+                                                          ng-if="transportationSchedule.isStatus === 7">
+                                                        Từ chối duyệt
+                                                    </span>
+                                                    <span class="fw-bold color-warning"
+                                                          ng-if="transportationSchedule.isStatus === 3">
+                                                        Hủy chuyến đi
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 ps-2">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Thông tin người đặt</h5>
+                                    <div class="mb-3">
+                                        <label class="form-label">Họ và tên của bạn <span
+                                                class="text-danger">*</span></label>
+                                        <input disabled type="text" class="form-control"
+                                               ng-model="tourGuide.customerName">
+
+                                    </div>
+                                    <!-- Form Row 2 for Email -->
+                                    <div class="mb-3">
+                                        <label class="form-label">email của bạn <span
+                                                class="text-danger">*</span></label>
+                                        <input disabled type="email" class="form-control"
+                                               ng-model="tourGuide.customerEmail">
+
+                                    </div>
+                                    <!-- Form Row 3 for Phone Number -->
+                                    <div class="mb-3">
+                                        <label class="form-label">số điện thoại của bạn <span
+                                                class="text-danger">*</span></label>
+                                        <input disabled type="tel" class="form-control"
+                                               ng-model="tourGuide.customerPhone">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Payment Information Section -->
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Thông tin thanh toán</h5>
+                                    <div class="">
+                                        <div class=" col-12 pe-0">
+                                            <p class="mx-2 my-1 fw-medium float-right">Phương thức thanh toán:
+                                                <span class="fw-medium color-green">
+                                            Thanh toán tiền mặt
+                                        </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p class="mx-2 my-1 fw-medium">Trạng thái:
+                                                <span class="fw-medium color-warning"
+                                                      ng-if="tourGuide.orderStatus == 0">
+                                                    Chờ thanh toán
+                                                </span>
+                                                <span class="fw-medium color-green" ng-if="tourGuide.orderStatus == 1">
+                                                    Đã thanh toán
+                                                </span>
+                                                <span class="fw-medium color-danger" ng-if="tourGuide.orderStatus == 2">
+                                                    Hủy giao dịch
+                                                </span>
+                                            </p>
+                                            <p class="mx-2 my-1 fw-medium" ng-if="tourGuide.orderStatus == 1">
+                                                Thời gian thanh toán:
+                                                <span class="fw-medium color-green">
+                                                    {{ tourGuide.dateCreated | vietnameseDateTime }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class=" col-12 pe-0">
+                                            <p class="mx-2 my-1 fw-medium float-right">Tổng tiền:
+                                                <span class="fw-medium color-green">
+                                                    {{ transportationSchedule.unitPrice | vnCurrency }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal địa điểm tham quan-->
+<div class="modal fade" id="modal-order-visit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Thông tin dịch vụ</h5>
+                <button type="button" class="btn-close" ng-click="closeVisitModal()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-7 pe-2 scroll-hidden" style="max-height: 600px;">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Chi tiết đơn hàng</h5>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card mb-3">
+                                                <img class="img-fluid" ng-src="{{ visit.visitLocationImage }}"/>
+                                                <div class="card-body ">
+                                                    <div class="bg-header-model">
+                                                        <p class="m-2 fw-medium">Tên điểm tham quan: <span
+                                                                class="fw-bold">{{ visit.visitLocationName }}</span></p>
+                                                        <p class="m-2 fw-medium">Địa chỉ web: <span
+                                                                class="fw-bold"><a class="text-decoration-none"
+                                                                                   href="{{visit.urlWebsite}}">{{ visit.urlWebsite }}</a></span>
+                                                        </p>
+                                                        <p class="m-2 fw-medium">Thời gian mở: <span
+                                                                class="fw-normal">{{ visit.openingTime + ' đến ' + visit.openingTime }}</span>
+                                                        </p>
+                                                        <p class="m-2 fw-medium">Số điện thoại: <span
+                                                                class="fw-normal">{{ visit.phone }}</span>
+                                                        </p>
+                                                        <p class="m-2 fw-medium">Địa chỉ: <span
+                                                                class="fw-normal">{{ visit.address + ', ' + visit.ward + ', ' + visit.district + ', ' + visit.province }}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card mb-3" ng-repeat="ovd in orderVisitDetailList">
+                                        <p class="py-3 px-4 mb-0">
+                                            <span class="float-start fw-medium">ID đơn hàng: <span
+                                                    class="fw-normal">{{ ovd.orderVisitId }}</span></span>
+                                            <span class="float-end fw-medium">Ngày vào: <span
+                                                    class="fw-normal">{{ ovd.orderVisitsByOrderVisitId.checkIn | vietnameseDateTime }}</span></span>
+                                        </p>
+                                        <hr class="my-0 py-0">
+                                        <div class="card-body py-3 px-4">
+                                            <p class="mb-0">
+                                                <span class="fw-normal">{{ ovd.visitLocationTicketsByVisitLocationTicketId.ticketTypeName }}</span>
+                                                <span class="fw-normal">({{ ovd.visitLocationTicketsByVisitLocationTicketId.unitPrice | vnCurrency }}
+                                                    ) x </span>
+                                                <span class="fw-normal">{{ ovd.amount }}</span>
+                                                <span class="fw-normal float-end">{{ ((ovd.visitLocationTicketsByVisitLocationTicketId.unitPrice) * (ovd.amount)) | vnCurrency }}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 ps-2">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Thông tin người đặt</h5>
+                                    <div class="mb-3">
+                                        <label class="form-label">Họ và tên của bạn <span
+                                                class="text-danger">*</span></label>
+                                        <input disabled type="text" class="form-control"
+                                               ng-model="tourGuide.customerName">
+
+                                    </div>
+                                    <!-- Form Row 2 for Email -->
+                                    <div class="mb-3">
+                                        <label class="form-label">email của bạn <span
+                                                class="text-danger">*</span></label>
+                                        <input disabled type="email" class="form-control"
+                                               ng-model="tourGuide.customerEmail">
+
+                                    </div>
+                                    <!-- Form Row 3 for Phone Number -->
+                                    <div class="mb-3">
+                                        <label class="form-label">số điện thoại của bạn <span
+                                                class="text-danger">*</span></label>
+                                        <input disabled type="tel" class="form-control"
+                                               ng-model="tourGuide.customerPhone">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Payment Information Section -->
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Thông tin thanh toán</h5>
+                                    <div class="">
+                                        <div class=" col-12 pe-0">
+                                            <p class="mx-2 my-1 fw-medium float-right">Phương thức thanh toán:
+                                                <span class="fw-medium color-green">
+                                            Thanh toán tiền mặt
+                                        </span>
+                                            </p>
+                                        </div>
+                                        <!--                                        <label for="pay" class="form-label">Chọn phương thức thanh toán</label>-->
+                                        <!--                                        <select id="pay" class="form-control" ng-model="payment">-->
+                                        <!--                                            <option selected ng-value="0">Thanh toán tiền mặt</option>-->
+                                        <!--                                            <option ng-value="1">Thanh toán VNPay</option>-->
+                                        <!--                                            <option ng-value="2">Thanh toán ZaloPay</option>-->
+                                        <!--                                            <option ng-value="3">Thanh toán Momo</option>-->
+                                        <!--                                        </select>-->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p class="mx-2 my-1 fw-medium">Trạng thái:
+                                                <span class="fw-medium color-warning"
+                                                      ng-if="tourGuide.orderStatus == 0">
+                                            Chờ thanh toán
+                                        </span>
+                                                <span class="fw-medium color-green" ng-if="tourGuide.orderStatus == 1">
+                                            Đã thanh toán
+                                        </span>
+                                                <span class="fw-medium color-danger" ng-if="tourGuide.orderStatus == 2">
+                                            Hủy giao dịch
+                                        </span>
+                                            </p>
+                                        </div>
+                                        <div class=" col-12 pe-0">
+                                            <p class="mx-2 my-1 fw-medium float-right">Tổng tiền:
+                                                <span class="fw-medium color-green">
+                                            {{ totalPrice | vnCurrency }}
+                                        </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-light" ng-click="closeVisitModal()">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>

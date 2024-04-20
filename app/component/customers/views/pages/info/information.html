@@ -132,13 +132,14 @@
                     </div>
                 </main>
             </div>
-            <div id="change-profile" class="modal fade">
+            <div id="change-profile" class="modal fade" data-bs-backdrop="static">
                 <div class="modal-dialog modal-dialog-centered" style="min-width: 50%;">
                     <div class="modal-content">
                         <div class="modal-header" style="border-bottom: 1px solid #c6c6c6;">
                             <h3 class="modal-title justify-content-center fw-medium"
                                 style="font-size: 22px; color: black" id="scrollingLongModalLabel2">Hồ sơ cá nhân</h3>
-                            <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                            <button class="btn p-1" type="button" ng-click="getCustomer()" data-bs-dismiss="modal"
+                                    aria-label="Close">
                                 <span class="fas fa-times fs--1"></span>
                             </button>
                         </div>
@@ -272,7 +273,7 @@
                     </div>
                 </div>
             </div>
-            <div id="change-phoneNumber" class="modal fade">
+            <div id="change-phoneNumber" data-bs-backdrop="static" class="modal fade">
                 <div class="modal-dialog modal-dialog-centered" style="min-width: 30%;">
                     <div class="modal-content">
                         <div class="modal-header" style="border-bottom: 1px solid #c6c6c6;">
