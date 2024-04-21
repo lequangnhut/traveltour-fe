@@ -334,6 +334,10 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'app/component/agent/hotel/views/pages/statistical/statistical-hotel.html',
             controller: 'StatisticalHotelControllerAG'
         })
+        .when('/business/hotel/restore-room-type', {
+            templateUrl: 'app/component/agent/hotel/views/pages/restore/restore-room-type.html',
+            controller: 'RestoreRoomTypeController'
+        })
 
         /**
          * Agent Transport

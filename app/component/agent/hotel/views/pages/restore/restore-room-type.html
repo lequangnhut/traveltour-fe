@@ -12,17 +12,7 @@
         <div class="header-control-center">
             <div class="d-flex justify-content-between align-items-center row ">
                 <div class="col-xl-6 mt-3">
-                    <h3 class="color-green fw-bold">DANH SÁCH LOẠI PHÒNG</h3>
-                </div>
-                <div class="col-xl-6 d-flex align-items-center justify-content-end header-control-center mt-3">
-                    <div class="row ">
-                        <div class="col-sm-3 d-flex align-items-center">
-                            <button class="btn d-flex ">
-                                <i class="fa-solid fa-file-export"></i>
-                                <span>Xuất</span>
-                            </button>
-                        </div>
-                    </div>
+                    <h3 class="color-green fw-bold">KHÔI PHỤC PHÒNG KHÁCH SẠN</h3>
                 </div>
             </div>
         </div>
@@ -45,10 +35,6 @@
                 </div>
                 <div class="col-xl-3 d-flex align-items-center justify-content-end mb-3 h-100"
                      style="margin: 16px 0 0 0">
-                    <a href="/business/hotel/room-type-list/create" class="btn btn-green"><i
-                            class="fa-solid fa-plus"></i>
-                        Tạo phòng mới
-                    </a>
                 </div>
             </div>
         </div>
@@ -61,7 +47,7 @@
                 <div class="row">
                     <div class="h4 col-lg-5 d-flex align-items-center h-100">
                         <div class="d-flex align-items-center">
-                            <span class="h4">Danh sách loại phòng</span>
+                            <span class="h4">Danh sách phòng bị xóa</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end align-items-baseline col-lg-2">
@@ -148,7 +134,7 @@
             </table>
             <div class="card-footer">
                 <div class="">
-                    <button class="btn text-danger float-start" ng-click="deleteSelectedItems()" ng-show="showDeleteButton" ng-disabled="selectedItems.length === 0">Xóa Tất Cả</button>
+                    <button class="btn text-danger float-start" ng-click="deleteSelectedItems()" ng-show="showDeleteButton" ng-disabled="selectedItems.length === 0">Khôi phục tất cả</button>
                     <div class="float-end">
                         {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                     </div>

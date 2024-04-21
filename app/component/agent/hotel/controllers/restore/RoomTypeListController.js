@@ -1,4 +1,4 @@
-travel_app.controller('RoomTypeListController', function ($scope, $timeout, $http, FormatDateService, Upload, RoomTypeService, LocalStorageService, BedTypeService) {
+travel_app.controller('RestoreRoomTypeController', function ($scope, $timeout, $http, FormatDateService, Upload, RoomTypeService, LocalStorageService, BedTypeService) {
     var hotelId = LocalStorageService.get("brandId")
 
     $scope.roomTypes = {
@@ -115,7 +115,7 @@ travel_app.controller('RoomTypeListController', function ($scope, $timeout, $htt
      * Phương thức lấy danh sách loại phòng
      */
     $scope.getRoomTypeList = async function () {
-        RoomTypeService.findAllRoomTypeDetails($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, "", hotelId, false)
+        RoomTypeService.findAllRoomTypeDetails($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, "", hotelId, true)
             .then(function (response) {
                 $scope.isLoading = true;
                 if (response.data.data === null || response.data.data.content.length === 0) {
@@ -140,7 +140,7 @@ travel_app.controller('RoomTypeListController', function ($scope, $timeout, $htt
         if (searchTimeout) $timeout.cancel(searchTimeout);
 
         searchTimeout = $timeout(function () {
-            RoomTypeService.findAllRoomTypeDetails($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm, hotelId, false)
+            RoomTypeService.findAllRoomTypeDetails($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm, hotelId, true)
                 .then(function (response) {
                     $scope.roomTypes = response.data.data.content;
                     $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
@@ -326,42 +326,32 @@ travel_app.controller('RoomTypeListController', function ($scope, $timeout, $htt
             return item.id;
         });
 
-        Swal.fire({
-            title: 'Bạn chắc chắn muốn xóa phòng này chứ?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Xóa',
-            cancelButtonText: 'Hủy'
-        }).then(async (result) => { // Thêm async ở đây
-            if (result.isConfirmed) {
-                if (selectedIds != null) {
-                    try {
-                        var response = await RoomTypeService.deleteAllRoomTypeById(selectedIds);
-                        $scope.isLoading = true;
-                        if (response.status === 200) {
-                            toastAlert("success", response.data.message);
-                            $scope.playSuccessSound();
-                            $timeout(function () {
-                                RoomTypeService.findAllRoomTypeDetails($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm, hotelId, false)
-                                    .then(function (response) {
-                                        $scope.roomTypes = response.data.data.content;
-                                        $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                                        $scope.totalElements = response.data.data.totalElements;
-                                    }, errorCallback);
-                            }, 200);
-                        } else {
-                            toastAlert("error", response.data.message);
-                            $scope.playErrorSound();
-                        }
-                    } catch (error) {
-                        toastAlert("error", error);
-                    } finally {
-                        $scope.isLoading = false;
-                    }
+        if (selectedIds != null) {
+            try {
+                var response = await RoomTypeService.restoreAllRoomTypeById(selectedIds);
+                $scope.isLoading = true;
+                if (response.status === 200) {
+                    toastAlert("success", response.data.message);
+                    $scope.playSuccessSound();
+                    $timeout(function () {
+                        RoomTypeService.findAllRoomTypeDetails($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm, hotelId, true)
+                            .then(function (response) {
+                                $scope.roomTypes = response.data.data.content;
+                                $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
+                                $scope.totalElements = response.data.data.totalElements;
+                            }, errorCallback);
+                    }, 200);
                 } else {
-                    toastAlert("error", "Bạn chưa chọn đối tượng nào để xóa");
+                    toastAlert("error", response.data.message);
+                    $scope.playErrorSound();
                 }
+            } catch (error) {
+                toastAlert("error", error);
+            } finally {
+                $scope.isLoading = false;
             }
-        });
+        } else {
+            toastAlert("error", "Bạn chưa chọn đối tượng nào để khôi phục");
+        }
     };
 })
