@@ -38,10 +38,7 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
 
     const initCharts = async () => {
         try {
-            const [revenueData, percentageData] = await Promise.all([
-                fetchRevenueData($scope.yearForTheChartColumn),
-                fetchPercentageData($scope.yearForPieChart)
-            ]);
+            const [revenueData, percentageData] = await Promise.all([fetchRevenueData($scope.yearForTheChartColumn), fetchPercentageData($scope.yearForPieChart)]);
 
             $scope.currentYearData = revenueData.currentYearRevenue;
             $scope.previousYearData = revenueData.previousYearIsRevenue;
@@ -118,36 +115,50 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
     }
 
     const tooltipFormatter = (params) => {
-        let tooltipItem = ``;
+        let tooltipContent = `<div>
+        <p class='mb-2 text-600 fw-bold'>
+            ${params[0].axisValue}
+        </p>
+        <div class="ms-1">`;
+
         params.forEach(el => {
-            tooltipItem += `<div class='ms-1'>
-        <h6 class="text-700"><span class="fas fa-circle me-1 fs--2" style="color:${
-                el.borderColor ? el.borderColor : el.color
-            }"></span>
-          ${el.seriesName} : ${
-                typeof el.value === 'object' ? el.value[1] : el.value
-            }
-        </h6>
-      </div>`;
+            tooltipContent += `
+            <h6 class="text-700 mb-2">
+                <span class="fas fa-circle me-1 fs--2" style="color:${el.borderColor ? el.borderColor : el.color}"></span>
+                ${el.seriesName} : ${typeof el.value === 'object' ? el.value[1] : el.value}
+            </h6>`;
         });
-        return `<div>
-            <p class='mb-2 text-600'> Tháng
-              ${parseInt(params[0].axisValue.replace("T", ""))}
-            </p>
-            ${tooltipItem}
-          </div>`;
+
+        tooltipContent += `</div>
+        </div>`;
+
+        return tooltipContent;
     };
 
-    const projectionVsActualChartInit = async (currentYearData, previousYearData) => {
+
+    // Hàm để khởi tạo biểu đồ
+    function projectionVsActualChartInit() {
         const {getColor, getData} = window.phoenix.utils;
         const $projectionVsActualChartEl = document.querySelector('.echart-projection-actual');
 
         if ($projectionVsActualChartEl) {
-            const userOptions = getData($projectionVsActualChartEl, 'echarts');
             const chart = window.echarts.init($projectionVsActualChartEl);
+            const userOptions = getData($projectionVsActualChartEl, 'echarts');
+
+            // Dữ liệu ảo cho số lượng vé người lớn và trẻ em cho 12 tháng của năm hiện tại
+            const currentYearAdultTickets = [100, 120, 150, 130, 110, 140, 160, 180, 170, 150, 140, 130]; // Vé người lớn cho 12 tháng của năm hiện tại
+            const currentYearChildTickets = [80, 90, 100, 90, 80, 100, 110, 120, 130, 110, 100, 90]; // Vé trẻ em cho 12 tháng của năm hiện tại
+
+            // Dữ liệu ảo cho số lượng vé người lớn và trẻ em cho 12 tháng của năm trước đó
+             const previousYearAdultTickets = [90, 110, 130, 0, 100, 130, 150, 170, 160, 140, 130, 120]; // Vé người lớn cho 12 tháng của năm trước đó
+             const previousYearChildTickets = [70, 80, 90, 0, 70, 90, 100, 110, 120, 100, 90, 80]; // Vé trẻ em cho 12 tháng của năm trước đó
+            // const previousYearAdultTickets = new Array(12).fill(0);
+            // const previousYearChildTickets = new Array(12).fill(0);
+
+            const months = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
 
             const getDefaultOptions = () => ({
-                color: [getColor('primary'), getColor('gray-300')],
+                color: [getColor('primary'), getColor('info-200'), getColor('success'), getColor('success-300')],
                 tooltip: {
                     trigger: 'axis',
                     padding: [7, 10],
@@ -156,38 +167,20 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                     textStyle: {color: getColor('dark')},
                     borderWidth: 1,
                     transitionDuration: 0,
-                    axisPointer: {
-                        type: 'none'
-                    },
+                    axisPointer: {type: 'none'},
                     formatter: params => tooltipFormatter(params)
                 },
                 xAxis: {
-                    type: 'category',
-                    axisLabel: {
-                        color: getColor('gray-800'),
-                        fontFamily: 'Nunito Sans',
-                        fontWeight: 600,
-                        fontSize: 12.8
-                    },
-                    data: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
-                    axisLine: {
-                        lineStyle: {
-                            color: getColor('gray-300')
-                        }
-                    },
-                    axisTick: false
+                    type: 'category', axisLabel: {
+                        color: getColor('gray-800'), fontFamily: 'Roboto, sans-serif', fontWeight: 600, fontSize: 12.8
+                    }, data: months, axisLine: {
+                        lineStyle: {color: getColor('gray-300')}
+                    }, axisTick: false
                 },
                 yAxis: {
-                    axisPointer: {type: 'none'},
-                    axisTick: 'none',
-                    splitLine: {
-                        interval: 5,
-                        lineStyle: {
-                            color: getColor('gray-200')
-                        }
-                    },
-                    axisLine: {show: false},
-                    axisLabel: {
+                    type: 'value', axisPointer: {type: 'none'}, axisTick: 'none', splitLine: {
+                        interval: 5, lineStyle: {color: getColor('gray-200')}
+                    }, axisLine: {show: false}, axisLabel: {
                         fontFamily: 'Nunito Sans',
                         fontWeight: 600,
                         fontSize: 13.8,
@@ -195,50 +188,108 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                         margin: 20,
                         verticalAlign: 'bottom',
                         formatter: function (value) {
-                            return formatNumberWithK(value);
+                            return value.toFixed(0); // Định dạng hiển thị số liệu
                         },
                     }
                 },
-                series: [
-                    {
-                        name: `${$scope.year - 1}`,
-                        type: 'bar',
-                        barWidth: '6px',
-                        data: previousYearData,
-                        barGap: '30%',
-                        label: {show: false},
-                        itemStyle: {
-                            borderRadius: [2, 2, 0, 0],
-                            color: getColor('info-200')
-                        }
-                    },
-                    {
-                        name: `${$scope.year}`,
-                        type: 'bar',
-                        data: currentYearData,
-                        barWidth: '6px',
-                        barGap: '30%',
-                        label: {show: false},
-                        z: 10,
-                        itemStyle: {
-                            borderRadius: [2, 2, 0, 0],
-                            color: getColor('primary')
-                        }
+                series: [{
+                    name: `Năm ${$scope.yearForTheChartColumn} (Vé Người Lớn)`,
+                    type: 'bar',
+                    stack: 'currentYear',
+                    barWidth: '20%',
+                    barGap: '30%',
+                    data: currentYearAdultTickets,
+                    label: {show: false}, // Ẩn số liệu
+                    itemStyle: {
+                        color: getColor('primary'), barBorderRadius: [0, 0, 100, 100]
                     }
+                }, {
+                    name: `Năm ${$scope.yearForTheChartColumn} (Vé Trẻ Em)`,
+                    type: 'bar',
+                    stack: 'currentYear',
+                    barWidth: '20%',
+                    data: currentYearChildTickets,
+                    label: {show: false}, // Ẩn số liệu
+                    itemStyle: {
+                        color: getColor('info-200'), barBorderRadius: [100, 100, 0, 0]
+                    }
+                }, {
+                    name: `Năm ${$scope.yearForTheChartColumn - 1} (Vé Người Lớn)`,
+                    type: 'bar',
+                    stack: 'previousYear',
+                    barWidth: '20%',
+                    data: previousYearAdultTickets,
+                    label: {show: false}, // Ẩn số liệu
+                    itemStyle: {
+                        color: getColor('success'), barBorderRadius: [0, 0, 100, 100]
+                    }
+                }, {
+                    name: `Năm ${$scope.yearForTheChartColumn - 1} (Vé Trẻ Em)`,
+                    type: 'bar',
+                    stack: 'previousYear',
+                    barWidth: '20%',
+                    data: previousYearChildTickets,
+                    label: {show: false}, // Ẩn số liệu
+                    itemStyle: {
+                        color: getColor('success-300'), barBorderRadius: [100, 100, 0, 0]
+                    }
+                }
                 ],
-                grid: {
-                    right: 0,
-                    left: 3,
-                    bottom: 0,
-                    top: '15%',
-                    containLabel: true
-                },
                 animation: false
             });
 
             echartSetOption(chart, userOptions, getDefaultOptions);
+
+            chart.on('legendselectchanged', function (params) {
+                const selected = params.selected;
+                const defaultOptions = getDefaultOptions();
+                const series = defaultOptions.series;
+                let index = -1;
+                for (let i = 0; i < series.length; i++) {
+                    const name = series[i].name;
+
+                    if (!selected[name]) {
+                        index = (i % 2 === 0) ? (i + 1) : (i - 1);
+                        series[index].itemStyle.barBorderRadius = [100, 100, 100, 100];
+                    } else if (i !== index) {
+                        if (i % 2 === 0) {
+                            series[i].itemStyle.barBorderRadius = [0, 0, 100, 100];
+                        } else {
+                            series[i].itemStyle.barBorderRadius = [100, 100, 0, 0];
+                        }
+                    }
+                }
+                chart.setOption(defaultOptions);
+            });
+
+            function hideLegendOnSmallScreen() {
+                if (window.innerWidth <= 768) {
+                    const defaultOptions = getDefaultOptions();
+                    defaultOptions.legend = {
+                        show: false
+                    };
+                    chart.setOption(defaultOptions);
+                } else {
+                    const defaultOptions = getDefaultOptions();
+                    defaultOptions.legend = {
+                        show: true,
+                        top: 3,
+                        textStyle: {
+                            color: getColor('gray-800'), fontFamily: 'Roboto, sans-serif', fontWeight: 600, fontSize: 13
+                        },
+                    };
+                    chart.setOption(defaultOptions);
+                }
+            }
+
+            hideLegendOnSmallScreen();
+
+            window.addEventListener('resize', function () {
+                hideLegendOnSmallScreen();
+            });
+
         }
-    };
+    }
 
     const pieChartInit = (hotelPercentage, visitLocationPercentage, transportBrandPercentage) => {
         const {getColor, getData, rgbaColor} = window.phoenix.utils;
@@ -249,62 +300,37 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
             const chart = window.echarts.init($chartEl);
             const getDefaultOptions = () => ({
                 legend: {
-                    left: 12,
-                    textStyle: {
+                    left: 12, textStyle: {
                         color: getColor('gray-600')
                     }
-                },
-                series: [
-                    {
-                        type: 'pie',
-                        radius: window.innerWidth < 530 ? '45%' : '60%',
-                        label: {
-                            color: getColor('gray-700'),
-                            formatter: '{b}: {c}%'
-                        },
-                        center: ['50%', '55%'],
-                        data: [
-                            {
-                                value: hotelPercentage,
-                                name: 'Khách sạn',
-                                itemStyle: {
-                                    color: getColor('danger')
-                                }
-                            },
-                            {
-                                value: transportBrandPercentage,
-                                name: 'Phương tiện',
-                                itemStyle: {
-                                    color: getColor('info')
-                                }
-                            },
-                            {
-                                value: visitLocationPercentage,
-                                name: 'Tham quan',
-                                itemStyle: {
-                                    color: getColor('success')
-                                }
-                            },
-                        ],
-                        emphasis: {
-                            itemStyle: {
-                                shadowBlur: 20,
-                                shadowOffsetX: 0,
-                                shadowColor: rgbaColor(getColor('gray-600'), 0.5)
-                            }
-                        },
-                    }
-                ],
-                tooltip: {
+                }, series: [{
+                    type: 'pie', radius: window.innerWidth < 530 ? '45%' : '60%', label: {
+                        color: getColor('gray-700'), formatter: '{b}: {c}%'
+                    }, center: ['50%', '55%'], data: [{
+                        value: hotelPercentage, name: 'Khách sạn', itemStyle: {
+                            color: getColor('danger')
+                        }
+                    }, {
+                        value: transportBrandPercentage, name: 'Phương tiện', itemStyle: {
+                            color: getColor('info')
+                        }
+                    }, {
+                        value: visitLocationPercentage, name: 'Tham quan', itemStyle: {
+                            color: getColor('success')
+                        }
+                    },], emphasis: {
+                        itemStyle: {
+                            shadowBlur: 20, shadowOffsetX: 0, shadowColor: rgbaColor(getColor('gray-600'), 0.5)
+                        }
+                    },
+                }], tooltip: {
                     trigger: 'item',
                     padding: [10, 15],
                     backgroundColor: '#f8f9fa',
                     borderColor: '#ced4da',
                     borderWidth: 1,
                     textStyle: {
-                        color: '#343a40',
-                        fontSize: 14,
-                        fontWeight: 'bold'
+                        color: '#343a40', fontSize: 14, fontWeight: 'bold'
                     },
                     transitionDuration: 0.5,
                     axisPointer: {
@@ -322,18 +348,13 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
 
             const responsiveOptions = {
                 xs: {
-                    series: [
-                        {
-                            radius: '45%'
-                        }
-                    ]
-                },
-                sm: {
-                    series: [
-                        {
-                            radius: '60%'
-                        }
-                    ]
+                    series: [{
+                        radius: '45%'
+                    }]
+                }, sm: {
+                    series: [{
+                        radius: '60%'
+                    }]
                 }
             };
 
@@ -362,70 +383,45 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                         type: 'none'
                     },
                     formatter: params => tooltipFormatter(params)
-                },
-                xAxis: {
-                    type: 'category',
-                    data: month,
-                    boundaryGap: false,
-                    axisLine: {
+                }, xAxis: {
+                    type: 'category', data: month, boundaryGap: false, axisLine: {
                         lineStyle: {
-                            color: getColor('gray-300'),
-                            type: 'solid'
+                            color: getColor('gray-300'), type: 'solid'
                         }
-                    },
-                    axisTick: {show: false},
-                    axisLabel: {
-                        color: getColor('gray-400'),
-                        margin: 15,
-                        formatter: value => value.substring(0, 3)
-                    },
-                    splitLine: {
+                    }, axisTick: {show: false}, axisLabel: {
+                        color: getColor('gray-400'), margin: 15, formatter: value => value.substring(0, 3)
+                    }, splitLine: {
                         show: false
                     }
-                },
-                yAxis: {
-                    type: 'value',
-                    splitLine: {
+                }, yAxis: {
+                    type: 'value', splitLine: {
                         lineStyle: {
-                            color: getColor('gray-200'),
-                            type: 'dashed'
+                            color: getColor('gray-200'), type: 'dashed'
                         }
+                    }, boundaryGap: false, axisLabel: {
+                        show: true, color: getColor('gray-400'), margin: 15
+                    }, axisTick: {show: false}, axisLine: {show: false}
+                }, series: [{
+                    name: 'Milk Tea',
+                    type: 'line',
+                    symbolSize: 10,
+                    itemStyle: {
+                        color: getColor('white'), borderColor: getColor('success'), borderWidth: 2
                     },
-                    boundaryGap: false,
-                    axisLabel: {
-                        show: true,
-                        color: getColor('gray-400'),
-                        margin: 15
+                    lineStyle: {
+                        color: getColor('success')
                     },
-                    axisTick: {show: false},
-                    axisLine: {show: false}
+                    symbol: 'circle',
+                    stack: 'product',
+                    data: [220, 182, 191, 234, 290, 330, 310, 182, 191, 234, 290, 330]
                 },
-                series: [
-                    {
-                        name: 'Milk Tea',
-                        type: 'line',
-                        symbolSize: 10,
-                        itemStyle: {
-                            color: getColor('white'),
-                            borderColor: getColor('success'),
-                            borderWidth: 2
-                        },
-                        lineStyle: {
-                            color: getColor('success')
-                        },
-                        symbol: 'circle',
-                        stack: 'product',
-                        data: [220, 182, 191, 234, 290, 330, 310, 182, 191, 234, 290, 330]
-                    },
 
                     {
                         name: 'Cheese Brownie',
                         type: 'line',
                         symbolSize: 10,
                         itemStyle: {
-                            color: getColor('white'),
-                            borderColor: getColor('warning'),
-                            borderWidth: 2
+                            color: getColor('white'), borderColor: getColor('warning'), borderWidth: 2
                         },
                         lineStyle: {
                             color: getColor('warning')
@@ -433,9 +429,7 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                         symbol: 'circle',
                         stack: 'product',
                         data: [320, 332, 301, 334, 390, 330, 320, 332, 301, 334, 390, 330]
-                    },
-                ],
-                grid: {right: 10, left: 5, bottom: 5, top: 8, containLabel: true}
+                    },], grid: {right: 10, left: 5, bottom: 5, top: 8, containLabel: true}
             });
             echartSetOption(chart, userOptions, getDefaultOptions);
         }

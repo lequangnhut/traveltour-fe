@@ -489,8 +489,8 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'OrderVisitControllerAG'
         })
         .when('/business/visit/statistical', {
-            templateUrl: 'app/component/agent/visits/views/pages/statistical/statistical.html',
-            controller: 'StatisticalControllerAG'
+            templateUrl: 'app/component/agent/visits/views/pages/statistical/statistical-visit.html',
+            controller: 'StatisticalVisitControllerAG'
         })
 
         /**
