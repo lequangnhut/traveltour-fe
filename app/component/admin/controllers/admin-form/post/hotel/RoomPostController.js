@@ -129,14 +129,12 @@ travel_app.controller("RoomPostController",
         }
 
         $scope.openModal = function (data) {
-            $scope.room = data;
-            $scope.utilities = data.roomUtilities;
-            $scope.roomImageList = data.roomImagesById;
-            $('#roomModal').modal('show');
+            $scope.roomTypesDetails = data;
+            $('#detail-room').modal('show');
         }
 
         $scope.closeModal = function () {
-            $('#roomModal').modal('hide');
+            $('#detail-room').modal('hide');
         };
 
         $scope.deniedFormRoom = function (data) {
@@ -145,7 +143,7 @@ travel_app.controller("RoomPostController",
                     .then(function (res) {
                         toastAlert('success', 'Đã từ chối quyền hoạt động!');
                         $scope.getRoomTypeList();
-                        $('#roomModal').modal('hide');
+                        $('#detail-room').modal('hide');
                     })
                     .catch(errorCallback).finally(function () {
                     $scope.isLoading = false;
@@ -161,7 +159,7 @@ travel_app.controller("RoomPostController",
                     .then(function (res) {
                         toastAlert('success', 'Đã cấp quyền hoạt động!');
                         $scope.getRoomTypeList();
-                        $('#roomModal').modal('hide');
+                        $('#detail-room').modal('hide');
                     })
                     .catch(errorCallback).finally(function () {
                     $scope.isLoading = false;

@@ -71,6 +71,7 @@ travel_app.controller('NotificationControllerAD',
             NotificationsServiceAD.seenNote(id).then(function (response) {
                 if (response.status === 200) {
                     $scope.loadData();
+                    $scope.setActiveNavItem('register-list');
                     $location.path('/admin/agency/agency-list-check');
                 } else {
                     $location.path('/admin/page-not-found');

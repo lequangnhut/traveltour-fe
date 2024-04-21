@@ -104,7 +104,7 @@ travel_app.controller('RequestCarControllerAD',
                             let transportationScheduleId = requestCarDetail.transportationScheduleId;
                             let requestCarId = requestCarDetail.requestCarId;
 
-                            AgencyServiceAD.findAgencieById(agenciesId).then(function (response) {
+                            AgencyServiceAD.findAgenciesById(agenciesId).then(function (response) {
                                 if (response.status === 200) {
                                     $scope.agencies.push(response.data.data);
                                 } else {

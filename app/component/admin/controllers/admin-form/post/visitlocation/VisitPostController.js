@@ -100,7 +100,7 @@ travel_app.controller("VisitPostController", function ($scope, $sce, $location, 
 
     $scope.getVisitPostList();
 
-    $scope.getChangeStatus = function(){
+    $scope.getChangeStatus = function () {
         $scope.getVisitPostList();
     }
 
@@ -127,13 +127,13 @@ travel_app.controller("VisitPostController", function ($scope, $sce, $location, 
     };
 
     $scope.openModal = function (data) {
-        $scope.locate = data;
+        $scope.visitLocation = data;
         $scope.ticketList = data.visitLocationTicketsById;
-        $('#visitModal').modal('show');
+        $('#detail-visit').modal('show');
     }
 
     $scope.closeModal = function () {
-        $('#visitModal').modal('hide');
+        $('#detail-visit').modal('hide');
     };
 
     $scope.deniedFormVisit = function (data) {
@@ -142,12 +142,13 @@ travel_app.controller("VisitPostController", function ($scope, $sce, $location, 
                 .then(function (res) {
                     toastAlert('success', 'Đã từ chối quyền hoạt động!');
                     $scope.getVisitPostList();
-                    $('#visitModal').modal('hide');
+                    $('#detail-visit').modal('hide');
                 })
                 .catch(errorCallback).finally(function () {
                 $scope.isLoading = false;
             });
         }
+
         confirmAlertPost('Bạn không phê duyệt dịch vụ này?', confirmDeny); // Chuyển hàm confirmDeleteType vào hàm confirmAlert
     };
 
@@ -157,12 +158,13 @@ travel_app.controller("VisitPostController", function ($scope, $sce, $location, 
                 .then(function (res) {
                     toastAlert('success', 'Đã cấp quyền hoạt động!');
                     $scope.getVisitPostList();
-                    $('#visitModal').modal('hide');
+                    $('#detail-visit').modal('hide');
                 })
                 .catch(errorCallback).finally(function () {
                 $scope.isLoading = false;
             });
         }
+
         confirmAlertPost('Bạn muốn phê duyệt dịch vụ này?', confirmAccept);
     };
 })

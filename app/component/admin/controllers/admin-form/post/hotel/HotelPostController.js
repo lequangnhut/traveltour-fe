@@ -129,11 +129,11 @@ travel_app.controller("HotelPostController",
         $scope.openModal = function (data) {
             $scope.hotelPost = data;
             $scope.utilitiesList = data.placeUtilities;
-            $('#hotelModal').modal('show');
+            $('#detail-hotel').modal('show');
         }
 
         $scope.closeModal = function () {
-            $('#hotelModal').modal('hide');
+            $('#detail-hotel').modal('hide');
         };
 
         $scope.deniedFormHotel = function (data) {
@@ -142,7 +142,7 @@ travel_app.controller("HotelPostController",
                     .then(function () {
                         toastAlert('success', 'Đã từ chối quyền hoạt động!');
                         $scope.getHotelPostList();
-                        $('#hotelModal').modal('hide');
+                        $('#detail-hotel').modal('hide');
                     })
                     .catch(errorCallback).finally(function () {
                     $scope.isLoading = false;
@@ -158,7 +158,7 @@ travel_app.controller("HotelPostController",
                     .then(function () {
                         toastAlert('success', 'Đã cấp quyền hoạt động!');
                         $scope.getHotelPostList();
-                        $('#hotelModal').modal('hide');
+                        $('#detail-hotel').modal('hide');
                     })
                     .catch(errorCallback).finally(function () {
                     $scope.isLoading = false;

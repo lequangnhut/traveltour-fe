@@ -62,6 +62,16 @@
                             <div class="meta row">
                                 <div class="col-lg-8 p-0">
                                     <div>
+                                        <span ng-if="requestCar.isAccepted">
+                                            <a class="fw-medium text-success text-decoration-none">
+                                                <i class="fa-solid fa-clock-rotate-left"></i>
+                                                Đã xe duyệt vào lúc
+                                                <strong>
+                                                    {{ requestCar.dateAccepted | vietnameseDateTime }}
+                                                </strong>
+                                            </a>
+                                            <br>
+                                        </span>
                                         <span>
                                             <a class="fw-medium text-success text-decoration-none"
                                                ng-if="!requestCar.isAccepted">

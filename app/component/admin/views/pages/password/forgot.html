@@ -12,10 +12,10 @@
     </div>
 
     <div class="card card-custom">
-        <form  class="signup-form form-input-custom" method="post" ng-submit="submitFormForgotAdmin()" name="formEmailForgot"
+        <form class="signup-form form-input-custom" method="post" ng-submit="submitFormForgotAdmin()"
+              name="formEmailForgot"
               role="form">
             <div class="col-12">
-
                 <div class="col-md-12">
                     <label class="form-label mb-2">Nhập địa chỉ email</label>
                     <input type="text"
@@ -58,11 +58,11 @@
                     </small>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-9 d-flex align-items-center mt-2">
+                    <div class="col-6 d-flex align-items-center mt-2">
                         <img style="border-radius: 5px; border: 1px solid rgba(128, 128, 128, 0.67); width: 100%"
                              ng-src="{{captchaImage}}" alt="Captcha Image" class="captcha-image">
                     </div>
-                    <div class="col-1 d-flex align-items-center justify-content-left">
+                    <div class="col-6 d-flex align-items-center justify-content-left">
                         <a ng-click="refreshCaptcha()" role="button">
                             <i class="fa-solid fa-arrows-rotate fa-2xl" style="color: #44ca85;"></i>
                         </a>
@@ -70,11 +70,12 @@
                 </div>
 
                 <div class="col-12 d-flex justify-content-end mt-5">
-                    <button type="button" class="btn btn-submit fw-bold" style="margin-right: 20px; background-color: white; color:black">
+                    <button type="button" class="btn btn-submit fw-bold"
+                            style="margin-right: 20px; background-color: white; color:black">
                         <a style="color: black; text-decoration: none" href="/login-admin">Đăng nhập</a>
                     </button>
                     <button type="submit" ng-disabled="formEmailForgot.$invalid || !emailError || !capCodeError"
-                            class="btn btn-submit fw-bold">Đổi mật khẩu
+                            class="btn btn-submit fw-bold">Lấy lại mật khẩu
                     </button>
                 </div>
             </div>

@@ -152,7 +152,7 @@
                             </button>
                         </div>
                     </nav>
-
+                   
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade active show" id="nav-home" role="tabpanel"
                              aria-labelledby="nav-home-tab">
@@ -184,7 +184,8 @@
                                         <div class="tour-trips-header p-2 bg-green rounded-top-3 d-flex">
                                             <h5 class="text-white m-1 ms-4 fs-6" ng-repeat="day in dayInTrip">
                                                 <a href="javascript:void(0)" ng-if="dayInTrip.length !== 0"
-                                                   ng-click="changeLocationOnMap(day.dayTrip)">
+                                                   ng-click="changeLocationOnMap(day.dayTrip)"
+                                                   ng-style="{'color': day.dayTrip === selectedDayTrip ? '#2C7865' : 'white'}">
                                                     <i class="fa-regular fa-calendar-days"></i>
                                                     Ngày {{ day.dayTrip }}
                                                 </a>
@@ -234,7 +235,9 @@
                                                             <div class="row">
                                                                 <div class="fw-medium col-sm-4 text-center">
                                                                     <i class="fa-solid fa-taxi"></i>
-                                                                    <span>{{ trip.transportationTypesByTransportationTypeId.transportationTypeName }}</span>
+                                                                    <span>
+                                                                        Xe đi tour
+                                                                    </span>
                                                                 </div>
                                                                 <div class="fw-medium col-sm-4 text-center">
                                                                     <i class="fa-solid fa-turn-down"></i>

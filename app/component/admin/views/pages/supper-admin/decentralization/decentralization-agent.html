@@ -126,13 +126,13 @@
                 <tbody>
                 <tr ng-repeat="agent in userRoleAgent" class="table-title">
                     <td>{{ $index + 1 }}</td>
+                    <td>{{ agent.email }}</td>
                     <td>
-                        <span title="{{ agent.email }}">
-                            <span>{{ agent.email | limitTo: 10 }}</span>
-                            <span ng-show="agent.email.length > 10">...</span>
+                        <span title="{{ agent.fullName }}">
+                            <span>{{ agent.fullName | limitTo: 10 }}</span>
+                            <span ng-show="agent.fullName.length > 10">...</span>
                         </span>
                     </td>
-                    <td>{{ agent.fullName }}</td>
                     <td>
                         <div class="mb-3">
                             <label class="form-check-label" for="{{ agent.id }} + _AGENT_HOTEL">

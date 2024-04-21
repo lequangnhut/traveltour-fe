@@ -1,14 +1,16 @@
-travel_app.controller("SchedulePostController",
+travel_app.controller("TransportationPostController",
     function ($scope, $location, $sce, $routeParams, $timeout, PostServiceAD, LocalStorageService, Base64ObjectService) {
         $scope.isLoading = true;
 
-        $scope.brandId = LocalStorageService.decryptLocalData('brandId', 'brandIdEncrypt');
-        $scope.transId = Base64ObjectService.decodeObject($routeParams.id);
+        LocalStorageService.encryptLocalData($routeParams.id, 'brandId', 'brandIdEncrypt');
+        $scope.brandId = Base64ObjectService.decodeObject($routeParams.id);
         let searchTimeout;
 
         $scope.mess = '';
 
-        $scope.tripList = [];
+        $scope.transList = [];
+        $scope.carImageList = [];
+        $scope.utilities = [];
         $scope.currentPage = 0;
         $scope.pageSize = 5;
         $scope.isActive = true;
@@ -27,9 +29,10 @@ travel_app.controller("SchedulePostController",
         $scope.setPage = function (page) {
             if (page >= 0 && page < $scope.totalPages) {
                 $scope.currentPage = page;
-                $scope.getTripList();
+                $scope.getTransportationList();
             }
         };
+
 
         $scope.getPaginationRange = function () {
             let range = [];
@@ -58,7 +61,7 @@ travel_app.controller("SchedulePostController",
 
         $scope.pageSizeChanged = function () {
             $scope.currentPage = 0;
-            $scope.getTripList();
+            $scope.getTransportationList();
         };
 
         $scope.getDisplayRange = function () {
@@ -68,7 +71,7 @@ travel_app.controller("SchedulePostController",
         $scope.sortData = function (column) {
             $scope.sortBy = column;
             $scope.sortDir = ($scope.sortDir === 'asc') ? 'desc' : 'asc';
-            $scope.getTripList();
+            $scope.getTransportationList();
         };
 
         $scope.getSortIcon = function (column) {
@@ -82,16 +85,16 @@ travel_app.controller("SchedulePostController",
             return $sce.trustAsHtml('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"/></svg>');
         };
 
-        $scope.getTripList = function () {
-            PostServiceAD.getTrips($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.isActive, '', $scope.transId)
+        $scope.getTransportationList = function () {
+            PostServiceAD.getTrans($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.isActive, '', $scope.brandId)
                 .then(function (response) {
                     if (response.data.data === null || response.data.data.content.length === 0) {
-                        $scope.tripList.length = 0;
+                        $scope.transList.length = 0;
                         $scope.totalElements = 0;
                         $scope.showNull = $scope.orderStatus;
                         return;
                     }
-                    $scope.tripList = response.data.data.content;
+                    $scope.transList = response.data.data.content;
                     $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                     $scope.totalElements = response.data.data.totalElements;
 
@@ -102,16 +105,17 @@ travel_app.controller("SchedulePostController",
 
         $scope.searchName = function () {
             if (searchTimeout) $timeout.cancel(searchTimeout);
+
             searchTimeout = $timeout(function () {
-                PostServiceAD.getTrips($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.isActive, $scope.searchTerm, $scope.transId)
+                PostServiceAD.getTrans($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.isActive, $scope.searchTerm, $scope.brandId)
                     .then(function (response) {
                         if (response.data.data === null || response.data.data.content.length === 0) {
-                            $scope.tripList.length = 0;
+                            $scope.transList.length = 0;
                             $scope.totalElements = 0;
                             $scope.showNull = $scope.orderStatus;
                             return;
                         }
-                        $scope.tripList = response.data.data.content;
+                        $scope.transList = response.data.data.content;
                         $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                         $scope.totalElements = response.data.data.totalElements;
 
@@ -121,50 +125,64 @@ travel_app.controller("SchedulePostController",
             }, 500);
         };
 
-        $scope.getTripList();
+        $scope.getTransportationList();
 
         $scope.getChangeStatus = function () {
-            $scope.getTripList();
+            $scope.getTransportationList();
         }
 
         $scope.openModal = function (data) {
-            $scope.tripDetail = data;
-            $('#timeModal').modal('show');
+            $('#modal-transport-detail').modal('show');
+            $scope.transportUtilityModal = [];
+
+            $scope.transportation = data;
+            $scope.transportBrand = data.transportationBrands;
+            $scope.transportationImages = data.transportationImagesById;
+
+            PostServiceAD.transUtility(data.id).then(function (response) {
+                if (response.status === 200) {
+                    $scope.transportUtilityModal = response.data.data;
+                } else {
+                    $location.path('/admin/page-not-found');
+                }
+            }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
         }
 
-        $scope.closeModal = function () {
-            $('#timeModal').modal('hide');
-        };
+        $scope.deniedFormTrans = function (data) {
+            let licensePlate = data.licensePlate;
 
-        $scope.deniedFormSchedule = function (data) {
             function confirmDeny() {
-                PostServiceAD.deniedSchedules(data.id)
+                PostServiceAD.deniedTrans(data.id)
                     .then(function (res) {
                         toastAlert('success', 'Đã từ chối quyền hoạt động!');
-                        $scope.getTripList();
-                        $('#timeModal').modal('hide');
+                        $scope.getTransportationList();
+                        $('#modal-transport-detail').modal('hide');
                     })
                     .catch(errorCallback).finally(function () {
                     $scope.isLoading = false;
                 });
             }
 
-            confirmAlertPost('Bạn không phê duyệt dịch vụ này?', confirmDeny);
+            confirmAlert(`Bạn có chắc chắn khóa hoạt động của xe ${licensePlate} không ?`, confirmDeny);
         };
 
-        $scope.acceptFormSchedule = function (data) {
+        $scope.acceptFormTrans = function (data) {
+            let licensePlate = data.licensePlate;
+
             function confirmAccept() {
-                PostServiceAD.acceptSchedules(data.id)
+                PostServiceAD.acceptTrans(data.id)
                     .then(function (res) {
                         toastAlert('success', 'Đã cấp quyền hoạt động!');
-                        $scope.getTripList();
-                        $('#timeModal').modal('hide');
+                        $scope.getTransportationList();
+                        $('#modal-transport-detail').modal('hide');
                     })
                     .catch(errorCallback).finally(function () {
                     $scope.isLoading = false;
                 });
             }
 
-            confirmAlertPost('Bạn muốn phê duyệt dịch vụ này?', confirmAccept);
+            confirmAlert(`Bạn có chắc chắn mở hoạt động của xe ${licensePlate} không ?`, confirmAccept);
         };
     })
