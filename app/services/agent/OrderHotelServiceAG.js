@@ -18,4 +18,40 @@ travel_app.service("OrderHotelServiceAG", function($http, $q) {
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
     };
+
+    this.findOrderHotelById = function (orderId) {
+        const deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: API_ORDER_HOTEL + 'findOrderHotelById',
+            params: {
+                orderId: orderId
+            }
+        }).then(deferred.resolve, deferred.reject);
+        return deferred.promise;
+    }
+
+    this.confirmInvoiceByOrderId = function (orderId) {
+        const deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: API_ORDER_HOTEL + 'confirmInvoiceByIdOrder',
+            params: {
+                orderId: orderId
+            }
+        }).then(deferred.resolve, deferred.reject);
+        return deferred.promise;
+    }
+
+    this.cancelInvoiceByOrderId = function (orderId) {
+        const deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: API_ORDER_HOTEL + 'cancelInvoiceByIdOrder',
+            params: {
+                orderId: orderId
+            }
+        }).then(deferred.resolve, deferred.reject);
+        return deferred.promise;
+    }
 })

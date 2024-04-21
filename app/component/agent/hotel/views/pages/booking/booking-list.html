@@ -48,21 +48,24 @@
                     </div>
                 </div>
                 <div class="col-xl-3 mb-3">
-                    Loại phòng
+                    Giờ nhận phòng
                     <select class="form-select" aria-label="Default select example">
                         <option selected>Tất cả</option>
-                        <option value="1">Phòng đơn</option>
-                        <option value="2">Phòng đôi</option>
-                        <option value="3">Phòng gia đình</option>
+                        <option value="1">12 giờ tới</option>
+                        <option value="2">24 giờ tới</option>
+                        <option value="3">36 giờ tới</option>
                     </select>
                 </div>
                 <div class="col-xl-3 mb-3">
-                    Số lượng
+                    Trạng thái
                     <select class="form-select" aria-label="Default select example">
                         <option selected>Tất cả</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                        <option value="0">Chưa xác nhận</option>
+                        <option value="1">Đã thanh toán</option>
+                        <option value="2">Đã xác nhận</option>
+                        <option value="3">Hoàn tất</option>
+                        <option value="4">Đã hủy bởi khách</option>
+                        <option value="5">Đã hủy bởi tôi</option>
                     </select>
                 </div>
                 <div class="col-xl-2 d-flex align-items-center justify-content-end mb-3 h-100"
@@ -173,10 +176,11 @@
                         <span ng-if="order.orderStatus === 2">Đã xác nhận</span>
                         <span ng-if="order.orderStatus === 3">Hoàn tất</span>
                         <span ng-if="order.orderStatus === 4">Đã hủy</span>
+                        <span ng-if="order.orderStatus === 5">Hủy bởi tôi</span>
 
                     </td>
                     <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                        <button class="btn text-info" ng-click="openModal(roomType.id)"><i
+                        <button class="btn text-info" ng-click="openModalDetailsOrder(order.id)"><i
                                 class="fa-regular fa-eye"></i></button>
                     </td>
                 </tr>
@@ -198,6 +202,6 @@
         </div>
     </div>
 </div>
-<div ng-include="'app/component/agent/hotel/views/pages/service/modal/details-room-hotel-modal.html'"></div>
+<div ng-include="'app/component/agent/hotel/views/pages/booking/modal/details-booking-modal.html'"></div>
 
 

@@ -30,6 +30,7 @@
                                                     <div class="h4 fw-medium">{{ hotel.hotelName }}</div>
                                                     <div class="">ID: <span>{{ hotel.id }}</span></div>
                                                 </div>
+                                                <div class="text-center mt-3 text-danger" ng-if="hotel.isAccepted !== true">Khách sạn đang chờ phê duyệt</div>
                                             </div>
                                         </div>
                                         <div class="card-footer d-flex justify-content-between w-100">

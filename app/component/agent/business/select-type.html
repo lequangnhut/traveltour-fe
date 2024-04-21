@@ -1,3 +1,11 @@
+<!--====== Start Preloader ======-->
+<div class="preloader" ng-show="isLoading">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+    <div class="bg"></div>
+</div><!--====== End Preloader ======-->
 <section id="business-information">
     <div class="container-fluid">
         <div class="logo text-center">
@@ -18,7 +26,7 @@
             <div class="d-flex justify-content-center align-items-center mt-3">
                 <div class="row">
                     <div class="box col-xl-4 card" ng-if="hasRole('ROLE_AGENT_HOTEL')">
-                        <a href="/business/hotel/home" ng-show="hotels.isAccepted">
+                        <a href="/business/hotel/home" ng-show="isActiveHotel === true">
                             <div class="box-icon mb-3">
                                 <i class="fa-solid fa-hotel color-green" style="font-size: 30px"></i>
                             </div>
@@ -26,7 +34,7 @@
                                 Khách sạn
                             </div>
                         </a>
-                        <a href="/business/register-hotel" ng-show="!hotels.isAccepted">
+                        <a href="/business/register-hotel" ng-show="!isActiveHotel === true">
                             <div class="box-icon mb-3">
                                 <i class="fa-solid fa-hotel color-green" style="font-size: 30px"></i>
                             </div>
