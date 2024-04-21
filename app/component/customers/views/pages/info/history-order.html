@@ -493,7 +493,8 @@
                                             <option value="1">Đã thanh toán</option>
                                             <option value="2">Đã duyệt</option>
                                             <option value="3">Thành công</option>
-                                            <option value="4">Thất bại</option>
+                                            <option value="4">Đã hủy</option>
+                                            <option value="5">Bị hủy bởi khách sạn</option>
                                         </select>
                                     </div>
                                     <div style="margin-right: 20px">
@@ -848,6 +849,15 @@
                                                                             <span class="subheadings"
                                                                                   ng-if="bookingHotel.orderStatus === 2"><i
                                                                                     class="dots bg-danger"></i> Đã hủy</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingHotel.orderStatus === 3"><i
+                                                                                    class="dots bg-danger"></i> Hoàn tất</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingHotel.orderStatus === 4"><i
+                                                                                    class="dots bg-danger"></i> Đã hủy</span>
+                                                                            <span class="subheadings"
+                                                                                  ng-if="bookingHotel.orderStatus === 5"><i
+                                                                                    class="dots bg-danger"></i> Đã bị hủy bởi khách sạn</span>
                                                                         </div>
                                                                     </td>
                                                                 </tr>

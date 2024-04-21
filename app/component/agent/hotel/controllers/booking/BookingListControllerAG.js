@@ -1,9 +1,10 @@
-travel_app.controller('BookingListController', function ($scope,$timeout, OrderHotelServiceAG, LocalStorageService) {
+travel_app.controller('BookingListController', function ($scope, $timeout, OrderHotelServiceAG, LocalStorageService) {
     var hotelId = LocalStorageService.get("brandId")
 
     function errorCallback(error) {
         toastAlert('error', "Máy chủ không tồn tại !");
     }
+
     $scope.orderHotels = {
         id: null,
         userId: null,
@@ -104,7 +105,7 @@ travel_app.controller('BookingListController', function ($scope,$timeout, OrderH
                 }
                 $scope.orderHotels = response.data.data.content;
                 $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                $scope.totalElements = response.data.data.totalElements; // Tổng số phần tử
+                $scope.totalElements = response.data.data.totalElements;
             }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
@@ -145,4 +146,80 @@ travel_app.controller('BookingListController', function ($scope,$timeout, OrderH
     $scope.getDisplayRange = function () {
         return Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
     };
+
+    $scope.openModalDetailsOrder = async function (orderId) {
+        $('#detailsOrderHotelModal').modal("show")
+
+        try {
+            var response = await OrderHotelServiceAG.findOrderHotelById(orderId)
+            if (response.status === 200) {
+                $timeout(function () {
+                    $scope.orderHotel = response.data
+                }, 100)
+
+            } else {
+                toastAlert("error", "Lỗi không xác định")
+                $scope.playErrorSound();
+            }
+        } catch (error) {
+            toastAlert("error", error.message)
+            $scope.playErrorSound();
+        }
+
+    }
+    $scope.closeModalDetailsOrder = function () {
+        $('#detailsOrderHotelModal').modal("hide")
+    }
+
+    $scope.confirmInvoice = async function (orderId) {
+        try {
+
+            var response = await OrderHotelServiceAG.confirmInvoiceByOrderId(orderId)
+            $scope.isLoading = true;
+            if (response.status === 200) {
+                toastAlert("success", response.data.message)
+                $scope.playSuccessSound();
+                $scope.getOrderHotelList()
+                $('#detailsOrderHotelModal').modal("hide")
+            } else {
+                toastAlert("error", "Lỗi không xác định")
+                $scope.playErrorSound();
+            }
+        } catch (error) {
+            toastAlert("error", error.message)
+            $scope.playErrorSound();
+        } finally {
+            $scope.isLoading = false;
+        }
+    }
+
+    $scope.cancelInvoice = async function (orderId) {
+        Swal.fire({
+            title: 'Bạn chắc chắn muốn hủy hóa đơn?',
+            text: "Bạn sẽ bị phạt rất nặng nếu tự ý hủy hoặc không xác nhận đơn của khách hàng, bạn chắc chứ!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Hủy hóa đơn',
+            cancelButtonText: 'Thôi không hủy nữa'
+        }).then(async (result) => {
+            try {
+                var response = await OrderHotelServiceAG.cancelInvoiceByOrderId(orderId)
+                $scope.isLoading = true;
+                if (response.status === 200) {
+                    toastAlert("success", response.data.message)
+                    $scope.playSuccessSound();
+                    $scope.getOrderHotelList()
+                    $('#detailsOrderHotelModal').modal("hide")
+                } else {
+                    toastAlert("error", "Lỗi không xác định")
+                    $scope.playErrorSound();
+                }
+            } catch (error) {
+                toastAlert("error", error.message)
+                $scope.playErrorSound();
+            } finally {
+                $scope.isLoading = false;
+            }
+        });
+    }
 })
