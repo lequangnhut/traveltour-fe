@@ -127,7 +127,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="roomType in roomTypes" ng-style="{'background-color': roomType.isActive !== 1 ? '#f2f2f2' : ''}">
+                <tr ng-repeat="roomType in roomTypes" ng-style="{'background-color': roomType.isActive === 1 ? '#f2f2f2' : ''}">
                     <td><input class="form-check-input" type="checkbox" ng-model="roomType.isSelected" ng-click="toggleSelection(roomType)"></td>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ roomType.id }}</td>

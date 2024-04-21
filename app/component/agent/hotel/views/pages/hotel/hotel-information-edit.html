@@ -187,29 +187,6 @@
                                 </small>
                             </div>
 
-                            <!-- Số tầng -->
-                            <div class="col-md-6 mb-3">
-                                <label for="inputfloorNumber" class="form-label">Số tầng</label>
-                                <input type="number"
-                                       class="form-control"
-                                       id="inputfloorNumber"
-                                       placeholder="2"
-                                       name="floorNumber"
-                                       ng-model="hotelEdit.floorNumber"
-                                       ng-class="{ 'is-invalid': (update_hotel.floorNumber.$invalid || hotelEdit.floorNumber < 0) && update_hotel.floorNumber.$touched,
-                       'is-valid': update_hotel.floorNumber.$valid && update_hotel.floorNumber.$touched }"
-                                       required
-                                >
-                                <small class="text-danger"
-                                       ng-show="update_hotel.floorNumber.$touched && update_hotel.floorNumber.$error.required">
-                                    Vui lòng nhập số tầng!
-                                </small>
-                                <small class="text-danger"
-                                       ng-show="hotelEdit.floorNumber < 0">
-                                    Số tầng phải lớn hơn 0!
-                                </small>
-                            </div>
-
                             <!-- Ảnh đại diện khách sạn -->
                             <div class="mb-3 mb-3">
                                 <label for="formFile" class="form-label">Ảnh đại diện khách sạn</label>

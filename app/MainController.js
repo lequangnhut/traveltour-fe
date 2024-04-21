@@ -427,6 +427,7 @@ travel_app.controller('MainController',
         $scope.connect = async function () {
             try {
                 await WebSocketService.connect(user, $scope.onConnected);
+                console.log(user)
             } catch (error) {
                 console.error("Error connecting:", error);
             }

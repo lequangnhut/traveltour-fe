@@ -1,16 +1,17 @@
-travel_app.controller("ChatCustomerController", function ($scope, $routeParams, $http, $timeout, UserChatService) {
+travel_app.controller("ChatCustomerController", function ($scope, $routeParams, $http, $timeout,AuthService, UserChatService) {
     $scope.agencyId = null;
     if ($routeParams.id) {
         $scope.agencyId = atob($routeParams.id);
+        console.log($scope.agencyId)
     }
 
-    var user = JSON.parse(window.localStorage.getItem('user'));
-    $scope.avatarUser = JSON.parse(window.localStorage.getItem('user'))
+    let user = $scope.user = AuthService.getUser();
+    $scope.avatarUser = $scope.user = AuthService.getUser();
     var stompClient = null;
 
     $scope.userAgencyId = []
 
-    $scope.userChatsList = {}
+    $scope.userChatsList = []
     $scope.displayMessages = []
     $scope.messageContent = '';
 
@@ -123,13 +124,14 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
     $scope.findUsersChat = async function () {
         try {
             console.log(user.id, user.roles[0].nameRole);
-            stompClient.send(`/app/${user.id}/send-notification-order`, {}, JSON.stringify({
+            stompClient.send(`/app/${user.id}/chat.findUsersChat`, {}, JSON.stringify({
                 userId: user.id,
                 role: user.roles[0].nameRole
             }));
 
-            stompClient.subscribe(`/user/${user.id}/send/send-notification-order`, function (message) {
+            stompClient.subscribe(`/user/${user.id}/chat/findUsersChat`, function (message) {
                 $scope.userChatsList = JSON.parse(message.body);
+                console.log($scope.userChatsList)
             });
         } catch (error) {
             console.error("Error:", error);
@@ -170,7 +172,8 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
                     timestamp: message.timestamp
                 };
                 $scope.displayMessages.push($scope.newMessage);
-                $scope.userAgencyId = JSON.parse(window.localStorage.getItem('user'))
+                $scope.userAgencyId = $scope.user = AuthService.getUser();
+                console.log("heheh",$scope.userAgencyId)
             });
         } else if (typeof messages === 'object') {
             $scope.newMessage = {
@@ -179,6 +182,7 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
                 timestamp: messages.timestamp
             };
             $scope.displayMessages.push($scope.newMessage);
+            console.log('NewMessage: ', $scope.newMessage);
         }
         $timeout(function () {
             $scope.$apply();
@@ -194,8 +198,9 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
                     content: messages.content,
                     timestamp: messages.timestamp
                 };
-                console.log('NewMessage: ', $scope.newMessage);
+
                 $scope.displayMessages.push($scope.newMessage);
+                console.log('NewMessage: ', $scope.newMessage);
             }
         }
         $timeout(function () {
@@ -220,11 +225,12 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
             }
 
             stompClient.send(`/app/${user.id}/chat.updateStatusMessenger`, {}, JSON.stringify({
-                senderId: customerId,
-                recipientId: user.id
+                senderId: user.id,
+                recipientId: customerId
             }));
 
             $scope.displayMessages.push($scope.newMessage)
+            console.log($scope.displayMessages)
             stompClient.send(`/app/${user.id}/chat`, {}, JSON.stringify(chatMessage));
         }
 
