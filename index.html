@@ -41,6 +41,7 @@
         <link rel="stylesheet" href="/assets/customers/css/rating.css">
         <link href="/assets/admin/assets/css/icon.css" type="text/css" rel="stylesheet">
         <link href="/node_modules/mapbox-gl/dist/mapbox-gl.css" type="text/css" rel="stylesheet">
+        <link href="/assets/admin/assets/vendors/swiper/swiper-bundle.min.css" rel="stylesheet"/>
         <link href="/node_modules/owl.carousel/dist/assets/owl.carousel.css" type="text/css" rel="stylesheet">
         <link href="/node_modules/owl.carousel/dist/assets/owl.theme.default.css" type="text/css" rel="stylesheet">
 
@@ -72,8 +73,7 @@
         <script src="/assets/admin/assets/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
         <script src="/assets/admin/assets/vendors/simplebar/simplebar.min.js"></script>
         <script src="/assets/admin/assets/js/config.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
-
+        <script src="/lib/pdf/html2pdf.bundle.min.js"></script>
 
         <!--Stylesheets-->
         <link href="/assets/admin/assets/vendors/dropzone/dropzone.min.css" rel="stylesheet">
@@ -103,8 +103,7 @@
         <link href="/assets/admin/assets/css/transportation.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/scroll-hidden.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/tab.css" type="text/css" rel="stylesheet">
-        <link href="/assets/admin/assets/vendors/swiper/swiper-bundle.min.css" rel="stylesheet"/>
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link href='/lib/icon/boxicons.min.css' rel='stylesheet'>
 
         <script src="/assets/admin/assets/vendors/popper/popper.min.js"></script>
         <script src="/assets/admin/assets/vendors/bootstrap/bootstrap.min.js"></script>
@@ -600,7 +599,7 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                                <i class="fa-solid fa-hippo"></i>
+                                                <i class="fa-solid fa-seedling"></i>
                                             </span>
                                             <span class="nav-link-text-wrapper">
                                                 <span class="nav-link-text">Thông tin tham quan</span>
@@ -777,7 +776,7 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                                <i class="fa-solid fa-money-bill-wave"></i>
+                                                <i class="fa-solid fa-chart-column"></i>
                                             </span>
                                             <span class="nav-link-text-wrapper">
                                                 <span class="nav-link-text">Doanh thu</span>
@@ -787,22 +786,22 @@
                                 </div>
 
                                 <!-- Thể loại tiện ích lưu trú -->
-<!--                                <div class="nav-item-wrapper">-->
-<!--                                    <a class="nav-link dropdown-indicator label-1"-->
-<!--                                       ng-class="{ 'active': activeNavItem === 'statistical'}"-->
-<!--                                       ng-click="setActiveNavItem('statistical')"-->
-<!--                                       href="/admin/report/statistical">-->
-<!--                                        <div class="d-flex align-items-center">-->
-<!--                                            <div class="dropdown-indicator-icon"></div>-->
-<!--                                            <span class="nav-link-icon">-->
-<!--                                                <i class="fa-solid fa-chart-simple"></i>-->
-<!--                                            </span>-->
-<!--                                            <span class="nav-link-text-wrapper">-->
-<!--                                                <span class="nav-link-text">Thống kê</span>-->
-<!--                                            </span>-->
-<!--                                        </div>-->
-<!--                                    </a>-->
-<!--                                </div>-->
+                                <!--                                <div class="nav-item-wrapper">-->
+                                <!--                                    <a class="nav-link dropdown-indicator label-1"-->
+                                <!--                                       ng-class="{ 'active': activeNavItem === 'statistical'}"-->
+                                <!--                                       ng-click="setActiveNavItem('statistical')"-->
+                                <!--                                       href="/admin/report/statistical">-->
+                                <!--                                        <div class="d-flex align-items-center">-->
+                                <!--                                            <div class="dropdown-indicator-icon"></div>-->
+                                <!--                                            <span class="nav-link-icon">-->
+                                <!--                                                <i class="fa-solid fa-chart-simple"></i>-->
+                                <!--                                            </span>-->
+                                <!--                                            <span class="nav-link-text-wrapper">-->
+                                <!--                                                <span class="nav-link-text">Thống kê</span>-->
+                                <!--                                            </span>-->
+                                <!--                                        </div>-->
+                                <!--                                    </a>-->
+                                <!--                                </div>-->
                             </div>
 
                             <div ng-if="isSelectedRole('ROLE_AGENT_HOTEL')"
@@ -1042,7 +1041,7 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                                <span data-feather="inbox"></span>
+                                                <i class="fa-solid fa-van-shuttle"></i>
                                             </span>
                                             <span class="nav-link-text-wrapper">
                                                 <span class="nav-link-text">Danh sách phương tiện</span>
@@ -1126,7 +1125,7 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                                <i class="fa-solid fa-money-bill-wave"></i>
+                                                <i class="fa-solid fa-chart-column"></i>
                                             </span>
                                             <span class="nav-link-text-wrapper">
                                                 <span class="nav-link-text">Thống Kê</span>
@@ -1628,10 +1627,10 @@
                                                                     -
                                                                     <span>
                                                                         {{
-                                                                        notification.agenciesByAgenciesId.isAccepted === 0 ? 'Chưa đăng ký' :
-                                                                            notification.agenciesByAgenciesId.isAccepted === 1 ? 'Chờ xác nhận' :
-                                                                                notification.agenciesByAgenciesId.isAccepted === 2 ? 'Duyệt thành công' :
-                                                                                    notification.agenciesByAgenciesId.isAccepted === 3 ? 'Duyệt thất bại' : ''
+                                                                            notification.agenciesByAgenciesId.isAccepted === 0 ? 'Chưa đăng ký' :
+                                                                                notification.agenciesByAgenciesId.isAccepted === 1 ? 'Chờ xác nhận' :
+                                                                                    notification.agenciesByAgenciesId.isAccepted === 2 ? 'Duyệt thành công' :
+                                                                                        notification.agenciesByAgenciesId.isAccepted === 3 ? 'Duyệt thất bại' : ''
                                                                         }}
                                                                     </span>
                                                                 </p>

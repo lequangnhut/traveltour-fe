@@ -258,9 +258,6 @@ travel_app.controller('MainController',
                 '/business/register-hotel',
                 '/business/register-business-success',
                 '/business/select-type',
-                '/business/hotel/home',
-                '/business/transport/home',
-                '/business/visit/home',
                 '/admin/page-not-found',
                 '/admin/internal-server-error',
                 '/admin/page-forbidden',
@@ -284,7 +281,9 @@ travel_app.controller('MainController',
             }
 
             if (
+                $location.path() === '/business/hotel/home' ||
                 $location.path() === '/business/transport/home' ||
+                $location.path() === '/business/visit/home' ||
                 $location.path() === '/business/select-type'
             ) {
                 return true;
@@ -310,9 +309,6 @@ travel_app.controller('MainController',
                 '/business/register-business',
                 '/business/register-business-success',
                 '/business/select-type',
-                '/business/hotel/home',
-                '/business/transport/home',
-                '/business/visit/home',
                 '/admin/page-not-found',
                 '/admin/internal-server-error',
                 '/admin/page-forbidden',
@@ -336,7 +332,9 @@ travel_app.controller('MainController',
             }
 
             if (
+                $location.path() === '/business/hotel/home' ||
                 $location.path() === '/business/transport/home' ||
+                $location.path() === '/business/visit/home' ||
                 $location.path() === '/business/select-type'
             ) {
                 return {'margin': '0'};
@@ -384,35 +382,6 @@ travel_app.controller('MainController',
         $scope.playErrorSound = function () {
             $scope.errorSound.play();
         };
-
-
-        // /** Hàm cập nhật để vô hiệu hóa mã OTP đổi mật khẩu */
-        // $scope.updatePassEvent = function () {
-        //     UpdateStatusService.updateOtpStatus().then(function () {
-        //     }).catch(function (error) {
-        //         console.error(error);
-        //     });
-        // };
-        // /** Hàm cập nhật để thay đổi trạng thái tour details */
-        // $scope.updateTourEvent = function () {
-        //     UpdateStatusService.updateTourDetailsStatus().then(function () {
-        //     }).catch(function (error) {
-        //         console.error(error);
-        //     });
-        // };
-        // /** Hàm cập nhật để thay đổi trạng thái transportation schedules */
-        // $scope.updateScheduleEvent = function () {
-        //     UpdateStatusService.updateSchedulesStatus().then(function () {
-        //     }).catch(function (error) {
-        //         console.error(error);
-        //     });
-        // };
-        //
-        // setInterval(function () {
-        //     $scope.updatePassEvent();
-        //     $scope.updateTourEvent();
-        //     $scope.updateScheduleEvent();
-        // }, 1000);
 
         $scope.notifyMessenger = function (message, header, webUrl) {
             var absoluteUrl = window.location.origin + webUrl;

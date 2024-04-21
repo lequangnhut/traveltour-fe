@@ -1,34 +1,15 @@
-<!--====== Start Breadcrumb Section ======-->
-<section class="page-banner overlay bg_cover">
-    <div id="carousel-tour" class="carousel slide carousel-fade" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="/assets/customers/images/background-banner/car-3.jpg" class="d-block w-100"
-                     style="height: 500px" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="/assets/customers/images/background-banner/car-2.png" class="d-block w-100"
-                     style="height: 500px" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="/assets/customers/images/background-banner/car-1.png" class="d-block w-100"
-                     style="height: 500px" alt="...">
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-tour" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carousel-tour" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
-</section><!--====== End Breadcrumb Section ======-->
-
 <!--====== Start Blog Details Section ======-->
-<section class="blog-details-section pt-100 pb-70">
+<section class="blog-details-section pt-80 pb-70">
     <div class="container">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
+             aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/home">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="/drive-move">Đặt xe</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chi tiết nhà xe</li>
+            </ol>
+        </nav>
+
         <!--====== Products Filter ======-->
         <div class="page-item-filter mb-40 wow fadeInUp">
             <div class="row d-flex justify-content-center">
@@ -245,11 +226,6 @@
                                         role="tab"
                                         aria-controls="nav-policy" aria-selected="false">Chính sách
                                 </button>
-                                <button class="nav-link text-green fw-medium" id="nav-rate-tab-{{$index}}"
-                                        data-bs-toggle="tab" data-bs-target="#nav-rate-{{$index}}" type="button"
-                                        role="tab"
-                                        aria-controls="nav-rate" aria-selected="false">Đánh giá
-                                </button>
                             </div>
 
                             <div class="tab-content p-3 border bg-white border-0"
@@ -358,11 +334,6 @@
                                          ng-if="schedule.transportationBrands.transportationBrandPolicy.length === 0 | trustHtml">
                                         Hiện tại nhà xe chưa quy định chính sách.
                                     </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="nav-rate-{{$index}}" role="tabpanel"
-                                     aria-labelledby="nav-rate-tab-{{$index}}">
-                                    Chổ này là đánh giá
                                 </div>
                             </div>
                         </div>
@@ -671,7 +642,7 @@
                     </div>
                 </div>
 
-                <div class="row" ng-if="transportSchedule.length > 0">
+                <div class="row mb-50" ng-if="transportSchedule.length > 0">
                     <div class="col-lg-12">
                         <!--=== Gowilds Pagination ===-->
                         <ul class="gowilds-pagination wow fadeInUp text-center d-flex align-items-center justify-content-center">
@@ -709,7 +680,7 @@
                     </div>
                 </div>
 
-                <div class="div mb-30" ng-if="transportSchedule.length === 0">
+                <div class="div mb-50" ng-if="transportSchedule.length === 0">
                     <div class="d-flex justify-content-center align-items-center fs-5">
                         Hiện tại nhà xe chưa có vé xe phù hợp ! Cảm ơn bạn.
                     </div>
@@ -734,7 +705,8 @@
                         <section class="row" style="max-width: 600px">
                             <div class="swiper-container">
                                 <div class="swiper-wrapper">
-                                    <div class="swiper-slide d-flex justify-content-center align-items-center" style="width: 500px"
+                                    <div class="swiper-slide d-flex justify-content-center align-items-center"
+                                         style="width: 500px"
                                          ng-repeat="rating in ratingHotel.userComments.content">
                                         <div class="text-center">
                                             <div class="text-center d-flex justify-content-center align-items-center">
@@ -793,7 +765,9 @@
                         </li>
                     </ul>
                     <div ng-if="ratingHotel.userComments.totalElements > ratingHotel.userComments.content.numberOfElements">
-                        <button class="btn text-green text-center" ng-click="findUserComments(roomTypes[0].hotelsByHotelId.id)">Hiển thị thêm</button>
+                        <button class="btn text-green text-center"
+                                ng-click="findUserComments(roomTypes[0].hotelsByHotelId.id)">Hiển thị thêm
+                        </button>
                     </div>
                 </div>
             </div>
