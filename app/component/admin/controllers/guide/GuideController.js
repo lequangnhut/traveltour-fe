@@ -24,6 +24,7 @@ travel_app.controller('GuideController',
 
         $scope.tourStatus = 1;
 
+
         const errorCallback = () => {
             $location.path('/admin/internal-server-error')
         }
@@ -67,6 +68,26 @@ travel_app.controller('GuideController',
             // Sử dụng $timeout để chờ cho đến khi phần tử cuộn hoàn toàn
             $timeout(function () {
                 const element = document.querySelector('.customer-list'); // Chọn phần tử chứa nội dung cần xuất PDF
+                const options = {
+                    margin: 0.4,
+                    image: {type: 'jpeg', quality: 0.20},
+                    html2canvas: {scale: 2, useCORS: false},
+                    jsPDF: {
+                        unit: 'in',
+                        format: 'letter',
+                        orientation: 'portrait'
+                    }
+                };
+                html2pdf().set(options)
+                    .from(element)
+                    .save('document.pdf'); // Lưu file PDF với tên 'document.pdf'
+            }, 1000); // Chờ 1 giây trước khi xuất PDF, có thể điều chỉnh thời gian theo nhu cầu của bạn
+        };
+
+        $scope.exportTripPdf = function () {
+            // Sử dụng $timeout để chờ cho đến khi phần tử cuộn hoàn toàn
+            $timeout(function () {
+                const element = document.querySelector('.trip-pdf'); // Chọn phần tử chứa nội dung cần xuất PDF
                 const options = {
                     margin: 0.4,
                     image: {type: 'jpeg', quality: 0.20},
@@ -192,7 +213,21 @@ travel_app.controller('GuideController',
                 }, errorCallback).finally(function () {
                 $scope.isLoading = false;
             });
-
+            var currentDate = new Date();
+            var departureDate = new Date(data.departureDate);
+            var arrivalDate = new Date(data.arrivalDate);
+            var daysElapsed = Math.ceil((currentDate - departureDate) / (1000 * 60 * 60 * 24));
+            var totalDays = Math.ceil((arrivalDate - departureDate) / (1000 * 60 * 60 * 24));
+            var progressPercentage = Math.ceil((daysElapsed / totalDays) * 100);
+            var total = 0;
+            if (progressPercentage <= 0) {
+                total = 0;
+            } else if (progressPercentage > 0 && progressPercentage <= 100) {
+                total = progressPercentage;
+            } else {
+                total = 100;
+            }
+            $scope.progressIndex = total;
             $scope.locationDetailDescription = $sce.trustAsHtml($scope.modalInfo.tourDetailDescription);
         }
 

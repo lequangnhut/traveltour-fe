@@ -15,6 +15,17 @@ travel_app.controller('HotelForTourGuideController',
             $location.path('/admin/internal-server-error')
         }
 
+        $scope.getNavItem = LocalStorageService.get('activeNavItem');
+        if ($scope.getNavItem === 'guide-future') {
+            $scope.goBack = 'guide-future';
+        } else if ($scope.getNavItem === 'guide-continuos') {
+            $scope.goBack = 'guide-continuos';
+        } else if ($scope.getNavItem === 'guide-perfect') {
+            $scope.goBack = 'guide-perfect';
+        } else if ($scope.getNavItem === 'guide-cancel') {
+            $scope.goBack = 'guide-cancel';
+        }
+
         //phân trang
         $scope.setPage = (page) => {
             if (page >= 0 && page < $scope.totalPages) {
