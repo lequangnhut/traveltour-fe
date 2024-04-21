@@ -534,6 +534,8 @@
                             </div>
                         </div>
                         <div class="col-lg-6 px-2">
+                            <div class="h5">Mô tả phòng này</div>
+                            <p ng-bind="infoRoomType.roomTypeDescription" class="mb-3"></p>
                             <div class="h5">Các dịch vụ của khách sạn mà bạn có</div>
                             <ul>
                                 <li ng-repeat="service in infoRoomType.hotelsByHotelId.placeUtilities">

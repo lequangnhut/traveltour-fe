@@ -337,6 +337,7 @@ travel_app.controller('TransportDetailCusController',
                 UserLikeService.saveLike(serviceId, $scope.category, user.id).then(function (response) {
                     if (response.status === 200) {
                         toastAlert('success', response.data.message)
+                        $scope.playSuccessSound()
                         $scope.checkIsLikeTransportationBrand(serviceId)
                     } else {
                         toastAlert('error', response.data.message)

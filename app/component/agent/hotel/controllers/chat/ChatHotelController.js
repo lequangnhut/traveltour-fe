@@ -1,5 +1,5 @@
-travel_app.controller('ChatHotelController', function ($scope, $routeParams, $http, $timeout, UserChatService) {
-    var user = JSON.parse(window.localStorage.getItem('user'));
+travel_app.controller('ChatHotelController', function ($scope, $routeParams, $http, $timeout,AuthService, UserChatService) {
+    let user = $scope.user = AuthService.getUser();
     var stompClient = null;
 
     $scope.userAgencyId = []
@@ -127,7 +127,7 @@ travel_app.controller('ChatHotelController', function ($scope, $routeParams, $ht
                     timestamp: message.timestamp
                 };
                 $scope.displayMessages.push($scope.newMessage);
-                $scope.userAgencyId = JSON.parse(window.localStorage.getItem('user'))
+                $scope.userAgencyId = $scope.user = AuthService.getUser();
             });
         } else if (typeof messages === 'object') {
             $scope.newMessage = {
