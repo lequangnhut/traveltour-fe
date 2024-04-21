@@ -17,9 +17,9 @@
                 <div class="list-hotel">
                     <div class="list-hotel-item">
                         <div class="row">
-                            <div class="col-xl-4 mb-4" ng-repeat="hotel in hotels" ng-if="hotels.length > 0">
-                                <div class="item">
-                                    <div class="card card-banner">
+                            <div class="col-xl-4 mb-4" ng-repeat="hotel in hotels" ng-if="hotels.length > 0" >
+                                <div class="item" >
+                                    <div class="card card-banner" ng-style="{'background-color': hotel.isAccepted !== true ? '#f2f2f2' : ''}">
                                         <div class="card-header">
                                             <div class="img-card-dashboard">
                                                 <img ng-src="{{hotel.hotelAvatar}}" class="img-fluid"

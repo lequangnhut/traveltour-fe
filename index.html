@@ -104,6 +104,7 @@
         <link href="/assets/admin/assets/css/scroll-hidden.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/css/tab.css" type="text/css" rel="stylesheet">
         <link href="/assets/admin/assets/vendors/swiper/swiper-bundle.min.css" rel="stylesheet"/>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
         <script src="/assets/admin/assets/vendors/popper/popper.min.js"></script>
         <script src="/assets/admin/assets/vendors/bootstrap/bootstrap.min.js"></script>
@@ -958,7 +959,23 @@
                                 <!-- label-->
                                 <p class="navbar-vertical-label text-uppercase">Công cụ</p>
                                 <hr class="navbar-vertical-line"/>
-
+                                <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1"
+                                       ng-click="setActiveNavItem('restoreRoomType')"
+                                       ng-class="{ 'active': activeNavItem === 'restoreRoomType'}"
+                                       href="/business/hotel/restore-room-type">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                                <span style="font-size: 16px" class='bx bx-reset'></span>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Khôi phục phòng</span>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
                                     <a class="nav-link label-1" href="/business/hotel/home">
@@ -2087,6 +2104,7 @@
 <script src="app/component/agent/hotel/controllers/booking/BookingEditControllerAG.js"></script>
 <script src="app/component/agent/hotel/controllers/chat/ChatHotelController.js"></script>
 <script src="app/component/agent/hotel/controllers/statistical/StatisticalHotelControllerAG.js"></script>
+<script src="app/component/agent/hotel/controllers/restore/RoomTypeListController.js"></script>
 
 <!--====== Controller Agent Visit ======-->
 <script src="app/component/agent/visits/controllers/RegisterVisitsControllerAG.js"></script>

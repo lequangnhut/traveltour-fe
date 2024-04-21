@@ -11,7 +11,7 @@ travel_app.service("RoomTypeService", function($http, $q) {
      * @param hotelId mã khách sạn
      * @returns {*}
      */
-    this.findAllRoomTypeDetails = function (page, size, sortBy, sortDir, searchTerm, hotelId) {
+    this.findAllRoomTypeDetails = function (page, size, sortBy, sortDir, searchTerm, hotelId, isDelete) {
         const deferred = $q.defer();
         $http({
             method: 'GET',
@@ -23,11 +23,12 @@ travel_app.service("RoomTypeService", function($http, $q) {
                 sortDir: sortDir || 'asc',
                 searchTerm: searchTerm || '',
                 hotelId: hotelId,
-                isDelete: false
+                isDelete: isDelete
             }
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
     };
+
 
     /**
      * Phương thức lấy loại phòng dựa vào id phòng
@@ -136,6 +137,30 @@ travel_app.service("RoomTypeService", function($http, $q) {
             url: API_ROOM_TYPE + 'findRoomTypesById',
             params: {
                 roomTypeId: roomTypeId
+            }
+        }).then(deferred.resolve, deferred.reject);
+        return deferred.promise;
+    }
+
+    this.deleteAllRoomTypeById = function (roomTypeIds) {
+        const deferred = $q.defer();
+        $http({
+            method: 'DELETE',
+            url: API_ROOM_TYPE + 'deleteAllRoomTypeByIds',
+            params: {
+                roomTypeIds: roomTypeIds
+            }
+        }).then(deferred.resolve, deferred.reject);
+        return deferred.promise;
+    }
+
+    this.restoreAllRoomTypeById = function (roomTypeIds) {
+        const deferred = $q.defer();
+        $http({
+            method: 'DELETE',
+            url: API_ROOM_TYPE + 'restoreAllRoomTypeByIds',
+            params: {
+                roomTypeIds: roomTypeIds
             }
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
