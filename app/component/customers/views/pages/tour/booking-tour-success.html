@@ -38,7 +38,8 @@
                         <span class="fw-medium">Họ tên: </span> {{ bookingTicket.customerName }}
                     </li>
                     <li class="col-lg-5 col-md-6 col-12">
-                        <span class="fw-medium">Số điện thoại: </span> {{ bookingTicket.customerPhone }}
+                        <span class="fw-medium">Số điện thoại: </span>
+                        {{ bookingTicket.customerPhone | phoneNumber }}
                     </li>
                     <li class="col-lg-6 col-md-6 col-12">
                         <span class="fw-medium">Email: </span> {{ bookingTicket.customerEmail }}
@@ -51,7 +52,7 @@
                     <span>Thông tin tour</span>
                 </div>
                 <ul class="list-dot row">
-                    <li class="col-lg-6 col-md-6 col-12">
+                    <li class="col-lg-12 col-md-6 col-12">
                         <span class="fw-medium">Tên Tour: </span>
                         <span class="text-danger fw-medium">{{ tourDetail.toursByTourId.tourName }}</span>
                     </li>
@@ -80,48 +81,63 @@
                     </li>
                 </ul>
                 <div class="title-line">
-                    <span>Danh khách hàng đại diện đặt tour</span>
+                    <span>Danh sách vé đã được đặt</span>
                 </div>
                 <div class="table-wrapper">
                     <table class="table table-bordered table-striped customers-tour mb-1">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Thông tin hành khách</th>
-                            <th>Giá người lớn</th>
-                            <th>Giá trẻ em</th>
-                            <th>Tổng tiền</th>
+                            <th class="fw-medium">STT</th>
+                            <th class="fw-medium">Loại vé</th>
+                            <th class="fw-medium">Số lượng</th>
+                            <th class="fw-medium">Đơn giá</th>
+                            <th class="fw-medium">Thành tiền</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
+                        <tr ng-if="ticket.adults > 0">
+                            <td>1</td>
                             <td>
-                                <ul>
-                                    <li>
-                                        <span>
-                                            {{ bookingTicket.customerName }}
-                                        </span>
-                                        <br>
-                                        <span>
-                                            {{ bookingTicket.customerPhone }}
-                                        </span>
-                                    </li>
+                                <ul class="text-dark">
+                                    Vé người lớn (trên 1m3)
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="text-dark">
+                                    {{ ticket.adults + ' vé' }}
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="text-dark">
+                                    {{ tourDetail.unitPrice | vnCurrency }}
                                 </ul>
                             </td>
                             <td>
                                 <span class="text-danger">
-                                    {{ tourDetail.unitPrice | vnCurrency }}
+                                    {{ ticket.adults * tourDetail.unitPrice | vnCurrency }}
                                 </span>
                             </td>
+                        </tr>
+                        <tr ng-if="ticket.children > 0">
+                            <td>2</td>
                             <td>
-                                <ul class="text-danger">
+                                <ul class="text-dark">
+                                    Vé trẻ em (dưới 1m3)
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="text-dark">
+                                    {{ ticket.children + ' vé' }}
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="text-dark">
                                     {{ tourDetail.unitPrice * 0.3 | vnCurrency }}
                                 </ul>
                             </td>
                             <td>
                                 <span class="text-danger">
-                                    {{ bookingTicket.orderTotal | vnCurrency }}
+                                    {{ ticket.children * (tourDetail.unitPrice * 0.3) | vnCurrency }}
                                 </span>
                             </td>
                         </tr>
@@ -149,24 +165,9 @@
                         </tfoot>
                     </table>
                     <div class="notice text-black mb-2">
-                        <span class="text-black">*</span> Lưu ý: Người đứng đầu danh sách sẽ là người đại diện.
+                        <span class="text-black">*</span> Lưu ý: quý khách vui lòng kiểm tra lại thông tin, nếu có sai
+                        sót xin vui lòng báo ngay cho chúng tôi.
                     </div>
-
-                    <ul class="list-dot row">
-                        <li class="col-lg-12 col-md-12 col-12" ng-if="ticket.adults > 0">
-                            <span class="fw-medium">
-                                Vé người lớn: {{ ticket.adults + ' vé' }} x {{ tourDetail.unitPrice | vnCurrency }}
-                            </span>
-                        </li>
-                        <li class="col-lg-12 col-md-12 col-12" ng-if="ticket.children > 0">
-                            <span class="fw-medium">
-                                Vé trẻ em: {{ ticket.children + ' vé' }} x {{ tourDetail.unitPrice * 0.3 | vnCurrency }}
-                            </span>
-                        </li>
-                        <li class="col-lg-12 col-md-12 col-12" ng-if="ticket.baby > 0">
-                            <span class="fw-medium">Vé em bé: {{ ticket.baby }} x 0</span>
-                        </li>
-                    </ul>
                 </div>
                 <div class="title-line">
                     <span>Thông tin thanh toán</span>
@@ -178,7 +179,7 @@
                     </li>
                     <li class="col-lg-5 col-md-6 col-12">
                         <span class="fw-medium">Số lượng khách: </span>
-                        {{ amountTicket }}
+                        {{ amountTicket }} khách
                     </li>
                     <li class="col-lg-6 col-md-6 col-12">
                         <span class="fw-medium">Phương thức thanh toán: </span>
@@ -204,8 +205,8 @@
                     </li>
                 </ul>
                 <div class="notice">
-                    <span class="text-red">*</span> Lưu ý: sau khi thanh toán thành công, người đại diện sẽ đến văn
-                    phòng để lấy mũ và vòng tay.
+                    <span class="text-red">*</span> Lưu ý (khách hàng thanh toán online): sau khi thanh toán
+                    thành công, người đại diện sẽ đến văn phòng để lấy mũ và vòng tay.
                 </div>
             </div>
         </div>

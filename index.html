@@ -35,7 +35,6 @@
         <link rel="stylesheet" href="/assets/customers/css/transport/transport.css">
         <link rel="stylesheet" href="/assets/customers/css/transport/trans-booking.css">
         <link rel="stylesheet" href="/assets/customers/css/register-agencies.css">
-        <link rel="stylesheet" href="/assets/customers/css/tour/tour-detail.css">
         <link rel="stylesheet" href="/assets/customers/css/visit-location.css">
         <link rel="stylesheet" href="/assets/customers/css/tour/booking-tour.css">
         <link rel="stylesheet" href="/assets/customers/css/rating.css">
@@ -148,7 +147,174 @@
 
 <div ng-cloak ng-if="!isManagerPage()">
     <div ng-include="'app/component/customers/views/components/loader-search.html'"></div>
-    <div ng-include="'app/component/customers/views/components/header.html'"></div>
+
+    <!--====== Start Header ======-->
+    <header class="header-area header-three" ng-if="!isAuthPage() && !isManagerPage()">
+        <div ng-include="'app/component/customers/views/components/header.html'"></div>
+
+        <!--====== Header Navigation ======-->
+        <div class="header-navigation">
+            <div class="nav-overlay"></div>
+            <div class="container-fluid">
+                <div class="primary-menu gray-bg">
+                    <!--====== Site Branding ======-->
+                    <div class="site-brading d-block d-xl-none">
+                        <a href="" class="brand-logo">
+                            <img src="/assets/customers/images/logo/logo-black.png" alt="Logo">
+                        </a>
+                    </div>
+                    <!--====== Nav Menu ======-->
+                    <div class="nav-menu">
+                        <!--====== Site Branding ======-->
+                        <div class="mobile-logo mb-30 d-block d-xl-none">
+                            <a href="" class="brand-logo">
+                                <img src="/assets/customers/images/logo/logo-black.png" alt="Site Logo">
+                            </a>
+                        </div>
+                        <!--=== Nav Search ===-->
+                        <div class="nav-search mb-30 d-block d-xl-none ">
+                            <form>
+                                <div class="form_group">
+                                    <input type="email"
+                                           class="form_control"
+                                           placeholder="Search Here"
+                                           name="email"
+                                           required
+                                    >
+                                    <button class="search-btn">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <!--====== Main Menu ======-->
+                        <nav class="main-menu">
+                            <ul>
+                                <li class="menu-item has-children">
+                                    <a ng-class="{ 'active': isActive('/home') }" href="/home">Trang chủ</a>
+                                </li>
+                                <li class="menu-item has-children">
+                                    <a ng-class="{ 'active': isActive('/tours') }" href="/tours">Tours</a>
+                                </li>
+                                <li class="menu-item has-children">
+                                    <a ng-class="{ 'active': isActive('/hotel') }" href="/hotel">Khách sạn</a>
+                                </li>
+                                <li class="menu-item has-children">
+                                    <a ng-class="{ 'active': isActive('/drive-move') || isActive('/tourism-location') }"
+                                       href="javascript:void(0)">
+                                        Dịch vụ
+                                        <span class="dd-trigger" style="background: #fff">
+                                            <span class="fas fa-angle-down text-dark"></span>
+                                        </span>
+                                        <span class="fas fa-angle-down"></span>
+                                        <span class="dd-trigger d-none"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="/drive-move">Đặt xe</a></li>
+                                        <li><a href="/tourism-location">Điểm tham quan</a></li>
+                                    </ul>
+                                </li>
+                                <li class="menu-item has-children">
+                                    <a ng-class="{ 'active': isActive('/introduce') || isActive('/travel-guide') || isActive('/contact') }"
+                                       href="javascript:void(0)">
+                                        Về chúng tôi
+                                        <span class="dd-trigger" style="background: #fff">
+                                            <span class="fas fa-angle-down text-dark"></span>
+                                        </span>
+                                        <span class="fas fa-angle-down"></span>
+                                        <span class="dd-trigger d-none"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="/travel-guide">Cẩm nang du lịch</a></li>
+                                        <li><a href="/introduce">Giới thiệu</a></li>
+                                        <li><a href="/contact">Liên hệ</a></li>
+                                    </ul>
+                                </li>
+                                <li class="menu-item has-children">
+                                    <a ng-class="{ 'active': isActive('/register-agency') ||
+                                                        isActive('/register-agency/register') ||
+                                                        isActive('/register-agency/register/information') }"
+                                       href="/register-agency">
+                                        Đăng ký thành đối tác
+                                    </a>
+                                </li>
+                                <li class="menu-item search-item">
+                                    <div class="search-btn" data-bs-toggle="modal" data-bs-target="#search-modal">
+                                        <span class="fas fa-search"></span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!--====== Menu Button ======-->
+                        <div class="menu-button mt-40 d-xl-none">
+                            <a href="/sign-in" class="main-btn primary-btn">
+                                Đăng nhập
+                                <span class="fas fa-user-circle"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <!--====== Nav Right Item ======-->
+                    <div class="nav-right-item" ng-if="!isAuthenticated || !hasRole('ROLE_CUSTOMER')">
+                        <div class="menu-button d-xl-block d-none">
+                            <a href="/sign-in" class="main-btn primary-btn">
+                                Đăng nhập
+                                <svg class="svg-inline--fa fa-circle-user fs-1" aria-hidden="true" focusable="false"
+                                     data-prefix="fas" data-icon="circle-user" role="img"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="-400 90 512 350" data-fa-i2svg="">
+                                    <path fill="currentColor"
+                                          d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 128c39.77 0 72 32.24 72 72S295.8 272 256 272c-39.76 0-72-32.24-72-72S216.2 128 256 128zM256 448c-52.93 0-100.9-21.53-135.7-56.29C136.5 349.9 176.5 320 224 320h64c47.54 0 87.54 29.88 103.7 71.71C356.9 426.5 308.9 448 256 448z"></path>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="navbar-toggler">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="nav-right-item" ng-if="isAuthenticated && hasRole('ROLE_CUSTOMER')">
+                        <nav class="main-menu">
+                            <ul>
+                                <li class="menu-item has-children">
+                                    <a href="/chat" class="position-relative chat-user-header">
+                                        <i class="fa-regular fa-message"></i>
+                                        <span class=" dot-message bg-green position-absolute text-center"
+                                              ng-if="countMessageUnread > 0" ng-bind="countMessageUnread"></span>
+                                    </a>
+                                </li>
+                                <li class="menu-item has-children">
+                                    <a href="javascript:void(0)">Xin chào, {{ user.fullName }}
+                                        <span class="fas fa-angle-down"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="javascript:void(0)"
+                                               ng-click="redirectPage('/information/', user.id)">
+                                                Thông tin cá nhân
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)"
+                                               ng-click="redirectPage('/change-password/', user.id)">
+                                                Đổi mật khẩu
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" ng-click="logoutAuth()">
+                                                Đăng xuất
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div><!--====== Header Navigation ======-->
+    </header>
+    <!--====== End Header ======-->
 
     <!--====== Start Main ======-->
     <ng-view></ng-view>

@@ -50,4 +50,19 @@ travel_app.controller('SignupController', function ($scope, $location, AuthServi
             $scope.phoneError = response.data.exists;
         });
     };
+
+    $scope.togglePassword = function (fieldClass, iconClass) {
+        let passwordField = document.querySelector('.' + fieldClass);
+        let passwordIcon = document.querySelector('.' + iconClass);
+
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            passwordIcon.classList.remove('fa-eye');
+            passwordIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            passwordIcon.classList.remove('fa-eye-slash');
+            passwordIcon.classList.add('fa-eye');
+        }
+    };
 });

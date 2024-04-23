@@ -72,3 +72,20 @@ travel_app.directive('richTextEditor', function () {
         }
     };
 });
+
+travel_app.directive('customTooltip', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            // Lấy nội dung tooltip từ thuộc tính tooltip-content
+            let customTooltip = attrs.customTooltip;
+
+            // Thiết lập tooltip sử dụng nội dung từ tooltip-content
+            $(element).tooltip({
+                title: customTooltip,
+                placement: attrs.placement || 'top',
+                trigger: 'hover'
+            });
+        }
+    };
+});

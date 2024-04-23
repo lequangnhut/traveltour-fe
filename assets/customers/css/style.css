@@ -3917,7 +3917,7 @@ button {
 }
 
 .tour-title-wrapper .tour-widget-info .info-box:not(:last-child) {
-    margin-right: 50px;
+    margin-right: 40px;
 }
 
 @media (max-width: 767px) {
@@ -3931,7 +3931,7 @@ button {
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     width: 45px;
-    margin-right: 20px;
+    margin-right: 10px;
     font-size: 50px;
 }
 

@@ -47,10 +47,12 @@ travel_app.controller('AgencyControllerAD',
          * Phương thức chuyển đổi tab
          * @param tab
          * @param isActive
+         * @param sortBy
          */
-        $scope.changeTab = (tab, isActive) => {
+        $scope.changeTab = (tab, isActive, sortBy) => {
             $scope.currentTab = tab;
             $scope.isActive = isActive;
+            $scope.sortByChangeTab = sortBy;
             $scope.currentPage = 0;
             $scope.pageSize = 5;
             $scope.init();
@@ -58,9 +60,9 @@ travel_app.controller('AgencyControllerAD',
         };
 
         if ($scope.currentTab === 'online') {
-            $scope.changeTab('online', true);
+            $scope.changeTab('online', true, 'dateCreated');
         } else {
-            $scope.changeTab('offline', false);
+            $scope.changeTab('offline', false, 'dateBlocked');
         }
 
         $scope.init = function () {
@@ -69,7 +71,7 @@ travel_app.controller('AgencyControllerAD',
             /**
              * Tìm kiếm tất cả dữ liệu ra bảng
              */
-            AgencyServiceAD.findAllAgenciesByIsAcceptedAD($scope.isActive, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
+            AgencyServiceAD.findAllAgenciesByIsAcceptedAD($scope.isActive, $scope.currentPage, $scope.pageSize, $scope.sortByChangeTab, $scope.sortDir)
                 .then(function (response) {
                     if (response.status === 200) {
                         if (response.data.data !== null) {
@@ -379,7 +381,7 @@ travel_app.controller('AgencyControllerAD',
 
                 AgencyServiceAD.deleteAgency(agenciesId, $scope.agent.noted).then(function (response) {
                     if (response.status === 200) {
-                        $scope.changeTab('offline', false);
+                        $scope.changeTab('offline', false, 'dateBlocked');
                         centerAlert('Thành công', `Tạm ngưng hoạt động doanh nghiệp ${nameAgencies} thành công !`, 'success');
 
                         $timeout(function () {
@@ -408,7 +410,7 @@ travel_app.controller('AgencyControllerAD',
 
                 AgencyServiceAD.restoreAgency(agenciesId).then(function (response) {
                     if (response.status === 200) {
-                        $scope.changeTab('online', true);
+                        $scope.changeTab('online', true, 'dateCreated');
                         centerAlert('Thành công', `Khôi phục hoạt động doanh nghiệp ${nameAgencies} thành công !`, 'success');
 
                         $timeout(function () {

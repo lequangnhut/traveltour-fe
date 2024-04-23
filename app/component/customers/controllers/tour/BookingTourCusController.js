@@ -1,5 +1,6 @@
 travel_app.controller('BookingTourCusController',
-    function ($scope, $sce, $location, $rootScope, $window, $routeParams, AuthService, LocalStorageService, BookingTourCusService, TourDetailCusService, GenerateCodePayService, Base64ObjectService) {
+    function ($scope, $sce, $location, $rootScope, $window, $routeParams, AuthService, LocalStorageService, BookingTourCusService,
+              TourDetailCusService, GenerateCodePayService, Base64ObjectService) {
 
         let user = AuthService.getUser();
         let tourDetailId = Base64ObjectService.decodeObject($routeParams.id);

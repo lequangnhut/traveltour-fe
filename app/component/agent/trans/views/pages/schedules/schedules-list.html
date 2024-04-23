@@ -111,7 +111,7 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-responsive text-center">
+            <table class="table table-responsive text-center table-striped">
                 <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
@@ -160,18 +160,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="schedule in transportationScheduleList" class="table-title">
+                <tr ng-repeat="schedule in transportationScheduleList">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ schedule.id }}</td>
                     <td>{{ transportationList[schedule.transportationId].licensePlate || 'Đang tải...' }}</td>
                     <td>
-                        <span title="{{ schedule.fromLocation }}">
+                        <span custom-tooltip="{{ schedule.fromLocation }}">
                             <span>{{ schedule.fromLocation | limitTo: 8 }}</span>
                             <span ng-show="schedule.fromLocation.length > 8">...</span>
                         </span>
                     </td>
                     <td>
-                        <span title="{{ schedule.toLocation }}">
+                        <span custom-tooltip="{{ schedule.toLocation }}">
                             <span>{{ schedule.toLocation | limitTo: 8 }}</span>
                             <span ng-show="schedule.toLocation.length > 8">...</span>
                         </span>
@@ -289,7 +289,7 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-responsive text-center">
+            <table class="table table-responsive text-center table-striped">
                 <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
@@ -338,18 +338,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="schedule in transportationScheduleList" class="table-title">
+                <tr ng-repeat="schedule in transportationScheduleList">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ schedule.id }}</td>
                     <td>{{ transportationList[schedule.transportationId].licensePlate || 'Đang tải...' }}</td>
                     <td>
-                        <span title="{{ schedule.fromLocation }}">
+                        <span custom-tooltip="{{ schedule.fromLocation }}">
                             <span>{{ schedule.fromLocation | limitTo: 8 }}</span>
                             <span ng-show="schedule.fromLocation.length > 8">...</span>
                         </span>
                     </td>
                     <td>
-                        <span title="{{ schedule.toLocation }}">
+                        <span custom-tooltip="{{ schedule.toLocation }}">
                             <span>{{ schedule.toLocation | limitTo: 8 }}</span>
                             <span ng-show="schedule.toLocation.length > 8">...</span>
                         </span>

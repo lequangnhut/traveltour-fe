@@ -5,6 +5,7 @@ travel_app.controller('HotelServiceControllerAD',
         $scope.isLoading = true;
         let currentDate = new Date();
 
+        $scope.tourDetailId = $routeParams.tourDetailId;
         const tourDetailId = Base64ObjectService.decodeObject($routeParams.tourDetailId);
         const hotelId = Base64ObjectService.decodeObject($routeParams.hotelId);
 

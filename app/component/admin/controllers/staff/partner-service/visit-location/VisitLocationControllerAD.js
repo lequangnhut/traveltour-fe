@@ -4,6 +4,7 @@ travel_app.controller('VisitLocationControllerAD',
         $scope.isLoading = true;
         $scope.visitLocationList = [];
 
+        $scope.tourDetailId = $routeParams.tourDetailId;
         const tourDetailId = Base64ObjectService.decodeObject($routeParams.tourDetailId);
         $scope.searchVisitLocation = {location: null};
         let searchTimeout;

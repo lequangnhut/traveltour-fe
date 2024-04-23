@@ -20,7 +20,7 @@
                 <div class="main-info">
                     <div class="hero-container">
                         <!-- Forgot form -->
-                        <form class="signup-form" method="post" method="post" ng-submit="submitFormForgot()" name="formEmailForgot">
+                        <form class="signup-form" method="post" ng-submit="submitFormForgot()" name="formEmailForgot">
                             <div class="imgcontainer">
                                 <a href="#" ng-click="goHome()">
                                     <img src="/assets/customers/images/logo/logo-black.png" class="avatar" alt="logo">
@@ -60,28 +60,30 @@
                                     <input type="text" placeholder="Ghi đúng chữ hoa, thường" name="captcha"
                                            ng-model="users.captcha"
                                            ng-class="{ 'is-invalid': formEmailForgot.captcha.$invalid && formEmailForgot.captcha.$touched, 'is-valid': formEmailForgot.captcha.$valid && formEmailForgot.captcha.$touched && capCodeError }"
-                                           ng-change="checkInputCaptcha()"required>
+                                           ng-change="checkInputCaptcha()" required>
                                     <small class="text-danger"
                                            ng-show="formEmailForgot.captcha.$touched && formEmailForgot.captcha.$error.required">
                                         Vui lòng nhập mã Captcha !
                                     </small>
-                                    <small class="text-danger" ng-show="formEmailForgot.captcha.$touched && !capCodeError">
+                                    <small class="text-danger"
+                                           ng-show="formEmailForgot.captcha.$touched && !capCodeError">
                                         Mã Captcha không đúng!
                                     </small>
                                 </div>
-                                <div class="col-9 d-flex align-items-center mt-2">
-                                    <img style="border-radius: 5px; border: 1px solid rgba(128, 128, 128, 0.67);"
+                                <div class="col-7 d-flex align-items-center mt-2">
+                                    <img style="border-radius: 5px; border: 1px solid rgba(128, 128, 128, 0.67); width: 100%"
                                          ng-src="{{captchaImage}}" alt="Captcha Image" class="captcha-image">
                                 </div>
-                                <div class="col-3 d-flex align-items-center justify-content-center">
+                                <div class="col-5 d-flex align-items-center justify-content-left">
                                     <a ng-click="refreshCaptcha()" role="button">
-                                        <i class="fa-solid fa-arrows-rotate fa-2xl" style="color: #44ca85;"></i>
+                                        <i class="fa-solid fa-arrows-rotate fa-2xl" style="color: #63AB45;"></i>
                                     </a>
                                 </div>
                                 <div class="login-btns mt-2">
                                     <button type="submit"
                                             ng-disabled="formEmailForgot.$invalid || !emailError || !capCodeError"
-                                    >Xác nhận</button>
+                                    >Xác nhận
+                                    </button>
                                 </div>
                                 <div class="login-with-btns">
                                     <span class="already-acc">Quay lại trang

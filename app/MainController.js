@@ -1,5 +1,6 @@
 travel_app.controller('MainController',
-    function ($scope, $rootScope, $location, $window, $timeout, AuthService, AgenciesServiceAG, Base64ObjectService, HotelServiceAG, TransportBrandServiceAG, VisitLocationServiceAG, LocalStorageService, NotificationService, WebSocketService) {
+    function ($scope, $rootScope, $location, $window, $timeout, AuthService, AgenciesServiceAG, Base64ObjectService, HotelServiceAG,
+              TransportBrandServiceAG, VisitLocationServiceAG, LocalStorageService, NotificationService, WebSocketService) {
         $scope.selectedRole = LocalStorageService.get('selectedRole') || null;
         $scope.activeNavItem = LocalStorageService.get('activeNavItem') || null;
 
@@ -427,7 +428,6 @@ travel_app.controller('MainController',
         $scope.connect = async function () {
             try {
                 await WebSocketService.connect(user, $scope.onConnected);
-                console.log(user)
             } catch (error) {
                 console.error("Error connecting:", error);
             }

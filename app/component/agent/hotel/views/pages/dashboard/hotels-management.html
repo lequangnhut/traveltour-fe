@@ -1,12 +1,3 @@
-<!--====== Start Preloader ======-->
-<div class="preloader" ng-show="isLoading">
-    <div class="loader">
-        <div class="pre-shadow"></div>
-        <div class="pre-box"></div>
-    </div>
-    <div class="bg"></div>
-</div><!--====== End Preloader ======-->
-
 <section id="dashboard-hotel">
     <div class="container-fluid">
         <header>
@@ -14,28 +5,38 @@
                 <div class="">
                     <div class="h3 fw-bold text-uppercase mb-5 color-greend">Danh sách khách sạn</div>
                 </div>
-                <div class="list-hotel">
+
+                <div ng-include="'app/component/utils/loading-component.html'"></div>
+
+                <div class="list-hotel" ng-if="!isLoading">
                     <div class="list-hotel-item">
                         <div class="row">
-                            <div class="col-xl-4 mb-4" ng-repeat="hotel in hotels" ng-if="hotels.length > 0" >
-                                <div class="item" >
-                                    <div class="card card-banner" ng-style="{'background-color': hotel.isAccepted !== true ? '#f2f2f2' : ''}">
+                            <div class="col-xl-4 mb-4" ng-repeat="hotel in hotels" ng-if="hotels.length > 0">
+                                <div class="item">
+                                    <div class="card card-banner"
+                                         ng-style="{'background-color': hotel.isAccepted !== true ? '#f2f2f2' : ''}">
                                         <div class="card-header">
                                             <div class="img-card-dashboard">
                                                 <img ng-src="{{hotel.hotelAvatar}}" class="img-fluid"
-                                                     onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'" />
+                                                     onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
                                             </div>
-                                            <div class="item-title mt-3 overflow-hidden" style="text-overflow: ellipsis; white-space: nowrap;">
+                                            <div class="item-title mt-3 overflow-hidden"
+                                                 style="text-overflow: ellipsis; white-space: nowrap;">
                                                 <div class="item-title mt-3">
                                                     <div class="h4 fw-medium">{{ hotel.hotelName }}</div>
                                                     <div class="">ID: <span>{{ hotel.id }}</span></div>
                                                 </div>
-                                                <div class="text-center mt-3 text-danger" ng-if="hotel.isAccepted !== true">Khách sạn đang chờ phê duyệt</div>
+                                                <div class="text-center mt-3 text-danger"
+                                                     ng-if="hotel.isAccepted !== true">Khách sạn đang chờ phê duyệt
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="card-footer d-flex justify-content-between w-100">
-                                            <a class="btn" href="{{ '/business/hotel/home/hotel/update/' + hotel.id }}">Sửa thông tin khách sạn</a>
-                                            <a class="btn btn-primary btn-green" href="/business/welcome-hotel" ng-click="showContentForRole('ROLE_AGENT_HOTEL', hotel.id)">Tiếp tục ></a>
+                                            <a class="btn" href="{{ '/business/hotel/home/hotel/update/' + hotel.id }}">Sửa
+                                                thông tin khách sạn</a>
+                                            <a class="btn btn-primary btn-green" href="/business/welcome-hotel"
+                                               ng-click="showContentForRole('ROLE_AGENT_HOTEL', hotel.id)">Tiếp tục
+                                                ></a>
                                         </div>
                                     </div>
                                 </div>

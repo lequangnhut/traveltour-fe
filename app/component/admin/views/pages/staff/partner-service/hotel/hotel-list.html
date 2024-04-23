@@ -5,37 +5,37 @@
                 <div class="col-xl-6 mt-3">
                     <h3 class="color-green fw-bold text-uppercase">dịch vụ khách sạn cho tour</h3>
                 </div>
-                <div class="col-xl-6 mt-3">
-                    <button type="button" class="btn btn-green float-end fw-bold ms-3"
+                <div class="col-xl-6 mt-2">
+                    <button type="button" class="btn btn-primary float-end fw-bold ms-3"
                             data-bs-toggle="modal" data-bs-target="#modalSchedule">
                         Lịch trình
                     </button>
-                    <button type="button" class="btn btn-green fw-bold float-end"
+                    <button type="button" class="btn btn-primary fw-bold float-end"
                             data-bs-toggle="modal" data-bs-target="#tourInformationModal">
                         Xem TT tour
                     </button>
                 </div>
             </div>
 
-            <div class="title-ber mt-2">
-                <ul class="d-flex mb-3 ps-0" style="list-style: none">
-                    <li>
-                        <a href="/admin/detail-tour-list" class="fw-medium text-dark">
+            <nav aria-label="breadcrumb mb-3">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item text-dark">
+                        <a href="/admin/detail-tour-list">
                             Tour chi tiết
                         </a>
-                        <i class="fa-solid fa-chevron-right" style="font-size: 14px"></i>
                     </li>
-                    &nbsp
-                    <li>
-                        <a href="/admin/detail-tour-list" class="fw-medium text-dark">
+                    <li class="breadcrumb-item text-dark">
+                        <a href="/admin/detail-tour-list/{{ tourDetailId }}/service-list">
                             Chọn dịch vụ
                         </a>
-                        <i class="fa-solid fa-chevron-right" style="font-size: 14px"></i>
                     </li>
-                    &nbsp
-                    <li class="fw-bold">Danh sách khách sạn</li>
-                </ul>
-            </div>
+                    <li class="breadcrumb-item active" style="width: 160px">
+                        <p>
+                            Danh sách khách sạn
+                        </p>
+                    </li>
+                </ol>
+            </nav>
         </div>
     </div>
 
@@ -156,7 +156,7 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-responsive text-center">
+            <table class="table table-responsive text-center table-striped">
                 <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
@@ -197,7 +197,7 @@
                         {{ hotelService.location }}
                     </td>
                     <td>{{ hotelService.averageRoomPrice | vnCurrency }}</td>
-                    <td class="d-flex align-items-center justify-content-center">
+                    <td>
                         <a role="button" class="fs-1 btn text-primary px-2"
                            ng-click="navigateToRoomTypeList(hotelService.id,
                             hotelService.location)">
