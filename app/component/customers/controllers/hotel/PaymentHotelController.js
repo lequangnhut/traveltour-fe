@@ -191,9 +191,10 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
 
 
     $scope.submitPaymentHotel = function (paymentMethod) {
-        if (paymentMethod === 'TTTT') {
+        console.log(paymentMethod)
+        if (paymentMethod === 'VPO') {
             $scope.directPayment();
-        } else if (paymentMethod === 'VNPay') {
+        } else if (paymentMethod === 'VNPAY') {
             $scope.paymentVNPay();
         }
         // else if (paymentMethod === 'ZaloPay') {
@@ -245,6 +246,7 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
         });
 
         OrderHotelService.createOrderHotel($scope.orderRoomType, $scope.orderDetailsHotel).then(function successCallBack(response) {
+            console.log(response)
             if (response.data.status === '200') {
                 let baseUrl = response.data.data
                 toastAlert('success', 'Đặt khách sạn thành công !');

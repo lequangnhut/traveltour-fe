@@ -1,6 +1,5 @@
 travel_app.controller('MainController',
-    function ($scope, $rootScope, $location, $window, $timeout, AuthService, AgenciesServiceAG, Base64ObjectService, HotelServiceAG,
-              TransportBrandServiceAG, VisitLocationServiceAG, LocalStorageService, NotificationService, WebSocketService) {
+    function ($scope, $rootScope, $location, $window, $timeout, $sce, AuthService, AgenciesServiceAG, Base64ObjectService, HotelServiceAG, TransportBrandServiceAG, VisitLocationServiceAG, LocalStorageService, NotificationService, WebSocketService) {
         $scope.selectedRole = LocalStorageService.get('selectedRole') || null;
         $scope.activeNavItem = LocalStorageService.get('activeNavItem') || null;
 
@@ -392,7 +391,7 @@ travel_app.controller('MainController',
                 // check if permission is already granted
                 if (Notification.permission === 'granted') {
                     var notify = new Notification(header, {
-                        body: message.content,
+                        body: $sce.trustAsHtml(message.content),
                         icon: '/assets/admin/assets/img/icons/logo.png',
                     });
                     notify.onclick = function () {
@@ -406,7 +405,7 @@ travel_app.controller('MainController',
                         if (p === 'granted') {
                             // show notification here
                             var notify = new Notification(header, {
-                                body: message.content,
+                                body: $sce.trustAsHtml(message.content),
                                 icon: '/assets/admin/assets/img/icons/logo.png',
                             });
 
