@@ -1,9 +1,11 @@
-travel_app.controller('TourCusController', function ($scope, $location, $filter, LocalStorageService, TourCusService, TourDetailCusService, MapBoxService, ToursServiceAD) {
+travel_app.controller('TourCusController', function ($scope, $location, $filter, LocalStorageService, TourCusService, HomeCusService, TourDetailCusService, MapBoxService, ToursServiceAD) {
     $scope.currentPage = 0;
-    $scope.pageSize = 10;
+    $scope.pageSize = 5
 
     $scope.showMoreTourType = false;
     $scope.limitTourType = 5;
+
+    $scope.hasResults = true;
 
     $scope.markersTour = [];
 
@@ -31,6 +33,37 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
     if (typeof $scope.filters.departure === 'string') {
         $scope.filters.departure = new Date($scope.filters.departure);
     }
+
+    $scope.showArrivesList = false;
+    $scope.showFromList = false;
+
+    $scope.enableIncomingList = function () {
+        $scope.showArrivesList = true;
+    };
+
+    $scope.turnOnThePointList = function () {
+        $scope.showFromList = true;
+    };
+    $scope.turnOffThePointList = function () {
+        $scope.showFromList = false;
+    };
+
+    $scope.setSelectedTour = function (tour) {
+        $scope.filters.departureArrives = tour.tourName;
+        $scope.showArrivesList = false;
+    };
+
+    angular.element(document).on('click', function (event) {
+        const target = angular.element(event.target);
+        const isInput = target.is('input');
+        const isListItem = target.parents('.list-group').length > 0;
+        if (!isInput && !isListItem) {
+            $scope.$apply(function () {
+                $scope.showArrivesList = false;
+                $scope.showFromList = false;
+            });
+        }
+    });
 
     function errorCallback() {
         $location.path('/admin/internal-server-error')
@@ -85,6 +118,23 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
         }
     };
 
+    const getAListOfPopularTours = (response) => {
+        if (response.data.status === '204') {
+            if ($scope.hasResults) {
+                centerAlert('Thông báo', 'Rất tiếc, Hiện tại không tìm thấy tour phù hợp với yêu cầu của quý khách. Dưới đây là đề xuất về các tour phổ biến nhất hiện tại của chúng tôi.', 'warning');
+            }
+            TourCusService.getAListOfPopularTours($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.filters)
+                .then((response) => {
+                    $scope.tourDetail = response.data.data !== null ? response.data.data.content : [];
+                    $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
+                    $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
+                }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+            $scope.hasResults = true;
+        }
+    }
+
     $scope.init = function () {
         $scope.isLoading = true;
 
@@ -95,10 +145,8 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
                     $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
                     $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
 
-                    if (response.data.status === '204') {
-                        toastAlert('warning', 'Không tìm thấy dữ liệu !');
-                        return
-                    }
+                    getAListOfPopularTours(response);
+
                     angular.forEach($scope.tourDetail, function (detail) {
                         let departureDate = new Date(detail.departureDate);
                         let arrivalDate = new Date(detail.arrivalDate);
@@ -120,18 +168,61 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
             }
         }, errorCallback);
 
-        TourCusService.getAllTourDetail().then(function (response) {
-            if (response.status === 200) {
-                $scope.tourDetailDataList = response.data.data;
-                $scope.filteredDataList = $scope.tourDetailDataList.slice(0, 5);
+        function removeDiacriticsAndNormalize(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
 
-                $scope.$watch('filters.searchTerm', function (newVal) {
+        function searchWithDiacriticsInsensitive(input, target) {
+            const inputWithoutDiacritics = removeDiacriticsAndNormalize(input.toLowerCase());
+            const targetWithoutDiacritics = removeDiacriticsAndNormalize(target.toLowerCase());
+            return targetWithoutDiacritics.includes(inputWithoutDiacritics);
+        }
+
+        HomeCusService.getAllDataList($scope.filters.departureArrives, $scope.filters.departureFrom).then((response) => {
+            if (response.status === 200) {
+                const departureArrives = response.data.data.departureArrives;
+                const departureFrom = response.data.data.departureFrom;
+
+                const updateArrivesLists = (newVal) => {
+                    let filteredArrives = [];
+
                     if (newVal && newVal.trim() !== '') {
-                        $scope.filteredDataList = $filter('filter')($scope.tourDetailDataList, newVal).slice(0, 5);
+                        filteredArrives = departureArrives.filter(function (arrive) {
+                            return searchWithDiacriticsInsensitive(newVal, arrive.tourName);
+                        });
+
+                        if (filteredArrives.length < 10) {
+                            const additionalFilteredArrives = departureArrives.filter(function (arrive) {
+                                return !filteredArrives.includes(arrive) && searchWithDiacriticsInsensitive(newVal, arrive.toLocation);
+                            });
+                            filteredArrives.push(...additionalFilteredArrives);
+                        }
                     } else {
-                        $scope.filteredDataList = $scope.tourDetailDataList.slice(0, 5);
+                        filteredArrives = angular.copy(departureArrives);
                     }
-                });
+                    $scope.departureArrives = filteredArrives.slice(0, 10);
+                };
+
+                const updateFromLists = (newVal) => {
+                    let filteredFrom = [];
+
+                    if (newVal && newVal.trim() !== '') {
+                        filteredFrom = departureFrom.filter(function (from) {
+                            return searchWithDiacriticsInsensitive(newVal, from);
+                        });
+                    } else {
+                        filteredFrom = angular.copy(departureFrom);
+                    }
+                    $scope.departureFrom = filteredFrom;
+                };
+
+
+                $scope.$watch('filters.departureArrives', updateArrivesLists);
+                $scope.$watch('filters.departureFrom', updateFromLists);
+
+                updateArrivesLists();
+                updateFromLists();
+
             } else {
                 $location.path('/admin/page-not-found')
             }
@@ -283,10 +374,8 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
                     $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
                     $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
 
-                    if (response.data.status === '204') {
-                        toastAlert('warning', 'Không tìm thấy dữ liệu !');
-                        return
-                    }
+                    getAListOfPopularTours(response);
+
                     angular.forEach($scope.tourDetail, function (detail) {
                         let departureDate = new Date(detail.departureDate);
                         let arrivalDate = new Date(detail.arrivalDate);
@@ -303,7 +392,7 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
 
     //sắp xếp
     $scope.sortData = (column, sortDir) => {
-
+        $scope.hasResults = false;
         if (!sortDir) {
             $scope.sortBy = "id";
             $scope.sortDir = "asc";
@@ -319,6 +408,7 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
      * Phân trang
      */
     $scope.setPage = function (page) {
+        $scope.hasResults = false;
         if (page >= 0 && page < $scope.totalPages) {
             $scope.currentPage = page;
             $scope.init();

@@ -21,25 +21,44 @@
     <div class="container-fluid">
         <div class="booking-form-wrapper p-r z-2">
             <form class="booking-form-two">
-                <div class="form_group">
-                    <span>Khởi hành đến</span>
+                <div class="form_group position-relative">
+                    <span>Điểm đến</span>
                     <label><span class="fas fa-plane-arrival"></span></label>
-                    <input list="datalistOptionDepartureArrives" ng-model="filters.departureArrives" type="text"
+                    <input ng-model="filters.departureArrives" type="text" ng-click="enableIncomingList()"
                            class="form_control datepicker" style="padding-right: 50px;" placeholder="Bạn muốn đi đâu?">
-                    <datalist id="datalistOptionDepartureArrives">
-                        <option ng-repeat="departureArrive in departureArrives"
-                                value="{{departureArrive}}">
-                    </datalist>
+                    <div class="list-group position-absolute mt-3 z-1 scroll-hidden" ng-show="showArrivesList"
+                         style="max-height: 370px; width: 500px;">
+                        <button type="button" class="list-group-item list-group-item-action"
+                                ng-repeat="arrive in departureArrives track by $index"
+                                ng-click="setSelectedTour(arrive)">
+                            <table class="bx-border-none">
+                                <tr>
+                                    <td class="px-0" style="width: 12%">
+                                        <img class="float-end rounded-1 w-100"
+                                             style="height: 40px; object-fit: cover;"
+                                             src="{{arrive.image}}">
+                                    </td>
+                                    <td class="" style="width: 78%">{{ arrive.tourName }}</td>
+                                    <td class="px-0" style="width: 10%"><p
+                                            class="float-end">{{ arrive.price | vnCurrency }}</p></td>
+                                </tr>
+                            </table>
+                        </button>
+                    </div>
                 </div>
                 <div class="form_group">
-                    <span>Điểm khởi hành</span>
+                    <span>Điểm xuất phát</span>
                     <label><span class="fas fa-plane-departure"></span></label>
-                    <input list="datalistOptionDepartureFrom" ng-model="filters.departureFrom" type="text"
-                           class="form_control datepicker" style="padding-right: 50px;" placeholder="Điểm đến">
-                    <datalist id="datalistOptionDepartureFrom">
-                        <option ng-repeat="df in departureFrom"
-                                value="{{df}}">
-                    </datalist>
+                    <input ng-model="filters.departureFrom" type="text" ng-click="turnOnThePointList()"
+                           class="form_control datepicker" style="padding-right: 50px;" placeholder="Điểm đi">
+                    <div class="list-group position-absolute mt-3 z-1 scroll-hidden" ng-show="showFromList"
+                         style="max-height: 370px; width: 200px;">
+                        <button type="button" class="list-group-item list-group-item-action"
+                                ng-repeat="from in departureFrom track by $index"
+                                ng-click="filters.departureFrom = from; turnOffThePointList()">
+                            {{ from }}
+                        </button>
+                    </div>
                 </div>
                 <div class="form_group">
                     <span>Số người</span>

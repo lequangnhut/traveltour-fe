@@ -9,6 +9,37 @@ travel_app.controller('HomeCusController', function ($scope, $window, $location,
         departure: new Date()
     }
 
+    $scope.showArrivesList = false;
+    $scope.showFromList = false;
+
+    $scope.enableIncomingList = function () {
+        $scope.showArrivesList = true;
+    };
+
+    $scope.turnOnThePointList = function () {
+        $scope.showFromList = true;
+    };
+    $scope.turnOffThePointList = function () {
+        $scope.showFromList = false;
+    };
+
+    $scope.setSelectedTour = function (tour) {
+        $scope.filters.departureArrives = tour.tourName;
+        $scope.showArrivesList = false;
+    };
+
+    angular.element(document).on('click', function (event) {
+        const target = angular.element(event.target);
+        const isInput = target.is('input');
+        const isListItem = target.parents('.list-group').length > 0;
+        if (!isInput && !isListItem) {
+            $scope.$apply(function () {
+                $scope.showArrivesList = false;
+                $scope.showFromList = false;
+            });
+        }
+    });
+
     function errorCallback() {
         $location.path('/admin/internal-server-error')
     }
@@ -47,27 +78,66 @@ travel_app.controller('HomeCusController', function ($scope, $window, $location,
             }
         }, errorCallback);
 
-        HomeCusService.getAllDataList().then((response) => {
+        function removeDiacritics(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
+        HomeCusService.getAllDataList($scope.filters.departureArrives, $scope.filters.departureFrom).then((response) => {
             if (response.status === 200) {
-                const updateLists = (newVal) => {
-                    let filteredArrives = response.data.data.departureArrives;
-                    let filteredFrom = response.data.data.departureFrom;
+                const departureArrives = response.data.data.departureArrives;
+                const departureFrom = response.data.data.departureFrom;
+
+                const updateArrivesLists = (newVal) => {
+                    let filteredArrives = [];
+
                     if (newVal && newVal.trim() !== '') {
-                        filteredArrives = $filter('filter')(filteredArrives, newVal);
-                        filteredFrom = $filter('filter')(filteredFrom, newVal);
+                        const searchTermWithoutDiacritics = removeDiacritics(newVal.toLowerCase());
+
+                        filteredArrives = departureArrives.filter(function (arrive) {
+                            const arriveWithoutDiacritics = removeDiacritics(arrive.tourName.toLowerCase());
+                            return arriveWithoutDiacritics.includes(searchTermWithoutDiacritics) || arriveWithoutDiacritics.includes(newVal.toLowerCase());
+                        });
+
+                        if (filteredArrives.length < 10) {
+                            const additionalFilteredArrives = departureArrives.filter(function (arrive) {
+                                const arriveWithoutDiacritics = removeDiacritics(arrive.toLocation.toLowerCase());
+                                return !filteredArrives.includes(arrive) && (arriveWithoutDiacritics.includes(searchTermWithoutDiacritics) || arriveWithoutDiacritics.includes(newVal.toLowerCase()));
+                            });
+                            filteredArrives.push(...additionalFilteredArrives);
+                        }
+                    } else {
+                        filteredArrives = angular.copy(departureArrives);
                     }
-                    $scope.departureArrives = filteredArrives.slice(0, 5);
-                    $scope.departureFrom = filteredFrom.slice(0, 5);
+                    $scope.departureArrives = filteredArrives.slice(0, 10);
                 };
 
-                $scope.$watch('filters.searchTerm', updateLists);
+                const updateFromLists = (newVal) => {
+                    let filteredFrom = [];
 
-                updateLists();
+                    if (newVal && newVal.trim() !== '') {
+                        const searchTermWithoutDiacritics = removeDiacritics(newVal.toLowerCase());
+
+                        filteredFrom = departureFrom.filter(function (from) {
+                            const fromWithoutDiacritics = removeDiacritics(from.toLowerCase());
+                            return fromWithoutDiacritics.includes(searchTermWithoutDiacritics) || fromWithoutDiacritics.includes(newVal.toLowerCase());
+                        });
+                    } else {
+                        filteredFrom = angular.copy(departureFrom);
+                    }
+                    $scope.departureFrom = filteredFrom;
+                };
+
+                $scope.$watch('filters.departureArrives', updateArrivesLists);
+                $scope.$watch('filters.departureFrom', updateFromLists);
+
+                updateArrivesLists();
+                updateFromLists();
 
             } else {
                 $location.path('/admin/page-not-found')
             }
         }, errorCallback);
+
     }
 
     $scope.getCurrentDate = () => {

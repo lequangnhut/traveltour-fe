@@ -31,6 +31,20 @@ travel_app.service('TourCusService', function ($http) {
             }
         });
     };
+    this.getAListOfPopularTours = function (page, size, sortBy, sortDir, filters) {
+        return $http({
+            method: 'GET',
+            url: API_TOUR + 'getAListOfPopularTours',
+            params: {
+                page: page || 0,
+                size: size || 10,
+                sortBy: sortBy || 'dateCreated',
+                sortDir: sortDir || 'DESC',
+                price: filters.price || null,
+                departure: filters.departure || null,
+            }
+        });
+    };
 
     this.getAllTourDetail = function () {
         return $http({

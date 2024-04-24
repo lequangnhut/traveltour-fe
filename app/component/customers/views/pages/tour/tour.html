@@ -150,32 +150,44 @@
             <div class="col-xl-9 col-md-12">
                 <div class="mb-5 w-100">
                     <div class="row single-event-item d-flex align-items-end">
-                        <div class="col-md-5 mb-2">
-                            <label for="departToArrive" class="form-label">Khởi hành đến</label>
-                            <input type="text" list="datalistOptionDepartureArrives"
-                                   class="form-control"
-                                   id="departToArrive"
-                                   ng-model="filters.departureArrives"
-                                   placeholder="Nhập nơi bạn muốn đến..."
-                            >
-                            <datalist id="datalistOptionDepartureArrives">
-                                <option ng-repeat="visitLocationData in filteredDataList"
-                                        value="{{visitLocationData}}">
-                            </datalist>
-
+                        <div class="col-md-5 mb-2 position-relative">
+                            <label for="departToArrive" class="form-label">Điểm đến</label>
+                            <input id="departToArrive" ng-model="filters.departureArrives" type="text"
+                                   ng-click="enableIncomingList()" class="form-control" autocomplete="off"
+                                   placeholder="Bạn muốn đi đâu?">
+                            <div class="list-group position-absolute mt-3 z-1 scroll-hidden" ng-show="showArrivesList"
+                                 style="max-height: 370px; width: 500px;">
+                                <button type="button" class="list-group-item list-group-item-action"
+                                        ng-repeat="arrive in departureArrives track by $index"
+                                        ng-click="setSelectedTour(arrive)">
+                                    <table class="bx-border-none">
+                                        <tr>
+                                            <td class="px-0" style="width: 12%">
+                                                <img class="float-end rounded-1 w-100"
+                                                     style="height: 40px; object-fit: cover;"
+                                                     src="{{arrive.image}}">
+                                            </td>
+                                            <td class="" style="width: 78%">{{ arrive.tourName }}</td>
+                                            <td class="px-0" style="width: 10%"><p
+                                                    class="float-end">{{ arrive.price | vnCurrency }}</p></td>
+                                        </tr>
+                                    </table>
+                                </button>
+                            </div>
                         </div>
                         <div class="col-md-5 mb-2">
-                            <label for="departure" class="form-label">Điểm khởi hành</label>
-                            <input type="text" list="datalistOptionDepartureFrom"
-                                   class="form-control"
-                                   id="departure"
-                                   ng-model="filters.departureFrom"
-                                   placeholder="Nhập nơi bạn muốn đến..."
-                            >
-                            <datalist id="datalistOptionDepartureFrom">
-                                <option ng-repeat="visitLocationData in filteredDataList"
-                                        value="{{visitLocationData}}">
-                            </datalist>
+                            <label for="departureFrom" class="form-label">Điểm xuất phát</label>
+                            <input id="departureFrom" ng-model="filters.departureFrom" type="text"
+                                   ng-click="turnOnThePointList()"
+                                   class="form-control datepicker" placeholder="Điểm đi">
+                            <div class="list-group position-absolute mt-3 z-1 scroll-hidden" ng-show="showFromList"
+                                 style="max-height: 370px; width: 200px;">
+                                <button type="button" class="list-group-item list-group-item-action"
+                                        ng-repeat="from in departureFrom track by $index"
+                                        ng-click="filters.departureFrom = from; turnOffThePointList()">
+                                    {{ from }}
+                                </button>
+                            </div>
                         </div>
 
                         <div class="col-md-5">
@@ -195,13 +207,6 @@
                                     class="fa-solid fa-magnifying-glass"></i> Tìm tour
                             </button>
                         </div>
-                        <!--                        <div class="col-md-6"></div>-->
-                        <!--                        <div class="col-md-4">-->
-                        <!--                           <span class="text-danger" ng-if="errorCheckInDateFiller">-->
-                        <!--                                {{ errorCheckInDateFiller }}-->
-                        <!--                            </span>-->
-                        <!--                        </div>-->
-                        <!--                        <div class="col-md-2"></div>-->
                     </div>
                 </div>
 
