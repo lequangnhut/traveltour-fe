@@ -136,15 +136,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="single-event-item mb-30 wow fadeInUp" style="min-height: 70px">
-                    <div class="img-holder position-relative" style="padding-top: 45px">
-                        <button type="button"
-                                style="position: absolute;width: 250px; top: 50%; left: 50%; transform: translate(-50%, -50%);"
-                                class="btn btn-green" data-toggle="modal" data-target="#formTourModal"
-                                ng-click="showCallTourModal()">Bạn có đề xuất gì không ?
-                        </button>
-                    </div>
-                </div>
             </div>
 
             <div class="col-xl-9 col-md-12">
@@ -261,7 +252,10 @@
                                                     <span class="fw-medium">{{ tour.fromLocation }}</span>
                                                 </p>
                                                 <p class="fs-7 mb-1">Điểm đến:
-                                                    <span class="fw-medium">{{ tour.toLocation }}</span>
+                                                    <span custom-tooltip="{{ tour.toLocation }}" class="fw-medium">
+                                                        <span>{{ tour.toLocation | limitTo: 40 }}</span>
+                                                        <span ng-show="tour.toLocation.length > 40">...</span>
+                                                    </span>
                                                 </p>
                                                 <p class="fs-7 mb-1">Ngày đi:
                                                     <span class="fw-medium">{{ tour.departureDate | formatDate }}</span>

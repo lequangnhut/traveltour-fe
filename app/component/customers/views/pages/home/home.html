@@ -114,13 +114,16 @@
                                 <li><a href="#">(4.9)</a></li>
                             </ul>
                             <h4 class="title">
-                                <a href="#" ng-click="redirectPage('/tours/tour-detail/', detail.id)">
-                                    {{ detail.toursByTourId.tourName }}
+                                <a href="#">
+                                    <span custom-tooltip="{{ detail.toursByTourId.tourName }}">
+                                        <span>{{ detail.toursByTourId.tourName | limitTo: 17 }}</span>
+                                        <span ng-show="detail.toursByTourId.tourName.length > 20">...</span>
+                                    </span>
                                 </a>
                             </h4>
                             <p class="location">
                                 <span class="fas fa-map-marker-alt"></span>
-                                <span title="Điểm đến {{ detail.toLocation }}">
+                                <span custom-tooltip="{{ detail.toLocation }}">
                                     <span>{{ detail.toLocation | limitTo: 20 }}</span>
                                     <span ng-show="detail.toLocation.length > 20">...</span>
                                 </span>

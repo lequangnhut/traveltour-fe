@@ -97,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-responsive text-center">
+            <table class="table table-responsive text-center table-striped">
                 <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
@@ -139,15 +139,16 @@
                 <tr ng-repeat="ticket in visitTicketData">
                     <td>{{ $index + 1 }}</td>
                     <td>
-                        <img ng-src="{{ visitLocations.visitLocationImage || 'Đang tải...' }}" class="img-fluid cursor-pointer" alt="avatar"
+                        <img ng-src="{{ visitLocations.visitLocationImage || 'Đang tải...' }}"
+                             class="img-fluid cursor-pointer rounded-3" alt="avatar"
                              width="60" title="Xem ảnh xe" ng-click="openImageModal(visitLocations.visitLocationImage)">
                     </td>
                     <td>{{ visitLocations.visitLocationName }}</td>
-                    <td>{{ visitLocations.phone }}</td>
+                    <td>{{ visitLocations.phone | phoneNumber }}</td>
                     <td>{{ ticket.ticketTypeName }}</td>
                     <td>{{ ticket.unitPrice | vnCurrency }}</td>
                     <td>{{ visitLocations.province }}</td>
-                    <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                    <td>
                         <a href="/business/visit/visit-ticket-management/update-visit-ticket/{{ ticket.id }}"
                            role="button" class="fs-1 btn text-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
@@ -174,7 +175,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="imageModalLabel">Ảnh địa điểm tham quan</h5>

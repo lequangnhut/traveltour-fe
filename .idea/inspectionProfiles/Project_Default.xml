@@ -20,7 +20,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="18">
+          <list size="19">
             <item index="0" class="java.lang.String" itemvalue="ng-app" />
             <item index="1" class="java.lang.String" itemvalue="src" />
             <item index="2" class="java.lang.String" itemvalue="style" />
@@ -39,6 +39,7 @@
             <item index="15" class="java.lang.String" itemvalue="xlink:href" />
             <item index="16" class="java.lang.String" itemvalue="aria-live" />
             <item index="17" class="java.lang.String" itemvalue="aria-atomic" />
+            <item index="18" class="java.lang.String" itemvalue="tooltip-content" />
           </list>
         </value>
       </option>

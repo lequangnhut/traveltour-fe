@@ -95,27 +95,33 @@
                                     Số điện thoại đã tồn tại ở một tài khoản khác !
                                 </small>
 
-                                <input type="password"
-                                       placeholder="Mật khẩu"
-                                       name="psw"
-                                       ng-model="user.password"
-                                       ng-class="{ 'is-invalid': registerForm.psw.$invalid && registerForm.psw.$touched, 'is-valid': registerForm.psw.$valid && registerForm.psw.$touched }"
-                                       ng-minlength="6"
-                                       class="input-checkmark"
-                                       required
-                                >
-                                <small class="text-danger"
-                                       ng-show="registerForm.psw.$touched && registerForm.psw.$error.required">
-                                    Vui lòng nhập mật khẩu !
-                                </small>
-                                <small class="text-danger"
-                                       ng-show="registerForm.psw.$error.minlength && registerForm.psw.$dirty">
-                                    Mật khẩu cần ít nhất 6 ký tự.
-                                </small>
+                                <span class="password-field-show">
+                                    <input type="password"
+                                           placeholder="Mật khẩu"
+                                           name="psw"
+                                           ng-model="user.password"
+                                           ng-class="{ 'is-invalid': registerForm.psw.$invalid && registerForm.psw.$touched, 'is-valid': registerForm.psw.$valid && registerForm.psw.$touched }"
+                                           ng-minlength="6"
+                                           class="password-field input-checkmark"
+                                           required
+                                    >
+                                   <span ng-click="togglePassword('password-field', 'toggle-password svg')"
+                                         class="field-icon toggle-password">
+                                        <i class="fa fa-fw fa-eye"></i>
+                                    </span>
+                                    <small class="text-danger"
+                                           ng-show="registerForm.psw.$touched && registerForm.psw.$error.required">
+                                        Vui lòng nhập mật khẩu !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="registerForm.psw.$error.minlength && registerForm.psw.$dirty">
+                                        Mật khẩu cần ít nhất 6 ký tự.
+                                    </small>
+                                </span>
 
                                 <span class="password-field-show">
                                     <input type="password"
-                                           class="password-field input-checkmark"
+                                           class="password-field-check input-checkmark"
                                            name="cpsw"
                                            ng-class="{ 'is-invalid': registerForm.cpsw.$invalid && registerForm.cpsw.$touched, 'is-valid': registerForm.cpsw.$valid && registerForm.cpsw.$touched }"
                                            ng-model="user.cpsw"
@@ -124,8 +130,10 @@
                                            placeholder="Nhập lại mật khẩu"
                                            required
                                     >
-                                    <span data-toggle=".password-field"
-                                          class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                   <span ng-click="togglePassword('password-field-check', 'toggle-password-check svg')"
+                                         class="field-icon toggle-password-check">
+                                        <i class="fa fa-fw fa-eye"></i>
+                                    </span>
                                     <small class="text-danger"
                                            ng-show="registerForm.cpsw.$touched && registerForm.cpsw.$error.required">
                                         Vui lòng xác thực mật khẩu !
@@ -184,5 +192,3 @@
         </div>
     </div>
 </section>
-
-<script src="/assets/customers/js/auth/script.js"></script>

@@ -1,11 +1,38 @@
-<div class="container mt-4">
+<div class="container">
     <div class="header-control mb-3">
         <div class="header-control-center">
             <div class="d-flex justify-content-between align-items-center row ">
                 <div class="col mt-3">
-                    <h3 class="color-green fw-bold text-uppercase mb-3">Chi tiết thanh toán</h3>
-                    <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/hotel-list/{{hotelId}}/room-type-list"
-                       class="text-decoration-none">< Quay lại đơn hàng</a>
+                    <h3 class="color-green fw-bold text-uppercase">Chi tiết thanh toán</h3>
+                    <nav aria-label="breadcrumb mb-3">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list">
+                                    Tour chi tiết
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list/{{ tourDetailIdRouter }}/service-list">
+                                    Chọn dịch vụ
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list/{{ tourDetailIdRouter }}/service-list/hotel-list">
+                                    Danh sách khách sạn
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/hotel-list/{{hotelId}}/room-type-list">
+                                    Danh sách phòng
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" style="width: 160px">
+                                <p>
+                                    Chi tiết thanh toán
+                                </p>
+                            </li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -184,7 +211,8 @@
             </div>
             <!-- Submit Button -->
             <div class="float-end mb-2">
-                <button ng-click="ConfirmationOfCompleteBooking()" ng-disabled="hotelForm.$invalid" class="btn btn-success" type="submit">Hoàn tất đặt
+                <button ng-click="ConfirmationOfCompleteBooking()" ng-disabled="hotelForm.$invalid"
+                        class="btn btn-success" type="submit">Hoàn tất đặt
                     phòng
                 </button>
             </div>

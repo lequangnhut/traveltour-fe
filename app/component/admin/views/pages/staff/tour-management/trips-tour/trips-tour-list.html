@@ -1,28 +1,27 @@
 <div class="container">
-    <div class="header-control">
+    <div class="header-control mb-4">
         <div class="header-control-center">
-            <div class="d-flex justify-content-between align-items-center row ">
+            <div class="d-flex justify-content-between align-items-center row">
                 <div class="col-xl-8 col-md-8 mt-3">
                     <h3 class="color-green fw-bold text-uppercase">Kế hoạch tour {{ tourName }}</h3>
                 </div>
-                <div class="col-xl-4 col-md-4 mt-3">
-                    <button class="btn btn-green btn-flex float-end" ng-click="toggleActivities()">
+                <div class="col-xl-4 col-md-4 mt-2">
+                    <button class="btn btn-primary btn-flex float-end" ng-click="toggleActivities()">
                         <i class="material-icons" ng-bind="showActivities ? 'visibility_off' : 'visibility'"></i>
-                        <span class="fw-bold" ng-bind="showActivities ? 'Ẩn hoạt động' : 'Xem hoạt động'"></span>
+                        <span class="fs--1" ng-bind="showActivities ? 'Ẩn hoạt động' : 'Xem hoạt động'"></span>
                     </button>
                 </div>
-                <div class="title-ber">
-                    <ul class="d-flex mb-3 ps-0" style="list-style: none">
-                        <li>
-                            <a href="/admin/detail-tour-list" class="fw-medium text-dark">
+
+                <nav aria-label="breadcrumb mb-3">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item text-dark">
+                            <a href="/admin/detail-tour-list">
                                 Tour chi tiết
                             </a>
-                            <i class="fa-solid fa-chevron-right" style="font-size: 14px"></i>
                         </li>
-                        &nbsp;
-                        <li class="fw-bold">Lịch trình tour</li>
-                    </ul>
-                </div>
+                        <li class="breadcrumb-item active" style="width: 150px"><p>Lịch trình tour</p></li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </div>
@@ -128,7 +127,7 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-responsive text-center">
+            <table class="table table-responsive table-striped text-center">
                 <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
@@ -167,20 +166,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="tourTrips in tourTripsList" class="table-title">
+                <tr ng-repeat="tourTrips in tourTripsList">
                     <td>{{ $index + 1 }}</td>
                     <td>Ngày {{ tourTrips.dayInTrip }}</td>
                     <td>{{ tourTrips.transportationTypesByTransportationTypeId.transportationTypeName }}</td>
                     <td>{{ tourTrips.placeName }}</td>
                     <td>
-                        <span title="{{ tourTrips.placeAddress }}">
+                        <span custom-tooltip="{{ tourTrips.placeAddress }}">
                             <span>{{ tourTrips.placeAddress | limitTo: 15 }}</span>
                             <span ng-show="tourTrips.placeAddress.length > 15">...</span>
                         </span>
                     </td>
                     <td>{{ tourTrips.timeGo }}</td>
                     <td>{{ tourTrips.placeCost | vnCurrency }}</td>
-                    <td class="d-flex align-items-center justify-content-center">
+                    <td>
                         <a ng-click="redirectPage('/admin/detail-tour-list/trips-tour-list/trips-tour-update/', tourTrips.id)"
                            role="button" class="fs-1 btn text-warning px-2 cursor-pointer">
                             <i class="fa-solid fa-pen-to-square"></i>

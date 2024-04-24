@@ -4,8 +4,30 @@
             <div class="d-flex justify-content-between align-items-center row ">
                 <div class="col mt-3">
                     <h3 class="color-green fw-bold text-uppercase mb-3">Chi tiết thanh toán</h3>
-                    <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/transportation-list"
-                       class="text-decoration-none">< Quay lại đơn hàng</a>
+                    <nav aria-label="breadcrumb mb-3">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list">
+                                    Tour chi tiết
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list/{{ tourDetailId }}/service-list">
+                                    Chọn dịch vụ
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/transportation-list">
+                                    Danh sách xe
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" style="width: 160px">
+                                <p>
+                                    Chi tiết thanh toán
+                                </p>
+                            </li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
         </div>

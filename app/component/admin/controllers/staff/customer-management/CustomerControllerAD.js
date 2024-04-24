@@ -161,11 +161,11 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
         CustomerServiceAD.getAllCustomer($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir)
             .then((response) => {
                 customerData(response);
-            }, errorCallback).finally(() => {
-            $scope.isLoading = false;
-        });
+            }, errorCallback);
 
         if (customerId !== undefined && customerId !== null && customerId !== "") {
+            $scope.isLoading = true;
+
             CustomerServiceAD.findCustomerById(customerId).then((response) => {
                 if (response.status === 200) {
                     $timeout(() => {
@@ -173,7 +173,7 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
                         $rootScope.phonenow = response.data.data.phone;
                         $rootScope.cardnow = response.data.data.citizenCard;
                         $scope.customer.birth = new Date(response.data.data.birth);
-                    }, 0);
+                    }, 100);
                 }
             }, errorCallback).finally(() => {
                 $scope.isLoading = false;

@@ -1,5 +1,4 @@
 travel_app.controller('LoginController', function ($scope, $location, $window, $timeout, AuthService, NotificationService, LocalStorageService) {
-
     $scope.rememberMe = false;
 
     $scope.user = {
@@ -68,4 +67,19 @@ travel_app.controller('LoginController', function ($scope, $location, $window, $
     $scope.loginGoogle = function () {
         $window.location.href = BASE_API + 'auth/login/google';
     }
+
+    $scope.togglePassword = function () {
+        let passwordField = document.querySelector('.password-field');
+        let passwordIcon = document.querySelector('.toggle-password svg');
+
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            passwordIcon.classList.remove('fa-eye');
+            passwordIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            passwordIcon.classList.remove('fa-eye-slash');
+            passwordIcon.classList.add('fa-eye');
+        }
+    };
 });

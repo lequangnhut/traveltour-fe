@@ -3,6 +3,7 @@ travel_app.controller('TransportationSchedulesControllerAD',
               TransportationTypeServiceAD, TransportationScheduleServiceAD, TourDetailsServiceAD,
               Base64ObjectService) {
         $scope.isLoading = true;
+        $scope.tourDetailId = $routeParams.tourDetailId;
         const tourDetailId = Base64ObjectService.decodeObject($routeParams.tourDetailId);
 
         $scope.transportationSearch = {}

@@ -1,3 +1,8 @@
+@font-face {
+    font-family: interFont;
+    src: url(assets/customers/fonts/Inter-Medium.ttf);
+}
+
 .chat-online {
     color: #34ce57
 }
@@ -88,6 +93,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block;
-    max-width: 250px;
+    max-width: 300px;
+}
+
+.font-inter {
+    font-family: Montserrat, sans-serif;
 }
 

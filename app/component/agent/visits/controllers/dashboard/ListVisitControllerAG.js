@@ -12,7 +12,7 @@ travel_app.controller('ListVisitControllerAG',
                 let agencyId = $scope.agencies.id;
 
                 if (agencyId !== undefined && agencyId !== null && agencyId !== "") {
-                    VisitLocationServiceAG.findAllByAgencyId(agencyId).then(function successCallback(response) {
+                    VisitLocationServiceAG.findAllByAgencyId(agencyId).then(function (response) {
                         $scope.visitLocation = response.data;
                     }, errorCallback).finally(function () {
                         $scope.isLoading = false;

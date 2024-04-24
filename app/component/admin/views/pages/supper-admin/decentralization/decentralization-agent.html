@@ -97,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-responsive text-center">
+            <table class="table table-responsive text-center table-striped">
                 <div ng-include="'app/component/utils/loading-table.html'"></div>
                 <thead>
                 <tr class="bg-light">
@@ -124,11 +124,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="agent in userRoleAgent" class="table-title">
+                <tr ng-repeat="agent in userRoleAgent">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ agent.email }}</td>
                     <td>
-                        <span title="{{ agent.fullName }}">
+                        <span custom-tooltip="{{ agent.fullName }}">
                             <span>{{ agent.fullName | limitTo: 10 }}</span>
                             <span ng-show="agent.fullName.length > 10">...</span>
                         </span>

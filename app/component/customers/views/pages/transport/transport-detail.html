@@ -3,10 +3,10 @@
     <div class="container">
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
              aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/home">Trang chủ</a></li>
-                <li class="breadcrumb-item"><a href="/drive-move">Đặt xe</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Chi tiết nhà xe</li>
+            <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item fw-medium"><a href="/home">Trang chủ</a></li>
+                <li class="breadcrumb-item fw-medium"><a href="/drive-move">Đặt xe</a></li>
+                <li class="breadcrumb-item active fw-medium" aria-current="page">Chi tiết nhà xe</li>
             </ol>
         </nav>
 
@@ -521,7 +521,7 @@
                                                         id="{{ 'booked-' + seat.seatNumber}}" ng-repeat="seat in row">
                                                         <input type="checkbox" id="{{ 'seat-' + seat.seatNumber }}"/>
                                                         <label for="{{ 'seat-' + seat.seatNumber }}"
-                                                               title="Số ghế: {{seat.seatNumber + ' - Giá: ' + formatPrice(schedule.unitPrice) }}"
+                                                               custom-tooltip="Số ghế: {{seat.seatNumber + ' - Giá: ' + formatPrice(schedule.unitPrice) }}"
                                                                ng-click="isActiveSeat(schedule, seat)"
                                                                ng-class="{'seatActive': seatSelections[schedule.id] && seatSelections[schedule.id][seat.seatNumber]}">
                                                             <a href="#">
@@ -577,7 +577,7 @@
                                                         id="{{ 'booked-' + seat.seatNumber}}" ng-repeat="seat in row">
                                                         <input type="checkbox" id="{{ 'seat-' + seat.seatNumber }}"/>
                                                         <label for="{{ 'seat-' + seat.seatNumber }}"
-                                                               title="Số ghế: {{seat.seatNumber + ' - Giá: ' + formatPrice(schedule.unitPrice) }}"
+                                                               custom-tooltip="Số ghế: {{seat.seatNumber + ' - Giá: ' + formatPrice(schedule.unitPrice) }}"
                                                                ng-click="isActiveSeat(schedule, seat)"
                                                                ng-class="{'seatActive': seatSelections[schedule.id] && seatSelections[schedule.id][seat.seatNumber]}">
                                                             <a href="#">

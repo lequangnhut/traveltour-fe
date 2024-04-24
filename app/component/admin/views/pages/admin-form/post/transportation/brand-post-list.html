@@ -92,7 +92,7 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-responsive text-center">
+                <table class="table table-responsive text-center table-striped">
                     <div ng-include="'app/component/utils/loading-table.html'"></div>
                     <thead>
                     <tr class="bg-light">
@@ -121,11 +121,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="br in brandPostList" class="table-title">
+                    <tr ng-repeat="br in brandPostList">
                         <td style="font-size: small">{{ $index + 1 }}</td>
                         <td>{{ br.transportationBrandName || 'Đang cập nhật' }}</td>
                         <td>
-                            <span title="{{ br.agencies.nameAgency }}">
+                            <span custom-tooltip="{{ br.agencies.nameAgency }}">
                                 <span>{{ br.agencies.nameAgency | limitTo: 8 }}</span>
                                 <span ng-show="br.agencies.nameAgency.length > 8">...</span>
                             </span>

@@ -62,8 +62,8 @@
                                                class="password-field"
                                                required
                                         >
-                                        <span data-toggle=".password-field"
-                                              class="fa fa-fw fa-eye field-icon toggle-password">
+                                        <span ng-click="togglePassword()" class="field-icon toggle-password">
+                                            <i class="fa fa-fw fa-eye"></i>
                                         </span>
                                     <small class="text-danger"
                                            ng-show="loginForm.password.$touched && loginForm.password.$error.required">
@@ -118,6 +118,3 @@
         </div>
     </div>
 </section>
-
-<!--====== Login js ======-->
-<script src="/assets/customers/js/auth/script.js"></script>

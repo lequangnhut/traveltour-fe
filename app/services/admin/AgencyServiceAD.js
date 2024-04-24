@@ -5,6 +5,7 @@ travel_app.service('AgencyServiceAD', function ($http, $q) {
      * API show list bên doanh nghiệp đã được duyệt
      */
     this.findAllAgenciesByIsAcceptedAD = function (isActive, page, size, sortBy, sortDir, searchTerm) {
+        console.log(sortBy)
         const deferred = $q.defer();
         $http({
             method: 'GET',

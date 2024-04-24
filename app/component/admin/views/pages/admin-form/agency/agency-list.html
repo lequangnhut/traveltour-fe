@@ -18,7 +18,6 @@
         text-decoration: none; /* Loại bỏ gạch chân */
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Hiệu ứng nền mờ */
     }
-
 </style>
 
 <div class="container">
@@ -35,14 +34,14 @@
             <li class="nav-item">
                 <a class="nav-link cursor-pointer" id="pills-true"
                    ng-class="{active: currentTab === 'online'}"
-                   ng-click="changeTab('online', true)">
+                   ng-click="changeTab('online', true, 'dateCreated')">
                     Đang hoạt động
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link cursor-pointer" id="pills-false"
                    ng-class="{active: currentTab === 'offline'}"
-                   ng-click="changeTab('offline', false)">
+                   ng-click="changeTab('offline', false, 'dateBlocked')">
                     Ngưng hoạt động
                 </a>
             </li>
@@ -125,7 +124,7 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-responsive text-center">
+                <table class="table table-responsive text-center table-striped">
                     <div ng-include="'app/component/utils/loading-table.html'"></div>
                     <thead>
                     <tr class="bg-light">
@@ -251,7 +250,7 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-responsive text-center">
+                <table class="table table-responsive text-center table-striped">
                     <div ng-include="'app/component/utils/loading-table.html'"></div>
                     <thead>
                     <tr class="bg-light">

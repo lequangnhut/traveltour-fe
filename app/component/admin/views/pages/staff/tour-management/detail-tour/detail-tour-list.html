@@ -1,7 +1,7 @@
 <div class="container">
     <div class="header-control mb-4">
         <div class="header-control-center">
-            <div class="d-flex justify-content-between align-items-center row ">
+            <div class="d-flex justify-content-between align-items-center row">
                 <div class="col-xl-12 mt-3">
                     <h3 class="color-green fw-bold text-uppercase">Danh sách tour chi tiết</h3>
                 </div>
@@ -140,7 +140,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="tourDetail in tourDetailList" class="table-title">
+                <tr ng-repeat="tourDetail in tourDetailList">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ tourDetail.id }}</td>
                     <td>
@@ -150,7 +150,7 @@
                              onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
                     </td>
                     <td>
-                        <span title="{{ tourDetail.toursByTourId.tourName }}">
+                        <span custom-tooltip="{{ tourDetail.toursByTourId.tourName }}">
                             <span>{{ tourDetail.toursByTourId.tourName | limitTo: 15 }}</span>
                             <span ng-show="tourDetail.toursByTourId.tourName.length > 15">...</span>
                         </span>
@@ -158,7 +158,7 @@
                     <td>{{ tourDetail.numberOfGuests }}</td>
                     <td>{{ tourDetail.fromLocation }}</td>
                     <td>
-                        <span title="{{ tourDetail.toLocation }}">
+                        <span custom-tooltip="{{ tourDetail.toLocation }}">
                             <span>{{ tourDetail.toLocation | limitTo: 15 }}</span>
                             <span ng-show="tourDetail.toLocation.length > 15">...</span>
                         </span>

@@ -4,6 +4,7 @@ travel_app.controller('RoomTypeControllerAD',
               RoomTypeServiceServiceAD, LocalStorageService, Base64ObjectService) {
         $scope.isLoading = true;
 
+        $scope.tourDetailIdRouter = $routeParams.tourDetailId;
         const tourDetailId = Base64ObjectService.decodeObject($routeParams.tourDetailId);
         const hotelId = Base64ObjectService.decodeObject($routeParams.hotelId);
 

@@ -27,13 +27,6 @@ travel_app.controller('BookingTourSuccessCusController',
                 $scope.paymentMethodTour = 'VPO';
             }
 
-            let unitPrice = $scope.tourDetail.unitPrice;
-            let amountAdults = $scope.ticket.adults;
-            let amountChildren = $scope.ticket.children;
-
-            $scope.totalPrice = (amountAdults * unitPrice) + (amountChildren * (unitPrice * 0.3));
-            $scope.totalTikets = parseInt($scope.ticket.adults) + parseInt($scope.ticket.children) + parseInt($scope.ticket.baby);
-
             $scope.printInvoiceTourCustomer = function () {
                 let invoice = {
                     dateCreated: new Date(),

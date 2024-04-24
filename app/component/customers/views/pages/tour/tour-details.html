@@ -6,14 +6,14 @@
         <!--=== Tour Details Wrapper ===-->
         <div class="tour-details-wrapper pt-80">
             <!--=== Tour Title Wrapper ===-->
-            <div class="tour-title-wrapper pb-30 wow fadeInUp">
+            <div class="tour-title-wrapper wow fadeInUp">
                 <div class="row">
                     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
                          aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/home">Trang chủ</a></li>
-                            <li class="breadcrumb-item"><a href="/tours">Đặt tour</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Chi tiết đặt tour</li>
+                            <li class="breadcrumb-item fw-medium"><a href="/home">Trang chủ</a></li>
+                            <li class="breadcrumb-item fw-medium"><a href="/tours">Đặt tour</a></li>
+                            <li class="breadcrumb-item active fw-medium" aria-current="page">Chi tiết đặt tour</li>
                         </ol>
                     </nav>
 
@@ -47,12 +47,15 @@
                                     <span class="fal fa-clock"></span>
                                 </div>
                                 <div class="info">
-                                    <h4><span>Trong vòng</span>{{ tourDetail.numberOfDays }} Ngày</h4>
+                                    <h4>
+                                        <span>Trong vòng</span>
+                                        {{ tourDetail.departureDate | calculateDaysAndNights:tourDetail.arrivalDate }}
+                                    </h4>
                                 </div>
                             </div>
                             <div class="info-box mb-20">
                                 <div class="icon">
-                                    <span class="fal fa-planet-ringed"></span>
+                                    <span class="fal fa-user"></span>
                                 </div>
                                 <div class="info">
                                     <h4><span>Số lượng khách</span>{{ tourDetail.numberOfGuests }} Người</h4>
@@ -367,11 +370,13 @@
                                     </span>
                                 </li>
                                 <li>
-                                    <span title="Điểm đến {{ tourDetail.toLocation }}">
+                                    <span>
                                         <span class="fas fa-map-marker-alt"></span>
                                         Điểm đến
-                                        <span>{{ tourDetail.toLocation | limitTo: 15 }}</span>
                                         <span ng-show="tourDetail.toLocation.length > 15">...</span>
+                                        <span custom-tooltip="{{ tourDetail }}">
+                                            {{ tourDetail.toLocation | limitTo: 15 }}
+                                        </span>
                                     </span>
                                 </li>
                             </ul>
@@ -400,7 +405,7 @@
                                 <div class="booking-guest-box mb-20">
                                     <h6 class="mb-20">Vé</h6>
                                     <div class="booking-item">
-                                        <label>Người lớn (trên 90cm) {{ tourDetail.unitPrice | vnCurrency }}</label>
+                                        <label>Người lớn (trên 1m3) {{ tourDetail.unitPrice | vnCurrency }}</label>
                                         <div class="bk-item booking-user">
                                             <span class="fas fa-user"></span>
                                             <select class="wide-select"
@@ -421,8 +426,9 @@
                                         </div>
                                     </div>
                                     <div class="booking-item">
-                                        <label>Trẻ em (dưới
-                                            90cm) {{ tourDetail.unitPrice * 0.3 | vnCurrency }}</label>
+                                        <label>
+                                            Trẻ em (dưới 1m3) <br> {{ tourDetail.unitPrice * 0.3 | vnCurrency }}
+                                        </label>
                                         <div class="bk-item booking-user">
                                             <span class="fas fa-user"></span>
                                             <select class="wide-select"
@@ -436,21 +442,6 @@
                                                 <option value="3">3</option>
                                                 <option value="4">4</option>
                                                 <option value="5">5</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="booking-item">
-                                        <label>Em bé 0đ</label>
-                                        <div class="bk-item booking-user">
-                                            <span class="fas fa-user"></span>
-                                            <select class="wide-select"
-                                                    ng-model="ticket.baby"
-                                                    ng-change="updateTotalPrice()"
-                                                    ng-disabled="ticket.baby < isExceedGuestLimit()"
-                                            >
-                                                <option value="0">0</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
                                             </select>
                                         </div>
                                     </div>
@@ -486,18 +477,6 @@
                             </form>
                         </div>
                         <!--=== Booking Info Widget ===-->
-
-                        <!--=== Call Tour Widget ===-->
-                        <div class="sidebar-widget booking-form-widget wow fadeInUp mb-40">
-                            <div class="img-holder position-relative" style="padding-top: 45px">
-                                <button type="button"
-                                        style="position: absolute;width: 250px; top: 50%; left: 50%; transform: translate(-50%, -50%);"
-                                        class="btn btn-green" data-toggle="modal" data-target="#formTourModal"
-                                        ng-click="showCallTourModal()">Bạn có đề xuất gì không ?
-                                </button>
-                            </div>
-                        </div>
-                        <!--=== Call Tour Widget ===-->
 
                         <!--=== Recent Place Widget ===-->
                         <div class="sidebar-widget recent-place-widget mb-40 wow fadeInUp">
