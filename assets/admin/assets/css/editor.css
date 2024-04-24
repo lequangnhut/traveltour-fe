@@ -86,3 +86,127 @@
         opacity: 1;
     }
 }
+
+
+.container-chat {
+    background-color: #ffffff;
+}
+
+.container-chat .options {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+}
+
+.container-chat button {
+    height: 16px;
+    width: 16px;
+    display: grid;
+    place-items: center;
+    border-radius: 3px;
+    border: none;
+    background-color: #ffffff;
+    outline: none;
+    color: #020929;
+    font-size: 12px;
+}
+
+.container-chat select {
+    padding: 4px;
+    border: 1px solid #020929;
+    border-radius: 3px;
+}
+
+.container-chat .options label,
+.container-chat .options select {
+    font-family: "Poppins", sans-serif;
+}
+
+.container-chat .input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.container-chat input[type="color"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    width: 40px;
+    height: 28px;
+    border: none;
+    cursor: pointer;
+}
+
+.container-chat input[type="color"]::-webkit-color-swatch {
+    border-radius: 15px;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px #020929;
+}
+
+.container-chat input[type="color"]::-moz-color-swatch {
+    border-radius: 15px;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px #020929;
+}
+
+.container-chat #chat-input{
+    overflow-x: auto;
+    border: 1px solid #dddddd;
+    height: fit-content;
+    padding: 10px 10px 10px 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    min-height: 40px;
+}
+
+.container-chat .active {
+    background-color: #e0e9ff;
+}
+
+.show-animation {
+    animation-name: fadeInUp;
+    animation-duration: 1s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#chat-message-show img{
+    max-width: 600px;
+}
+
+.user-chat-new-message img{
+    max-width: 100px;
+    max-height: 20px;
+}
+
+#contactListTabContent h1,
+#contactListTabContent h2,
+#contactListTabContent h3,
+#contactListTabContent h4,
+#contactListTabContent h5,
+#contactListTabContent h6 {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+#contactListTabContent font {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.header-white h1,
+.header-white h2,
+.header-white h3,
+.header-white h4,
+.header-white h5,
+.header-white h6 {
+    color: white;
+}

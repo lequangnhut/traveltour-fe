@@ -1,8 +1,7 @@
-travel_app.controller("ChatCustomerController", function ($scope, $routeParams, $http, $timeout,AuthService, UserChatService) {
+travel_app.controller("ChatCustomerController", function ($scope, $routeParams, $http, $sce, $timeout, AuthService, UserChatService) {
     $scope.agencyId = null;
     if ($routeParams.id) {
         $scope.agencyId = atob($routeParams.id);
-        console.log($scope.agencyId)
     }
 
     let user = $scope.user = AuthService.getUser();
@@ -48,7 +47,7 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
                 $scope.message = JSON.parse(message.body);
                 $scope.message.timestamp = Date.now();
                 await $scope.findUsersChat();
-                $scope.notifyMessenger($scope.message, "Bạn vừa có tin nhắn mới", "/business/hotel/chat");
+                // $scope.notifyMessenger($scope.message, "Bạn vừa có tin nhắn mới", "/business/hotel/chat");
                 $scope.showNewMessage($scope.message);
                 $scope.$apply();
                 scrollToBottom();
@@ -104,7 +103,7 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
         }
         await $scope.findUsersChat();
         scrollToBottom()
-        if ($scope.agencyId) {
+        if ($scope.agencyId != null && $scope.agencyId != undefined && $scope.agencyId) {
             $scope.matchedUserChat = $scope.userChatsList.find(function (userChat) {
                 return userChat.userId === $scope.agencyId;
             });
@@ -123,22 +122,23 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
      */
     $scope.findUsersChat = async function () {
         try {
-            console.log(user.id, user.roles[0].nameRole);
             stompClient.send(`/app/${user.id}/chat.findUsersChat`, {}, JSON.stringify({
                 userId: user.id,
                 role: user.roles[0].nameRole
             }));
 
             stompClient.subscribe(`/user/${user.id}/chat/findUsersChat`, function (message) {
-                $scope.userChatsList = JSON.parse(message.body);
-                console.log($scope.userChatsList)
+                $timeout(function () {
+                    $scope.userChatsList = JSON.parse(message.body);
+                })
+
             });
         } catch (error) {
             console.error("Error:", error);
             throw error; // Ném lỗi để xử lý ở mức cao hơn
         }
     };
-
+    $scope.findUsersChat();
 
     /**
      * Phương thức hiển thị người dùng lên giao diện chính
@@ -173,7 +173,6 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
                 };
                 $scope.displayMessages.push($scope.newMessage);
                 $scope.userAgencyId = $scope.user = AuthService.getUser();
-                console.log("heheh",$scope.userAgencyId)
             });
         } else if (typeof messages === 'object') {
             $scope.newMessage = {
@@ -182,7 +181,6 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
                 timestamp: messages.timestamp
             };
             $scope.displayMessages.push($scope.newMessage);
-            console.log('NewMessage: ', $scope.newMessage);
         }
         $timeout(function () {
             $scope.$apply();
@@ -190,7 +188,6 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
     };
 
     $scope.showNewMessage = function (messages) {
-        console.log($scope.displayUserChat, messages)
         if ($scope.displayUserChat && messages) {
             if (messages.senderId.toString() === $scope.displayUserChat.userId.toString()) {
                 $scope.newMessage = {
@@ -200,7 +197,6 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
                 };
 
                 $scope.displayMessages.push($scope.newMessage);
-                console.log('NewMessage: ', $scope.newMessage);
             }
         }
         $timeout(function () {
@@ -209,37 +205,51 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
         scrollToBottom()
     };
 
+    $scope.statusSendMessage = "Đã nhận";
+
     $scope.sendMessage = async function (customerId) {
-        $scope.messageContent.trim();
-        if (($scope.messageContent !== '') && $scope.displayUserChat !== null && $scope.displayUserChat !== undefined) {
-            var chatMessage = {
-                senderId: user.id,
-                recipientId: customerId,
-                content: $scope.messageContent,
-                timestamp: new Date()
-            };
-            $scope.newMessage = {
-                senderId: user.id,
-                content: $scope.messageContent,
-                timestamp: new Date()
+        try {
+            await $timeout(angular.noop); // Chờ cho $timeout hoàn thành trước khi tiếp tục
+
+            $scope.messageContent.trim();
+            if (($scope.messageContent !== '') && $scope.displayUserChat !== null && $scope.displayUserChat !== undefined) {
+                var chatMessage = {
+                    senderId: user.id,
+                    recipientId: customerId,
+                    content: $scope.messageContent,
+                    timestamp: new Date()
+                };
+                $scope.newMessage = {
+                    senderId: user.id,
+                    content: $scope.messageContent,
+                    timestamp: new Date()
+                };
+
+                $scope.displayMessages.push($scope.newMessage);
+                hd
+                // Gửi tin nhắn cập nhật trạng thái
+                stompClient.send(`/app/${user.id}/chat.updateStatusMessenger`, {}, JSON.stringify({
+                    senderId: user.id,
+                    recipientId: customerId
+                }));
+
+                // Gửi tin nhắn chính
+                stompClient.send(`/app/${user.id}/chat`, {}, JSON.stringify(chatMessage));
             }
 
-            stompClient.send(`/app/${user.id}/chat.updateStatusMessenger`, {}, JSON.stringify({
-                senderId: user.id,
-                recipientId: customerId
-            }));
-
-            $scope.displayMessages.push($scope.newMessage)
-            console.log($scope.displayMessages)
-            stompClient.send(`/app/${user.id}/chat`, {}, JSON.stringify(chatMessage));
-        }
-
-        $scope.messageContent = '';
-        $timeout(function () {
+            $scope.messageContent = '';
+            await $timeout(angular.noop); // Chờ cho $timeout hoàn thành trước khi tiếp tục
             $scope.updateStatusMessenger($scope.displayUserChat);
-        }, 100)
-        scrollToBottom()
+            scrollToBottom();
+        } catch (error) {
+            $scope.statusSendMessage = "Đang gửi";
+            toastAlert("error", "Lỗi không xác định");
+            $timeout(function () {
+                scrollToBottom()
+            }, 100)
+        }
     };
+
 
     /**
      * Cập nhật lại thông tin nhắn tin của người dùng khi thực hiện gửi tin nhắn mới
@@ -248,7 +258,6 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
      */
     $scope.updateStatusMessenger = async function (userChat) {
         $scope.displayUserChat = userChat;
-        console.log(userChat);
         if (user.id !== null) {
             try {
                 const response = await UserChatService.findUserChatById(userChat.userId, user.id);
@@ -281,4 +290,25 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
     }
 
     $scope.connect();
+
+    $scope.trustAsHtml = function (html) {
+        return $sce.trustAsHtml(html);
+    };
+
+    $scope.editorHeight = '40px'; // Độ cao mặc định
+
+    $scope.toggleHeight = function () {
+        if ($scope.editorHeight === '40px') {
+            $scope.editorHeight = '200px'; // Thay đổi độ cao
+        } else {
+            $scope.editorHeight = '40px'; // Thay đổi độ cao khác
+        }
+    };
+
+    $scope.onKeyPress = function (event) {
+        if (event.keyCode === 13 && !event.shiftKey) {
+            event.preventDefault(); // Ngăn chặn sự kiện mặc định của phím "Enter"
+            $scope.sendMessage($scope.displayUserChat.userId); // Gửi tin nhắn
+        }
+    };
 });

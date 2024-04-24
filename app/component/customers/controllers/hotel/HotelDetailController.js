@@ -409,7 +409,7 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll,$
 
     $scope.likeHotel = function (serviceId) {
         $scope.category = 1
-        if (user != null && user) {
+        if (user != null && user!= undefined && user) {
             UserLikeService.saveLike(serviceId, $scope.category, user.id).then(function (response) {
                 if (response.status === 200) {
                     toastAlert('success', response.data.message)

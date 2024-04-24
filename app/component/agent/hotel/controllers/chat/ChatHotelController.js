@@ -1,4 +1,4 @@
-travel_app.controller('ChatHotelController', function ($scope, $routeParams, $http, $timeout,AuthService, UserChatService) {
+travel_app.controller('ChatHotelController', function ($scope, $routeParams, $http, $sce, $timeout, AuthService, UserChatService) {
     let user = $scope.user = AuthService.getUser();
     var stompClient = null;
 
@@ -40,7 +40,7 @@ travel_app.controller('ChatHotelController', function ($scope, $routeParams, $ht
                 $scope.message = JSON.parse(message.body);
                 $scope.message.timestamp = Date.now();
                 await $scope.findUsersChat();
-                $scope.notifyMessenger($scope.message, "Bạn vừa có tin nhắn mới", "/business/hotel/chat");
+                // $scope.notifyMessenger($scope.message, "Bạn vừa có tin nhắn mới", "/business/hotel/chat");
                 $scope.showNewMessage($scope.message);
                 $scope.$apply();
                 scrollToBottom();
@@ -74,7 +74,6 @@ travel_app.controller('ChatHotelController', function ($scope, $routeParams, $ht
      */
     $scope.findUsersChat = async function () {
         try {
-            console.log(user.id, user.roles[0].nameRole);
             stompClient.send(`/app/${user.id}/chat.findUsersChat`, {}, JSON.stringify({
                 userId: user.id,
                 role: user.roles[0].nameRole
@@ -83,7 +82,6 @@ travel_app.controller('ChatHotelController', function ($scope, $routeParams, $ht
             return new Promise(function (resolve, reject) {
                 stompClient.subscribe(`/user/${user.id}/chat/findUsersChat`, function (message) {
                     $scope.userChatsList = JSON.parse(message.body);
-                    console.log($scope.userChatsList);
                     scrollToBottom();
                     resolve($scope.userChatsList);
                 });
@@ -117,7 +115,6 @@ travel_app.controller('ChatHotelController', function ($scope, $routeParams, $ht
     };
 
     $scope.showMessage = function (messages) {
-        console.log(messages)
         $scope.displayMessages = []
         if (Array.isArray(messages)) {
             messages.forEach(function (message) {
@@ -143,7 +140,6 @@ travel_app.controller('ChatHotelController', function ($scope, $routeParams, $ht
     };
 
     $scope.showNewMessage = function (messages) {
-        console.log($scope.displayUserChat, messages)
         if ($scope.displayUserChat && messages) {
             if (messages.senderId.toString() === $scope.displayUserChat.userId.toString()) {
                 $scope.newMessage = {
@@ -151,7 +147,6 @@ travel_app.controller('ChatHotelController', function ($scope, $routeParams, $ht
                     content: messages.content,
                     timestamp: messages.timestamp
                 };
-                console.log('NewMessage: ', $scope.newMessage);
                 $scope.displayMessages.push($scope.newMessage);
             }
         }
@@ -160,37 +155,46 @@ travel_app.controller('ChatHotelController', function ($scope, $routeParams, $ht
         });
     };
 
+    $scope.statusSendMessage = "Đã nhận";
 
     $scope.sendMessage = async function (customerId) {
-        $scope.messageContent.trim();
-        if ($scope.messageContent !== '' && $scope.displayUserChat !== null && $scope.displayUserChat !== undefined) {
-            var chatMessage = {
-                senderId: user.id,
-                recipientId: customerId,
-                content: $scope.messageContent,
-                timestamp: new Date()
-            };
-            $scope.newMessage = {
-                senderId: user.id,
-                content: $scope.messageContent,
-                timestamp: new Date()
+        try {
+            $scope.messageContent.trim();
+            if ($scope.messageContent !== '' && $scope.displayUserChat !== null && $scope.displayUserChat !== undefined) {
+                var chatMessage = {
+                    senderId: user.id,
+                    recipientId: customerId,
+                    content: $scope.messageContent,
+                    timestamp: new Date()
+                };
+                $scope.newMessage = {
+                    senderId: user.id,
+                    content: $scope.messageContent,
+                    timestamp: new Date()
+                };
+
+                $scope.displayMessages.push($scope.newMessage);
+
+                stompClient.send(`/app/${user.id}/chat`, {}, JSON.stringify(chatMessage));
             }
 
-            $scope.displayMessages.push($scope.newMessage)
-            stompClient.send(`/app/${user.id}/chat`, {}, JSON.stringify(chatMessage));
+            $scope.messageContent = '';
+            $timeout(function () {
+                $scope.updateStatusMessenger($scope.displayUserChat);
+                scrollToBottom();
+            }, 200);
+        } catch (error) {
+            toastAlert("error", "Lỗi không xác định");
+            $scope.statusSendMessage = "Đang gửi";
+            $timeout(function () {
+                scrollToBottom();
+            }, 100)
         }
-
-        $scope.messageContent = '';
-        console.log($scope.displayUserChat)
-        $timeout(function () {
-            $scope.updateStatusMessenger($scope.displayUserChat);
-        },200)
-        scrollToBottom()
     };
+
 
     $scope.updateStatusMessenger = async function (userChat) {
         $scope.displayUserChat = userChat;
-        console.log(userChat)
         if (user.id !== null) {
             UserChatService.findUserChatById(userChat.userId, user.id).then(async function (response) {
                 if (response.status === 200) {
@@ -205,9 +209,9 @@ travel_app.controller('ChatHotelController', function ($scope, $routeParams, $ht
                 }
             })
         }
-        $timeout(function() {
+        $timeout(function () {
             $scope.findUsersChat();
-        },100)
+        }, 100)
         await $scope.fetchAndDisplayUserChat(userChat.userId)
         $timeout(function () {
             $scope.$apply();
@@ -223,4 +227,25 @@ travel_app.controller('ChatHotelController', function ($scope, $routeParams, $ht
     }
 
     $scope.connect();
+
+    $scope.trustAsHtml = function (html) {
+        return $sce.trustAsHtml(html);
+    };
+
+    $scope.editorHeight = '40px';
+
+    $scope.toggleHeight = function () {
+        if ($scope.editorHeight === '40px') {
+            $scope.editorHeight = '200px';
+        } else {
+            $scope.editorHeight = '40px';
+        }
+    };
+    $scope.onKeyPress = function (event) {
+        if (event.keyCode === 13 && !event.shiftKey) {
+            event.preventDefault();
+            $scope.sendMessage($scope.displayUserChat.userId);
+        }
+    };
+
 })
