@@ -275,13 +275,9 @@ travel_app.controller('DecentralizationControllerStaffAD', function ($scope, $sc
     };
 
     $scope.updateRoles = function (userId, dataRole) {
-        $scope.isLoading = true;
-
         DecentralizationServiceAD.updateDecentralization(userId, dataRole).then(function successCallback() {
             toastAlert('success', 'Cập nhật quyền thành công !');
-        }, errorCallback).finally(function () {
-            $scope.isLoading = false;
-        });
+        }, errorCallback);
     };
 
     $scope.init();

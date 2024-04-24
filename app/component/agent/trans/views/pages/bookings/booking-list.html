@@ -172,12 +172,13 @@
                             <span class="text-status-success">Đã hủy vé</span>
                         </div>
                     </td>
-                    <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px"
-                        ng-if="transportationSchedule.isStatus === 0">
+                    <td ng-if="transportationSchedule.isStatus === 0">
                         <a href="#"
                            ng-click="redirectPage('/business/transport/schedules-management/order-transport-management/' + scheduleIdRedirect + '/update-order-visit/', booking.id)"
-                           role="button" class="fs-1 btn text-warning">
-                            <i class="fa-solid fa-pen-to-square"></i>
+                           role="button" class="fs-1 btn px-2 text-warning">
+                            <span custom-tooltip="Cập nhật vé">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </span>
                         </a>
                         <a href="#"
                            ng-click="deleteOrderTransport(booking.id, booking.amountTicket,
@@ -185,9 +186,11 @@
                            transportScheduleName[booking.transportationScheduleId].toLocation,
                            booking.transportationScheduleId)"
                            role="button"
-                           class="fs-1 btn text-danger"
+                           class="fs-1 btn px-2 text-danger"
                         >
-                            <i class="fa-solid fa-trash"></i>
+                            <span custom-tooltip="Xóa vé">
+                                <i class="fa-solid fa-trash"></i>
+                            </span>
                         </a>
                     </td>
                 </tr>

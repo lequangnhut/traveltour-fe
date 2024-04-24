@@ -8,7 +8,6 @@ travel_app.controller('RequestCarControllerAD',
         $scope.currentPageDetail = 0; // Trang hiện tại
         $scope.pageSizeDetail = 10; // Số lượng tours trên mỗi trang
 
-        $scope.agencies = [];
         $scope.transportations = [];
         $scope.transportUtilities = [];
 
@@ -106,7 +105,7 @@ travel_app.controller('RequestCarControllerAD',
 
                             AgencyServiceAD.findAgenciesById(agenciesId).then(function (response) {
                                 if (response.status === 200) {
-                                    $scope.agencies.push(response.data.data);
+                                    requestCarDetail.agencies = response.data.data;
                                 } else {
                                     $location.path('/admin/page-not-found');
                                 }

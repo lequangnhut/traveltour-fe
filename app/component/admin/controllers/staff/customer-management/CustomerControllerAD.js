@@ -1,5 +1,4 @@
 travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $location, $rootScope, $routeParams, $timeout, $http, Base64ObjectService, CustomerServiceAD, AuthService, LocalStorageService, NotificationService) {
-    $scope.isLoading = true;
     $scope.hasImage = false;
 
     $scope.customer = {
@@ -234,8 +233,6 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
     //form update
     $scope.updateCustomerSubmit = () => {
         function confirmUpdate() {
-            $scope.isLoading = true;
-
             const dataCustomer = new FormData();
             if ($scope.hasImage) {
                 dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));
@@ -305,8 +302,6 @@ travel_app.controller('CustomerControllerAD', function ($scope, $sce, $window, $
 
     $scope.updateAdminInfoSubmit = () => {
         function confirmUpdateInfoAdmin() {
-            $scope.isLoading = true;
-
             const dataCustomer = new FormData();
             if ($scope.hasImage) {
                 dataCustomer.append("customerDto", new Blob([JSON.stringify($scope.customer)], {type: "application/json"}));

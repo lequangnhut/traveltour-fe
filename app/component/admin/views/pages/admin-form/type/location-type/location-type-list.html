@@ -114,11 +114,15 @@
                     <td class="d-flex align-items-center justify-content-center">
                         <a ng-click="redirectPage('/admin/type/visit-location-type-list/visit-location-type-update/', type.id)"
                            role="button" class="fs-1 btn text-warning px-2 cursor-pointer">
-                            <i class="fa-solid fa-pen-to-square"></i>
+                            <span custom-tooltip="Cập nhật tiện ích">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </span>
                         </a>
                         <a ng-click="deleteType(type.id)"
                            role="button" class="fs-1 btn text-danger px-2 cursor-pointer">
-                            <i class="fa-solid fa-trash"></i>
+                            <span custom-tooltip="Xóa tiện ích">
+                                <i class="fa-solid fa-trash"></i>
+                            </span>
                         </a>
                     </td>
                 </tr>

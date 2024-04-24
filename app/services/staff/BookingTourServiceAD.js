@@ -31,11 +31,15 @@ travel_app.service('BookingTourServiceAD', function ($http, $q) {
         return deferred.promise;
     };
 
-    this.deactivate = function (id) {
+    this.deactivate = function (bookingTourId, orderNoted) {
         const deferred = $q.defer();
         $http({
             method: 'DELETE',
-            url: API + 'delete-booking-tour/' + id
+            url: API + 'delete-booking-tour',
+            params: {
+                bookingTourId: bookingTourId,
+                orderNoted: orderNoted
+            }
         }).then(function (response) {
             deferred.resolve(response);
         }, function (error) {

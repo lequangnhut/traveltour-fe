@@ -138,7 +138,9 @@
                     <td>{{ getBedTypeName(roomType.roomBedsById[0].bedTypeId) }}</td>
                     <td>{{ formatCurrency(roomType.price) }}</td>
                     <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
-                        <button class="btn text-info" ng-click="openModal(roomType.id)"><i class="fa-regular fa-eye"></i></button>
+                        <button class="fs-1 btn text-info" ng-click="openModal(roomType.id)">
+                            <span custom-tooltip="Xem chi tiết"><i class="fa-regular fa-eye"></i></span>
+                        </button>
                     </td>
                 </tr>
                 <tr ng-if="roomTypes.length === 0">

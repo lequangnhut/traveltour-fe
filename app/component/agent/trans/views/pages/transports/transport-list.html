@@ -162,7 +162,9 @@
                     </td>
                     <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
                         <button class="fs-1 btn text-info px-2" ng-click="openModal(transport.id)">
-                            <i class="fa-regular fa-eye"></i>
+                            <span custom-tooltip="Xem chi tiết">
+                                <i class="fa-regular fa-eye"></i>
+                            </span>
                         </button>
                     </td>
                 </tr>
@@ -319,10 +321,13 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal"
+                <button type="button" class="btn" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Thoát
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"
                         ng-click="deleteTrans(transportation.id, transportation.licensePlate)">Xóa
                 </button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
             </div>
         </div>
     </div>

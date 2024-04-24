@@ -154,14 +154,16 @@
                             </div>
                         </td>
                         <td>
-                            <a role="button" class="fs-1 btn text-info px-2" ng-click="openModal(tran)"
-                               title="Xem hồ sơ">
-                                <i class="fa-regular fa-newspaper"></i>
+                            <a role="button" class="fs-1 btn text-info px-2" ng-click="openModal(tran)">
+                                <span custom-tooltip="Xem hồ sơ">
+                                    <i class="fa-regular fa-newspaper"></i>
+                                </span>
                             </a>
                             <a role="button" class="fs-1 btn text-warning px-2 cursor-pointer"
-                               ng-click="redirectPage('/admin/post/brand-post-list/transportation-list/transportation-schedule-post-list/', tran.id)"
-                               title="Danh sách chuyến xe">
-                                <i class="fa-regular fa-calendar-days"></i>
+                               ng-click="redirectPage('/admin/post/brand-post-list/transportation-list/transportation-schedule-post-list/', tran.id)">
+                                <span custom-tooltip="Danh sách chuyến xe">
+                                    <i class="fa-regular fa-calendar-days"></i>
+                                </span>
                             </a>
                         </td>
                     </tr>

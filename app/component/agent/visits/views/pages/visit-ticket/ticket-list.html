@@ -150,12 +150,16 @@
                     <td>{{ visitLocations.province }}</td>
                     <td>
                         <a href="/business/visit/visit-ticket-management/update-visit-ticket/{{ ticket.id }}"
-                           role="button" class="fs-1 btn text-warning">
-                            <i class="fa-solid fa-pen-to-square"></i>
+                           role="button" class="fs-1 btn px-2 text-warning">
+                            <span custom-tooltip="Cập nhật vé">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </span>
                         </a>
                         <a href="#" ng-click="deleteVisitTicket(ticket.id, visitLocations.visitLocationName)"
-                           role="button" class="fs-1 btn text-danger">
-                            <i class="fa-solid fa-trash"></i>
+                           role="button" class="fs-1 btn px-2 text-danger">
+                            <span custom-tooltip="Xóa vé">
+                                <i class="fa-solid fa-trash"></i>
+                            </span>
                         </a>
                     </td>
                 </tr>

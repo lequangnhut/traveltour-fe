@@ -155,7 +155,12 @@
                     <tbody>
                     <tr ng-repeat="agent in agenciesList">
                         <td style="font-size: small">{{ $index + 1 }}</td>
-                        <td>{{ agent.nameAgency }}</td>
+                        <td class="cursor-default">
+                            <span custom-tooltip="{{ agent.nameAgency }}">
+                                <span>{{ agent.nameAgency | limitTo: 35 }}</span>
+                                <span ng-show="agent.nameAgency.length > 35">...</span>
+                            </span>
+                        </td>
                         <td>{{ agent.phone | phoneNumber }}</td>
                         <td>{{ agent.province }}</td>
                         <td>
@@ -171,13 +176,16 @@
                             </div>
                         </td>
                         <td class="d-flex align-items-center justify-content-center">
-                            <a role="button" class="fs-1 btn text-info px-2" ng-click="openModalInfoAgencies(agent.id)"
-                               title="Xem hồ sơ">
-                                <i class="fa-regular fa-eye"></i>
+                            <a role="button" class="fs-1 btn text-info px-2" ng-click="openModalInfoAgencies(agent.id)">
+                               <span custom-tooltip="Xem hồ sơ">
+                                    <i class="fa-regular fa-eye"></i>
+                                </span>
                             </a>
                             <a ng-click="redirectPage('/admin/agency/agency-list/agency-update/', agent.id)"
-                               role="button" class="fs-1 btn text-warning px-2 cursor-pointer" title="Cập nhật">
-                                <i class="fa-solid fa-pen-to-square"></i>
+                               role="button" class="fs-1 btn text-warning px-2 cursor-pointer">
+                                <span custom-tooltip="Cập nhật doanh nghiệp">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </span>
                             </a>
                         </td>
                     </tr>
@@ -281,7 +289,12 @@
                     <tbody>
                     <tr ng-repeat="agent in agenciesList">
                         <td style="font-size: small">{{ $index + 1 }}</td>
-                        <td>{{ agent.nameAgency ? agent.nameAgency : '-' }}</td>
+                        <td class="cursor-default">
+                            <span custom-tooltip="{{ agent.nameAgency }}">
+                                <span>{{ agent.nameAgency | limitTo: 35 }}</span>
+                                <span ng-show="agent.nameAgency.length > 35">...</span>
+                            </span>
+                        </td>
                         <td>{{ agent.phone ? agent.phone : '-' | phoneNumber }}</td>
                         <td>{{ agent.province ? agent.province : '-' }}</td>
                         <td>
@@ -297,13 +310,16 @@
                             </div>
                         </td>
                         <td class="d-flex align-items-center justify-content-center">
-                            <a role="button" class="fs-1 btn text-info px-2" ng-click="openModalInfoAgencies(agent.id)"
-                               title="Xem hồ sơ">
-                                <i class="fa-regular fa-eye"></i>
+                            <a role="button" class="fs-1 btn text-info px-2" ng-click="openModalInfoAgencies(agent.id)">
+                                <span custom-tooltip="Xem hồ sơ">
+                                    <i class="fa-regular fa-eye"></i>
+                                </span>
                             </a>
                             <a ng-click="redirectPage('/admin/agency/agency-list/agency-update/', agent.id)"
-                               role="button" class="fs-1 btn text-warning px-2 cursor-pointer" title="Cập nhật">
-                                <i class="fa-solid fa-pen-to-square"></i>
+                               role="button" class="fs-1 btn text-warning px-2 cursor-pointer">
+                                <span custom-tooltip="Cập nhật doanh nghiệp">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </span>
                             </a>
                         </td>
                     </tr>
@@ -635,6 +651,7 @@
                     Quay về
                 </button>
                 <button type="button"
+                        ng-disabled="formNotedAgencies.$invalid"
                         ng-click="deleteThisAgency(agencies.id, agencies.nameAgency)"
                         class="btn btn-success"
                 >

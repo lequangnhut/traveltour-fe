@@ -127,7 +127,7 @@
                 <tr ng-repeat="staff in userRoleStaff">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ staff.email }}</td>
-                    <td>
+                    <td class="cursor-default">
                         <span custom-tooltip="{{ staff.fullName }}">
                             <span>{{ staff.fullName | limitTo: 10 }}</span>
                             <span ng-show="staff.fullName.length > 10">...</span>
@@ -183,12 +183,16 @@
                     </td>
                     <td>
                         <a href="/admin/decentralized-staff-management/update-staff-account/{{ staff.id }}"
-                           role="button" class="fs-1 btn text-warning">
-                            <i class="fa-solid fa-pen-to-square"></i>
+                           role="button" class="fs-1 px-2 btn text-warning">
+                             <span custom-tooltip="Cập nhật tài khoản">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </span>
                         </a>
                         <a href="#" ng-click="deleteAccountStaff(staff.id, staff.fullName)"
-                           role="button" class="fs-1 btn text-danger">
-                            <i class="fa-solid fa-trash"></i>
+                           role="button" class="fs-1 px-2 btn text-danger">
+                            <span custom-tooltip="Xóa tài khoản">
+                                <i class="fa-solid fa-trash"></i>
+                            </span>
                         </a>
                     </td>
                 </tr>

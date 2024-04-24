@@ -124,7 +124,7 @@
                     <tr ng-repeat="br in brandPostList">
                         <td style="font-size: small">{{ $index + 1 }}</td>
                         <td>{{ br.transportationBrandName || 'Đang cập nhật' }}</td>
-                        <td>
+                        <td class="cursor-default">
                             <span custom-tooltip="{{ br.agencies.nameAgency }}">
                                 <span>{{ br.agencies.nameAgency | limitTo: 8 }}</span>
                                 <span ng-show="br.agencies.nameAgency.length > 8">...</span>
@@ -143,21 +143,24 @@
                         </td>
                         <td>
                             <a role="button" class="fs-1 btn text-warning px-1 cursor-pointer"
-                               ng-click="redirectPage('/admin/post/brand-post-list/transportation-post-list/', br.id)"
-                               title="Danh sách phương tiện">
-                                <i class="fa-solid fa-car-side"></i>
+                               ng-click="redirectPage('/admin/post/brand-post-list/transportation-post-list/', br.id)">
+                                <span custom-tooltip="Danh sách phương tiện">
+                                    <i class="fa-solid fa-car-side"></i>
+                                </span>
                             </a>
                             <a role="button" class="fs-1 btn text-danger px-2 cursor-pointer"
                                ng-if="br.isAccepted === true"
-                               ng-click="deniedFormBrand(br)"
-                               title="Từ chối nhà xe">
-                                <i class="fa-solid fa-ban"></i>
+                               ng-click="deniedFormBrand(br)">
+                                <span custom-tooltip="Từ chối nhà xe">
+                                    <i class="fa-solid fa-ban"></i>
+                                </span>
                             </a>
                             <a role="button" class="fs-1 btn text-success px-2 cursor-pointer"
                                ng-if="br.isAccepted === false"
-                               ng-click="acceptFormBrand(br)"
-                               title="Duyệt nhà xe">
-                                <i class="fa-solid fa-check-to-slot"></i>
+                               ng-click="acceptFormBrand(br)">
+                                <span custom-tooltip="Duyệt nhà xe">
+                                    <i class="fa-solid fa-check-to-slot"></i>
+                                </span>
                             </a>
                         </td>
                     </tr>

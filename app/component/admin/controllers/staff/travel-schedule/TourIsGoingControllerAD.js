@@ -25,6 +25,7 @@ travel_app.controller('TourIsGoingControllerAD', function ($scope, $sce, $locati
                 if (response.status === 200) {
                     $timeout(() => {
                         $scope.tourDetail = response.data.data;
+                        $scope.tourDetailImage = $scope.tourDetail.tourDetailImagesById;
                     }, 0);
                 }
             })

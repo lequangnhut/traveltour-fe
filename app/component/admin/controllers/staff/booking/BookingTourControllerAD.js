@@ -1,5 +1,6 @@
 travel_app.controller('BookingControllerAD',
-    function ($scope, $sce, $q, $location, $routeParams, $timeout, BookingTourServiceAD, TourDetailsServiceAD) {
+    function ($scope, $sce, $q, $filter, $location, $routeParams, $timeout, PrintService,
+              BookingTourServiceAD, TourDetailsServiceAD, BillTourServiceAD) {
         $scope.isLoading = true;
 
         let searchTimeout;
@@ -9,6 +10,10 @@ travel_app.controller('BookingControllerAD',
         $scope.pageSize = 5;
         $scope.currentTab = 'pending';
         $scope.orderStatus = 0;
+
+        $scope.bookingTourDto = {
+            orderNoted: null
+        }
 
         function errorCallback() {
             $location.path('/admin/internal-server-error')
@@ -72,7 +77,7 @@ travel_app.controller('BookingControllerAD',
                 });
             });
 
-            $q.all(promises).then((updatedBookings) => {
+            $q.all(promises).then(() => {
             }).catch((error) => {
                 console.error("Error occurred: ", error);
             });
@@ -80,6 +85,8 @@ travel_app.controller('BookingControllerAD',
 
 
         $scope.getTourBookingList = function () {
+            $scope.isLoading = true;
+
             BookingTourServiceAD.getAll($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.orderStatus)
                 .then((response) => {
                     bookingTourData(response)
@@ -120,31 +127,68 @@ travel_app.controller('BookingControllerAD',
             }, 500); // 500ms debounce
         };
 
-        $scope.browseBookingTour = (id) => {
+        /**
+         * Thanh toán tour
+         * @param bookingTour
+         */
+        $scope.browseBookingTour = (bookingTour) => {
             const confirm = () => {
-                BookingTourServiceAD.updateStatus(id).then(() => {
-                    toastAlert('success', 'Duyệt thành công !');
+                BookingTourServiceAD.updateStatus(bookingTour.id).then(() => {
+                    toastAlert('success', 'Thanh toán thành công !');
                     $('#modal-tour-detail').modal('hide');
                     $scope.changeTab('paid', 1);
                     $scope.getTourBookingList();
                 }, errorCallback);
             }
 
-            confirmAlert('Bạn có chắc chắn muốn duyệt booking này không ?', confirm);
+            confirmAlert(`Bạn có chắc chắn muốn thanh toán cho 
+                               khách hàng ${bookingTour.customerName} với số tiền 
+                               ${$filter('vnCurrency')(bookingTour.orderTotal)} không ?`, confirm);
         }
 
-        $scope.deleteBookingTour = (id) => {
+        /**
+         * Hủy tour
+         * @param bookingTour
+         */
+        $scope.deleteBookingTour = (bookingTour) => {
+            let orderNoted = $scope.bookingTourDto.orderNoted;
+
             const confirm = () => {
-                BookingTourServiceAD.deactivate(id).then(() => {
+                BookingTourServiceAD.deactivate(bookingTour.id, orderNoted).then(() => {
                     toastAlert('success', 'Hủy thành công !');
                     $('#modal-tour-detail').modal('hide');
+                    $('#cancelled_noted').modal('hide');
                     $scope.changeTab('cancelled', 2)
                     $scope.getTourBookingList();
                 }, errorCallback);
             }
 
-            confirmAlert('Bạn có chắc chắn muốn hủy booking này không ?', confirm);
+            confirmAlert(`Bạn có chắc chắn muốn hủy đặt tour cho 
+                               khách hàng ${bookingTour.customerName} với số tiền 
+                               ${$filter('vnCurrency')(bookingTour.orderTotal)} không ?`, confirm);
         }
+
+        /**
+         * In hóa đơn
+         * @param invoiceId
+         */
+        $scope.printInvoice = (invoiceId) => {
+            BillTourServiceAD.findByInvoiceId(invoiceId).then(function (response) {
+                if (response.status === 200) {
+                    let invoice = {
+                        ...response.data.data,
+                        tourDetailsByTourDetailId: {
+                            ...response.data.data.tourDetailsByTourDetailId,
+                            toursByTourId: response.data.data.toursByTourId
+                        }
+                    };
+
+                    PrintService.print(invoice);
+                } else {
+                    $location.path('/admin/page-not-found');
+                }
+            })
+        };
 
         $scope.getTourBookingList();
 
@@ -167,8 +211,12 @@ travel_app.controller('BookingControllerAD',
         $scope.closeModal = () => {
             $('#modal-tour-detail').modal('hide');
         };
+
         $scope.closeModal = () => {
             $('#modal-cancel-transaction').modal('hide');
         };
 
+        $scope.hideModalCancelBookTour = function () {
+            $('#modal-tour-detail').modal('show');
+        }
     });

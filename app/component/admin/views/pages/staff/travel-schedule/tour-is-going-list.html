@@ -73,7 +73,8 @@
                                 </li>
 
                                 <!-- Next Page -->
-                                <li class="page-item cursor-pointer" ng-class="{disabled: currentPage === totalPages - 1}">
+                                <li class="page-item cursor-pointer"
+                                    ng-class="{disabled: currentPage === totalPages - 1}">
                                     <a class="page-link" ng-click="setPage(totalPages - 1)">
                                         <i class="fa-solid fa-angles-right"></i>
                                     </a>
@@ -132,10 +133,17 @@
                     <td>{{ tourDetail.id }}</td>
                     <td>{{ tourDetail.toursByTourId.tourName }}</td>
                     <td>{{ tourDetail.numberOfGuests }}</td>
-                    <td>{{ tourDetail.fromLocation }}</td>
-                    <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="{{ tourDetail.toLocation }}">
-                        {{ tourDetail.toLocation }}
+                    <td class="cursor-default">
+                        <span custom-tooltip="{{ tourDetail.fromLocation }}">
+                            <span>{{ tourDetail.fromLocation | limitTo: 15 }}</span>
+                            <span ng-show="tourDetail.fromLocation.length > 15">...</span>
+                        </span>
+                    </td>
+                    <td class="cursor-default">
+                        <span custom-tooltip="{{ tourDetail.toLocation }}">
+                            <span>{{ tourDetail.toLocation | limitTo: 15 }}</span>
+                            <span ng-show="tourDetail.toLocation.length > 15">...</span>
+                        </span>
                     </td>
                     <td>{{ tourDetail.unitPrice | vnCurrency }}</td>
                     <td ng-if="tourDetail.tourDetailStatus == 1">
@@ -165,9 +173,8 @@
                     <td class="d-flex align-items-center justify-content-center">
                         <button class="fs-1 btn text-info px-2"
                                 ng-click="openModal(tourDetail.id)"
-                                title="Xem thông tin tour"
                         >
-                            <i class="fa-regular fa-eye"></i>
+                            <span custom-tooltip="Xem chi tiết"><i class="fa-regular fa-eye"></i></span>
                         </button>
                     </td>
                 </tr>
@@ -185,13 +192,13 @@
     </div>
 </div>
 
-<!--modal-->
+<!-- Modal xem thông tin chuyến đi chi tiết -->
 <div class="modal fade" id="modal-tour-is-going" tabindex="-1" role="dialog" aria-labelledby="tourIsGoingModal"
      aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header text-white">
-                <h5 class="modal-title" id="tourIsGoingModal">Chi tiết Tour
+                <h5 class="modal-title" id="exampleModalLabel">Chi tiết Tour
                     đi {{ tourDetail.fromLocation }} - {{ tourDetail.toLocation }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -252,21 +259,12 @@
                                             class="fw-bold">{{ tourDetail.fromLocation }}</span></p>
                                     <p class="m-2 fw-medium">Điểm đến: <span
                                             class="fw-bold">{{ tourDetail.toLocation }}</span></p>
-                                    <p class="m-2 fw-medium">Dự kiến khoảng:
-                                        <span id="expectedKm" class="fw-bold"></span>
-                                    </p>
                                     <p class="m-2 fw-medium">Đã đặt:
                                         <span class="fw-normal" ng-if="tourDetail.bookedSeat === 0">
                                             Tour đang trống
                                         </span>
                                         <span class="fw-normal" ng-if="tourDetail.bookedSeat !== 0">
                                             {{ tourDetail.bookedSeat }} Người
-                                        </span>
-                                    </p>
-                                    <p class="m-2 fw-medium">Điểm dừng:
-                                        <span class="fw-bold" ng-repeat="province in provinceBreak">
-                                            {{ province.Name }}
-                                            <span ng-if="!$last">,</span>
                                         </span>
                                     </p>
                                     <p class="m-2 fw-medium">Ngày đi: <span
@@ -300,11 +298,27 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-12 mb-3 mt-5">
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-xl-3 p-1" ng-repeat="img in tourDetailImage">
+                                            <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px"
+                                                 loading="lazy" ng-src="{{img.tourDetailImg}}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+                <button type="button" class="btn" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Thoát
+                </button>
             </div>
         </div>
     </div>

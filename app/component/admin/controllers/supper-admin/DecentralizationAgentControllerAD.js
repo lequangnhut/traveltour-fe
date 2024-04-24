@@ -239,7 +239,7 @@ travel_app.controller('DecentralizationControllerAgentAD', function ($scope, $sc
             });
         }
 
-        confirmAlert('Bạn có chắc chắn muốn xóa nhân viên ' + fullName + ' không ?', confirmDeleteStaff);
+        confirmAlert('Bạn có chắc chắn muốn xóa đối tác ' + fullName + ' không ?', confirmDeleteStaff);
     }
 
     /**
@@ -275,13 +275,9 @@ travel_app.controller('DecentralizationControllerAgentAD', function ($scope, $sc
     };
 
     $scope.updateRoles = function (userId, dataRole) {
-        $scope.isLoading = true;
-
         DecentralizationServiceAD.updateDecentralization(userId, dataRole).then(function successCallback() {
             toastAlert('success', 'Cập nhật quyền thành công !');
-        }, errorCallback).finally(function () {
-            $scope.isLoading = false;
-        });
+        }, errorCallback);
     };
 
     $scope.init();

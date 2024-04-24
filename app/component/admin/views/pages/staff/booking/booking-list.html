@@ -3,7 +3,7 @@
         <div class="header-control-center">
             <div class="d-flex justify-content-between align-items-center row ">
                 <div class="col-xl-12 mt-3">
-                    <h3 class="color-green fw-bold text-uppercase">Danh sách đặt tour</h3>
+                    <h3 class="color-green fw-bold text-uppercase">Danh sách khách đặt tour</h3>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                 <div class="row">
                     <div class="h4 col-lg-5 d-flex align-items-center h-100">
                         <div class="d-flex align-items-center">
-                            <span class="h4">Danh sách booking chờ thanh toán</span>
+                            <span class="h4">Danh sách tour chờ thanh toán</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end align-items-baseline col-lg-2">
@@ -106,7 +106,7 @@
                 <tr class="bg-light">
                     <th>#</th>
                     <th class="cursor-pointer" ng-click="sortData('id')">
-                        <div class="icon-left">ID
+                        <div class="icon-left">Mã đơn hàng
                             <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
@@ -116,13 +116,18 @@
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('customerPhone')">
-                        <div class="icon-left">SDT khách hàng
+                        <div class="icon-left">SĐT khách hàng
                             <span class="sorting-icon" ng-bind-html="getSortIcon('customerPhone')"></span>
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('orderTotal')">
                         <div class="icon-left">Giá
                             <span class="sorting-icon" ng-bind-html="getSortIcon('orderTotal        ')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('dateCreated')">
+                        <div class="icon-left">Thời gian đặt tour
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('dateCreated')"></span>
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('orderStatus')">
@@ -137,9 +142,15 @@
                 <tr ng-repeat="btl in bookingTourList">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ btl.id }}</td>
-                    <td>{{ btl.customerName }}</td>
-                    <td>{{ btl.customerPhone }}</td>
+                    <td class="cursor-default">
+                        <span custom-tooltip="{{ btl.customerName }}">
+                            <span>{{ btl.customerName | limitTo: 15 }}</span>
+                            <span ng-show="btl.customerName.length > 15">...</span>
+                        </span>
+                    </td>
+                    <td>{{ btl.customerPhone | phoneNumber }}</td>
                     <td>{{ btl.orderTotal | vnCurrency }}</td>
+                    <td>{{ btl.dateCreated | vietnameseDateTime }}</td>
                     <td ng-if="btl.orderStatus == 0">
                         <div class="d-flex align-items-center justify-content-center">
                             <span class="status-warning"></span>
@@ -160,7 +171,7 @@
                     </td>
                     <td class="d-flex align-items-center justify-content-center">
                         <button class="fs-1 btn text-info px-2" ng-click="openModal(btl)">
-                            <i class="fa-regular fa-eye"></i>
+                            <span custom-tooltip="Xem chi tiết"><i class="fa-regular fa-eye"></i></span>
                         </button>
                     </td>
                 </tr>
@@ -183,7 +194,7 @@
                 <div class="row">
                     <div class="h4 col-lg-5 d-flex align-items-center h-100">
                         <div class="d-flex align-items-center">
-                            <span class="h4">Danh sách booking đã thanh toán</span>
+                            <span class="h4">Danh sách tour đã thanh toán</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end align-items-baseline col-lg-2">
@@ -239,7 +250,7 @@
                 <tr class="bg-light">
                     <th>#</th>
                     <th class="cursor-pointer" ng-click="sortData('id')">
-                        <div class="icon-left">ID
+                        <div class="icon-left">Mã đơn hàng
                             <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
@@ -249,13 +260,18 @@
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('customerPhone')">
-                        <div class="icon-left">SDT khách hàng
+                        <div class="icon-left">SĐT khách hàng
                             <span class="sorting-icon" ng-bind-html="getSortIcon('customerPhone')"></span>
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('orderTotal')">
                         <div class="icon-left">Giá
                             <span class="sorting-icon" ng-bind-html="getSortIcon('orderTotal        ')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('dateCreated')">
+                        <div class="icon-left">Thời gian thanh toán
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('dateCreated')"></span>
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('orderStatus')">
@@ -270,9 +286,15 @@
                 <tr ng-repeat="btl in bookingTourList">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ btl.id }}</td>
-                    <td>{{ btl.customerName }}</td>
-                    <td>{{ btl.customerPhone }}</td>
+                    <td class="cursor-default">
+                        <span custom-tooltip="{{ btl.customerName }}">
+                            <span>{{ btl.customerName | limitTo: 15 }}</span>
+                            <span ng-show="btl.customerName.length > 15">...</span>
+                        </span>
+                    </td>
+                    <td>{{ btl.customerPhone | phoneNumber }}</td>
                     <td>{{ btl.orderTotal | vnCurrency }}</td>
+                    <td>{{ btl.invoicesById[0].dateCreated | vietnameseDateTime }}</td>
                     <td ng-if="btl.orderStatus == 0">
                         <div class="d-flex align-items-center justify-content-center">
                             <span class="status-warning"></span>
@@ -293,7 +315,7 @@
                     </td>
                     <td class="d-flex align-items-center justify-content-center">
                         <button class="fs-1 btn text-info px-2" ng-click="openModal(btl)">
-                            <i class="fa-regular fa-eye"></i>
+                            <span custom-tooltip="Xem chi tiết"><i class="fa-regular fa-eye"></i></span>
                         </button>
                     </td>
                 </tr>
@@ -315,7 +337,7 @@
                 <div class="row">
                     <div class="h4 col-lg-5 d-flex align-items-center h-100">
                         <div class="d-flex align-items-center">
-                            <span class="h4">Danh sách booking huỷ giao dịch</span>
+                            <span class="h4">Danh sách tour huỷ giao dịch</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end align-items-baseline col-lg-2">
@@ -371,7 +393,7 @@
                 <tr class="bg-light">
                     <th>#</th>
                     <th class="cursor-pointer" ng-click="sortData('id')">
-                        <div class="icon-left">ID
+                        <div class="icon-left">Mã đơn hàng
                             <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
@@ -381,13 +403,18 @@
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('customerPhone')">
-                        <div class="icon-left">SDT khách hàng
+                        <div class="icon-left">SĐT khách hàng
                             <span class="sorting-icon" ng-bind-html="getSortIcon('customerPhone')"></span>
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('orderTotal')">
                         <div class="icon-left">Giá
                             <span class="sorting-icon" ng-bind-html="getSortIcon('orderTotal        ')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('dateCreated')">
+                        <div class="icon-left">Thời gian hủy đơn
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('dateCreated')"></span>
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('orderStatus')">
@@ -402,9 +429,15 @@
                 <tr ng-repeat="btl in bookingTourList">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ btl.id }}</td>
-                    <td>{{ btl.customerName }}</td>
-                    <td>{{ btl.customerPhone }}</td>
+                    <td class="cursor-default">
+                        <span custom-tooltip="{{ btl.customerName }}">
+                            <span>{{ btl.customerName | limitTo: 15 }}</span>
+                            <span ng-show="btl.customerName.length > 15">...</span>
+                        </span>
+                    </td>
+                    <td>{{ btl.customerPhone | phoneNumber }}</td>
                     <td>{{ btl.orderTotal | vnCurrency }}</td>
+                    <td>{{ btl.dateCancelled | vietnameseDateTime }}</td>
                     <td ng-if="btl.orderStatus == 0">
                         <div class="d-flex align-items-center justify-content-center">
                             <span class="status-warning"></span>
@@ -425,7 +458,7 @@
                     </td>
                     <td class="d-flex align-items-center justify-content-center">
                         <button class="fs-1 btn text-info px-2" ng-click="openModalCancelTransaction(btl)">
-                            <i class="fa-regular fa-eye"></i>
+                            <span custom-tooltip="Xem chi tiết"><i class="fa-regular fa-eye"></i></span>
                         </button>
                     </td>
                 </tr>
@@ -443,13 +476,13 @@
     </div>
 </div>
 
-<!--modal-->
+<!-- Modal xem thông tin tour đang chờ thanh toán và đã thanh toán -->
 <div class="modal fade" id="modal-tour-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header text-white">
-                <h5 class="modal-title" id="exampleModalLabel">Chi tiết booking tour {{ bookingTour.id }}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Chi tiết đặt tour {{ bookingTour.id }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -461,8 +494,11 @@
                                      src="{{bookingTour.toursByTourId.tourImg}}"
                                      onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"
                                      style="height: 400px"/>
-                                <div class="card-body ">
+                                <div class="card-body">
                                     <div class="bg-header-model">
+                                        <div class="h2 text-center fw-medium">
+                                            {{ bookingTour.toursByTourId.tourName }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -474,25 +510,24 @@
                                     Thông tin tour
                                 </div>
                                 <div class="card-body p-3">
+                                    <p class="m-2 fw-medium">Hướng dẫn viên: <span
+                                            class="fw-normal">{{ bookingTour.usersByUserId.fullName }}</span></p>
                                     <p class="m-2 fw-medium">Mã Tour: <span
                                             class="fw-bold">{{ bookingTour.tourDetailsByTourDetailId.tourId }}</span>
                                     </p>
                                     <p class="m-2 fw-medium">Mã Tour chi tiết: <span
                                             class="fw-bold">{{ bookingTour.tourDetailId }}</span></p>
                                     <p class="m-2 fw-medium">Ngày đi: <span
-                                            class="fw-normal">{{ bookingTour.tourDetailsByTourDetailId.departureDate | vietnameseDateTime }}</span>
+                                            class="fw-medium color-warning">{{ bookingTour.tourDetailsByTourDetailId.departureDate | vietnameseDateTime }}</span>
                                     </p>
                                     <p class="m-2 fw-medium">Ngày về: <span
-                                            class="fw-normal">{{ bookingTour.tourDetailsByTourDetailId.arrivalDate | vietnameseDateTime }}</span>
+                                            class="fw-medium color-warning">{{ bookingTour.tourDetailsByTourDetailId.arrivalDate | vietnameseDateTime }}</span>
                                     </p>
                                     <p class="m-2 fw-medium">Điểm đi: <span
-                                            class="fw-normal">{{ bookingTour.tourDetailsByTourDetailId.fromLocation }}</span>
+                                            class="fw-medium color-green">{{ bookingTour.tourDetailsByTourDetailId.fromLocation }}</span>
                                     </p>
                                     <p class="m-2 fw-medium">Điểm đến: <span
-                                            class="fw-normal">{{ bookingTour.tourDetailsByTourDetailId.toLocation }}</span>
-                                    </p>
-                                    <p class="m-2 fw-medium">Giá : <span
-                                            class="fw-normal">{{ bookingTour.tourDetailsByTourDetailId.unitPrice | vnCurrency }}</span>
+                                            class="fw-medium color-green">{{ bookingTour.tourDetailsByTourDetailId.toLocation }}</span>
                                     </p>
                                 </div>
                             </div>
@@ -501,44 +536,133 @@
                         <div class="col-md-7">
                             <div class="card">
                                 <div class="card-header p-3 fw-bold">
-                                    Thông tin booking tour
+                                    Thông tin đặt tour
                                 </div>
                                 <div class="card-body p-3">
                                     <p class="m-2 fw-medium">Mã booking: <span
                                             class="fw-bold">{{ bookingTour.id }}</span></p>
-                                    <p class="m-2 fw-medium">Hướng dẫn viên: <span
-                                            class="fw-normal">{{ bookingTour.usersByUserId.fullName }}</span></p>
+                                    <p class="m-2 fw-medium">Email: <span
+                                            class="fw-bold">{{ bookingTour.customerEmail }}</span></p>
                                     <p class="m-2 fw-medium">Tên khách hàng: <span
-                                            class="fw-normal">{{ bookingTour.customerName }}</span></p>
-                                    <p class="m-2 fw-medium">số điện thoại khách hàng: <span
-                                            class="fw-normal">{{ bookingTour.customerPhone }}</span></p>
-                                    <p class="m-2 fw-medium">email khách hàng: <span
-                                            class="fw-normal">{{ bookingTour.customerEmail }}</span></p>
-                                    <p class="m-2 fw-medium">Ngày tạo: <span
-                                            class="fw-normal">{{ bookingTour.dateCreated | vietnameseDateTime }}</span>
-                                    </p>
-                                    <p class="m-2 fw-medium">Số người lớn: <span
-                                            class="fw-normal">{{ bookingTour.capacityAdult }} </span></p>
-                                    <p class="m-2 fw-medium">Số trẻ em: <span
-                                            class="fw-normal">{{ bookingTour.capacityKid }} </span></p>
-                                    <p class="m-2 fw-medium">Số em bé: <span
-                                            class="fw-normal">{{ bookingTour.capacityBaby }} </span></p>
-                                    <p class="m-2 fw-medium">Đơn giá: <span
+                                            class="fw-bold">{{ bookingTour.customerName }}</span></p>
+                                    <p class="m-2 fw-medium">Số điện thoại: <span
+                                            class="fw-bold">{{ bookingTour.customerPhone | phoneNumber }}</span></p>
+                                    <p class="m-2 fw-medium">Tổng tiền: <span
                                             class="fw-bold">{{ bookingTour.orderTotal | vnCurrency }}</span></p>
-                                    <p class="m-2 fw-medium">Ghi chú: <span
-                                            class="fw-normal">{{ bookingTour.orderNote === null ? 'Chưa ghi chú' : bookingTour.orderNote }}</span>
+                                    <p class="m-2 fw-medium">Ngày đặt tour: <span
+                                            class="fw-bold text-warning">{{ bookingTour.dateCreated | vietnameseDateTime }}</span>
+                                    </p>
+                                    <p class="m-2 fw-medium" ng-if="bookingTour.orderStatus != 0">
+                                        Thời gian thanh toán:
+                                        <span class="fw-bold color-green">{{ bookingTour.invoicesById[0].dateCreated | vietnameseDateTime }}</span>
                                     </p>
                                     <p class="m-2 fw-medium">Trạng thái:
-                                        <span class="fw-medium color-warning" ng-if="bookingTour.orderStatus == 0">
+                                        <span class="fw-bold color-warning" ng-if="bookingTour.orderStatus == 0">
                                             Chờ thanh toán
                                         </span>
-                                        <span class="fw-medium color-green" ng-if="bookingTour.orderStatus == 1">
+                                        <span class="fw-bold color-green" ng-if="bookingTour.orderStatus == 1">
                                             Đã thanh toán
                                         </span>
-                                        <span class="fw-medium color-danger" ng-if="bookingTour.orderStatus == 2">
+                                        <span class="fw-bold color-danger" ng-if="bookingTour.orderStatus == 2">
                                             Hủy giao dịch
                                         </span>
                                     </p>
+                                    <p class="m-2 fw-medium">Ghi chú: <span
+                                            class="fw-normal">{{ bookingTour.orderNote === null ? 'Không có thông tin ghi chú' : bookingTour.orderNote }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-12 mt-2">
+                            <table class="table table-bordered table-striped mb-1">
+                                <thead>
+                                <tr>
+                                    <th class="fw-medium">STT</th>
+                                    <th class="fw-medium">Loại vé</th>
+                                    <th class="fw-medium">Số lượng</th>
+                                    <th class="fw-medium">Đơn giá</th>
+                                    <th class="fw-medium">Thành tiền</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-if="bookingTour.capacityAdult > 0">
+                                    <td>1</td>
+                                    <td>
+                                        <ul class="text-dark">
+                                            Vé người lớn (trên 1m3)
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul class="text-dark">
+                                            {{ bookingTour.capacityAdult + ' vé' }}
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul class="text-dark">
+                                            {{ bookingTour.tourDetailsByTourDetailId.unitPrice | vnCurrency }}
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <span class="text-danger">
+                                            {{ bookingTour.capacityAdult * bookingTour.tourDetailsByTourDetailId.unitPrice | vnCurrency }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr ng-if="bookingTour.capacityKid > 0">
+                                    <td>2</td>
+                                    <td>
+                                        <ul class="text-dark">
+                                            Vé trẻ em (dưới 1m3)
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul class="text-dark">
+                                            {{ bookingTour.capacityKid + ' vé' }}
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul class="text-dark">
+                                            {{ bookingTour.tourDetailsByTourDetailId.unitPrice * 0.3 | vnCurrency }}
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <span class="text-danger">
+                                            {{ bookingTour.capacityKid * (bookingTour.tourDetailsByTourDetailId.unitPrice * 0.3) | vnCurrency }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="4">
+                                        <li class="d-flex justify-content-end align-items-center">
+                                            <div style="line-height: 20px">
+                                                <strong>Tổng tiền:</strong>
+                                                <strong>
+                                                    <p class="mb-0" style="font-size: 13px">
+                                                        (Đã bao gồm phí VAT)
+                                                    </p>
+                                                </strong>
+                                            </div>
+                                        </li>
+                                    </td>
+                                    <td>
+                                        <span class="text-danger fw-medium">
+                                            {{ bookingTour.orderTotal | vnCurrency }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div class="col-12 mt-3">
+                            <div class="row">
+                                <div class="col-xl-3 p-1"
+                                     ng-repeat="img in bookingTour.tourDetailsByTourDetailId.tourDetailImagesById">
+                                    <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px"
+                                         loading="lazy" ng-src="{{img.tourDetailImg}}" alt="img-tour"/>
                                 </div>
                             </div>
                         </div>
@@ -546,17 +670,34 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-green" data-dismiss="modal" ng-if="bookingTour.orderStatus == 0"
-                        ng-click="browseBookingTour(bookingTour.id)">Duyệt
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Thoát
                 </button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal"
-                        ng-click="deleteBookingTour(bookingTour.id)">Hủy
+                <button type="button"
+                        class="btn btn-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#cancelled_noted"
+                >
+                    Hủy tour
                 </button>
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Thoát</button>
+                <button type="button"
+                        ng-if="bookingTour.orderStatus == 1"
+                        ng-click="printInvoice(bookingTour.invoicesById[0].id)"
+                        class="btn btn-info"
+                >
+                    In hóa đơn
+                    <i class="fa-solid fa-print"></i>
+                </button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-if="bookingTour.orderStatus == 0"
+                        ng-click="browseBookingTour(bookingTour)">Thanh toán
+                </button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal xem thông tin đặt tour đã bị hủy -->
 <div class="modal fade" id="modal-cancel-transaction" tabindex="-1" role="dialog"
      aria-labelledby="cancelTransactionModel"
      aria-hidden="true">
@@ -572,11 +713,14 @@
                         <div class="col-12">
                             <div class="card mb-3">
                                 <img class="img-fluid"
-                                     src="{{bookingTour.toursByTourId.tourImg}}"
+                                     ng-src="{{bookingTour.toursByTourId.tourImg}}"
                                      onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"
-                                     style="height: 400px"/>
-                                <div class="card-body ">
+                                     style="height: 400px" alt="img-tour"/>
+                                <div class="card-body">
                                     <div class="bg-header-model">
+                                        <div class="h2 text-center fw-medium">
+                                            {{ bookingTour.toursByTourId.tourName }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -593,20 +737,19 @@
                                     </p>
                                     <p class="m-2 fw-medium">Mã Tour chi tiết: <span
                                             class="fw-bold">{{ bookingTour.tourDetailId }}</span></p>
+                                    <p class="m-2 fw-medium">Hướng dẫn viên: <span
+                                            class="fw-normal">{{ bookingTour.usersByUserId.fullName }}</span></p>
                                     <p class="m-2 fw-medium">Ngày đi: <span
-                                            class="fw-normal">{{ bookingTour.tourDetailsByTourDetailId.departureDate | vietnameseDateTime }}</span>
+                                            class="fw-medium color-warning">{{ bookingTour.tourDetailsByTourDetailId.departureDate | vietnameseDateTime }}</span>
                                     </p>
                                     <p class="m-2 fw-medium">Ngày về: <span
-                                            class="fw-normal">{{ bookingTour.tourDetailsByTourDetailId.arrivalDate | vietnameseDateTime }}</span>
+                                            class="fw-medium color-warning">{{ bookingTour.tourDetailsByTourDetailId.arrivalDate | vietnameseDateTime }}</span>
                                     </p>
                                     <p class="m-2 fw-medium">Điểm đi: <span
-                                            class="fw-normal">{{ bookingTour.tourDetailsByTourDetailId.fromLocation }}</span>
+                                            class="fw-medium color-green">{{ bookingTour.tourDetailsByTourDetailId.fromLocation }}</span>
                                     </p>
                                     <p class="m-2 fw-medium">Điểm đến: <span
-                                            class="fw-normal">{{ bookingTour.tourDetailsByTourDetailId.toLocation }}</span>
-                                    </p>
-                                    <p class="m-2 fw-medium">Giá : <span
-                                            class="fw-normal">{{ bookingTour.tourDetailsByTourDetailId.unitPrice | vnCurrency }}</span>
+                                            class="fw-medium color-green">{{ bookingTour.tourDetailsByTourDetailId.toLocation }}</span>
                                     </p>
                                 </div>
                             </div>
@@ -615,32 +758,25 @@
                         <div class="col-md-7">
                             <div class="card">
                                 <div class="card-header p-3 fw-bold">
-                                    Thông tin booking tour
+                                    Thông tin đặt tour
                                 </div>
                                 <div class="card-body p-3">
                                     <p class="m-2 fw-medium">Mã booking: <span
                                             class="fw-bold">{{ bookingTour.id }}</span></p>
-                                    <p class="m-2 fw-medium">Hướng dẫn viên: <span
-                                            class="fw-normal">{{ bookingTour.usersByUserId.fullName }}</span></p>
+                                    <p class="m-2 fw-medium">Email: <span
+                                            class="fw-bold">{{ bookingTour.customerEmail }}</span></p>
                                     <p class="m-2 fw-medium">Tên khách hàng: <span
-                                            class="fw-normal">{{ bookingTour.customerName }}</span></p>
-                                    <p class="m-2 fw-medium">số điện thoại khách hàng: <span
-                                            class="fw-normal">{{ bookingTour.customerPhone }}</span></p>
-                                    <p class="m-2 fw-medium">email khách hàng: <span
-                                            class="fw-normal">{{ bookingTour.customerEmail }}</span></p>
-                                    <p class="m-2 fw-medium">Ngày tạo: <span
-                                            class="fw-normal">{{ bookingTour.dateCreated | vietnameseDateTime }}</span>
-                                    </p>
-                                    <p class="m-2 fw-medium">Số người lớn: <span
-                                            class="fw-normal">{{ bookingTour.capacityAdult }} </span></p>
-                                    <p class="m-2 fw-medium">Số trẻ em: <span
-                                            class="fw-normal">{{ bookingTour.capacityKid }} </span></p>
-                                    <p class="m-2 fw-medium">Số em bé: <span
-                                            class="fw-normal">{{ bookingTour.capacityBaby }} </span></p>
-                                    <p class="m-2 fw-medium">Đơn giá: <span
+                                            class="fw-bold">{{ bookingTour.customerName }}</span></p>
+                                    <p class="m-2 fw-medium">Số điện thoại: <span
+                                            class="fw-bold">{{ bookingTour.customerPhone | phoneNumber }}</span></p>
+                                    <p class="m-2 fw-medium">Tổng tiền: <span
                                             class="fw-bold">{{ bookingTour.orderTotal | vnCurrency }}</span></p>
-                                    <p class="m-2 fw-medium">Ghi chú: <span
-                                            class="fw-normal">{{ bookingTour.orderNote === null ? 'Chưa ghi chú' : bookingTour.orderNote }}</span>
+                                    <p class="m-2 fw-medium">Ngày đặt tour: <span
+                                            class="fw-bold color-green">{{ bookingTour.dateCreated | vietnameseDateTime }}</span>
+                                    </p>
+                                    <p class="m-2 fw-medium" ng-if="bookingTour.orderStatus == 2">
+                                        Thời gian hủy đơn:
+                                        <span class="fw-bold color-danger">{{ bookingTour.dateCancelled | vietnameseDateTime }}</span>
                                     </p>
                                     <p class="m-2 fw-medium">Trạng thái:
                                         <span class="fw-medium color-warning" ng-if="bookingTour.orderStatus == 0">
@@ -653,14 +789,102 @@
                                             Hủy giao dịch
                                         </span>
                                     </p>
+                                    <p class="m-2 fw-medium">Ghi chú: <span
+                                            class="fw-normal">{{ bookingTour.orderNote === null ? 'Không có thông tin ghi chú' : bookingTour.orderNote }}</span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12">
+
+                        <div class="col-12 col-lg-12 mt-3">
+                            <table class="table table-bordered table-striped mb-1">
+                                <thead>
+                                <tr>
+                                    <th class="fw-medium">STT</th>
+                                    <th class="fw-medium">Loại vé</th>
+                                    <th class="fw-medium">Số lượng</th>
+                                    <th class="fw-medium">Đơn giá</th>
+                                    <th class="fw-medium">Thành tiền</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-if="bookingTour.capacityAdult > 0">
+                                    <td>1</td>
+                                    <td>
+                                        <ul class="text-dark">
+                                            Vé người lớn (trên 1m3)
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul class="text-dark">
+                                            {{ bookingTour.capacityAdult + ' vé' }}
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul class="text-dark">
+                                            {{ bookingTour.tourDetailsByTourDetailId.unitPrice | vnCurrency }}
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <span class="text-danger">
+                                            {{ bookingTour.capacityAdult * bookingTour.tourDetailsByTourDetailId.unitPrice | vnCurrency }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr ng-if="bookingTour.capacityKid > 0">
+                                    <td>2</td>
+                                    <td>
+                                        <ul class="text-dark">
+                                            Vé trẻ em (dưới 1m3)
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul class="text-dark">
+                                            {{ bookingTour.capacityKid + ' vé' }}
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul class="text-dark">
+                                            {{ bookingTour.tourDetailsByTourDetailId.unitPrice * 0.3 | vnCurrency }}
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <span class="text-danger">
+                                            {{ bookingTour.capacityKid * (bookingTour.tourDetailsByTourDetailId.unitPrice * 0.3) | vnCurrency }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="4">
+                                        <li class="d-flex justify-content-end align-items-center">
+                                            <div style="line-height: 20px">
+                                                <strong>Tổng tiền:</strong>
+                                                <strong>
+                                                    <p class="mb-0" style="font-size: 13px">
+                                                        (Đã bao gồm phí VAT)
+                                                    </p>
+                                                </strong>
+                                            </div>
+                                        </li>
+                                    </td>
+                                    <td>
+                                        <span class="text-danger fw-medium">
+                                            {{ bookingTour.orderTotal | vnCurrency }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div class="col-12 mt-3">
                             <div class="row">
-                                <div class="col-xl-3 p-1" ng-repeat="img in bookingTour.tourDetailsByTourDetailId.tourDetailImagesById">
-                                    <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px" loading="lazy"
-                                         ng-src="{{img.tourDetailImg}}"/>
+                                <div class="col-xl-3 p-1"
+                                     ng-repeat="img in bookingTour.tourDetailsByTourDetailId.tourDetailImagesById">
+                                    <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px"
+                                         loading="lazy" ng-src="{{img.tourDetailImg}}" alt="img-tour"/>
                                 </div>
                             </div>
                         </div>
@@ -668,7 +892,69 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Thoát
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal nhập thông tin tại sao ngưng hoạt động doanh nghiệp -->
+<div class="modal fade" id="cancelled_noted" tabindex="-1" aria-labelledby="noted-agencies-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="noted-agencies-label">
+                    Mô tả lí do
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" role="form" name="formCancelledTour">
+                    <div class="form-group">
+                        <label for="noted" class="form-label">
+                            VUI LÒNG NHẬP LÍ DO HỦY TOUR VỚI KHÁCH HÀNG<span class="text-danger">*</span>
+                        </label>
+                        <textarea class="form-control"
+                                  rows="4"
+                                  id="noted"
+                                  name="orderNoted"
+                                  ng-model="bookingTourDto.orderNoted"
+                                  ng-class="{ 'is-invalid': formCancelledTour.orderNoted.$invalid && formCancelledTour.orderNoted.$touched,
+                                               'is-valid': formCancelledTour.orderNoted.$valid && formCancelledTour.orderNoted.$touched }"
+                                  ng-pattern="/.{10,}/"
+                                  placeholder="Nhập lí do hủy tour của khách hàng {{ bookingTour.customerName }} với số tiền {{ bookingTour.orderTotal | vnCurrency }}"
+                                  required
+                        ></textarea>
+                        <small class="text-danger"
+                               ng-show="formCancelledTour.orderNoted.$touched && formCancelledTour.orderNoted.$error.required">
+                            Vui lòng nhập lí do vì sao hủy tour.
+                        </small>
+                        <small class="text-danger"
+                               ng-show="formCancelledTour.orderNoted.$error.pattern">
+                            Vui lòng nhập ít nhất 10 ký tự.
+                        </small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn"
+                        ng-click="hideModalCancelBookTour()"
+                        data-bs-dismiss="modal"
+                >
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Quay về
+                </button>
+                <button type="button"
+                        ng-disabled="formCancelledTour.$invalid"
+                        ng-click="deleteBookingTour(bookingTour)"
+                        class="btn btn-success"
+                >
+                    Xác nhận hủy
+                </button>
             </div>
         </div>
     </div>

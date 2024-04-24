@@ -143,13 +143,13 @@
                 <tr ng-repeat="tourDetail in tourDetailList">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ tourDetail.id }}</td>
-                    <td>
+                    <td class="cursor-default">
                         <img ng-src="{{tourDetail.tourDetailImagesById[0].tourDetailImg}}" loading="lazy"
                              class="cursor-pointer rounded-2" alt="avatar" width="55" height="30" title="Xem ảnh xe"
                              ng-click="openImageModal(tourDetail.tourDetailImagesById[0].tourDetailImg)"
                              onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
                     </td>
-                    <td>
+                    <td class="cursor-default">
                         <span custom-tooltip="{{ tourDetail.toursByTourId.tourName }}">
                             <span>{{ tourDetail.toursByTourId.tourName | limitTo: 15 }}</span>
                             <span ng-show="tourDetail.toursByTourId.tourName.length > 15">...</span>
@@ -157,7 +157,7 @@
                     </td>
                     <td>{{ tourDetail.numberOfGuests }}</td>
                     <td>{{ tourDetail.fromLocation }}</td>
-                    <td>
+                    <td class="cursor-default">
                         <span custom-tooltip="{{ tourDetail.toLocation }}">
                             <span>{{ tourDetail.toLocation | limitTo: 15 }}</span>
                             <span ng-show="tourDetail.toLocation.length > 15">...</span>
@@ -191,17 +191,20 @@
                     <td class="d-flex align-items-center justify-content-center">
                         <button class="fs-1 btn text-info px-2"
                                 ng-click="openModal(tourDetail.id)"
-                                title="Xem thông tin tour"
                         >
-                            <i class="fa-regular fa-eye"></i>
+                            <span custom-tooltip="Xem chi tiết"><i class="fa-regular fa-eye"></i></span>
                         </button>
                         <a ng-click="redirectPage('/admin/detail-tour-list/trips-tour-list/', tourDetail.id)"
-                           role="button" class="fs-1 btn text-primary px-2 cursor-pointer" title="Lịch trình tour">
-                            <i class="fa-solid fa-calendar-days"></i>
+                           role="button" class="fs-1 btn text-primary px-2 cursor-pointer">
+                            <span custom-tooltip="Lịch trình đi tour">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </span>
                         </a>
                         <a ng-click="redirectWithMultipleId('/admin/detail-tour-list/:tourDetailId/service-list', [tourDetail.id])"
-                           role="button" class="fs-1 btn text-warning px-2" title="Dịch vụ theo tour">
-                            <i class="fa-solid fa-gear"></i>
+                           role="button" class="fs-1 btn text-warning px-2">
+                            <span custom-tooltip="Dịch vụ theo tour">
+                                <i class="fa-solid fa-gear"></i>
+                            </span>
                         </a>
                     </td>
                 </tr>
@@ -219,7 +222,7 @@
     </div>
 </div>
 
-<!--modal-->
+<!-- Modal xem thông tin tour chi tiết-->
 <div class="modal fade" id="modal-tour-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -411,10 +414,13 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal"
+                <button type="button" class="btn" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Thoát
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"
                         ng-click="deleteTourDetail(tourDetail.id)">Xóa
                 </button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
             </div>
         </div>
     </div>

@@ -379,14 +379,16 @@
                                                     <div class="location text-orange" style="font-size: 14px">
                                                         <p class="text-warning mb-1">
                                                             <i class="fa-solid fa-phone"></i>
-                                                            Số điện thoại: {{ agencies[$index].phone | phoneNumber }}
+                                                            Số điện thoại:
+                                                            {{ requestCarDetail.agencies.phone | phoneNumber }}
                                                         </p>
                                                         <p class="text-warning mb-1">
                                                             <i class="fa-solid fa-earth-americas"></i>
                                                             Website:
-                                                            <a href="https://{{ agencies[$index].urlWebsite }}"
+                                                            <a target="_blank"
+                                                               href="https://{{ requestCarDetail.agencies.urlWebsite }}"
                                                                class="text-warning">
-                                                                {{ agencies[$index].urlWebsite }}
+                                                                {{ requestCarDetail.agencies.urlWebsite }}
                                                             </a>
                                                         </p>
                                                     </div>

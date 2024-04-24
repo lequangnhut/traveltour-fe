@@ -81,10 +81,14 @@ travel_app.directive('customTooltip', function () {
             let customTooltip = attrs.customTooltip;
 
             // Thiết lập tooltip sử dụng nội dung từ tooltip-content
-            $(element).tooltip({
+            let tooltip = $(element).tooltip({
                 title: customTooltip,
                 placement: attrs.placement || 'top',
                 trigger: 'hover'
+            });
+
+            scope.$on('$destroy', function () {
+                tooltip.tooltip('dispose');
             });
         }
     };

@@ -1,4 +1,4 @@
-travel_app.service('BillTourServiceAD', function ($http, $q, ) {
+travel_app.service('BillTourServiceAD', function ($http, $q,) {
     let API = BASE_API + 'staff/invoices/';
 
     this.getAll = function (page, size, sortBy, sortDir, searchTerm) {
@@ -17,11 +17,14 @@ travel_app.service('BillTourServiceAD', function ($http, $q, ) {
         return deferred.promise;
     };
 
-    this.deactivate = function (id) {
+    this.findByInvoiceId = function (invoiceId) {
         const deferred = $q.defer();
         $http({
-            method: 'DELETE',
-            url: API + 'delete-booking-tour/' + id
+            method: 'GET',
+            url: API + 'find-by-invoice-id',
+            params: {
+                invoiceId: invoiceId
+            }
         }).then(function (response) {
             deferred.resolve(response);
         }, function (error) {
@@ -29,5 +32,4 @@ travel_app.service('BillTourServiceAD', function ($http, $q, ) {
         });
         return deferred.promise;
     };
-
 });

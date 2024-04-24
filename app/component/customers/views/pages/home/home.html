@@ -114,7 +114,7 @@
                                 <li><a href="#">(4.9)</a></li>
                             </ul>
                             <h4 class="title">
-                                <a href="#">
+                                <a href="#" ng-click="redirectPage('/tours/tour-detail/', detail.id)">
                                     <span custom-tooltip="{{ detail.toursByTourId.tourName }}">
                                         <span>{{ detail.toursByTourId.tourName | limitTo: 17 }}</span>
                                         <span ng-show="detail.toursByTourId.tourName.length > 20">...</span>
