@@ -1,35 +1,42 @@
-travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueServiceAD, $filter, $sce, $location, $routeParams, OrderVisitServiceAG, LocalStorageService) {
-    $scope.yearForTheChartColumn = new Date().getFullYear();
+travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueServiceAD, $filter, StatisticalVisitServiceAG, $location, $routeParams, OrderVisitServiceAG, LocalStorageService, StatisticalHotelServiceAG) {
+    $scope.yearOfTheStackedColumnChart = new Date().getFullYear();
+    $scope.yearOfLineBarChart = new Date().getFullYear();
     $scope.yearForPieChart = new Date().getFullYear();
     $scope.currentYearData = new Array(12).fill(0);
     $scope.previousYearData = new Array(12).fill(0);
 
-    RevenueServiceAD.getAllYearColumn().then((repo) => {
-        $scope.selectYearListColumn = repo.data.data;
+    const visitId = LocalStorageService.get('brandId');
+
+    StatisticalVisitServiceAG.getAllOrderVisitYear().then((repo) => {
+        $scope.selectYearOrderVisitList = repo.data.data;
     }).catch((err) => {
         console.error(err);
     })
 
-    RevenueServiceAD.getAllYearPie().then((repo) => {
-        $scope.selectYearListPie = repo.data.data;
-    }).catch((err) => {
-        console.error(err);
-    })
-
-    async function fetchRevenueData(year) {
+    async function fetchStatisticsClassifyingAdultAndChildTicketsData(year, visitId) {
         try {
-            const response = await RevenueServiceAD.revenueOf12MonthsOfTheYearFromTourBooking(year);
-            return response.data.data;
+            const response = await StatisticalVisitServiceAG.statisticsClassifyingAdultAndChildTickets(year, visitId);
+            return response.data;
         } catch (error) {
             console.error(error);
             throw error;
         }
     }
 
-    async function fetchPercentageData(year) {
+    async function fetchStatisticalBookingVisitLocationData(year, visitId) {
         try {
-            const response = await RevenueServiceAD.percentageOfEachTypeOfService(year);
-            return response.data.data;
+            const response = await StatisticalVisitServiceAG.statisticalBookingVisitLocation(year, visitId);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
+
+    async function fetchRevenueOfTouristAttractionsData(year, visitId) {
+        try {
+            const response = await StatisticalVisitServiceAG.getRevenueOfTouristAttractions(year, visitId);
+            return response.data;
         } catch (error) {
             console.error(error);
             throw error;
@@ -38,36 +45,37 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
 
     const initCharts = async () => {
         try {
-            const [revenueData, percentageData] = await Promise.all([fetchRevenueData($scope.yearForTheChartColumn), fetchPercentageData($scope.yearForPieChart)]);
+            const [statisticsClassifyingAdultAndChildTicketsData,
+                statisticalBookingVisitLocationData,
+                revenueOfTouristAttractionsData] = await Promise.all([
+                fetchStatisticsClassifyingAdultAndChildTicketsData($scope.yearOfTheStackedColumnChart, visitId),
+                fetchStatisticalBookingVisitLocationData($scope.yearForPieChart, visitId),
+                fetchRevenueOfTouristAttractionsData($scope.yearOfLineBarChart, visitId)
+            ]);
 
-            $scope.currentYearData = revenueData.currentYearRevenue;
-            $scope.previousYearData = revenueData.previousYearIsRevenue;
+            projectionVsActualChartInit(statisticsClassifyingAdultAndChildTicketsData);
+            stackedLineChartInit(revenueOfTouristAttractionsData);
+            pieChartInit(statisticalBookingVisitLocationData);
 
-            $scope.hotelPercentage = percentageData.hotelPercentage;
-            $scope.visitLocationPercentage = percentageData.visitLocationPercentage;
-            $scope.transportBrandPercentage = percentageData.transportBrandPercentage;
-
-            if ($scope.currentYearData.length > 0 && $scope.previousYearData.length > 0) {
-                projectionVsActualChartInit($scope.currentYearData, $scope.previousYearData);
-            }
-
-            if ($scope.hotelPercentage !== undefined && $scope.visitLocationPercentage !== undefined && $scope.transportBrandPercentage !== undefined) {
-                pieChartInit($scope.hotelPercentage, $scope.visitLocationPercentage, $scope.transportBrandPercentage);
-            }
         } catch (error) {
             console.error(error);
         }
     };
 
-    const updateColumnChart = async () => {
+    const updateStackedColumnChart = async () => {
         try {
-            const revenueData = await fetchRevenueData($scope.yearForTheChartColumn);
-            $scope.currentYearData = revenueData.currentYearRevenue;
-            $scope.previousYearData = revenueData.previousYearIsRevenue;
+            const revenueData = await fetchStatisticsClassifyingAdultAndChildTicketsData($scope.yearOfTheStackedColumnChart, visitId);
+            projectionVsActualChartInit(revenueData);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-            if ($scope.currentYearData.length > 0 && $scope.previousYearData.length > 0) {
-                projectionVsActualChartInit($scope.currentYearData, $scope.previousYearData);
-            }
+
+    const updateLineBarChart = async () => {
+        try {
+            const revenueData = await fetchRevenueOfTouristAttractionsData($scope.yearOfLineBarChart, visitId);
+            stackedLineChartInit(revenueData);
         } catch (error) {
             console.error(error);
         }
@@ -75,14 +83,8 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
 
     const updatedPieChart = async () => {
         try {
-            const percentageData = await fetchPercentageData($scope.yearForPieChart);
-            $scope.hotelPercentage = percentageData.hotelPercentage;
-            $scope.visitLocationPercentage = percentageData.visitLocationPercentage;
-            $scope.transportBrandPercentage = percentageData.transportBrandPercentage;
-
-            if ($scope.hotelPercentage !== undefined && $scope.visitLocationPercentage !== undefined && $scope.transportBrandPercentage !== undefined) {
-                pieChartInit($scope.hotelPercentage, $scope.visitLocationPercentage, $scope.transportBrandPercentage);
-            }
+            const percentageData = await fetchStatisticalBookingVisitLocationData($scope.yearForPieChart, visitId);
+            pieChartInit(percentageData);
         } catch (error) {
             console.error(error);
         }
@@ -137,7 +139,7 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
 
 
     // Hàm để khởi tạo biểu đồ
-    function projectionVsActualChartInit() {
+    function projectionVsActualChartInit(response) {
         const {getColor, getData} = window.phoenix.utils;
         const $projectionVsActualChartEl = document.querySelector('.echart-projection-actual');
 
@@ -146,14 +148,12 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
             const userOptions = getData($projectionVsActualChartEl, 'echarts');
 
             // Dữ liệu ảo cho số lượng vé người lớn và trẻ em cho 12 tháng của năm hiện tại
-            const currentYearAdultTickets = [100, 120, 150, 130, 110, 140, 160, 180, 170, 150, 140, 130]; // Vé người lớn cho 12 tháng của năm hiện tại
-            const currentYearChildTickets = [80, 90, 100, 90, 80, 100, 110, 120, 130, 110, 100, 90]; // Vé trẻ em cho 12 tháng của năm hiện tại
+            const currentYearAdultTickets = response.data.currentYearAdultTickets; // Vé người lớn cho 12 tháng của năm hiện tại
+            const currentYearChildTickets = response.data.currentYearChildTickets; // Vé trẻ em cho 12 tháng của năm hiện tại
 
             // Dữ liệu ảo cho số lượng vé người lớn và trẻ em cho 12 tháng của năm trước đó
-             const previousYearAdultTickets = [90, 110, 130, 0, 100, 130, 150, 170, 160, 140, 130, 120]; // Vé người lớn cho 12 tháng của năm trước đó
-             const previousYearChildTickets = [70, 80, 90, 0, 70, 90, 100, 110, 120, 100, 90, 80]; // Vé trẻ em cho 12 tháng của năm trước đó
-            // const previousYearAdultTickets = new Array(12).fill(0);
-            // const previousYearChildTickets = new Array(12).fill(0);
+            const previousYearAdultTickets = response.data.previousYearAdultTickets; // Vé người lớn cho 12 tháng của năm trước đó
+            const previousYearChildTickets = response.data.previousYearChildTickets // Vé trẻ em cho 12 tháng của năm trước đó
 
             const months = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
 
@@ -187,13 +187,11 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                         color: getColor('gray-800'),
                         margin: 20,
                         verticalAlign: 'bottom',
-                        formatter: function (value) {
-                            return value.toFixed(0); // Định dạng hiển thị số liệu
-                        },
+
                     }
                 },
                 series: [{
-                    name: `Năm ${$scope.yearForTheChartColumn} (Vé Người Lớn)`,
+                    name: `Năm ${$scope.yearOfLineBarChart} (Vé Người Lớn)`,
                     type: 'bar',
                     stack: 'currentYear',
                     barWidth: '20%',
@@ -204,7 +202,7 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                         color: getColor('primary'), barBorderRadius: [0, 0, 100, 100]
                     }
                 }, {
-                    name: `Năm ${$scope.yearForTheChartColumn} (Vé Trẻ Em)`,
+                    name: `Năm ${$scope.yearOfLineBarChart} (Vé Trẻ Em)`,
                     type: 'bar',
                     stack: 'currentYear',
                     barWidth: '20%',
@@ -214,7 +212,7 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                         color: getColor('info-200'), barBorderRadius: [100, 100, 0, 0]
                     }
                 }, {
-                    name: `Năm ${$scope.yearForTheChartColumn - 1} (Vé Người Lớn)`,
+                    name: `Năm ${$scope.yearOfLineBarChart - 1} (Vé Người Lớn)`,
                     type: 'bar',
                     stack: 'previousYear',
                     barWidth: '20%',
@@ -224,7 +222,7 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                         color: getColor('success'), barBorderRadius: [0, 0, 100, 100]
                     }
                 }, {
-                    name: `Năm ${$scope.yearForTheChartColumn - 1} (Vé Trẻ Em)`,
+                    name: `Năm ${$scope.yearOfLineBarChart - 1} (Vé Trẻ Em)`,
                     type: 'bar',
                     stack: 'previousYear',
                     barWidth: '20%',
@@ -291,13 +289,18 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
         }
     }
 
-    const pieChartInit = (hotelPercentage, visitLocationPercentage, transportBrandPercentage) => {
+    const pieChartInit = (response) => {
         const {getColor, getData, rgbaColor} = window.phoenix.utils;
         const $chartEl = document.querySelector('.echart-pie-chart-example');
 
         if ($chartEl) {
             const userOptions = getData($chartEl, 'echarts');
             const chart = window.echarts.init($chartEl);
+
+            const pendingPayment = response.data[0]
+            const completePayment = response.data[1]
+            const cancelTransaction = response.data[2]
+
             const getDefaultOptions = () => ({
                 legend: {
                     left: 12, textStyle: {
@@ -307,16 +310,16 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                     type: 'pie', radius: window.innerWidth < 530 ? '45%' : '60%', label: {
                         color: getColor('gray-700'), formatter: '{b}: {c}%'
                     }, center: ['50%', '55%'], data: [{
-                        value: hotelPercentage, name: 'Khách sạn', itemStyle: {
-                            color: getColor('danger')
+                        value: pendingPayment, name: 'Chờ thanh toán', itemStyle: {
+                            color: getColor('warning')
                         }
                     }, {
-                        value: transportBrandPercentage, name: 'Phương tiện', itemStyle: {
-                            color: getColor('info')
-                        }
-                    }, {
-                        value: visitLocationPercentage, name: 'Tham quan', itemStyle: {
+                        value: completePayment, name: 'Đã thanh toán', itemStyle: {
                             color: getColor('success')
+                        }
+                    }, {
+                        value: cancelTransaction, name: 'Hủy giao dịch', itemStyle: {
+                            color: getColor('danger')
                         }
                     },], emphasis: {
                         itemStyle: {
@@ -362,14 +365,18 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
         }
     };
 
-    const stackedLineChartInit = () => {
+    const stackedLineChartInit = (response) => {
         const {getColor, getData} = window.phoenix.utils;
         const $chartEl = document.querySelector('.echart-stacked-line-chart');
-        const month = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
 
         if ($chartEl) {
             const userOptions = getData($chartEl, 'echarts');
             const chart = window.echarts.init($chartEl);
+
+            const currentYear =  response.data.currentYear; // Vé người lớn cho 12 tháng của năm hiện tại
+            const previousYear =  response.data.previousYear; // Vé trẻ em cho 12 tháng của năm hiện tại
+            const month = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
+
             const getDefaultOptions = () => ({
                 tooltip: {
                     trigger: 'axis',
@@ -384,7 +391,9 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                     },
                     formatter: params => tooltipFormatter(params)
                 }, xAxis: {
-                    type: 'category', data: month, boundaryGap: false, axisLine: {
+                    type: 'category',
+                    data: month,
+                    boundaryGap: false, axisLine: {
                         lineStyle: {
                             color: getColor('gray-300'), type: 'solid'
                         }
@@ -401,49 +410,57 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                     }, boundaryGap: false, axisLabel: {
                         show: true, color: getColor('gray-400'), margin: 15
                     }, axisTick: {show: false}, axisLine: {show: false}
-                }, series: [{
-                    name: 'Milk Tea',
-                    type: 'line',
-                    symbolSize: 10,
-                    itemStyle: {
-                        color: getColor('white'), borderColor: getColor('success'), borderWidth: 2
-                    },
-                    lineStyle: {
-                        color: getColor('success')
-                    },
-                    symbol: 'circle',
-                    stack: 'product',
-                    data: [220, 182, 191, 234, 290, 330, 310, 182, 191, 234, 290, 330]
-                },
-
+                }, series: [
                     {
-                        name: 'Cheese Brownie',
+                        name: `Doanh thu năm ${$scope.yearOfLineBarChart}`,
                         type: 'line',
+                        smooth: 0.4,
                         symbolSize: 10,
                         itemStyle: {
-                            color: getColor('white'), borderColor: getColor('warning'), borderWidth: 2
+                            color: getColor('white'),
+                            borderColor: getColor('success'),
+                            borderWidth: 2
+                        },
+                        lineStyle: {
+                            color: getColor('success')
+                        },
+                        symbol: 'circle',
+                        data: currentYear
+                    },
+                    {
+                        name: `Doanh thu năm ${$scope.yearOfLineBarChart - 1}`,
+                        type: 'line',
+                        smooth: 0.4,
+                        symbolSize: 10,
+                        itemStyle: {
+                            color: getColor('white'),
+                            borderColor: getColor('warning'),
+                            borderWidth: 2
                         },
                         lineStyle: {
                             color: getColor('warning')
                         },
                         symbol: 'circle',
-                        stack: 'product',
-                        data: [320, 332, 301, 334, 390, 330, 320, 332, 301, 334, 390, 330]
-                    },], grid: {right: 10, left: 5, bottom: 5, top: 8, containLabel: true}
+                        data: previousYear
+                    },
+                ], grid: {right: 10, left: 5, bottom: 5, top: 8, containLabel: true}
             });
             echartSetOption(chart, userOptions, getDefaultOptions);
         }
     };
 
-    initCharts();
-
-    $scope.$watch('yearForTheChartColumn', async (newValue, oldValue) => {
+    $scope.$watch('yearOfTheStackedColumnChart', async (newValue, oldValue) => {
         if (newValue !== oldValue) {
-            updateColumnChart();
+            updateStackedColumnChart();
         }
     });
 
-    // Update charts when the selected year changes for the pie chart
+    $scope.$watch('yearOfLineBarChart', async (newValue, oldValue) => {
+        if (newValue !== oldValue) {
+            updateLineBarChart();
+        }
+    });
+
     $scope.$watch('yearForPieChart', async (newValue, oldValue) => {
         if (newValue !== oldValue) {
             updatedPieChart();
@@ -451,8 +468,8 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
     });
 
     const {docReady: docReady} = window.phoenix.utils;
-    docReady(projectionVsActualChartInit);
-    docReady(pieChartInit);
-    docReady(stackedLineChartInit);
+    docReady(() => {
+        initCharts();
+    });
 
 });

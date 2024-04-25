@@ -1,6 +1,6 @@
 travel_app.controller('HomeCusController', function ($scope, $window, $location, LocalStorageService, HomeCusService, AuthService, NotificationService) {
     $scope.currentPage = 0;
-    $scope.pageSize = 9;
+    $scope.pageSize = 10;
 
     $scope.filters = {
         departureArrives: null,
