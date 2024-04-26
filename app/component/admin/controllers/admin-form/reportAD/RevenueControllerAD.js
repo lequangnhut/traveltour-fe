@@ -1,4 +1,4 @@
-travel_app.controller('RevenueControllerAD', function ($scope, RevenueServiceAD) {
+travel_app.controller('RevenueControllerAD', function ($scope,$filter, RevenueServiceAD) {
     $scope.yearForTheChartColumn = new Date().getFullYear();
     $scope.yearForPieChart = new Date().getFullYear();
     $scope.currentYearData = new Array(12).fill(0);

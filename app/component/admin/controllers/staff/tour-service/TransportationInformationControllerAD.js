@@ -157,7 +157,7 @@ travel_app.controller('TransportationInformationControllerAD', function ($scope,
 
     $scope.selectTourDetailId = () => {
         $scope.isLoading = true;
-        TourDetailsServiceAD.findAllTourDetails().then((response) => {
+        TourDetailsServiceAD.findAllTourDetailSelect().then((response) => {
             $scope.tourDetails = response.data.data.content
         }, errorCallback).finally(() => {
             $scope.isLoading = false;

@@ -86,7 +86,7 @@ travel_app.controller("HotelInformationAddController", function ($scope, $http, 
             $scope.company.wardName = selectedWard.Name;
         }
 
-    };
+            };
 
     /**
      * Băt lỗi hình ảnh đại diện khách sạn

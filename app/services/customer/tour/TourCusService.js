@@ -42,6 +42,8 @@ travel_app.service('TourCusService', function ($http) {
                 sortDir: sortDir || 'DESC',
                 price: filters.price || null,
                 departure: filters.departure || null,
+                departureArrives: filters.departureArrives || null,
+                departureFrom: filters.departureFrom || null,
             }
         });
     };

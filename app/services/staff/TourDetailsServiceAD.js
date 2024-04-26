@@ -17,6 +17,15 @@ travel_app.service('TourDetailsServiceAD', function ($http, $q) {
         return deferred.promise;
     };
 
+    this.findAllTourDetailSelect = function () {
+        const deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: API_TOUR_DETAIL + 'find-all-tourDetail-select',
+        }).then(deferred.resolve, deferred.reject);
+        return deferred.promise;
+    };
+
     this.findTourDetailById = function (id) {
         const deferred = $q.defer();
         $http({

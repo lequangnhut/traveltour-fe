@@ -5,7 +5,7 @@ travel_app.controller('HomeCusController', function ($scope, $window, $location,
     $scope.filters = {
         departureArrives: null,
         departureFrom: null,
-        numberOfPeople: 2,
+        numberOfPeople: 1,
         departure: new Date()
     }
 

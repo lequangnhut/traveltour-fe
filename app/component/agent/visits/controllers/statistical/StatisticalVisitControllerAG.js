@@ -108,15 +108,15 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
         }));
     };
 
-    function formatNumberWithK(value) {
-        const thousands = value / 1000;
+    function formatNumberWithMillion(value) {
+        const millions = value / 1000000; // Chia cho 1 triệu
         const formatted = new Intl.NumberFormat('en-US', {
-            maximumFractionDigits: 0
-        }).format(thousands);
-        return `${formatted} k`;
+            maximumFractionDigits: 1 // Số lượng số thập phân tối đa là 1
+        }).format(millions);
+        return `${formatted} Tr`; // Thêm đơn vị Triệu
     }
 
-    const tooltipFormatter = (params) => {
+    const tooltipFormatterColumnChart = (params) => {
         let tooltipContent = `<div>
         <p class='mb-2 text-600 fw-bold'>
             ${params[0].axisValue}
@@ -135,6 +135,25 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
         </div>`;
 
         return tooltipContent;
+    };
+
+    const tooltipFormatterLineChart = (params) => {
+        let tooltipItem = ``;
+        params.forEach(el => {
+            tooltipItem += `<div class='ms-1'>
+       <h6 class="text-700"><span class="fas fa-circle me-1 fs--2" style="color:${
+                el.borderColor ? el.borderColor : el.color
+            }"></span>
+          ${el.seriesName} : ${$filter('vnCurrency')(("object" == typeof el.value ? el.value[1] : el.value))}
+        </h6>
+      </div>`;
+        });
+        return `<div>
+            <p class='mb-2 text-600'> Tháng
+              ${parseInt(params[0].axisValue.replace("T", ""))}
+            </p>
+            ${tooltipItem}
+          </div>`;
     };
 
 
@@ -168,7 +187,7 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                     borderWidth: 1,
                     transitionDuration: 0,
                     axisPointer: {type: 'none'},
-                    formatter: params => tooltipFormatter(params)
+                    formatter: params => tooltipFormatterColumnChart(params)
                 },
                 xAxis: {
                     type: 'category', axisLabel: {
@@ -178,16 +197,29 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                     }, axisTick: false
                 },
                 yAxis: {
-                    type: 'value', axisPointer: {type: 'none'}, axisTick: 'none', splitLine: {
-                        interval: 5, lineStyle: {color: getColor('gray-200')}
-                    }, axisLine: {show: false}, axisLabel: {
+                    type: 'value',
+                    axisPointer: {type: 'none'},
+                    axisTick: 'none',
+                    splitLine: {
+                        interval: 5,
+                        lineStyle: {color: getColor('gray-200')}
+                    },
+                    axisLine: {show: false},
+                    axisLabel: {
                         fontFamily: 'Nunito Sans',
                         fontWeight: 600,
                         fontSize: 13.8,
                         color: getColor('gray-800'),
                         margin: 20,
                         verticalAlign: 'bottom',
-
+                        formatter: function (value) {
+                            return value.toLocaleString('en-US', {maximumFractionDigits: 0}); // Sử dụng toLocaleString để hiển thị số nguyên
+                        }
+                    },
+                    min: 0, // Đảm bảo giá trị nhỏ nhất của trục y là 0
+                    max: function (value) {
+                        // Kiểm tra nếu giá trị lớn nhất của dữ liệu nhỏ hơn 5, thì đặt giá trị lớn nhất của trục y là 5
+                        return Math.max(value.max, 5);
                     }
                 },
                 series: [{
@@ -373,8 +405,8 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
             const userOptions = getData($chartEl, 'echarts');
             const chart = window.echarts.init($chartEl);
 
-            const currentYear =  response.data.currentYear; // Vé người lớn cho 12 tháng của năm hiện tại
-            const previousYear =  response.data.previousYear; // Vé trẻ em cho 12 tháng của năm hiện tại
+            const currentYear = response.data.currentYear; // Vé người lớn cho 12 tháng của năm hiện tại
+            const previousYear = response.data.previousYear; // Vé trẻ em cho 12 tháng của năm hiện tại
             const month = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
 
             const getDefaultOptions = () => ({
@@ -389,7 +421,7 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                     axisPointer: {
                         type: 'none'
                     },
-                    formatter: params => tooltipFormatter(params)
+                    formatter: params => tooltipFormatterLineChart(params)
                 }, xAxis: {
                     type: 'category',
                     data: month,
@@ -408,7 +440,10 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                             color: getColor('gray-200'), type: 'dashed'
                         }
                     }, boundaryGap: false, axisLabel: {
-                        show: true, color: getColor('gray-400'), margin: 15
+                        show: true, color: getColor('gray-400'), margin: 15,
+                        formatter: function (value) {
+                            return formatNumberWithMillion(value);
+                        },
                     }, axisTick: {show: false}, axisLine: {show: false}
                 }, series: [
                     {

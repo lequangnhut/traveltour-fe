@@ -68,7 +68,7 @@ travel_app.controller('HotelPaymentControllerAD',
                 checkIn: LocalStorageService.decryptLocalData('infoHotel', 'encryptInfoHotel').departureDate,
                 checkOut: LocalStorageService.decryptLocalData('infoHotel', 'encryptInfoHotel').arrivalDate,
                 orderTotal: $scope.total,
-                paymentMethod: 'TTTT',
+                paymentMethod: 'VPO',
                 dateCreated: new Date(),
                 orderStatus: 0, //cho thanh toan
                 orderCode: GenerateCodePayService.generateCodePayment('VPO')

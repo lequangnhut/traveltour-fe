@@ -1,35 +1,41 @@
-travel_app.controller('StatisticalTransportControllerAG', function ($scope, RevenueServiceAD, $filter, $sce, $location, $routeParams, OrderVisitServiceAG, LocalStorageService) {
+travel_app.controller('StatisticalTransportControllerAG', function ($scope,$filter, StatisticalTransportServiceAG, LocalStorageService) {
     $scope.yearForTheChartColumn = new Date().getFullYear();
+    $scope.yearForTheChartHorizontalColumn = new Date().getFullYear();
     $scope.yearForPieChart = new Date().getFullYear();
-    $scope.currentYearData = new Array(12).fill(0);
-    $scope.previousYearData = new Array(12).fill(0);
 
-    RevenueServiceAD.getAllYearColumn().then((repo) => {
-        $scope.selectYearListColumn = repo.data.data;
+    const transportId = LocalStorageService.get('brandId');
+
+    StatisticalTransportServiceAG.findAllOrderTransportYear().then((repo) => {
+        $scope.selectYearList = repo.data.data;
     }).catch((err) => {
         console.error(err);
     })
 
-    RevenueServiceAD.getAllYearPie().then((repo) => {
-        $scope.selectYearListPie = repo.data.data;
-    }).catch((err) => {
-        console.error(err);
-    })
-
-    async function fetchRevenueData(year) {
+    async function fetchStatisticalBookingTransportData(year, transportId) {
         try {
-            const response = await RevenueServiceAD.revenueOf12MonthsOfTheYearFromTourBooking(year);
-            return response.data.data;
+            const response = await StatisticalTransportServiceAG.findStatisticalBookingTransport(year, transportId);
+            return response.data;
         } catch (error) {
             console.error(error);
             throw error;
         }
     }
 
-    async function fetchPercentageData(year) {
+    async function fetchStatisticalTransportBrandData(year, transportId) {
         try {
-            const response = await RevenueServiceAD.percentageOfEachTypeOfService(year);
-            return response.data.data;
+            const response = await StatisticalTransportServiceAG.statisticalTransportBrand(year, transportId);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
+
+    async function fetchTransportRevenueStatisticsData(year, transportId) {
+        try {
+            const response = await StatisticalTransportServiceAG.findTransportRevenueStatistics(year, transportId);
+            console.log(response)
+            return response.data;
         } catch (error) {
             console.error(error);
             throw error;
@@ -38,25 +44,14 @@ travel_app.controller('StatisticalTransportControllerAG', function ($scope, Reve
 
     const initCharts = async () => {
         try {
-            const [revenueData, percentageData] = await Promise.all([
-                fetchRevenueData($scope.yearForTheChartColumn),
-                fetchPercentageData($scope.yearForPieChart)
+            const [statisticalBookingTransportData, statisticalTransportBrandData, transportRevenueStatisticsData] = await Promise.all([
+                fetchStatisticalBookingTransportData($scope.yearForPieChart, transportId),
+                fetchStatisticalTransportBrandData($scope.yearForTheChartHorizontalColumn, transportId),
+                fetchTransportRevenueStatisticsData($scope.yearForTheChartColumn, transportId)
             ]);
-
-            $scope.currentYearData = revenueData.currentYearRevenue;
-            $scope.previousYearData = revenueData.previousYearIsRevenue;
-
-            $scope.hotelPercentage = percentageData.hotelPercentage;
-            $scope.visitLocationPercentage = percentageData.visitLocationPercentage;
-            $scope.transportBrandPercentage = percentageData.transportBrandPercentage;
-
-            if ($scope.currentYearData.length > 0 && $scope.previousYearData.length > 0) {
-                projectionVsActualChartInit($scope.currentYearData, $scope.previousYearData);
-            }
-
-            if ($scope.hotelPercentage !== undefined && $scope.visitLocationPercentage !== undefined && $scope.transportBrandPercentage !== undefined) {
-                pieChartInit($scope.hotelPercentage, $scope.visitLocationPercentage, $scope.transportBrandPercentage);
-            }
+            projectionVsActualChartInit(transportRevenueStatisticsData);
+            horizontalBarChartInit(statisticalTransportBrandData);
+            pieChartInit(statisticalBookingTransportData);
         } catch (error) {
             console.error(error);
         }
@@ -64,28 +59,25 @@ travel_app.controller('StatisticalTransportControllerAG', function ($scope, Reve
 
     const updateColumnChart = async () => {
         try {
-            const revenueData = await fetchRevenueData($scope.yearForTheChartColumn);
-            $scope.currentYearData = revenueData.currentYearRevenue;
-            $scope.previousYearData = revenueData.previousYearIsRevenue;
-
-            if ($scope.currentYearData.length > 0 && $scope.previousYearData.length > 0) {
-                projectionVsActualChartInit($scope.currentYearData, $scope.previousYearData);
-            }
+            const data = await fetchTransportRevenueStatisticsData($scope.yearForTheChartColumn, transportId);
+            projectionVsActualChartInit(data);
         } catch (error) {
             console.error(error);
         }
     }
 
+    const updatedHorizontalBarChart = async () => {
+        try {
+            const data = await fetchStatisticalTransportBrandData($scope.yearForTheChartHorizontalColumn, transportId);
+            horizontalBarChartInit(data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
     const updatedPieChart = async () => {
         try {
-            const percentageData = await fetchPercentageData($scope.yearForPieChart);
-            $scope.hotelPercentage = percentageData.hotelPercentage;
-            $scope.visitLocationPercentage = percentageData.visitLocationPercentage;
-            $scope.transportBrandPercentage = percentageData.transportBrandPercentage;
-
-            if ($scope.hotelPercentage !== undefined && $scope.visitLocationPercentage !== undefined && $scope.transportBrandPercentage !== undefined) {
-                pieChartInit($scope.hotelPercentage, $scope.visitLocationPercentage, $scope.transportBrandPercentage);
-            }
+            const data = await fetchStatisticalBookingTransportData($scope.yearForPieChart, transportId);
+            pieChartInit(data);
         } catch (error) {
             console.error(error);
         }
@@ -109,24 +101,22 @@ travel_app.controller('StatisticalTransportControllerAG', function ($scope, Reve
         }));
     };
 
-    function formatNumberWithK(value) {
-        const thousands = value / 1000;
+    function formatNumberWithMillion(value) {
+        const millions = value / 1000000; // Chia cho 1 triệu
         const formatted = new Intl.NumberFormat('en-US', {
-            maximumFractionDigits: 0
-        }).format(thousands);
-        return `${formatted} k`;
+            maximumFractionDigits: 1 // Số lượng số thập phân tối đa là 1
+        }).format(millions);
+        return `${formatted} Tr`; // Thêm đơn vị Triệu
     }
 
     const tooltipFormatter = (params) => {
         let tooltipItem = ``;
         params.forEach(el => {
             tooltipItem += `<div class='ms-1'>
-        <h6 class="text-700"><span class="fas fa-circle me-1 fs--2" style="color:${
+       <h6 class="text-700"><span class="fas fa-circle me-1 fs--2" style="color:${
                 el.borderColor ? el.borderColor : el.color
             }"></span>
-          ${el.seriesName} : ${
-                typeof el.value === 'object' ? el.value[1] : el.value
-            }
+          ${el.seriesName} : ${$filter('vnCurrency')(("object" == typeof el.value ? el.value[1] : el.value))}
         </h6>
       </div>`;
         });
@@ -138,13 +128,16 @@ travel_app.controller('StatisticalTransportControllerAG', function ($scope, Reve
           </div>`;
     };
 
-    const projectionVsActualChartInit = async (currentYearData, previousYearData) => {
+    const projectionVsActualChartInit = async (response) => {
         const {getColor, getData} = window.phoenix.utils;
         const $projectionVsActualChartEl = document.querySelector('.echart-projection-actual');
 
         if ($projectionVsActualChartEl) {
             const userOptions = getData($projectionVsActualChartEl, 'echarts');
             const chart = window.echarts.init($projectionVsActualChartEl);
+
+            let currentYearData = response.revenue === undefined ? new Array(12).fill(0) : response.revenue;
+            let previousYearData = response.lastYearRevenue === undefined ? new Array(12).fill(0) : response.lastYearRevenue;
 
             const getDefaultOptions = () => ({
                 color: [getColor('primary'), getColor('gray-300')],
@@ -195,7 +188,7 @@ travel_app.controller('StatisticalTransportControllerAG', function ($scope, Reve
                         margin: 20,
                         verticalAlign: 'bottom',
                         formatter: function (value) {
-                            return formatNumberWithK(value);
+                            return formatNumberWithMillion(value);
                         },
                     }
                 },
@@ -230,7 +223,7 @@ travel_app.controller('StatisticalTransportControllerAG', function ($scope, Reve
                     right: 0,
                     left: 3,
                     bottom: 0,
-                    top: '15%',
+                    top: '7%',
                     containLabel: true
                 },
                 animation: false
@@ -240,71 +233,58 @@ travel_app.controller('StatisticalTransportControllerAG', function ($scope, Reve
         }
     };
 
-    const pieChartInit = (hotelPercentage, visitLocationPercentage, transportBrandPercentage) => {
+    const pieChartInit = (response) => {
         const {getColor, getData, rgbaColor} = window.phoenix.utils;
         const $chartEl = document.querySelector('.echart-pie-chart-example');
 
         if ($chartEl) {
             const userOptions = getData($chartEl, 'echarts');
             const chart = window.echarts.init($chartEl);
+
+            let pendingPayment = 0;
+            let completePayment = 0;
+            let cancelTransaction = 0;
+
+            if (response) {
+                pendingPayment = response[0]
+                completePayment = response[1]
+                cancelTransaction = response[2]
+            }
+
+
             const getDefaultOptions = () => ({
                 legend: {
-                    left: 12,
-                    textStyle: {
+                    left: 12, textStyle: {
                         color: getColor('gray-600')
                     }
-                },
-                series: [
-                    {
-                        type: 'pie',
-                        radius: window.innerWidth < 530 ? '45%' : '60%',
-                        label: {
-                            color: getColor('gray-700'),
-                            formatter: '{b}: {c}%'
-                        },
-                        center: ['50%', '55%'],
-                        data: [
-                            {
-                                value: hotelPercentage,
-                                name: 'Khách sạn',
-                                itemStyle: {
-                                    color: getColor('danger')
-                                }
-                            },
-                            {
-                                value: transportBrandPercentage,
-                                name: 'Phương tiện',
-                                itemStyle: {
-                                    color: getColor('info')
-                                }
-                            },
-                            {
-                                value: visitLocationPercentage,
-                                name: 'Tham quan',
-                                itemStyle: {
-                                    color: getColor('success')
-                                }
-                            },
-                        ],
-                        emphasis: {
-                            itemStyle: {
-                                shadowBlur: 20,
-                                shadowOffsetX: 0,
-                                shadowColor: rgbaColor(getColor('gray-600'), 0.5)
-                            }
-                        },
-                    }
-                ],
-                tooltip: {
+                }, series: [{
+                    type: 'pie', radius: window.innerWidth < 530 ? '45%' : '60%', label: {
+                        color: getColor('gray-700'), formatter: '{b}: {c}%'
+                    }, center: ['50%', '55%'], data: [{
+                        value: pendingPayment, name: 'Chờ thanh toán', itemStyle: {
+                            color: getColor('warning')
+                        }
+                    }, {
+                        value: completePayment, name: 'Đã thanh toán', itemStyle: {
+                            color: getColor('success')
+                        }
+                    }, {
+                        value: cancelTransaction, name: 'Hủy giao dịch', itemStyle: {
+                            color: getColor('danger')
+                        }
+                    },], emphasis: {
+                        itemStyle: {
+                            shadowBlur: 20, shadowOffsetX: 0, shadowColor: rgbaColor(getColor('gray-600'), 0.5)
+                        }
+                    },
+                }], tooltip: {
                     trigger: 'item',
                     padding: [10, 15],
                     backgroundColor: '#f8f9fa',
                     borderColor: '#ced4da',
                     borderWidth: 1,
                     textStyle: {
-                        color: '#343a40',
-                        fontSize: 14,
-                        fontWeight: 'bold'
+                        color: '#343a40', fontSize: 14, fontWeight: 'bold'
                     },
                     transitionDuration: 0.5,
                     axisPointer: {
@@ -322,18 +302,13 @@ travel_app.controller('StatisticalTransportControllerAG', function ($scope, Reve
 
             const responsiveOptions = {
                 xs: {
-                    series: [
-                        {
-                            radius: '45%'
-                        }
-                    ]
-                },
-                sm: {
-                    series: [
-                        {
-                            radius: '60%'
-                        }
-                    ]
+                    series: [{
+                        radius: '45%'
+                    }]
+                }, sm: {
+                    series: [{
+                        radius: '60%'
+                    }]
                 }
             };
 
@@ -341,11 +316,11 @@ travel_app.controller('StatisticalTransportControllerAG', function ($scope, Reve
         }
     };
 
-    const stackedLineChartInit = () => {
+    const horizontalBarChartInit = (statisticalTransportBrandData) => {
         const {getColor, getData} = window.phoenix.utils;
-        const $chartEl = document.querySelector('.echart-stacked-line-chart');
-        const month = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
-
+        const $chartEl = document.querySelector('.echart-horizontal-bar-chart');
+        const months = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
+        const countRoomTypeData = statisticalTransportBrandData.map(item => item.maxAmount);
         if ($chartEl) {
             const userOptions = getData($chartEl, 'echarts');
             const chart = window.echarts.init($chartEl);
@@ -357,91 +332,103 @@ travel_app.controller('StatisticalTransportControllerAG', function ($scope, Reve
                     borderColor: getColor('gray-300'),
                     textStyle: {color: getColor('dark')},
                     borderWidth: 1,
+                    formatter: function (params) {
+                        const dataIndex = params[0].dataIndex;
+                        const count = countRoomTypeData[dataIndex];
+                        const transportBrand = statisticalTransportBrandData[dataIndex];
+
+                        let tooltipContent = `<div style="max-width: 200px; background-color: #fff; border: 1px solid #ccc; border-radius: 5px; padding: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <div style="margin-bottom: 5px; font-weight: bold;">Tháng ${transportBrand.month}</div>
+                            <div style="display:flex; align-items:center; margin-bottom: 5px;">
+                                <div style="width:10px; height:10px; border-radius:50%; background-color: #17a2b8; margin-right:8px;"></div>
+                                <div style="font-weight: bold;">Số lượng khách: &nbsp;</div>
+                                <div> ${count} khách</div>
+                            </div>`;
+
+                        if (count !== 0 && transportBrand) {
+                            tooltipContent += `<div style="margin-bottom: 5px;">
+                                <div style="display:flex; align-items:center;">
+                                    <div style="width:10px; height:10px; border-radius:50%; background-color: #17a2b8; margin-right:8px;"></div>
+                                    <div style="font-weight: bold;">Điểm đi: &nbsp;</div>
+                                    <div>${transportBrand.formLocation}</div>
+                                </div>
+                                <div style="display:flex; align-items:center;">
+                                    <div style="width:10px; height:10px; border-radius:50%; background-color: #17a2b8; margin-right:8px;"></div>
+                                    <div style="font-weight: bold;">Điểm đến: &nbsp;</div>
+                                    <div>${transportBrand.toLocation}</div>
+                                </div>
+                            </div>`;
+                        }
+                        tooltipContent += `</div>`;
+                        return tooltipContent;
+                    },
                     transitionDuration: 0,
                     axisPointer: {
                         type: 'none'
-                    },
-                    formatter: params => tooltipFormatter(params)
+                    }
                 },
                 xAxis: {
-                    type: 'category',
-                    data: month,
+                    type: 'value',
                     boundaryGap: false,
                     axisLine: {
+                        show: true,
                         lineStyle: {
-                            color: getColor('gray-300'),
-                            type: 'solid'
+                            color: getColor('gray-300')
                         }
                     },
-                    axisTick: {show: false},
+                    axisTick: {show: true},
                     axisLabel: {
-                        color: getColor('gray-400'),
-                        margin: 15,
-                        formatter: value => value.substring(0, 3)
+                        color: getColor('gray-500')
                     },
                     splitLine: {
                         show: false
-                    }
+                    },
+                    min: 0
                 },
                 yAxis: {
-                    type: 'value',
-                    splitLine: {
-                        lineStyle: {
-                            color: getColor('gray-200'),
-                            type: 'dashed'
-                        }
-                    },
-                    boundaryGap: false,
+                    type: 'category',
+                    data: months,
+                    boundaryGap: true,
                     axisLabel: {
+                        formatter: value => value.substring(0, 3),
                         show: true,
-                        color: getColor('gray-400'),
+                        color: getColor('gray-500'),
                         margin: 15
                     },
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: getColor('gray-200')
+                        }
+                    },
                     axisTick: {show: false},
-                    axisLine: {show: false}
+                    axisLine: {
+                        lineStyle: {
+                            color: getColor('gray-300')
+                        }
+                    }
                 },
                 series: [
                     {
-                        name: 'Milk Tea',
-                        type: 'line',
-                        symbolSize: 10,
+                        type: 'bar',
+                        name: 'Total',
+                        data: countRoomTypeData,
+                        lineStyle: {color: getColor('primary')},
                         itemStyle: {
-                            color: getColor('white'),
-                            borderColor: getColor('success'),
-                            borderWidth: 2
+                            color: getColor('primary'),
+                            barBorderRadius: [0, 3, 3, 0]
                         },
-                        lineStyle: {
-                            color: getColor('success')
-                        },
+                        showSymbol: false,
                         symbol: 'circle',
-                        stack: 'product',
-                        data: [220, 182, 191, 234, 290, 330, 310, 182, 191, 234, 290, 330]
-                    },
-
-                    {
-                        name: 'Cheese Brownie',
-                        type: 'line',
-                        symbolSize: 10,
-                        itemStyle: {
-                            color: getColor('white'),
-                            borderColor: getColor('warning'),
-                            borderWidth: 2
-                        },
-                        lineStyle: {
-                            color: getColor('warning')
-                        },
-                        symbol: 'circle',
-                        stack: 'product',
-                        data: [320, 332, 301, 334, 390, 330, 320, 332, 301, 334, 390, 330]
-                    },
+                        smooth: false,
+                        hoverAnimation: true
+                    }
                 ],
-                grid: {right: 10, left: 5, bottom: 5, top: 8, containLabel: true}
+                grid: {right: '10%', left: '10%', bottom: '10%', top: '7%'}
             });
             echartSetOption(chart, userOptions, getDefaultOptions);
         }
     };
-
-    initCharts();
 
     $scope.$watch('yearForTheChartColumn', async (newValue, oldValue) => {
         if (newValue !== oldValue) {
@@ -449,16 +436,18 @@ travel_app.controller('StatisticalTransportControllerAG', function ($scope, Reve
         }
     });
 
-    // Update charts when the selected year changes for the pie chart
+    $scope.$watch('yearForTheChartHorizontalColumn', async (newValue, oldValue) => {
+        if (newValue !== oldValue) {
+            updatedHorizontalBarChart();
+        }
+    });
+
     $scope.$watch('yearForPieChart', async (newValue, oldValue) => {
         if (newValue !== oldValue) {
             updatedPieChart();
         }
     });
 
-    const {docReady: docReady} = window.phoenix.utils;
-    docReady(projectionVsActualChartInit);
-    docReady(pieChartInit);
-    docReady(stackedLineChartInit);
+    initCharts();
 
 });

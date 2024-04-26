@@ -340,6 +340,18 @@ travel_app.controller('MainController',
                 return {'margin': '0'};
             }
 
+            if (
+                $location.path() === '/business/visit/statistical' ||
+                $location.path() === '/business/hotel/statistical' ||
+                $location.path() === '/business/transport/statistical'
+            ) {
+                {
+                    return {
+                        'padding-top': 'calc(var(--phoenix-navbar-top-height))'
+                    };
+                }
+            }
+
             if ($location.path() === "/business/register-hotel") {
                 return {'margin': '0'};
             }

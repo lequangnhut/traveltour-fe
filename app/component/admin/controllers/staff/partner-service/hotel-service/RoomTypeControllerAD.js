@@ -35,7 +35,7 @@ travel_app.controller('RoomTypeControllerAD',
             const availableRooms = parseInt(rt.availableRooms, 10) || 0;
 
             if (rt.quantity > availableRooms) {
-                toastAlert('warning', 'Số lượng phòng đặt không được vượt quá số lượng phòng còn trống!');
+                centerAlert('Thông báo', 'Số lượng phòng đặt không được vượt quá số lượng phòng còn trống!', 'warning');
                 rt.quantity = availableRooms; // Đặt lại rt.quantity thành số lượng phòng có sẵn
             }
         };
