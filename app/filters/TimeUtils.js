@@ -284,3 +284,19 @@ travel_app.filter('twoDigit', function () {
         return input < 10 ? '0' + input : input;
     };
 });
+
+travel_app.filter('vietnameseTimeNoSeconds', function () {
+    return function (isoDateTime) {
+        const date = new Date(isoDateTime);
+
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const seconds = date.getSeconds().toString().padStart(2, '0');
+
+        return `${day}/${month}/${year} ${hours}:${minutes}`;
+    };
+});

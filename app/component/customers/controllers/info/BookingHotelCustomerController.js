@@ -170,7 +170,7 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $sce,$
         }
 
         Promise.all(promises).then(function () {
-            if ((data.orderStatus === 0 && data.paymentMethod === 'TTTT') || $scope.cancelWithFee === false) {
+            if ((data.orderStatus === 0 && data.paymentMethod === 'VPO') || $scope.cancelWithFee === false) {
                 $scope.mess = "Bạn có muốn hủy phòng không ?";
                 return;
             }
@@ -215,12 +215,18 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $sce,$
 
     };
 
+    $scope.hideReasonModal = function () {
+        $('#hotelModal').modal('show');
+    };
+
     $scope.cancelBookingHotelOrder = function (data) {
-        function confirmDeleteType() {
+       function confirmDeleteType() {
+            $scope.noted = $scope.cancel.reason;
             $scope.isLoading = true;
-            HistoryOrderServiceCUS.cancelHotel(data.id).then(function successCallback(response) {
+            HistoryOrderServiceCUS.cancelHotel(data.id, $scope.noted).then(function successCallback(response) {
                 centerAlert('Thành công !', 'Đã hủy booking, mời người dùng check mail !', 'success');
                 $('#hotelModal').modal('hide'); // Đóng modal khi thành công
+                $('#delete-hotel-reason').modal('hide'); // Đóng modal khi thành công
                 $scope.getBookingTourHotelList();
             }, errorCallback).finally(function () {
                 $scope.isLoading = false;

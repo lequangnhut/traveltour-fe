@@ -36,7 +36,7 @@ travel_app.controller('GuideController',
         $scope.getNavItem = LocalStorageService.get('activeNavItem');
         if ($scope.getNavItem === 'guide-future') {
             $scope.tourStatus = 1;
-        } else if ($scope.getNavItem === 'guide-continuos') {
+        } else if ($scope.getNavItem === 'guide-continuous') {
             $scope.tourStatus = 2;
         } else if ($scope.getNavItem === 'guide-perfect') {
             $scope.tourStatus = 3;

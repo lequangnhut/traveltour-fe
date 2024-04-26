@@ -1,0 +1,222 @@
+<div class="container mt-4 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex row">
+                <div class="col-lg-12">
+                    <h3 class="color-black fw-bold text-uppercase">Thống kê hoạt động</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-md-4 col-xl-3 col-xxl-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex d-sm-block justify-content-between">
+                        <div class="border-bottom-sm mb-sm-4">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center icon-wrapper-sm shadow-primary-100"
+                                     style="transform: rotate(-7.45deg);"><span
+                                        class="fa-solid fa-users text-primary fs-1 z-index-1 ms-2"></span></div>
+                                <p class="text-700 fs--1 mb-0 ms-2 mt-3">Khách hàng tháng này</p>
+                            </div>
+                            <p class="text-primary mt-2 fs-2 fw-bold mb-0 mb-sm-4">
+                                {{ userNow }}
+                                <span class="fs-0 text-900 lh-lg">Người dùng mới</span>
+                            </p>
+                        </div>
+                        <div class="d-flex flex-column justify-content-center flex-between-end d-sm-block text-end text-sm-start">
+                            <span ng-if="compareUser > 0" class="badge badge-phoenix badge-phoenix-success fs--2 mb-2">+{{ compareUser }}%</span>
+                            <span ng-if="compareUser < 0" class="badge badge-phoenix badge-phoenix-warning fs--2 mb-2">{{ compareUser }}%</span>
+                            <p class="mb-0 fs--1 text-700">Tháng trước</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3 col-xxl-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex d-sm-block justify-content-between">
+                        <div class="border-bottom-sm mb-sm-4">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center icon-wrapper-sm shadow-info-100"
+                                     style="transform: rotate(-7.45deg);"><span
+                                        class="fa-solid fa-calendar text-info fs-1 z-index-1 ms-2"></span></div>
+                                <p class="text-700 fs--1 mb-0 ms-2 mt-3">Đối tác tháng này</p>
+                            </div>
+                            <p class="text-info mt-2 fs-2 fw-bold mb-0 mb-sm-4">
+                                {{ agentNow }}
+                                <span class="fs-0 text-900 lh-lg">Đối tác mới</span>
+                            </p>
+                        </div>
+                        <div class="d-flex flex-column justify-content-center flex-between-end d-sm-block text-end text-sm-start">
+                            <span ng-if="compareAgent > 0" class="badge badge-phoenix badge-phoenix-success fs--2 mb-2">+{{ compareAgent }}%</span>
+                            <span ng-if="compareAgent < 0" class="badge badge-phoenix badge-phoenix-warning fs--2 mb-2">{{ compareAgent }}%</span>
+                            <p class="mb-0 fs--1 text-700">Tháng trước</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  List 5 Agencies  -->
+        <div class="col-md-4 col-xl-6 col-xxl-4 gy-5 gy-md-3">
+            <div class="border-bottom">
+                <h5 class="pb-4 border-bottom">Top 5 Đối Tác Hợp Tác Gần Đây</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-transparent list-group-crm fw-bold text-900 fs--1 py-2"
+                        ng-repeat="li in listFive">
+                        <div class="d-flex justify-content-between">
+                        <span class="fw-normal fs--1 mx-1">
+                            <span class="fw-bold">{{ $index + 1 }}. </span>
+                            {{ li.nameAgency }}
+                        </span>
+                            <span>{{ li.province }}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex row">
+                <div class="col-lg-12">
+                    <h3 class="color-black fw-bold text-uppercase">Top 3 khách sạn hoạt động hiệu quả</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3 mb-4">
+        <div class="col" ng-repeat = "h in listHotel">
+            <div class="card h-100 hover-actions-trigger">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <h5 class="mb-2 lh-sm flex-1">{{ h.hotelName }}</h5>
+                    </div>
+                    <span class="badge badge-phoenix fs--2 mb-4 badge-phoenix-success">ĐANG HOẠT ĐỘNG</span>
+                    <div class="d-flex align-items-center mb-2"><span
+                            class="fa-solid fa-user me-2 text-500 fs--1 fw-extra-bold"></span>
+                        <p class="fw-bold mb-0 text-truncate lh-1">Thuộc: <span
+                                class="fw-semi-bold text-primary ms-1" custom-tooltip="{{ h.agencies.nameAgency }}">
+                            {{ h.agencies.nameAgency }}</span>
+                        </p>
+                    </div>
+                    <div class="d-flex align-items-center mt-3 mb-4"><span
+                            class="fa-solid fa-credit-card me-2 text-700 fs--1 fw-extra-bold"></span>
+                        <p class="fw-bold mb-0 lh-1">Địa điểm : <span class="ms-1 text-1100">{{ h.province }}</span></p>
+                    </div>
+                    <div class="progress bg-success-100">
+                        <div class="progress-bar rounded bg-success" role="progressbar" aria-label="Success example"
+                             style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="d-flex align-items-center mt-4">
+                        <p class="mb-0 fw-bold fs--1">Bắt đầu kinh doanh :<span
+                                class="fw-semi-bold text-600 ms-1">	{{ h.dateCreated | vietnameseDate }}</span></p>
+                    </div>
+                    <!--                    <div class="d-flex align-items-center mt-2">-->
+                    <!--                        <p class="mb-0 fw-bold fs&#45;&#45;1">Deadline : <span-->
+                    <!--                                class="fw-semi-bold text-600 ms-1">	21st May 2028</span></p>-->
+                    <!--                    </div>-->
+                    <div class="d-flex d-lg-block d-xl-flex justify-content-between align-items-center mt-3">
+                        <div class="mt-lg-3 mt-xl-0"><i class="fa-solid fa-star me-1 text-warning"></i>
+                            <p class="d-inline-block fw-bold mb-0">{{ h.hotelTypes.hotelTypeName }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex row">
+                <div class="col-lg-12">
+                    <h3 class="color-black fw-bold text-uppercase">Top 3 nhà xe hoạt động hiệu quả</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3 mb-4">
+        <div class="col" ng-repeat = "t in listBrand">
+            <div class="card h-100 hover-actions-trigger">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <h5 class="mb-2 lh-sm flex-1">{{ t.transportationBrandName }}</h5>
+                    </div>
+                    <span class="badge badge-phoenix fs--2 mb-4 badge-phoenix-success">ĐANG HOẠT ĐỘNG</span>
+                    <div class="d-flex align-items-center mb-2"><span
+                            class="fa-solid fa-user me-2 text-500 fs--1 fw-extra-bold"></span>
+                        <p class="fw-bold mb-0 text-truncate lh-1">Thuộc: <span
+                                class="fw-semi-bold text-primary ms-1" custom-tooltip="{{ t.agencies.nameAgency }}">
+                            {{ t.agencies.nameAgency }}</span>
+                        </p>
+                    </div>
+                    <div class="d-flex mt-3 mb-4"><span
+                            class="fa-solid fa-credit-card me-2 text-700 fs--1 fw-extra-bold"></span>
+                        <p class="fw-bold mb-0 lh-2">Địa điểm : <span class=" fw-medium ms-1 text-1100">{{ t.transportationBrandAddress }}</span></p>
+                    </div>
+                    <div class="progress bg-success-100">
+                        <div class="progress-bar rounded bg-success" role="progressbar" aria-label="Success example"
+                             style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="d-flex align-items-center mt-4">
+                        <p class="mb-0 fw-bold fs--1">Bắt đầu kinh doanh :<span
+                                class="fw-semi-bold text-600 ms-1">	{{ t.dateCreated | vietnameseDate }}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex row">
+                <div class="col-lg-12">
+                    <h3 class="color-black fw-bold text-uppercase">Top 3 địa điểm tham quan hoạt động hiệu quả</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3 mb-4">
+        <div class="col" ng-repeat = "vl in listVisit">
+            <div class="card h-100 hover-actions-trigger">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <h5 class="mb-2 lh-sm flex-1">{{ vl.visitLocationName }}</h5>
+                    </div>
+                    <span class="badge badge-phoenix fs--2 mb-4 badge-phoenix-success">ĐANG HOẠT ĐỘNG</span>
+                    <div class="d-flex align-items-center mb-2"><span
+                            class="fa-solid fa-user me-2 text-500 fs--1 fw-extra-bold"></span>
+                        <p class="fw-bold mb-0 text-truncate lh-1">Thuộc: <span
+                                class="fw-semi-bold text-primary ms-1" custom-tooltip="{{ vl.agencies.nameAgency }}">
+                            {{ vl.agencies.nameAgency }}</span>
+                        </p>
+                    </div>
+                    <div class="d-flex align-items-center mt-3 mb-4"><span
+                            class="fa-solid fa-credit-card me-2 text-700 fs--1 fw-extra-bold"></span>
+                        <p class="fw-bold mb-0 lh-1">Địa điểm : <span class="ms-1 text-1100">{{ vl.province }}</span></p>
+                    </div>
+                    <div class="progress bg-success-100">
+                        <div class="progress-bar rounded bg-success" role="progressbar" aria-label="Success example"
+                             style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="d-flex align-items-center mt-4">
+                        <p class="mb-0 fw-bold fs--1">Bắt đầu kinh doanh :<span
+                                class="fw-semi-bold text-600 ms-1">	{{ vl.dateCreated | vietnameseDate }}</span></p>
+                    </div>
+                    <div class="d-flex d-lg-block d-xl-flex justify-content-between align-items-center mt-3">
+                        <div class="mt-lg-3 mt-xl-0"><i class="fa-solid fa-star me-1 text-warning"></i>
+                            <p class="d-inline-block fw-bold mb-0">{{ vl.visitLocationTypes.visitLocationTypeName
+                                }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

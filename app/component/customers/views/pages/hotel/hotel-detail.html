@@ -1,4 +1,3 @@
-
 <div ng-include="'app/component/customers/views/components/loader-search.html'"></div>
 <!--====== Start Blog Details Section ======-->
 <section class="blog-details-section pt-80 pb-70">
@@ -129,41 +128,52 @@
                                         <thead>
                                         <tr class="btn-green">
                                             <th>Loại chỗ nghỉ</th>
-                                            <th>Số lượng khách</th>
+                                            <th class="text-center">Số lượng khách</th>
                                             <th>Giá hôm nay</th>
-                                            <th>Các lựa chọn</th>
                                             <th>Chọn phòng</th>
-                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody ng-repeat="roomType in roomTypes">
-                                        <tr>
+                                        <tr style="border-bottom: white">
                                             <td>
                                                 <div class="room-type">
                                                     <div class="h5 text-green"
                                                          ng-click="showInfoRoomType(roomType.id)">{{ roomType.roomTypeName }}
                                                     </div>
-                                                    <div>Loại
-                                                        giường: {{ getRoomBedsName(roomType.roomBedsById[0].bedTypeId) }}
+                                                    <div>
+                                                        <img style="width:200px; border-radius: 5px" src="{{roomType.roomTypeAvatar}}" alt="" srcset="">
                                                     </div>
-                                                    <div ng-repeat="roomUtilities in roomType.roomUtilities">
-                                                        <ul class="nav flex-column">
-                                                            <li class="nav-item"><i class="fas fa-check-circle"></i>
-                                                                <span ng-bind="roomUtilities.roomUtilitiesName"></span>
-                                                            </li>
-                                                        </ul>
+                                                    <div class="mt-1">
+                                                        <strong style="font-weight:500">Loại giường:</strong> {{ getRoomBedsName(roomType.roomBedsById[0].bedTypeId) }}
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div>{{ roomType.capacityAdults }} người lớn</div>
-                                                <div>{{ roomType.capacityChildren }} trẻ em</div>
+                                            <td class="text-center">
+                                                <div>
+                                                    <strong>
+                                                        {{ roomType.capacityAdults }} <i class="fa-solid fa-person" style="font-size:medium"></i>
+                                                    </strong>&nbsp;
+                                                    <strong>
+                                                        {{ roomType.capacityChildren }} <i class="fa-solid fa-child"></i>
+                                                    </strong>
+                                                </div>
                                             </td>
                                             <td>
                                                 <div class="h6">{{ roomType.price | removeCurrencySymbol }} VND</div>
                                                 <div>Đã bao gồm thuế và phí</div>
                                             </td>
                                             <td>
+                                                <select class="form-select" aria-label="selectAmountRoom"
+                                                        style="font-size: 13px; width: 60px"
+                                                        ng-model="roomType.amountRoomSelected"
+                                                        ng-change="selectedRoomType(roomType.amountRoomSelected, roomType)"
+                                                        ng-options="room as room + '' + ' (' + (room * roomType.price | removeCurrencySymbol) + ' VND)' for room in generateRoomNumbers(roomType.amountRoom)">
+                                                    <option value="">0</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr style="border-bottom: white">
+                                            <td colspan="4" class="pt-0 pb-0">
                                                 <div ng-if="roomType.breakfastIncluded" class="text-green">
                                                     <i class="fa-solid fa-check"></i> Miễn phí ăn sáng
                                                 </div>
@@ -181,14 +191,21 @@
                                                     có thể chọn phòng khác của khách sạn
                                                 </div>
                                             </td>
-                                            <td>
-                                                <select class="form-select" aria-label="selectAmountRoom"
-                                                        style="font-size: 13px; width: 60px"
-                                                        ng-model="roomType.amountRoomSelected"
-                                                        ng-change="selectedRoomType(roomType.amountRoomSelected, roomType)"
-                                                        ng-options="room as room + '' + ' (' + (room * roomType.price | removeCurrencySymbol) + ' VND)' for room in generateRoomNumbers(roomType.amountRoom)">
-                                                    <option value="">0</option>
-                                                </select>
+                                        </tr>
+                                        <tr style="border-top: white">
+                                            <td colspan="4">
+                                                <div class="row">
+                                                    <strong class="mb-1">Tiện ích của phòng</strong>
+                                                    <div class="col-4"
+                                                         ng-repeat="roomUtilities in roomType.roomUtilities">
+                                                        <i class="fas fa-check-circle"></i>
+                                                        <span ng-bind="roomUtilities.roomUtilitiesName"></span>
+                                                    </div>
+                                                    <div ng-if="roomType.roomUtilities.length === 0">
+                                                        <i class="fas fa-check-circle"></i>
+                                                        <span>Đang cập nhật</span>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -292,7 +309,8 @@
                             <section class="row" style="max-width: 600px">
                                 <div class="swiper-container">
                                     <div class="swiper-wrapper">
-                                        <div class="swiper-slide d-flex justify-content-center align-items-center" style="width: 500px"
+                                        <div class="swiper-slide d-flex justify-content-center align-items-center"
+                                             style="width: 500px"
                                              ng-repeat="rating in ratingHotel.userComments.content">
                                             <div class="text-center">
                                                 <div class="text-center d-flex justify-content-center align-items-center">
@@ -351,7 +369,9 @@
                             </li>
                         </ul>
                         <div ng-if="ratingHotel.userComments.totalElements > ratingHotel.userComments.content.numberOfElements">
-                            <button class="btn text-green text-center" ng-click="findUserComments(roomTypes[0].hotelsByHotelId.id)">Hiển thị thêm</button>
+                            <button class="btn text-green text-center"
+                                    ng-click="findUserComments(roomTypes[0].hotelsByHotelId.id)">Hiển thị thêm
+                            </button>
                         </div>
                     </div>
                 </div>

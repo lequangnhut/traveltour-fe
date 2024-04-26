@@ -189,12 +189,18 @@ travel_app.controller("BookingTransCustomerController", function ($scope, $sce, 
         $('#transModal').modal('hide');
     };
 
+    $scope.hideReasonModal = function () {
+        $('#transModal').modal('show');
+    };
+
     $scope.cancelBookingTransOrder = function (data) {
         function confirmDeleteType() {
+            $scope.noted = $scope.cancel.reason;
             $scope.isLoading = true;
-            HistoryOrderServiceCUS.cancelTrans(data.id).then(function successCallback(response) {
+            HistoryOrderServiceCUS.cancelTrans(data.id, $scope.noted).then(function successCallback(response) {
                 centerAlert('Thành công !', 'Đã hủy booking, mời người dùng check mail !', 'success');
                 $('#transModal').modal('hide'); // Đóng modal khi thành công
+                $('#delete-vehicle-reason').modal('hide'); // Đóng modal khi thành công
                 $scope.getBookingTourTransList();
             }, errorCallback).finally(function () {
                 $scope.isLoading = false;

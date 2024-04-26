@@ -24,7 +24,7 @@
                      ng-style="{'background-image': 'linear-gradient(180deg, rgba(0, 0, 0, 0) 39.41%, rgba(0, 0, 0, 0.4) 100%), url(' + tc.toursByTourId.tourImg + ')'}"></div>
                 <div class="position-relative h-100 d-flex flex-column justify-content-between">
                     <div class="d-flex justify-content-between align-items-center"><span
-                            class="p-2 badge badge-phoenix fs--2 light badge-phoenix-danger">Canceled</span>
+                            class="p-2 badge badge-phoenix fs--2 light badge-phoenix-danger">Đã hủy</span>
                         <div class="z-index-2">
                             <button class="btn btn-icon btn-reveal dropdown-toggle dropdown-caret-none transition-none"
                                     data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true"
@@ -285,7 +285,7 @@
                                     PDF
                                 </button>
                             </div>
-                            <div class="row export-file" style="">
+                            <div class="row export-file" id="element-to-print">
                                 <div class="place-content-wrap my-1 wow fadeInUp max-wi"
                                      ng-bind-html="locationDetailDescription"
                                      style="text-align: justify; white-space: pre-line; font-family: 'Roboto',sans-serif;">
