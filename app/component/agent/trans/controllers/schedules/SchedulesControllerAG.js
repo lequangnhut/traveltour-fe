@@ -166,10 +166,11 @@ travel_app.controller('SchedulesControllerAG',
             /**
              * Tìm tất cả chuyến xe bằng loại xe (tripType)
              */
+            $scope.isLoading = true;
+
             SchedulesServiceAG.findAllByTripType(brandId, $scope.tripType, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function (response) {
                 if (response.status === 200) {
                     $scope.transportationScheduleList = response.data.data.content;
-                    console.log($scope.transportationScheduleList)
                     $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
                     $scope.totalElements = response.data.data.totalElements;
 

@@ -203,7 +203,7 @@
                             <span class="text-status-error">Hủy chuyến đi</span>
                         </div>
                     </td>
-                    <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
+                    <td>
                         <a href="#"
                            ng-click="redirectPage('/business/transport/schedules-management/update-schedules/', schedule.id)"
                            role="button" class="fs-1 px-2 btn text-warning">
@@ -366,7 +366,9 @@
                     <td ng-if="schedule.isStatus === 4">
                         <div class="d-flex align-items-center justify-content-center">
                             <span class="status-warning"></span>
-                            <span class="text-status-warning">Chuyến đi đang trống</span>
+                            <span class="text-status-warning" custom-tooltip="Chuyến đi đang trống">
+                                Chuyến đi đa...
+                            </span>
                         </div>
                     </td>
                     <td ng-if="schedule.isStatus === 5">
@@ -387,24 +389,27 @@
                             <span class="text-status-error">Từ chối duyệt</span>
                         </div>
                     </td>
-                    <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px"
-                        ng-if="schedule.isStatus === 4">
+                    <td ng-if="schedule.isStatus === 4">
                         <a href="#"
                            ng-click="redirectPage('/business/transport/schedules-management/update-schedules/', schedule.id)"
                            role="button" class="fs-1 px-2 btn text-warning">
-                            <i class="fa-solid fa-pen-to-square"></i>
+                            <span custom-tooltip="Cập nhật">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </span>
                         </a>
                         <a href="#" ng-click="deleteSchedule(schedule.id, schedule.fromLocation, schedule.toLocation)"
                            role="button" class="fs-1 px-2 btn text-danger">
-                            <i class="fa-solid fa-trash"></i>
+                            <span custom-tooltip="Xóa lịch trình">
+                                <i class="fa-solid fa-trash"></i>
+                            </span>
                         </a>
                     </td>
-                    <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px"
-                        ng-if="schedule.isStatus === 5 || schedule.isStatus === 6 || schedule.isStatus === 7">
+                    <td ng-if="schedule.isStatus === 5 || schedule.isStatus === 6 || schedule.isStatus === 7">
                         <button type="button" class="btn text-info"
                                 ng-click="modalDetailSchedule(transportationList[schedule.transportationId].id, schedule.id)">
-                            <i class="fa-regular fa-eye"></i>
-                            Xem thông tin
+                            <span custom-tooltip="Xem chi tiết">
+                                <i class="fs-1 fa-regular fa-eye"></i>
+                            </span>
                         </button>
                     </td>
                 </tr>

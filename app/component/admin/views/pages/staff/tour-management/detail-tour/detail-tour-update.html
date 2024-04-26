@@ -201,7 +201,7 @@
                     <option ng-selected="tourDetail.tourDetailStatus === 1" value="1">Chờ vận hành</option>
                     <option ng-selected="tourDetail.tourDetailStatus === 2" value="2">Đang vận hành</option>
                     <option ng-selected="tourDetail.tourDetailStatus === 3" value="3">Đã hoàn thành</option>
-                    <option ng-selected="tourDetail.tourDetailStatus === 4" value="4">Đã hủy</option>
+                    <option ng-selected="tourDetail.tourDetailStatus === 4" value="4">Ngưng vận hành</option>
                 </select>
                 <small class="text-danger"
                        ng-show="tourDetailForm.tourDetailStatus.$error.required">
@@ -209,10 +209,24 @@
                 </small>
             </div>
 
-            <div class="col-md-4">
-                <label for="note" class="form-label">Ghi chú</label>
-                <input class="form-control" type="text" id="note" placeholder="....."
-                       ng-model="tourDetail.tourDetailNotes">
+            <div class="col-md-4"
+                 ng-if="tourDetail.tourDetailStatus === 1 || tourDetail.tourDetailStatus === undefined">
+                <label class="form-label">Ghi chú</label>
+                <input class="form-control"
+                       type="text"
+                       ng-model="tourDetail.tourDetailNotes"
+                       placeholder="....."
+                >
+            </div>
+
+            <div class="col-md-4" ng-if="tourDetail.tourDetailStatus !== 1">
+                <label class="form-label">Ghi chú</label>
+                <input class="form-control"
+                       type="text"
+                       disabled
+                       ng-value="tourDetail.tourDetailNotes"
+                       placeholder="....."
+                >
             </div>
 
             <div class="col-12">

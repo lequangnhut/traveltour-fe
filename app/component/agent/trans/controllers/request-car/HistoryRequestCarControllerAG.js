@@ -28,11 +28,10 @@ travel_app.controller('HistoryRequestCarControllerAG',
         }
 
         $scope.init = function () {
-            $scope.isLoading = true;
-
             /**
              * Danh sách tất cả lịch sử đã ứng tuyển
              */
+            $scope.isLoading = true;
             $scope.historyRequestCarList = [];
 
             RequestCarServiceAG.findAllHistoryRequestCarServiceAgent($scope.brandId, $scope.acceptedRequest, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function (response) {

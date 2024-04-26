@@ -11,7 +11,7 @@ travel_app.service('PrintContractService', ['$window', '$filter', function ($win
 
         let today = new Date();
         let customerPhone = $filter('phoneNumber')(bookingTour.customerPhone);
-        let customerQuantityTotal = bookingTour.capacityAdult + bookingTour.capacityKid;
+        let customerQuantityTotal = parseInt(bookingTour.capacityAdult) + parseInt(bookingTour.capacityKid);
         let guidePhone = $filter('phoneNumber')(staffGuide.phone);
 
         let tourDateLimit = $filter('calculateDaysAndNights')(tourDetail.departureDate, tourDetail.arrivalDate);
@@ -109,7 +109,7 @@ travel_app.service('PrintContractService', ['$window', '$filter', function ($win
                 <img src="/assets/admin/assets/img/logos/logo.png" alt="Faded Company Logo" class="faded-logo">
             </div>
            
-            <header class="flex justify-between items-center pb-8">
+            <header class="flex justify-between items-center pb-4">
                 <div>
                     <h1 class="text-1xl font-bold">CÔNG TY DU LỊCH LỮ HÀNH</h1>
                     <p class="font-bold text-center">TRAVELTOUR</p>
@@ -122,25 +122,44 @@ travel_app.service('PrintContractService', ['$window', '$filter', function ($win
                 </div>
             </header>
             
-            <div class="mt-5">
-                <h1 class="text-1xl font-bold text-center">HỢP ĐỒNG DU LỊCH</h1>
+            <div class="text-right">
+                <p class="font-medium">
+                    <i>Cần Thơ, ngày ${today.getDate()} tháng ${today.getMonth() + 1} năm ${today.getFullYear()}</i>
+                </p>
+            </div>
+            
+            <div class="mt-2">
+                <h1 class="text-1xl font-bold text-center">HỢP ĐỒNG DỊCH VỤ LỮ HÀNH</h1>
+                <h1 class="text-1xl font-bold text-center">${tourDetail.toursByTourId.tourName}</h1>
                 
                 <div class="content mt-3">
                     <div class="mb-2">
+                        Căn cứ Luật thương mại được Quốc hội nước Cộng hòa xã hội chủ nghĩa Việt Nam khóa XI, kỳ họp thứ
+                        VII thông qua ngày 14 tháng 06 năm 2005;
+                    </div>
+                    <div class="mb-2">
+                        Căn cứ Bộ luật dân sự được Quốc hội nước Cộng hòa xã hội chủ nghĩa Việt Nam khóa XIII thông qua 
+                        ngày 24 tháng 11 năm 2015;
+                    </div>
+                    <div class="mb-2">
+                        Căn cứ nhu cầu và khả năng của các bên.
+                    </div>
+                    <div class="mb-2">
                         Hôm nay, ngày ${today.getDate()} tháng ${today.getMonth() + 1} năm ${today.getFullYear()}, 
+                        vào lúc ${today.getHours()} giờ ${today.getMinutes()} phút ${today.getSeconds()} giây 
                         tại văn phòng Công ty Dịch vụ Du lịch và Lữ hành TravelTour,
                     </div>
                     <div class="mb-2">
                         Chúng tôi gồm có:
                         <div class="mb-2">
-                            <span class="font-bold">Bên A:</span> ${bookingTour.customerName} <br>
+                            <span class="font-bold">Bên A: (KHÁCH DU LỊCH) ${bookingTour.customerName}</span> <br>
                             <span>Số căn cước công dân:</span> ${bookingTour.customerCitizenCard} <br>
                             <span>Điện thoại:</span> ${customerPhone} <br>
                             <span>Email:</span> ${bookingTour.customerEmail}
                         </div> 
                         
                         <div class="mb-2">
-                            <span class="font-bold">Bên B:</span> Công ty Dịch vụ Du lịch và Lữ hành Travel Tour <br>
+                            <span class="font-bold">Bên B: Công ty Dịch vụ Du lịch và Lữ hành Travel Tour</span> <br>
                             <span>Địa chỉ: 12/34/56 Đại lộ Hòa Bình, phường Tân An, quận Ninh Kiều, TP.Cần Thơ. <br>
                             
                             <div class="grid grid-cols-2 gap-4">
@@ -210,15 +229,15 @@ travel_app.service('PrintContractService', ['$window', '$filter', function ($win
                                 </h2>
                                 <ul class="list-inside">
                                     Trong đó:
-                                    ${bookingTour.capacityAdult !== 0 ? `
+                                    ${parseInt(bookingTour.capacityAdult) !== 0 ? `
                                     <li class="flex items-center">
                                         <span class="mr-2">•</span> 
-                                        ${bookingTour.capacityAdult} khách người lớn.
+                                        ${parseInt(bookingTour.capacityAdult)} khách người lớn.
                                     </li>` : ``}
-                                    ${bookingTour.capacityKid !== 0 ? `
+                                    ${parseInt(bookingTour.capacityKid) !== 0 ? `
                                     <li class="flex items-center">
                                         <span class="mr-2">•</span> 
-                                        ${bookingTour.capacityKid} khách trẻ em.
+                                        ${parseInt(bookingTour.capacityKid)} khách trẻ em.
                                     </li>` : ``}
                                 </ul>
                             </div>
@@ -259,9 +278,11 @@ travel_app.service('PrintContractService', ['$window', '$filter', function ($win
                                     <li class="flex items-center">
                                         Giá cho 01 khách người lớn: ${tourUnitPriceAdult}. 
                                     </li>
+                                    ${parseInt(bookingTour.capacityKid) !== 0 ? `
                                     <li class="flex items-center">
                                         Giá cho 01 khách trẻ em: ${tourUnitPriceKid}. 
                                     </li>
+                                    ` : ``}
                                     <li class="flex items-center">
                                         Tổng số khách theo hợp đồng: ${customerQuantityTotal} người.
                                     </li>

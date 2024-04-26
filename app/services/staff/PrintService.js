@@ -3,7 +3,7 @@ travel_app.service('PrintService', ['$window', '$filter', function ($window, $fi
         let windowFeatures = 'left=300,right=200,top=100,toolbar=no,location=no,directories=no,menubar=no,scrollbars=no,width=900,height=600';
         let printWindow = $window.open('', '', windowFeatures);
 
-        let formattedDate = $filter('vietnameseDate')(invoices.dateCreated);
+        let formattedDate = $filter('vietnameseDateTime')(invoices.dateCreated);
         let formattedTotal = $filter('vnCurrency')(invoices.bookingToursByBookingTourId.orderTotal);
         let calculateDaysAndNights = $filter('calculateDaysAndNights')(invoices.tourDetailsByTourDetailId.departureDate, invoices.tourDetailsByTourDetailId.arrivalDate);
 
@@ -69,19 +69,16 @@ travel_app.service('PrintService', ['$window', '$filter', function ($window, $fi
               <!-- Address -->
               <div class="flex mb-10">
                   <div class="grow h-14">
-                    <p class="font-bold mb-2">Thông tin người đại diện</p>
-                    <p><span class="font-medium">Họ và tên: </span>${invoices.bookingToursByBookingTourId.customerName}</p>
-                    <p><span class="font-medium">Căn cước công dân: </span>${invoices.bookingToursByBookingTourId.customerCitizenCard}</p>
-                    <p><span class="font-medium">Số điện thoại: </span>${invoices.bookingToursByBookingTourId.customerPhone}</p>
-                    <p><span class="font-medium">Email: </span>${invoices.bookingToursByBookingTourId.customerEmail}</p>
+                    <p class="font-bold mb-2">Thông tin chuyến đi</p>
+                    <p><span class="font-medium">Tên tour: </span>${invoices.tourDetailsByTourDetailId.toursByTourId.tourName}</p>
+                    <p><span class="font-medium">Ngày đi dự kiến: </span>${$filter('vietnameseDate')(invoices.tourDetailsByTourDetailId.departureDate)}</p>
+                    <p><span class="font-medium">Thời gian: </span>${calculateDaysAndNights}</p>
                   </div>
                   <div class="grow-0 h-14"></div>
                   <div class="grow h-14 text-right">
-                    <p class="font-bold mb-2">Thông tin chuyến đi</p>
-                    <p><span class="font-medium">Tên tour: </span>${invoices.tourDetailsByTourDetailId.toursByTourId.tourName}</p>
-                    <p><span class="font-medium">Đi từ: </span>${invoices.tourDetailsByTourDetailId.fromLocation} - ${invoices.tourDetailsByTourDetailId.toLocation}</p>
-                    <p><span class="font-medium">Ngày đi dự kiến: </span>${$filter('vietnameseDate')(invoices.tourDetailsByTourDetailId.departureDate)}</p>
-                    <p><span class="font-medium">Thời gian: </span>${calculateDaysAndNights}</p>
+                    <p class="font-bold mb-2">Thông tin người đại diện</p>
+                    <p><span class="font-medium">Họ và tên: </span>${invoices.bookingToursByBookingTourId.customerName}</p>
+                    <p><span class="font-medium">Số điện thoại: </span>${invoices.bookingToursByBookingTourId.customerPhone}</p>
                   </div>
                </div>
                <div class="py-5"></div>

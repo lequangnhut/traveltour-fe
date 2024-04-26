@@ -9,6 +9,37 @@
         </div>
     </div>
 
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link cursor-pointer" id="pills-true-tab"
+               ng-class="{active: currentTab === 'waiting'}"
+               ng-click="changeTab('waiting', 1, 'dateCreated')">
+                Chờ vận hành
+            </a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link cursor-pointer" id="pills-false-tab"
+               ng-class="{active: currentTab === 'active'}"
+               ng-click="changeTab('active', 2, 'departureDate')">
+                Đang vận hành
+            </a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link cursor-pointer" id="pills-success-tab"
+               ng-class="{active: currentTab === 'success'}"
+               ng-click="changeTab('success', 3, 'arrivalDate')">
+                Đã hoàn thành
+            </a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link cursor-pointer" id="pills-cancelled-tab"
+               ng-class="{active: currentTab === 'cancelled'}"
+               ng-click="changeTab('cancelled', 4, 'dateDeleted')">
+                Tour ngưng vận hành
+            </a>
+        </li>
+    </ul>
+
     <div class="">
         <div class="card card-customer">
             <div class="row" style="margin: 20px 16px 20px 16px">
@@ -144,9 +175,9 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ tourDetail.id }}</td>
                     <td class="cursor-default">
-                        <img ng-src="{{tourDetail.tourDetailImagesById[0].tourDetailImg}}" loading="lazy"
+                        <img ng-src="{{ tourDetail.toursByTourId.tourImg }}" loading="lazy"
                              class="cursor-pointer rounded-2" alt="avatar" width="55" height="30" title="Xem ảnh xe"
-                             ng-click="openImageModal(tourDetail.tourDetailImagesById[0].tourDetailImg)"
+                             ng-click="openImageModal(tourDetail.toursByTourId.tourImg)"
                              onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
                     </td>
                     <td class="cursor-default">
@@ -185,7 +216,7 @@
                     <td ng-if="tourDetail.tourDetailStatus == 4">
                         <div class="d-flex align-items-center justify-content-center">
                             <span class="status-error"></span>
-                            <span class="text-status-error">Đã hủy</span>
+                            <span class="text-status-error">Ngưng vận hành</span>
                         </div>
                     </td>
                     <td class="d-flex align-items-center justify-content-center">
@@ -366,8 +397,6 @@
                                             class="fw-normal">{{ tourDetail.minimumNumberOfGuests }} Khách</span></p>
                                     <p class="m-2 fw-medium">Đơn giá: <span
                                             class="fw-bold">{{ tourDetail.unitPrice | vnCurrency }}</span></p>
-                                    <p class="m-2 fw-medium">Ghi chú: <span
-                                            class="fw-normal">{{ tourDetail.tourDetailNotes }}</span></p>
                                     <p class="m-2 fw-medium">Trạng thái:
                                         <span class="fw-medium color-warning" ng-if="tourDetail.tourDetailStatus == 1">
                                             Chờ vận hành
@@ -378,10 +407,12 @@
                                         <span class="fw-medium color-green" ng-if="tourDetail.tourDetailStatus == 3">
                                             Đã hoàn thành
                                         </span>
-                                        <span class="fw-medium color-danger" ng-if="tourDetail.tourDetailStatus == 4">
-                                            Đã hủy
+                                        <span class="fw-medium text-danger" ng-if="tourDetail.tourDetailStatus == 4">
+                                            Ngưng vận hành
                                         </span>
                                     </p>
+                                    <p class="m-2 fw-medium">Ghi chú: <span
+                                            class="fw-normal">{{ tourDetail.tourDetailNotes }}</span></p>
                                 </div>
                                 <div class="card-footer d-flex justify-content-center p-3" data-bs-dismiss="modal">
                                     <a role="button" class="btn btn-green"
@@ -418,15 +449,79 @@
                     <i class="fa-solid fa-arrow-left"></i>
                     Thoát
                 </button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal"
-                        ng-click="deleteTourDetail(tourDetail.id)">Xóa
+                <button type="button"
+                        class="btn btn-warning"
+                        ng-if="tourDetail.tourDetailStatus === 1"
+                        ng-click="openModalCanceledTour()"
+                >
+                    Ngưng vận hành tour
                 </button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal nhập thông tin tại sao ngưng hoạt động tour -->
+<div class="modal fade" id="cancelled_tour_noted" tabindex="-1" aria-labelledby="cancelled_tour_noted_label"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelled_tour_noted_label">
+                    Mô tả lí do
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" role="form" name="formCancelledTour">
+                    <div class="form-group">
+                        <label for="noted" class="form-label">
+                            VUI LÒNG NHẬP LÍ DO HỦY TOUR VỚI KHÁCH HÀNG<span class="text-danger">*</span>
+                        </label>
+                        <textarea class="form-control"
+                                  rows="4"
+                                  id="noted"
+                                  name="tourDetailNotes"
+                                  ng-model="tourDetail.tourDetailNotes"
+                                  ng-class="{ 'is-invalid': formCancelledTour.tourDetailNotes.$invalid && formCancelledTour.tourDetailNotes.$touched,
+                                               'is-valid': formCancelledTour.tourDetailNotes.$valid && formCancelledTour.tourDetailNotes.$touched }"
+                                  ng-pattern="/.{10,}/"
+                                  placeholder="Nhập lí do vì sao bạn muốn ngưng vận hành tour {{ tourDetail.toursByTourId.tourName }}"
+                                  required
+                        ></textarea>
+                        <small class="text-danger"
+                               ng-show="formCancelledTour.orderNoted.$touched && formCancelledTour.orderNoted.$error.required">
+                            Vui lòng nhập lí do vì sao ngưng hoạt động tour.
+                        </small>
+                        <small class="text-danger"
+                               ng-show="formCancelledTour.orderNoted.$error.pattern">
+                            Vui lòng nhập ít nhất 10 ký tự.
+                        </small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn"
+                        ng-click="hideModalCanceledTour()"
+                        data-bs-dismiss="modal"
+                >
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Quay về
+                </button>
+                <button type="button"
+                        ng-disabled="formCancelledTour.$invalid"
+                        ng-click="deleteTourDetail(tourDetail)"
+                        class="btn btn-success"
+                >
+                    Xác nhận hủy
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal xem hình ảnh xe -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">

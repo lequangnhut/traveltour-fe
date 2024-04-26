@@ -158,7 +158,7 @@
                         title="{{ visitLocation.visitLocationName }}">
                         {{ visitLocation.visitLocationName }}
                     </td>
-                    <td>{{ visitLocation.phone }}</td>
+                    <td>{{ visitLocation.phone | phoneNumber }}</td>
                     <td class="text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="{{ visitLocation.address + ', ' + visitLocation.ward + ', ' + visitLocation.district + ', ' + visitLocation.province }}">
                         {{ visitLocation.province }}

@@ -10,13 +10,16 @@
                             data-bs-toggle="modal" data-bs-target="#modalSchedule">
                         Lịch trình
                     </button>
-                    <button type="button" class="btn btn-primary fw-bold float-end ms-3"
-                            data-bs-toggle="modal" data-bs-target="#tourInformationModal">
-                        Xem TT tour
+                    <button type="button"
+                            class="btn btn-outline-primary fw-bold float-end ms-3"
+                            ng-click="checkHotelDetailModal()">
+                        Xem khách sạn
                     </button>
-                    <button type="button" class="btn btn-primary fw-bold float-end"
-                            data-bs-toggle="modal" data-bs-target="#hotelInformationModal">
-                        Xem TT khách sạn
+                    <button type="button"
+                            class="btn btn-outline-primary fw-bold float-end"
+                            ng-click="checkTourDetailModal()"
+                    >
+                        Xem tour
                     </button>
                 </div>
             </div>
@@ -227,41 +230,139 @@
     </div>
 </div>
 
-<!-- Modal tour-->
+<!-- Modal xem tour detail chi tiết -->
 <div class="modal fade" id="tourInformationModal" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog modal-md modal-dialog-centered">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <h5 class="modal-title text-center mt-3" id="">THÔNG TIN TOUR</h5>
-            <hr>
+            <div class="modal-header text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Chi tiết Tour
+                    đi {{ tourDetailModal.fromLocation }} - {{ tourDetailModal.toLocation }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
             <div class="modal-body">
-                <div class="fw-normal px-3">
-                    <table class="table table-borderless">
-                        <tr>
-                            <td class="fw-bold">Tên tour:</td>
-                            <td>{{ tourInfo.tourName }}</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Ngày đi:</td>
-                            <td>{{ tourInfo.departureDate | date: 'dd/MM/yyyy' }}</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Ngày về:</td>
-                            <td>{{ tourInfo.arrivalDate | date: 'dd/MM/yyyy' }}</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Điểm đi - điểm đến:</td>
-                            <td>{{ tourInfo.fromLocation }} - {{ tourInfo.toLocation }}</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Số khách:</td>
-                            <td>{{ tourInfo.numberOfGuests }}</td>
-                        </tr>
-                    </table>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card mb-3">
+                                <img class="img-fluid" ng-src="{{ tourDetailModal.toursByTourId.tourImg }}"
+                                     style="height: 400px"/>
+                                <div class="card-body ">
+                                    <div class="bg-header-model">
+                                        <div class="h2 text-center fw-medium">{{ tourDetailModal.toursByTourId.tourName }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="card mb-3">
+                                <div class="card-header p-3 fw-bold">
+                                    Thông tin tour
+                                </div>
+                                <div class="card-body p-3">
+                                    <p class="m-2 fw-medium">Mã Tour: <span
+                                            class="fw-bold">{{ tourDetailModal.toursByTourId.id }}</span></p>
+                                    <p class="m-2 fw-medium">Loại Tour: <span
+                                            class="fw-bold">{{ tourDetailModal.tourTypes.tourTypeName }}</span></p>
+                                    <p class="m-2 fw-medium">Ngày tạo: <span
+                                            class="fw-normal">{{ tourDetailModal.toursByTourId.dateCreated | vietnameseDateTime }}</span>
+                                    </p>
+                                    <p class="m-2 fw-medium">
+                                        Trạng thái:
+                                        <span class="fw-bold color-green"
+                                              ng-if="tourDetailModal.toursByTourId.isActive === true">
+                                                Đang hoạt động
+                                        </span>
+                                        <span class="fw-bold color-green"
+                                              ng-if="tourDetailModal.toursByTourId.isActive === false">
+                                                Ngưng hoạt động
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7">
+                            <div class="card">
+                                <div class="card-header p-3 fw-bold">
+                                    Chi tiết tour
+                                </div>
+                                <div class="card-body p-3">
+                                    <p class="m-2 fw-medium">Mã Tour chi tiết: <span
+                                            class="fw-bold">{{ tourDetailModal.id }}</span></p>
+                                    <p class="m-2 fw-medium">Hướng dẫn viên: <span
+                                            class="fw-normal">{{ tourDetailModal.usersByGuideId.fullName }}</span></p>
+                                    <p class="m-2 fw-medium">Điểm đi: <span
+                                            class="fw-bold">{{ tourDetailModal.fromLocation }}</span></p>
+                                    <p class="m-2 fw-medium">Điểm đến: <span
+                                            class="fw-bold">{{ tourDetailModal.toLocation }}</span></p>
+                                    <p class="m-2 fw-medium">Đã đặt:
+                                        <span class="fw-normal" ng-if="tourDetailModal.bookedSeat === 0">
+                                            Tour đang trống
+                                        </span>
+                                        <span class="fw-normal" ng-if="tourDetailModal.bookedSeat !== 0">
+                                            {{ tourDetailModal.bookedSeat }} Người
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Ngày đi: <span
+                                            class="fw-normal">{{ tourDetailModal.departureDate | dateWithTimeFormat }}</span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Ngày về: <span
+                                            class="fw-normal">{{ tourDetailModal.arrivalDate | dateWithTimeFormat }}</span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Số lượng khách: <span
+                                            class="fw-normal">{{ tourDetailModal.numberOfGuests }} Khách</span></p>
+                                    <p class="m-2 fw-medium">Khách tối thiểu: <span
+                                            class="fw-normal">{{ tourDetailModal.minimumNumberOfGuests }} Khách</span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Đơn giá: <span
+                                            class="fw-bold">{{ tourDetailModal.unitPrice | vnCurrency }}</span></p>
+                                    <p class="m-2 fw-medium">Trạng thái:
+                                        <span class="fw-medium color-warning"
+                                              ng-if="tourDetailModal.tourDetailStatus == 1">
+                                            Chờ vận hành
+                                        </span>
+                                        <span class="fw-medium color-green"
+                                              ng-if="tourDetailModal.tourDetailStatus == 2">
+                                            Đang vận hành
+                                        </span>
+                                        <span class="fw-medium color-green"
+                                              ng-if="tourDetailModal.tourDetailStatus == 3">
+                                            Đã hoàn thành
+                                        </span>
+                                        <span class="fw-medium text-danger"
+                                              ng-if="tourDetailModal.tourDetailStatus == 4">
+                                            Ngưng vận hành
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Ghi chú: <span
+                                            class="fw-normal">{{ tourDetailModal.tourDetailNotes }}</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-3 mt-2 p-3">
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-xl-3 p-1"
+                                             ng-repeat="img in tourDetailModal.tourDetailImagesById">
+                                            <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px"
+                                                 loading="lazy" ng-src="{{img.tourDetailImg}}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Thoát</button>
+                <button type="button" class="btn" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Thoát
+                </button>
             </div>
         </div>
     </div>
@@ -284,43 +385,104 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Thoát</button>
+                <button type="button" class="btn" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Thoát
+                </button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal khách sạn-->
-<div class="modal fade" id="hotelInformationModal" tabindex="-1"
-     aria-hidden="true">
-    <div class="modal-dialog modal-md modal-dialog-centered">
+<!-- Modal xem thông tin chi tiết khách sạn-->
+<div class="modal fade" id="hotelInformationModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <h5 class="modal-title text-center mt-3">THÔNG TIN KHÁCH SẠN</h5>
-            <hr>
+            <div class="modal-header text-white">
+                <h5 class="modal-title" id="detail-hotel-label">Chi tiết khách sạn {{ hotelModal.hotelName }}</h5>
+                <button type="button" class="close btn" data-dismiss="modal" aria-label="Close" ng-click="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="modal-body">
-                <div class="fw-normal px-3">
-                    <table class="table">
-                        <tr>
-                            <td class="fw-bold" style="width: 95px">Tên:</td>
-                            <td>{{ hotelInfo.hotelName }}</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Loại:</td>
-                            <td>{{ hotelInfo.hotelTypeName }}</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Địa chỉ:</td>
-                            <td>{{ hotelInfo.address }}</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Tiện ích:</td>
-                            <td>{{ hotelInfo.utilities }}</td>
-                        </tr>
-                    </table>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card mb-3">
+                                <img ng-src="{{ hotelModal.hotelAvatar }}" class="img-fluid rounded-top"
+                                     alt="hotelAvatar" loading="lazy" style="height: 500px">
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card">
+                                <div class="card-header p-3 fw-bold">
+                                    Thông tin phòng
+                                </div>
+                                <div class="card-body p-3">
+                                    <p class="m-2 fw-medium">Mã khách sạn: <span
+                                            class="fw-normal">{{ hotelModal.id }}</span></p>
+                                    <p class="m-2 fw-medium">Địa chỉ website: <span
+                                            class="fw-bold">{{ hotelModal.urlWebsite }}</span></p>
+                                    <p class="m-2 fw-medium">Số điện thoại: <span
+                                            class="fw-bold">{{ hotelModal.phone | phoneNumber }}</span></p>
+                                    <p class="m-2 fw-medium">Địa chỉ:
+                                        <span class="fw-normal">
+                                            {{ hotelModal.ward }} - {{ hotelModal.district }}
+                                            - {{ hotelModal.province }}
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Địa chỉ cụ thể:
+                                        <span class="fw-normal">
+                                            {{ hotelModal.address }}
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Ngày đăng ký: <span
+                                            class="fw-bold">{{ hotelModal.dateCreated | vietnameseDateTime }}</span></p>
+                                    <p class="m-2 fw-medium">
+                                        Trạng thái phê duyệt:
+                                        <span class="fw-bold color-green"
+                                              ng-if="hotelModal.isAccepted === true">
+                                                Đã phê duyệt
+                                        </span>
+                                        <span class="fw-bold text-danger"
+                                              ng-if="hotelModal.isAccepted === false">
+                                                 Đã từ chối
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">
+                                        Trạng thái hoạt động:
+                                        <span class="fw-bold color-green"
+                                              ng-if="hotelModal.isActive === true">
+                                                Đang hoạt động
+                                        </span>
+                                        <span class="fw-bold text-danger"
+                                              ng-if="hotelModal.isActive === false">
+                                                Ngừng hoạt động
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <div class="card">
+                                <div class="card-header p-3 fw-bold">
+                                    Tiện ích khách sạn
+                                </div>
+                                <div class="card-body p-3">
+                                    <div ng-repeat="hotelUtil in hotelModal.placeUtilities">
+                                        <li class="m-2">{{ hotelUtil.placeUtilitiesName }}</li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Thoát</button>
+                <button type="button" class="btn" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Thoát
+                </button>
             </div>
         </div>
     </div>

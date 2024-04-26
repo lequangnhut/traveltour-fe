@@ -166,7 +166,7 @@ travel_app.controller('BookingControllerAD',
                 }, errorCallback);
             }
 
-            confirmAlert(`Bạn có chắc chắn muốn thanh toán tour với số tiền 
+            confirmAlert(`Bạn có chắc chắn muốn thanh toán tour này với số tiền 
                                ${$filter('vnCurrency')(bookingTour.orderTotal)} của 
                                khách hàng ${bookingTour.customerName} không ?`, confirm);
         }

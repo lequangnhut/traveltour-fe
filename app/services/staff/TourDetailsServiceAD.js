@@ -1,7 +1,7 @@
 travel_app.service('TourDetailsServiceAD', function ($http, $q) {
     let API_TOUR_DETAIL = BASE_API + 'staff/tour-detail/';
 
-    this.findAllTourDetails = function (page, size, sortBy, sortDir, searchTerm) {
+    this.findAllTourDetails = function (page, size, sortBy, sortDir, sortDate, tourDetailStatus, searchTerm) {
         const deferred = $q.defer();
         $http({
             method: 'GET',
@@ -9,9 +9,10 @@ travel_app.service('TourDetailsServiceAD', function ($http, $q) {
             params: {
                 page: page || 0,
                 size: size || 10,
-                sortBy: sortBy || 'dateCreated',
-                sortDir: sortDir || 'DESC',
-                searchTerm: searchTerm || ''
+                sortBy: sortBy || sortDate,
+                sortDir: sortDir || 'desc',
+                searchTerm: searchTerm || '',
+                tourDetailStatus: tourDetailStatus || '',
             }
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
@@ -79,11 +80,15 @@ travel_app.service('TourDetailsServiceAD', function ($http, $q) {
         return deferred.promise;
     };
 
-    this.deactivateTourDetail = function (id) {
+    this.deactivateTourDetail = function (tourDetail, tourDetailNotes) {
         const deferred = $q.defer();
         $http({
             method: 'DELETE',
-            url: API_TOUR_DETAIL + 'delete-tourDetail/' + id
+            url: API_TOUR_DETAIL + 'delete-tourDetail',
+            params: {
+                tourDetail: tourDetail,
+                tourDetailNotes: tourDetailNotes
+            }
         }).then(function (response) {
             deferred.resolve(response);
         }, function (error) {

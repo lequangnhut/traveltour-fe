@@ -26,31 +26,80 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/admin/dashboard', {
             templateUrl: 'app/component/admin/views/pages/dashboard/dashboard.html',
-            controller: 'DashboardControllerAD'
+            controller: 'DashboardControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/decentralized-staff-management', {
             templateUrl: 'app/component/admin/views/pages/supper-admin/decentralization/decentralization-staff.html',
-            controller: 'DecentralizationControllerStaffAD'
+            controller: 'DecentralizationControllerStaffAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/decentralized-staff-management/create-staff-account', {
             templateUrl: 'app/component/admin/views/pages/supper-admin/account/staff-create.html',
-            controller: 'DecentralizationControllerStaffAD'
+            controller: 'DecentralizationControllerStaffAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/decentralized-staff-management/update-staff-account/:id', {
             templateUrl: 'app/component/admin/views/pages/supper-admin/account/staff-update.html',
-            controller: 'DecentralizationControllerStaffAD'
+            controller: 'DecentralizationControllerStaffAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/decentralized-agent-management', {
             templateUrl: 'app/component/admin/views/pages/supper-admin/decentralization/decentralization-agent.html',
-            controller: 'DecentralizationControllerAgentAD'
+            controller: 'DecentralizationControllerAgentAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/decentralized-agent-management/create-agency-account', {
             templateUrl: 'app/component/admin/views/pages/supper-admin/agent/agent-create.html',
-            controller: 'DecentralizationControllerAgentAD'
+            controller: 'DecentralizationControllerAgentAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/decentralized-agent-management/update-agency-account/:id', {
             templateUrl: 'app/component/admin/views/pages/supper-admin/agent/agent-update.html',
-            controller: 'DecentralizationControllerAgentAD'
+            controller: 'DecentralizationControllerAgentAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -58,43 +107,113 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/admin/basic-tour-list', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/basic-tour/basic-tour-list.html',
-            controller: 'BasicTourControllerAD'
+            controller: 'BasicTourControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/basic-tour-list/basic-tour-create', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/basic-tour/basic-tour-create.html',
-            controller: 'BasicTourControllerAD'
+            controller: 'BasicTourControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/basic-tour-list/basic-tour-update/:id', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/basic-tour/basic-tour-update.html',
-            controller: 'BasicTourControllerAD'
+            controller: 'BasicTourControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/detail-tour-list', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/detail-tour/detail-tour-list.html',
-            controller: 'TourDetailControllerAD'
+            controller: 'TourDetailControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/detail-tour-list/detail-tour-create', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/detail-tour/detail-tour-create.html',
-            controller: 'TourDetailControllerAD'
+            controller: 'TourDetailControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/detail-tour-list/detail-tour-update/:id', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/detail-tour/detail-tour-update.html',
-            controller: 'TourDetailControllerAD'
+            controller: 'TourDetailControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/detail-tour-list/image-tour/:id', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/detail-tour/tour-detail-image.html',
-            controller: 'TourDetailsImageControllerAD'
+            controller: 'TourDetailsImageControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/detail-tour-list/trips-tour-list/:tourDetailId', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/trips-tour/trips-tour-list.html',
-            controller: 'TripsTourControllerAD'
+            controller: 'TripsTourControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/detail-tour-list/trips-tour-list/trips-tour-create/:tourDetailId', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/trips-tour/trips-tour-create.html',
-            controller: 'TripsTourControllerAD'
+            controller: 'TripsTourControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/detail-tour-list/trips-tour-list/trips-tour-update/:tourTripsId', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-management/trips-tour/trips-tour-update.html',
-            controller: 'TripsTourControllerAD'
+            controller: 'TripsTourControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -102,35 +221,91 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/admin/detail-tour-list/:tourDetailId/service-list', {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/service-list.html',
-            controller: 'ServiceListControllerAD'
+            controller: 'ServiceListControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/detail-tour-list/:tourDetailId/service-list/hotel-list', {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/hotel/hotel-list.html',
-            controller: 'HotelServiceControllerAD'
+            controller: 'HotelServiceControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/detail-tour-list/:tourDetailId/service-list/hotel-list/:hotelId/room-type-list', {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/hotel/room-type-list.html',
-            controller: 'RoomTypeControllerAD'
+            controller: 'RoomTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/detail-tour-list/:tourDetailId/service-list/hotel-list/:hotelId/room-type-list/hotel-payment', {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/hotel/hotel-payment.html',
-            controller: 'HotelPaymentControllerAD'
+            controller: 'HotelPaymentControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/detail-tour-list/:tourDetailId/service-list/visit-location-list', {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/visit-location/visit-location-list.html',
-            controller: 'VisitLocationControllerAD'
+            controller: 'VisitLocationControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/detail-tour-list/:tourDetailId/service-list/visit-location-list/:visitLocationId/visit-location-payment', {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/visit-location/visit-location-payment.html',
-            controller: 'VisitLocationPaymentControllerAD'
+            controller: 'VisitLocationPaymentControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/detail-tour-list/:tourDetailId/service-list/transportation-list', {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/transportation/transportation-list.html',
-            controller: 'TransportationSchedulesControllerAD'
+            controller: 'TransportationSchedulesControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/detail-tour-list/:tourDetailId/service-list/transportation-list/:transportationScheduleId/transportation-payment', {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/transportation/transportation-payment.html',
-            controller: 'TransportationSchedulesPaymentControllerAD'
+            controller: 'TransportationSchedulesPaymentControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -138,15 +313,36 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/admin/request-booking-car', {
             templateUrl: 'app/component/admin/views/pages/staff/request-car/booking-car.html',
-            controller: 'RequestCarControllerAD'
+            controller: 'RequestCarControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/request-booking-car/create-request-booking', {
             templateUrl: 'app/component/admin/views/pages/staff/request-car/booking-car-add.html',
-            controller: 'RequestCarControllerAD'
+            controller: 'RequestCarControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/request-booking-car/update-request-booking/:requestCarId', {
             templateUrl: 'app/component/admin/views/pages/staff/request-car/booking-car-edit.html',
-            controller: 'RequestCarControllerAD'
+            controller: 'RequestCarControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -154,19 +350,47 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/admin/booking-list', {
             templateUrl: 'app/component/admin/views/pages/staff/booking/booking-list.html',
-            controller: 'BookingControllerAD'
+            controller: 'BookingControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/accommodation-information-list', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-service/accommodation-information-list.html',
-            controller: 'AccommodationInformationControllerAD'
+            controller: 'AccommodationInformationControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/transportation-information-list', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-service/transportation-information-list.html',
-            controller: 'TransportationInformationControllerAD'
+            controller: 'TransportationInformationControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/visit-information-list', {
             templateUrl: 'app/component/admin/views/pages/staff/tour-service/visit-information-list.html',
-            controller: 'VisitInformationControllerAD'
+            controller: 'VisitInformationControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -174,23 +398,58 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/admin/tour-is-going-list', {
             templateUrl: 'app/component/admin/views/pages/staff/travel-schedule/tour-is-going-list.html',
-            controller: 'TourIsGoingControllerAD'
+            controller: 'TourIsGoingControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/customer-go-on-list', {
             templateUrl: 'app/component/admin/views/pages/staff/travel-schedule/customers-go-on-tour/customers-go-on-tour-list.html',
-            controller: 'CustomersGoOnTourControllerAD'
+            controller: 'CustomersGoOnTourControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/customer-go-on-list/:tourDetailId/customer-go-on-create', {
             templateUrl: 'app/component/admin/views/pages/staff/travel-schedule/customers-go-on-tour/customers-go-on-tour-create.html',
-            controller: 'CustomersGoOnTourControllerAD'
+            controller: 'CustomersGoOnTourControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/customer-go-on-list/customer-go-on-update/:id', {
             templateUrl: 'app/component/admin/views/pages/staff/travel-schedule/customers-go-on-tour/customers-go-on-tour-update.html',
-            controller: 'CustomersGoOnTourControllerAD'
+            controller: 'CustomersGoOnTourControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/bill-list', {
             templateUrl: 'app/component/admin/views/pages/staff/bill/bill-list.html',
-            controller: 'BillControllerAD'
+            controller: 'BillControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -264,79 +523,212 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/business/register-hotel', {
             templateUrl: 'app/component/agent/hotel/views/pages/register-hotel.html',
-            controller: 'RegisterHotelControllerAG'
+            controller: 'RegisterHotelControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/home', {
             templateUrl: 'app/component/agent/hotel/views/pages/dashboard/hotels-management.html',
-            controller: 'ListHotelControllerAG'
+            controller: 'ListHotelControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/home/hotel/create', {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-add.html',
-            controller: 'HotelInformationAddController'
+            controller: 'HotelInformationAddController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/home/hotel/update/:id', {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-edit.html',
-            controller: 'HotelInformationEditController'
+            controller: 'HotelInformationEditController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/room-type-list', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-list.html',
-            controller: 'RoomTypeListController'
+            controller: 'RoomTypeListController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/room-type-list/create', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-add.html',
-            controller: 'RoomTypeAddController'
+            controller: 'RoomTypeAddController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/room-type-list/update-info-room/:id', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-info-room-edit.html',
-            controller: 'RoomTypeInfoRoomEditController'
+            controller: 'RoomTypeInfoRoomEditController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/room-type-list/update-img-room/:id', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-image-edit.html',
-            controller: 'RoomTypeImageController'
+            controller: 'RoomTypeImageController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/room-type-list/update-utilities-room/:id', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-utilities-edit.html',
-            controller: 'RoomTypeUtilitiesEditController'
+            controller: 'RoomTypeUtilitiesEditController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/home/hotel-type-in/update/:id', {
             templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-add.html',
-            controller: 'HotelInformationEditController'
+            controller: 'HotelInformationEditController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/booking-list', {
             templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-list.html',
-            controller: 'BookingListController'
+            controller: 'BookingListController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/order-visit-list/create', {
             templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-add.html',
-            controller: 'HotelAmenitiesListControllerAG'
+            controller: 'HotelAmenitiesListControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/order-visit-list/update', {
             templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-edit.html',
-            controller: 'HotelAmenitiesListControllerAG'
+            controller: 'HotelAmenitiesListControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/accommodation-location-information/update', {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/accommodation-location-information-edit.html',
-            controller: 'AccommodationLocationInformationEditController'
+            controller: 'AccommodationLocationInformationEditController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/room-type-information-update', {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/room-type-information-edit.html',
-            controller: 'AccommodationLocationInformationEditController'
+            controller: 'AccommodationLocationInformationEditController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/room-modal-update', {
             templateUrl: 'app/component/agent/hotel/views/pages/hotel/room-amenities.html',
-            controller: 'AccommodationLocationInformationEditController'
+            controller: 'AccommodationLocationInformationEditController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/chat', {
             templateUrl: 'app/component/agent/hotel/views/pages/chat/chat-agency.html',
-            controller: 'ChatHotelController'
+            controller: 'ChatHotelController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/statistical', {
             templateUrl: 'app/component/agent/hotel/views/pages/statistical/statistical-hotel.html',
-            controller: 'StatisticalHotelControllerAG'
+            controller: 'StatisticalHotelControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/hotel/restore-room-type', {
             templateUrl: 'app/component/agent/hotel/views/pages/restore/restore-room-type.html',
-            controller: 'RestoreRoomTypeController'
+            controller: 'RestoreRoomTypeController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -347,14 +739,22 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'RegisterTransControllerAG',
             resolve: {
                 "check": function ($location, AuthService) {
-                    // Ví dụ như trang này tui có 2 điều kiện để vào, là có được user và token (bắt buộc)
-                    // thứ 2 là nếu người dùng chưa đăng kí xe, còn lại nếu đã đăng kí thì không được vào
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
                 }
             }
         })
         .when('/business/transport/home', {
             templateUrl: 'app/component/agent/trans/views/pages/dashboard/management-transport.html',
-            controller: 'ListTransportBrandControllerAG'
+            controller: 'ListTransportBrandControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -362,11 +762,25 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/business/transport/home/create-transport', {
             templateUrl: 'app/component/agent/trans/views/pages/transport-brand/create-transport.html',
-            controller: 'RegisterTransControllerAG'
+            controller: 'RegisterTransControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/transport/home/update-transport/:id', {
             templateUrl: 'app/component/agent/trans/views/pages/transport-brand/update-transport.html',
-            controller: 'RegisterTransControllerAG'
+            controller: 'RegisterTransControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -374,19 +788,47 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/business/transport/transport-management', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-list.html',
-            controller: 'TransportControllerAG'
+            controller: 'TransportControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/transport/transport-management/transport-image/:id', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-detail-image.html',
-            controller: 'TransportDetailsImageControllerAD'
+            controller: 'TransportDetailsImageControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/transport/transport-management/create-transport', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-create.html',
-            controller: 'TransportControllerAG'
+            controller: 'TransportControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/transport/transport-management/update-transport/:id', {
             templateUrl: 'app/component/agent/trans/views/pages/transports/transport-update.html',
-            controller: 'TransportControllerAG'
+            controller: 'TransportControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -394,15 +836,36 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/business/transport/schedules-management/order-transport-management/:scheduleId', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-list.html',
-            controller: 'OrderTransportControllerAG'
+            controller: 'OrderTransportControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/transport/schedules-management/order-transport-management/:scheduleId/create-order-visit', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-create.html',
-            controller: 'OrderTransportControllerAG'
+            controller: 'OrderTransportControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/transport/schedules-management/order-transport-management/:scheduleId/update-order-visit/:id', {
             templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-update.html',
-            controller: 'OrderTransportControllerAG'
+            controller: 'OrderTransportControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -410,15 +873,36 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/business/transport/schedules-management', {
             templateUrl: 'app/component/agent/trans/views/pages/schedules/schedules-list.html',
-            controller: 'SchedulesControllerAG'
+            controller: 'SchedulesControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/transport/schedules-management/create-schedules', {
             templateUrl: 'app/component/agent/trans/views/pages/schedules/schedules-create.html',
-            controller: 'SchedulesControllerAG'
+            controller: 'SchedulesControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/transport/schedules-management/update-schedules/:id', {
             templateUrl: 'app/component/agent/trans/views/pages/schedules/schedules-update.html',
-            controller: 'SchedulesControllerAG'
+            controller: 'SchedulesControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -426,15 +910,36 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/business/transport/notification-request-car', {
             templateUrl: 'app/component/agent/trans/views/pages/request-car/notification-request-car.html',
-            controller: 'RequestCarControllerAG'
+            controller: 'RequestCarControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/transport/notification-request-car/select-car/:requestCarId', {
             templateUrl: 'app/component/agent/trans/views/pages/request-car/select-car.html',
-            controller: 'SelectCarControllerAG'
+            controller: 'SelectCarControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/transport/history-request-car', {
             templateUrl: 'app/component/agent/trans/views/pages/request-car/history-request-car.html',
-            controller: 'HistoryRequestCarControllerAG'
+            controller: 'HistoryRequestCarControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -442,7 +947,14 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/business/transport/statistical', {
             templateUrl: 'app/component/agent/trans/views/pages/statistical/statistical-transport.html',
-            controller: 'StatisticalTransportControllerAG'
+            controller: 'StatisticalTransportControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -450,47 +962,124 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/business/register-visit', {
             templateUrl: 'app/component/agent/visits/views/pages/register-visits.html',
-            controller: 'RegisterVisitsControllerAG'
+            controller: 'RegisterVisitsControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/visit/home', {
             templateUrl: 'app/component/agent/visits/views/pages/dashboard/management-visit.html',
-            controller: 'ListVisitControllerAG'
+            controller: 'ListVisitControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/visit/home/create-visit-location', {
             templateUrl: 'app/component/agent/visits/views/pages/visit-location/create-visits.html',
-            controller: 'RegisterVisitsControllerAG'
+            controller: 'RegisterVisitsControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/visit/home/update-visit-location/:id', {
             templateUrl: 'app/component/agent/visits/views/pages/visit-location/update-visits.html',
-            controller: 'RegisterVisitsControllerAG'
+            controller: 'RegisterVisitsControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/visit/visit-ticket-management', {
             templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/ticket-list.html',
-            controller: 'VisitControllerAG'
+            controller: 'VisitControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/visit/visit-ticket-management/create-visit-ticket', {
             templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/ticket-create.html',
-            controller: 'VisitControllerAG'
+            controller: 'VisitControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/visit/visit-ticket-management/update-visit-ticket/:id', {
             templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/ticket-update.html',
-            controller: 'VisitControllerAG'
+            controller: 'VisitControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/visit/order-visit-management', {
             templateUrl: 'app/component/agent/visits/views/pages/bookings/booking-visit-list.html',
-            controller: 'OrderVisitControllerAG'
+            controller: 'OrderVisitControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/visit/order-visit-management/create-order-visit', {
             templateUrl: 'app/component/agent/visits/views/pages/bookings/booking-visit-create.html',
-            controller: 'OrderVisitControllerAG'
+            controller: 'OrderVisitControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/visit/order-visit-management/update-order-visit/:id', {
             templateUrl: 'app/component/agent/visits/views/pages/bookings/booking-visit-update.html',
-            controller: 'OrderVisitControllerAG'
+            controller: 'OrderVisitControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/business/visit/statistical', {
             templateUrl: 'app/component/agent/visits/views/pages/statistical/statistical-visit.html',
-            controller: 'StatisticalVisitControllerAG'
+            controller: 'StatisticalVisitControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -498,119 +1087,308 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/admin/customer-list', {
             templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-list.html',
-            controller: 'CustomerControllerAD'
+            controller: 'CustomerControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/customer-list/customer-create', {
             templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-create.html',
-            controller: 'CustomerControllerAD'
+            controller: 'CustomerControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/customer-list/customer-update/:id', {
             templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-update.html',
-            controller: 'CustomerControllerAD'
+            controller: 'CustomerControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         .when('/admin/type/hotel-type-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-type/hotel-type-list.html',
-            controller: 'HotelTypeControllerAD'
+            controller: 'HotelTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/type/hotel-type-list/hotel-type-create', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-type/hotel-type-create.html',
-            controller: 'HotelTypeControllerAD'
+            controller: 'HotelTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/type/hotel-type-list/hotel-type-update/:id', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-type/hotel-type-update.html',
-            controller: 'HotelTypeControllerAD'
+            controller: 'HotelTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         .when('/admin/type/visit-location-type-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/location-type/location-type-list.html',
-            controller: 'VisitLocationTypeControllerAD'
+            controller: 'VisitLocationTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/type/visit-location-type-list/visit-location-type-create', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/location-type/location-type-create.html',
-            controller: 'VisitLocationTypeControllerAD'
+            controller: 'VisitLocationTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/type/visit-location-type-list/visit-location-type-update/:id', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/location-type/location-type-update.html',
-            controller: 'VisitLocationTypeControllerAD'
+            controller: 'VisitLocationTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         .when('/admin/type/tour-type-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/tour-type/tour-type-list.html',
-            controller: 'TourTypeControllerAD'
+            controller: 'TourTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/type/tour-type-list/tour-type-create', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/tour-type/tour-type-create.html',
-            controller: 'TourTypeControllerAD'
+            controller: 'TourTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/type/tour-type-list/tour-type-update/:id', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/tour-type/tour-type-update.html',
-            controller: 'TourTypeControllerAD'
+            controller: 'TourTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         .when('/admin/type/transportation-type-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-type/transportation-type-list.html',
-            controller: 'TransTypeControllerAD'
+            controller: 'TransTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/type/transportation-type-list/transportation-type-create', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-type/transportation-type-create.html',
-            controller: 'TransTypeControllerAD'
+            controller: 'TransTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/type/transportation-type-list/transportation-type-update/:id', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-type/transportation-type-update.html',
-            controller: 'TransTypeControllerAD'
+            controller: 'TransTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         .when('/admin/type/transport-utilities-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-utilities/transportation-utilities-list.html',
-            controller: 'TransportUtilityControllerAD'
+            controller: 'TransportUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/type/transport-utilities-list/transport-utilities-create', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-utilities/transportation-utilities-create.html',
-            controller: 'TransportUtilityControllerAD'
+            controller: 'TransportUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/type/transport-utilities-list/transport-utilities-update/:transportUtilitiesId', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-utilities/transportation-utilities-update.html',
-            controller: 'TransportUtilityControllerAD'
+            controller: 'TransportUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         .when('/admin/type/hotel-utility-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-list.html',
-            controller: 'PlaceUtilityControllerAD'
+            controller: 'PlaceUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/type/hotel-utility-list/hotel-utility-create', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-create.html',
-            controller: 'PlaceUtilityControllerAD'
+            controller: 'PlaceUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/type/hotel-utility-list/hotel-utility-update/:id', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-update.html',
-            controller: 'PlaceUtilityControllerAD'
+            controller: 'PlaceUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         .when('/admin/type/room-utility-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/room-utility/room-utility-list.html',
-            controller: 'RoomUtilityControllerAD'
+            controller: 'RoomUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/type/room-utility-list/room-utility-create', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/room-utility/room-utility-create.html',
-            controller: 'RoomUtilityControllerAD'
+            controller: 'RoomUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/type/room-utility-list/room-utility-update/:id', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/room-utility/room-utility-update.html',
-            controller: 'RoomUtilityControllerAD'
+            controller: 'RoomUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         .when('/admin/type/bed-type-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/bed-type/bed-type-list.html',
-            controller: 'BedTypeControllerAD'
+            controller: 'BedTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/type/bed-type-list/bed-type-create', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/bed-type/bed-type-create.html',
-            controller: 'BedTypeControllerAD'
+            controller: 'BedTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/type/bed-type-list/bed-type-update/:id', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/bed-type/bed-type-update.html',
-            controller: 'BedTypeControllerAD'
+            controller: 'BedTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -618,19 +1396,47 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/admin/agency/agency-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-list.html',
-            controller: 'AgencyControllerAD'
+            controller: 'AgencyControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/agency/agency-list/agency-update', {
             templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-update.html',
-            controller: 'AgencyControllerAD'
+            controller: 'AgencyControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/agency/agency-list/agency-update/:id', {
             templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-update.html',
-            controller: 'AgencyControllerAD'
+            controller: 'AgencyControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/agency/agency-list-check', {
             templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-list-check.html',
-            controller: 'AgencyControllerWaitingAD'
+            controller: 'AgencyControllerWaitingAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -638,38 +1444,94 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/admin/post/hotel-post-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/post/hotel/hotel-post-list.html',
-            controller: 'HotelPostController'
+            controller: 'HotelPostController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/post/hotel-post-list/room-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/post/hotel/room-type-post-list.html',
-            controller: 'RoomPostController'
+            controller: 'RoomPostController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/post/hotel-post-list/room-list/:id', {
             templateUrl: 'app/component/admin/views/pages/admin-form/post/hotel/room-type-post-list.html',
-            controller: 'RoomPostController'
+            controller: 'RoomPostController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         .when('/admin/post/brand-post-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/post/transportation/brand-post-list.html',
-            controller: 'TransBrandPostController'
+            controller: 'TransBrandPostController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/post/brand-post-list/transportation-post-list/:id', {
             templateUrl: 'app/component/admin/views/pages/admin-form/post/transportation/transportation-post-list.html',
-            controller: 'TransportationPostController'
+            controller: 'TransportationPostController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/post/brand-post-list/transportation-list/transportation-schedule-post-list/:id', {
             templateUrl: 'app/component/admin/views/pages/admin-form/post/transportation/transportation-schedule-post-list.html',
-            controller: 'SchedulePostController'
+            controller: 'SchedulePostController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         .when('/admin/post/visit-post-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/post/visit/visit-post-list.html',
-            controller: 'VisitPostController'
+            controller: 'VisitPostController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         .when('/admin/chat', {
             templateUrl: 'app/component/agent/hotel/views/pages/chat/chat-agency.html',
-            controller: 'ChatHotelController'
+            controller: 'ChatHotelController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -677,11 +1539,25 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/admin/report/revenue', {
             templateUrl: 'app/component/admin/views/pages/admin-form/report/revenue.html',
-            controller: 'RevenueControllerAD'
+            controller: 'RevenueControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/report/statistical', {
             templateUrl: 'app/component/admin/views/pages/admin-form/report/statistical.html',
-            controller: 'StatisticalControllerAD'
+            controller: 'StatisticalControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -689,11 +1565,84 @@ travel_app.config(function ($routeProvider, $locationProvider) {
          */
         .when('/admin/information-update/:id', {
             templateUrl: 'app/component/admin/views/pages/information/information-update.html',
-            controller: 'CustomerControllerAD'
+            controller: 'CustomerControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
         .when('/admin/change-password/:id', {
             templateUrl: 'app/component/admin/views/pages/information/change-password.html',
-            controller: 'InformationController'
+            controller: 'InformationController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
+        /**
+         * Guide
+         */
+        .when('/admin/guide-perfect', {
+            templateUrl: 'app/component/admin/views/pages/guide/guide-perfect.html',
+            controller: 'GuideController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/guide-continuous', {
+            templateUrl: 'app/component/admin/views/pages/guide/guide-continuous.html',
+            controller: 'GuideController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/guide-future', {
+            templateUrl: 'app/component/admin/views/pages/guide/guide-future.html',
+            controller: 'GuideController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/guide-cancel', {
+            templateUrl: 'app/component/admin/views/pages/guide/guide-cancel.html',
+            controller: 'GuideController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/guide-cancel/:id', {
+            templateUrl: 'app/component/admin/views/pages/guide/service-tour-guide.html',
+            controller: 'HotelForTourGuideController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
         })
 
         /**
@@ -747,6 +1696,13 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/favourites/:id', {
             templateUrl: 'app/component/customers/views/pages/info/favourite.html',
             controller: 'FavoritesController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/home');
+                    }
+                }
+            }
         })
         .when('/order-visit', {
             templateUrl: 'app/component/customers/views/pages/tour/booking.html',
@@ -790,7 +1746,14 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/chat/:id', {
             templateUrl: 'app/component/customers/views/pages/chat/chat.html',
-            controller: 'ChatCustomerController'
+            controller: 'ChatCustomerController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/home');
+                    }
+                }
+            }
         })
         .when('/hotel/hotel-details/payment', {
             templateUrl: 'app/component/customers/views/pages/hotel/payment-hotel.html',
@@ -803,6 +1766,13 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/chat', {
             templateUrl: 'app/component/customers/views/pages/chat/chat.html',
             controller: 'ChatCustomerController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/home');
+                    }
+                }
+            }
         })
 
         /**
@@ -874,30 +1844,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/register-agency/register/information', {
             templateUrl: 'app/component/customers/views/pages/register-agency/register-agency-form.html',
             controller: 'RegisterAgencyFormCusController',
-        })
-
-        /**
-         * Guide
-         */
-        .when('/admin/guide-perfect', {
-            templateUrl: 'app/component/admin/views/pages/guide/guide-perfect.html',
-            controller: 'GuideController'
-        })
-        .when('/admin/guide-continuous', {
-            templateUrl: 'app/component/admin/views/pages/guide/guide-continuous.html',
-            controller: 'GuideController'
-        })
-        .when('/admin/guide-future', {
-            templateUrl: 'app/component/admin/views/pages/guide/guide-future.html',
-            controller: 'GuideController'
-        })
-        .when('/admin/guide-cancel', {
-            templateUrl: 'app/component/admin/views/pages/guide/guide-cancel.html',
-            controller: 'GuideController'
-        })
-        .when('/admin/guide-cancel/:id', {
-            templateUrl: 'app/component/admin/views/pages/guide/service-tour-guide.html',
-            controller: 'HotelForTourGuideController'
         })
 
         /**

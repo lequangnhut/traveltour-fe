@@ -112,6 +112,35 @@ travel_app.controller('RoomTypeControllerAD',
             $scope.$apply()
         };
 
+        /**
+         * Modal xem chi tiết tour detail
+         */
+        $scope.checkTourDetailModal = function () {
+            $('#tourInformationModal').modal('show');
+
+            TourDetailsServiceAD.findTourDetailById($scope.tourDetailId).then(function (response) {
+                if (response.status === 200) {
+                    $scope.tourDetailModal = response.data.data;
+                } else {
+                    $location.path('/admin/page-not-found');
+                }
+            })
+        }
+
+        /**
+         * Modal xem chi tiết khách sạn
+         */
+        $scope.checkHotelDetailModal = function () {
+            $('#hotelInformationModal').modal('show');
+
+            HotelServiceServiceAD.findHotelById($scope.hotelId).then(function (response) {
+                if (response.status === 200) {
+                    $scope.hotelModal = response.data.data;
+                } else {
+                    $location.path('/admin/page-not-found');
+                }
+            })
+        }
 
         $scope.getRoomTypeList = async () => {
             try {
@@ -282,5 +311,4 @@ travel_app.controller('RoomTypeControllerAD',
         }
 
         $scope.getRoomTypeList();
-
     });

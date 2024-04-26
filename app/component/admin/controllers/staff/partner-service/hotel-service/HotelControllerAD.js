@@ -301,6 +301,20 @@ travel_app.controller('HotelServiceControllerAD',
             return hourDiff < 1;
         };
 
+        /**
+         * Modal xem chi tiết tour detail
+         */
+        $scope.checkTourDetailModal = function () {
+            $('#tourInformationModal').modal('show');
+
+            TourDetailsServiceAD.findTourDetailById(tourDetailId).then(function (response) {
+                if (response.status === 200) {
+                    $scope.tourDetailModal = response.data.data;
+                } else {
+                    $location.path('/admin/page-not-found');
+                }
+            })
+        }
 
         $scope.navigateToRoomTypeList = (hotelServiceId, hotelName, address) => {
 

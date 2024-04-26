@@ -90,7 +90,14 @@
                         <!--=== Category Widget ===-->
                         <form method="post" role="form" name="bookingCustomerForm">
                             <div class="sidebar-widget category-widget mb-30 wow fadeInUp">
-                                <h4 class="widget-title fs-6">Thông tin liên hệ (nhận vé / phiếu thanh toán)</h4>
+                                <h4 class="widget-title fs-6">
+                                    Thông tin liên hệ (nhận vé / phiếu thanh toán)
+                                    <br>
+                                    <i style="font-size: 13px" class="fw-normal">
+                                        Lưu ý: Form trên chỉ để ghi chú lại thông tin của người đặt tour, dùng để hỗ trợ
+                                        khi có vấn đề xảy ra. Và thông tin này không được xem là khách hàng đi tour.
+                                    </i>
+                                </h4>
                                 <div class="mb-4 row">
                                     <div class="col-6">
                                         <label for="full_name" class="form-label">Họ và tên
@@ -189,32 +196,12 @@
                                         </small>
                                     </div>
 
-                                    <div class="row mb-3" ng-if="user !== null">
-                                        <div class="col-6">
-                                            <label class="form-check-label" for="customer_tq">
-                                                <input type="radio"
-                                                       class="form-check-input"
-                                                       name="category_customer"
-                                                       id="customer_tq"
-                                                >
-                                                Tôi là khách tham quan
-                                            </label>
-                                        </div>
-                                        <div class="col-6">
-                                            <label class="form-check-label" for="customer">
-                                                <input type="radio"
-                                                       class="form-check-input"
-                                                       name="category_customer"
-                                                       id="customer"
-                                                >
-                                                Tôi đặt cho người khác
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="show-form" ng-if="totalQuantityTicket > 1">
-                                        <a href="#" class="text-green" ng-click="showFormImportInfo()">
-                                            Nhập thêm thông tin cho {{ totalQuantity }} khách hàng
+                                    <div class="show-form">
+                                        <a href="#"
+                                           custom-tooltip="Có thể điền vào hợp đồng ở phòng vé sau khi đặt tour thành công"
+                                           class="text-green"
+                                           ng-click="showFormImportInfo()">
+                                            Nhập thông tin cho {{ ticketArray.length }} khách hàng đi tour
                                         </a>
                                         <i class="text-green" ng-bind-html="getChangeIconTour()"></i>
                                     </div>

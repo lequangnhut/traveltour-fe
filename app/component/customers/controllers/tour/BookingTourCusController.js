@@ -200,7 +200,8 @@ travel_app.controller('BookingTourCusController',
             $scope.bookings_tour.capacityKid = ticket.children;
             $scope.bookings_tour.capacityBaby = ticket.baby;
             $scope.bookings_tour.orderTotal = totalPrice;
-            $scope.bookings_tour.paymentMethod = 0; // 0: travel
+            $scope.bookings_tour.paymentMethod = 0; // 0: Travel
+            $scope.bookings_tour.dateBookingTour = new Date().getTime();
             $scope.bookings_tour.orderCode = GenerateCodePayService.generateCodePayment('VPO');
 
             let bookingDto = {
@@ -250,6 +251,7 @@ travel_app.controller('BookingTourCusController',
             $scope.bookings_tour.capacityBaby = ticket.baby;
             $scope.bookings_tour.orderTotal = totalPrice;
             $scope.bookings_tour.paymentMethod = 1; // 1: VNPay
+            $scope.bookings_tour.dateBookingTour = new Date().getTime();
             $scope.bookings_tour.orderCode = GenerateCodePayService.generateCodePayment('VNPAY');
 
             function confirmBookTour() {
@@ -298,6 +300,7 @@ travel_app.controller('BookingTourCusController',
             $scope.bookings_tour.capacityBaby = ticket.baby;
             $scope.bookings_tour.orderTotal = totalPrice;
             $scope.bookings_tour.paymentMethod = 3; // 3: MOMO
+            $scope.bookings_tour.dateBookingTour = new Date().getTime();
             $scope.bookings_tour.orderCode = GenerateCodePayService.generateCodePayment('MOMO');
 
             function confirmBookTour() {

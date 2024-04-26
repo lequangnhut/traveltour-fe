@@ -1,5 +1,5 @@
 travel_app.controller('BookingTourSuccessCusController',
-    function ($scope, $location, $routeParams, LocalStorageService, PrintService) {
+    function ($scope, $location, $routeParams, LocalStorageService, PrintService, PrintContractService) {
 
         $scope.init = function () {
             let dataBooking = LocalStorageService.decryptLocalData('dataBooking', 'encryptDataBooking');
@@ -18,6 +18,7 @@ travel_app.controller('BookingTourSuccessCusController',
             $scope.provinceName = dataBooking.provinceName;
             $scope.dataCustomers = bookingDto.bookingTourCustomersDto;
             $scope.bookingTicket = bookingTicket;
+            $scope.bookingTourDto = bookingDto.bookingToursDto;
 
             if ($routeParams.orderStatus && $routeParams.paymentMethod) {
                 $scope.orderStatus = parseInt(atob($routeParams.orderStatus));
@@ -45,6 +46,30 @@ travel_app.controller('BookingTourSuccessCusController',
                 }
 
                 PrintService.print(invoice);
+            }
+
+            $scope.printContractTourCustomer = function () {
+                let contract = {
+                    toursByTourId: $scope.tourDetail.toursByTourId,
+                    tourDetailsByTourDetailId: $scope.tourDetail,
+                    contractsById: [
+                        invoiceTour = {
+                            dateCreated: new Date().getTime()
+                        }
+                    ],
+                    customerName: bookingTicket.customerName,
+                    customerEmail: bookingTicket.customerEmail,
+                    customerCitizenCard: bookingTicket.customerCitizenCard,
+                    customerPhone: bookingTicket.customerPhone,
+                    capacityAdult: $scope.ticket.adults,
+                    capacityKid: $scope.ticket.children,
+                    bookingTourCustomersById: bookingTicket.dataCustomers || [],
+                    orderTotal: bookingTicket.orderTotal,
+                    dateCreated: new Date().getTime(),
+                    paymentMethod: 1
+                }
+
+                PrintContractService.printContracts(contract);
             }
         }
 
