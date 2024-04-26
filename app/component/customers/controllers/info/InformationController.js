@@ -1,6 +1,6 @@
 travel_app.controller("InformationController",
-    function ($scope, $sce, $location, $window, $routeParams, $timeout, Base64ObjectService, $rootScope,
-              CustomerServiceAD, LocalStorageService, AuthService, HistoryOrderServiceCUS, NotificationService) {
+    function ($scope, $sce, $location, $window, $routeParams, $timeout, $http, Base64ObjectService, $rootScope,
+              CustomerServiceAD, LocalStorageService, AuthService, HistoryOrderServiceCUS, NotificationService, ValidationImagesService) {
         let checkOldPass = '';
         let checkNewPass = '';
 
@@ -170,18 +170,45 @@ travel_app.controller("InformationController",
          * Các function xử lý hình ảnh
          * @param file
          */
+        $scope.hasImage = false;
+        $scope.errorMessageImage = ""
         $scope.uploadCustomerAvatar = (file) => {
             if (file && !file.$error) {
+                $scope.isLoading = true;
                 let reader = new FileReader();
 
-                reader.onload = (e) => {
-                    $scope.customer.avatar = e.target.result;
-                    $scope.customerAvatarNoCloud = file;
-                    $scope.hasImage = true; // Đánh dấu là đã có ảnh
-                    $scope.$apply();
-                };
+                ValidationImagesService.validationImage(file).then(function (response) {
 
-                reader.readAsDataURL(file);
+                    var validationImage = response.data
+
+                    if (0.9 > validationImage.nudity.none) {
+                        $scope.hasImage = true;
+                        $scope.errorMessageImage = "Phát hiện hình ảnh nhạy cảm, bạn sẽ bị khóa tài khoản nếu cố ý đăng tải"
+                    } else if (0.1 < validationImage.gore.prob) {
+                        $scope.hasImage = true;
+                        $scope.errorMessageImage = "Phát hiện hình ảnh bạo lực máu me, bạn sẽ bị khóa tài khoản nếu cố ý đăng tải"
+                    } else if (0.1 < validationImage.skull.prob) {
+                        $scope.hasImage = true;
+                        $scope.errorMessageImage = "Phát hiện hình ảnh phản cảm, bạn sẽ bị khóa tài khoản nếu cố ý đăng tải"
+                    } else {
+                        $scope.hasImage = false;
+                        $scope.errorMessageImage = ""
+
+                        reader.onload = (e) => {
+                            $scope.customer.avatar = e.target.result;
+                            $scope.customerAvatarNoCloud = file;
+                            $scope.hasImage = true; // Đánh dấu là đã có ảnh
+                            $scope.$apply();
+                        };
+
+                        reader.readAsDataURL(file);
+                    }
+
+                }).catch(function (error) {
+                    toastAlert("error", "Lỗi vui lòng thử lại sau");
+                }).finally(function () {
+                    $scope.isLoading = false;
+                })
             }
         };
 
@@ -316,4 +343,5 @@ travel_app.controller("InformationController",
             confirmAlert('Bạn có chắc chắn muốn đổi mật khẩu ?', confirmUpdatePassAdmin);
         }
 
-    })
+    }
+)

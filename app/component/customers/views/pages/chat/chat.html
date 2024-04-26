@@ -26,22 +26,25 @@
                                           style="bottom: 0; right: 4px; width: 10px; height: 10px"></span>
                                 </div>
                                 <div class="full-name-wrapper mx-1 user-chat-new-message">
-                                    <span class="full-name" style="line-height: 1rem">
-                                        <span style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600">{{ userChat.fullName }}</span>
-                                        <span class="full-name badge rounded-pill bg-primary" style="font-size: 8px"
+                                    <span class="full-name d-flex justify-content-center align-items-center">
+                                        <span style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; font-size: 15px">
+                                            {{ userChat.fullName }}
+                                        </span>
+                                        <span class="full-name badge rounded-pill bg-primary" style="font-size: 8px; margin-left: 8px"
                                               ng-if="
                                             userChat.role === 'ROLE_AGENT_HOTEL'
                                             || userChat.role === 'ROLE_AGENT_TRANSPORT'
                                             || userChat.role === 'ROLE_AGENT_PLACE'">Đối tác</span>
-                                        <span class="badge rounded-pill text-bg-success" style="font-size: 8px"
+                                        <span class="badge rounded-pill text-bg-success" style="font-size: 8px; margin-left: 8px"
                                               ng-if="
                                             userChat.role === 'ROLE_STAFF'">Quản trị viên</span>
                                     </span>
                                     <p class="small"
-                                       style="max-width: 270px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                                       style="max-width: 270px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3rem; font-size: 12px"
                                        ng-style="{'font-weight': userChat.countMessageUnread > 0 ? '600' : 'normal'}">
                                         <span ng-if="userChat.userId.toString() === userAgencyId.id.toString()">Bạn: </span>
-                                        <span ng-bind-html="trustAsHtml(userChat.newMessage)"></span>
+                                        <span ng-if="userChat.newMessage === null && true" >Không có tin nhắn</span>
+                                        <span ng-if="userChat.newMessage !== null " ng-bind-html="trustAsHtml(userChat.newMessage)"></span>
                                     </p>
                                 </div>
                             </div>
@@ -52,7 +55,7 @@
                         <hr class="d-block d-lg-none mt-1 mb-0">
                     </div>
                     <div class="col-12 col-lg-7 col-xl-8">
-                        <div class="py-2 px-4 border-bottom d-none d-lg-block" ng-click="connectStaffSupportOnline()">
+                        <div class="py-2 px-4 border-bottom d-none d-lg-block">
                             <div class="d-flex align-items-center py-1">
                                 <div class="flex-grow-1 pl-3">
                                     <div class="d-flex align-items-start m-1">
@@ -69,7 +72,13 @@
                                         <div class="full-name-wrapper">
                                             <span class="full-name " ng-bind="displayUserChat.fullName"></span>
                                             <span class="full-name badge rounded-pill bg-primary"
-                                                  ng-if="displayUserChat.role === 'ROLE_AGENT_HOTEL'">Đối tác</span>
+                                                  ng-if="displayUserChat.role === 'ROLE_AGENT_HOTEL'
+                                                  || displayUserChat.role === 'ROLE_AGENT_TRANSPORT'
+                                                  || displayUserChat.role === 'ROLE_AGENT_PLACE'"
+                                                  style="margin-left: 4px">Đối tác</span>
+                                            <span class="full-name badge rounded-pill text-bg-success"
+                                                  ng-if="displayUserChat.role === 'ROLE_STAFF'"
+                                                  style="margin-left: 4px">Quản trị viên</span>
                                             <div class="text-muted small">
                                                 <em ng-if="displayUserChat.status === 'ONLINE'">Đang hoạt động</em>
                                                 <em ng-if="displayUserChat.status === 'OFFLINE'"
@@ -109,7 +118,7 @@
                                                     <div class="font-weight-bold mb-1" ng-bind="message.fullName">Bạn</div>
                                                     <p ng-bind-html="trustAsHtml(message.content)" style="max-width: 600px"></p>
                                                     <div class="text-muted small text-nowrap mt-2 text-white"
-                                                         ng-bind="message.timestamp | formatHoursLeft"></div>
+                                                         ng-bind="message.timestamp | formatHoursRight"></div>
                                                 </div>
                                             </div>
                                             <span class="float-end badge rounded-pill bg-light text-dark mt-2"

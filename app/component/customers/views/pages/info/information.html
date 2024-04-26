@@ -36,7 +36,6 @@
 </style>
 
 <div ng-include="'app/component/utils/loading-html.html'"></div>
-
 <section id="information-section">
     <div class="container mt-5">
         <div class="">
@@ -160,9 +159,9 @@
                                             <input class="form-control d-none" type="file" id="avatar"
                                                    accept=".png, .jpg, .jpeg" ngf-select="uploadCustomerAvatar($file)"
                                                    ng-model="customer.avatar"/>
-
                                         </div>
                                     </div>
+                                    <div class="d-flex justify-content-center align-items-center"><span class="text-danger text-center" ng-bind="errorMessageImage"></span></div>
                                     <div class="row">
                                         <div class="col-6 mb-2">
                                             <label class="form-label">Tên của bạn</label>
@@ -260,7 +259,7 @@
                                         <div class="mt-2 d-flex justify-content-center pb-2">
                                             <button type="submit" class="btn btn-green"
                                                     style="padding: 8px 50px; border-radius: 30px"
-                                                    ng-disabled="customerForm.$invalid || cardError"
+                                                    ng-disabled="customerForm.$invalid || cardError || hasImage"
                                             >
                                                 Cập nhật
                                             </button>

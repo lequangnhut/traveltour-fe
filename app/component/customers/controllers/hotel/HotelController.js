@@ -436,6 +436,7 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         } else {
             $scope.filler.hotelTypeIdListFilter.splice(index, 1);
         }
+        $scope.findAllRoomTypesByFillerClick()
     };
 
     /**
@@ -449,6 +450,7 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         } else {
             $scope.filler.placeUtilitiesIdListFilter.splice(index, 1);
         }
+        $scope.findAllRoomTypesByFillerClick()
     };
 
     /**
@@ -462,6 +464,7 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         } else {
             $scope.filler.roomUtilitiesIdListFilter.splice(index, 1);
         }
+        $scope.findAllRoomTypesByFillerClick()
     }
 
     /**
@@ -475,6 +478,7 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         } else {
             $scope.filler.roomBedsIdListFilter.splice(index, 1);
         }
+        $scope.findAllRoomTypesByFillerClick()
     }
 
     /**
@@ -487,6 +491,7 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         } else {
             $scope.filler.breakfastIncludedFilter = null;
         }
+        $scope.findAllRoomTypesByFillerClick()
     }
 
     /**
@@ -499,6 +504,7 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         } else {
             $scope.filler.freeCancellationFilter = null;
         }
+        $scope.findAllRoomTypesByFillerClick()
     }
 
     /**
@@ -527,19 +533,19 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
     /**
      * Phương thức tìm kiếm loại phòng qua các điều kiện lọc
      */
-    HotelServiceCT.findAllRoomTypesByFillter($scope.filler).then(function successCallback(response) {
-        $scope.loading = true;
-        if (response.status === 200) {
-            $scope.roomTypes = response.data.data;
-            $scope.countSize = response.data.totalPages;
-            $scope.totalPages = Math.ceil(response.data.totalPages / $scope.filler.size);
-            $scope.encryptedData = btoa(JSON.stringify($scope.filler));
-        } else {
-            $location.path('/admin/internal-server-error');
-        }
-    }).finally(function () {
-        $scope.loading = false;
-    });
+    // HotelServiceCT.findAllRoomTypesByFillter($scope.filler).then(function successCallback(response) {
+    //     $scope.loading = true;
+    //     if (response.status === 200) {
+    //         $scope.roomTypes = response.data.data;
+    //         $scope.countSize = response.data.totalPages;
+    //         $scope.totalPages = Math.ceil(response.data.totalPages / $scope.filler.size);
+    //         $scope.encryptedData = btoa(JSON.stringify($scope.filler));
+    //     } else {
+    //         $location.path('/admin/internal-server-error');
+    //     }
+    // }).finally(function () {
+    //     $scope.loading = false;
+    // });
 
     /**
      * Phương thức tìm kiếm tất cả loại phòng
@@ -589,27 +595,33 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
      * Phương thức tìm kiếm khách sạn dựa vào thông tin filler khi click tìm kiếm
      */
     $scope.findAllRoomTypesByFillerClick = function () {
-        HotelServiceCT.findAllRoomTypesByFillter($scope.filler).then(function successCallback(response) {
-            if (response.status === 200) {
-                $scope.roomTypes = response.data.data;
-                $scope.totalPages = Math.ceil(response.data.totalPages / $scope.filler.size);
-                $scope.countSize = response.data.totalPages;
-                $scope.daysBetween = Math.floor(($scope.filler.checkOutDateFiller - $scope.filler.checkInDateFiller) / (1000 * 60 * 60 * 24));
-                $scope.addMarkers($scope.roomTypes);
-                $scope.encryptedData = btoa(JSON.stringify($scope.filler));
-            } else {
-                $location.path('/admin/internal-server-error');
-            }
-        })
+        $scope.isLoading = true;
+        HotelServiceCT.findAllRoomTypesByFillter($scope.filler)
+            .then(function successCallback(response) {
+                if (response.status === 200) {
+                    $scope.roomTypes = response.data.data;
+                    $scope.totalPages = Math.ceil(response.data.totalPages / $scope.filler.size);
+                    $scope.countSize = response.data.totalPages;
+                    $scope.daysBetween = Math.floor(($scope.filler.checkOutDateFiller - $scope.filler.checkInDateFiller) / (1000 * 60 * 60 * 24));
+                    $scope.addMarkers($scope.roomTypes);
+                    $scope.encryptedData = btoa(JSON.stringify($scope.filler));
+                } else {
+                    $location.path('/admin/internal-server-error');
+                }
+            }).finally(function () {
+            $scope.isLoading = false;
+        });
     }
     $scope.findAllRoomTypesByFillerClick()
 
     var performSearchPromise;
     $scope.performSearch = function () {
+        $scope.isLoading = true;
         if (performSearchPromise) {
             clearTimeout(performSearchPromise);
         }
         performSearchPromise = setTimeout(function () {
+
             HotelServiceCT.findAllRoomTypesByFillter($scope.filler).then(function successCallback(response) {
                 if (response.status === 200) {
                     $scope.roomTypes = response.data.data;
@@ -621,6 +633,8 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
                 } else {
                     $location.path('/admin/internal-server-error');
                 }
+            }).finally(function () {
+                $scope.isLoading = false;
             });
         }, 500); // Delay 500ms trước khi gửi yêu cầu tìm kiếm
     };
@@ -768,7 +782,6 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
                         <div class="img-holder col-xl-3 col-lg-4 p-0">
                             <img src="${roomType.roomTypeAvatar}"
                                  onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
-
                         </div>
                         <div class=" col-xl-9 col-lg-8">
                             <div class="meta row">

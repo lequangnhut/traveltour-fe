@@ -48,6 +48,12 @@
                                         </div>
                                         <div class="d-flex justify-content-between user-chat-new-message">
                                             <p class="fs--1 text-600 mb-0 text-nowrap"
+                                               ng-if="userChat.newMessage === null && true"
+                                               ng-class="{'message': userChat.countMessageUnread > 0}"
+                                               ng-bind-html="trustAsHtml(userChat.newMessage)"
+                                               style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px;">Không có tin nhắn</p>
+                                            <p class="fs--1 text-600 mb-0 text-nowrap"
+                                               ng-if="userChat.newMessage !== null"
                                                ng-class="{'message': userChat.countMessageUnread > 0}"
                                                ng-bind-html="trustAsHtml(userChat.newMessage)"
                                                style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px; "></p>

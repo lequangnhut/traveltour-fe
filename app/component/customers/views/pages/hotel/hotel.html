@@ -1,3 +1,4 @@
+
 <!--====== Start Breadcrumb Section ======-->
 <section class="page-banner overlay bg_cover">
     <div id="carousel-tour" class="carousel slide carousel-fade" data-bs-ride="carousel">
@@ -77,7 +78,8 @@
                                 <label for="rangePrice" class="form-label">Chọn ngân sách:</label>
                                 <input type="range" class="form-range" id="rangePrice" ng-model="filler.priceFilter"
                                        min="100000"
-                                       max="30000000" step="100000">
+                                       max="30000000" step="100000"
+                                        ng-change="findAllRoomTypesByFillerClick()">
                                 <p>{{ filler.priceFilter | number:0 }} VND</p>
                             </div>
                         </div>
@@ -193,30 +195,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="find-item mb-3 d-flex justify-content-center mt-3">
-                            <button class="btn btn-green" ng-click="findAllRoomTypesByFillerClick()">Lọc khách sạn
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-xl-9 col-md-12">
                 <div class="mb-3 w-100">
                     <div class="row single-event-item">
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <label for="locationFilter" class="form-label">Tìm kiếm</label>
                             <input type="text" class="form-control" id="locationFilter"
                                    ng-model="filler.locationFilter" ng-change="performSearch()">
                         </div>
-                        <div class="col-md-3">
-                            <label for="checkInDateFiller" class="form-label">Ngày nhận phòng</label>
+                        <div class="col-md-2">
+                            <label for="checkInDateFiller" class="form-label">Ngày nhận</label>
                             <input type="date" class="form-control" id="checkInDateFiller"
                                    ng-model="filler.checkInDateFiller" ng-change="validateDates()">
                             <span class="text-danger" ng-if="errorCheckInDateFiller">
                                 {{ errorCheckInDateFiller }}
                             </span>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label for="checkOutDateFiller" class="form-label">Ngày trả phòng</label>
                             <input type="date" class="form-control" id="checkOutDateFiller"
                                    ng-model="filler.checkOutDateFiller" ng-change="validateDates()">
@@ -242,100 +240,102 @@
                     </div>
                     <h4 class="mt-3 ">Tìm thấy {{ countSize }} chỗ nghỉ trên trang của chúng tôi</h4>
                 </div>
-                <div ng-repeat="roomType in roomTypes" ng-if="roomTypes.length > 0">
-                    <div class="single-event-item mb-30 wow fadeInUp row">
-                        <div class="img-holder col-xl-3 col-lg-4 p-0">
-                            <img ng-src="{{roomType.roomTypeAvatar}}" style="height: 170px"
-                                 onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
-                        </div>
-                        <div class=" col-xl-9 col-lg-8">
-                            <div class="meta row">
-                                <div class="col-lg-8 container-hotel">
-                                    <div>
+                <div ng-include="'app/component/utils/loading-component.html'"></div>
+                <div ng-if="!isLoading">
+                    <div   ng-repeat="roomType in roomTypes" ng-if="roomTypes.length > 0">
+                        <div class="single-event-item mb-30 wow fadeInUp row">
+                            <div class="img-holder col-xl-3 col-lg-4 p-0">
+                                <img ng-src="{{roomType.roomTypeAvatar}}" style="height: 170px"
+                                     onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
+                            </div>
+                            <div class=" col-xl-9 col-lg-8">
+                                <div class="meta row">
+                                    <div class="col-lg-8 container-hotel">
+                                        <div>
                                         <span>
                                             <i class="fa-solid fa-hotel"></i>
                                             <a>
                                                 {{ getHotelTypeName(roomType.hotelsByHotelId.hotelTypeId) }}
                                             </a>
                                         </span>
-                                        <h3 class="fw-medium"><a href="#">{{ roomType.hotelsByHotelId.hotelName }}</a>
-                                        </h3>
-                                        <div class="d-flex align-items-center mb-3"
-                                             style="border-bottom: 1px solid rgba(29, 35, 31, 0.1);">
-                                            <div class="location text-orange" style="font-size: 14px">
-                                                <p><span
-                                                        class="fas fa-map-marker-alt"></span> {{ roomType.hotelsByHotelId.province }}
-                                                    -
-                                                    {{ roomType.hotelsByHotelId.district }}</p>
-                                                <p>{{ roomType.hotelsByHotelId.address }}</p>
+                                            <h3 class="fw-medium"><a href="#">{{ roomType.hotelsByHotelId.hotelName }}</a>
+                                            </h3>
+                                            <div class="d-flex align-items-center mb-3"
+                                                 style="border-bottom: 1px solid rgba(29, 35, 31, 0.1);">
+                                                <div class="location text-orange" style="font-size: 14px">
+                                                    <p><span
+                                                            class="fas fa-map-marker-alt"></span> {{ roomType.hotelsByHotelId.province }}
+                                                        -
+                                                        {{ roomType.hotelsByHotelId.district }}</p>
+                                                    <p>{{ roomType.hotelsByHotelId.address }}</p>
+                                                </div>
+                                                <a href="#" class="btn text-green" style="font-size: 14px"
+                                                   ng-click="showMapModalByIdHotel(roomType.id)">
+                                                    Xem trên bản đồ</a>
                                             </div>
-                                            <a href="#" class="btn text-green" style="font-size: 14px"
-                                               ng-click="showMapModalByIdHotel(roomType.id)">
-                                                Xem trên bản đồ</a>
                                         </div>
-                                    </div>
-                                    <div class="roomTypeByHotel mb-3"
-                                         style="padding-left: 10px ;border-left: 1px solid rgba(29, 35, 31, 0.1)">
-                                        <div style="font-size: 14px; line-height: 20px">
-                                            <div class="fw-medium"
-                                                 style="font-size: 15px">{{ roomType.roomTypeName }}
-                                            </div>
-                                            <p class="fs-7 mb-1">Loại
-                                                giường: {{ getRoomBedsName(roomType.roomBedsById[0].bedTypeId) }}</p>
-                                            <div ng-if="roomType.breakfastIncluded" class="text-green">
-                                                <i class="fa-solid fa-check"></i> Miễn phí ăn sáng
-                                            </div>
-                                            <div ng-if="roomType.freeCancellation" class="text-green">
-                                                <i class="fa-solid fa-check"></i> Miễn phí hủy phòng
-                                            </div>
+                                        <div class="roomTypeByHotel mb-3"
+                                             style="padding-left: 10px ;border-left: 1px solid rgba(29, 35, 31, 0.1)">
+                                            <div style="font-size: 14px; line-height: 20px">
+                                                <div class="fw-medium"
+                                                     style="font-size: 15px">{{ roomType.roomTypeName }}
+                                                </div>
+                                                <p class="fs-7 mb-1">Loại
+                                                    giường: {{ getRoomBedsName(roomType.roomBedsById[0].bedTypeId) }}</p>
+                                                <div ng-if="roomType.breakfastIncluded" class="text-green">
+                                                    <i class="fa-solid fa-check"></i> Miễn phí ăn sáng
+                                                </div>
+                                                <div ng-if="roomType.freeCancellation" class="text-green">
+                                                    <i class="fa-solid fa-check"></i> Miễn phí hủy phòng
+                                                </div>
 
-                                            <div ng-if="roomType.amountRoom <= 10 && roomType.amountRoom > 0"
-                                                 class="text-danger mt-3 fw-medium">
-                                                <i class="fa-solid fa-exclamation"></i> Chỉ
-                                                còn {{ roomType.amountRoom }} phòng với giá này trên trang của chúng tôi
-                                            </div>
-                                            <div ng-if="roomType.amountRoom === 0" class="text-danger mt-3 fw-medium">
-                                                <i class="fa-solid fa-exclamation"></i> Phòng này đã hết, Nhưng bạn có
-                                                thể chọn phòng khác của khách sạn
+                                                <div ng-if="roomType.amountRoom <= 5 && roomType.amountRoom > 0"
+                                                     class="text-danger mt-3 fw-medium">
+                                                    <i class="fa-solid fa-exclamation"></i> Chỉ
+                                                    còn {{ roomType.amountRoom }} phòng với giá này trên trang của chúng tôi
+                                                </div>
+                                                <div ng-if="roomType.amountRoom === 0" class="text-danger mt-3 fw-medium">
+                                                    <i class="fa-solid fa-exclamation"></i> Phòng này đã hết, Nhưng bạn có
+                                                    thể chọn phòng khác của khách sạn
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="infoHotel h-100 w-100 position-relative row">
-                                        <div class="rating col-xl-12 col-lg-12 col-sm-6 col-6">
-                                            <div class="float-end" style="font-size: 14px; line-height: 20px">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="rating-content float-end m-2">
-                                                        <p>Rất tốt</p>
-                                                        <p>133 Đánh giá</p>
-                                                    </div>
-                                                    <div class="rating-content float-end">
-                                                        <div class="btn-green text-center"
-                                                             style="width: 50px; height: 50px; line-height: 50px; border-radius: 8px">
-                                                            <span class="fw-medium fs-5">4.9</span>
+                                    <div class="col-lg-4">
+                                        <div class="infoHotel h-100 w-100 position-relative row">
+                                            <div class="rating col-xl-12 col-lg-12 col-sm-6 col-6">
+                                                <div class="float-end" style="font-size: 14px; line-height: 20px">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="rating-content float-end m-2">
+                                                            <p>Rất tốt</p>
+                                                            <p>133 Đánh giá</p>
+                                                        </div>
+                                                        <div class="rating-content float-end">
+                                                            <div class="btn-green text-center"
+                                                                 style="width: 50px; height: 50px; line-height: 50px; border-radius: 8px">
+                                                                <span class="fw-medium fs-5">4.9</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
-                                            <div class="box">
-                                                <div class="amount-customer text-end">
-                                                    <p>
-                                                        {{ roomType.capacityAdults }} Người lớn *
-                                                        {{ roomType.capacityChildren }} Trẻ em
-                                                    </p>
+                                            <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
+                                                <div class="box">
+                                                    <div class="amount-customer text-end">
+                                                        <p>
+                                                            {{ roomType.capacityAdults }} người lớn
+                                                        </p>
+                                                    </div>
+                                                    <div class="fw-medium text-end"
+                                                         style="font-size: 20px">{{ roomType.price * daysBetween | number:0 }}
+                                                        VND
+                                                    </div>
+                                                    <p class="fs-7 float-end"> {{ daysBetween }} Đêm </p>
+                                                    <a ng-click="hotelDetailsById(roomType)"
+                                                       class="btn btn-green w-100 mt-3">
+                                                        Xem chi tiết
+                                                    </a>
                                                 </div>
-                                                <div class="fw-medium text-end"
-                                                     style="font-size: 20px">{{ roomType.price * daysBetween | number:0 }}
-                                                    VND
-                                                </div>
-                                                <p class="fs-7 float-end"> {{ daysBetween }} Đêm </p>
-                                                <a ng-click="hotelDetailsById(roomType)"
-                                                   class="btn btn-green w-100 mt-3">
-                                                    Xem chi tiết
-                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -344,14 +344,15 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="div" ng-if="roomTypes.length <= 0">
                     <div class="d-flex justify-content-center align-items-center">
                         Không có phòng nào phù hợp với yêu cầu của bạn
                         <sạn></sạn>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12">
+                <div class="row" >
+                    <div class="col-lg-12" ng-if="countSize.toInteger() < 10">
                         <ul class="gowilds-pagination wow fadeInUp text-center d-flex align-items-center justify-content-center">
                             <!-- Previous Page -->
                             <li class="m-1" ng-class="{disabled: filler.page === 0}">

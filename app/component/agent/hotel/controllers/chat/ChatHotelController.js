@@ -84,7 +84,7 @@ travel_app.controller('ChatHotelController', function ($scope, $routeParams, $ht
                     var userChats = JSON.parse(message.body);
 
                     var filteredUserChats = userChats.filter(function (userChat) {
-                        return userChat.userId !== user.id;
+                        return userChat.userId !== user.id.toString();
                     });
                     $scope.userChatsList = filteredUserChats;
                     scrollToBottom();

@@ -331,7 +331,7 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll,$
                     LocalStorageService.set("redirectAfterLogin", "/hotel/hotel-details");
                     $location.path('/sign-in');
                 }else{
-                    $window.location.href = '/chat/' + encodedId;
+                    $location.path( '/chat/' + encodedId);
                 }
 
             } else {
