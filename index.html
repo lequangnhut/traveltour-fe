@@ -959,22 +959,22 @@
                                 </div>
 
                                 <!-- Thể loại tiện ích lưu trú -->
-                                <!--                                <div class="nav-item-wrapper">-->
-                                <!--                                    <a class="nav-link dropdown-indicator label-1"-->
-                                <!--                                       ng-class="{ 'active': activeNavItem === 'statistical'}"-->
-                                <!--                                       ng-click="setActiveNavItem('statistical')"-->
-                                <!--                                       href="/admin/report/statistical">-->
-                                <!--                                        <div class="d-flex align-items-center">-->
-                                <!--                                            <div class="dropdown-indicator-icon"></div>-->
-                                <!--                                            <span class="nav-link-icon">-->
-                                <!--                                                <i class="fa-solid fa-chart-simple"></i>-->
-                                <!--                                            </span>-->
-                                <!--                                            <span class="nav-link-text-wrapper">-->
-                                <!--                                                <span class="nav-link-text">Thống kê</span>-->
-                                <!--                                            </span>-->
-                                <!--                                        </div>-->
-                                <!--                                    </a>-->
-                                <!--                                </div>-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link dropdown-indicator label-1"
+                                       ng-class="{ 'active': activeNavItem === 'statistical'}"
+                                       ng-click="setActiveNavItem('statistical')"
+                                       href="/admin/report/statistical">
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                                <i class="fa-solid fa-chart-simple"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Thống kê</span>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
 
                             <div ng-if="isSelectedRole('ROLE_AGENT_HOTEL')"
@@ -1497,8 +1497,8 @@
                                 <!-- label-->
                                 <div class="nav-item-wrapper">
                                     <a class="nav-link label-1"
-                                       ng-class="{ 'active': activeNavItem === 'guide-continuos'}"
-                                       ng-click="setActiveNavItem('guide-continuos')"
+                                       ng-class="{ 'active': activeNavItem === 'guide-continuous'}"
+                                       ng-click="setActiveNavItem('guide-continuous')"
                                        href="/admin/guide-continuous"
                                     >
                                         <div class="d-flex align-items-center">
@@ -1586,8 +1586,8 @@
                         </div>
                     </a>
                 </div>
-
-                <div class="search-box navbar-top-search-box d-none d-lg-block" style="width:25rem;" ng-cloak
+<!--                d-lg-block-->
+                <div class="search-box navbar-top-search-box d-none" style="width:25rem;" ng-cloak
                      ng-hide="hideSidebar()">
                     <form class="position-relative" data-bs-toggle="search" data-bs-display="static"><input
                             class="form-control search-input fuzzy-search rounded-pill form-control-sm" type="search"
@@ -2097,7 +2097,7 @@
 <script src="app/services/admin/NotificationsServiceAD.js"></script>
 <script src="app/services/admin/PostServiceAD.js"></script>
 <script src="app/services/admin/RevenueServiceAD.js"></script>
-
+<script src="app/services/admin/StatisticalServiceAD.js"></script>
 
 <!--====== Staff Service ======-->
 <script src="app/services/staff/ToursServiceAD.js"></script>

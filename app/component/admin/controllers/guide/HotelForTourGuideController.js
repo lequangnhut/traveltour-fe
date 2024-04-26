@@ -18,8 +18,8 @@ travel_app.controller('HotelForTourGuideController',
         $scope.getNavItem = LocalStorageService.get('activeNavItem');
         if ($scope.getNavItem === 'guide-future') {
             $scope.goBack = 'guide-future';
-        } else if ($scope.getNavItem === 'guide-continuos') {
-            $scope.goBack = 'guide-continuos';
+        } else if ($scope.getNavItem === 'guide-continuous') {
+            $scope.goBack = 'guide-continuous';
         } else if ($scope.getNavItem === 'guide-perfect') {
             $scope.goBack = 'guide-perfect';
         } else if ($scope.getNavItem === 'guide-cancel') {

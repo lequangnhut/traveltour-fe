@@ -25,11 +25,12 @@ travel_app.service('HistoryOrderServiceCUS', function ($http, $q) {
         })
     }
 
-    this.cancelBookingTour = function (id) {
+    this.cancelBookingTour = function (id, noted) {
         const deferred = $q.defer();
         $http({
             method: 'DELETE',
             url: API_HISTORY_ORDER + 'delete-booking-tour-customer/' + id,
+            params: {noted: noted},
             headers: {'Content-Type': undefined},
             transformRequest: angular.identity
         }).then(function (response) {
@@ -139,11 +140,12 @@ travel_app.service('HistoryOrderServiceCUS', function ($http, $q) {
         })
     }
 
-    this.cancelHotel = function (id) {
+    this.cancelHotel = function (id, noted) {
         const deferred = $q.defer();
         $http({
             method: 'DELETE',
             url: API_HISTORY_ORDER + 'delete-booking-hotel-customer/' + id,
+            params: {noted: noted},
             headers: {'Content-Type': undefined},
             transformRequest: angular.identity
         }).then(function (response) {
@@ -154,11 +156,12 @@ travel_app.service('HistoryOrderServiceCUS', function ($http, $q) {
         return deferred.promise;
     };
 
-    this.cancelVisit = function (id) {
+    this.cancelVisit = function (id, noted) {
         const deferred = $q.defer();
         $http({
             method: 'DELETE',
             url: API_HISTORY_ORDER + 'delete-booking-visit-customer/' + id,
+            params: {noted: noted},
             headers: {'Content-Type': undefined},
             transformRequest: angular.identity
         }).then(function (response) {
@@ -169,11 +172,12 @@ travel_app.service('HistoryOrderServiceCUS', function ($http, $q) {
         return deferred.promise;
     };
 
-    this.cancelTrans = function (id) {
+    this.cancelTrans = function (id, noted) {
         const deferred = $q.defer();
         $http({
             method: 'DELETE',
             url: API_HISTORY_ORDER + 'delete-booking-trans-customer/' + id,
+            params: {noted: noted},
             headers: {'Content-Type': undefined},
             transformRequest: angular.identity
         }).then(function (response) {

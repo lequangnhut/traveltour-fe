@@ -192,18 +192,23 @@ travel_app.controller("BookingVisitCustomerController", function ($scope, $sce, 
         $('#visitModal').modal('hide');
     };
 
+    $scope.hideReasonModal = function () {
+        $('#visitModal').modal('show');
+    };
+
     $scope.cancelBookingVisitOrder = function (data) {
         function confirmDeleteType() {
+            $scope.noted = $scope.cancel.reason;
             $scope.isLoading = true;
-            HistoryOrderServiceCUS.cancelVisit(data.id).then(function successCallback(response) {
+            HistoryOrderServiceCUS.cancelVisit(data.id, $scope.noted).then(function successCallback(response) {
                 centerAlert('Thành công !', 'Đã hủy booking, mời người dùng check mail !', 'success');
                 $('#visitModal').modal('hide'); // Đóng modal khi thành công
+                $('#delete-visit-reason').modal('hide'); // Đóng modal khi thành công
                 $scope.getBookingTourVisitList();
             }, errorCallback).finally(function () {
                 $scope.isLoading = false;
             });
         }
-
         confirmAlert($scope.mess, confirmDeleteType);
     };
 
