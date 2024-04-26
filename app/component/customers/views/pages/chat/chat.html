@@ -33,6 +33,9 @@
                                             userChat.role === 'ROLE_AGENT_HOTEL'
                                             || userChat.role === 'ROLE_AGENT_TRANSPORT'
                                             || userChat.role === 'ROLE_AGENT_PLACE'">Đối tác</span>
+                                        <span class="badge rounded-pill text-bg-success" style="font-size: 8px"
+                                              ng-if="
+                                            userChat.role === 'ROLE_STAFF'">Quản trị viên</span>
                                     </span>
                                     <p class="small"
                                        style="max-width: 270px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -74,18 +77,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <button class="btn btn-light border btn-lg px-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24"
-                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                             stroke-linejoin="round" class="feather feather-more-horizontal feather-lg">
-                                            <circle cx="12" cy="12" r="1"></circle>
-                                            <circle cx="19" cy="12" r="1"></circle>
-                                            <circle cx="5" cy="12" r="1"></circle>
-                                        </svg>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -221,7 +212,7 @@
                                         <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
                                     </button>
                                 </div>
-                                <div class="d-flex justify-content-center align-items-center">
+                                <div class="d-flex justify-content-center align-items-center" style="max-width: 1000px">
                                     <div class="form-control mb-1" contenteditable="true" id="chat-input"
                                          ng-model="messageContent" ng-blur="setTouched()"
                                          ng-style="{'height': editorHeight}" ng-keypress="onKeyPress($event)">
