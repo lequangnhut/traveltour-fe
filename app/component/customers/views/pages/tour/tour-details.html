@@ -374,7 +374,7 @@
                                         <span class="fas fa-map-marker-alt"></span>
                                         Điểm đến
                                         <span ng-show="tourDetail.toLocation.length > 15">...</span>
-                                        <span custom-tooltip="{{ tourDetail }}">
+                                        <span ng-if="dataLoaded" custom-tooltip="{{ tourDetail.toLocation }}">
                                             {{ tourDetail.toLocation | limitTo: 15 }}
                                         </span>
                                     </span>

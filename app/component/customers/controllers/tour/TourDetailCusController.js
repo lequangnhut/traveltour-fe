@@ -13,23 +13,6 @@ travel_app.controller('TourDetailCusController',
         $scope.selectedDayTrip = 1;
         $scope.mapLineLayerId = null;
 
-        $scope.tourDetail = {
-            tourDetailId: null,
-            guideId: null,
-            departureDate: null,
-            arrivalDate: null,
-            numberOfGuests: null,
-            minimumNumberOfGuests: null,
-            unitPrice: null,
-            tourDetailNotes: null,
-            tourDetailStatus: null,
-            dateCreated: null,
-            tourDetailDescription: null,
-            bookedSeat: null,
-            fromLocation: null,
-            toLocation: null,
-            tourDetailImage: null
-        };
         $scope.size = null;
         $scope.page = null;
 
@@ -49,11 +32,14 @@ travel_app.controller('TourDetailCusController',
         }
 
         $scope.init = function () {
+            var toLocation;
             $scope.isLoading = true;
+            $scope.dataLoaded = false;
 
             TourDetailCusService.findByTourDetailId(tourDetailId).then(function (response) {
                 if (response.status === 200) {
                     $scope.tourDetail = response.data.data;
+                    toLocation = $scope.tourDetail.toLocation;
                     $scope.tourDetailImagesById = response.data.data.tourDetailImagesById;
                     $scope.tourDetailDescription = $sce.trustAsHtml($scope.tourDetail.tourDetailDescription);
 
@@ -70,6 +56,10 @@ travel_app.controller('TourDetailCusController',
                 }
             }, errorCallback).finally(function () {
                 $scope.isLoading = false;
+                $timeout(function () {
+                    $scope.tourDetail.toLocation = toLocation;
+                    $scope.dataLoaded = true;
+                });
             });
 
             TourDetailCusService.findAllTourTrend().then(function (response) {

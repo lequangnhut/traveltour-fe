@@ -90,6 +90,7 @@ travel_app.controller('RequestCarControllerAD',
              */
             $scope.openModalRequestCarList = function (requestCarId) {
                 $('#request-car-list').modal('show');
+                $scope.isLoading = true;
                 $scope.requestCarDetailList = [];
 
                 RequestCarServiceAD.findAllRequestCarDetailService(requestCarId, $scope.currentPageDetail, $scope.pageSizeDetail, $scope.sortBy, $scope.sortDir)

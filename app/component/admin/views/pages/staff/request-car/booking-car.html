@@ -94,7 +94,7 @@
                                         <div class="d-flex align-items-center mb-2"
                                              style="border-bottom: 1px solid rgba(29, 35, 31, 0.1);">
                                             <div class="location text-orange" style="font-size: 14px">
-                                                <p class="text-warning mb-1">
+                                                <p class="text-warning mb-1" ng-if="!requestCar.isAccepted">
                                                     <i class="fa-solid fa-earth-americas"></i>
                                                     {{ requestCar.requestCarNoted }}
                                                 </p>
@@ -413,7 +413,9 @@
                                                     <p class="mb-3">
                                                         <span class="fas fa-map-marker-alt color-green"></span>
                                                         Địa chỉ:
-                                                        {{ requestCarDetail.transportationBrands.transportationBrandAddress }}
+                                                        <span class="fw-bold">
+                                                            {{ requestCarDetail.transportationBrands.transportationBrandAddress }}
+                                                        </span>
                                                     </p>
                                                     <div class="color-green">
                                                         <i class="fa-solid fa-check"></i> Xe có WIFI miễn phí

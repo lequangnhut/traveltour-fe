@@ -57,7 +57,7 @@ travel_app.service('PrintService', ['$window', '$filter', function ($window, $fi
               <!-- Header -->
               <header class="flex justify-between items-center pb-8">
                 <div>
-                  <h1 class="text-1xl font-bold">HÓA ĐƠN GIÁ TRỊ GIA TĂNG</h1>
+                  <h1 class="text-1xl font-bold">HÓA ĐƠN ĐIỆN TỬ</h1>
                   <p class="font-bold">SỐ: ${invoices.bookingTourId}</p>
                 </div>
                 <div class="text-right">
@@ -175,10 +175,9 @@ travel_app.service('PrintService', ['$window', '$filter', function ($window, $fi
                     <td style="font-size:small;text-align: center;width:45%">Công ty TNHH TravelTour
                     </td>
                     </tr>
-                    </table>
-                    <p class="separator" style="; border-bottom:2px solid #706f6f; font-size:0;
-                    margin: 10px 0 10px 0; line-height: 0;">&nbsp;</p>
-                    <p class="mt-2 mb-3" style="font-style: italic; font-size: 12px; margin: 0">
+              </table>
+              <p class="separator" style="; border-bottom:2px solid #706f6f; font-size:0; margin: 10px 0 10px 0; line-height: 0;">&nbsp;</p>
+              <p class="mt-2 mb-3" style="font-style: italic; font-size: 12px; margin: 0">
 
               <!-- Note and Footer -->
               <footer class="mt-5">
@@ -215,18 +214,3 @@ travel_app.service('PrintService', ['$window', '$filter', function ($window, $fi
         };
     };
 }]);
-
-travel_app.directive('myShowIf', function () {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attrs) {
-            scope.$watch(attrs.myShowIf, function (value) {
-                if (value) {
-                    element.css('display', '');
-                } else {
-                    element.css('display', 'none');
-                }
-            });
-        }
-    };
-});
