@@ -210,3 +210,7 @@
 .header-white h6 {
     color: white;
 }
+
+.content-chat-image img{
+    max-width: 600px
+}

@@ -667,6 +667,11 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'VisitPostController'
         })
 
+        .when('/admin/chat', {
+            templateUrl: 'app/component/agent/hotel/views/pages/chat/chat-agency.html',
+            controller: 'ChatHotelController'
+        })
+
         /**
          * Admin doanh thu
          */

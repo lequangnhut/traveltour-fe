@@ -226,7 +226,7 @@ travel_app.controller("ChatCustomerController", function ($scope, $routeParams, 
                 };
 
                 $scope.displayMessages.push($scope.newMessage);
-                hd
+
                 // Gửi tin nhắn cập nhật trạng thái
                 stompClient.send(`/app/${user.id}/chat.updateStatusMessenger`, {}, JSON.stringify({
                     senderId: user.id,

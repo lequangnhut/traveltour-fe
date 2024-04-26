@@ -80,11 +80,20 @@ travel_app.controller('ChatHotelController', function ($scope, $routeParams, $ht
             }));
 
             return new Promise(function (resolve, reject) {
-                stompClient.subscribe(`/user/${user.id}/chat/findUsersChat`, function (message) {
-                    $scope.userChatsList = JSON.parse(message.body);
+                var subscription = stompClient.subscribe(`/user/${user.id}/chat/findUsersChat`, function (message) {
+                    var userChats = JSON.parse(message.body);
+
+                    var filteredUserChats = userChats.filter(function (userChat) {
+                        return userChat.userId !== user.id;
+                    });
+                    $scope.userChatsList = filteredUserChats;
                     scrollToBottom();
-                    resolve($scope.userChatsList);
+                    resolve(filteredUserChats);
                 });
+
+                subscription.onError = function (error) {
+                    reject(error);
+                };
             });
         } catch (error) {
             console.error("Error:", error);
