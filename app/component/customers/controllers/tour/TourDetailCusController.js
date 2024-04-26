@@ -1,5 +1,5 @@
 travel_app.controller('TourDetailCusController',
-    function ($scope, $location, $sce, $timeout, $filter, $routeParams, LocalStorageService, UserLikeService, UserCommentsService, AuthService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailCusService, MapBoxService, ToursServiceAD, Base64ObjectService) {
+    function ($scope, $location, $sce, $timeout, $filter, $routeParams, $window, LocalStorageService, UserLikeService, UserCommentsService, RoomTypeServiceCT, AuthService, TourTripsServiceAD, TourDetailsServiceAD, TourDetailCusService, MapBoxService, ToursServiceAD, Base64ObjectService) {
         let user = null
         user = AuthService.getUser();
 
@@ -715,4 +715,16 @@ travel_app.controller('TourDetailCusController',
                 },
             });
         }, 500);
+
+        $scope.redirectToChatTour = function () {
+            var encodedId = btoa('66');
+
+            if (user == null) {
+                LocalStorageService.set("redirectAfterLogin", "/hotel/hotel-details");
+                $location.path('/sign-in');
+            } else {
+                $location.path( '/chat/' + encodedId);
+            }
+
+        }
     });

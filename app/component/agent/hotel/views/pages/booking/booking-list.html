@@ -183,7 +183,7 @@
                         </button>
                     </td>
                 </tr>
-                <tr ng-if="orderHotels.length === 0">
+                <tr ng-if="orderHotels.length <= 0 || orderHotels != null && orderHotels">
                     <td colspan="14">Trang này không có dữ liệu.</td>
                 </tr>
                 </tbody>
