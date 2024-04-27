@@ -49,7 +49,7 @@ travel_app.controller("BookingTourCustomerController",
         $scope.currentPage = 0;
         $scope.pageSize = 5;
         $scope.currentTab = 'pending';
-        $scope.orderStatus = 0;
+        $scope.orderStatus = null;
 
         $scope.passDate = false;
 
