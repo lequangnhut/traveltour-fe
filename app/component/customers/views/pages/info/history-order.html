@@ -111,6 +111,27 @@
         cursor: pointer;
     }
 
+    .active > .page-link, .page-link.active {
+        background-color: #63ab45;
+        border: none;
+    }
+
+    .disabled > .page-link, .page-link.disabled {
+        border: none;
+        color: rgba(128, 128, 128, 0.98);
+    }
+
+    .page-link {
+        cursor: pointer;
+        color: #63ab45;
+    }
+
+    .page-link:hover {
+        color: #63ab45;
+        background-color: white;
+        border: 1px solid #63ab45;
+    }
+
 </style>
 <div ng-include="'app/component/utils/loading-html.html'"></div>
 
@@ -160,8 +181,9 @@
                                         <select class="form-select" aria-label="Default select example"
                                                 style="height:44px;margin-right:20px;"
                                                 ng-model="orderStatus"
-                                                ng-init="orderStatus = '0'"
+                                                ng-init="orderStatus = null"
                                                 ng-change="getChangeStatus()">
+                                            <option value="">Tất cả</option>
                                             <option value="0">Chờ thanh toán</option>
                                             <option value="1">Đã thanh toán</option>
                                             <option value="2">Đã hủy</option>
@@ -181,31 +203,31 @@
 
                                     <ul class="pagination justify-content-center align-items-center">
                                         <!-- Previous Page -->
-                                        <li class="page-item" ng-class="{disabled: currentPage === 0}">
-                                            <a class="page-link" ng-click="setPage(0)">
-                                                <i class="fa-solid fa-angles-left"></i>
+                                        <li class="page-item" ng-class="{disabled: currentPage === 0}" style="border: none">
+                                            <a class="page-link me-2 fw-bold" ng-click="setPage(0)" style="width: 45px; border-radius: 50%; text-align:center">
+                                                <i class="fa-solid fa-angles-left text-"></i>
                                             </a>
                                         </li>
 
                                         <!-- Ellipsis at the beginning -->
-                                        <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
-                                            <span class="page-link">...</span>
+                                        <li class="page-item" ng-if="currentPage > 2 && totalPages > 5" style="border: none">
+                                            <span class="page-link me-2 fw-bold">...</span>
                                         </li>
 
                                         <!-- Pagination Numbers -->
-                                        <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                        <li class="page-item" ng-repeat="n in getPaginationRange()" style="border: none"
                                             ng-class="{active: n === currentPage}">
-                                            <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                            <a class="page-link me-2 fw-bold" ng-click="setPage(n)" style="width: 45px; border-radius: 50%; text-align:center">{{ n + 1 }}</a>
                                         </li>
 
                                         <!-- Ellipsis at the end -->
-                                        <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                        <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5" style="border: none">
                                             <span class="page-link">...</span>
                                         </li>
 
                                         <!-- Next Page -->
-                                        <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}">
-                                            <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                        <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}" style="border: none">
+                                            <a class="page-link fw-bold" ng-click="setPage(totalPages - 1)" style="width: 45px; border-radius: 50%;  text-align:center">
                                                 <i class="fa-solid fa-angles-right"></i>
                                             </a>
                                         </li>
@@ -317,7 +339,7 @@
                                 <div class="modal fade" id="tourModal" tabindex="-1"
                                      aria-labelledby="exampleModalScrollableTitle"
                                      style="display: none;" aria-hidden="true">
-                                    <div class="modal-dialog" style="min-height: 600px; min-width: 700px">
+                                    <div class="modal-dialog" style="min-height: 600px; min-width: 720px">
                                         <div class="modal-content bg-white">
                                             <div class="modal-header pb-2 pt-2 text-muted"
                                                  style="border-bottom: 1px solid #d2d2d2;">
@@ -331,10 +353,10 @@
                                                         style="font-size: 10px; margin:0"
                                                         ng-click="closeTourModal()"></button>
                                             </div>
-                                            <div class="modal-body overflow-auto bg-white"
+                                            <div class="modal-body overflow-y-auto bg-white"
                                                  style="border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;margin-bottom: 10px;
-                 margin-left: 8px;margin-right: 8px; max-height: 600px">
-                                                <div class="container-fluid">
+                 margin-left: 8px;margin-right: 8px; max-height: 570px">
+                                                <div class="container-fluid" style="padding-left: 15px; padding-right: 15px">
                                                     <div class="row mt-3 mb-3">
                                                         <div class="col-4">
                                                             <div class="card">
@@ -418,11 +440,11 @@
                                                                             <p class="fw-bold"
                                                                                style="font-size: 14px;font-family: Montserrat, sans-serif">
                                                                                 Trạng thái:
-                                                                                <span class="fw-light"
+                                                                                <span class="fw-light text-warning"
                                                                                       ng-if="bookingTour.orderStatus === 0">Chờ thanh toán</span>
-                                                                                <span class="fw-light"
+                                                                                <span class="fw-light text-success"
                                                                                       ng-if="bookingTour.orderStatus === 1">Đã thanh toán</span>
-                                                                                <span class="fw-light"
+                                                                                <span class="fw-light text-danger"
                                                                                       ng-if="bookingTour.orderStatus === 2">Đã hủy</span>
                                                                             </p>
                                                                         </div>
@@ -622,8 +644,9 @@
                                         <select class="form-select" aria-label="Default select example"
                                                 style="height:44px;margin-right:20px;"
                                                 ng-model="orderStatus"
-                                                ng-init="orderStatus = '0'"
+                                                ng-init="orderStatus = null"
                                                 ng-change="getChangeHotelStatus()">
+                                            <option value="">Tất cả</option>
                                             <option value="0">Chờ thanh toán</option>
                                             <option value="1">Đã thanh toán</option>
                                             <option value="2">Đã duyệt</option>
@@ -645,31 +668,31 @@
                                     </div>
                                     <ul class="pagination justify-content-center align-items-center">
                                         <!-- Previous Page -->
-                                        <li class="page-item" ng-class="{disabled: currentPage === 0}">
-                                            <a class="page-link" ng-click="setPage(0)">
-                                                <i class="fa-solid fa-angles-left"></i>
+                                        <li class="page-item" ng-class="{disabled: currentPage === 0}" style="border: none">
+                                            <a class="page-link me-2 fw-bold" ng-click="setPage(0)" style="width: 45px; border-radius: 50%; text-align:center">
+                                                <i class="fa-solid fa-angles-left text-"></i>
                                             </a>
                                         </li>
 
                                         <!-- Ellipsis at the beginning -->
-                                        <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
-                                            <span class="page-link">...</span>
+                                        <li class="page-item" ng-if="currentPage > 2 && totalPages > 5" style="border: none">
+                                            <span class="page-link me-2 fw-bold">...</span>
                                         </li>
 
                                         <!-- Pagination Numbers -->
-                                        <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                        <li class="page-item" ng-repeat="n in getPaginationRange()" style="border: none"
                                             ng-class="{active: n === currentPage}">
-                                            <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                            <a class="page-link me-2 fw-bold" ng-click="setPage(n)" style="width: 45px; border-radius: 50%; text-align:center">{{ n + 1 }}</a>
                                         </li>
 
                                         <!-- Ellipsis at the end -->
-                                        <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                        <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5" style="border: none">
                                             <span class="page-link">...</span>
                                         </li>
 
                                         <!-- Next Page -->
-                                        <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}">
-                                            <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                        <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}" style="border: none">
+                                            <a class="page-link fw-bold" ng-click="setPage(totalPages - 1)" style="width: 45px; border-radius: 50%;  text-align:center">
                                                 <i class="fa-solid fa-angles-right"></i>
                                             </a>
                                         </li>
@@ -824,10 +847,10 @@
                                                         style="font-size: 10px; margin:0"
                                                         ng-click="closeHotelModal()"></button>
                                             </div>
-                                            <div class="modal-body overflow-auto bg-white"
+                                            <div class="modal-body overflow-y-auto bg-white"
                                                  style="border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;margin-bottom: 10px;
-                 margin-left: 8px;margin-right: 8px; max-height: 600px">
-                                                <div class="container-fluid">
+                 margin-left: 8px;margin-right: 8px; max-height: 570px">
+                                                <div class="container-fluid" style="padding-left: 15px; padding-right: 15px">
                                                     <div class="row mt-3 mb-3">
                                                         <div class="col-4">
                                                             <div class="card">
@@ -917,17 +940,17 @@
                                                                             <p class="fw-bold"
                                                                                style="font-size: 14px;font-family: Montserrat, sans-serif">
                                                                                 Trạng thái:
-                                                                                <span class="fw-light"
+                                                                                <span class="fw-light text-warning"
                                                                                       ng-if="bookingHotel.orderStatus === 0">Chờ thanh toán</span>
-                                                                                <span class="fw-light"
+                                                                                <span class="fw-light text-success"
                                                                                       ng-if="bookingHotel.orderStatus === 1">Đã thanh toán</span>
-                                                                                <span class="fw-light"
+                                                                                <span class="fw-light text-success"
                                                                                       ng-if="bookingHotel.orderStatus === 2">Đã duyệt</span>
-                                                                                <span class="fw-light"
+                                                                                <span class="fw-light text-success"
                                                                                       ng-if="bookingHotel.orderStatus === 3">Thành công</span>
-                                                                                <span class="fw-light"
+                                                                                <span class="fw-light text-danger"
                                                                                       ng-if="bookingHotel.orderStatus === 4">Đã hủy</span>
-                                                                                <span class="fw-light"
+                                                                                <span class="fw-light text-danger"
                                                                                       ng-if="bookingHotel.orderStatus === 5">Khách sạn hủy</span>
 
                                                                             </p>
@@ -1105,8 +1128,9 @@
                                         <select class="form-select" aria-label="Default select example"
                                                 style="height:44px;margin-right:20px;"
                                                 ng-model="orderStatus"
-                                                ng-init="orderStatus = '0'"
+                                                ng-init="orderStatus = null"
                                                 ng-change="getChangeTransStatus()">
+                                            <option value="">Tất cả</option>
                                             <option value="0">Chờ thanh toán</option>
                                             <option value="1">Đã thanh toán</option>
                                             <option value="2">Đã hủy</option>
@@ -1125,31 +1149,31 @@
                                     </div>
                                     <ul class="pagination justify-content-center align-items-center">
                                         <!-- Previous Page -->
-                                        <li class="page-item" ng-class="{disabled: currentPage === 0}">
-                                            <a class="page-link" ng-click="setPage(0)">
-                                                <i class="fa-solid fa-angles-left"></i>
+                                        <li class="page-item" ng-class="{disabled: currentPage === 0}" style="border: none">
+                                            <a class="page-link me-2 fw-bold" ng-click="setPage(0)" style="width: 45px; border-radius: 50%; text-align:center">
+                                                <i class="fa-solid fa-angles-left text-"></i>
                                             </a>
                                         </li>
 
                                         <!-- Ellipsis at the beginning -->
-                                        <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
-                                            <span class="page-link">...</span>
+                                        <li class="page-item" ng-if="currentPage > 2 && totalPages > 5" style="border: none">
+                                            <span class="page-link me-2 fw-bold">...</span>
                                         </li>
 
                                         <!-- Pagination Numbers -->
-                                        <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                        <li class="page-item" ng-repeat="n in getPaginationRange()" style="border: none"
                                             ng-class="{active: n === currentPage}">
-                                            <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                            <a class="page-link me-2 fw-bold" ng-click="setPage(n)" style="width: 45px; border-radius: 50%; text-align:center">{{ n + 1 }}</a>
                                         </li>
 
                                         <!-- Ellipsis at the end -->
-                                        <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                        <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5" style="border: none">
                                             <span class="page-link">...</span>
                                         </li>
 
                                         <!-- Next Page -->
-                                        <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}">
-                                            <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                        <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}" style="border: none">
+                                            <a class="page-link fw-bold" ng-click="setPage(totalPages - 1)" style="width: 45px; border-radius: 50%;  text-align:center">
                                                 <i class="fa-solid fa-angles-right"></i>
                                             </a>
                                         </li>
@@ -1265,10 +1289,10 @@
                                                         style="font-size: 10px; margin:0"
                                                         ng-click="closeTransModal()"></button>
                                             </div>
-                                            <div class="modal-body overflow-auto bg-white"
+                                            <div class="modal-body overflow-y-auto bg-white"
                                                  style="border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;margin-bottom: 10px;
-                 margin-left: 8px;margin-right: 8px; max-height: 600px">
-                                                <div class="container-fluid">
+                 margin-left: 8px;margin-right: 8px; max-height: 570px">
+                                                <div class="container-fluid" style="padding-left: 15px; padding-right: 15px">
                                                     <div class="row mt-3 mb-3">
                                                         <div class="col-4">
                                                             <div class="card">
@@ -1362,13 +1386,13 @@
                                                                             <p class="fw-bold"
                                                                                style="font-size: 14px;font-family: Montserrat, sans-serif">
                                                                                 Trạng thái:
-                                                                                <span class="fw-light"
+                                                                                <span class="fw-light text-warning"
                                                                                       ng-if="bookingTrans.orderStatus === 0">Chờ thanh toán
                                                                                 </span>
-                                                                                <span class="fw-light"
+                                                                                <span class="fw-light text-success"
                                                                                       ng-if="bookingTrans.orderStatus === 1">Đã thanh toán
                                                                                 </span>
-                                                                                <span class="fw-light"
+                                                                                <span class="fw-light text-danger"
                                                                                       ng-if="bookingTrans.orderStatus === 2">Đã hủy
                                                                                 </span>
 
@@ -1536,8 +1560,9 @@
                                         <select class="form-select" aria-label="Default select example"
                                                 style="height:44px;margin-right:20px;"
                                                 ng-model="orderStatus"
-                                                ng-init="orderStatus = '0'"
+                                                ng-init="orderStatus = null"
                                                 ng-change="getChangeVisitStatus()">
+                                            <option value="">Tất cả</option>
                                             <option value="0">Chờ thanh toán</option>
                                             <option value="1">Đã thanh toán</option>
                                             <option value="2">Đã hủy</option>
@@ -1556,31 +1581,31 @@
                                     </div>
                                     <ul class="pagination justify-content-center align-items-center">
                                         <!-- Previous Page -->
-                                        <li class="page-item" ng-class="{disabled: currentPage === 0}">
-                                            <a class="page-link" ng-click="setPage(0)">
-                                                <i class="fa-solid fa-angles-left"></i>
+                                        <li class="page-item" ng-class="{disabled: currentPage === 0}" style="border: none">
+                                            <a class="page-link me-2 fw-bold" ng-click="setPage(0)" style="width: 45px; border-radius: 50%; text-align:center">
+                                                <i class="fa-solid fa-angles-left text-"></i>
                                             </a>
                                         </li>
 
                                         <!-- Ellipsis at the beginning -->
-                                        <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
-                                            <span class="page-link">...</span>
+                                        <li class="page-item" ng-if="currentPage > 2 && totalPages > 5" style="border: none">
+                                            <span class="page-link me-2 fw-bold">...</span>
                                         </li>
 
                                         <!-- Pagination Numbers -->
-                                        <li class="page-item" ng-repeat="n in getPaginationRange()"
+                                        <li class="page-item" ng-repeat="n in getPaginationRange()" style="border: none"
                                             ng-class="{active: n === currentPage}">
-                                            <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                            <a class="page-link me-2 fw-bold" ng-click="setPage(n)" style="width: 45px; border-radius: 50%; text-align:center">{{ n + 1 }}</a>
                                         </li>
 
                                         <!-- Ellipsis at the end -->
-                                        <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                        <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5" style="border: none">
                                             <span class="page-link">...</span>
                                         </li>
 
                                         <!-- Next Page -->
-                                        <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}">
-                                            <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                        <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}" style="border: none">
+                                            <a class="page-link fw-bold" ng-click="setPage(totalPages - 1)" style="width: 45px; border-radius: 50%;  text-align:center">
                                                 <i class="fa-solid fa-angles-right"></i>
                                             </a>
                                         </li>
@@ -1699,10 +1724,10 @@
                                                         style="font-size: 10px; margin:0"
                                                         ng-click="closeVisitModal()"></button>
                                             </div>
-                                            <div class="modal-body overflow-auto bg-white"
+                                            <div class="modal-body overflow-y-auto bg-white"
                                                  style="border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;margin-bottom: 10px;
-                 margin-left: 8px;margin-right: 8px; max-height: 600px">
-                                                <div class="container-fluid">
+                 margin-left: 8px;margin-right: 8px; max-height: 570px">
+                                                <div class="container-fluid" style="padding-left: 15px; padding-right: 15px">
                                                     <div class="row mt-3 mb-3">
                                                         <div class="col-4">
                                                             <div class="card">
@@ -1791,13 +1816,13 @@
                                                                             <p class="fw-bold"
                                                                                style="font-size: 14px;font-family: Montserrat, sans-serif">
                                                                                 Trạng thái:
-                                                                                <span class="fw-light"
+                                                                                <span class="fw-light text-warning"
                                                                                       ng-if="bookingVisit.orderStatus === 0">Chờ thanh toán
                                                                                 </span>
-                                                                                <span class="fw-light"
+                                                                                <span class="fw-light text-success"
                                                                                       ng-if="bookingVisit.orderStatus === 1">Đã thanh toán
                                                                                 </span>
-                                                                                <span class="fw-light"
+                                                                                <span class="fw-light text-danger"
                                                                                       ng-if="bookingVisit.orderStatus === 2">Đã hủy
                                                                                 </span>
 

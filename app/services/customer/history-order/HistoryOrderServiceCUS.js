@@ -12,7 +12,7 @@ travel_app.service('HistoryOrderServiceCUS', function ($http, $q) {
                 size: size || 10,
                 sortBy: sortBy || 'id',
                 sortDir: sortDir || 'asc',
-                orderStatus: orderStatus || 0
+                orderStatus: orderStatus || null
             }
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
@@ -51,7 +51,7 @@ travel_app.service('HistoryOrderServiceCUS', function ($http, $q) {
                 size: size || 10,
                 sortBy: sortBy || 'id',
                 sortDir: sortDir || 'asc',
-                orderHotelStatus: orderHotelStatus || 1
+                orderHotelStatus: orderHotelStatus || null
             }
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
@@ -67,7 +67,7 @@ travel_app.service('HistoryOrderServiceCUS', function ($http, $q) {
                 size: size || 10,
                 sortBy: sortBy || 'id',
                 sortDir: sortDir || 'asc',
-                orderStatus: orderStatus || 0
+                orderStatus: orderStatus || null
             }
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
@@ -104,7 +104,7 @@ travel_app.service('HistoryOrderServiceCUS', function ($http, $q) {
                 size: size || 10,
                 sortBy: sortBy || 'id',
                 sortDir: sortDir || 'asc',
-                orderStatus: orderStatus || 0
+                orderStatus: orderStatus || null
             }
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
@@ -127,7 +127,7 @@ travel_app.service('HistoryOrderServiceCUS', function ($http, $q) {
                 size: size || 10,
                 sortBy: sortBy || 'id',
                 sortDir: sortDir || 'asc',
-                orderStatus: orderStatus || 0
+                orderStatus: orderStatus || null
             }
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;

@@ -9,7 +9,7 @@ travel_app.controller("BookingVisitCustomerController", function ($scope, $sce, 
     $scope.currentPage = 0;
     $scope.pageSize = 5;
     $scope.currentTab = 'pending';
-    $scope.orderStatus = 0;
+    $scope.orderStatus = null;
 
     $scope.passDate = false;
 
