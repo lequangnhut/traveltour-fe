@@ -159,7 +159,8 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="h6">{{ roomType.price | removeCurrencySymbol }} VND</div>
+                                                <div class="h6">{{ roomType.price * daysBetween | removeCurrencySymbol }} VND</div>
+                                                <div class="fw-medium text-orange">{{daysBetween }} đêm</div>
                                                 <div>Đã bao gồm thuế và phí</div>
                                             </td>
                                             <td>
@@ -167,7 +168,7 @@
                                                         style="font-size: 13px; width: 60px"
                                                         ng-model="roomType.amountRoomSelected"
                                                         ng-change="selectedRoomType(roomType.amountRoomSelected, roomType)"
-                                                        ng-options="room as room + '' + ' (' + (room * roomType.price | removeCurrencySymbol) + ' VND)' for room in generateRoomNumbers(roomType.amountRoom)">
+                                                        ng-options="room as room + '' + ' (' + (room * roomType.price * daysBetween | removeCurrencySymbol) + ' VND)' for room in generateRoomNumbers(roomType.amountRoom)">
                                                     <option value="">0</option>
                                                 </select>
                                             </td>
@@ -180,7 +181,7 @@
                                                 <div ng-if="roomType.freeCancellation" class="text-green">
                                                     <i class="fa-solid fa-check"></i> Miễn phí hủy phòng
                                                 </div>
-                                                <div ng-if="roomType.amountRoom <= 10 && roomType.amountRoom > 0"
+                                                <div ng-if="roomType.amountRoom <= 5 && roomType.amountRoom > 0"
                                                      class="text-danger fw-medium">
                                                     <i class="fa-solid fa-exclamation"></i> Chỉ
                                                     còn {{ roomType.amountRoom }} phòng với giá này trên trang của chúng
@@ -242,7 +243,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="h6">{{ roomType.amountRoomSelected * roomType.price | removeCurrencySymbol }}
+                                        <div class="h6">{{ roomType.amountRoomSelected * roomType.price * daysBetween | removeCurrencySymbol }}
                                             VND
                                         </div>
                                         <span>Đã bao gồm thuế và phí</span>
@@ -257,15 +258,12 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="1" class="text-end">
-                                        <div class="">Miễn phí hủy phòng trước ngày</div>
-                                    </td>
                                     <td colspan="2" class="text-end">
-                                        <div class="h6">Tổng
-                                            tiền: {{ totalAmountRoomSelected() | removeCurrencySymbol }} VND
+                                        <div class="h6" style="line-height: 30px">Tổng
+                                            tiền: {{ totalAmountRoomSelected() * daysBetween| removeCurrencySymbol }} VND
                                         </div>
-                                        <div class="h6">{{ roomTypeSelected[0].hotelsByHotelId.freeCancellationDate | date: 'dd/MM/yyyy' }}</div>
-                                    <td colspan="1" class="text-end">
+                                        <div class="h6" style="line-height: 30px">{{ roomTypeSelected[0].hotelsByHotelId.freeCancellationDate | date: 'dd/MM/yyyy' }}</div>
+                                    <td colspan="2" class="text-end">
                                         <button class="btn btn-green" ng-click="paymentHotelNow()">Thanh toán ngay
                                         </button>
                                     </td>

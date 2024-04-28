@@ -39,14 +39,17 @@
                             <span class="input-group-text" id="basic-addon1"><i
                                     class="fa-solid fa-magnifying-glass bg-light"></i></span>
                         <input type="text" class="form-control" placeholder="Tìm kiếm" ng-model="searchTerm"
-                               ng-change="searchRoomTypeDetail()"
+                               ng-change="getOrderHotelList()"
                                aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                 </div>
                 <div class="col-xl-3 mb-3">
                     Giờ nhận phòng
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Tất cả</option>
+                    <select class="form-select" aria-label="Default select example"
+                            ng-model="filter"
+                            ng-init="filter = '0'"
+                            ng-change="getOrderHotelList()">
+                        <option value="0">Tất cả</option>
                         <option value="1">12 giờ tới</option>
                         <option value="2">24 giờ tới</option>
                         <option value="3">36 giờ tới</option>
@@ -84,9 +87,9 @@
                     </div>
                     <div class="d-flex justify-content-end align-items-baseline col-lg-2">
                         <select class="form-select" aria-label="Default select example"
-                                ng-model="pageSize"
-                                ng-init="pageSize='5'"
-                                ng-change="pageSizeChanged()">
+                                ng-model="size"
+                                ng-init="size='5'"
+                                ng-change="getOrderHotelList()">
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="15">15</option>
@@ -160,8 +163,8 @@
                     <td>{{ order.customerPhone }}</td>
                     <td>{{ order.capacityAdult }}</td>
                     <td>{{ order.capacityKid }}</td>
-                    <td>{{ order.checkIn | formatDate }}</td>
-                    <td>{{ order.checkOut | formatDate }}</td>
+                    <td>{{ order.checkIn | formatHoursRight }}</td>
+                    <td>{{ order.checkOut | formatHoursRight }}</td>
                     <td>
                         <span class="status-dot"
                               ng-class="{ 'text-warning': order.orderStatus === 0, 'text-success': order.orderStatus === 1, 'text-primary': order.orderStatus === 2, 'text-danger': order.orderStatus === 3, 'text-secondary': order.orderStatus === 4 }">
@@ -183,16 +186,13 @@
                         </button>
                     </td>
                 </tr>
-                <tr ng-if="orderHotels.length <= 0 || orderHotels != null && orderHotels">
+                <tr ng-if="!(orderHotels && orderHotels.length)">
                     <td colspan="14">Trang này không có dữ liệu.</td>
                 </tr>
                 </tbody>
             </table>
             <div class="card-footer">
                 <div class="">
-                    <button class="btn text-danger float-start" ng-click="deleteSelectedItems()"
-                            ng-show="showDeleteButton" ng-disabled="selectedItems.length === 0">Xóa Tất Cả
-                    </button>
                     <div class="float-end">
                         {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                     </div>

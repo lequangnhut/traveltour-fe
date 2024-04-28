@@ -76,27 +76,52 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
         }
     }
 
-    $scope.filler = {
-        priceFilter: 30000000,
-        hotelTypeIdListFilter: [],
-        placeUtilitiesIdListFilter: [],
-        roomUtilitiesIdListFilter: [],
-        breakfastIncludedFilter: null,
-        freeCancellationFilter: null,
-        roomBedsIdListFilter: [],
-        amountRoomFilter: null,
-        locationFilter: null,
-        capacityAdultsFilter: 2,
-        capacityChildrenFilter: 0,
-        checkInDateFiller: null,
-        checkOutDateFiller: null,
-        hotelIdFilter: null,
-        page: 0,
-        size: 10,
-        sort: null
+    if (!localStorage.getItem('filterHotels')) {
+        var today = new Date();
+
+        var tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+
+        $scope.filler = {
+            priceFilter: 30000000,
+            hotelTypeIdListFilter: [],
+            placeUtilitiesIdListFilter: [],
+            roomUtilitiesIdListFilter: [],
+            breakfastIncludedFilter: null,
+            freeCancellationFilter: null,
+            roomBedsIdListFilter: [],
+            amountRoomFilter: null,
+            locationFilter: null,
+            capacityAdultsFilter: 2,
+            capacityChildrenFilter: 0,
+            checkInDateFiller: today,
+            checkOutDateFiller: tomorrow,
+            hotelIdFilter: null,
+            page: 0,
+            size: 10,
+            sort: null
+        };
+
+        $scope.filler.checkInDateFiller = new Date($scope.filler.checkInDateFiller);
+        $scope.filler.checkOutDateFiller = new Date($scope.filler.checkOutDateFiller);
+
+        $scope.filler.checkOutDateFiller.setDate($scope.filler.checkOutDateFiller.getDate() + 1);
+
+        localStorage.setItem('filterHotels', JSON.stringify($scope.filler));
     }
 
-    $scope.filler = JSON.parse($window.localStorage.getItem('fillerHotel'));
+    $scope.updateFilter = function() {
+        $scope.fillerUpdate = JSON.parse(localStorage.getItem('filterHotels'));
+        $scope.fillerUpdate.checkInDateFiller = $scope.filler.checkInDateFiller
+        $scope.fillerUpdate.checkOutDateFiller = $scope.filler.checkOutDateFiller
+
+        localStorage.setItem('filterHotels', JSON.stringify($scope.fillerUpdate));
+    }
+
+    $scope.filler = JSON.parse(localStorage.getItem('filterHotels'));
+    $scope.filler.checkInDateFiller = new Date($scope.filler.checkInDateFiller);
+    $scope.filler.checkOutDateFiller = new Date($scope.filler.checkOutDateFiller);
+    $scope.daysBetween = Math.floor(($scope.filler.checkOutDateFiller - $scope.filler.checkInDateFiller) / (1000 * 60 * 60 * 24));
 
     $scope.totalPrice = 0;
 
