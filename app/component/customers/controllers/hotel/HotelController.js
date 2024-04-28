@@ -20,29 +20,63 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
     $scope.markers = [];
     $scope.markersById = [];
 
-    $scope.filler = {
-        priceFilter: 30000000,
-        hotelTypeIdListFilter: [],
-        placeUtilitiesIdListFilter: [],
-        roomUtilitiesIdListFilter: [],
-        breakfastIncludedFilter: null,
-        freeCancellationFilter: null,
-        roomBedsIdListFilter: [],
-        amountRoomFilter: null,
-        locationFilter: null,
-        capacityAdultsFilter: 2,
-        capacityChildrenFilter: 0,
-        checkInDateFiller: new Date(),
-        checkOutDateFiller: new Date(),
-        hotelIdFilter: null,
-        page: 0,
-        size: 10,
-        sort: null
+    if (!localStorage.getItem('filterHotels') || localStorage.getItem('filterHotelsDate') !== new Date().toDateString()) {
+        var today = new Date();
+
+        var tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+
+        $scope.filler = {
+            priceFilter: 30000000,
+            hotelTypeIdListFilter: [],
+            placeUtilitiesIdListFilter: [],
+            roomUtilitiesIdListFilter: [],
+            breakfastIncludedFilter: null,
+            freeCancellationFilter: null,
+            roomBedsIdListFilter: [],
+            amountRoomFilter: null,
+            locationFilter: null,
+            capacityAdultsFilter: 2,
+            capacityChildrenFilter: 0,
+            checkInDateFiller: today,
+            checkOutDateFiller: tomorrow,
+            hotelIdFilter: null,
+            page: 0,
+            size: 10,
+            sort: null
+        };
+
+        $scope.filler.checkOutDateFiller.setDate($scope.filler.checkOutDateFiller.getDate() + 1);
+
+        localStorage.setItem('filterHotels', JSON.stringify($scope.filler));
+        localStorage.setItem('filterHotelsDate', new Date().toDateString());
+    } else {
+        $scope.filler = JSON.parse(localStorage.getItem('filterHotels'));
+        var today = new Date();
+        var tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+        $scope.filler.checkInDateFiller = today;
+        $scope.filler.checkOutDateFiller = tomorrow;
+        localStorage.setItem('filterHotels', JSON.stringify($scope.filler));
+        localStorage.setItem('filterHotelsDate', new Date().toDateString());
+    }
+
+
+
+
+    $scope.filler = JSON.parse(localStorage.getItem('filterHotels'));
+    $scope.filler.checkInDateFiller = new Date($scope.filler.checkInDateFiller);
+    $scope.filler.checkOutDateFiller = new Date($scope.filler.checkOutDateFiller);
+
+    $scope.updateFilter = function() {
+        $scope.fillerUpdate = JSON.parse(localStorage.getItem('filterHotels'));
+        $scope.fillerUpdate.checkInDateFiller = $scope.filler.checkInDateFiller
+        $scope.fillerUpdate.checkOutDateFiller = $scope.filler.checkOutDateFiller
+
+        localStorage.setItem('filterHotels', JSON.stringify($scope.fillerUpdate));
     }
 
     $scope.totalPages = 0;
-
-    $scope.filler.checkOutDateFiller.setDate($scope.filler.checkOutDateFiller.getDate() + 1);
     $scope.daysBetween = Math.floor(($scope.filler.checkOutDateFiller - $scope.filler.checkInDateFiller) / (1000 * 60 * 60 * 24));
     $scope.ratings = [{id: 1, label: 'Trên 1 sao'}, {id: 2, label: 'Trên 2 sao'}, {id: 3, label: 'Trên 3 sao'}, {
         id: 4,
@@ -510,6 +544,7 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
     /**
      * Phương thức bắt lỗi ngày nhận phòng và ngày trả phòng
      */
+    $scope.errorCheckInDateFiller = "";
     $scope.validateDates = function () {
         $scope.currentDate = new Date();
 
@@ -529,23 +564,6 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
             $scope.errorCheckOutDateFiller = "";
         }
     };
-
-    /**
-     * Phương thức tìm kiếm loại phòng qua các điều kiện lọc
-     */
-    // HotelServiceCT.findAllRoomTypesByFillter($scope.filler).then(function successCallback(response) {
-    //     $scope.loading = true;
-    //     if (response.status === 200) {
-    //         $scope.roomTypes = response.data.data;
-    //         $scope.countSize = response.data.totalPages;
-    //         $scope.totalPages = Math.ceil(response.data.totalPages / $scope.filler.size);
-    //         $scope.encryptedData = btoa(JSON.stringify($scope.filler));
-    //     } else {
-    //         $location.path('/admin/internal-server-error');
-    //     }
-    // }).finally(function () {
-    //     $scope.loading = false;
-    // });
 
     /**
      * Phương thức tìm kiếm tất cả loại phòng
@@ -596,6 +614,11 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
      */
     $scope.findAllRoomTypesByFillerClick = function () {
         $scope.isLoading = true;
+        if (parseInt($scope.filler.capacityAdultsFilter) !== 2) {
+            $scope.filler.sort = '05';
+            console.log($scope.filler);
+        }
+
         HotelServiceCT.findAllRoomTypesByFillter($scope.filler)
             .then(function successCallback(response) {
                 if (response.status === 200) {
@@ -604,7 +627,7 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
                     $scope.countSize = response.data.totalPages;
                     $scope.daysBetween = Math.floor(($scope.filler.checkOutDateFiller - $scope.filler.checkInDateFiller) / (1000 * 60 * 60 * 24));
                     $scope.addMarkers($scope.roomTypes);
-                    $scope.encryptedData = btoa(JSON.stringify($scope.filler));
+                    $scope.updateFilter()
                 } else {
                     $location.path('/admin/internal-server-error');
                 }
@@ -621,6 +644,9 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
             clearTimeout(performSearchPromise);
         }
         performSearchPromise = setTimeout(function () {
+            if (parseInt($scope.filler.capacityAdultsFilter) !== 2) {
+                $scope.filler.sort = 5;
+            }
 
             HotelServiceCT.findAllRoomTypesByFillter($scope.filler).then(function successCallback(response) {
                 if (response.status === 200) {
@@ -629,7 +655,6 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
                     $scope.countSize = response.data.totalPages;
                     $scope.daysBetween = Math.floor(($scope.filler.checkOutDateFiller - $scope.filler.checkInDateFiller) / (1000 * 60 * 60 * 24));
                     $scope.addMarkers($scope.roomTypes);
-                    $scope.encryptedData = btoa(JSON.stringify($scope.filler));
                 } else {
                     $location.path('/admin/internal-server-error');
                 }
@@ -916,7 +941,6 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         }
 
         $window.localStorage.setItem('historyWatchHotels', JSON.stringify($scope.roomTypeViewed));
-
         $scope.filler.hotelIdFilter = roomType.hotelsByHotelId.id;
 
         $scope.encryptedData = btoa(JSON.stringify($scope.filler));

@@ -24,8 +24,7 @@ travel_app.controller('BookingListController', function ($scope, $timeout, Order
         orderNote: null
     }
     $scope.currentPage = 0;
-    $scope.pageSize = 5;
-
+    $scope.size = '5';
     /**
      * Phương thức sắp xếp các trường dữ liệu
      * @param column
@@ -90,28 +89,30 @@ travel_app.controller('BookingListController', function ($scope, $timeout, Order
     };
     $scope.getPaginationRange()
 
-    /**
-     * Phương thức lấy danh sách loại phòng
-     */
+    $scope.filter = '0'
     $scope.getOrderHotelList = function () {
-        console.log($scope.currentPage, $scope.pageSize, $scope.sortField, $scope.sortDirection, '', hotelId)
-        OrderHotelServiceAG.findAllOrderHotel($scope.currentPage, $scope.pageSize, $scope.sortField, $scope.sortDirection, '', hotelId)
-            .then(function (response) {
-                console.log(response.data)
-                $scope.isLoading = true;
-                if (response.data.data === null || response.data.data.content.length === 0) {
-                    $scope.setPage(Math.max(0, $scope.currentPage - 1));
-                    return
-                }
-                $scope.orderHotels = response.data.data.content;
-                $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                $scope.totalElements = response.data.data.totalElements;
-            }, errorCallback).finally(function () {
-            $scope.isLoading = false;
-        });
+        $scope.orderHotels = {}
+        if ($scope.currentFilter !== $scope.filter) {
+            $scope.currentFilter = $scope.filter;
+            console.log($scope.currentPage, $scope.size, $scope.sortField, $scope.sortDirection, '', hotelId, $scope.filter);
+            OrderHotelServiceAG.findAllOrderHotel($scope.currentPage, $scope.size, $scope.sortField, $scope.sortDirection, '', hotelId, $scope.filter)
+                .then(function (response) {
+                    console.log(response.data);
+                    $scope.isLoading = true;
+                    if (response.data.data === null || response.data.data.content.length === 0) {
+                        $scope.setPage(Math.max(0, $scope.currentPage - 1));
+                        return;
+                    }
+                    $scope.orderHotels = response.data.data.content;
+                    $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.size);
+                    $scope.totalElements = response.data.data.totalElements;
+                }, errorCallback).finally(function () {
+                $scope.isLoading = false;
+            });
+        }
     };
 
-    $scope.getOrderHotelList()
+    $scope.getOrderHotelList();
 
     /**
      * Phương thức tìm kiếm dữ liệu
@@ -120,10 +121,10 @@ travel_app.controller('BookingListController', function ($scope, $timeout, Order
     //     if (searchTimeout) $timeout.cancel(searchTimeout);
     //
     //     searchTimeout = $timeout(function () {
-    //         OrderHotelServiceAG.findAllOrderHotel($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm, hotelId)
+    //         OrderHotelServiceAG.findAllOrderHotel($scope.currentPage, $scope.size, $scope.sortBy, $scope.sortDir, $scope.searchTerm, hotelId)
     //             .then(function (response) {
     //                 $scope.roomTypes = response.data.data.content;
-    //                 $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
+    //                 $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.size);
     //                 $scope.totalElements = response.data.data.totalElements;
     //             }, errorCallback);
     //     }, 500); // 500ms debounce
@@ -132,19 +133,11 @@ travel_app.controller('BookingListController', function ($scope, $timeout, Order
     // $scope.searchRoomTypeDetail();
 
     /**
-     * Phương thức hiển thị số lượng tối đa của dữ liệu
-     */
-    $scope.pageSizeChanged = function () {
-        $scope.currentPage = 0;
-        $scope.getOrderHotelList();
-    };
-
-    /**
      * phương thức lấy số lượng dữ liệu trả về
      * @returns {number}
      */
     $scope.getDisplayRange = function () {
-        return Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
+        return Math.min(($scope.currentPage + 1) * $scope.size, $scope.totalElements);
     };
 
     $scope.openModalDetailsOrder = async function (orderId) {
@@ -221,5 +214,10 @@ travel_app.controller('BookingListController', function ($scope, $timeout, Order
                 $scope.isLoading = false;
             }
         });
+    }
+
+    $scope.pageSizeChanged = function () {
+        $scope.currentPage = 0;
+        $scope.getOrderHotelList();
     }
 })

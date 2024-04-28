@@ -210,17 +210,11 @@
                             <label for="checkInDateFiller" class="form-label">Ngày nhận</label>
                             <input type="date" class="form-control" id="checkInDateFiller"
                                    ng-model="filler.checkInDateFiller" ng-change="validateDates()">
-                            <span class="text-danger" ng-if="errorCheckInDateFiller">
-                                {{ errorCheckInDateFiller }}
-                            </span>
                         </div>
                         <div class="col-md-2">
                             <label for="checkOutDateFiller" class="form-label">Ngày trả phòng</label>
                             <input type="date" class="form-control" id="checkOutDateFiller"
                                    ng-model="filler.checkOutDateFiller" ng-change="validateDates()">
-                            <span class="text-danger" ng-if="errorCheckOutDateFiller">
-                                {{ errorCheckOutDateFiller }}
-                            </span>
                         </div>
                         <div class="col-md-2">
                             <label for="capacityAdultsFilter" class="form-label">Số người lớn</label>
@@ -233,7 +227,15 @@
                                    ng-model="filler.capacityChildrenFilter">
                         </div>
                         <div class="d-flex justify-content-end mt-3">
-                            <button type="button" class="btn btn-green" ng-click="findAllRoomTypesByFillerClick()"><i
+                             <span class="text-danger" ng-if="errorCheckInDateFiller">
+                                {{ errorCheckInDateFiller }}
+                            </span>
+                            <span class="text-danger" ng-if="errorCheckOutDateFiller">
+                                {{ errorCheckOutDateFiller }}
+                            </span>
+                            <button type="button" class="btn btn-green"
+                                    ng-disabled="errorCheckInDateFiller !== ''"
+                                    ng-click="findAllRoomTypesByFillerClick()"><i
                                     class="fa-solid fa-magnifying-glass"></i> Tìm khách sạn
                             </button>
                         </div>
@@ -307,13 +309,17 @@
                                                 <div class="float-end" style="font-size: 14px; line-height: 20px">
                                                     <div class="d-flex align-items-center">
                                                         <div class="rating-content float-end m-2">
-                                                            <p>Rất tốt</p>
-                                                            <p>133 Đánh giá</p>
+                                                            <p ng-if="roomType.rate.toInteger() >= 1">Rất tệ</p>
+                                                            <p ng-if="roomType.rate.toInteger() >= 2">Tệ</p>
+                                                            <p ng-if="roomType.rate.toInteger() >= 3">Trung bình</p>
+                                                            <p ng-if="roomType.rate.toInteger() >= 4">Tốt</p>
+                                                            <p ng-if="roomType.rate.toInteger() >= 5">Tuyêt vời</p>
+                                                            <p>{{roomType.countRating}} Đánh giá</p>
                                                         </div>
                                                         <div class="rating-content float-end">
                                                             <div class="btn-green text-center"
                                                                  style="width: 50px; height: 50px; line-height: 50px; border-radius: 8px">
-                                                                <span class="fw-medium fs-5">4.9</span>
+                                                                <span class="fw-medium fs-5" ng-bind="roomType.rate">0</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -324,6 +330,7 @@
                                                     <div class="amount-customer text-end">
                                                         <p>
                                                             {{ roomType.capacityAdults }} người lớn
+                                                            {{ roomType.capacityChildren }} trẻ em
                                                         </p>
                                                     </div>
                                                     <div class="fw-medium text-end"

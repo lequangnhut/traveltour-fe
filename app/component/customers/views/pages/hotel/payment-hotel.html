@@ -38,7 +38,7 @@
                                     <p class="fw-bold mb-0">{{ getRoomBedsName(roomType.roomBedsById[0].bedTypeId) }}</p>
                                 </div>
                                 <div class="col-5 px-2" style="line-height: 18px">
-                                    <p class="fw-bold float-end text-orange">{{ roomType.price * roomType.amountRoomSelected | removeCurrencySymbol }}
+                                    <p class="fw-bold float-end text-orange">{{ roomType.price * roomType.amountRoomSelected * daysBetween | removeCurrencySymbol }}
                                         VND</p>
                                     <p class="float-end">{{ roomType.amountRoomSelected }} phòng</p>
                                 </div>
@@ -52,8 +52,8 @@
                                        date-time-string="filler.checkInDateFiller"></p>
                                     <p>lúc <span class="fw-bold">{{ roomType.checkinTime | convertTime }}</span> giờ</p>
                                 </div>
-                                <div class="col-2 d-flex justify-content-center align-items-center px-2">
-                                    <p class="fw-bold">1 đêm</p>
+                                <div class="col-2 d-flex justify-content-center align-items-center px-1">
+                                    <p class="fw-bold">{{daysBetween}} đêm</p>
                                 </div>
                                 <div class="col-5" style="line-height: 18px">
                                     <p class=" float-end">Ngày trả phòng</p>
@@ -70,7 +70,7 @@
                     <div>
                         <div class="d-flex justify-content-between">
                             <span class="font-bold text-lg">Tổng tiền khách sạn:</span>
-                            <span class="font-bold text-lg"> {{ totalPrice | removeCurrencySymbol }} VND</span>
+                            <span class="font-bold text-lg"> {{ totalPrice * daysBetween | removeCurrencySymbol }} VND</span>
                         </div>
                         <div class="d-flex justify-content-between">
                             <span>Giảm giá:</span>
@@ -80,7 +80,7 @@
                         <div class="d-flex justify-content-between font-bold text-xl mt-3 fw-medium"
                              style="font-size: 18px">
                             <span>Tổng tiền phải trả:</span>
-                            <span> {{ totalPrice | removeCurrencySymbol }} VND</span>
+                            <span> {{ totalPrice * daysBetween | removeCurrencySymbol }} VND</span>
                         </div>
                         <p class="float-end">Đã bao gồm thuế và phí</p>
                     </div>
@@ -90,7 +90,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Chi phí hủy phòng là bao nhiêu?</h5>
                     <div class="" ng-if="roomType.freeCancellation === true">
-                        Hiện tại bạn có thể hủy phòng miễn phí trước 10 ngày (<span
+                        Hiện tại bạn có thể hủy phòng miễn phí trước 5 ngày (<span
                             class="text-green">{{ freeCancelDate | date:'dd-MM-yyyy' }}</span>).
                         Sau ngày này, nếu bạn không có mặt hoặc hủy phòng bạn sẽ phải trả phí hủy phòng tùy thuộc vào số
                         ngày đến của bạn.
@@ -98,7 +98,7 @@
 
                     <hr>
                     <div class="float-end fw-bold">Nếu hủy bạn sẽ phải thanh
-                        toán: {{ totalPriceAfterCancellation | removeCurrencySymbol }} VND
+                        toán: {{ totalPriceAfterCancellation * daysBetween | removeCurrencySymbol }} VND
                     </div>
                 </div>
             </div>

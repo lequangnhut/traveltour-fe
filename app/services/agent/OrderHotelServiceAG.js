@@ -1,7 +1,7 @@
 travel_app.service("OrderHotelServiceAG", function($http, $q) {
     let API_ORDER_HOTEL = BASE_API + 'agent/order-hotel/';
 
-    this.findAllOrderHotel = function (page, size, sortField, sortDirection, searchTerm, hotelId) {
+    this.findAllOrderHotel = function (page, size, sortField, sortDirection, searchTerm, hotelId, filter) {
         const deferred = $q.defer();
         $http({
             method: 'GET',
@@ -13,7 +13,8 @@ travel_app.service("OrderHotelServiceAG", function($http, $q) {
                 sortDir: sortDirection || 'asc',
                 searchTerm: searchTerm || '',
                 hotelId: hotelId,
-                isDelete: false
+                isDelete: false,
+                filter: filter || 0
             }
         }).then(deferred.resolve, deferred.reject);
         return deferred.promise;
