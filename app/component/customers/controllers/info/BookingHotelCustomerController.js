@@ -153,6 +153,21 @@ travel_app.controller("BookingHotelCustomerController", function ($scope, $sce,$
         $scope.resetRating()
         $scope.bookingHotel = data;
 
+        $scope.checkInDate = new Date(data.checkIn);
+        $scope.checkOutDate = new Date(data.checkOut);
+        $scope.calculateNumberOfNights = function() {
+            var oneDay = 24 * 60 * 60 * 1000; // Số mili giây trong một ngày
+            var checkInTime = new Date($scope.checkInDate.getFullYear(), $scope.checkInDate.getMonth(), $scope.checkInDate.getDate());
+            var checkOutTime = new Date($scope.checkOutDate.getFullYear(), $scope.checkOutDate.getMonth(), $scope.checkOutDate.getDate());
+            var nightCount = Math.round(Math.abs((checkOutTime - checkInTime) / oneDay));
+            return nightCount;
+        };
+        // Kết quả số đêm giữa hai ngày
+        $scope.numberOfNights = $scope.calculateNumberOfNights();
+
+        console.log($scope.numberOfNights)
+
+
         var promises = [];
 
         for (let i = 0; i < $scope.bookingTourHotelList.length; i++) {

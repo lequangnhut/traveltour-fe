@@ -153,6 +153,9 @@
                                                     <strong>
                                                         {{ roomType.capacityAdults }} <i class="fa-solid fa-person" style="font-size:medium"></i>
                                                     </strong>&nbsp;
+                                                    <strong ng-if="roomType.capacityChildren > 0">
+                                                        {{ roomType.capacityChildren }} <i class="fa-solid fa-person"></i>
+                                                    </strong>&nbsp;
                                                 </div>
                                             </td>
                                             <td>
