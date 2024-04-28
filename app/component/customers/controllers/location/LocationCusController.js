@@ -253,7 +253,6 @@ travel_app.controller('LocationCusController', function ($scope, $filter, $locat
     $scope.filterAllVisitCus = () => {
         $scope.isLoading = true;
         LocationCusService.findAllVisitCustomerByFilters($scope.currentPage, $scope.pageSize, $scope.filters).then((response) => {
-            console.log(response)
             $scope.visitLocation = response.data.data !== null ? response.data.data.content : [];
             $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
             $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;

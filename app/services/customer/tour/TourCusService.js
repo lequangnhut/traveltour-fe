@@ -3,20 +3,15 @@ travel_app.service('TourCusService', function ($http) {
 
     this.findAllTourDetailCustomer = function (page, size) {
         return $http({
-            method: 'GET',
-            url: API_TOUR + 'find-tour-detail-customer',
-            params: {
-                page: page || 0,
-                size: size || 5,
+            method: 'GET', url: API_TOUR + 'find-tour-detail-customer', params: {
+                page: page || 0, size: size || 5,
             }
         });
     };
 
     this.findAllTourDetailCustomerByFilters = function (page, size, sortBy, sortDir, filters) {
         return $http({
-            method: 'GET',
-            url: API_TOUR + 'find-tour-detail-customer-by-filters',
-            params: {
+            method: 'GET', url: API_TOUR + 'find-tour-detail-customer-by-filters', params: {
                 page: page || 0,
                 size: size || 10,
                 sortBy: sortBy || 'dateCreated',
@@ -28,14 +23,14 @@ travel_app.service('TourCusService', function ($http) {
                 departureFrom: filters.departureFrom || null,
                 numberOfPeople: filters.numberOfPeople || null,
                 departure: filters.departure || null,
+                cleanArrives: filters.cleanArrives === [] ? null : filters.cleanArrives,
+                cleanFrom: filters.cleanFrom === [] ? null : filters.cleanFrom,
             }
         });
     };
     this.getAListOfPopularTours = function (page, size, sortBy, sortDir, filters) {
         return $http({
-            method: 'GET',
-            url: API_TOUR + 'getAListOfPopularTours',
-            params: {
+            method: 'GET', url: API_TOUR + 'getAListOfPopularTours', params: {
                 page: page || 0,
                 size: size || 10,
                 sortBy: sortBy || 'dateCreated',
@@ -50,15 +45,13 @@ travel_app.service('TourCusService', function ($http) {
 
     this.getAllTourDetail = function () {
         return $http({
-            method: 'GET',
-            url: API_TOUR + 'get-tour-detail-customer-data-list',
+            method: 'GET', url: API_TOUR + 'get-tour-detail-customer-data-list',
         });
     };
 
     this.findAllTourType = function () {
         return $http({
-            method: 'GET',
-            url: API_TOUR + 'find-all-tour-type'
+            method: 'GET', url: API_TOUR + 'find-all-tour-type'
         });
     }
 });

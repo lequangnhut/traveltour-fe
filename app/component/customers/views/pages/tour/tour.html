@@ -139,7 +139,7 @@
             </div>
 
             <div class="col-xl-9 col-md-12">
-                <div class="mb-5 w-100">
+                <div class="w-100" ng-class="{'mb-3': proposedResults, 'mb-5': !proposedResults}">
                     <div class="row single-event-item d-flex align-items-end">
                         <div class="col-md-5 mb-2 position-relative">
                             <label for="departToArrive" class="form-label">Điểm đến</label>
@@ -203,6 +203,7 @@
 
                 <div ng-include="'app/component/utils/loading-component.html'"></div>
                 <div ng-if="!isLoading">
+                    <div class="fw-medium fs-5 mb-1" ng-if="proposedResults">Dưới đây là các đề xuất của chúng tôi.</div>
                     <div ng-repeat="tour in tourDetail" ng-if="tourDetail.length > 0">
                         <div class="single-event-item mb-30 wow fadeInUp row">
                             <div class="img-holder col-xl-3 col-lg-4 p-0">

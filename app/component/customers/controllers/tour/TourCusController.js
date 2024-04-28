@@ -1,4 +1,14 @@
 travel_app.controller('TourCusController', function ($scope, $location, $filter, LocalStorageService, TourCusService, HomeCusService, TourDetailCusService, MapBoxService, ToursServiceAD) {
+
+    const vie = ['tour', 'du', 'lịch', '-', '–', 'bắt', 'đầu', 'bị', 'bởi', 'cả', 'các', 'cái', 'cần', 'càng', 'chỉ', 'chiếc', 'cho', 'chứ', 'chưa', 'chuyện', 'có', 'có thể', 'cứ', 'của', 'cùng', 'cũng', 'đã', 'đang', 'để', 'đến nỗi', 'đều', 'điều', 'do', 'đó', 'được', 'dưới', 'gì', 'khi', 'không', 'là', 'lại', 'lên', 'lúc', 'mà', 'mỗi', 'một cách', 'này', 'nên', 'nếu', 'ngay', 'nhiều', 'như', 'nhưng', 'những', 'nơi', 'nữa', 'phải', 'qua', 'ra', 'rằng', 'rất', 'rồi', 'sau', 'sẽ', 'so', 'sự', 'tại', 'theo', 'thì', 'trên', 'trước', 'từ', 'từng', 'và', 'vẫn', 'vào', 'vậy', 'vì', 'việc', 'với', 'vừa', 'vâng', 'à', 'ừ', 'từ'];
+
+    const removeStopwords = (tokens, stopwords = vie) => {
+        if (!Array.isArray(tokens) || !Array.isArray(stopwords)) {
+            throw new Error('expected Arrays try: removeStopwords(Array[, Array])')
+        }
+        return tokens.filter(x => !stopwords.includes(x.toLowerCase()))
+    };
+
     $scope.currentPage = 0;
     $scope.pageSize = 5
 
@@ -6,16 +16,14 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
     $scope.limitTourType = 5;
 
     $scope.hasResults = true;
+    $scope.proposedResults = false;
 
     $scope.markersTour = [];
 
-    $scope.ratings = [
-        {id: 1, label: 'Trên 1 sao'},
-        {id: 2, label: 'Trên 2 sao'},
-        {id: 3, label: 'Trên 3 sao'},
-        {id: 4, label: 'Trên 4 sao'},
-        {id: 5, label: 'Trên 5 sao'}
-    ];
+    $scope.ratings = [{id: 1, label: 'Trên 1 sao'}, {id: 2, label: 'Trên 2 sao'}, {id: 3, label: 'Trên 3 sao'}, {
+        id: 4,
+        label: 'Trên 4 sao'
+    }, {id: 5, label: 'Trên 5 sao'}];
 
     let filters = LocalStorageService.decryptLocalData('filtersTour', 'encryptFiltersTour');
 
@@ -132,33 +140,14 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
                 $scope.isLoading = false;
             });
             $scope.hasResults = true;
+            $scope.proposedResults = true;
         }
     }
 
     $scope.init = function () {
         $scope.isLoading = true;
 
-        TourCusService.findAllTourDetailCustomerByFilters($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.filters)
-            .then((response) => {
-                if (response.status === 200) {
-                    $scope.tourDetail = response.data.data !== null ? response.data.data.content : [];
-                    $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;
-                    $scope.totalElements = response.data.data !== null ? response.data.data.totalElements : 0;
-
-                    getAListOfPopularTours(response);
-
-                    angular.forEach($scope.tourDetail, function (detail) {
-                        let departureDate = new Date(detail.departureDate);
-                        let arrivalDate = new Date(detail.arrivalDate);
-
-                        detail.numberOfDays = Math.ceil((arrivalDate - departureDate) / (1000 * 60 * 60 * 24));
-                    });
-                } else {
-                    $location.path('/admin/page-not-found')
-                }
-            }, errorCallback).finally(function () {
-            $scope.isLoading = false;
-        });
+        $scope.filterAllTour();
 
         TourCusService.findAllTourType().then(function (response) {
             if (response.status === 200) {
@@ -239,10 +228,7 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
             mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
             $scope.map = new mapboxgl.Map({
-                container: 'map',
-                style: 'mapbox://styles/mapbox/streets-v12',
-                center: [106.6297, 10.8231],
-                zoom: 9
+                container: 'map', style: 'mapbox://styles/mapbox/streets-v12', center: [106.6297, 10.8231], zoom: 9
             });
         }
 
@@ -366,6 +352,18 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
 
     $scope.filterAllTour = () => {
         $scope.isLoading = true;
+        $scope.proposedResults = false;
+
+        $scope.filters.cleanArrives = [];
+        $scope.filters.cleanFrom = [];
+
+        if ($scope.filters.departureArrives !== null) {
+            $scope.filters.cleanArrives = removeStopwords($scope.filters.departureArrives.split(" "));
+        }
+
+        if ($scope.filters.departureFrom !== null) {
+            $scope.filters.cleanFrom = removeStopwords($scope.filters.departureFrom.split(" "));
+        }
 
         TourCusService.findAllTourDetailCustomerByFilters($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.filters)
             .then((response) => {
@@ -390,7 +388,7 @@ travel_app.controller('TourCusController', function ($scope, $location, $filter,
         });
     }
 
-    //sắp xếp
+//sắp xếp
     $scope.sortData = (column, sortDir) => {
         $scope.hasResults = false;
         if (!sortDir) {

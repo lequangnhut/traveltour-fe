@@ -16,16 +16,34 @@ travel_app.controller('TourDetailCusController',
         $scope.size = null;
         $scope.page = null;
 
+        $scope.adultsMax = 999;
+        $scope.childrenMax = 999;
+
         $scope.ticket = {
-            adults: '1',
-            children: '0',
-            baby: '0'
+            adults: 1,
+            children: 0,
         }
 
         $scope.isIntegerCheck = true;
         $scope.roundingStars = 0.0;
 
         const tourDetailId = Base64ObjectService.decodeObject($routeParams.id);
+
+        //input
+
+        $scope.onQuantityBlurAdult = (ticket) => {
+            if (ticket.adults === null || ticket.adults === '' || ticket.adults < 1) {
+                ticket.adults = 1;
+            }
+            $scope.updateTotalPrice();
+        };
+
+        $scope.onQuantityBlurChildren = (ticket) => {
+            if (ticket.children === null || ticket.children === '' || ticket.children < 1) {
+                ticket.children = 0;
+            }
+            $scope.updateTotalPrice();
+        };
 
         function errorCallback() {
             $location.path('/admin/internal-server-error')
@@ -87,11 +105,19 @@ travel_app.controller('TourDetailCusController',
                 let unitPrice = $scope.tourDetail.unitPrice;
                 let amountAdults = $scope.ticket.adults;
                 let amountChildren = $scope.ticket.children;
+                $scope.remainingTickets = $scope.tourDetail.numberOfGuests - $scope.tourDetail.bookedSeat;
+
+                $scope.adultsMax = $scope.remainingTickets - amountChildren; // Số vé người lớn tối đa là số vé còn lại trừ đi số vé trẻ em đã chọn
+                $scope.childrenMax = $scope.remainingTickets - amountAdults; // Số vé trẻ em tối đa là số vé còn lại trừ đi số vé người lớn đã chọn
+
+                $scope.adultsMax = Math.max($scope.adultsMax, 0);
+                $scope.childrenMax = Math.max($scope.childrenMax, 0);
 
                 $scope.totalPrice = (amountAdults * unitPrice) + (amountChildren * (unitPrice * 0.3));
-                $scope.totalTikets = parseInt($scope.ticket.adults) + parseInt($scope.ticket.children) + parseInt($scope.ticket.baby);
+                $scope.totalTikets = (parseInt($scope.ticket.adults) + parseInt($scope.ticket.children)) || 0;
                 $scope.isExceedGuestLimit();
             };
+
 
             /**
              * phương thức kiểm tra vé
@@ -723,7 +749,7 @@ travel_app.controller('TourDetailCusController',
                 LocalStorageService.set("redirectAfterLogin", "/hotel/hotel-details");
                 $location.path('/sign-in');
             } else {
-                $location.path( '/chat/' + encodedId);
+                $location.path('/chat/' + encodedId);
             }
 
         }

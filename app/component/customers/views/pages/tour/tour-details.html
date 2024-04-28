@@ -82,7 +82,8 @@
                     </div>
                     <div class="col-md-8">
                         <div class="share-nav">
-                            <a href="#" ng-click="redirectToChatTour('66')">Nhắn tin<i class="fa-regular fa-comment"></i></a>
+                            <a href="#" ng-click="redirectToChatTour('66')">Nhắn tin<i
+                                    class="fa-regular fa-comment"></i></a>
                             <a href="#">Chia sẻ<span class="fas fa-share"></span></a>
                             <a href="#" ng-click="likeTour(tourDetail.toursByTourId.id)">Yêu thích
                                 <i ng-if="isLikeTour">
@@ -404,46 +405,37 @@
                                     </div>
                                 </div>
                                 <div class="booking-guest-box mb-20">
-                                    <h6 class="mb-20">Vé</h6>
+                                    <h6 class="mb-20">Vé <span class="fs-6 fw-normal">(chỉ còn {{remainingTickets}} vé)</span> </h6>
                                     <div class="booking-item">
                                         <label>Người lớn (trên 1m3) {{ tourDetail.unitPrice | vnCurrency }}</label>
                                         <div class="bk-item booking-user">
-                                            <span class="fas fa-user"></span>
-                                            <select class="wide-select"
-                                                    ng-model="ticket.adults"
-                                                    ng-change="updateTotalPrice()"
-                                                    ng-disabled="tourDetail.bookedSeat === tourDetail.numberOfGuests"
-                                            >
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                            </select>
+                                             <span class="d-flex align-items-center bd-highlight">
+                                                 <span class="ms-auto bd-highlight">
+                                                        <input style="width: 70px;  padding: .375rem .75rem;"
+                                                               type="number" class="form-control"
+                                                               ng-model="ticket.adults"
+                                                               ng-change="updateTotalPrice()"
+                                                               ng-blur="onQuantityBlurAdult(ticket)" min="1" max="{{adultsMax}}"
+                                                               oninput="validity.valid||(value=1);">
+                                                </span>
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="booking-item">
                                         <label>
-                                            Trẻ em (dưới 1m3) <br> {{ tourDetail.unitPrice * 0.3 | vnCurrency }}
+                                            Trẻ em (dưới 1m3) &nbsp; {{ tourDetail.unitPrice * 0.3 | vnCurrency }}
                                         </label>
                                         <div class="bk-item booking-user">
-                                            <span class="fas fa-user"></span>
-                                            <select class="wide-select"
-                                                    ng-model="ticket.children"
-                                                    ng-change="updateTotalPrice()"
-                                                    ng-disabled="ticket.children < isExceedGuestLimit()"
-                                            >
-                                                <option value="0">0</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </select>
+                                             <span class="d-flex align-items-center bd-highlight">
+                                                 <span class="ms-auto bd-highlight">
+                                                        <input style="width: 70px;  padding: .375rem .75rem;"
+                                                               type="number" class="form-control"
+                                                               ng-model="ticket.children"
+                                                               ng-change="updateTotalPrice()"
+                                                               ng-blur="onQuantityBlurChildren(ticket)" min="0" max="{{childrenMax}}"
+                                                               oninput="validity.valid||(value=0);">
+                                                </span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

@@ -70,7 +70,7 @@ travel_app.controller('ChartControllerAD', function ($scope, $filter, $rootScope
                         fontSize: 12.8,
                         margin: 24,
                         formatter: function(value) {
-                            return formatNumberWithK(value);
+                            return formatNumberWithMillion(value);
                         },
                     },
                 },
@@ -98,7 +98,7 @@ travel_app.controller('ChartControllerAD', function ($scope, $filter, $rootScope
                         fontWeight: "normal",
                         fontSize: "12.8px",
                         formatter: function (params) {
-                            return formatNumberWithK(params.value);
+                            return formatNumberWithMillion(params.value);
                         }
                     }
                 }],
@@ -559,12 +559,12 @@ travel_app.controller('ChartControllerAD', function ($scope, $filter, $rootScope
         return yValues;
     };
 
-    function formatNumberWithK(value) {
-        const thousands = value / 1000;
+    function formatNumberWithMillion(value) {
+        const millions = value / 1000000; // Chia cho 1 triệu
         const formatted = new Intl.NumberFormat('en-US', {
-            maximumFractionDigits: 0
-        }).format(thousands);
-        return `${formatted} k`;
+            maximumFractionDigits: 1 // Số lượng số thập phân tối đa là 1
+        }).format(millions);
+        return `${formatted} Tr`; // Thêm đơn vị Triệu
     }
 
     $scope.getAllCount();
