@@ -259,7 +259,7 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td style="text-align: justify;">{{ btl.id }}</td>
                                         <td style="text-align: justify;">{{ btl.toursByTourId.tourName }}</td>
-                                        <td>{{ (btl.dateCreated | vietnameseDateTime) }}</td>
+                                        <td>{{ (btl.dateCreated | vietnameseTimeNoSeconds) }}</td>
                                         <td ng-if="btl.orderStatus == 0">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <span class="status-warning"></span>
@@ -292,6 +292,9 @@
                                     </tr>
                                     <tr ng-if="bookingTourList.length === 0 && orderStatus == 2">
                                         <td colspan="14">Hiện không có đơn nào được hủy.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourList.length === 0 && orderStatus == null">
+                                        <td colspan="14">Hiện không có đơn nào.</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -729,8 +732,8 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td style="text-align: justify;">{{ h.id }}</td>
                                         <td style="text-align: justify;">{{ h.hotel.hotelName }}</td>
-                                        <td>{{ h.checkIn | vietnameseDateTime }}</td>
-                                        <td>{{ h.checkOut | vietnameseDateTime }}</td>
+                                        <td>{{ h.checkIn | vietnameseTimeNoSeconds }}</td>
+                                        <td>{{ h.checkOut | vietnameseTimeNoSeconds }}</td>
                                         <td ng-if="h.orderStatus == 0">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <span class="status-warning"></span>
@@ -784,6 +787,9 @@
                                     </tr>
                                     <tr ng-if="bookingTourHotelList.length === 0 && orderStatus == 5">
                                         <td colspan="14">Hiện không có đơn nào bị hủy.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourHotelList.length === 0 && orderStatus == null">
+                                        <td colspan="14">Hiện không có đơn nào.</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -884,6 +890,11 @@
                                                                        style="font-size: 14px;font-family: Montserrat, sans-serif">
                                                                         Thời gian trả phòng:
                                                                         <span class="fw-light">{{ bookingHotel.checkOut | vietnameseTimeNoSeconds }}</span>
+                                                                    </p>
+                                                                    <p class="fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Số đêm:
+                                                                        <span class="fw-light">{{ numberOfNights }}</span>
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -1201,8 +1212,8 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td style="text-align: justify;">{{ t.id }}</td>
                                         <td style="text-align: justify;">{{ (t.transportationSchedules.fromLocation) + ' - ' + (t.transportationSchedules.toLocation) }}</td>
-                                        <td>{{ t.transportationSchedules.departureTime | vietnameseDateTime }}</td>
-                                        <td>{{ t.transportationSchedules.arrivalTime | vietnameseDateTime }}</td>
+                                        <td>{{ t.transportationSchedules.departureTime | vietnameseTimeNoSeconds }}</td>
+                                        <td>{{ t.transportationSchedules.arrivalTime | vietnameseTimeNoSeconds }}</td>
                                         <td ng-if="t.orderStatus == 0">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <span class="status-warning"></span>
@@ -1235,6 +1246,9 @@
                                     </tr>
                                     <tr ng-if="bookingTourTransList.length === 0 && orderStatus == 2">
                                         <td colspan="14">Hiện không có đơn nào được hủy.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourTransList.length === 0 && orderStatus == null">
+                                        <td colspan="14">Hiện không có đơn nào.</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -1636,7 +1650,7 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td style="text-align: justify;">{{ ov.id }}</td>
                                         <td style="text-align: justify;">{{ ov.visitLocationsByVisitLocationId.visitLocationName }}</td>
-                                        <td>{{ ov.dateCreated | vietnameseDateTime }}</td>
+                                        <td>{{ ov.dateCreated | vietnameseTimeNoSeconds }}</td>
                                         <td ng-if="ov.orderStatus == 0">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <span class="status-warning"></span>
@@ -1669,6 +1683,9 @@
                                     </tr>
                                     <tr ng-if="bookingTourVisitList.length === 0 && orderStatus == 2">
                                         <td colspan="14">Hiện không có đơn nào được hủy.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourVisitList.length === 0 && orderStatus == null">
+                                        <td colspan="14">Hiện không có đơn nào.</td>
                                     </tr>
                                     </tbody>
                                 </table>

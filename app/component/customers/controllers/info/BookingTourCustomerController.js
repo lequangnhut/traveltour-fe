@@ -178,7 +178,6 @@ travel_app.controller("BookingTourCustomerController",
 
         $scope.openTourModal = function (data) {
             $('#tourModal').modal('show');
-            console.log(data)
             $scope.bookingTour = data;
             // var currentDate = new Date();  // Ngày hiện tại
             // var departureDate = new Date(data.startDate);  // Ngày xuất phát
@@ -250,7 +249,6 @@ travel_app.controller("BookingTourCustomerController",
         $scope.cancelBooking = function (data) {
             function confirmDeleteType() {
                 $scope.noted = $scope.cancel.reason;
-                console.log($scope.noted)
                 $scope.isLoading = true;
                 HistoryOrderServiceCUS.cancelBookingTour(data.id, $scope.noted).then(function successCallback() {
                     centerAlert('Thành công !', 'Đã hủy booking, mời người dùng check mail !', 'success');
