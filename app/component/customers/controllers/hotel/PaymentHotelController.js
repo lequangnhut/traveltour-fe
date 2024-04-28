@@ -263,8 +263,8 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
             };
 
             if ($scope.visibilityOption === 'show') {
-                orderDetail.customerName = roomType.paymentHotelCustomer.customerName;
-                orderDetail.customerEmail = roomType.paymentHotelCustomer.customerEmail;
+                orderDetail.customerName = roomType.paymentHotelCustomer.customerName || "";
+                orderDetail.customerEmail = roomType.paymentHotelCustomer.customerEmail || "";
             }
 
             return orderDetail;
@@ -330,8 +330,8 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
             };
 
             if ($scope.visibilityOption === 'show') {
-                orderDetail.customerName = roomType.paymentHotelCustomer.customerName;
-                orderDetail.customerEmail = roomType.paymentHotelCustomer.customerEmail;
+                orderDetail.customerName = roomType.paymentHotelCustomer.customerName || "";
+                orderDetail.customerEmail = roomType.paymentHotelCustomer.customerEmail || "";
             }
 
             return orderDetail;
