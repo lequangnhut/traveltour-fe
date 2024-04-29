@@ -20,7 +20,7 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
     $scope.markers = [];
     $scope.markersById = [];
 
-    if (!localStorage.getItem('filterHotels') || localStorage.getItem('filterHotelsDate') !== new Date().toDateString()) {
+    if (!localStorage.getItem('filterHotels') || new Date(localStorage.getItem('filterHotelsDate')).setHours(0,0,0,0) !== new Date().setHours(0,0,0,0)) {
         var today = new Date();
 
         var tomorrow = new Date(today);
@@ -60,6 +60,8 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         localStorage.setItem('filterHotels', JSON.stringify($scope.filler));
         localStorage.setItem('filterHotelsDate', new Date().toDateString());
     }
+
+
 
 
 
