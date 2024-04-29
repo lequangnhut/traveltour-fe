@@ -22,21 +22,40 @@
 
     <div class="">
         <div class="card card-customer">
-            <div class="row" style="margin: 20px 16px 20px 16px">
-                <div class="col-xl-4">
-                    Bạn muốn tìm kiếm gì ?
-                    <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"><i
-                                    class="fa-solid fa-magnifying-glass bg-light"></i></span>
-                        <input type="text" class="form-control" placeholder="Tìm kiếm" ng-model="searchTerm"
-                               ng-change="searchCustomers()"
-                               aria-label="Username" aria-describedby="basic-addon1">
-                    </div>
+            <div class="row single-event-item d-flex align-items-end" style="margin: 20px 16px 20px 16px">
+
+                <div class="col-md-3 mb-2">
+                    <label for="fromLocation" class="form-label">Điểm đi</label>
+                    <input id="fromLocation" ng-model="filters.fromLocation" type="text"
+                           ng-click="turnOnThePointList()"
+                           class="form-control datepicker" placeholder="Nhập điểm đi">
                 </div>
-                <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
-                     style="margin: 16px 0 0 0">
-                    <a href="/admin/request-booking-car/create-request-booking" class="btn btn-primary"><i
-                            class="fa-solid fa-plus" style="margin-right: 10px"></i> Tạo yêu cầu tìm xe
+
+                <div class="col-md-3 mb-2">
+                    <label for="toLocation" class="form-label">Điểm đến</label>
+                    <input id="toLocation" ng-model="filters.toLocation" type="text"
+                           ng-click="enableIncomingList()" class="form-control" autocomplete="off"
+                           placeholder="Nhập điểm đến">
+                </div>
+
+                <div class="col-md-3 mb-2">
+                    <label for="dateOfDepartment" class="form-label">Ngày đi</label>
+                    <input type="date" class="form-control" id="dateOfDepartment"
+                           ng-model="filters.dateOfDepartment" min="{{getCurrentDate()}}">
+
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label for="returnDay" class="form-label">Ngày về</label>
+                    <input type="date" class="form-control" id="returnDay"
+                           ng-model="filters.returnDay" min="{{getCurrentDate()}}">
+
+                </div>
+                <div class="col-md-12 d-flex flex-row-reverse bd-highlight mt-2">
+                    <button type="button" class="btn btn-green bd-highlight ms-2" ng-click="filterAllTour()"><i
+                            class="fa-solid fa-magnifying-glass"></i> Tìm xe
+                    </button>
+                    <a href="/admin/request-booking-car/create-request-booking" class="btn btn-primary mx-2"><i
+                            class="fa-solid fa-plus bd-highlight" style="margin-right: 10px"></i> Tạo yêu cầu tìm xe
                     </a>
                 </div>
             </div>
@@ -196,16 +215,6 @@
                                  alt="Event Image" loading="lazy">
                         </div>
                         <div class="form-customer px-3 pt-5">
-                            <div class="find-item mb-3">
-                                <p class="fw-medium mb-2 ms-2">Ngân sách của bạn</p>
-                                <div class="findHotelType">
-                                    <label for="rangePrice" class="form-label">Chọn ngân sách:</label>
-                                    <input type="range" class="form-range" id="rangePrice" ng-model="filters.price"
-                                           min="100000"
-                                           max="20000000" step="10000">
-                                    <p>{{ filters.price | number:'0' }} VND</p>
-                                </div>
-                            </div>
                             <div class="form-customer find-item mb-3">
                                 <p class="fw-medium mb-2 ms-2">Loại phương tiện</p>
                                 <div class="findHotelType"
@@ -222,7 +231,7 @@
                                     </div>
                                 </div>
                                 <button class="btn text-green"
-                                        ng-show="transportationBrandList.length > 5 && !showMoreTransportationType"
+                                        ng-show="transportationTypeList.length > 5 && !showMoreTransportationType"
                                         ng-click="showMoreItemsTransportationType()">Hiển thị thêm <i
                                         class="fa-solid fa-angle-down"></i></button>
                                 <button class="btn text-green" ng-show="showMoreTransportationType"
@@ -267,7 +276,7 @@
                                 </div>
                             </div>
                             <div class="find-item mb-3 d-flex justify-content-center mt-3">
-                                <button type="button" class="btn btn-success" ng-click="filterAllMedia()">Lọc yêu cầu
+                                <button type="button" class="btn btn-success" ng-click="filterAllMedia()">Lọc xe
                                 </button>
                             </div>
                         </div>

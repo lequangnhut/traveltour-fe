@@ -1,5 +1,5 @@
 travel_app.controller('RequestCarControllerAD',
-    function ($scope, $location, $routeParams, $sce, $timeout, TransportServiceAG, GenerateCodePayService, Base64ObjectService, AgencyServiceAD, AuthService, RequestCarServiceAD) {
+    function ($scope, $location, $routeParams, $sce, $timeout, TransportationBrandServiceAD, TransportationTypeServiceAD, TransportServiceAG, GenerateCodePayService, Base64ObjectService, AgencyServiceAD, AuthService, RequestCarServiceAD) {
         const user = AuthService.getUser();
 
         $scope.currentPage = 0; // Trang hiện tại
@@ -10,6 +10,12 @@ travel_app.controller('RequestCarControllerAD',
 
         $scope.transportations = [];
         $scope.transportUtilities = [];
+
+        $scope.showMoreTransportationBrand = false;
+        $scope.limitTransportationBrand = 5;
+
+        $scope.showMoreTransportationType = false;
+        $scope.limitTransportationType = 5;
 
         $scope.requestCarId = Base64ObjectService.decodeObject($routeParams.requestCarId);
 
@@ -26,8 +32,118 @@ travel_app.controller('RequestCarControllerAD',
             requestCarNoted: null
         }
 
+        $scope.ratings = [{id: 1, label: 'Trên 1 sao'}, {id: 2, label: 'Trên 2 sao'}, {id: 3, label: 'Trên 3 sao'}, {
+            id: 4, label: 'Trên 4 sao'
+        }, {id: 5, label: 'Trên 5 sao'}];
+
+        $scope.filters = {
+            fromLocation: null,
+            toLocation: null,
+            dateOfDepartment: new Date(),
+            returnDay: (() => {
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                return tomorrow;
+            })(),
+            mediaTypeList: [],
+            listOfVehicleManufacturers: [],
+        };
+
+        $scope.validateDates = (day) => {
+            $scope.currentDate = new Date();
+
+            let currentDateNow = Math.floor((day - $scope.currentDate) / (1000 * 60 * 60 * 24))
+
+            if (currentDateNow < -1) {
+                $scope.errorCheckInDateFiller = "Ngày đi không thể nhỏ hơn ngày hiện tại";
+            } else {
+                $scope.errorCheckInDateFiller = "";
+            }
+        };
+
+        $scope.getCurrentDate = () => {
+            let currentDate = new Date();
+            const year = currentDate.getFullYear();
+            let month = currentDate.getMonth() + 1;
+            let day = currentDate.getDate();
+
+            if (month < 10) {
+                month = '0' + month;
+            }
+            if (day < 10) {
+                day = '0' + day;
+            }
+
+            return year + '-' + month + '-' + day;
+        };
+
+        $scope.checkDate = () => {
+            const currentDate = new Date();
+            if ($scope.filters.departure === undefined) {
+                $scope.filters.departure = currentDate;
+                toastAlert('warning', 'Không được nhập ngày quá khứ!');
+            }
+        };
+
+        //show tiện ích
+        $scope.showMoreItemsTransportationBrand = () => {
+            $scope.limitTransportationBrand = $scope.transportationBrandList.length;
+            $scope.showMoreTransportationBrand = true;
+        };
+
+        $scope.showLessItemsTransportationBrand = () => {
+            $scope.limitTransportationBrand = 5;
+            $scope.showMoreTransportationBrand = false;
+        };
+
+        $scope.showMoreItemsTransportationType = () => {
+            $scope.limitTransportationType = $scope.transportationTypeList.length;
+            $scope.showMoreTransportationType = true;
+        };
+
+        $scope.showLessItemsTransportationType = () => {
+            $scope.limitTransportationType = 5;
+            $scope.showMoreTransportationType = false;
+        };
+
+        //thêm danh sách lọc
+        $scope.ChooseFromAVarietyOfVehicles = (id) => {
+            let index = $scope.filters.mediaTypeList.indexOf(id);
+            if (index === -1) {
+                $scope.filters.mediaTypeList.push(id);
+            } else {
+                $scope.filters.mediaTypeList.splice(index, 1);
+            }
+        };
+
+        $scope.ChooseFromManyCarBrands = (id) => {
+            let index = $scope.filters.listOfVehicleManufacturers.indexOf(id);
+            if (index === -1) {
+                $scope.filters.listOfVehicleManufacturers.push(id);
+            } else {
+                $scope.filters.listOfVehicleManufacturers.splice(index, 1);
+            }
+        };
+
+        const fetchData = (serviceFunc, successCallback) => {
+            return serviceFunc().then((response) => {
+                if (response.status === 200) {
+                    successCallback(response.data.data);
+                } else {
+                    $location.path('/admin/page-not-found');
+                }
+            });
+        }
+
         $scope.init = function () {
             $scope.isLoading = true;
+
+            Promise.all([fetchData(TransportationBrandServiceAD.getAllTransportationBrands, (repo) => {
+                $scope.transportationBrandList = repo;
+            }), fetchData(TransportationTypeServiceAD.getAllTransportationTypes, (repo) => {
+                $scope.transportationTypeList = repo;
+            })]).finally(() => {
+            });
 
             /**
              * Tìm tất cả tour detail fill lên select
@@ -276,6 +392,16 @@ travel_app.controller('RequestCarControllerAD',
 
                 return range;
             };
+        }
+
+        $scope.filterAllMedia = () => {
+            RequestCarServiceAD.findAllRequestCarFilters($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.filters)
+                .then((response) => {
+                    $scope.requestCarList = response.data.data !== null ? response.data.data.content : [];
+                    $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
+                }).finally(() => {
+                $scope.isLoading = false;
+            });
         }
 
         /**

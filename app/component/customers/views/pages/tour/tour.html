@@ -169,7 +169,7 @@
                         <div class="col-md-5 mb-2">
                             <label for="departureFrom" class="form-label">Điểm xuất phát</label>
                             <input id="departureFrom" ng-model="filters.departureFrom" type="text"
-                                   ng-click="turnOnThePointList()"
+                                   ng-click="turnOnThePointList()" autocomplete="off"
                                    class="form-control datepicker" placeholder="Điểm đi">
                             <div class="list-group position-absolute mt-3 z-1 scroll-hidden" ng-show="showFromList"
                                  style="max-height: 370px; width: 200px;">

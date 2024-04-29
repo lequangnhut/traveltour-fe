@@ -14,6 +14,25 @@ travel_app.service('RequestCarServiceAD', function ($http) {
         });
     };
 
+    this.findAllRequestCarFilters = function (page, size, sortBy, sortDir, filters) {
+        return $http({
+            method: 'GET',
+            url: API_REQUEST_CAR + 'find-all-request-car-filters',
+            params: {
+                page: page || 0,
+                size: size || 10,
+                sortBy: sortBy || 'id',
+                sortDir: sortDir || 'desc',
+                fromLocation: filters.fromLocation || null,
+                toLocation: filters.toLocation || null,
+                dateOfDepartment: filters.dateOfDepartment || null,
+                returnDay: filters.returnDay || null,
+                mediaTypeList: filters.mediaTypeList === [] ? null : filters.mediaTypeList,
+                listOfVehicleManufacturers: filters.listOfVehicleManufacturers === [] ? null : filters.listOfVehicleManufacturers
+            }
+        });
+    };
+
     this.findAllRequestCarDetailService = function (requestCarId, page, size, sortBy, sortDir) {
         return $http({
             method: 'GET',
