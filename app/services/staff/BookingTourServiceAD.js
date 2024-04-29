@@ -48,5 +48,4 @@ travel_app.service('BookingTourServiceAD', function ($http, $q) {
         });
         return deferred.promise;
     };
-
 });

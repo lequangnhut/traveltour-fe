@@ -17,7 +17,8 @@
     <div class="mb-4" style="margin: 20px 0 20px 0" ng-if="!isLoading || requestCarList.length > 0">
         <div class="row">
             <div class="col-xl-9">
-                <div class="card card-customer mb-3" ng-repeat="requestCar in requestCarList">
+                <div class="card card-customer mb-3" ng-repeat="requestCar in requestCarList"
+                     ng-class="{'bg-light': requestCar.isAccepted ? requestCar.isAccepted : ''}">
                     <div class="mb-30 row">
                         <div class="col-xl-3 col-lg-4 ps-5 pt-3">
                             <img ng-src="{{ requestCar.toursByTourId.tourImg }}" class="img-fluid rounded-3"
@@ -50,7 +51,7 @@
                                         <div class="d-flex align-items-center mb-2"
                                              style="border-bottom: 1px solid rgba(29, 35, 31, 0.1);">
                                             <div class="location text-orange" style="font-size: 14px">
-                                                <p class="text-warning mb-1">
+                                                <p class="text-warning mb-1" ng-if="!requestCar.isAccepted">
                                                     <i class="fa-solid fa-earth-americas"></i>
                                                     {{ requestCar.requestCarNoted }}
                                                 </p>

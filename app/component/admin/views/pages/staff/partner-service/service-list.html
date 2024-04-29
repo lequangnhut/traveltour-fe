@@ -8,7 +8,9 @@
     <div class="header-control-center">
         <div class="d-flex justify-content-between align-items-center row">
             <div class="col-xl-8 col-md-8 col-12 order-2 order-md-1">
-                <h3 class="color-green fw-bold text-uppercase">Danh sách các dịch vụ</h3>
+                <h3 class="color-green fw-bold text-uppercase">
+                    Danh sách các dịch vụ
+                </h3>
 
                 <nav aria-label="breadcrumb mb-3">
                     <ol class="breadcrumb mb-0">
@@ -31,11 +33,15 @@
 <div class="container my-5">
     <div class="logo text-center">
         <div class="content-text text-center mb-3">
-            <div class="h3 fw-medium mb-3 color-green">Hãy chọn loại dịch vụ bạn muốn</div>
+            <div class="h3 fw-medium">
+                {{ tourDetail.id }} - {{ tourDetail.toursByTourId.tourName || 'Đang tải...' }}
+            </div>
+            <div class="h3 fw-medium mb-2 color-green">Hãy chọn loại dịch vụ bạn muốn thêm vào tour</div>
             <p>Nếu bạn muốn thêm dịch vụ cho tour du lịch bạn có thể chọn các dịch vụ có sẵn dưới đây</p>
         </div>
         <div class="d-flex justify-content-center">
-            <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="row row-cols-1 row-cols-md-3 g-4"
+                 ng-if="tourDetail.tourDetailStatus === 1 || tourDetail.tourDetailStatus === 2">
                 <div class="col">
                     <div class="card h-100 shadow rounded-3 cursor-pointer">
                         <a ng-click="showSelectionPopupHotel()"
@@ -67,6 +73,53 @@
                 <div class="col">
                     <div class="card h-100 shadow rounded-3 cursor-pointer">
                         <a ng-click="showSelectionPopupVisitLocation()"
+                           class="text-dark text-decoration-none">
+                            <img src="/assets/admin/assets/upload/sightseeing.png" alt="img-service"
+                                 class="card-img-top rounded-top-3" style="height: 200px"/>
+                            <div class="card-body">
+                                <h5 class="card-title">Dịch vụ tham quan</h5>
+                                <p class="card-text">Khám phá những điểm du lịch tuyệt vời nhất với các chương trình
+                                    tham quan đặc đáo và hấp dẫn, tận hưởng trải nghiệm du lịch đầy ý nghĩa.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phần này chỉ xem danh sách -->
+            <div class="row row-cols-1 row-cols-md-3 g-4"
+                 ng-if="tourDetail.tourDetailStatus === 3 || tourDetail.tourDetailStatus === 4">
+                <div class="col">
+                    <div class="card h-100 shadow rounded-3 cursor-pointer">
+                        <a ng-click="redirectWithMultipleId('/admin/detail-tour-list/:tourDetailId/service-list/accommodation-information-list', [tourDetail.id])"
+                           class="text-dark text-decoration-none">
+                            <img src="/assets/admin/assets/upload/hotel.png" alt="img-service"
+                                 class="card-img-top rounded-top-3" style="height: 200px"/>
+                            <div class="card-body">
+                                <h5 class="card-title">Dịch vụ khách sạn</h5>
+                                <p class="card-text">Trải nghiệm dịch vụ lưu trú đẳng cấp tại các khách sạn uy tín và đa
+                                    dạng với các dịch vụ tiện ích hàng đầu.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 shadow rounded-3 cursor-pointer">
+                        <a ng-click="redirectWithMultipleId('/admin/detail-tour-list/:tourDetailId/service-list/transportation-information-list', [tourDetail.id])"
+                           class="text-dark text-decoration-none">
+                            <img src="/assets/admin/assets/upload/vehicle.png" alt="img-service"
+                                 class="card-img-top rounded-top-3" style="height: 200px"/>
+                            <div class="card-body">
+                                <h5 class="card-title">Dịch vụ xe</h5>
+                                <p class="card-text">Tiện lợi và linh hoạt với dịch vụ thuê xe chất lượng, đa dạng về
+                                    ngoại hình và phong cách, đảm bảo sự an toàn và thoải mái cho mọi hành trình.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 shadow rounded-3 cursor-pointer">
+                        <a ng-click="redirectWithMultipleId('/admin/detail-tour-list/:tourDetailId/service-list/visit-information-list', [tourDetail.id])"
                            class="text-dark text-decoration-none">
                             <img src="/assets/admin/assets/upload/sightseeing.png" alt="img-service"
                                  class="card-img-top rounded-top-3" style="height: 200px"/>

@@ -230,6 +230,41 @@ travel_app.config(function ($routeProvider, $locationProvider) {
                 }
             }
         })
+
+        .when('/admin/detail-tour-list/:tourDetailId/service-list/accommodation-information-list', {
+            templateUrl: 'app/component/admin/views/pages/staff/tour-service/accommodation-information-list.html',
+            controller: 'AccommodationInformationControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/detail-tour-list/:tourDetailId/service-list/transportation-information-list', {
+            templateUrl: 'app/component/admin/views/pages/staff/tour-service/transportation-information-list.html',
+            controller: 'TransportationInformationControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/detail-tour-list/:tourDetailId/service-list/visit-information-list', {
+            templateUrl: 'app/component/admin/views/pages/staff/tour-service/visit-information-list.html',
+            controller: 'VisitInformationControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
         .when('/admin/detail-tour-list/:tourDetailId/service-list/hotel-list', {
             templateUrl: 'app/component/admin/views/pages/staff/partner-service/hotel/hotel-list.html',
             controller: 'HotelServiceControllerAD',
@@ -351,39 +386,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/admin/booking-list', {
             templateUrl: 'app/component/admin/views/pages/staff/booking/booking-list.html',
             controller: 'BookingControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/accommodation-information-list', {
-            templateUrl: 'app/component/admin/views/pages/staff/tour-service/accommodation-information-list.html',
-            controller: 'AccommodationInformationControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/transportation-information-list', {
-            templateUrl: 'app/component/admin/views/pages/staff/tour-service/transportation-information-list.html',
-            controller: 'TransportationInformationControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/visit-information-list', {
-            templateUrl: 'app/component/admin/views/pages/staff/tour-service/visit-information-list.html',
-            controller: 'VisitInformationControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
                     if (!AuthService.getToken()) {

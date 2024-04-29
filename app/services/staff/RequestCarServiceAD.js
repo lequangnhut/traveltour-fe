@@ -47,6 +47,16 @@ travel_app.service('RequestCarServiceAD', function ($http) {
         });
     };
 
+    this.checkExitsTourDetail = function (tourDetailId) {
+        return $http({
+            method: 'GET',
+            url: API_REQUEST_CAR + 'check-exits-tour-detail',
+            params: {
+                tourDetailId: tourDetailId,
+            }
+        });
+    }
+
     this.findRequestCarDetailSubmittedService = function (transportationScheduleId) {
         return $http({
             method: 'GET',

@@ -445,7 +445,7 @@
                                         <div class="d-flex align-items-center">
                                             <div class="dropdown-indicator-icon"></div>
                                             <span class="nav-link-icon">
-                                                <span data-feather="briefcase"></span>
+                                                <i class="fa-regular fa-calendar-plus"></i>
                                             </span>
                                             <span class="nav-link-text-wrapper">
                                                 <span class="nav-link-text">Tour cơ bản</span>
@@ -474,6 +474,25 @@
                                 </div>
 
                                 <!-- label-->
+                                <div class="nav-item-wrapper">
+                                    <a class="nav-link label-1"
+                                       ng-class="{ 'active': activeNavItem === 'customer-go-on-list'}"
+                                       ng-click="setActiveNavItem('customer-go-on-list')"
+                                       href="/admin/customer-go-on-list"
+                                    >
+                                        <div class="d-flex align-items-center">
+                                            <div class="dropdown-indicator-icon"></div>
+                                            <span class="nav-link-icon">
+                                                <i class="fa-solid fa-users-viewfinder"></i>
+                                            </span>
+                                            <span class="nav-link-text-wrapper">
+                                                <span class="nav-link-text">Khách hàng đi tour</span>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- label-->
                                 <p class="navbar-vertical-label">QUẢN LÝ THANH TOÁN - HÓA ĐƠN</p>
                                 <hr class="navbar-vertical-line"/>
 
@@ -491,48 +510,6 @@
                                             </span>
                                             <span class="nav-link-text-wrapper">
                                                 <span class="nav-link-text">Danh sách khách đặt tour</span>
-                                            </span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- label-->
-                                <p class="navbar-vertical-label">LỊCH TRÌNH DI CHUYỂN</p>
-                                <hr class="navbar-vertical-line"/>
-
-                                <!-- label-->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link label-1"
-                                       ng-class="{ 'active': activeNavItem === 'tour-is-going-list'}"
-                                       ng-click="setActiveNavItem('tour-is-going-list')"
-                                       href="/admin/tour-is-going-list"
-                                    >
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span class="nav-link-icon">
-                                                <span data-feather="hard-drive"></span>
-                                            </span>
-                                            <span class="nav-link-text-wrapper">
-                                                <span class="nav-link-text">Các tour đang vận hành</span>
-                                            </span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- label-->
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link label-1"
-                                       ng-class="{ 'active': activeNavItem === 'customer-go-on-list'}"
-                                       ng-click="setActiveNavItem('customer-go-on-list')"
-                                       href="/admin/customer-go-on-list"
-                                    >
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon"></div>
-                                            <span class="nav-link-icon">
-                                                <span data-feather="compass"></span>
-                                            </span>
-                                            <span class="nav-link-text-wrapper">
-                                                <span class="nav-link-text">Khách hàng đi tour</span>
                                             </span>
                                         </div>
                                     </a>

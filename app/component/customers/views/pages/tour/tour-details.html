@@ -204,9 +204,9 @@
                                                         <div class="tour-trips-item-footer">
                                                             <div class="row">
                                                                 <div class="fw-medium col-sm-4 text-center">
-                                                                    <i class="fa-solid fa-taxi"></i>
+                                                                    <i class="fa-solid fa-van-shuttle"></i>
                                                                     <span>
-                                                                        Xe đi tour
+                                                                        Xe trên hợp đồng
                                                                     </span>
                                                                 </div>
                                                                 <div class="fw-medium col-sm-4 text-center">
@@ -405,9 +405,10 @@
                                     </div>
                                 </div>
                                 <div class="booking-guest-box mb-20">
-                                    <h6 class="mb-20">Vé <span class="fs-6 fw-normal">(chỉ còn {{remainingTickets}} vé)</span> </h6>
+                                    <h6 class="mb-20">Vé <span class="fs-6 fw-normal">(chỉ còn {{ remainingTickets }}
+                                        vé)</span></h6>
                                     <div class="booking-item">
-                                        <label>Người lớn (trên 1m3) {{ tourDetail.unitPrice | vnCurrency }}</label>
+                                        <label>Người lớn (trên 1m3) <br> {{ tourDetail.unitPrice | vnCurrency }}</label>
                                         <div class="bk-item booking-user">
                                              <span class="d-flex align-items-center bd-highlight">
                                                  <span class="ms-auto bd-highlight">
@@ -415,7 +416,8 @@
                                                                type="number" class="form-control"
                                                                ng-model="ticket.adults"
                                                                ng-change="updateTotalPrice()"
-                                                               ng-blur="onQuantityBlurAdult(ticket)" min="1" max="{{adultsMax}}"
+                                                               ng-blur="onQuantityBlurAdult(ticket)" min="1"
+                                                               max="{{adultsMax}}"
                                                                oninput="validity.valid||(value=1);">
                                                 </span>
                                             </span>
@@ -423,7 +425,7 @@
                                     </div>
                                     <div class="booking-item">
                                         <label>
-                                            Trẻ em (dưới 1m3) &nbsp; {{ tourDetail.unitPrice * 0.3 | vnCurrency }}
+                                            Trẻ em (dưới 1m3) <br> {{ tourDetail.unitPrice * 0.3 | vnCurrency }}
                                         </label>
                                         <div class="bk-item booking-user">
                                              <span class="d-flex align-items-center bd-highlight">
@@ -432,7 +434,8 @@
                                                                type="number" class="form-control"
                                                                ng-model="ticket.children"
                                                                ng-change="updateTotalPrice()"
-                                                               ng-blur="onQuantityBlurChildren(ticket)" min="0" max="{{childrenMax}}"
+                                                               ng-blur="onQuantityBlurChildren(ticket)" min="0"
+                                                               max="{{childrenMax}}"
                                                                oninput="validity.valid||(value=0);">
                                                 </span>
                                             </span>

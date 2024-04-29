@@ -57,7 +57,7 @@ travel_app.controller('HotelPaymentControllerAD',
             $scope.isLoading = true;
 
             $scope.orderHotel = {
-                id: GenerateCodePayService.generateCodeBooking('VPO',hotelId),
+                id: GenerateCodePayService.generateCodeBooking('VPO', hotelId),
                 userId: $scope.tourGuide.id,
                 customerName: $scope.tourGuide.fullName,
                 customerCitizenCard: $scope.tourGuide.citizenCard,
@@ -91,12 +91,10 @@ travel_app.controller('HotelPaymentControllerAD',
                     OrderHotelDetailServiceAD.createOrderHotelDetail(dataOrderHotelDetail).then(() => {
                     })
                 })
-                toastAlert('success', 'Thêm mới thành công !');
-                $location.path(`/admin/detail-tour-list/${$routeParams.tourDetailId}/service-list/hotel-list`);
+                toastAlert('success', 'Đặt phòng thành công !');
+                $location.path(`/admin/detail-tour-list/${$routeParams.tourDetailId}/service-list/accommodation-information-list`);
             }, errorCallback).finally(() => {
                 $scope.isLoading = false;
             });
         }
-
-
     });

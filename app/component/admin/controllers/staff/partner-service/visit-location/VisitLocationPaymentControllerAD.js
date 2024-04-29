@@ -64,28 +64,31 @@ travel_app.controller('VisitLocationPaymentControllerAD',
             dataOrderVisitLocation.append("orderVisitsDto", new Blob([JSON.stringify(orderVisitLocation)], {type: "application/json"}));
             dataOrderVisitLocation.append("tourDetailId", tourDetailId);
 
-            OrderVisitServiceAD.createOrderVisit(dataOrderVisitLocation).then((repo) => {
-                console.log(repo)
-                let orderVisitLocationId = repo.data.data.id;
+            function confirmSubmit() {
+                OrderVisitServiceAD.createOrderVisit(dataOrderVisitLocation).then((repo) => {
+                    let orderVisitLocationId = repo.data.data.id;
 
-                $scope.selectedTickets.forEach(item => {
-                    let orderVisitLocationDetail = {
-                        orderVisitId: orderVisitLocationId,
-                        visitLocationTicketId: item.id,
-                        amount: item.quantity,
-                        unitPrice: item.unitPrice,
-                    }
+                    $scope.selectedTickets.forEach(item => {
+                        let orderVisitLocationDetail = {
+                            orderVisitId: orderVisitLocationId,
+                            visitLocationTicketId: item.id,
+                            amount: item.quantity,
+                            unitPrice: item.unitPrice,
+                        }
 
-                    const dataOrderVisitLocationDetail = new FormData();
-                    dataOrderVisitLocationDetail.append("orderVisitDetailsDto", new Blob([JSON.stringify(orderVisitLocationDetail)], {type: "application/json"}));
-                    OrderVisitDetailServiceAD.createOrderVisitDetail(dataOrderVisitLocationDetail).then(() => {
+                        const dataOrderVisitLocationDetail = new FormData();
+                        dataOrderVisitLocationDetail.append("orderVisitDetailsDto", new Blob([JSON.stringify(orderVisitLocationDetail)], {type: "application/json"}));
+                        OrderVisitDetailServiceAD.createOrderVisitDetail(dataOrderVisitLocationDetail).then(() => {
+                        })
                     })
-                })
-                toastAlert('success', 'Thêm mới thành công !');
-                $location.path(`/admin/detail-tour-list/${$routeParams.tourDetailId}/service-list/visit-location-list`);
-            }, errorCallback).finally(() => {
-                $scope.isLoading = false;
-            });
+                    toastAlert('success', 'Đặt vé thành công !');
+                    $location.path(`/admin/detail-tour-list/${$routeParams.tourDetailId}/service-list/visit-information-list`);
+                }, errorCallback).finally(() => {
+                    $scope.isLoading = false;
+                });
+            }
+
+            confirmAlert('Bạn có chắc chắn muốn đặt vé cho điểm tham quan này không ?', confirmSubmit);
         };
 
         $scope.toggleActivities = () => {

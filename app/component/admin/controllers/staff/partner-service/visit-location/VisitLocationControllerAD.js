@@ -209,6 +209,21 @@ travel_app.controller('VisitLocationControllerAD',
             $scope.hasFreeTicket = $scope.tickets.some(ticket => ticket.ticketTypeName.toLowerCase() === 'miễn phí vé');
         }
 
+        /**
+         * Modal xem chi tiết tour detail
+         */
+        $scope.checkTourDetailModal = function () {
+            $('#tourInformationModal').modal('show');
+
+            TourDetailsServiceAD.findTourDetailById(tourDetailId).then(function (response) {
+                if (response.status === 200) {
+                    $scope.tourDetailModal = response.data.data;
+                } else {
+                    $location.path('/admin/page-not-found');
+                }
+            })
+        }
+
         let ConfirmTicketSelection = (visitLocationId) => {
             let childTicketCount = 0;
             let adultTicketCount = 0;
@@ -272,10 +287,8 @@ travel_app.controller('VisitLocationControllerAD',
                 return;
             }
 
-            confirmAlert('Bạn có chắc chắn muốn đặt vé không ?', () => {
-                $('#modal-tour-detail').modal('hide');
-                ConfirmTicketSelection(visitLocationId);
-            });
+            $('#modal-tour-detail').modal('hide');
+            ConfirmTicketSelection(visitLocationId);
         };
 
         $scope.getVisitLocationList();

@@ -9,10 +9,10 @@ travel_app.service('TransportationInformationServiceAD', function ($http, $q) {
             params: {
                 page: page || 0,
                 size: size || 10,
-                sortBy: sortBy || 'dateCreated',
-                sortDir: sortDir || 'DESC',
+                sortBy: sortBy || 'id',
+                sortDir: sortDir || 'desc',
                 tourDetailId: tourDetailId || null,
-                orderStatus: orderStatus || 1,
+                orderStatus: orderStatus || null,
                 searchTerm: searchTerm || null
             }
         }).then(deferred.resolve, deferred.reject);
