@@ -134,7 +134,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="trip in tripList">
-                        <td style="font-size: small">{{ $index + 1 }}</td>
+                        <td>{{ getDisplayIndex($index) }}</td>
                         <td>{{ (trip.fromLocation || 'Đang cập nhật') + ' - ' + (trip.toLocation || 'Đang cập nhật') }}</td>
                         <td>{{ (trip.departureTime | vietnameseDateTime) || 'Đang cập nhật' }}</td>
                         <td>{{ (trip.arrivalTime  | vietnameseDateTime) || 'Đang cập nhật' }}</td>

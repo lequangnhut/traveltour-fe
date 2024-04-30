@@ -137,7 +137,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="ticket in visitTicketData">
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ getDisplayIndex($index) }}</td>
                     <td>
                         <img ng-src="{{ visitLocations.visitLocationImage || 'Đang tải...' }}"
                              class="img-fluid cursor-pointer rounded-3" alt="avatar"

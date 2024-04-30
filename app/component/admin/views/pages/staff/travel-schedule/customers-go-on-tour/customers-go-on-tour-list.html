@@ -126,7 +126,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="btc in bookingTourCustomerList">
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ getDisplayIndex($index) }}</td>
                     <td class=ext-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="{{ btc.customerName }}">
                         {{ btc.customerName }}

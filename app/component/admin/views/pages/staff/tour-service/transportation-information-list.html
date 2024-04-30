@@ -134,12 +134,12 @@
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('fromLocation')">
-                        <div class="icon-left">Địa đi
+                        <div class="icon-left">Điểm đi
                             <span class="sorting-icon" ng-bind-html="getSortIcon('fromLocation  ')"></span>
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('toLocation')">
-                        <div class="icon-left">Địa đến
+                        <div class="icon-left">Điểm đến
                             <span class="sorting-icon" ng-bind-html="getSortIcon('toLocation  ')"></span>
                         </div>
                     </th>
@@ -163,7 +163,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="btsl in bookingTourTransportationSchedulesList">
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ getDisplayIndex($index) }}</td>
                     <td>{{ btsl.id }}</td>
                     <td class=ext-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="{{ btsl.fromLocation }}">

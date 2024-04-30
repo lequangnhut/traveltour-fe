@@ -63,6 +63,10 @@ travel_app.controller("HotelPostController",
             return Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
         };
 
+        $scope.getDisplayIndex = function (index) {
+            return index + 1 + $scope.currentPage * $scope.pageSize;
+        };
+
         $scope.sortData = function (column) {
             $scope.sortBy = column;
             $scope.sortDir = ($scope.sortDir === 'asc') ? 'desc' : 'asc';
@@ -81,6 +85,8 @@ travel_app.controller("HotelPostController",
         };
 
         $scope.getHotelPostList = function () {
+            $scope.isLoading = true;
+
             PostServiceAD.findAllHotel($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.isAccepted)
                 .then(function (response) {
                     if (response.data.data === null || response.data.data.content.length === 0) {

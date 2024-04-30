@@ -108,7 +108,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="type in typeList">
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ getDisplayIndex($index) }}</td>
                     <td>{{ type.tourTypeName }}</td>
                     <td class="d-flex align-items-center justify-content-center">
                         <a ng-click="redirectPage('/admin/type/tour-type-list/tour-type-update/', type.id)"

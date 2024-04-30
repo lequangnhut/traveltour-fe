@@ -132,7 +132,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="rt in roomList">
-                        <td style="font-size: small">{{ $index + 1 }}</td>
+                        <td>{{ getDisplayIndex($index) }}</td>
                         <td>{{ rt.roomTypeName }}</td>
                         <td>{{ rt.amountRoom }}</td>
                         <td>{{ rt.price | vnCurrency }}</td>

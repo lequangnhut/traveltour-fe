@@ -247,7 +247,7 @@ travel_app.controller('LocationDetailCusController', function ($scope, $location
                 }
             })
         } else {
-            toastAlert('error', "Vui lòng đăng nhập để thích khách sạn này")
+            centerAlert('Thất bại !', "Vui lòng đăng nhập để yêu thích điểm tham quan này !", 'warning');
         }
     }
     $scope.isLikeLocation = false;

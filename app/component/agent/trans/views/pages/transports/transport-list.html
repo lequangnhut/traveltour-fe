@@ -139,7 +139,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="transport in transportData">
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ getDisplayIndex($index) }}</td>
                     <td>
                         <img ng-src="{{ transport.transportationImg }}" class="img-fluid" alt="avatar"
                              width="55" title="Xem ảnh xe">

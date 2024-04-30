@@ -87,6 +87,10 @@ travel_app.controller('RoomTypeControllerAD',
 
         $scope.getDisplayRange = () => Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
 
+        $scope.getDisplayIndex = function (index) {
+            return index + 1 + $scope.currentPage * $scope.pageSize;
+        };
+
         const roomTypeData = async (response) => {
             let roomTypeList = response.data.data !== null ? response.data.data.content : [];
             $scope.totalPages = response.data.data !== null ? Math.ceil(response.data.data.totalElements / $scope.pageSize) : 0;

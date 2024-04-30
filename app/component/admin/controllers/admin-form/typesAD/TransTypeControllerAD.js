@@ -63,6 +63,10 @@ travel_app.controller('TransTypeControllerAD',
             return Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
         };
 
+        $scope.getDisplayIndex = function (index) {
+            return index + 1 + $scope.currentPage * $scope.pageSize;
+        };
+
         //show list
         $scope.getTypeList = function () {
             $scope.isLoading = true;

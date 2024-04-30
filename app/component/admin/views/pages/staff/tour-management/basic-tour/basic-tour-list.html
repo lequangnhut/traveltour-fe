@@ -127,7 +127,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="tour in tourBasicList">
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ getDisplayIndex($index) }}</td>
                     <td>{{ tour.id }}</td>
                     <td>
                         <img ng-src="{{tour.tourImg}}" class="cursor-pointer rounded-2" alt="avatar" loading="lazy"

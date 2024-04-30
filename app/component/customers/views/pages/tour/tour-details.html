@@ -348,17 +348,19 @@
                 <div class="col-xl-4">
                     <!--=== Sidebar Widget Area ===-->
                     <div class="sidebar-widget-area pt-45 pl-lg-30">
-                        <div class="sidebar-widget booking-info-widget wow fadeInUp mb-40">
+                        <div class="sidebar-widget category-widget booking-info-widget wow fadeInUp mb-40">
                             <h4 class="widget-title">Thông tin chuyến đi</h4>
                             <ul class="info-list">
                                 <li>
-                                    <span><span class="fas fa-user-circle"></span>
+                                    <span>
+                                        <span class="fas fa-user-circle"></span>
                                         Lượt khách tối đa
                                         <span>{{ tourDetail.numberOfGuests }} Người</span>
                                     </span>
                                 </li>
                                 <li>
-                                    <span><span class="fas fa-user-circle"></span>
+                                    <span>
+                                        <span class="fas fa-user-circle"></span>
                                         Đã đặt
                                         <span>
                                             {{ tourDetail.bookedSeat }}/{{ tourDetail.numberOfGuests }}
@@ -366,20 +368,20 @@
                                     </span>
                                 </li>
                                 <li>
-                                    <span><span class="fas fa-map-marker-alt"></span>
+                                    <span>
+                                        <span class="fas fa-map-marker-alt"></span>
                                         Điểm xuất phát
                                         <span>{{ tourDetail.fromLocation }}</span>
                                     </span>
                                 </li>
                                 <li>
-                                    <span>
-                                        <span class="fas fa-map-marker-alt"></span>
-                                        Điểm đến
-                                        <span ng-show="tourDetail.toLocation.length > 15">...</span>
-                                        <span ng-if="dataLoaded" custom-tooltip="{{ tourDetail.toLocation }}">
-                                            {{ tourDetail.toLocation | limitTo: 15 }}
+                                    <a>
+                                        <span>
+                                            <span class="fas fa-map-marker-alt"></span>
+                                            Điểm đến
+                                            <span>{{ tourDetail.toLocation }}</span>
                                         </span>
-                                    </span>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -412,7 +414,7 @@
                                         <div class="bk-item booking-user">
                                              <span class="d-flex align-items-center bd-highlight">
                                                  <span class="ms-auto bd-highlight">
-                                                        <input style="width: 70px;  padding: .375rem .75rem;"
+                                                        <input style="width: 80px;  padding: .675rem .75rem;"
                                                                type="number" class="form-control"
                                                                ng-model="ticket.adults"
                                                                ng-change="updateTotalPrice()"
@@ -430,7 +432,7 @@
                                         <div class="bk-item booking-user">
                                              <span class="d-flex align-items-center bd-highlight">
                                                  <span class="ms-auto bd-highlight">
-                                                        <input style="width: 70px;  padding: .375rem .75rem;"
+                                                        <input style="width: 80px;  padding: .675rem .75rem;"
                                                                type="number" class="form-control"
                                                                ng-model="ticket.children"
                                                                ng-change="updateTotalPrice()"

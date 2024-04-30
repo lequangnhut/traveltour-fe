@@ -167,7 +167,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="tourTrips in tourTripsList">
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ getDisplayIndex($index) }}</td>
                     <td>Ngày {{ tourTrips.dayInTrip }}</td>
                     <td>{{ tourTrips.transportationTypesByTransportationTypeId.transportationTypeName }}</td>
                     <td>{{ tourTrips.placeName }}</td>
@@ -200,7 +200,7 @@
                 </tbody>
             </table>
             <div class="card-footer">
-                <div class="d-flex justify-content-end">
+                <div class="d-flex justify-content-end" ng-if="tourTripsList.length > 0">
                     {{ getDisplayRange() }} trong tổng số {{ totalElements }}
                 </div>
             </div>

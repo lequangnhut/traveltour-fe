@@ -85,6 +85,10 @@ travel_app.controller('HotelServiceControllerAD',
 
         $scope.getDisplayRange = () => Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
 
+        $scope.getDisplayIndex = function (index) {
+            return index + 1 + $scope.currentPage * $scope.pageSize;
+        };
+
         $scope.findHotelData = () => {
             return HotelServiceServiceAD.getAllOrSearchHotels(
                 $scope.currentPage,

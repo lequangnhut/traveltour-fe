@@ -54,6 +54,9 @@ travel_app.controller('TourDetailCusController',
             $scope.isLoading = true;
             $scope.dataLoaded = false;
 
+            /**
+             * Tìm tất cả dữ liệu
+             */
             TourDetailCusService.findByTourDetailId(tourDetailId).then(function (response) {
                 if (response.status === 200) {
                     $scope.tourDetail = response.data.data;
@@ -80,6 +83,9 @@ travel_app.controller('TourDetailCusController',
                 });
             });
 
+            /**
+             * Top 5 tour nổi bật
+             */
             TourDetailCusService.findAllTourTrend().then(function (response) {
                 if (response.status === 200) {
                     $scope.tourTrendData = response.data.data.map(function (item) {
@@ -676,7 +682,7 @@ travel_app.controller('TourDetailCusController',
                     }
                 })
             } else {
-                toastAlert('error', "Vui lòng đăng nhập để thích khách sạn này")
+                centerAlert('Thất bại !', "Vui lòng đăng nhập để yêu thích tour này !", 'warning');
             }
         }
         $scope.isLikeTour = false;

@@ -184,7 +184,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="hotelService in hotelServiceList">
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ getDisplayIndex($index) }}</td>
                     <td class="cursor-default" style="max-width: 150px;">
                         <span custom-tooltip="{{ hotelService.hotelName }}">
                             {{ hotelService.hotelName }}

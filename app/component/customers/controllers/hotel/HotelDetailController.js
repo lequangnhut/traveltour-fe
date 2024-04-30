@@ -437,7 +437,7 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll, 
                 }
             })
         } else {
-            toastAlert('error', "Vui lòng đăng nhập để thích khách sạn này")
+            centerAlert('Thất bại !', "Vui lòng đăng nhập để yêu thích khách sạn này !", 'warning');
         }
     }
     $scope.isLikeHotel = false;

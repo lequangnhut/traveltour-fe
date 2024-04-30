@@ -122,7 +122,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="ht in hotelPostList">
-                        <td style="font-size: small">{{ $index + 1 }}</td>
+                        <td>{{ getDisplayIndex($index) }}</td>
                         <td>{{ ht.hotelName || 'Đang cập nhật' }}</td>
                         <td>{{ (ht.district || 'Đang cập nhật') + ', ' + (ht.province || 'Đang cập nhật') }}</td>
                         <td>{{ ht.hotelTypes.hotelTypeName || 'Đang cập nhật' }}</td>

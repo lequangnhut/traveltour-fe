@@ -162,7 +162,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="agent in agenciesList">
-                        <td style="font-size: small">{{ $index + 1 }}</td>
+                        <td>{{ getDisplayIndex($index) }}</td>
                         <td>{{ agent.nameAgency ? agent.nameAgency : '-' }}</td>
                         <td>{{ agent.representativeName ? agent.representativeName : '-' }}</td>
                         <td>{{ agent.phone ? agent.phone : '-' | phoneNumber }}</td>
@@ -287,7 +287,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="agent in agenciesList">
-                        <td style="font-size: small">{{ $index + 1 }}</td>
+                        <td>{{ getDisplayIndex($index) }}</td>
                         <td>{{ agent.nameAgency ? agent.nameAgency : '-' }}</td>
                         <td>{{ agent.representativeName ? agent.representativeName : '-' }}</td>
                         <td>{{ agent.phone ? agent.phone : '-' | phoneNumber }}</td>

@@ -288,6 +288,10 @@ travel_app.controller('OrderVisitControllerAG', function ($scope, $timeout, $fil
         return Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
     };
 
+    $scope.getDisplayIndex = function (index) {
+        return index + 1 + $scope.currentPage * $scope.pageSize;
+    };
+
     /**
      * Sắp xếp
      */

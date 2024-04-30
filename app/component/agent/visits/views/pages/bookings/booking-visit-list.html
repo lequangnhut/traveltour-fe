@@ -142,7 +142,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="oVisit in orderVisit">
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ getDisplayIndex($index) }}</td>
                     <td>{{ visitLocations.visitLocationName }}</td>
                     <td>{{ oVisit.customerName }}</td>
                     <td>{{ oVisit.customerPhone }}</td>
@@ -163,13 +163,13 @@
                     </td>
                     <td class="d-flex align-items-center justify-content-center" style="padding-right: 10px">
                         <a href="/business/visit/order-visit-management/update-order-visit/{{ oVisit.id }}"
-                           role="button" class="fs-1 btn text-warning">
+                           role="button" class="fs-1 px-2 btn text-warning">
                             <span custom-tooltip="Cập nhật vé">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </span>
                         </a>
                         <a href="#" ng-click="deleteOrderVisit(oVisit.id, oVisit.customerName)"
-                           role="button" class="fs-1 btn text-danger">
+                           role="button" class="fs-1 px-2 btn text-danger">
                             <span custom-tooltip="Xóa vé">
                                 <i class="fa-solid fa-trash"></i>
                             </span>

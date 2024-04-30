@@ -39,7 +39,7 @@ travel_app.controller('ForgotPwController', function ($scope, $location, ForgotP
         ForgotPwService.emailForgot($scope.users.email, $scope.users)
             .then(function successCallback(response) {
                 $location.path("/home");
-                centerAlert('Thành công !', 'Mời người dùng kiểm tra mail !', 'success');
+                centerAlert('Thành công !', 'Mời người dùng kiểm tra email để đổi mật khẩu !', 'success');
             }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });
@@ -57,7 +57,7 @@ travel_app.controller('ForgotPwController', function ($scope, $location, ForgotP
         ForgotPwService.emailForgotAdmin($scope.users.email, $scope.users)
             .then(function successCallback(response) {
                 $location.path("/login-admin");
-                centerAlert('Thành công !', 'Mời người dùng kiểm tra mail !', 'success');
+                centerAlert('Thành công !', 'Mời người dùng kiểm tra email để đổi mật khẩu !', 'success');
             }, errorCallback).finally(function () {
             $scope.isLoading = false;
         });

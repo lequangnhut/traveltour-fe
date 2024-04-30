@@ -167,7 +167,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="tourDetail in tourDetailList">
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ getDisplayIndex($index) }}</td>
                     <td>{{ tourDetail.id }}</td>
                     <td class="cursor-default">
                         <img ng-src="{{ tourDetail.toursByTourId.tourImg }}" loading="lazy"

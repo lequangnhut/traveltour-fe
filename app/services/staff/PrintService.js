@@ -172,9 +172,10 @@ travel_app.service('PrintService', ['$window', '$filter', function ($window, $fi
                     <td style="font-size:small;text-align: center;width:45%">Công ty TNHH TravelTour
                     </td>
                     </tr>
-              </table>
-              <p class="separator" style="; border-bottom:2px solid #706f6f; font-size:0; margin: 10px 0 10px 0; line-height: 0;">&nbsp;</p>
-              <p class="mt-2 mb-3" style="font-style: italic; font-size: 12px; margin: 0">
+                    </table>
+                    <p class="separator" style="; border-bottom:2px solid #706f6f; font-size:0;
+                    margin: 10px 0 10px 0; line-height: 0;">&nbsp;</p>
+                    <p class="mt-2 mb-3" style="font-style: italic; font-size: 12px; margin: 0">
 
               <!-- Note and Footer -->
               <footer class="mt-5">

@@ -1,5 +1,5 @@
 travel_app.controller('TransportDetailCusController',
-    function ($scope, $location, $sce, $routeParams, $timeout, UserLikeService, AuthService ,TransportCusService, TransportServiceAG,UserCommentsService, TransportBrandServiceAG, LocalStorageService, Base64ObjectService) {
+    function ($scope, $location, $sce, $routeParams, $timeout, UserLikeService, AuthService, TransportCusService, TransportServiceAG, UserCommentsService, TransportBrandServiceAG, LocalStorageService, Base64ObjectService) {
         let brandId = Base64ObjectService.decodeObject($routeParams.brandId);
         let user = null
         user = AuthService.getUser();
@@ -109,7 +109,7 @@ travel_app.controller('TransportDetailCusController',
             /**
              * Hiển thị tất cả các xe có vé
              */
-            TransportCusService.findAllTransportScheduleCus($scope.currentPage, $scope.pageSize,$scope.filters, brandId).then(function (response) {
+            TransportCusService.findAllTransportScheduleCus($scope.currentPage, $scope.pageSize, $scope.filters, brandId).then(function (response) {
                 console.log(response)
                 if (response.status === 200) {
                     if (response.data && response.data.data && response.data.data.content) {
@@ -344,7 +344,7 @@ travel_app.controller('TransportDetailCusController',
                     }
                 })
             } else {
-                toastAlert('error', "Vui lòng đăng nhập để thích khách sạn này")
+                centerAlert('Thất bại !', "Vui lòng đăng nhập để yêu thích nhà xe này !", 'warning');
             }
         }
         $scope.isLikeTransportationBrand = false;
@@ -359,11 +359,11 @@ travel_app.controller('TransportDetailCusController',
             }
         };
 
-        $scope.findUserComments = function(transId) {
-            if($scope.size === null || $scope.page === null){
+        $scope.findUserComments = function (transId) {
+            if ($scope.size === null || $scope.page === null) {
                 $scope.size = 10;
                 $scope.page = 0;
-                UserCommentsService.findCommentsByServiceId(transId, 'ASC', $scope.size, $scope.page).then(function(response) {
+                UserCommentsService.findCommentsByServiceId(transId, 'ASC', $scope.size, $scope.page).then(function (response) {
                     console.log(response)
                     $scope.ratingHotel = response.data;
 
@@ -376,10 +376,10 @@ travel_app.controller('TransportDetailCusController',
                     }
                     console.log($scope.ratingStar)
                 })
-            }else {
+            } else {
                 $scope.size = $scope.size + 5;
                 $scope.page = $scope.page + 1;
-                UserCommentsService.findCommentsByServiceId(transId, 'ASC', $scope.size, $scope.page).then(function(response) {
+                UserCommentsService.findCommentsByServiceId(transId, 'ASC', $scope.size, $scope.page).then(function (response) {
                     $scope.ratingHotel = response.data;
 
                     if ($scope.ratingHotel.roundedAverageRating % 1 !== 0) {
@@ -393,11 +393,11 @@ travel_app.controller('TransportDetailCusController',
             }
         }
 
-        $timeout(function() {
+        $timeout(function () {
             var swiper = new Swiper('.swiper-container', {
                 // Các tùy chọn Swiper
                 slidesPerView: 1,
-                loop: true,autoplay: {
+                loop: true, autoplay: {
                     delay: 2500,
                     disableOnInteraction: false,
                 },

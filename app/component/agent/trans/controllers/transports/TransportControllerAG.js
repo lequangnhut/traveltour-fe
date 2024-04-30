@@ -101,6 +101,8 @@ travel_app.controller('TransportControllerAG',
         };
 
         $scope.init = function () {
+            $scope.isLoading = true;
+
             TransportServiceAG.findAllTransport(brandId, $scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir).then(function successCallback(response) {
                 if (response.status === 200) {
                     $scope.transportData = response.data.content;
@@ -281,6 +283,10 @@ travel_app.controller('TransportControllerAG',
 
         $scope.getDisplayRange = function () {
             return Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
+        };
+
+        $scope.getDisplayIndex = function (index) {
+            return index + 1 + $scope.currentPage * $scope.pageSize;
         };
 
         /**

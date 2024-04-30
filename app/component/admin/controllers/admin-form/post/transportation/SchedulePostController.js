@@ -65,6 +65,10 @@ travel_app.controller("SchedulePostController",
             return Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
         };
 
+        $scope.getDisplayIndex = function (index) {
+            return index + 1 + $scope.currentPage * $scope.pageSize;
+        };
+
         $scope.sortData = function (column) {
             $scope.sortBy = column;
             $scope.sortDir = ($scope.sortDir === 'asc') ? 'desc' : 'asc';

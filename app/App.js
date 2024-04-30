@@ -1418,17 +1418,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
                 }
             }
         })
-        .when('/admin/agency/agency-list/agency-update', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-update.html',
-            controller: 'AgencyControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
         .when('/admin/agency/agency-list/agency-update/:id', {
             templateUrl: 'app/component/admin/views/pages/admin-form/agency/agency-update.html',
             controller: 'AgencyControllerAD',
@@ -1458,17 +1447,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         .when('/admin/post/hotel-post-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/post/hotel/hotel-post-list.html',
             controller: 'HotelPostController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/post/hotel-post-list/room-list', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/post/hotel/room-type-post-list.html',
-            controller: 'RoomPostController',
             resolve: {
                 "check": function ($location, AuthService) {
                     if (!AuthService.getToken()) {

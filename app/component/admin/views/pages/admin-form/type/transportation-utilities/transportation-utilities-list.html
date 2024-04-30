@@ -122,7 +122,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="util in transportUtilityData">
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ getDisplayIndex($index) }}</td>
                     <td>
                         <img ng-src="{{ util.icon }}" class="img-fluid" width="40" alt="icon demo" loading="lazy">
                     </td>

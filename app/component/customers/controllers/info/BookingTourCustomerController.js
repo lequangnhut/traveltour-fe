@@ -130,6 +130,9 @@ travel_app.controller("BookingTourCustomerController",
             $scope.getTourBookingList();
         };
 
+        $scope.getDisplayIndex = function (index) {
+            return index + 1 + $scope.currentPage * $scope.pageSize;
+        };
 
         $scope.getSortIcon = function (column) {
             if ($scope.sortBy === column) {

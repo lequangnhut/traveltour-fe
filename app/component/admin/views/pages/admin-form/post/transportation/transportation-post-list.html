@@ -139,7 +139,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="tran in transList">
-                        <td style="font-size: small">{{ $index + 1 }}</td>
+                        <td>{{ getDisplayIndex($index) }}</td>
                         <td>{{ tran.id || 'Đang cập nhật' }}</td>
                         <td>{{ tran.licensePlate || 'Đang cập nhật' }}</td>
                         <td>{{ tran.amountSeat || 'Đang cập nhật' }}</td>

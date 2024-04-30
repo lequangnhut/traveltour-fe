@@ -129,16 +129,11 @@
                 <thead>
                 <tr class="bg-light">
                     <th>#</th>
+                    <th>STT</th>
                     <th class="cursor-pointer" ng-click="sortData('roomTypeName')">
                         <div class="icon-left">
                             Tên loại phòng
                             <span class="sorting-icon" ng-bind-html="getSortIcon('roomTypeName')"></span>
-                        </div>
-                    </th>
-                    <th class="cursor-pointer" ng-click="sortData('roomUtilitiesNames')">
-                        <div class="icon-left">
-                            Tên tiện ích
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('roomUtilitiesNames')"></span>
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('bedTypeNames')">
@@ -179,13 +174,13 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="rt in roomTypeList">
-                    <td><span><input class="form-check-input" type="checkbox" ng-model="rt.isChecked"
-                                     ng-change="onCheckChanged(rt)"></span></td>
-                    <td class="cursor-default text-truncate" style="max-width: 150px;">
-                        <span custom-tooltip="{{ rt.roomTypeName }}">
-                            {{ rt.roomTypeName }}
+                    <td>
+                        <span>
+                            <input class="form-check-input" type="checkbox" ng-model="rt.isChecked"
+                                   ng-change="onCheckChanged(rt)">
                         </span>
                     </td>
+                    <td>{{ getDisplayIndex($index) }}</td>
                     <td class="cursor-default text-truncate" style="max-width: 150px;">
                         <span custom-tooltip="{{ rt.roomTypeName }}">
                             {{ rt.roomTypeName }}

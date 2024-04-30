@@ -192,7 +192,9 @@ travel_app.controller('TourDetailControllerAD',
                                         console.error("Lỗi khi tính toán khoảng cách:", error);
                                     });
 
-                                $scope.getProvinceBelow10KmAlongRoute(fromLocation, toLocation);
+                                if ($scope.tourDetail.tourDetailStatus === 1) {
+                                    $scope.getProvinceBelow10KmAlongRoute(fromLocation, toLocation);
+                                }
                             }, 0);
                         }
                     })
@@ -499,6 +501,10 @@ travel_app.controller('TourDetailControllerAD',
 
             $scope.getDisplayRange = () => {
                 return Math.min(($scope.currentPage + 1) * $scope.pageSize, $scope.totalElements);
+            };
+
+            $scope.getDisplayIndex = function (index) {
+                return index + 1 + $scope.currentPage * $scope.pageSize;
             };
 
             /**

@@ -128,7 +128,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="customer in customerList">
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ getDisplayIndex($index) }}</td>
                     <td>{{ customer.id }}</td>
                     <td class="cursor-default">
                         <span custom-tooltip="{{ customer.fullName }}">

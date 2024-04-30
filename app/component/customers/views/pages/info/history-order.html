@@ -256,7 +256,7 @@
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="btl in bookingTourList">
-                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ getDisplayIndex($index) }}</td>
                                         <td style="text-align: justify;">{{ btl.id }}</td>
                                         <td style="text-align: justify;">{{ btl.toursByTourId.tourName }}</td>
                                         <td>{{ (btl.dateCreated | vietnameseTimeNoSeconds) }}</td>
@@ -729,7 +729,7 @@
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="h in bookingTourHotelList">
-                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ getDisplayIndex($index) }}</td>
                                         <td style="text-align: justify;">{{ h.id }}</td>
                                         <td style="text-align: justify;">{{ h.hotel.hotelName }}</td>
                                         <td>{{ h.checkIn | vietnameseTimeNoSeconds }}</td>
@@ -1209,7 +1209,7 @@
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="t in bookingTourTransList">
-                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ getDisplayIndex($index) }}</td>
                                         <td style="text-align: justify;">{{ t.id }}</td>
                                         <td style="text-align: justify;">{{ (t.transportationSchedules.fromLocation) + ' - ' + (t.transportationSchedules.toLocation) }}</td>
                                         <td>{{ t.transportationSchedules.departureTime | vietnameseTimeNoSeconds }}</td>
@@ -1647,7 +1647,7 @@
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="ov in bookingTourVisitList">
-                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ getDisplayIndex($index) }}</td>
                                         <td style="text-align: justify;">{{ ov.id }}</td>
                                         <td style="text-align: justify;">{{ ov.visitLocationsByVisitLocationId.visitLocationName }}</td>
                                         <td>{{ ov.dateCreated | vietnameseTimeNoSeconds }}</td>

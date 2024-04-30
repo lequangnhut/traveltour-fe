@@ -152,7 +152,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="booking in orderTransport">
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ getDisplayIndex($index) }}</td>
                     <td>
                         {{ transportScheduleName[booking.transportationScheduleId].fromLocation + ' - ' + transportScheduleName[booking.transportationScheduleId].toLocation || 'Đang tải...' }}
                     </td>
