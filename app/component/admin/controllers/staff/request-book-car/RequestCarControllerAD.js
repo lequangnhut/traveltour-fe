@@ -45,14 +45,9 @@ travel_app.controller('RequestCarControllerAD',
         $scope.filters = {
             fromLocation: null,
             toLocation: null,
-            dateOfDepartment: new Date(),
-            returnDay: (() => {
-                const tomorrow = new Date();
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                return tomorrow;
-            })(),
             mediaTypeList: [],
             listOfVehicleManufacturers: [],
+            seatTypeList: [],
         };
 
         $scope.validateDates = (day) => {
@@ -128,6 +123,15 @@ travel_app.controller('RequestCarControllerAD',
                 $scope.filters.listOfVehicleManufacturers.push(id);
             } else {
                 $scope.filters.listOfVehicleManufacturers.splice(index, 1);
+            }
+        };
+
+        $scope.chooseFromSeatingType = (id) => {
+            let index = $scope.filters.seatTypeList.indexOf(id);
+            if (index === -1) {
+                $scope.filters.seatTypeList.push(id);
+            } else {
+                $scope.filters.seatTypeList.splice(index, 1);
             }
         };
 
@@ -444,16 +448,17 @@ travel_app.controller('RequestCarControllerAD',
                 $location.path(`/admin/detail-tour-list/${tourDetailId}/service-list/transportation-information-list`);
                 $scope.setActiveNavItem('detail-tour-list');
             }
+        }
 
-            $scope.filterAllMedia = () => {
-                RequestCarServiceAD.findAllRequestCarFilters($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.filters)
-                    .then((response) => {
-                        $scope.requestCarList = response.data.data !== null ? response.data.data.content : [];
-                        $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
-                    }).finally(() => {
-                    $scope.isLoading = false;
-                });
-            }
+        //loc
+        $scope.filterAllMedia = () => {
+            RequestCarServiceAD.findAllRequestCarFilters($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.filters)
+                .then((response) => {
+                    $scope.requestCarList = response.data.data !== null ? response.data.data.content : [];
+                    $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
+                }).finally(() => {
+                $scope.isLoading = false;
+            });
         }
 
         /**

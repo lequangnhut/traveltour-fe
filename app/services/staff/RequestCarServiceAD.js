@@ -28,7 +28,8 @@ travel_app.service('RequestCarServiceAD', function ($http) {
                 dateOfDepartment: filters.dateOfDepartment || null,
                 returnDay: filters.returnDay || null,
                 mediaTypeList: filters.mediaTypeList === [] ? null : filters.mediaTypeList,
-                listOfVehicleManufacturers: filters.listOfVehicleManufacturers === [] ? null : filters.listOfVehicleManufacturers
+                listOfVehicleManufacturers: filters.listOfVehicleManufacturers === [] ? null : filters.listOfVehicleManufacturers,
+                seatTypeList: filters.seatTypeList === [] ? null : filters.seatTypeList
             }
         });
     };

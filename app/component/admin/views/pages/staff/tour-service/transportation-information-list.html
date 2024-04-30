@@ -133,6 +133,11 @@
                             <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
+                    <th class="cursor-pointer" ng-click="sortData('id')">
+                        <div class="icon-left">Tên hãng xe
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                        </div>
+                    </th>
                     <th class="cursor-pointer" ng-click="sortData('fromLocation')">
                         <div class="icon-left">Điểm đi
                             <span class="sorting-icon" ng-bind-html="getSortIcon('fromLocation  ')"></span>
@@ -165,11 +170,17 @@
                 <tr ng-repeat="btsl in bookingTourTransportationSchedulesList">
                     <td>{{ getDisplayIndex($index) }}</td>
                     <td>{{ btsl.id }}</td>
+                    <td class="cursor-default" style="max-width: 250px;">
+                        <span custom-tooltip="{{ btsl.transportationBrandsByTransportationBrandId.transportationBrandName }}">
+                            <span>{{ btsl.transportationBrandsByTransportationBrandId.transportationBrandName | limitTo: 15 }}</span>
+                            <span ng-show="btsl.transportationBrandsByTransportationBrandId.transportationBrandName.length > 15">...</span>
+                        </span>
+                    </td>
                     <td class=ext-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="{{ btsl.fromLocation }}">
                         {{ btsl.fromLocation }}
                     </td>
-                    <td class=ext-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
+                    <td class="ext-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="{{ btsl.toLocation }}">
                         {{ btsl.toLocation }}
                     </td>

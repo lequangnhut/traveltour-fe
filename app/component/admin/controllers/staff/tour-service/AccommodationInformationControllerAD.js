@@ -2,6 +2,7 @@ travel_app.controller('AccommodationInformationControllerAD',
     function ($scope, $sce, $location, $routeParams, $timeout, Base64ObjectService,
               AccommodationInformationServiceAD, TourDetailsServiceAD) {
         $scope.isLoading = true;
+        $scope.orderHotelStatus = null;
 
         let searchTimeout;
         $scope.tourDetailIdEncode = $routeParams.tourDetailId;

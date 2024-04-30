@@ -12,6 +12,36 @@
         </div>
     </div>
 
+    <div class="">
+        <div class="card card-customer">
+            <div class="row single-event-item d-flex align-items-end" style="margin: 20px 16px 20px 16px">
+
+                <div class="col-md-4 ">
+                    <label for="fromLocation" class="form-label">Điểm đi</label>
+                    <input id="fromLocation" ng-model="filters.fromLocation" type="text"
+                           ng-click="turnOnThePointList()"
+                           class="form-control datepicker" placeholder="Nhập điểm đi">
+                </div>
+
+                <div class="col-md-4 ">
+                    <label for="toLocation" class="form-label">Điểm đến</label>
+                    <input id="toLocation" ng-model="filters.toLocation" type="text"
+                           ng-click="enableIncomingList()" class="form-control" autocomplete="off"
+                           placeholder="Nhập điểm đến">
+                </div>
+
+                <div class="col-md-4 d-flex flex-row-reverse bd-highlight">
+                    <button type="button" class="btn btn-success bd-highlight ms-2" ng-click="filterAllMedia()"><i
+                            class="fa-solid fa-magnifying-glass"></i> Tìm tour
+                    </button>
+                    <a href="/admin/request-booking-car/create-request-booking" class="btn btn-primary mx-2"><i
+                            class="fa-solid fa-plus bd-highlight" style="margin-right: 10px"></i> Tạo yêu cầu tìm xe
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div ng-include="'app/component/utils/loading-component.html'"></div>
 
     <div class="mb-4" style="margin: 20px 0 20px 0" ng-if="!isLoading || requestCarList.length > 0">
@@ -178,16 +208,6 @@
                                  alt="Event Image">
                         </div>
                         <div class="form-customer px-3 pt-5">
-                            <div class="find-item mb-3">
-                                <p class="fw-medium mb-2 ms-2">Ngân sách của bạn</p>
-                                <div class="findHotelType">
-                                    <label for="rangePrice" class="form-label">Chọn ngân sách:</label>
-                                    <input type="range" class="form-range" id="rangePrice" ng-model="filters.price"
-                                           min="100000"
-                                           max="20000000" step="10000">
-                                    <p>{{ filters.price | number:'0' }} VND</p>
-                                </div>
-                            </div>
                             <div class="form-customer find-item mb-3">
                                 <p class="fw-medium mb-2 ms-2">Loại phương tiện</p>
                                 <div class="findHotelType"
@@ -204,7 +224,7 @@
                                     </div>
                                 </div>
                                 <button class="btn text-green"
-                                        ng-show="transportationBrandList.length > 5 && !showMoreTransportationType"
+                                        ng-show="transportationTypeList.length > 5 && !showMoreTransportationType"
                                         ng-click="showMoreItemsTransportationType()">Hiển thị thêm <i
                                         class="fa-solid fa-angle-down"></i></button>
                                 <button class="btn text-green" ng-show="showMoreTransportationType"
@@ -236,6 +256,33 @@
                                         class="fa-solid fa-angle-up"></i>
                                 </button>
                             </div>
+                            <div class="form-customer find-item mb-3">
+                                <p class="fw-medium mb-2 ms-2">Loại chỗ ngồi</p>
+                                <div class="findHotelType">
+                                    <div class="form-check ms-3">
+                                        <input class="form-check-input" type="checkbox"
+                                               value="true"
+                                               id="bed"
+                                               ng-model="bed"
+                                               ng-change="chooseFromSeatingType(true)">
+                                        <label class="form-check-label" for="bed">
+                                            Xe giường
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="findHotelType">
+                                    <div class="form-check ms-3">
+                                        <input class="form-check-input" type="checkbox"
+                                               value="false"
+                                               id="sit"
+                                               ng-model="sit"
+                                               ng-change="chooseFromSeatingType(false)">
+                                        <label class="form-check-label" for="sit">
+                                            Xe ngồi
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="find-item mb-3">
                                 <p class="fw-medium mb-2 ms-2">Xếp hạng xe</p>
                                 <div class="findHotelType">
@@ -249,8 +296,7 @@
                                 </div>
                             </div>
                             <div class="find-item mb-3 d-flex justify-content-center mt-3">
-                                <button type="button" class="btn btn-success" ng-click="filterAllMedia()">
-                                    Lọc yêu cầu
+                                <button type="button" class="btn btn-success" ng-click="filterAllMedia()">Lọc xe
                                 </button>
                             </div>
                         </div>
