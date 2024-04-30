@@ -114,6 +114,8 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
         $scope.fillerUpdate = JSON.parse(localStorage.getItem('filterHotels'));
         $scope.fillerUpdate.checkInDateFiller = $scope.filler.checkInDateFiller
         $scope.fillerUpdate.checkOutDateFiller = $scope.filler.checkOutDateFiller
+        $scope.fillerUpdate.capacityChildrenFilter = $scope.filler.capacityChildrenFilter
+        $scope.fillerUpdate.capacityAdultsFilter = $scope.filler.capacityAdultsFilter
 
         localStorage.setItem('filterHotels', JSON.stringify($scope.fillerUpdate));
     }
@@ -161,7 +163,10 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
         }
     }
 
-
+    /**
+     * Phương thức lấy tổng số tiền sau khi hủy phòng
+     * @param roomTypes
+     */
     $scope.totalPriceAfterCancellations = function (roomTypes) {
         roomTypes.forEach(function (roomType) {
             $scope.totalPrice += roomType.price * roomType.amountRoomSelected;
@@ -194,6 +199,9 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
 
     $scope.totalPriceAfterCancellations($scope.roomTypes)
 
+    /**
+     * Phương thức tìm kiếm tât cả phương thức thanh toán
+     */
     PaymentMethodServiceCT.findAllPaymentMethod().then(function (response) {
         if (response.status === 200) {
             $scope.paymentMethods = response.data.data;
@@ -203,6 +211,10 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
         }
     })
 
+    /**
+     * Phương thức lựa chọn phương thức thanh toán
+     * @param paymentMethod
+     */
     $scope.changePaymentMethod = function (paymentMethod) {
         $scope.paymentHotelCustomer.paymentMethod = paymentMethod;
         console.log($scope.paymentHotelCustomer.paymentMethod);
@@ -330,8 +342,17 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
             };
 
             if ($scope.visibilityOption === 'show') {
-                orderDetail.customerName = roomType.paymentHotelCustomer.customerName || "";
-                orderDetail.customerEmail = roomType.paymentHotelCustomer.customerEmail || "";
+                if (roomType.paymentHotelCustomer && roomType.paymentHotelCustomer.customerName != null) {
+                    orderDetail.customerName = roomType.paymentHotelCustomer.customerName;
+                } else {
+                    orderDetail.customerName = null;
+                }
+
+                if (roomType.paymentHotelCustomer && roomType.paymentHotelCustomer.customerEmail != null) {
+                    orderDetail.customerEmail = roomType.paymentHotelCustomer.customerEmail;
+                } else {
+                    orderDetail.customerEmail = null;
+                }
             }
 
             return orderDetail;

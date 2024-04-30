@@ -39,7 +39,7 @@
                             <span class="input-group-text" id="basic-addon1"><i
                                     class="fa-solid fa-magnifying-glass bg-light"></i></span>
                         <input type="text" class="form-control" placeholder="Tìm kiếm" ng-model="searchTerm"
-                               ng-change="getOrderHotelList()"
+                               ng-change="performOrderHotelList()"
                                aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                 </div>
@@ -47,19 +47,21 @@
                     Giờ nhận phòng
                     <select class="form-select" aria-label="Default select example"
                             ng-model="filter"
-                            ng-init="filter = '0'"
-                            ng-change="getOrderHotelList()">
+                            ng-change="findOrderByFilter(filter)">
                         <option value="0">Tất cả</option>
-                        <option value="1">12 giờ tới</option>
-                        <option value="2">24 giờ tới</option>
-                        <option value="3">36 giờ tới</option>
+                        <option value="1">Trong hôm nay</option>
+                        <option value="2">Ngày mai</option>
+                        <option value="3">Ngày mốt</option>
                     </select>
                 </div>
-                <div class="col-xl-3 mb-3">
+                <div class="col-xl-2 mb-3">
                     Trạng thái
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Tất cả</option>
-                        <option value="0">Chưa xác nhận</option>
+                    <select class="form-select"
+                            ng-model="orderStatus"
+                            ng-disabled="filter !== '0'"
+                            ng-change="findOrderByStatus(orderStatus)">
+                        <option value="">Tất cả</option>
+                        <option value="0">Chưa thanh toán</option>
                         <option value="1">Đã thanh toán</option>
                         <option value="2">Đã xác nhận</option>
                         <option value="3">Hoàn tất</option>
@@ -67,9 +69,9 @@
                         <option value="5">Đã hủy bởi tôi</option>
                     </select>
                 </div>
-                <div class="col-xl-2 d-flex align-items-center justify-content-end mb-3 h-100"
-                     style="margin: 16px 0 0 0">
-                    <button class="btn btn-primary">Tìm kiếm</button>
+                <div class="col-xl-3 d-flex align-items-center justify-content-end mb-3 h-100"
+                     style="margin: 20px 0 0 0">
+                    <a href="/business/hotel/booking-list/add-booking-hotel" class="btn btn-green" >Thêm booking</a>
                 </div>
             </div>
         </div>
@@ -82,7 +84,7 @@
                 <div class="row">
                     <div class="h4 col-lg-5 d-flex align-items-center h-100">
                         <div class="d-flex align-items-center">
-                            <span class="h4">Danh sách loại phòng</span>
+                            <span class="h4">Danh sách booking</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end align-items-baseline col-lg-2">

@@ -249,6 +249,11 @@
                             <div class="img-holder col-xl-3 col-lg-4 p-0">
                                 <img ng-src="{{roomType.roomTypeAvatar}}" style="height: 170px"
                                      onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
+                                <div class="text-center mt-3">
+                                    <a href="#" class="btn text-green text-center" style="font-size: 14px"
+                                       ng-click="showMapModalByIdHotel(roomType.id)">
+                                        Xem trên bản đồ</a>
+                                </div>
                             </div>
                             <div class=" col-xl-9 col-lg-8">
                                 <div class="meta row">
@@ -271,9 +276,6 @@
                                                         {{ roomType.hotelsByHotelId.district }}</p>
                                                     <p>{{ roomType.hotelsByHotelId.address }}</p>
                                                 </div>
-                                                <a href="#" class="btn text-green" style="font-size: 14px"
-                                                   ng-click="showMapModalByIdHotel(roomType.id)">
-                                                    Xem trên bản đồ</a>
                                             </div>
                                         </div>
                                         <div class="roomTypeByHotel mb-3"

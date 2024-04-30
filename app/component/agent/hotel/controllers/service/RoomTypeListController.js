@@ -321,6 +321,10 @@ travel_app.controller('RoomTypeListController', function ($scope, $timeout, $htt
         }
     };
 
+    /**
+     * Phương thức xóa những phòng đã chọn
+     * @returns {Promise<void>}
+     */
     $scope.deleteSelectedItems = async function () {
         var selectedIds = $scope.selectedItems.map(function (item) {
             return item.id;

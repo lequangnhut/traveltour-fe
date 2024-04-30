@@ -644,6 +644,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
                 }
             }
         })
+        .when('/business/hotel/booking-list/add-booking-hotel', {
+            templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-add.html',
+            controller: 'BookingAddControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    if (!AuthService.getToken()) {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
         .when('/business/hotel/order-visit-list/create', {
             templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-add.html',
             controller: 'HotelAmenitiesListControllerAG',
