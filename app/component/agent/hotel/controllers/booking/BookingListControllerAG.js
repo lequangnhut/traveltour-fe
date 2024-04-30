@@ -1,4 +1,4 @@
-travel_app.controller('BookingListController', function ($scope, $timeout, OrderHotelServiceAG, LocalStorageService) {
+travel_app.controller('BookingListController', function ($scope, $timeout, OrderHotelServiceAG, LocalStorageService, RoomTypeService) {
     var hotelId = LocalStorageService.get("brandId")
 
     function errorCallback(error) {
@@ -89,49 +89,83 @@ travel_app.controller('BookingListController', function ($scope, $timeout, Order
     };
     $scope.getPaginationRange()
 
-    $scope.filter = '0'
+    $scope.filter = '0';
+    $scope.orderStatus = '';
+
+    /**
+     * Phương thức tìm kiếm theo ngày khách hàng đến
+     * @param filter
+     */
+    $scope.findOrderByFilter = function(filter) {
+        $scope.filter = filter;
+        $scope.getOrderHotelList();
+    }
+
+    /**
+     * Phương thức tìm kiếm theo trạng thái
+     * @param status
+     */
+    $scope.findOrderByStatus = function(status) {
+        $scope.orderStatus = status;
+        $scope.getOrderHotelList();
+    }
+
+    /**
+     * Phương thức lấy danh sách các đơn hàng dựa vào bộ lọc
+     */
     $scope.getOrderHotelList = function () {
-        $scope.orderHotels = {}
-        if ($scope.currentFilter !== $scope.filter) {
-            $scope.currentFilter = $scope.filter;
-            console.log($scope.currentPage, $scope.size, $scope.sortField, $scope.sortDirection, '', hotelId, $scope.filter);
-            OrderHotelServiceAG.findAllOrderHotel($scope.currentPage, $scope.size, $scope.sortField, $scope.sortDirection, '', hotelId, $scope.filter)
+        $scope.orderHotels = {};
+        if($scope.filter !== '0'){
+            $scope.orderStatus = '2';
+        }
+
+        OrderHotelServiceAG.findAllOrderHotel($scope.currentPage, $scope.size, $scope.sortField, $scope.sortDirection, $scope.searchTerm, hotelId, $scope.filter, $scope.orderStatus)
+            .then(function (response) {
+                console.log(response.data);
+                $scope.isLoading = true;
+                if (response.data === null || response.data.content.length === 0) {
+                    if ($scope.currentPage > 0) {
+                        $scope.setPage($scope.currentPage - 1);
+                    }
+                    return;
+                }
+                $scope.orderHotels = response.data.content;
+                $scope.totalPages = Math.ceil(response.data.totalElements / $scope.size);
+                $scope.totalElements = response.data.totalElements;
+            }).catch(function () {
+            toastAlert('error', "Máy chủ không tồn tại !");
+        }).finally(function () {
+            $scope.isLoading = false;
+        });
+    };
+
+    /**
+     * Phương thức tìm kiếm đơn hàng dựa vào tìm kiếm
+     */
+    var performSearchPromise;
+    $scope.performOrderHotelList = function () {
+        if (performSearchPromise) {
+            clearTimeout(performSearchPromise);
+        }
+        performSearchPromise = setTimeout(function () {
+            OrderHotelServiceAG.findAllOrderHotel($scope.currentPage, $scope.size, $scope.sortField, $scope.sortDirection, $scope.searchTerm, hotelId, $scope.filter, $scope.orderStatus)
                 .then(function (response) {
                     console.log(response.data);
                     $scope.isLoading = true;
-                    if (response.data.data === null || response.data.data.content.length === 0) {
+                    if (response.data === null || response.data.content.length === 0) {
                         $scope.setPage(Math.max(0, $scope.currentPage - 1));
                         return;
                     }
-                    $scope.orderHotels = response.data.data.content;
-                    $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.size);
-                    $scope.totalElements = response.data.data.totalElements;
+                    $scope.orderHotels = response.data.content;
+                    $scope.totalPages = Math.ceil(response.data.totalElements / $scope.size);
+                    $scope.totalElements = response.data.totalElements;
                 }, errorCallback).finally(function () {
                 $scope.isLoading = false;
             });
-        }
-    };
+        }, 500)
+    }
 
     $scope.getOrderHotelList();
-
-    /**
-     * Phương thức tìm kiếm dữ liệu
-     */
-    // $scope.searchRoomTypeDetail = function () {
-    //     if (searchTimeout) $timeout.cancel(searchTimeout);
-    //
-    //     searchTimeout = $timeout(function () {
-    //         OrderHotelServiceAG.findAllOrderHotel($scope.currentPage, $scope.size, $scope.sortBy, $scope.sortDir, $scope.searchTerm, hotelId)
-    //             .then(function (response) {
-    //                 $scope.roomTypes = response.data.data.content;
-    //                 $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.size);
-    //                 $scope.totalElements = response.data.data.totalElements;
-    //             }, errorCallback);
-    //     }, 500); // 500ms debounce
-    // };
-    //
-    // $scope.searchRoomTypeDetail();
-
     /**
      * phương thức lấy số lượng dữ liệu trả về
      * @returns {number}
@@ -140,6 +174,11 @@ travel_app.controller('BookingListController', function ($scope, $timeout, Order
         return Math.min(($scope.currentPage + 1) * $scope.size, $scope.totalElements);
     };
 
+    /**
+     * Phương thúc mở modal chi tiết đặt phòng
+     * @param orderId mã hóa đơn khách sạn
+     * @returns {Promise<void>}
+     */
     $scope.openModalDetailsOrder = async function (orderId) {
         $('#detailsOrderHotelModal').modal("show")
 
@@ -148,6 +187,7 @@ travel_app.controller('BookingListController', function ($scope, $timeout, Order
             if (response.status === 200) {
                 $timeout(function () {
                     $scope.orderHotel = response.data
+                    $scope.daysBetween = Math.floor(($scope.orderHotel.checkOut - $scope.orderHotel.checkIn) / (1000 * 60 * 60 * 24));
                 }, 100)
 
             } else {
@@ -160,43 +200,34 @@ travel_app.controller('BookingListController', function ($scope, $timeout, Order
         }
 
     }
+
+    /**
+     * Phương thức đóng modal
+     */
     $scope.closeModalDetailsOrder = function () {
         $('#detailsOrderHotelModal').modal("hide")
     }
 
-    $scope.confirmInvoice = async function (orderId) {
+    /**
+     * Phương thức xác nhận đơn hàng từ phía khách sạn
+     * @param orderId mã hóa đơn
+     * @returns {Promise<void>}
+     */
+    $scope.paymentInvoice = async function (orderId) {
         try {
+            // Sử dụng SweetAlert2 để hiển thị cửa sổ xác nhận
+            const confirmed = await Swal.fire({
+                title: 'Xác nhận thanh toán',
+                text: 'Bạn có chắc muốn xác nhận thanh toán cho đơn đặt phòng này?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xác nhận',
+                cancelButtonText: 'Hủy bỏ'
+            });
 
-            var response = await OrderHotelServiceAG.confirmInvoiceByOrderId(orderId)
-            $scope.isLoading = true;
-            if (response.status === 200) {
-                toastAlert("success", response.data.message)
-                $scope.playSuccessSound();
-                $scope.getOrderHotelList()
-                $('#detailsOrderHotelModal').modal("hide")
-            } else {
-                toastAlert("error", "Lỗi không xác định")
-                $scope.playErrorSound();
-            }
-        } catch (error) {
-            toastAlert("error", error.message)
-            $scope.playErrorSound();
-        } finally {
-            $scope.isLoading = false;
-        }
-    }
-
-    $scope.cancelInvoice = async function (orderId) {
-        Swal.fire({
-            title: 'Bạn chắc chắn muốn hủy hóa đơn?',
-            text: "Bạn sẽ bị phạt rất nặng nếu tự ý hủy hoặc không xác nhận đơn của khách hàng, bạn chắc chứ!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Hủy hóa đơn',
-            cancelButtonText: 'Thôi không hủy nữa'
-        }).then(async (result) => {
-            try {
-                var response = await OrderHotelServiceAG.cancelInvoiceByOrderId(orderId)
+            // Nếu người dùng xác nhận
+            if (confirmed.isConfirmed) {
+                var response = await OrderHotelServiceAG.confirmInvoiceByOrderId(orderId)
                 $scope.isLoading = true;
                 if (response.status === 200) {
                     toastAlert("success", response.data.message)
@@ -207,17 +238,134 @@ travel_app.controller('BookingListController', function ($scope, $timeout, Order
                     toastAlert("error", "Lỗi không xác định")
                     $scope.playErrorSound();
                 }
-            } catch (error) {
-                toastAlert("error", error.message)
-                $scope.playErrorSound();
-            } finally {
-                $scope.isLoading = false;
+            } else {
+                // Người dùng hủy xác nhận
+                toastAlert("info", "Thanh toán đã bị hủy bỏ");
+            }
+        } catch (error) {
+            toastAlert("error", error.message)
+            $scope.playErrorSound();
+        } finally {
+            $scope.isLoading = false;
+        }
+    }
+
+    $scope.roomTypes = {}
+    RoomTypeService.findAllRoomTypeDetails($scope.currentPage, 30, $scope.sortBy, $scope.sortDir, "", hotelId, false)
+        .then(function (response) {
+            $scope.isLoading = true;
+            if (response.data.data === null || response.data.data.content.length === 0) {
+                $scope.setPage(Math.max(0, $scope.currentPage - 1));
+                return
+            }
+            $scope.roomTypes = response.data.data.content;
+            $scope.totalPages = Math.ceil(response.data.data.totalElements / $scope.pageSize);
+            $scope.totalElements = response.data.data.totalElements; // Tổng số phần tử
+            console.log("phòng:", $scope.roomTypes)
+        }, errorCallback).finally(function () {
+        $scope.isLoading = false;
+    });
+
+    $scope.getRoomTypeName = function (bedTypeId) {
+        var bedType = $scope.roomTypes.find(function (bedType) {
+            return bedType.id === bedTypeId;
+        });
+
+        return bedType ? bedType.roomTypeName : '';
+    }
+
+    /**
+     * Phương thức xác nhận đơn hàng từ phía khách sạn
+     * @param orderId mã hóa đơn
+     * @returns {Promise<void>}
+     */
+    $scope.confirmInvoice = async function (orderId) {
+        try {
+            // Sử dụng SweetAlert2 để hiển thị cửa sổ xác nhận
+            const confirmed = await Swal.fire({
+                title: 'Xác nhận duyệt đơn hàng',
+                text: 'Bạn có chắc muốn duyệt đơn đặt phòng này?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xác nhận',
+                cancelButtonText: 'Hủy bỏ'
+            });
+
+            // Nếu người dùng xác nhận
+            if (confirmed.isConfirmed) {
+                var response = await OrderHotelServiceAG.confirmInvoiceByOrderId(orderId)
+                $scope.isLoading = true;
+                if (response.status === 200) {
+                    toastAlert("success", response.data.message)
+                    $scope.playSuccessSound();
+                    $scope.getOrderHotelList()
+                    $('#detailsOrderHotelModal').modal("hide")
+                } else {
+                    toastAlert("error", "Lỗi không xác định")
+                    $scope.playErrorSound();
+                }
+            } else {
+                // Người dùng hủy xác nhận
+                toastAlert("info", "Duyệt đơn hàng đã bị hủy bỏ");
+            }
+        } catch (error) {
+            toastAlert("error", error.message)
+            $scope.playErrorSound();
+        } finally {
+            $scope.isLoading = false;
+        }
+    }
+
+
+    /**
+     * Phương thức hủy phòng khách sạn
+     * @param orderId  mã hóa đơn
+     * @returns {Promise<void>}
+     */
+    $scope.cancelInvoice = async function (orderId) {
+        Swal.fire({
+            title: 'Hủy hóa đơn',
+            text: 'Nếu cố ý hủy bạn sẽ phải chịu hình phạt',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Hủy hóa đơn',
+            cancelButtonText: 'Thôi không hủy nữa',
+            input: "text",
+            inputLabel: "Nhập lí do huỷ đơn",
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            preConfirm: async (cancelReason) => {
+                try {
+                    var response = await OrderHotelServiceAG.cancelInvoiceByOrderId(orderId, cancelReason)
+                    $scope.isLoading = true;
+                    if (response.status === 200) {
+                        toastAlert("success", response.data.message)
+                        $scope.playSuccessSound();
+                        $scope.getOrderHotelList()
+                        $('#detailsOrderHotelModal').modal("hide")
+                    } else {
+                        toastAlert("error", "Lỗi không xác định")
+                        $scope.playErrorSound();
+                    }
+                } catch (error) {
+                    toastAlert("error", error.message)
+                    $scope.playErrorSound();
+                } finally {
+                    $scope.isLoading = false;
+                }
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Thực hiện xác nhận hủy đơn dựa trên lý do được nhập
+                console.log("Lý do hủy đơn: " + result.value);
+            } else {
+                // Người dùng chọn không hủy đơn
+                console.log("Không hủy đơn");
             }
         });
     }
 
-    $scope.pageSizeChanged = function () {
-        $scope.currentPage = 0;
-        $scope.getOrderHotelList();
-    }
+
 })

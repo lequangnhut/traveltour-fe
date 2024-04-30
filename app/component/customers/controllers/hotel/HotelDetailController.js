@@ -92,6 +92,8 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll, 
         $scope.fillerUpdate = JSON.parse(localStorage.getItem('filterHotels'));
         $scope.fillerUpdate.checkInDateFiller = $scope.filler.checkInDateFiller
         $scope.fillerUpdate.checkOutDateFiller = $scope.filler.checkOutDateFiller
+        $scope.fillerUpdate.capacityChildrenFilter = $scope.filler.capacityChildrenFilter
+        $scope.fillerUpdate.capacityAdultsFilter = $scope.filler.capacityAdultsFilter
 
         localStorage.setItem('filterHotels', JSON.stringify($scope.fillerUpdate));
     }
@@ -306,7 +308,6 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll, 
                 $scope.roomTypeSelected[index].amountRoomSelected = selectedRoomType;
             }
         }
-        console.log($scope.roomTypeSelected)
     };
 
 

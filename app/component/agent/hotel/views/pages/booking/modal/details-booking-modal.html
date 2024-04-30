@@ -52,12 +52,12 @@
                         <hr>
                         <div class="d-flex justify-content-between">
                             <span class="fw-medium">Ngày nhận phòng: </span> <span
-                                ng-bind="orderHotel.checkIn | formatDate"></span>
+                                ng-bind="orderHotel.checkIn | formatHoursRight"></span>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between">
                             <span class="fw-medium">Ngày trả phòng: </span> <span
-                                ng-bind="orderHotel.checkOut  | formatDate"></span>
+                                ng-bind="orderHotel.checkOut  | formatHoursRight"></span>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between">
@@ -102,25 +102,22 @@
                                 <th class="fw-medium">#</th>
                                 <th class="fw-medium">Loại phòng</th>
                                 <th class="fw-medium">Tên khách</th>
-                                <th class="fw-medium">Email khách</th>
                                 <th class="fw-medium">Số lượng</th>
+                                <th class="fw-medium">Số đêm</th>
                                 <th class="fw-medium">Thành tiền</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-repeat="orderHotelDetails in orderHotel.orderHotelDetailsById">
                                 <th>{{ $index + 1 }}</th>
-                                <td ng-bind="orderHotelDetails.roomTypeId"></td>
+                                <td ng-bind="getRoomTypeName(orderHotelDetails.roomTypeId)"></td>
                                 <td ng-if="orderHotelDetails.customerName !== null"
                                     ng-bind="orderHotelDetails.customerName"></td>
                                 <td ng-if="orderHotelDetails.customerName === null"
                                     ng-bind="orderHotel.customerName"></td>
-                                <td ng-if="orderHotelDetails.customerEmail !== null"
-                                    ng-bind="orderHotelDetails.customerEmail"></td>
-                                <td ng-if="orderHotelDetails.customerEmail === null"
-                                    ng-bind="orderHotel.customerEmail"></td>
                                 <td ng-bind="orderHotelDetails.amount"></td>
-                                <td ng-bind="(orderHotelDetails.unitPrice | removeCurrencySymbol) + ' VND'"></td>
+                                <td ng-bind="daysBetween + ' đêm'"></td>
+                                <td ng-bind="(orderHotelDetails.unitPrice * daysBetween| removeCurrencySymbol) + ' VND'"></td>
 
                             </tr>
                             <tr>
@@ -141,10 +138,13 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button"  ng-if="order.orderStatus === 1" class="btn btn-green" data-dismiss="modal" ng-click="confirmInvoice(orderHotel.id)">
+                <button type="button"  ng-if="orderHotel.orderStatus === 0" class="btn btn-green" data-dismiss="modal" ng-click="paymentInvoice(orderHotel.id)">
                     Xác nhận đặt phòng
                 </button>
-                <button type="button"  ng-if="order.orderStatus === 1" class="btn btn-danger" data-dismiss="modal" ng-click="cancelInvoice(orderHotel.id)">
+                <button type="button"  ng-if="orderHotel.orderStatus === 1" class="btn btn-green" data-dismiss="modal" ng-click="confirmInvoice(orderHotel.id)">
+                    Xác nhận đặt phòng
+                </button>
+                <button type="button"  ng-if="orderHotel.orderStatus === 1" class="btn btn-danger" data-dismiss="modal" ng-click="cancelInvoice(orderHotel.id)">
                     Hủy phòng
                 </button>
                 <button type="button" class="btn btn-light" data-dismiss="modal" ng-click="closeModalDetailsOrder()">
