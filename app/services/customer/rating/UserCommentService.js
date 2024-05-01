@@ -46,4 +46,24 @@ travel_app.service('UserCommentsService', function ($http) {
             url: API_USER_COMMENTS + 'delete'
         })
     }
+
+    this.findScoreRatingByTourId = function (tourId) {
+        return $http({
+            method: 'GET',
+            url: API_USER_COMMENTS + 'findScoreRatingByTourId',
+            params: {
+                tourId: tourId
+            }
+        })
+    }
+
+    this.findScoreRatingByTourId = function (tourId) {
+        return $http({
+            method: 'GET',
+            url: API_USER_COMMENTS + 'findScoreRatingByTourId',
+            params: {
+                tourId: tourId
+            }
+        })
+    }
 })

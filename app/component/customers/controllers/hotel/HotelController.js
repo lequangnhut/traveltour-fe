@@ -1,4 +1,4 @@
-travel_app.controller('HotelCustomerController', function ($scope, $location, $window, HotelServiceCT, RoomTypeService) {
+travel_app.controller('HotelCustomerController', function ($scope, $location, $window,$timeout, HotelServiceCT, RoomTypeService) {
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
     $scope.showMoreHotelType = false;
@@ -904,7 +904,7 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
                                                     VND
                                                 </div>
                                                 <p class="fs-7 float-end"> ${$scope.daysBetween} Đêm </p>
-                                                <a href="#" id="closeModelMap" class="btn btn-green w-100 mt-3">
+                                                <a id="closeModelMap" data-room-type='${JSON.stringify(roomType)}' class="btn btn-green w-100 mt-3">
                                                     Xem chi tiết
                                                 </a>
                                             </div>
@@ -918,8 +918,15 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
     }
 
     $(document).on('click', '#closeModelMap', function () {
-        $('#mapModal').modal('hide');
+        var roomType = $(this).data('roomType');
+        console.log(roomType);
+        $scope.hotelDetailsById(roomType);
+        $timeout(function () {
+            $('#mapModal').modal('hide');
+            $('#mapBoxModelById').modal('hide');
+        },400)
     });
+
 
 
     /**

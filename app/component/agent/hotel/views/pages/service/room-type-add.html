@@ -192,7 +192,7 @@
                                name="roomTypeAvatar"
                                accept="image/*"
                                ng-model="roomTypes.roomTypeAvatar"
-                               ngf-select="validateRoomTypeAvatar()"
+                               ngf-select="validateRoomTypeAvatar($file)"
                                multiple
                                required
                         >
@@ -203,6 +203,9 @@
                         <small class="text-danger"
                                ng-show="addRoomTypeName.roomTypeAvatar.$error.maxImages">
                             Số lượng ảnh tối đa là 1!
+                        </small>
+                        <small class="text-danger">
+                            {{errorMessageImage}}
                         </small>
                     </div>
 

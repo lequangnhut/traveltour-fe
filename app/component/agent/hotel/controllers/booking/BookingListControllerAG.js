@@ -317,55 +317,50 @@ travel_app.controller('BookingListController', function ($scope, $timeout, Order
     }
 
 
-    /**
-     * Phương thức hủy phòng khách sạn
-     * @param orderId  mã hóa đơn
-     * @returns {Promise<void>}
-     */
     $scope.cancelInvoice = async function (orderId) {
-        Swal.fire({
+        const result = await Swal.fire({
             title: 'Hủy hóa đơn',
-            text: 'Nếu cố ý hủy bạn sẽ phải chịu hình phạt',
+            text: 'Nếu cố ý hủy bạn sẽ phải chịu hình phạt rất nặng bạn có chắc chứ?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Hủy hóa đơn',
-            cancelButtonText: 'Thôi không hủy nữa',
-            input: "text",
-            inputLabel: "Nhập lí do huỷ đơn",
-            inputAttributes: {
-                autocapitalize: 'off'
-            },
-            preConfirm: async (cancelReason) => {
-                try {
-                    var response = await OrderHotelServiceAG.cancelInvoiceByOrderId(orderId, cancelReason)
-                    $scope.isLoading = true;
-                    if (response.status === 200) {
-                        toastAlert("success", response.data.message)
-                        $scope.playSuccessSound();
-                        $scope.getOrderHotelList()
-                        $('#detailsOrderHotelModal').modal("hide")
-                    } else {
-                        toastAlert("error", "Lỗi không xác định")
-                        $scope.playErrorSound();
-                    }
-                } catch (error) {
-                    toastAlert("error", error.message)
-                    $scope.playErrorSound();
-                } finally {
-                    $scope.isLoading = false;
-                }
-            },
-            allowOutsideClick: () => !Swal.isLoading()
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Thực hiện xác nhận hủy đơn dựa trên lý do được nhập
-                console.log("Lý do hủy đơn: " + result.value);
-            } else {
-                // Người dùng chọn không hủy đơn
-                console.log("Không hủy đơn");
-            }
+            cancelButtonText: 'Thôi không hủy nữa'
         });
+
+        if (result.isConfirmed) {
+            // Hiển thị modal Bootstrap khi người dùng nhấn "Hủy hóa đơn"
+            $('#cancelOrderModal').modal('show');
+            $('#detailsOrderHotelModal').modal("hide")
+            // Gán orderId vào biến orderIdCancel để sử dụng trong modal Bootstrap
+            $timeout(function() {
+                $scope.orderIdCancel = orderId;
+            },100)
+        }
+    };
+
+
+    $scope.cancelInvoiceModal = async function(orderId, cancelReason) {
+        try {
+            var response = await OrderHotelServiceAG.cancelInvoiceByOrderId(orderId, cancelReason);
+            $scope.isLoading = true;
+            if (response.status === 200) {
+                toastAlert("success", response.data.message);
+                $scope.playSuccessSound();
+                $scope.getOrderHotelList();
+                $('#cancelOrderModal').modal('hide');
+                $('#detailsOrderHotelModal').modal("hide")
+            } else {
+                toastAlert("error", "Lỗi không xác định");
+                $scope.playErrorSound();
+            }
+        } catch (error) {
+            toastAlert("error", error.message);
+            $scope.playErrorSound();
+        } finally {
+            $scope.isLoading = false;
+        }
     }
+
 
 
 })

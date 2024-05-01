@@ -1,4 +1,4 @@
-travel_app.controller('RoomTypeAddController', function ($scope, $location, FormatDateService, RoomUtilitiesService, RoomTypeService, BedTypeService, HotelServiceAG, LocalStorageService) {
+travel_app.controller('RoomTypeAddController', function ($scope, $location, FormatDateService, RoomUtilitiesService, RoomTypeService, ValidationImagesService, BedTypeService, HotelServiceAG, LocalStorageService) {
     var hotelId = LocalStorageService.get("brandId")
 
     $scope.roomTypes = {
@@ -35,7 +35,7 @@ travel_app.controller('RoomTypeAddController', function ($scope, $location, Form
     /**
      * Phương thức bắt lỗi ảnh đại diện khách sạn
      */
-    $scope.validateRoomTypeAvatar = function () {
+    $scope.validateRoomTypeAvatar = function (file) {
         var maxImages = 1;
 
         if ($scope.roomTypes.roomTypeAvatar && $scope.roomTypes.roomTypeAvatar.length > maxImages) {
@@ -43,6 +43,45 @@ travel_app.controller('RoomTypeAddController', function ($scope, $location, Form
         } else {
             $scope.addRoomTypeName.roomTypeAvatar.$setValidity('maxImages', true);
         }
+
+        if (file && !file.$error) {
+            $scope.isLoading = true;
+            let reader = new FileReader();
+
+            ValidationImagesService.validationImage(file).then(function (response) {
+
+                var validationImage = response.data
+
+                if (0.9 > validationImage.nudity.none) {
+                    $scope.hasImage = true;
+                    $scope.errorMessageImage = "Phát hiện hình ảnh nhạy cảm, bạn sẽ bị khóa tài khoản nếu cố ý đăng tải"
+                } else if (0.1 < validationImage.gore.prob) {
+                    $scope.hasImage = true;
+                    $scope.errorMessageImage = "Phát hiện hình ảnh bạo lực máu me, bạn sẽ bị khóa tài khoản nếu cố ý đăng tải"
+                } else if (0.1 < validationImage.skull.prob) {
+                    $scope.hasImage = true;
+                    $scope.errorMessageImage = "Phát hiện hình ảnh phản cảm, bạn sẽ bị khóa tài khoản nếu cố ý đăng tải"
+                } else {
+                    $scope.hasImage = false;
+                    $scope.errorMessageImage = ""
+
+                    reader.onload = (e) => {
+                        $scope.customer.avatar = e.target.result;
+                        $scope.customerAvatarNoCloud = file;
+                        $scope.hasImage = true; // Đánh dấu là đã có ảnh
+                        $scope.$apply();
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+
+            }).catch(function (error) {
+                toastAlert("error", "Lỗi vui lòng thử lại sau");
+            }).finally(function () {
+                $scope.isLoading = false;
+            })
+        }
+
         $scope.isImageSelected = !!$scope.roomTypes.roomTypeAvatar;
     };
 
@@ -174,13 +213,12 @@ travel_app.controller('RoomTypeAddController', function ($scope, $location, Form
             $scope.roomTypes.listRoomTypeImg,
             selectedCheckboxValues,
             FormatDateService.formatDate($scope.roomTypes.checkinTime),
-            FormatDateService.formatDate($scope.roomTypes.checkoutTime)).then(function (response)
-        {
-            if(response.data.status === "200"){
+            FormatDateService.formatDate($scope.roomTypes.checkoutTime)).then(function (response) {
+            if (response.data.status === "200") {
                 $location.path('/business/hotel/room-type-list');
                 successSound.play();
                 toastAlert('success', response.data.message)
-            }else if(response.data.status === "500") {
+            } else if (response.data.status === "500") {
                 errorSound.play();
                 toastAlert('error', response.data.message)
             }
