@@ -21,29 +21,38 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
     $scope.markersById = [];
 
     if (!localStorage.getItem('filterHotels')) {
-        // Nếu không có dữ liệu filterHotels trong localStorage, hoặc nếu filterHotelsDate không tồn tại
         initializeDefaultValues();
     } else {
-        var storedDate = localStorage.getItem('filterHotelsDate');
-        var storedDateObj = new Date(storedDate);
+        var storedFilterHotels = JSON.parse(localStorage.getItem('filterHotels'));
+        var storedDate = new Date(localStorage.getItem('filterHotelsDate')); // Chuyển đổi chuỗi thành đối tượng Date
         var currentDate = new Date();
 
-        // So sánh ngày, tháng và năm của currentDate và storedDateObj
-        if (currentDate.getFullYear() === storedDateObj.getFullYear() &&
-            currentDate.getMonth() === storedDateObj.getMonth() &&
-            currentDate.getDate() === storedDateObj.getDate()) {
-            // Nếu currentDate trùng với storedDateObj, lấy dữ liệu từ localStorage
-            $scope.filler = JSON.parse(localStorage.getItem('filterHotels'));
+        // So sánh ngày, tháng và năm của currentDate và storedDate
+        if (currentDate.getFullYear() === storedDate.getFullYear() &&
+            currentDate.getMonth() === storedDate.getMonth() &&
+            currentDate.getDate() === storedDate.getDate()) {
+            $scope.filler = storedFilterHotels;
         } else {
-            // Nếu currentDate khác storedDateObj hoặc không tồn tại, khởi tạo giá trị mặc định mới
             initializeDefaultValues();
         }
     }
 
     function initializeDefaultValues() {
-        var today = new Date();
-        var tomorrow = new Date(today);
-        tomorrow.setDate(today.getDate() + 1);
+        $scope.today = new Date();
+        $scope.tomorrow = new Date();
+
+        // Lấy các thành phần ngày, tháng và năm của ngày hiện tại và ngày mai
+        var todayYear = $scope.today.getFullYear();
+        var todayMonth = $scope.today.getMonth() + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
+        var todayDate = $scope.today.getDate();
+
+        var tomorrowYear = $scope.tomorrow.getFullYear();
+        var tomorrowMonth = $scope.tomorrow.getMonth() + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
+        var tomorrowDate = $scope.tomorrow.getDate() + 1; // Bạn muốn ngày tiếp theo nên cộng 1
+
+        // Định dạng ngày tháng năm phù hợp
+        var todayFormatted = todayYear + '-' + todayMonth.toString().padStart(2, '0') + '-' + todayDate.toString().padStart(2, '0');
+        var tomorrowFormatted = tomorrowYear + '-' + tomorrowMonth.toString().padStart(2, '0') + '-' + tomorrowDate.toString().padStart(2, '0');
 
         $scope.filler = {
             priceFilter: 30000000,
@@ -57,22 +66,20 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
             locationFilter: null,
             capacityAdultsFilter: 2,
             capacityChildrenFilter: 0,
-            checkInDateFiller: today,
-            checkOutDateFiller: tomorrow,
+            checkInDateFiller: todayFormatted,
+            checkOutDateFiller: tomorrowFormatted,
             hotelIdFilter: null,
             page: 0,
             size: 10,
             sort: null
         };
 
-        $scope.filler.checkOutDateFiller.setDate($scope.filler.checkOutDateFiller.getDate() + 1);
+        console.log($scope.filler);
 
-        // Lưu giá trị mới vào localStorage và cập nhật filterHotelsDate
+        // Lưu dữ liệu vào localStorage
         localStorage.setItem('filterHotels', JSON.stringify($scope.filler));
-        localStorage.setItem('filterHotelsDate', today.toISOString());
+        localStorage.setItem('filterHotelsDate', todayFormatted);
     }
-
-
 
     $scope.filler = JSON.parse(localStorage.getItem('filterHotels'));
     $scope.filler.checkInDateFiller = new Date($scope.filler.checkInDateFiller);
@@ -573,6 +580,7 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
         } else {
             $scope.errorCheckOutDateFiller = "";
         }
+        $scope.updateFilter()
     };
 
     /**
@@ -637,7 +645,6 @@ travel_app.controller('HotelCustomerController', function ($scope, $location, $w
                     $scope.countSize = response.data.totalPages;
                     $scope.daysBetween = Math.floor(($scope.filler.checkOutDateFiller - $scope.filler.checkInDateFiller) / (1000 * 60 * 60 * 24));
                     $scope.addMarkers($scope.roomTypes);
-                    $scope.updateFilter()
                 } else {
                     $location.path('/admin/internal-server-error');
                 }

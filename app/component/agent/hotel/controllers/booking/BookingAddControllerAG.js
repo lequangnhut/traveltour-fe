@@ -96,9 +96,21 @@ travel_app.controller('BookingAddControllerAG', function($scope, $location ,Hote
     }
 
     function initializeDefaultValues() {
-        var today = new Date();
-        var tomorrow = new Date(today);
-        tomorrow.setDate(today.getDate() + 1);
+        $scope.today = new Date();
+        $scope.tomorrow = new Date();
+
+        // Lấy các thành phần ngày, tháng và năm của ngày hiện tại và ngày mai
+        var todayYear = $scope.today.getFullYear();
+        var todayMonth = $scope.today.getMonth() + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
+        var todayDate = $scope.today.getDate();
+
+        var tomorrowYear = $scope.tomorrow.getFullYear();
+        var tomorrowMonth = $scope.tomorrow.getMonth() + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
+        var tomorrowDate = $scope.tomorrow.getDate() + 1; // Bạn muốn ngày tiếp theo nên cộng 1
+
+        // Định dạng ngày tháng năm phù hợp
+        var todayFormatted = todayYear + '-' + todayMonth.toString().padStart(2, '0') + '-' + todayDate.toString().padStart(2, '0');
+        var tomorrowFormatted = tomorrowYear + '-' + tomorrowMonth.toString().padStart(2, '0') + '-' + tomorrowDate.toString().padStart(2, '0');
 
         $scope.filler = {
             priceFilter: 30000000,
@@ -112,19 +124,19 @@ travel_app.controller('BookingAddControllerAG', function($scope, $location ,Hote
             locationFilter: null,
             capacityAdultsFilter: 2,
             capacityChildrenFilter: 0,
-            checkInDateFiller: today,
-            checkOutDateFiller: tomorrow,
-            hotelIdFilter: hotelId,
+            checkInDateFiller: todayFormatted,
+            checkOutDateFiller: tomorrowFormatted,
+            hotelIdFilter: null,
             page: 0,
             size: 10,
             sort: null
         };
 
-        $scope.filler.checkOutDateFiller.setDate($scope.filler.checkOutDateFiller.getDate() + 1);
+        console.log($scope.filler);
 
-        // Lưu giá trị mới vào localStorage và cập nhật filterHotelsDate
+        // Lưu dữ liệu vào localStorage
         localStorage.setItem('filterHotelsAG', JSON.stringify($scope.filler));
-        localStorage.setItem('filterHotelsDateAG', today.toISOString());
+        localStorage.setItem('filterHotelsDateAG', todayFormatted);
     }
 
 
