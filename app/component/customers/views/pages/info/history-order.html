@@ -200,8 +200,7 @@
                                             <option value="15">15</option>
                                         </select>
                                     </div>
-
-                                    <ul class="pagination justify-content-center align-items-center">
+                                    <ul  ng-if="bookingTourList.length > 0" class="pagination justify-content-center align-items-center">
                                         <!-- Previous Page -->
                                         <li class="page-item" ng-class="{disabled: currentPage === 0}" style="border: none">
                                             <a class="page-link me-2 fw-bold" ng-click="setPage(0)" style="width: 45px; border-radius: 50%; text-align:center">
@@ -669,7 +668,7 @@
                                             <option value="15">15</option>
                                         </select>
                                     </div>
-                                    <ul class="pagination justify-content-center align-items-center">
+                                    <ul  ng-if="bookingTourHotelList.length > 0" class="pagination justify-content-center align-items-center">
                                         <!-- Previous Page -->
                                         <li class="page-item" ng-class="{disabled: currentPage === 0}" style="border: none">
                                             <a class="page-link me-2 fw-bold" ng-click="setPage(0)" style="width: 45px; border-radius: 50%; text-align:center">
@@ -1158,7 +1157,7 @@
                                             <option value="15">15</option>
                                         </select>
                                     </div>
-                                    <ul class="pagination justify-content-center align-items-center">
+                                    <ul ng-if="bookingTourTransList.length > 0" class="pagination justify-content-center align-items-center">
                                         <!-- Previous Page -->
                                         <li class="page-item" ng-class="{disabled: currentPage === 0}" style="border: none">
                                             <a class="page-link me-2 fw-bold" ng-click="setPage(0)" style="width: 45px; border-radius: 50%; text-align:center">
@@ -1593,7 +1592,7 @@
                                             <option value="15">15</option>
                                         </select>
                                     </div>
-                                    <ul class="pagination justify-content-center align-items-center">
+                                    <ul ng-if="bookingTourVisitList.length > 0" class="pagination justify-content-center align-items-center">
                                         <!-- Previous Page -->
                                         <li class="page-item" ng-class="{disabled: currentPage === 0}" style="border: none">
                                             <a class="page-link me-2 fw-bold" ng-click="setPage(0)" style="width: 45px; border-radius: 50%; text-align:center">
