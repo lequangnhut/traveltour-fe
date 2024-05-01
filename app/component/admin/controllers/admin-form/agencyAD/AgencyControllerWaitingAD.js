@@ -52,7 +52,7 @@ travel_app.controller('AgencyControllerWaitingAD',
             $scope.currentTab = tab;
             $scope.isAccepted = isAccepted;
             $scope.currentPage = 0;
-            $scope.pageSize = 5;
+            $scope.pageSize = '5';
             $scope.init();
         };
 

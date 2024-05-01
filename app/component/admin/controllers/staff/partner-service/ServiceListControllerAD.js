@@ -1,6 +1,6 @@
 travel_app.controller('ServiceListControllerAD',
     function ($scope, $routeParams, $location, $timeout, $rootScope,
-              TourDetailsServiceAD, Base64ObjectService) {
+              TourDetailsServiceAD, Base64ObjectService, LocalStorageService) {
         $scope.tourDetailIdEncode = $routeParams.tourDetailId;
         let tourDetail = Base64ObjectService.decodeObject($scope.tourDetailIdEncode);
 
@@ -69,6 +69,7 @@ travel_app.controller('ServiceListControllerAD',
                 if (result.isConfirmed) {
                     $timeout(function () {
                         $location.path('/admin/request-booking-car/create-request-booking');
+                        LocalStorageService.encryptLocalData($scope.tourDetailIdEncode, 'tourDetailIdRequestCar', 'tourDetailEncode');
                         $scope.setActiveNavItem('request-car');
                     }, 50)
                 } else if (result.isDenied) {

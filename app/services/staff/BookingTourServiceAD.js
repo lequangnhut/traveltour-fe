@@ -32,14 +32,15 @@ travel_app.service('BookingTourServiceAD', function ($http, $q) {
         return deferred.promise;
     };
 
-    this.deactivate = function (bookingTourId, orderNoted) {
+    this.deactivate = function (bookingTourId, orderNoted, whoCancelled) {
         const deferred = $q.defer();
         $http({
             method: 'DELETE',
             url: API + 'delete-booking-tour',
             params: {
                 bookingTourId: bookingTourId,
-                orderNoted: orderNoted
+                orderNoted: orderNoted,
+                whoCancelled: whoCancelled
             }
         }).then(function (response) {
             deferred.resolve(response);

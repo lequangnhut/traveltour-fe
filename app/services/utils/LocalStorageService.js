@@ -75,5 +75,4 @@ travel_app.service('LocalStorageService', function () {
             return null;
         }
     };
-
 });

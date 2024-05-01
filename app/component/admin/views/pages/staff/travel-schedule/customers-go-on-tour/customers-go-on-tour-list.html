@@ -127,12 +127,11 @@
                 <tbody>
                 <tr ng-repeat="btc in bookingTourCustomerList">
                     <td>{{ getDisplayIndex($index) }}</td>
-                    <td class=ext-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="{{ btc.customerName }}">
+                    <td style="max-width: 150px;">
                         {{ btc.customerName }}
                     </td>
                     <td>{{ btc.customerBirth | date: 'dd/MM/yyyy' }}</td>
-                    <td>{{ btc.customerPhone }}</td>
+                    <td>{{ btc.customerPhone | phoneNumber }}</td>
                     <td class="d-flex align-items-center justify-content-center">
                         <a ng-click="clickUpdate(btc.id, btc.customerPhone)" role="button"
                            class="fs-1 btn text-warning px-2">

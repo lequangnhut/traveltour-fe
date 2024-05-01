@@ -37,8 +37,7 @@
 
     <div ng-include="'app/component/utils/loading-component.html'"></div>
 
-    <div class="mb-4" style="margin: 20px 0 20px 0" ng-show="currentTab === 'submitted'"
-         ng-if="!isLoading || historyRequestCarList.length > 0">
+    <div class="mb-4" style="margin: 20px 0 20px 0" ng-show="currentTab === 'submitted'" ng-if="!isLoading">
         <div class="row">
             <div class="col-xl-12">
                 <div class="card card-customer mb-3" ng-repeat="history in historyRequestCarList">
@@ -251,8 +250,7 @@
         </div>
     </div>
 
-    <div class="mb-4" style="margin: 20px 0 20px 0" ng-show="currentTab === 'approve'"
-         ng-if="!isLoading || historyRequestCarList.length > 0">
+    <div class="mb-4" style="margin: 20px 0 20px 0" ng-show="currentTab === 'approve'" ng-if="!isLoading">
         <div class="row">
             <div class="col-xl-12">
                 <div class="card card-customer mb-3" ng-repeat="history in historyRequestCarList">
@@ -453,8 +451,7 @@
         </div>
     </div>
 
-    <div class="mb-4" style="margin: 20px 0 20px 0" ng-show="currentTab === 'cancel'"
-         ng-if="!isLoading || historyRequestCarList.length > 0">
+    <div class="mb-4" style="margin: 20px 0 20px 0" ng-show="currentTab === 'cancel'" ng-if="!isLoading">
         <div class="row">
             <div class="col-xl-12">
                 <div class="card card-customer mb-3" ng-repeat="history in historyRequestCarList">
@@ -660,8 +657,7 @@
         </div>
     </div>
 
-    <div class="mb-4" style="margin: 20px 0 20px 0" ng-show="currentTab === 'reject'"
-         ng-if="!isLoading || historyRequestCarList.length > 0">
+    <div class="mb-4" style="margin: 20px 0 20px 0" ng-show="currentTab === 'reject'" ng-if="!isLoading">
         <div class="row">
             <div class="col-xl-12">
                 <div class="card card-customer mb-3" ng-repeat="history in historyRequestCarList">

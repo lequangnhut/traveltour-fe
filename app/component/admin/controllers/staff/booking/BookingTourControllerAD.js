@@ -10,7 +10,8 @@ travel_app.controller('BookingControllerAD',
         $scope.orderStatus = 0;
 
         $scope.bookingTourDto = {
-            orderNoted: null
+            orderNoted: null,
+            whoCancelled: true,
         }
 
         function errorCallback() {
@@ -27,7 +28,7 @@ travel_app.controller('BookingControllerAD',
             $scope.currentTab = tab;
             $scope.orderStatus = status;
             $scope.currentPage = 0;
-            $scope.pageSize = 5;
+            $scope.pageSize = '5';
             $scope.dateSort = dateSort;
             $scope.init();
             LocalStorageService.set('currentTabBookingList', tab);
@@ -181,9 +182,10 @@ travel_app.controller('BookingControllerAD',
          */
         $scope.deleteBookingTour = (bookingTour) => {
             let orderNoted = $scope.bookingTourDto.orderNoted;
+            let whoCancelled = $scope.bookingTourDto.whoCancelled;
 
             const confirm = () => {
-                BookingTourServiceAD.deactivate(bookingTour.id, orderNoted).then(() => {
+                BookingTourServiceAD.deactivate(bookingTour.id, orderNoted, whoCancelled).then(() => {
                     toastAlert('success', 'Hủy thanh toán thành công !');
                     $('#modal-tour-detail').modal('hide');
                     $('#cancelled_noted').modal('hide');

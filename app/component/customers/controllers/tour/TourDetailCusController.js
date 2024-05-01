@@ -22,6 +22,7 @@ travel_app.controller('TourDetailCusController',
         $scope.ticket = {
             adults: 1,
             children: 0,
+            baby: 0
         }
 
         $scope.isIntegerCheck = true;
@@ -648,7 +649,7 @@ travel_app.controller('TourDetailCusController',
                                                 <div class="fw-bold text-end" style="font-size: 20px">
                                                     ${$scope.formatPrice(tourDetail.unitPrice)} ₫
                                                 </div>
-                                                <a href="#" id="redirectTourDetail" class="btn btn-green w-100 mt-3">Đặt tour ngay</a>
+                                                <a href="#" id="redirectTourDetail" class="btn btn-green w-100 mt-3">Điểm đến</a>
                                             </div>
                                         </div>
                                     </div>

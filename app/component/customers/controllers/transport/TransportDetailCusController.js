@@ -1,5 +1,7 @@
 travel_app.controller('TransportDetailCusController',
-    function ($scope, $location, $sce, $routeParams, $timeout, UserLikeService, AuthService, TransportCusService, TransportServiceAG, UserCommentsService, TransportBrandServiceAG, LocalStorageService, Base64ObjectService) {
+    function ($scope, $location, $sce, $filter, $routeParams, $timeout, UserLikeService,
+              AuthService, TransportCusService, TransportServiceAG, UserCommentsService,
+              TransportBrandServiceAG, LocalStorageService, Base64ObjectService) {
         let brandId = Base64ObjectService.decodeObject($routeParams.brandId);
         let user = null
         user = AuthService.getUser();

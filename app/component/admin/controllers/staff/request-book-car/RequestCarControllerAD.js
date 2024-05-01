@@ -1,7 +1,7 @@
 travel_app.controller('RequestCarControllerAD',
-    function ($scope, $location, $routeParams, $sce, $timeout,
-              TransportationBrandServiceAD, TransportationTypeServiceAD, TransportServiceAG, GenerateCodePayService, Base64ObjectService,
-              AgencyServiceAD, AuthService, RequestCarServiceAD) {
+    function ($scope, $location, $routeParams, $sce, $timeout, TransportationBrandServiceAD, TransportationTypeServiceAD,
+              TransportServiceAG, GenerateCodePayService, Base64ObjectService, AgencyServiceAD, AuthService,
+              RequestCarServiceAD, TourDetailsServiceAD, LocalStorageService) {
         const user = AuthService.getUser();
 
         $scope.currentPage = 0; // Trang hiện tại
@@ -19,6 +19,7 @@ travel_app.controller('RequestCarControllerAD',
         $scope.showMoreTransportationType = false;
         $scope.limitTransportationType = 5;
 
+        $scope.tourDetailIdDecrypt = Base64ObjectService.decodeObject(LocalStorageService.decryptLocalData('tourDetailIdRequestCar', 'tourDetailEncode'));
         $scope.requestCarId = Base64ObjectService.decodeObject($routeParams.requestCarId);
 
         $scope.requestCar = {
@@ -161,6 +162,22 @@ travel_app.controller('RequestCarControllerAD',
             RequestCarServiceAD.findAllTourDetailUseRequestCarService().then(function (response) {
                 if (response.status === 200) {
                     $scope.tourDetailSelect = response.data.data;
+
+                    if ($scope.tourDetailIdDecrypt) {
+                        $scope.requestCar.tourDetailId = $scope.tourDetailIdDecrypt;
+
+                        $scope.tourDetailSelect.forEach(function (tourDetail) {
+                            if (tourDetail.id === $scope.tourDetailIdDecrypt) {
+                                $scope.requestCar.amountCustomer = tourDetail.numberOfGuests;
+                                $scope.requestCar.toLocation = tourDetail.toLocation;
+                                $scope.requestCar.fromLocation = tourDetail.fromLocation;
+                                $scope.requestCar.departureDate = new Date(tourDetail.departureDate);
+                                $scope.requestCar.arrivalDate = new Date(tourDetail.arrivalDate);
+
+                                $scope.requestCar.requestCarNoted = "Chúng tôi đang cần một đối tác cung cấp dịch vụ vận chuyển chất lượng cao, bao gồm xe limousine và hỗ trợ nước, để đáp ứng nhu cầu di chuyển của doanh nghiệp và khách hàng của chúng tôi.";
+                            }
+                        });
+                    }
                 } else {
                     $location.path('/admin/page-not-found');
                 }
@@ -539,4 +556,10 @@ travel_app.controller('RequestCarControllerAD',
         }
 
         $scope.init();
+
+        $scope.$on('$routeChangeStart', function (event, next, current) {
+            if (next.controller !== 'BookingTourSuccessCusController') {
+                LocalStorageService.remove('tourDetailIdRequestCar');
+            }
+        });
     })

@@ -1,5 +1,6 @@
 travel_app.controller('TransportCusController',
-    function ($scope, $filter, $location, MapBoxService, TransportCusService, LocalStorageService, TransportationBrandServiceAD, TransportationTypeServiceAD) {
+    function ($scope, $filter, $location, MapBoxService, TransportCusService, LocalStorageService,
+              TransportationBrandServiceAD, TransportationTypeServiceAD, Base64ObjectService) {
         mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
 
         $scope.currentPage = 0;
@@ -363,6 +364,7 @@ travel_app.controller('TransportCusController',
         $scope.init();
 
         function createPopupContent(brand) {
+            let transportBrandId = Base64ObjectService.encodeObject(brand.id);
             return `
                         <div class="m-1 row">
                             <div class="img-holder col-xl-3 col-lg-4 p-0">
@@ -433,9 +435,10 @@ travel_app.controller('TransportCusController',
                                             </div>
                                             <div class="price position-absolute bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
                                                 <div class="box">
-                                                    <a href="#"
-                                                       class="btn btn-green w-100 mt-3 redirectTransportDetail">
-                                                        Xem chi tiết
+                                                    <a href="/drive-move/drive-transport-detail/${transportBrandId}" class="mt-3">
+                                                        <button class="btn btn-green w-100" data-bs-dismiss="modal">
+                                                            Xem chi tiết
+                                                        </button>
                                                     </a>
                                                 </div>
                                             </div>

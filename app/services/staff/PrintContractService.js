@@ -27,7 +27,7 @@ travel_app.service('PrintContractService', ['$window', '$filter', function ($win
 
         const tableRows = [];
 
-        for (let i = 0; i < tourDetail.numberOfGuests; i++) {
+        for (let i = 0; i < customerQuantityTotal; i++) {
             tableRows.push(`
                 <tr>
                     <td class="px-4 py-2 border border-gray-300">${bookingTourCustomer.length + i + 1}</td>

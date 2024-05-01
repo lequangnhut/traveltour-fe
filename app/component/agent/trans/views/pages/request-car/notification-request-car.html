@@ -31,12 +31,12 @@
                 </div>
 
                 <div class="col-md-4 d-flex flex-row-reverse bd-highlight">
-                    <button type="button" class="btn btn-success bd-highlight ms-2" ng-click="filterAllMedia()"><i
-                            class="fa-solid fa-magnifying-glass"></i> Tìm tour
-                    </button>
                     <a href="/admin/request-booking-car/create-request-booking" class="btn btn-primary mx-2"><i
                             class="fa-solid fa-plus bd-highlight" style="margin-right: 10px"></i> Tạo yêu cầu tìm xe
                     </a>
+                    <button type="button" class="btn btn-success bd-highlight ms-2" ng-click="filterAllMedia()"><i
+                            class="fa-solid fa-magnifying-glass"></i> Tìm tour
+                    </button>
                 </div>
             </div>
         </div>
@@ -204,8 +204,40 @@
                 <div class="card border-0 w-100 pt-3">
                     <div class="single-event-item mb-30 wow fadeInUp">
                         <div class="img-holder px-3">
-                            <img class="w-100 rounded-3" src="/assets/customers/images/event/event-1.jpg"
-                                 alt="Event Image">
+                            <div id="slide_filter_car" class="carousel slide">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="/assets/admin/assets/img/transport/filter_transport_4.png"
+                                             class="d-block w-100" alt="...">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/assets/admin/assets/img/transport/filter_transport_2.png"
+                                             class="d-block w-100" alt="...">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/assets/admin/assets/img/transport/filter_transport_3.png"
+                                             class="d-block w-100" alt="...">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/assets/admin/assets/img/transport/filter_transport_1.png"
+                                             class="d-block w-100" alt="...">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/assets/admin/assets/img/transport/filter_transport_5.png"
+                                             class="d-block w-100" alt="...">
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#slide_filter_car" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                        data-bs-target="#slide_filter_car" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
                         </div>
                         <div class="form-customer px-3 pt-5">
                             <div class="form-customer find-item mb-3">

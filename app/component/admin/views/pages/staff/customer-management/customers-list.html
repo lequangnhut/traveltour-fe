@@ -98,14 +98,14 @@
                             <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
                         </div>
                     </th>
-                    <th class="cursor-pointer" ng-click="sortData('fullName')">
-                        <div class="icon-left">Họ tên
-                            <span class="sorting-icon" ng-bind-html="getSortIcon('fullName')"></span>
-                        </div>
-                    </th>
                     <th class="cursor-pointer" ng-click="sortData('email')">
                         <div class="icon-left">Email
                             <span class="sorting-icon" ng-bind-html="getSortIcon('email')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('fullName')">
+                        <div class="icon-left">Họ tên
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('fullName')"></span>
                         </div>
                     </th>
                     <th class="cursor-pointer" ng-click="sortData('phone')">
@@ -130,14 +130,12 @@
                 <tr ng-repeat="customer in customerList">
                     <td>{{ getDisplayIndex($index) }}</td>
                     <td>{{ customer.id }}</td>
+                    <td style="max-width: 170px">
+                        {{ customer.email }}
+                    </td>
                     <td class="cursor-default">
                         <span custom-tooltip="{{ customer.fullName }}">
                             <span>{{ customer.fullName | limitTo: 10 }}</span>...
-                        </span>
-                    </td>
-                    <td class="cursor-default">
-                        <span custom-tooltip="{{ customer.email }}">
-                            <span>{{ customer.email | limitTo: 15 }}</span>...
                         </span>
                     </td>
                     <td>{{ customer.phone | phoneNumber }}</td>

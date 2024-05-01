@@ -71,7 +71,7 @@
                                     <span ng-if="ticket.unitPrice">- {{ ticket.unitPrice | vnCurrency }}</span>
                                 </span>
                                 </div>
-                                <a ng-click="redirectVisitLocationDetail(location.id)"
+                                <a ng-click="redirectPage('/tourism-location/tourism-location-detail/', location.id)"
                                    class="main-btn filled-btn detail-link">
                                     Xem chi tiết
                                     <svg class="svg-inline--fa fa-paper-plane" aria-hidden="true" focusable="false"
@@ -279,7 +279,7 @@
                 <div id="map" class="col-12" style="height: 500px"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-green" data-bs-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>

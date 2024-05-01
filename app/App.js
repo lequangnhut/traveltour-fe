@@ -29,7 +29,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'DashboardControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF", "ROLE_ADMIN", "ROLE_SUPERADMIN", "ROLE_GUIDE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -40,7 +50,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'DecentralizationControllerStaffAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_SUPERADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -51,7 +71,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'DecentralizationControllerStaffAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_SUPERADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -62,7 +92,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'DecentralizationControllerStaffAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_SUPERADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -73,7 +113,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'DecentralizationControllerAgentAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_SUPERADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -84,7 +134,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'DecentralizationControllerAgentAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_SUPERADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -95,7 +155,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'DecentralizationControllerAgentAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_SUPERADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -110,7 +180,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'BasicTourControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -121,7 +201,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'BasicTourControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -132,7 +222,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'BasicTourControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -143,7 +243,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'TourDetailControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -154,7 +264,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'TourDetailControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -165,7 +285,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'TourDetailControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -176,7 +306,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'TourDetailsImageControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -187,7 +327,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'TripsTourControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -198,7 +348,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'TripsTourControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -209,7 +369,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'TripsTourControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -224,7 +394,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'ServiceListControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -236,7 +416,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'AccommodationInformationControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -247,7 +437,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'TransportationInformationControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -258,7 +458,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'VisitInformationControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -270,7 +480,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'HotelServiceControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -281,7 +501,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'RoomTypeControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -292,7 +522,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'HotelPaymentControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -303,7 +543,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'VisitLocationControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -314,7 +564,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'VisitLocationPaymentControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -325,7 +585,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'TransportationSchedulesControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -336,7 +606,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'TransportationSchedulesPaymentControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -351,7 +631,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'RequestCarControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -362,7 +652,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'RequestCarControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -373,7 +673,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'RequestCarControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -388,7 +698,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'BookingControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -403,7 +723,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'TourIsGoingControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -414,7 +744,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'CustomersGoOnTourControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -425,7 +765,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'CustomersGoOnTourControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -436,7 +786,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'CustomersGoOnTourControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -447,957 +807,38 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'BillControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
+                    let userRoles = AuthService.getUser();
 
-        /**
-         * Agent
-         */
-        .when('/business/welcome-hotel', {
-            templateUrl: 'app/component/agent/welcome.html',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/welcome-transport', {
-            templateUrl: 'app/component/agent/welcome.html',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/welcome-place', {
-            templateUrl: 'app/component/agent/welcome.html',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/register-business', {
-            templateUrl: 'app/component/agent/business/register-business.html',
-            controller: 'RegisterBusinessControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/register-business-success', {
-            templateUrl: 'app/component/agent/business/register-business-success.html',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/select-type', {
-            templateUrl: 'app/component/agent/business/select-type.html',
-            controller: 'SelectTypeControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
 
-        /**
-         * Agent Hotel
-         */
-        .when('/business/register-hotel', {
-            templateUrl: 'app/component/agent/hotel/views/pages/register-hotel.html',
-            controller: 'RegisterHotelControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
             }
         })
-        .when('/business/hotel/home', {
-            templateUrl: 'app/component/agent/hotel/views/pages/dashboard/hotels-management.html',
-            controller: 'ListHotelControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/home/hotel/create', {
-            templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-add.html',
-            controller: 'HotelInformationAddController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/home/hotel/update/:id', {
-            templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-edit.html',
-            controller: 'HotelInformationEditController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/room-type-list', {
-            templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-list.html',
-            controller: 'RoomTypeListController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/room-type-list/create', {
-            templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-add.html',
-            controller: 'RoomTypeAddController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/room-type-list/update-info-room/:id', {
-            templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-info-room-edit.html',
-            controller: 'RoomTypeInfoRoomEditController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/room-type-list/update-img-room/:id', {
-            templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-image-edit.html',
-            controller: 'RoomTypeImageController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/room-type-list/update-utilities-room/:id', {
-            templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-utilities-edit.html',
-            controller: 'RoomTypeUtilitiesEditController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/home/hotel-type-in/update/:id', {
-            templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-add.html',
-            controller: 'HotelInformationEditController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/booking-list', {
-            templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-list.html',
-            controller: 'BookingListController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/booking-list/add-booking-hotel', {
-            templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-add.html',
-            controller: 'BookingAddControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/order-visit-list/create', {
-            templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-add.html',
-            controller: 'HotelAmenitiesListControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/order-visit-list/update', {
-            templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-edit.html',
-            controller: 'HotelAmenitiesListControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/accommodation-location-information/update', {
-            templateUrl: 'app/component/agent/hotel/views/pages/hotel/accommodation-location-information-edit.html',
-            controller: 'AccommodationLocationInformationEditController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/room-type-information-update', {
-            templateUrl: 'app/component/agent/hotel/views/pages/hotel/room-type-information-edit.html',
-            controller: 'AccommodationLocationInformationEditController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/room-modal-update', {
-            templateUrl: 'app/component/agent/hotel/views/pages/hotel/room-amenities.html',
-            controller: 'AccommodationLocationInformationEditController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/chat', {
+        .when('/admin/chat', {
             templateUrl: 'app/component/agent/hotel/views/pages/chat/chat-agency.html',
             controller: 'ChatHotelController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/statistical', {
-            templateUrl: 'app/component/agent/hotel/views/pages/statistical/statistical-hotel.html',
-            controller: 'StatisticalHotelControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/hotel/restore-room-type', {
-            templateUrl: 'app/component/agent/hotel/views/pages/restore/restore-room-type.html',
-            controller: 'RestoreRoomTypeController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
+                    let userRoles = AuthService.getUser();
 
-        /**
-         * Agent Transport
-         */
-        .when('/business/register-transports', {
-            templateUrl: 'app/component/agent/trans/views/pages/register-transport.html',
-            controller: 'RegisterTransControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/transport/home', {
-            templateUrl: 'app/component/agent/trans/views/pages/dashboard/management-transport.html',
-            controller: 'ListTransportBrandControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
 
-        /**
-         * Transport brand
-         */
-        .when('/business/transport/home/create-transport', {
-            templateUrl: 'app/component/agent/trans/views/pages/transport-brand/create-transport.html',
-            controller: 'RegisterTransControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/transport/home/update-transport/:id', {
-            templateUrl: 'app/component/agent/trans/views/pages/transport-brand/update-transport.html',
-            controller: 'RegisterTransControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-
-        /**
-         * Transportation
-         */
-        .when('/business/transport/transport-management', {
-            templateUrl: 'app/component/agent/trans/views/pages/transports/transport-list.html',
-            controller: 'TransportControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/transport/transport-management/transport-image/:id', {
-            templateUrl: 'app/component/agent/trans/views/pages/transports/transport-detail-image.html',
-            controller: 'TransportDetailsImageControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/transport/transport-management/create-transport', {
-            templateUrl: 'app/component/agent/trans/views/pages/transports/transport-create.html',
-            controller: 'TransportControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/transport/transport-management/update-transport/:id', {
-            templateUrl: 'app/component/agent/trans/views/pages/transports/transport-update.html',
-            controller: 'TransportControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-
-        /**
-         * Order Transport
-         */
-        .when('/business/transport/schedules-management/order-transport-management/:scheduleId', {
-            templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-list.html',
-            controller: 'OrderTransportControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/transport/schedules-management/order-transport-management/:scheduleId/create-order-visit', {
-            templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-create.html',
-            controller: 'OrderTransportControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/transport/schedules-management/order-transport-management/:scheduleId/update-order-visit/:id', {
-            templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-update.html',
-            controller: 'OrderTransportControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-
-        /**
-         * Transport Schedule Management
-         */
-        .when('/business/transport/schedules-management', {
-            templateUrl: 'app/component/agent/trans/views/pages/schedules/schedules-list.html',
-            controller: 'SchedulesControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/transport/schedules-management/create-schedules', {
-            templateUrl: 'app/component/agent/trans/views/pages/schedules/schedules-create.html',
-            controller: 'SchedulesControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/transport/schedules-management/update-schedules/:id', {
-            templateUrl: 'app/component/agent/trans/views/pages/schedules/schedules-update.html',
-            controller: 'SchedulesControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-
-        /**
-         * Transport Request Car From TravelTour
-         */
-        .when('/business/transport/notification-request-car', {
-            templateUrl: 'app/component/agent/trans/views/pages/request-car/notification-request-car.html',
-            controller: 'RequestCarControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/transport/notification-request-car/select-car/:requestCarId', {
-            templateUrl: 'app/component/agent/trans/views/pages/request-car/select-car.html',
-            controller: 'SelectCarControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/transport/history-request-car', {
-            templateUrl: 'app/component/agent/trans/views/pages/request-car/history-request-car.html',
-            controller: 'HistoryRequestCarControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-
-        /**
-         * Transport Thống kê
-         */
-        .when('/business/transport/statistical', {
-            templateUrl: 'app/component/agent/trans/views/pages/statistical/statistical-transport.html',
-            controller: 'StatisticalTransportControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-
-        /**
-         * Agent Visit
-         */
-        .when('/business/register-visit', {
-            templateUrl: 'app/component/agent/visits/views/pages/register-visits.html',
-            controller: 'RegisterVisitsControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/visit/home', {
-            templateUrl: 'app/component/agent/visits/views/pages/dashboard/management-visit.html',
-            controller: 'ListVisitControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/visit/home/create-visit-location', {
-            templateUrl: 'app/component/agent/visits/views/pages/visit-location/create-visits.html',
-            controller: 'RegisterVisitsControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/visit/home/update-visit-location/:id', {
-            templateUrl: 'app/component/agent/visits/views/pages/visit-location/update-visits.html',
-            controller: 'RegisterVisitsControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/visit/visit-ticket-management', {
-            templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/ticket-list.html',
-            controller: 'VisitControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/visit/visit-ticket-management/create-visit-ticket', {
-            templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/ticket-create.html',
-            controller: 'VisitControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/visit/visit-ticket-management/update-visit-ticket/:id', {
-            templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/ticket-update.html',
-            controller: 'VisitControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/visit/order-visit-management', {
-            templateUrl: 'app/component/agent/visits/views/pages/bookings/booking-visit-list.html',
-            controller: 'OrderVisitControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/visit/order-visit-management/create-order-visit', {
-            templateUrl: 'app/component/agent/visits/views/pages/bookings/booking-visit-create.html',
-            controller: 'OrderVisitControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/visit/order-visit-management/update-order-visit/:id', {
-            templateUrl: 'app/component/agent/visits/views/pages/bookings/booking-visit-update.html',
-            controller: 'OrderVisitControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/business/visit/statistical', {
-            templateUrl: 'app/component/agent/visits/views/pages/statistical/statistical-visit.html',
-            controller: 'StatisticalVisitControllerAG',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-
-        /**
-         * Admin Template
-         */
-        .when('/admin/customer-list', {
-            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-list.html',
-            controller: 'CustomerControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/customer-list/customer-create', {
-            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-create.html',
-            controller: 'CustomerControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/customer-list/customer-update/:id', {
-            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-update.html',
-            controller: 'CustomerControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-
-        .when('/admin/type/hotel-type-list', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-type/hotel-type-list.html',
-            controller: 'HotelTypeControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/type/hotel-type-list/hotel-type-create', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-type/hotel-type-create.html',
-            controller: 'HotelTypeControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/type/hotel-type-list/hotel-type-update/:id', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-type/hotel-type-update.html',
-            controller: 'HotelTypeControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-
-        .when('/admin/type/visit-location-type-list', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/location-type/location-type-list.html',
-            controller: 'VisitLocationTypeControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/type/visit-location-type-list/visit-location-type-create', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/location-type/location-type-create.html',
-            controller: 'VisitLocationTypeControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/type/visit-location-type-list/visit-location-type-update/:id', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/location-type/location-type-update.html',
-            controller: 'VisitLocationTypeControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-
-        .when('/admin/type/tour-type-list', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/tour-type/tour-type-list.html',
-            controller: 'TourTypeControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/type/tour-type-list/tour-type-create', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/tour-type/tour-type-create.html',
-            controller: 'TourTypeControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/type/tour-type-list/tour-type-update/:id', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/tour-type/tour-type-update.html',
-            controller: 'TourTypeControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-
-        .when('/admin/type/transportation-type-list', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-type/transportation-type-list.html',
-            controller: 'TransTypeControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/type/transportation-type-list/transportation-type-create', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-type/transportation-type-create.html',
-            controller: 'TransTypeControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/type/transportation-type-list/transportation-type-update/:id', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-type/transportation-type-update.html',
-            controller: 'TransTypeControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-
-        .when('/admin/type/transport-utilities-list', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-utilities/transportation-utilities-list.html',
-            controller: 'TransportUtilityControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/type/transport-utilities-list/transport-utilities-create', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-utilities/transportation-utilities-create.html',
-            controller: 'TransportUtilityControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/type/transport-utilities-list/transport-utilities-update/:transportUtilitiesId', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-utilities/transportation-utilities-update.html',
-            controller: 'TransportUtilityControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-
-        .when('/admin/type/hotel-utility-list', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-list.html',
-            controller: 'PlaceUtilityControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/type/hotel-utility-list/hotel-utility-create', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-create.html',
-            controller: 'PlaceUtilityControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/type/hotel-utility-list/hotel-utility-update/:id', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-update.html',
-            controller: 'PlaceUtilityControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-
-        .when('/admin/type/room-utility-list', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/room-utility/room-utility-list.html',
-            controller: 'RoomUtilityControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/type/room-utility-list/room-utility-create', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/room-utility/room-utility-create.html',
-            controller: 'RoomUtilityControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/type/room-utility-list/room-utility-update/:id', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/room-utility/room-utility-update.html',
-            controller: 'RoomUtilityControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-
-        .when('/admin/type/bed-type-list', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/bed-type/bed-type-list.html',
-            controller: 'BedTypeControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/type/bed-type-list/bed-type-create', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/bed-type/bed-type-create.html',
-            controller: 'BedTypeControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/type/bed-type-list/bed-type-update/:id', {
-            templateUrl: 'app/component/admin/views/pages/admin-form/type/bed-type/bed-type-update.html',
-            controller: 'BedTypeControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1412,7 +853,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'AgencyControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1423,7 +874,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'AgencyControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1434,7 +895,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'AgencyControllerWaitingAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1449,7 +920,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'HotelPostController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1460,7 +941,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'RoomPostController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1472,7 +963,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'TransBrandPostController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1483,7 +984,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'TransportationPostController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1494,7 +1005,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'SchedulePostController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1506,19 +1027,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'VisitPostController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
+                    let userRoles = AuthService.getUser();
 
-        .when('/admin/chat', {
-            templateUrl: 'app/component/agent/hotel/views/pages/chat/chat-agency.html',
-            controller: 'ChatHotelController',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1533,7 +1052,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'RevenueControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1544,7 +1073,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'StatisticalControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1559,7 +1098,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'CustomerControllerAD',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1570,7 +1119,592 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'InformationController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
+        /**
+         * Admin Template
+         */
+        .when('/admin/customer-list', {
+            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-list.html',
+            controller: 'CustomerControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/customer-list/customer-create', {
+            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-create.html',
+            controller: 'CustomerControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/customer-list/customer-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-update.html',
+            controller: 'CustomerControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
+        .when('/admin/type/hotel-type-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-type/hotel-type-list.html',
+            controller: 'HotelTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/hotel-type-list/hotel-type-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-type/hotel-type-create.html',
+            controller: 'HotelTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/hotel-type-list/hotel-type-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-type/hotel-type-update.html',
+            controller: 'HotelTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
+        .when('/admin/type/visit-location-type-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/location-type/location-type-list.html',
+            controller: 'VisitLocationTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/visit-location-type-list/visit-location-type-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/location-type/location-type-create.html',
+            controller: 'VisitLocationTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/visit-location-type-list/visit-location-type-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/location-type/location-type-update.html',
+            controller: 'VisitLocationTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
+        .when('/admin/type/tour-type-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/tour-type/tour-type-list.html',
+            controller: 'TourTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/tour-type-list/tour-type-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/tour-type/tour-type-create.html',
+            controller: 'TourTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/tour-type-list/tour-type-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/tour-type/tour-type-update.html',
+            controller: 'TourTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/transportation-type-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-type/transportation-type-list.html',
+            controller: 'TransTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/transportation-type-list/transportation-type-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-type/transportation-type-create.html',
+            controller: 'TransTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/transportation-type-list/transportation-type-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-type/transportation-type-update.html',
+            controller: 'TransTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
+        .when('/admin/type/transport-utilities-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-utilities/transportation-utilities-list.html',
+            controller: 'TransportUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/transport-utilities-list/transport-utilities-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-utilities/transportation-utilities-create.html',
+            controller: 'TransportUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/transport-utilities-list/transport-utilities-update/:transportUtilitiesId', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/transportation-utilities/transportation-utilities-update.html',
+            controller: 'TransportUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/hotel-utility-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-list.html',
+            controller: 'PlaceUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/hotel-utility-list/hotel-utility-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-create.html',
+            controller: 'PlaceUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/hotel-utility-list/hotel-utility-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-utility/hotel-utility-update.html',
+            controller: 'PlaceUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/room-utility-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/room-utility/room-utility-list.html',
+            controller: 'RoomUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/room-utility-list/room-utility-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/room-utility/room-utility-create.html',
+            controller: 'RoomUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/room-utility-list/room-utility-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/room-utility/room-utility-update.html',
+            controller: 'RoomUtilityControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/bed-type-list', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/bed-type/bed-type-list.html',
+            controller: 'BedTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/bed-type-list/bed-type-create', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/bed-type/bed-type-create.html',
+            controller: 'BedTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/type/bed-type-list/bed-type-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/admin-form/type/bed-type/bed-type-update.html',
+            controller: 'BedTypeControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_ADMIN"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1585,7 +1719,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'GuideController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_GUIDE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1596,7 +1740,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'GuideController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_GUIDE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1607,7 +1761,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'GuideController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_GUIDE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1618,7 +1782,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'GuideController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_GUIDE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1629,7 +1803,1208 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'HotelForTourGuideController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_GUIDE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
+        /**
+         * Agent
+         */
+        .when('/business/welcome-hotel', {
+            templateUrl: 'app/component/agent/welcome.html',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/welcome-transport', {
+            templateUrl: 'app/component/agent/welcome.html',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/welcome-place', {
+            templateUrl: 'app/component/agent/welcome.html',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_PLACE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/register-business', {
+            templateUrl: 'app/component/agent/business/register-business.html',
+            controller: 'RegisterBusinessControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL", "ROLE_AGENT_TRANSPORT", "ROLE_AGENT_PLACE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/register-business-success', {
+            templateUrl: 'app/component/agent/business/register-business-success.html',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL", "ROLE_AGENT_TRANSPORT", "ROLE_AGENT_PLACE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/select-type', {
+            templateUrl: 'app/component/agent/business/select-type.html',
+            controller: 'SelectTypeControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL", "ROLE_AGENT_TRANSPORT", "ROLE_AGENT_PLACE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
+        /**
+         * Agent Hotel
+         */
+        .when('/business/register-hotel', {
+            templateUrl: 'app/component/agent/hotel/views/pages/register-hotel.html',
+            controller: 'RegisterHotelControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/home', {
+            templateUrl: 'app/component/agent/hotel/views/pages/dashboard/hotels-management.html',
+            controller: 'ListHotelControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/home/hotel/create', {
+            templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-add.html',
+            controller: 'HotelInformationAddController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/home/hotel/update/:id', {
+            templateUrl: 'app/component/agent/hotel/views/pages/hotel/hotel-information-edit.html',
+            controller: 'HotelInformationEditController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/room-type-list', {
+            templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-list.html',
+            controller: 'RoomTypeListController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/room-type-list/create', {
+            templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-add.html',
+            controller: 'RoomTypeAddController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/room-type-list/update-info-room/:id', {
+            templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-info-room-edit.html',
+            controller: 'RoomTypeInfoRoomEditController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/room-type-list/update-img-room/:id', {
+            templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-image-edit.html',
+            controller: 'RoomTypeImageController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/room-type-list/update-utilities-room/:id', {
+            templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-utilities-edit.html',
+            controller: 'RoomTypeUtilitiesEditController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/home/hotel-type-in/update/:id', {
+            templateUrl: 'app/component/agent/hotel/views/pages/service/room-type-add.html',
+            controller: 'HotelInformationEditController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/booking-list', {
+            templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-list.html',
+            controller: 'BookingListController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/booking-list/add-booking-hotel', {
+            templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-add.html',
+            controller: 'BookingAddControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/order-visit-list/create', {
+            templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-add.html',
+            controller: 'HotelAmenitiesListControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/order-visit-list/update', {
+            templateUrl: 'app/component/agent/hotel/views/pages/booking/booking-edit.html',
+            controller: 'HotelAmenitiesListControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/accommodation-location-information/update', {
+            templateUrl: 'app/component/agent/hotel/views/pages/hotel/accommodation-location-information-edit.html',
+            controller: 'AccommodationLocationInformationEditController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/room-type-information-update', {
+            templateUrl: 'app/component/agent/hotel/views/pages/hotel/room-type-information-edit.html',
+            controller: 'AccommodationLocationInformationEditController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/room-modal-update', {
+            templateUrl: 'app/component/agent/hotel/views/pages/hotel/room-amenities.html',
+            controller: 'AccommodationLocationInformationEditController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/chat', {
+            templateUrl: 'app/component/agent/hotel/views/pages/chat/chat-agency.html',
+            controller: 'ChatHotelController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/statistical', {
+            templateUrl: 'app/component/agent/hotel/views/pages/statistical/statistical-hotel.html',
+            controller: 'StatisticalHotelControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/hotel/restore-room-type', {
+            templateUrl: 'app/component/agent/hotel/views/pages/restore/restore-room-type.html',
+            controller: 'RestoreRoomTypeController',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_HOTEL"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
+        /**
+         * Agent Transport
+         */
+        .when('/business/register-transports', {
+            templateUrl: 'app/component/agent/trans/views/pages/register-transport.html',
+            controller: 'RegisterTransControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/transport/home', {
+            templateUrl: 'app/component/agent/trans/views/pages/dashboard/management-transport.html',
+            controller: 'ListTransportBrandControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
+        /**
+         * Transport brand
+         */
+        .when('/business/transport/home/create-transport', {
+            templateUrl: 'app/component/agent/trans/views/pages/transport-brand/create-transport.html',
+            controller: 'RegisterTransControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/transport/home/update-transport/:id', {
+            templateUrl: 'app/component/agent/trans/views/pages/transport-brand/update-transport.html',
+            controller: 'RegisterTransControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
+        /**
+         * Transportation
+         */
+        .when('/business/transport/transport-management', {
+            templateUrl: 'app/component/agent/trans/views/pages/transports/transport-list.html',
+            controller: 'TransportControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/transport/transport-management/transport-image/:id', {
+            templateUrl: 'app/component/agent/trans/views/pages/transports/transport-detail-image.html',
+            controller: 'TransportDetailsImageControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/transport/transport-management/create-transport', {
+            templateUrl: 'app/component/agent/trans/views/pages/transports/transport-create.html',
+            controller: 'TransportControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/transport/transport-management/update-transport/:id', {
+            templateUrl: 'app/component/agent/trans/views/pages/transports/transport-update.html',
+            controller: 'TransportControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
+        /**
+         * Order Transport
+         */
+        .when('/business/transport/schedules-management/order-transport-management/:scheduleId', {
+            templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-list.html',
+            controller: 'OrderTransportControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/transport/schedules-management/order-transport-management/:scheduleId/create-order-visit', {
+            templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-create.html',
+            controller: 'OrderTransportControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/transport/schedules-management/order-transport-management/:scheduleId/update-order-visit/:id', {
+            templateUrl: 'app/component/agent/trans/views/pages/bookings/booking-update.html',
+            controller: 'OrderTransportControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
+        /**
+         * Transport Schedule Management
+         */
+        .when('/business/transport/schedules-management', {
+            templateUrl: 'app/component/agent/trans/views/pages/schedules/schedules-list.html',
+            controller: 'SchedulesControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/transport/schedules-management/create-schedules', {
+            templateUrl: 'app/component/agent/trans/views/pages/schedules/schedules-create.html',
+            controller: 'SchedulesControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/transport/schedules-management/update-schedules/:id', {
+            templateUrl: 'app/component/agent/trans/views/pages/schedules/schedules-update.html',
+            controller: 'SchedulesControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
+        /**
+         * Transport Request Car From TravelTour
+         */
+        .when('/business/transport/notification-request-car', {
+            templateUrl: 'app/component/agent/trans/views/pages/request-car/notification-request-car.html',
+            controller: 'RequestCarControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/transport/notification-request-car/select-car/:requestCarId', {
+            templateUrl: 'app/component/agent/trans/views/pages/request-car/select-car.html',
+            controller: 'SelectCarControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/transport/history-request-car', {
+            templateUrl: 'app/component/agent/trans/views/pages/request-car/history-request-car.html',
+            controller: 'HistoryRequestCarControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
+        /**
+         * Transport Thống kê
+         */
+        .when('/business/transport/statistical', {
+            templateUrl: 'app/component/agent/trans/views/pages/statistical/statistical-transport.html',
+            controller: 'StatisticalTransportControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_TRANSPORT"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+
+        /**
+         * Agent Visit
+         */
+        .when('/business/register-visit', {
+            templateUrl: 'app/component/agent/visits/views/pages/register-visits.html',
+            controller: 'RegisterVisitsControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_PLACE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/visit/home', {
+            templateUrl: 'app/component/agent/visits/views/pages/dashboard/management-visit.html',
+            controller: 'ListVisitControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_PLACE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/visit/home/create-visit-location', {
+            templateUrl: 'app/component/agent/visits/views/pages/visit-location/create-visits.html',
+            controller: 'RegisterVisitsControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_PLACE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/visit/home/update-visit-location/:id', {
+            templateUrl: 'app/component/agent/visits/views/pages/visit-location/update-visits.html',
+            controller: 'RegisterVisitsControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_PLACE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/visit/visit-ticket-management', {
+            templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/ticket-list.html',
+            controller: 'VisitControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_PLACE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/visit/visit-ticket-management/create-visit-ticket', {
+            templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/ticket-create.html',
+            controller: 'VisitControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_PLACE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/visit/visit-ticket-management/update-visit-ticket/:id', {
+            templateUrl: 'app/component/agent/visits/views/pages/visit-ticket/ticket-update.html',
+            controller: 'VisitControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_PLACE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/visit/order-visit-management', {
+            templateUrl: 'app/component/agent/visits/views/pages/bookings/booking-visit-list.html',
+            controller: 'OrderVisitControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_PLACE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/visit/order-visit-management/create-order-visit', {
+            templateUrl: 'app/component/agent/visits/views/pages/bookings/booking-visit-create.html',
+            controller: 'OrderVisitControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_PLACE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/visit/order-visit-management/update-order-visit/:id', {
+            templateUrl: 'app/component/agent/visits/views/pages/bookings/booking-visit-update.html',
+            controller: 'OrderVisitControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_PLACE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/business/visit/statistical', {
+            templateUrl: 'app/component/agent/visits/views/pages/statistical/statistical-visit.html',
+            controller: 'StatisticalVisitControllerAG',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_AGENT_PLACE"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/login-admin');
                     }
                 }
@@ -1656,7 +3031,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'InformationController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_CUSTOMER"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/home');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/home');
                     }
                 }
@@ -1667,7 +3052,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'InformationController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_CUSTOMER"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/home');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/home');
                     }
                 }
@@ -1678,7 +3073,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'BookingTourCustomerController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_CUSTOMER"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/home');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/home');
                     }
                 }
@@ -1689,7 +3094,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'FavoritesController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_CUSTOMER"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/home');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/home');
                     }
                 }
@@ -1740,7 +3155,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'ChatCustomerController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_CUSTOMER"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/home');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/home');
                     }
                 }
@@ -1759,7 +3184,17 @@ travel_app.config(function ($routeProvider, $locationProvider) {
             controller: 'ChatCustomerController',
             resolve: {
                 "check": function ($location, AuthService) {
-                    if (!AuthService.getToken()) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_CUSTOMER"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/home');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
                         $location.path('/home');
                     }
                 }

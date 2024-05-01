@@ -146,11 +146,8 @@
                 <tr ng-repeat="btl in bookingTourList">
                     <td>{{ getDisplayIndex($index) }}</td>
                     <td>{{ btl.id }}</td>
-                    <td class="cursor-default">
-                        <span custom-tooltip="{{ btl.customerName }}">
-                            <span>{{ btl.customerName | limitTo: 15 }}</span>
-                            <span ng-show="btl.customerName.length > 15">...</span>
-                        </span>
+                    <td style="max-width: 150px">
+                        {{ btl.customerName }}
                     </td>
                     <td>{{ btl.customerPhone | phoneNumber }}</td>
                     <td>{{ btl.orderTotal | vnCurrency }}</td>
@@ -290,11 +287,8 @@
                 <tr ng-repeat="btl in bookingTourList">
                     <td>{{ getDisplayIndex($index) }}</td>
                     <td>{{ btl.id }}</td>
-                    <td class="cursor-default">
-                        <span custom-tooltip="{{ btl.customerName }}">
-                            <span>{{ btl.customerName | limitTo: 15 }}</span>
-                            <span ng-show="btl.customerName.length > 15">...</span>
-                        </span>
+                    <td style="max-width: 150px">
+                        {{ btl.customerName }}
                     </td>
                     <td>{{ btl.customerPhone | phoneNumber }}</td>
                     <td>{{ btl.orderTotal | vnCurrency }}</td>
@@ -436,11 +430,8 @@
                 <tr ng-repeat="btl in bookingTourList">
                     <td>{{ getDisplayIndex($index) }}</td>
                     <td>{{ btl.id }}</td>
-                    <td class="cursor-default">
-                        <span custom-tooltip="{{ btl.customerName }}">
-                            <span>{{ btl.customerName | limitTo: 15 }}</span>
-                            <span ng-show="btl.customerName.length > 15">...</span>
-                        </span>
+                    <td style="max-width: 150px">
+                        {{ btl.customerName }}
                     </td>
                     <td>{{ btl.customerPhone | phoneNumber }}</td>
                     <td>{{ btl.orderTotal | vnCurrency }}</td>
@@ -946,7 +937,13 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer d-flex justify-content-start align-items-center">
+                <div class="form-group me-auto">
+                    <select class="form-control" ng-model="bookingTourDto.whoCancelled">
+                        <option ng-value="true">Hủy bởi khách hàng</option>
+                        <option ng-value="false">Hủy bởi nhân viên</option>
+                    </select>
+                </div>
                 <button type="button"
                         class="btn"
                         ng-click="hideModalCancelBookTour()"

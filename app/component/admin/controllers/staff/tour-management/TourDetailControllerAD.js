@@ -64,7 +64,7 @@ travel_app.controller('TourDetailControllerAD',
             $scope.tourDetailStatus = status;
             $scope.sortDate = sortDate;
             $scope.currentPage = 0;
-            $scope.pageSize = 5;
+            $scope.pageSize = '5';
             $scope.init();
             LocalStorageService.set('currentTabTourDetail', tab);
         };
