@@ -1,4 +1,4 @@
-travel_app.controller('PaymentSuccessHotelController', function($scope, $routeParams, $location, AuthService, OrderHotelService) {
+travel_app.controller('PaymentSuccessHotelController', function($scope, $routeParams, $location, AuthService,Base64ObjectService , OrderHotelService) {
     let user = $scope.user = AuthService.getUser();
 
     $scope.orderStatus = atob($routeParams.orderStatus);
@@ -21,11 +21,20 @@ travel_app.controller('PaymentSuccessHotelController', function($scope, $routePa
         $scope.isLoading = false;
     })
 
-    $scope.redirectToHistoryOrderHotel = function() {
-        if(user === null || user) {
-            $location.path("/sign-up")
-        }else {
-            $location.path("/sign-up")
+    /**
+     * Hàm để di chuyển trang encode mã
+     * @param objId
+     * @param url
+     * @param navItem
+     */
+    $scope.redirectPage = function (url, objId, navItem) {
+        if (navItem) {
+            let objIdEncode = Base64ObjectService.encodeObject(objId);
+            $location.path(url + objIdEncode);
+            $scope.setActiveNavItem(navItem);
+        } else {
+            let objIdEncode = Base64ObjectService.encodeObject(objId);
+            $location.path(url + objIdEncode);
         }
 
     }

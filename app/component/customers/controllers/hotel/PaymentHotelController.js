@@ -227,18 +227,23 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
     };
 
 
-    $scope.submitPaymentHotel = function (paymentMethod) {
-        console.log(paymentMethod)
-        if (paymentMethod === 'VPO') {
-            $scope.directPayment();
-        } else if (paymentMethod === 'VNPAY') {
-            $scope.paymentVNPay();
+    $scope.submitPaymentHotel = async  function (paymentMethod) {
+        const result = await Swal.fire({
+            title: 'Xác nhận thanh toán',
+            text: 'Bạn có chắc chắn email ' + $scope.paymentHotelCustomer.customerEmail + ' là chính xác!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Chính xác',
+            cancelButtonText: 'Chưa để tôi nhập lại'
+        });
+
+        if (result.isConfirmed) {
+            if (paymentMethod === 'VPO') {
+                $scope.directPayment();
+            } else if (paymentMethod === 'VNPAY') {
+                $scope.paymentVNPay();
+            }
         }
-        // else if (paymentMethod === 'ZaloPay') {
-        //     $scope.paymentZaLoPay();
-        // } else if (paymentMethod === 'Momo') {
-        //     $scope.paymentMomo();
-        // }
 
     }
 
@@ -288,6 +293,8 @@ travel_app.controller('PaymentHotelController', function ($scope, $anchorScroll,
                 let baseUrl = response.data.data
                 toastAlert('success', 'Đặt khách sạn thành công !');
                 $scope.playSuccessSound()
+                localStorage.removeItem('filterHotels')
+                localStorage.removeItem('filterHotelsDate')
                 $location.path(baseUrl);
             } else if (response.data.status === '400') {
                 Swal.fire({

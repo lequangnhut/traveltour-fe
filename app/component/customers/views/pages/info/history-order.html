@@ -763,6 +763,12 @@
                                                 <span class="text-status-error">Đã bị hủy</span>
                                             </div>
                                         </td>
+                                        <td ng-if="h.orderStatus == 5">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-error"></span>
+                                                <span class="text-status-error">Bị hủy bởi đối tác</span>
+                                            </div>
+                                        </td>
                                         <td>
                                             <button class="btn btn-look" ng-click="openHotelModal(h)"><i
                                                     class="fa-solid fa-magnifying-glass"></i> Xem chi tiết
