@@ -62,14 +62,14 @@ travel_app.controller('ChartControllerAD', function ($scope, $filter, $rootScope
                 },
                 yAxis: {
                     type: 'value',
-                    splitLine: { lineStyle: { color: t("gray-200") } },
+                    splitLine: {lineStyle: {color: t("gray-200")}},
                     axisLabel: {
                         color: t("gray-900"),
                         fontFamily: "Nunito Sans",
                         fontWeight: 700,
                         fontSize: 12.8,
                         margin: 24,
-                        formatter: function(value) {
+                        formatter: function (value) {
                             return formatNumberWithMillion(value);
                         },
                     },
@@ -343,14 +343,14 @@ travel_app.controller('ChartControllerAD', function ($scope, $filter, $rootScope
         // only for mobile device
         if (window.innerWidth <= 540) {
             const tooltipHeight = dom.offsetHeight;
-            const obj = { top: pos[1] - tooltipHeight - 20 };
+            const obj = {top: pos[1] - tooltipHeight - 20};
             obj[pos[0] < size.viewSize[0] / 2 ? 'left' : 'right'] = 5;
             return obj;
         }
         return null; // else default behaviour
     };
     const projectionVsActualChartInit = () => {
-        const { getColor, getData, getPastDates } = window.phoenix.utils;
+        const {getColor, getData, getPastDates} = window.phoenix.utils;
         const $projectionVsActualChartEl = document.querySelector(
             '.echart-projection-actual'
         );
@@ -376,7 +376,7 @@ travel_app.controller('ChartControllerAD', function ($scope, $filter, $rootScope
                     padding: [7, 10],
                     backgroundColor: getColor('gray-100'),
                     borderColor: getColor('gray-300'),
-                    textStyle: { color: getColor('dark') },
+                    textStyle: {color: getColor('dark')},
                     borderWidth: 1,
                     transitionDuration: 0,
                     axisPointer: {
@@ -421,7 +421,7 @@ travel_app.controller('ChartControllerAD', function ($scope, $filter, $rootScope
                     axisTick: false
                 },
                 yAxis: {
-                    axisPointer: { type: 'none' },
+                    axisPointer: {type: 'none'},
                     // boundaryGap: false,
                     axisTick: 'none',
                     splitLine: {
@@ -430,7 +430,7 @@ travel_app.controller('ChartControllerAD', function ($scope, $filter, $rootScope
                             color: getColor('gray-200')
                         }
                     },
-                    axisLine: { show: false },
+                    axisLine: {show: false},
                     axisLabel: {
                         fontFamily: 'Nunito Sans',
                         fontWeight: 600,
@@ -448,7 +448,7 @@ travel_app.controller('ChartControllerAD', function ($scope, $filter, $rootScope
                         barWidth: '6px',
                         data: data2,
                         barGap: '30%',
-                        label: { show: false },
+                        label: {show: false},
                         itemStyle: {
                             borderRadius: [2, 2, 0, 0],
                             color: getColor('primary')
@@ -460,7 +460,7 @@ travel_app.controller('ChartControllerAD', function ($scope, $filter, $rootScope
                         data: data1,
                         barWidth: '6px',
                         barGap: '30%',
-                        label: { show: false },
+                        label: {show: false},
                         z: 10,
                         itemStyle: {
                             borderRadius: [2, 2, 0, 0],
@@ -569,7 +569,7 @@ travel_app.controller('ChartControllerAD', function ($scope, $filter, $rootScope
 
     $scope.getAllCount();
 
-    $scope.labels = ['T1', 'T2', 'T3', 'T4', 'T6', 'T7', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
+    $scope.labels = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
     $scope.data = [];
     $scope.tourTypeId = null;
     $scope.year = new Date().getFullYear();
@@ -634,7 +634,7 @@ travel_app.controller('ChartControllerAD', function ($scope, $filter, $rootScope
                     datasets: [{
                         data: $scope.data,
                         borderColor: '#ff6384',
-                        backgroundColor: function(context) {
+                        backgroundColor: function (context) {
                             let chartArea = context.chart.chartArea;
                             if (!chartArea) {
                                 return 'rgba(255, 99, 132, 0.2)';

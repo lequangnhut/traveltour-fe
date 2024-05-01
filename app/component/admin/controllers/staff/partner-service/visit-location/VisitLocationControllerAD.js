@@ -39,10 +39,8 @@ travel_app.controller('VisitLocationControllerAD',
         };
 
         $scope.checkDate = () => {
-            console.log($scope.departureDate)
             const currentDate = new Date();
             if ($scope.departureDate === undefined) {
-                console.log(123)
                 $scope.departureDate = currentDate;
                 toastAlert('warning', 'Không được nhập ngày quá khứ!');
             }
@@ -131,29 +129,26 @@ travel_app.controller('VisitLocationControllerAD',
             return $sce.trustAsHtml('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"/></svg>');
         };
 
-        $scope.searchVisitLocationByKey = async () => {
+        $scope.searchVisitLocationByKey = () => {
             if (searchTimeout) $timeout.cancel(searchTimeout);
-            $scope.setPage(0);
 
-            searchTimeout = $timeout(async () => {
-                try {
-                    const response = await VisitLocationServiceAD.getAllOrSearchVisitLocation($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm);
-
-                    if (!response || !response.data || !response.data.data || !response.data.data.content) {
-                        $scope.getVisitLocationList();
-                        toastAlert('warning', 'Không tìm thấy !');
-                        return;
-                    }
-
-                    await $timeout(() => {
-                        visitLocationData(response)
-                    }, 0);
-
-                } catch (error) {
-                    console.error("Error:", error);
-                }
+            searchTimeout = $timeout(() => {
+                $scope.currentPage = 0;
+                VisitLocationServiceAD.getAllOrSearchVisitLocation($scope.currentPage, $scope.pageSize, $scope.sortBy, $scope.sortDir, $scope.searchTerm)
+                    .then(response => {
+                        if (!response || !response.data || !response.data.data || !response.data.data.content) {
+                            $scope.getVisitLocationList();
+                            toastAlert('warning', 'Không tìm thấy !');
+                            return;
+                        }
+                        visitLocationData(response);
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                    });
             }, 500);
         };
+
 
         $scope.searchVisitLocationByLocation = async () => {
             if (searchTimeout) $timeout.cancel(searchTimeout);
@@ -182,12 +177,6 @@ travel_app.controller('VisitLocationControllerAD',
                 console.error("Error:", error);
             }
         };
-
-
-        $scope.refreshSearch = () => {
-            $scope.searchTerm = ''
-            $scope.searchVisitLocation = {}
-        }
 
         /**
          * Mở image bự hơn trong modal
