@@ -22,10 +22,13 @@ travel_app.controller('TourCusController',
 
         $scope.markersTour = [];
 
-        $scope.ratings = [{id: 1, label: 'Trên 1 sao'}, {id: 2, label: 'Trên 2 sao'}, {id: 3, label: 'Trên 3 sao'}, {
-            id: 4,
-            label: 'Trên 4 sao'
-        }, {id: 5, label: 'Trên 5 sao'}];
+        $scope.ratings = [
+            {id: 1, label: 'Trên 1 sao'},
+            {id: 2, label: 'Trên 2 sao'},
+            {id: 3, label: 'Trên 3 sao'},
+            {id: 4, label: 'Trên 4 sao'},
+            {id: 5, label: 'Trên 5 sao'}
+        ];
 
         let filters = LocalStorageService.decryptLocalData('filtersTour', 'encryptFiltersTour');
 

@@ -823,6 +823,69 @@ travel_app.config(function ($routeProvider, $locationProvider) {
                 }
             }
         })
+        .when('/admin/customer-list', {
+            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-list.html',
+            controller: 'CustomerControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/customer-list/customer-create', {
+            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-create.html',
+            controller: 'CustomerControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
+        .when('/admin/customer-list/customer-update/:id', {
+            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-update.html',
+            controller: 'CustomerControllerAD',
+            resolve: {
+                "check": function ($location, AuthService) {
+                    let userRoles = AuthService.getUser();
+
+                    if (userRoles !== null) {
+                        let requiredRoles = ["ROLE_STAFF"];
+                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
+
+                        if (!roles.some(role => requiredRoles.includes(role))) {
+                            $location.path('/login-admin');
+                            AuthService.clearAuthData();
+                        }
+                    } else {
+                        $location.path('/login-admin');
+                    }
+                }
+            }
+        })
         .when('/admin/chat', {
             templateUrl: 'app/component/agent/hotel/views/pages/chat/chat-agency.html',
             controller: 'ChatHotelController',
@@ -1101,7 +1164,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
                     let userRoles = AuthService.getUser();
 
                     if (userRoles !== null) {
-                        let requiredRoles = ["ROLE_ADMIN"];
+                        let requiredRoles = ["ROLE_STAFF", "ROLE_ADMIN", "ROLE_SUPERADMIN", "ROLE_GUIDE", "ROLE_AGENT_TRANSPORT", "ROLE_AGENT_HOTEL", "ROLE_AGENT_PLACE"];
                         let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
 
                         if (!roles.some(role => requiredRoles.includes(role))) {
@@ -1122,7 +1185,7 @@ travel_app.config(function ($routeProvider, $locationProvider) {
                     let userRoles = AuthService.getUser();
 
                     if (userRoles !== null) {
-                        let requiredRoles = ["ROLE_ADMIN"];
+                        let requiredRoles = ["ROLE_STAFF", "ROLE_ADMIN", "ROLE_SUPERADMIN", "ROLE_GUIDE", "ROLE_AGENT_TRANSPORT", "ROLE_AGENT_HOTEL", "ROLE_AGENT_PLACE"];
                         let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
 
                         if (!roles.some(role => requiredRoles.includes(role))) {
@@ -1139,70 +1202,6 @@ travel_app.config(function ($routeProvider, $locationProvider) {
         /**
          * Admin Template
          */
-        .when('/admin/customer-list', {
-            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-list.html',
-            controller: 'CustomerControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    let userRoles = AuthService.getUser();
-
-                    if (userRoles !== null) {
-                        let requiredRoles = ["ROLE_ADMIN"];
-                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
-
-                        if (!roles.some(role => requiredRoles.includes(role))) {
-                            $location.path('/login-admin');
-                            AuthService.clearAuthData();
-                        }
-                    } else {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/customer-list/customer-create', {
-            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-create.html',
-            controller: 'CustomerControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    let userRoles = AuthService.getUser();
-
-                    if (userRoles !== null) {
-                        let requiredRoles = ["ROLE_ADMIN"];
-                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
-
-                        if (!roles.some(role => requiredRoles.includes(role))) {
-                            $location.path('/login-admin');
-                            AuthService.clearAuthData();
-                        }
-                    } else {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-        .when('/admin/customer-list/customer-update/:id', {
-            templateUrl: 'app/component/admin/views/pages/staff/customer-management/customers-update.html',
-            controller: 'CustomerControllerAD',
-            resolve: {
-                "check": function ($location, AuthService) {
-                    let userRoles = AuthService.getUser();
-
-                    if (userRoles !== null) {
-                        let requiredRoles = ["ROLE_ADMIN"];
-                        let roles = userRoles.roles ? userRoles.roles.map(role => role.nameRole) : [];
-
-                        if (!roles.some(role => requiredRoles.includes(role))) {
-                            $location.path('/login-admin');
-                            AuthService.clearAuthData();
-                        }
-                    } else {
-                        $location.path('/login-admin');
-                    }
-                }
-            }
-        })
-
         .when('/admin/type/hotel-type-list', {
             templateUrl: 'app/component/admin/views/pages/admin-form/type/hotel-type/hotel-type-list.html',
             controller: 'HotelTypeControllerAD',

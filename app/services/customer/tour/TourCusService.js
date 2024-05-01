@@ -28,24 +28,21 @@ travel_app.service('TourCusService', function ($http) {
             }
         });
     };
+
     this.getAListOfPopularTours = function (page, size, sortBy, sortDir, filters) {
         return $http({
-            method: 'GET', url: API_TOUR + 'getAListOfPopularTours', params: {
+            method: 'GET',
+            url: API_TOUR + 'getAListOfPopularTours',
+            params: {
                 page: page || 0,
                 size: size || 10,
                 sortBy: sortBy || 'dateCreated',
-                sortDir: sortDir || 'DESC',
+                sortDir: sortDir || 'desc',
                 price: filters.price || null,
                 departure: filters.departure || null,
                 departureArrives: filters.departureArrives || null,
                 departureFrom: filters.departureFrom || null,
             }
-        });
-    };
-
-    this.getAllTourDetail = function () {
-        return $http({
-            method: 'GET', url: API_TOUR + 'get-tour-detail-customer-data-list',
         });
     };
 
