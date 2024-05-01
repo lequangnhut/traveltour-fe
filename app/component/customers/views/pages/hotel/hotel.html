@@ -311,11 +311,11 @@
                                                 <div class="float-end" style="font-size: 14px; line-height: 20px">
                                                     <div class="d-flex align-items-center">
                                                         <div class="rating-content float-end m-2">
-                                                            <p ng-if="roomType.rate.toInteger() >= 1">Rất tệ</p>
-                                                            <p ng-if="roomType.rate.toInteger() >= 2">Tệ</p>
-                                                            <p ng-if="roomType.rate.toInteger() >= 3">Trung bình</p>
-                                                            <p ng-if="roomType.rate.toInteger() >= 4">Tốt</p>
-                                                            <p ng-if="roomType.rate.toInteger() >= 5">Tuyêt vời</p>
+                                                            <p ng-if="tour.rate >= 1 && tour.rate < 2">Rất tệ</p>
+                                                            <p ng-if="tour.rate >= 2 && tour.rate < 3">Tệ</p>
+                                                            <p ng-if="tour.rate >= 3 && tour.rate < 4">Trung bình</p>
+                                                            <p ng-if="tour.rate >= 4 && tour.rate < 5">Tốt</p>
+                                                            <p ng-if="tour.rate >= 5">Tuyêt vời</p>
                                                             <p>{{roomType.countRating}} Đánh giá</p>
                                                         </div>
                                                         <div class="rating-content float-end">

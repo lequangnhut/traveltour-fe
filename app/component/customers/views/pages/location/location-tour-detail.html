@@ -76,13 +76,14 @@
                 <div class="row align-items-center">
                     <div class="col-md-4">
                         <div class="ratings-box">
-                            <ul class="ratings">
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><span class="fas fa-star"></span></li>
-                                <li><a href="#">(3k Lượt xem)</a></li>
+                            <ul class="ratings d-flex align-items-center color-ratings">
+                                <div ng-repeat="star in stars track by $index">
+                                    <span class="fas fa-star"></span>
+                                </div>
+                                <div ng-if="showHalfStar">
+                                    <span class="fas fa-star-half-alt"></span>
+                                </div>
+                                <span class="reviews mx-1" ng-bind="+ ratingHotel.numberOfRatings + ' Đánh giá'"></span>
                             </ul>
                         </div>
                     </div>
@@ -189,7 +190,7 @@
                             <li>
                                 <div class="comment">
                                     <div class="comment-avatar">
-                                        <img src="{{ rating.usersByUserId.avatar }}" style="border-radius: 50px"
+                                        <img src="{{ rating.usersByUserId.avatar }}" style="border-radius: 50px; width: 100px; height: 100px"
                                              alt="comment author">
                                     </div>
                                     <div class="comment-wrap w-100">

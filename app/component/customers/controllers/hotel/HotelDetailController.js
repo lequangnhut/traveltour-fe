@@ -1,7 +1,7 @@
 travel_app.controller('HotelDetailController', function ($scope, $anchorScroll, $timeout, $window, $sce, $routeParams, $location, AuthService, UserCommentsService, UserLikeService, HotelServiceCT, RoomTypeServiceCT, LocalStorageService, AgenciesServiceAG, Base64ObjectService) {
     $scope.encryptedData = $routeParams.encryptedData;
     mapboxgl.accessToken = 'pk.eyJ1IjoicW5odXQxNyIsImEiOiJjbHN5aXk2czMwY2RxMmtwMjMxcGE1NXg4In0.iUd6-sHYnKnhsvvFuuB_bA';
-
+    $('#mapModal').modal('hide');
     let user = null
     user = AuthService.getUser();
 
@@ -504,4 +504,17 @@ travel_app.controller('HotelDetailController', function ($scope, $anchorScroll, 
             },
         });
     }, 500);
+
+    /**
+     * Phương thức xem chi tiết phòng khách sạn và lưu lịch sử xem của khách hàng
+     * @param roomType khách sạn
+     */
+    $scope.hotelDetailsById = function (roomType) {
+        console.log(roomType.roomTypeId)
+        $scope.filler.hotelIdFilter = roomType.roomTypeId.hotelId;
+
+        $scope.filler.locationFilter = null;
+        $scope.encryptedData = btoa(JSON.stringify($scope.filler));
+        $location.path('/hotel/hotel-detail/' + $scope.encryptedData);
+    }
 });
