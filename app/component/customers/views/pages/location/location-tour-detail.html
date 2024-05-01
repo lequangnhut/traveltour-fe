@@ -252,7 +252,7 @@
                                         <span class="ms-auto bd-highlight" style="width: 70px">
                                             <input type="number" class="form-control" ng-model="tickets.adultTickets"
                                                    ng-change="calculateTotalPrice()"
-                                                   ng-blur="onQuantityBlurAdult(tickets)" min="1" max="99"
+                                                   ng-blur="onQuantityBlurAdult(tickets)" min="1" max="999"
                                                    oninput="validity.valid||(value='');">
                                         </span>
                                     </span>
@@ -264,7 +264,7 @@
                                         <span class="ms-auto bd-highlight" style="width: 70px">
                                             <input type="number" class="form-control" ng-model="tickets.childrenTickets"
                                                    ng-change="calculateTotalPrice()"
-                                                   ng-blur="onQuantityBlurChildren(tickets)" min="0" max="99"
+                                                   ng-blur="onQuantityBlurChildren(tickets)" min="0" max="999"
                                                    oninput="validity.valid||(value='');">
                                         </span>
                                     </span>

@@ -223,7 +223,7 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                     }
                 },
                 series: [{
-                    name: `Năm ${$scope.yearOfLineBarChart} (Vé Người Lớn)`,
+                    name: `Năm ${$scope.yearOfTheStackedColumnChart} (Vé Người Lớn)`,
                     type: 'bar',
                     stack: 'currentYear',
                     barWidth: '20%',
@@ -234,30 +234,33 @@ travel_app.controller('StatisticalVisitControllerAG', function ($scope, RevenueS
                         color: getColor('primary'), barBorderRadius: [0, 0, 100, 100]
                     }
                 }, {
-                    name: `Năm ${$scope.yearOfLineBarChart} (Vé Trẻ Em)`,
+                    name: `Năm ${$scope.yearOfTheStackedColumnChart} (Vé Trẻ Em)`,
                     type: 'bar',
                     stack: 'currentYear',
                     barWidth: '20%',
+                    barGap: '30%',
                     data: currentYearChildTickets,
                     label: {show: false}, // Ẩn số liệu
                     itemStyle: {
                         color: getColor('info-200'), barBorderRadius: [100, 100, 0, 0]
                     }
                 }, {
-                    name: `Năm ${$scope.yearOfLineBarChart - 1} (Vé Người Lớn)`,
+                    name: `Năm ${$scope.yearOfTheStackedColumnChart - 1} (Vé Người Lớn)`,
                     type: 'bar',
                     stack: 'previousYear',
                     barWidth: '20%',
+                    barGap: '30%',
                     data: previousYearAdultTickets,
                     label: {show: false}, // Ẩn số liệu
                     itemStyle: {
                         color: getColor('success'), barBorderRadius: [0, 0, 100, 100]
                     }
                 }, {
-                    name: `Năm ${$scope.yearOfLineBarChart - 1} (Vé Trẻ Em)`,
+                    name: `Năm ${$scope.yearOfTheStackedColumnChart - 1} (Vé Trẻ Em)`,
                     type: 'bar',
                     stack: 'previousYear',
                     barWidth: '20%',
+                    barGap: '30%',
                     data: previousYearChildTickets,
                     label: {show: false}, // Ẩn số liệu
                     itemStyle: {
