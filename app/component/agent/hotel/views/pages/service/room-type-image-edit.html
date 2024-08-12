@@ -1,0 +1,88 @@
+<!--====== Start Preloader ======-->
+<div class="preloader" ng-show="isLoading">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+    <div class="bg"></div>
+</div><!--====== End Preloader ======-->
+<section>
+    <div class="container">
+        <div class="container-fluid">
+            <div class="header-control mb-4">
+                <div class="">
+                    <div class="d-flex align-items-center row">
+                        <div class="col-lg-6">
+                            <h3 class="color-green fw-bold">CHỈNH SỬA HÌNH ẢNH LOẠI PHÒNG</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-custom">
+
+                <form class="form-input-custom" name="editImageRoomForm">
+                    <div class="mb-5">
+                        <div class="d-flex align-items-center row">
+                            <!-- Ảnh đại diện phòng -->
+                            <div class="col-lg-9" >
+                                <label for="formFile" class="form-label">Ảnh phòng khách sạn</label>
+                                <input class="form-control"
+                                       type="file"
+                                       id="formFile"
+                                       name="roomTypeImg"
+                                       accept="image/*"
+                                       ng-model="editImageRoom.roomTypeImg"
+                                       ngf-select="validateRoomTypeImg()"
+                                       multiple
+                                       required
+                                >
+                                <div style="height: 24px">
+                                    <small class="text-danger"
+                                           ng-show="editImageRoomForm.roomTypeImg.$touched && editImageRoomForm.roomTypeImg.$error.required">
+                                        Vui lòng chọn ít nhất một ảnh!
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="editImageRoomForm.roomTypeImg.$error.maxImages">
+                                        Số lượng ảnh tối đa là 30!
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 d-flex justify-content-end">
+                                <button class="btn btn-green" ng-click="addImagesRoomType()"
+                                        ng-disabled="editImageRoomForm.$invalid">Thêm hình ảnh mới
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row room-type-image-edit">
+                        <div class="col-xl-3 col-md-4 col-sm-6 p-1" ng-repeat="img in editImageRoom">
+                            <div class="image-container object-fit-contain">
+                                <img id="{{ img.id }}"
+                                     style="height: 100%; width: 100%; border-radius: 8px"
+                                     name="roomTypeName"
+                                     ng-model="editInfoRoom.roomTypeName"
+                                     ng-src="{{ img.roomTypeImg }}"/>
+                                <span class="delete-icon" ng-click="deleteImage(img.id)"><i class="fa-solid fa-xmark"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div ng-if="editImageRoom === null || editImageRoom.length <= 0">{{inValidImage}}</div>
+                    </div>
+                    <div class="col-12 d-flex justify-content-end mt-5">
+                        <button class="btn" style="margin-right: 20px"><a class="btn"
+                                                                          href="/business/hotel/room-type-list">Trở
+                            về</a></button>
+                        <button type="button"
+                                class="btn btn-submit"
+                                ng-click="deleteImageRoomType()"
+                                ng-disabled="deletedImages.length < 1">Sửa hình ảnh
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,221 @@
+<div class="container mt-4">
+    <div class="header-control mb-3">
+        <div class="header-control-center">
+            <div class="d-flex justify-content-between align-items-center row ">
+                <div class="col mt-3">
+                    <h3 class="color-green fw-bold text-uppercase mb-3">Chi tiết thanh toán</h3>
+                    <nav aria-label="breadcrumb mb-3">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list">
+                                    Tour chi tiết
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list/{{ tourDetailId }}/service-list">
+                                    Chọn dịch vụ
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/transportation-list">
+                                    Danh sách xe
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" style="width: 160px">
+                                <p>
+                                    Chi tiết thanh toán
+                                </p>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 pe-2">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Chi tiết đơn hàng</h5>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="card mb-3">
+                                <img class="img-fluid rounded-3" loading="lazy"
+                                     ng-src="{{transportationSchedules.transportationsByTransportationId.transportationImg }}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mx-3">
+                        <p class="card-text fw-medium mb-1">Phương tiện</p>
+                        <p class="card-title fw-medium mb-1 ms-3">
+                            Hãng: {{ transportationSchedules.transportationBrandsByTransportationBrandId.transportationBrandName }}</p>
+                        <p class="card-title fw-medium mb-1 ms-3">
+                            Loại: {{ transportationSchedules.transportationTypesByTransportationTypeId.transportationTypeName }}</p>
+                        <p class="card-title mb-1 ms-3">biển
+                            số: {{ transportationSchedules.transportationsByTransportationId.licensePlate }}</p>
+                        <p class="card-title fw-medium mb-3 ms-3">số chỗ
+                            ngồi: {{ transportationSchedules.transportationsByTransportationId.amountSeat }}</p>
+                        <p class="card-text fw-medium mb-1 ">Chuyến đi</p>
+                        <ul class="ps-0 ms-3">
+                            <li class="d-flex align-items-start mb-2">
+                                <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                <span>Đi từ <span
+                                        class="fw-medium">{{ transportationSchedules.fromLocation }}</span>  đến
+                                                <span class="fw-medium">{{ transportationSchedules.toLocation }}</span></span>
+                            </li>
+                            <li class="d-flex align-items-start mb-2">
+                                <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                <span>ngày khởi hành: <span
+                                        class="fw-medium"> {{ transportationSchedules.departureTime | dateWithTimeFormat }}</span></span>
+                            </li>
+                            <li class="d-flex align-items-start mb-2">
+                                <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                                <span>ngày về: <span
+                                        class="fw-medium">{{ transportationSchedules.arrivalTime | dateWithTimeFormat }}</span></span>
+                            </li>
+                        </ul>
+
+                        <p class="fw-medium">Trạng thái:
+                            <span class="fw-bold color-green" ng-if="transportationSchedules.isActive === true">
+                                                Đang hoạt động
+                                        </span>
+                            <span class="fw-bold color-green" ng-if="transportationSchedules.isActive === false">
+                                            Ngưng hoạt động
+                                        </span>
+                        </p>
+                    </div>
+
+                    <div class="mx-3">
+                        <div class="d-flex justify-content-between">
+                            <span class="font-bold text-lg">Tổng tiền xe:</span>
+                            <span class="font-bold text-lg"> {{ transportationSchedules.unitPrice | vnCurrency }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Thuế GTGT: (vé đã bao gồm thuế GTGT)</span>
+                            <span> {{ 0 | vnCurrency }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Chiết khấu:</span>
+                            <span> {{ 0 | vnCurrency }}</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between font-bold text-xl mt-3 fw-bold">
+                            <span>Tổng tiền phải thanh toán:</span>
+                            <span> {{ transportationSchedules.unitPrice | vnCurrency }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 ps-2">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form method="post" role="form" name="transportForm">
+                        <h5 class="card-title">Thông tin của bạn để hoàn tất quá trình đặt vé</h5>
+                        <div class="col-12 mb-3">
+                            <label for="full_name" class="form-label">Họ và tên
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text"
+                                   id="full_name"
+                                   class="form-control"
+                                   name="fullName"
+                                   ng-model="tourGuide.fullName"
+                                   placeholder="VD: Nguyen Van A"
+                                   ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                   ng-class="{ 'is-invalid': transportForm.fullName.$invalid && transportForm.fullName.$touched, 'is-valid': transportForm.fullName.$valid && transportForm.fullName.$touched }"
+                                   ng-change="codeQrOnChange()"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="transportForm.fullName.$touched && transportForm.fullName.$error.required">
+                                Vui lòng nhập họ và tên !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="transportForm.fullName.$touched && transportForm.fullName.$error.pattern">
+                                Họ và tên không đúng định dạng !
+                            </small>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label for="phone" class="form-label">Điện thoại di động<span
+                                    class="text-danger">*</span></label>
+                            <input type="tel"
+                                   id="phone"
+                                   name="phone"
+                                   maxlength="10"
+                                   class="form-control"
+                                   ng-model="tourGuide.phone"
+                                   ng-class="{ 'is-invalid': transportForm.phone.$invalid && transportForm.phone.$touched, 'is-valid': transportForm.phone.$valid && transportForm.phone.$touched }"
+                                   ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                                   ng-change="codeQrOnChange()"
+                                   placeholder="VD: 0918298029"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="transportForm.phone.$touched && transportForm.phone.$error.required">
+                                Vui lòng nhập số điện thoại !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="transportForm.phone.$touched && transportForm.phone.$error.pattern">
+                                Số điện thoại không đúng định dạng !
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="email"
+                                   id="email"
+                                   class="form-control"
+                                   name="email"
+                                   ng-model="tourGuide.email"
+                                   ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                                   placeholder="VD: example@gmail.com"
+                                   ng-class="{ 'is-invalid': transportForm.email.$invalid && transportForm.email.$touched, 'is-valid': transportForm.email.$valid && transportForm.email.$touched }"
+                                   ng-change="codeQrOnChange()"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="transportForm.email.$touched && transportForm.email.$error.required">
+                                Vui lòng nhập địa chỉ email !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="transportForm.email.$touched && transportForm.email.$error.pattern">
+                                Địa chỉ email không đúng định dạng !
+                            </small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Delivery Time Section -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Thời gian đến của bạn</h5>
+                    <ul class="ps-0">
+                        <li class="d-flex align-items-start mb-2">
+                            <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                            <span>xe của bạn sẽ sẵn sàng để nhận từ ngày
+                                <span class="fw-medium">{{ transportationSchedules.departureTime | dateWithTimeFormat }}</span>
+                            đến ngày
+                                <span class="fw-medium">{{ transportationSchedules.arrivalTime | dateWithTimeFormat }}</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="float-end mb-2">
+                <button ng-click="ConfirmCompletionOfBooking()" ng-disabled="transportForm.$invalid"
+                        class="btn btn-success" type="submit">
+                    Hoàn tất đặt xe
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

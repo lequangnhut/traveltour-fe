@@ -1,0 +1,663 @@
+<style>
+    .nav-pills .nav-link {
+        border: none;
+        border-bottom: 2px solid transparent;
+        color: #495057;
+        border-radius: 0; /* Bỏ border-radius */
+    }
+
+    .nav-pills .nav-link.active {
+        border-color: #28a745;
+        color: #28a745;
+        font-weight: bold;
+        background-color: transparent;
+        border-radius: 0; /* Bỏ border-radius */
+    }
+
+    p.mb-3:hover a.ng-scope {
+        text-decoration: none; /* Loại bỏ gạch chân */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Hiệu ứng nền mờ */
+    }
+</style>
+
+<div class="container">
+    <div class="header-control mb-4">
+        <div class="header-control-center mb-3">
+            <div class="d-flex justify-content-between align-items-center row ">
+                <div class="col-xl-6 mt-3">
+                    <h3 class="color-green fw-bold">DANH SÁCH DOANH NGHIỆP</h3>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link cursor-pointer" id="pills-true"
+                   ng-class="{active: currentTab === 'online'}"
+                   ng-click="changeTab('online', true, 'dateCreated')">
+                    Đang hoạt động
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link cursor-pointer" id="pills-false"
+                   ng-class="{active: currentTab === 'offline'}"
+                   ng-click="changeTab('offline', false, 'dateBlocked')">
+                    Ngưng hoạt động
+                </a>
+            </li>
+        </ul>
+
+        <div class="card card-customer">
+            <div class="row" style="margin: 20px 16px 20px 16px">
+                <div class="col-xl-4">
+                    Bạn muốn tìm kiếm gì ?
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">
+                            <a href="#" class="bg-light text-dark">
+                                <i class="fa-solid fa-magnifying-glass bg-light"></i>
+                            </a>
+                        </span>
+                        <input type="text" class="form-control"
+                               placeholder="Nhập tên của doanh nghiệp cần tìm"
+                               ng-model="searchTerm" ng-change="searchAgencies()">
+                    </div>
+                </div>
+                <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
+                     style="margin: 20px 0 0 0">
+                </div>
+            </div>
+        </div>
+
+        <!-- Danh sách đang hoạt động -->
+        <div class="table-components table-responsive mb-5" ng-show="currentTab === 'online'">
+            <div class="card table-responsive table-customer">
+                <div class="card-header ">
+                    <div class="row">
+                        <div class="h4 col-lg-5 d-flex align-items-center h-100">
+                            <div class="d-flex align-items-center">
+                                <span class="h4">Doanh nghiệp đang hoạt động</span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end align-items-baseline col-lg-2">
+                            <select class="form-select" aria-label="Default select example"
+                                    ng-model="pageSize"
+                                    ng-init="pageSize='5'"
+                                    ng-change="pageSizeChanged()">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                            </select>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
+                            <nav aria-label="Page navigation example float-end" ng-if="agenciesList.length > 0">
+                                <ul class="pagination justify-content-center align-items-center">
+                                    <li class="page-item" ng-class="{disabled: currentPage === 0}">
+                                        <a class="page-link" ng-click="setPage(0)">
+                                            <i class="fa-solid fa-angles-left"></i>
+                                        </a>
+                                    </li>
+                                    <!-- Ellipsis at the beginning -->
+                                    <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                        <span class="page-link">...</span>
+                                    </li>
+
+                                    <!-- Pagination Numbers -->
+                                    <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
+                                        ng-class="{active: n === currentPage}">
+                                        <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                    </li>
+
+                                    <!-- Ellipsis at the end -->
+                                    <li class="page-item"
+                                        ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                        <span class="page-link">...</span>
+                                    </li>
+
+                                    <!-- Next Page -->
+                                    <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}">
+                                        <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                            <i class="fa-solid fa-angles-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-responsive text-center table-striped">
+                    <div ng-include="'app/component/utils/loading-table.html'"></div>
+                    <thead>
+                    <tr class="bg-light">
+                        <th scope="col"># <i class="fa-solid fa-sort"></i></th>
+                        <th ng-click="sortData('nameAgency')">
+                            <div class="icon-left">Tên doanh nghiệp
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('nameAgency')"></span>
+                            </div>
+                        </th>
+                        <th ng-click="sortData('phone')">
+                            <div class="icon-left">Liên lạc
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('phone')"></span>
+                            </div>
+                        </th>
+                        <th ng-click="sortData('province')">
+                            <div class="icon-left">Địa chỉ
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('province')"></span>
+                            </div>
+                        </th>
+                        <th ng-click="sortData('isActive')">
+                            <div class="icon-left">Trạng thái
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('isActive')"></span>
+                            </div>
+                        </th>
+                        <th scope="col">Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="agent in agenciesList">
+                        <td>{{ getDisplayIndex($index) }}</td>
+                        <td class="cursor-default">
+                            <span custom-tooltip="{{ agent.nameAgency }}">
+                                <span>{{ agent.nameAgency | limitTo: 35 }}</span>
+                                <span ng-show="agent.nameAgency.length > 35">...</span>
+                            </span>
+                        </td>
+                        <td>{{ agent.phone | phoneNumber }}</td>
+                        <td>{{ agent.province }}</td>
+                        <td>
+                            <div ng-if="agent.isActive === true"
+                                 class="d-flex align-items-center justify-content-center">
+                                <span class="status-success"></span> <span
+                                    class="text-status-success">Đang hoạt động</span>
+                            </div>
+                            <div ng-if="agent.isActive === false"
+                                 class="d-flex align-items-center justify-content-center">
+                                <span class="status-error"></span> <span
+                                    class="text-status-error">Ngừng hoạt động</span>
+                            </div>
+                        </td>
+                        <td class="d-flex align-items-center justify-content-center">
+                            <a role="button" class="fs-1 btn text-info px-2" ng-click="openModalInfoAgencies(agent.id)">
+                               <span custom-tooltip="Xem hồ sơ">
+                                    <i class="fa-regular fa-eye"></i>
+                                </span>
+                            </a>
+                            <a ng-click="redirectPage('/admin/agency/agency-list/agency-update/', agent.id)"
+                               role="button" class="fs-1 btn text-warning px-2 cursor-pointer">
+                                <span custom-tooltip="Cập nhật doanh nghiệp">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr ng-if="agenciesList.length === 0">
+                        <td colspan="8">Trang này không có dữ liệu.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-end" ng-if="agenciesList.length > 0">
+                        {{ getDisplayRange() }} trong tổng số {{ totalElements }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Danh sách ngưng hoạt động -->
+        <div class="table-components table-responsive mb-5" ng-show="currentTab === 'offline'">
+            <div class="card table-responsive table-customer">
+                <div class="card-header ">
+                    <div class="row">
+                        <div class="h4 col-lg-5 d-flex align-items-center h-100">
+                            <div class="d-flex align-items-center">
+                                <span class="h4">Doanh nghiệp ngưng hoạt động</span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end align-items-baseline col-lg-2">
+                            <select class="form-select" aria-label="Default select example"
+                                    ng-model="pageSize"
+                                    ng-init="pageSize='5'"
+                                    ng-change="pageSizeChanged()">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                            </select>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
+                            <nav aria-label="Page navigation example float-end" ng-if="agenciesList.length > 0">
+                                <ul class="pagination justify-content-center align-items-center">
+                                    <li class="page-item" ng-class="{disabled: currentPage === 0}">
+                                        <a class="page-link" ng-click="setPage(0)">
+                                            <i class="fa-solid fa-angles-left"></i>
+                                        </a>
+                                    </li>
+                                    <!-- Ellipsis at the beginning -->
+                                    <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                        <span class="page-link">...</span>
+                                    </li>
+
+                                    <!-- Pagination Numbers -->
+                                    <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
+                                        ng-class="{active: n === currentPage}">
+                                        <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                    </li>
+
+                                    <!-- Ellipsis at the end -->
+                                    <li class="page-item"
+                                        ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                        <span class="page-link">...</span>
+                                    </li>
+
+                                    <!-- Next Page -->
+                                    <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}">
+                                        <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                            <i class="fa-solid fa-angles-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-responsive text-center table-striped">
+                    <div ng-include="'app/component/utils/loading-table.html'"></div>
+                    <thead>
+                    <tr class="bg-light">
+                        <th scope="col"># <i class="fa-solid fa-sort"></i></th>
+                        <th ng-click="sortData('nameAgency')">
+                            <div class="icon-left">Tên doanh nghiệp
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('nameAgency')"></span>
+                            </div>
+                        </th>
+                        <th ng-click="sortData('phone')">
+                            <div class="icon-left">Liên lạc
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('phone')"></span>
+                            </div>
+                        </th>
+                        <th ng-click="sortData('province')">
+                            <div class="icon-left">Địa chỉ
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('province')"></span>
+                            </div>
+                        </th>
+                        <th ng-click="sortData('isActive')">
+                            <div class="icon-left">Trạng thái
+                                <span class="sorting-icon" ng-bind-html="getSortIcon('isActive')"></span>
+                            </div>
+                        </th>
+                        <th scope="col">Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="agent in agenciesList">
+                        <td>{{ getDisplayIndex($index) }}</td>
+                        <td class="cursor-default">
+                            <span custom-tooltip="{{ agent.nameAgency }}">
+                                <span>{{ agent.nameAgency | limitTo: 35 }}</span>
+                                <span ng-show="agent.nameAgency.length > 35">...</span>
+                            </span>
+                        </td>
+                        <td>{{ agent.phone ? agent.phone : '-' | phoneNumber }}</td>
+                        <td>{{ agent.province ? agent.province : '-' }}</td>
+                        <td>
+                            <div ng-if="agent.isActive === true"
+                                 class="d-flex align-items-center justify-content-center">
+                                <span class="status-success"></span> <span
+                                    class="text-status-success">Đang hoạt động</span>
+                            </div>
+                            <div ng-if="agent.isActive === false"
+                                 class="d-flex align-items-center justify-content-center">
+                                <span class="status-error"></span> <span
+                                    class="text-status-error">Ngừng hoạt động</span>
+                            </div>
+                        </td>
+                        <td class="d-flex align-items-center justify-content-center">
+                            <a role="button" class="fs-1 btn text-info px-2" ng-click="openModalInfoAgencies(agent.id)">
+                                <span custom-tooltip="Xem hồ sơ">
+                                    <i class="fa-regular fa-eye"></i>
+                                </span>
+                            </a>
+                            <a ng-click="redirectPage('/admin/agency/agency-list/agency-update/', agent.id)"
+                               role="button" class="fs-1 btn text-warning px-2 cursor-pointer">
+                                <span custom-tooltip="Cập nhật doanh nghiệp">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr ng-if="agenciesList.length === 0">
+                        <td colspan="8">Trang này không có dữ liệu.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-end" ng-if="agenciesList.length > 0">
+                        {{ getDisplayRange() }} trong tổng số {{ totalElements }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal xem thông tin chi tiết của doanh nghiệp -->
+<div class="modal fade" id="modal-agencies" tabindex="-1" aria-labelledby="modal-agencies-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog" style="min-width: 80%;">
+        <div class="modal-content" style="min-width: 100%; background-color: rgb(245,245,245)">
+            <div class="modal-header" style="border-bottom: 1px solid #c6c6c6;">
+                <h3 class="modal-title justify-content-center fw-bold d-flex" style="font-size: 22px; color: black"
+                    id="modal-agencies-label">
+                    Hồ sơ doanh nghiệp -
+                    <p class="color-green" ng-if="agencies.isActive === true">&nbsp;Đang hoạt động</p>
+                    <p class="color-danger" ng-if="agencies.isActive === false">&nbsp;Tạm ngưng hoạt động</p>
+                </h3>
+                <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="fas fa-times fs--1"></span>
+                </button>
+            </div>
+            <div class="modal-body" style="min-height: 500px;padding: 35px 40px 0 40px;">
+                <div class="mb-3"
+                     style="background-image: url('https://i.imgur.com/aYK6Vt2.jpg'); min-height: 200px; border-radius: 10px; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(145,145,145,0.23); border-radius: 10px; height: 100%; width: 100%; justify-content: center; align-items: center; display: flex;">
+                        <div class="mb-4 mt-4 text-center">
+                            <label for="nameAgency" class="form-label mb-3 mt-2"
+                                   style="font-size: 20px; color: rgba(0,0,0,0.71); padding-left:25px; text-transform: none; font-weight: normal">
+                                Tên doanh nghiệp
+                            </label>
+                            <p class="mb-3 lh-lg mb-0"
+                               style="font-size: 25px; font-weight: bold">{{ agencies.nameAgency }}</p>
+                            <p class="mb-2 lh-lg mb-0"
+                               style="font-size: 20px; color: rgba(0,0,0,0.71); padding-left:25px; text-transform: none; font-weight: bolder">
+                                ID: {{ agencies.id }}</p>
+                            <p class="mb-0 text-700 lh-lg mb-0" style="font-size: large"
+                               ng-if="agencies.nameAgency == null">(Trống)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 col-sm-12 mb-3"
+                         style="min-height: 450px; border-radius: 10px; position: relative; overflow: hidden;">
+                        <div style="top: 0; left: 0; right: 0; bottom: 0; background-color: rgb(255,255,255); border-radius: 10px; height: 100%; width: 100%; display: flex;">
+                            <div class="mb-4 mt-4" style="width: 100%">
+                                <p style="width: 100%; text-align-last: center;font-size: large; color: black; font-weight: bold">
+                                    THÔNG TIN CHUNG
+                                </p>
+                                <hr>
+                                <p class="mb-3 lh-lg ng-binding"
+                                   style="font-size: 15px; padding-left: 20px; padding-right: 20px">
+                                    <strong>Mã doanh nghiệp: </strong>
+                                    <span class="fw-bold">{{ agencies.id || '...' }}</span>
+                                </p>
+
+                                <p class="mb-3 lh-lg ng-binding"
+                                   style="font-size: 15px;padding-left: 20px; padding-right: 20px">
+                                    <strong>Tên doanh nghiệp: </strong>
+                                    <span class="fw-bold">{{ agencies.nameAgency || '...' }}</span>
+                                </p>
+
+                                <p class="mb-3 lh-lg ng-binding"
+                                   style="font-size: 15px;padding-left: 20px; padding-right: 20px">
+                                    <strong>Người đại diện: </strong> {{ agencies.representativeName || '...' }}
+                                </p>
+
+                                <p class="mb-3 lh-lg ng-binding"
+                                   style="font-size: 15px;padding-left: 20px; padding-right: 20px">
+                                    <strong>Mã số thuế: </strong>
+                                    <span class="fw-bold">{{ agencies.taxId || '...' }}</span>
+                                </p>
+
+                                <p class="mb-3 lh-lg ng-binding"
+                                   style="font-size: 15px;padding-left: 20px; padding-right: 20px">
+                                    <strong>Số điện thoại: </strong> {{ agencies.phone || '...' | phoneNumber }}
+                                </p>
+
+                                <p class="mb-3 lh-lg ng-binding"
+                                   style="font-size: 15px;padding-left: 20px; padding-right: 20px">
+                                    <strong>Địa chỉ website: </strong>
+                                    <a href="https://{{agencies.urlWebsite}}" target="_blank">
+                                        {{ agencies.urlWebsite || '...' }}
+                                    </a>
+                                </p>
+
+                                <p class="mb-3 lh-lg ng-binding"
+                                   style="font-size: 15px;padding-left: 20px; padding-right: 20px">
+                                    <strong>Địa chỉ: </strong> {{ agencies.address || '...' }}
+                                    , {{ agencies.ward || '...' }}, {{ agencies.district || '...' }}
+                                    , {{ agencies.province || '...' }}
+                                </p>
+
+                                <p class="mb-3 lh-lg ng-binding"
+                                   style="font-size: 15px;padding-left: 20px; padding-right: 20px">
+                                    <strong>Ngày đăng ký: </strong> {{ agencies.dateCreated | vietnameseDateTime }}
+                                </p>
+
+                                <p class="mb-3 lh-lg ng-binding" ng-if="agencies.isActive"
+                                   style="font-size: 15px;padding-left: 20px; padding-right: 20px">
+                                    <strong>Ngày duyệt hồ sơ: </strong>
+                                    <span class="fw-bold">{{ agencies.dateAccepted | vietnameseDateTime }}</span>
+                                </p>
+
+                                <p class="mb-3 lh-lg ng-binding" ng-if="!agencies.isActive"
+                                   style="font-size: 15px;padding-left: 20px; padding-right: 20px">
+                                    <strong>Ngày khóa doanh nghiệp: </strong>
+                                    <span class="fw-bold">{{ agencies.dateBlocked | vietnameseDateTime }}</span>
+                                </p>
+
+                                <p class="mb-3 lh-lg ng-binding"
+                                   style="font-size: 15px;padding-left: 20px; padding-right: 20px">
+                                    <strong>Trạng thái đăng ký: </strong>
+                                    <span class="text-warning fw-bold" ng-if="agencies.isAccepted === 1">
+                                        Đang chờ duyệt
+                                    </span>
+                                    <span class="text-success fw-bold" ng-if="agencies.isAccepted === 2">
+                                        Đã được duyệt
+                                    </span>
+                                    <span class="text-danger fw-bold" ng-if="agencies.isAccepted === 3">
+                                        Từ chối duyệt
+                                    </span>
+                                </p>
+
+                                <p class="lh-lg ng-binding" ng-class="agencies.isActive ? 'mb-5' : 'mb-3'"
+                                   style="font-size: 15px;padding-left: 20px; padding-right: 20px">
+                                    <strong>Trạng thái hoạt động: </strong>
+                                    <span class="text-success fw-bold" ng-if="agencies.isActive">
+                                        Đang hoạt động
+                                    </span>
+                                    <span class="text-danger fw-bold" ng-if="!agencies.isActive">
+                                        Ngưng hoạt động
+                                    </span>
+                                </p>
+
+                                <p class="mb-5 lh-lg ng-binding" ng-if="!agencies.isActive"
+                                   style="font-size: 15px;padding-left: 20px; padding-right: 20px">
+                                    <strong>Lí do khóa doanh nghiệp: </strong>
+                                    {{ agencies.noted }}
+                                </p>
+
+                                <p style="width: 100%; text-align-last: center;font-size: large; color: black; font-weight: bold">
+                                    LĨNH VỰC DOANH NGHIỆP ĐĂNG KÝ KINH DOANH
+                                </p>
+
+                                <section id="business-information" class="pt-0">
+                                    <div class="container-fluid">
+                                        <div class="logo text-center">
+                                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                                <div class="row">
+                                                    <div class="box col-xl-4 card"
+                                                         ng-if="rolesAgenciesAD.includes('ROLE_AGENT_HOTEL')">
+                                                        <a class="cursor-pointer">
+                                                            <div class="box-icon mb-3">
+                                                                <i class="fa-solid fa-hotel color-green"
+                                                                   style="font-size: 30px"></i>
+                                                            </div>
+                                                            <div class="box-content fw-medium text-dark">
+                                                                Khách sạn
+                                                                <i class="not-info" ng-if="!hotels.isAccepted">
+                                                                    <br>
+                                                                    <span class="fs--1">Chưa đăng ký thông tin</span>
+                                                                </i>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="box col-xl-4 card"
+                                                         ng-if="rolesAgenciesAD.includes('ROLE_AGENT_TRANSPORT')">
+                                                        <a class="cursor-pointer">
+                                                            <div class="box-icon mb-3">
+                                                                <i class="fa-solid fa-car color-green"
+                                                                   style="font-size: 30px"></i>
+                                                            </div>
+                                                            <div class="box-content fw-medium text-dark">
+                                                                Phương tiện
+                                                                <i class="not-info" ng-if="!transport.isAccepted">
+                                                                    <br>
+                                                                    <span class="fs--1">Chưa đăng ký thông tin</span>
+                                                                </i>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="box col-xl-4 card"
+                                                         ng-if="rolesAgenciesAD.includes('ROLE_AGENT_PLACE')">
+                                                        <a class="cursor-pointer">
+                                                            <div class="box-icon mb-3">
+                                                                <i class="fa-brands fa-pagelines color-green"
+                                                                   style="font-size: 30px"></i>
+                                                            </div>
+                                                            <div class="box-content fw-medium text-dark">
+                                                                Tham quan
+                                                                <i class="not-info" ng-if="!visits.isAccepted">
+                                                                    <br>
+                                                                    <span class="fs--1">Chưa đăng ký thông tin</span>
+                                                                </i>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 col-sm-12 mb-3"
+                         style="min-height: 450px; border-radius: 10px; position: relative; overflow: hidden;">
+                        <div style="top: 0; left: 0; right: 0; bottom: 0; background-color: rgb(255,255,255); border-radius: 10px; height: 100%; width: 100%; display: flex;">
+                            <div class="mb-4 mt-4" style="width: 100%">
+                                <p style="width: 100%; text-align-last: center;font-size: large; color: black; font-weight: bold">
+                                    HÌNH ẢNH CHỨNG TỪ
+                                </p>
+                                <hr>
+                                <p class="mb-3 lh-lg ng-binding align-items-center text-center"
+                                   ng-if="agencies.imgDocument == null"
+                                   style="font-size: 15px; padding-left: 20px; padding-right: 20px;">
+                                    Không có ảnh để hiện thị
+                                </p>
+                                <p class="mb-3 lh-lg ng-binding align-items-center text-center"
+                                   ng-if="agencies.imgDocument != null"
+                                   style="font-size: 15px; padding-left: 20px; padding-right: 20px;">
+                                    <img class="text-700 lh-lg mb-0" src="{{agencies.imgDocument}}" loading="lazy"
+                                         style="width: 90%; display: block; margin-left: auto; margin-right: auto;"
+                                         alt="License">
+                                </p>
+                                <hr style="margin-top: 10px;">
+                                <p class="mb-3 lh-lg ng-binding text-center"
+                                   ng-if="agencies.imgDocument != null"
+                                   style="font-size: 15px; padding-left: 20px; padding-right: 20px;">
+                                    <a href="{{agencies.imgDocument}}"
+                                       ng-if="agencies.imgDocument != null" type="button"
+                                       class="ng-scope fw-bold"
+                                       target="_blank"
+                                       style="background-color: mediumseagreen; padding: 10px; border-radius: 8px; color: #ffffff; font-weight: 600; display: inline-block;">
+                                        Xem ảnh
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding-right: 0">
+                    <button type="button" class="btn" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Thoát
+                    </button>
+                    <button type="button"
+                            ng-if="agencies.isActive"
+                            data-bs-toggle="modal"
+                            data-bs-target="#noted-agencies"
+                            class="btn btn-warning"
+                    >
+                        Ngưng hoạt động
+                    </button>
+                    <button type="button"
+                            ng-if="!agencies.isActive"
+                            ng-click="restoreThisAgency(agencies.id, agencies.nameAgency)"
+                            class="btn btn-warning"
+                    >
+                        Khôi phục hoạt động
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal nhập thông tin tại sao ngưng hoạt động doanh nghiệp -->
+<div class="modal fade" id="noted-agencies" tabindex="-1" aria-labelledby="noted-agencies-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="noted-agencies-label">
+                    Mô tả lí do
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" role="form" name="formNotedAgencies">
+                    <div class="form-group">
+                        <label for="noted" class="form-label">
+                            VUI LÒNG NHẬP LÍ DO TẠM NGƯNG HOẠT ĐỘNG<span class="text-danger">*</span>
+                        </label>
+                        <textarea class="form-control"
+                                  rows="4"
+                                  id="noted"
+                                  name="noted"
+                                  ng-model="agent.noted"
+                                  ng-class="{ 'is-invalid': formNotedAgencies.noted.$invalid && formNotedAgencies.noted.$touched,
+                                               'is-valid': formNotedAgencies.noted.$valid && formNotedAgencies.noted.$touched }"
+                                  ng-pattern="/.{25,}/"
+                                  placeholder="Nhập lí do tạm ngưng hoạt động đối với doanh nghiệp {{ agencies.nameAgency }}"
+                                  required
+                        ></textarea>
+                        <small class="text-danger"
+                               ng-show="formNotedAgencies.noted.$touched && formNotedAgencies.noted.$error.required">
+                            Vui lòng nhập lí do vì sao ngưng hoạt động.
+                        </small>
+                        <small class="text-danger"
+                               ng-show="formNotedAgencies.noted.$error.pattern">
+                            Vui lòng nhập ít nhất 25 ký tự.
+                        </small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn"
+                        ng-click="hideModalInfoAgencies()"
+                        data-bs-dismiss="modal"
+                >
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Quay về
+                </button>
+                <button type="button"
+                        ng-disabled="formNotedAgencies.$invalid"
+                        ng-click="deleteThisAgency(agencies.id, agencies.nameAgency)"
+                        class="btn btn-success"
+                >
+                    Xác nhận
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

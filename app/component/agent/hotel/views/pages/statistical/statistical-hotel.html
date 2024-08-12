@@ -1,0 +1,53 @@
+<div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white pt-6 pb-3 border-y border-300">
+    <div class="row gx-6">
+        <div class="col-12 col-xl-6 mb-3 mb-md-3 mb-lg-3 mb-xl-2 mb-xxl-3">
+            <div class="scrollbar row">
+                <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 mb-2 ps-5">
+                    <h4 class="text-700">Dữ Liệu So Sánh Giữa Năm {{ year - 1 }} Và {{ year }}</h4>
+                    <p class="text-700 mb-0">So sánh doanh thu tour theo tháng giữa năm {{ year - 1 }} và {{ year }}</p>
+                </div>
+
+                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 ps-5 mb-5 mb-md-3 mb-lg-5 mb-xl-2 mb-xxl-3" style="margin-bottom: -40px; z-index: 1">
+                    <select class="form-select form-select-sm" ng-model="yearForTheChartHorizontalColumn"
+                            ng-options="y for y in selectYearOrderHotelList">
+                    </select>
+                </div>
+                <div class="echart-horizontal-bar-chart" style="height: 450px;"></div>
+            </div>
+        </div>
+        <div class="col-12 col-xl-6 mb-3 mb-md-3 mb-lg-3 mb-xl-2 mb-xxl-3">
+            <div class="scrollbar row">
+                <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 mb-2 ps-5">
+                    <h4 class="text-700">Phân Tích Tình Trạng Đơn Đặt Phòng Khách Sạn</h4>
+                    <p class="text-700 mb-0">Tổng Quan Đơn Hàng Khách Sạn: Thống Kê Theo Trạng Thái Đơn Hàng</p>
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 ps-5 mb-5 mb-md-3 mb-lg-5 mb-xl-2 mb-xxl-3" style="margin-bottom: -40px; z-index: 1">
+                    <select class="form-select form-select-sm" ng-model="yearForPieChart"
+                            ng-options="y for y in selectYearOrderHotelList">
+                    </select>
+                </div>
+                <div class="echart-pie-chart-example" style="min-height: 450px;"></div>
+            </div>
+        </div>
+        <div class="col-12" style="margin-top: 60px">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-6">
+                    <div class="scrollbar row">
+                        <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 mb-2 ps-5">
+                            <h4 class="text-700">Dữ Liệu So Sánh Giữa Năm {{ year - 1 }} Và {{ year }}</h4>
+                            <p class="text-700 mb-0">So sánh doanh thu tour theo tháng giữa năm {{ year - 1 }}
+                                và {{ year }}</p>
+                        </div>
+
+                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 ps-5" style="margin-bottom: -20px; z-index: 1">
+                            <select class="form-select form-select-sm" ng-model="yearForTheChartColumn"
+                                    ng-options="y for y in selectYearOrderHotelList">
+                            </select>
+                        </div>
+                        <div class="echart-projection-actual" style="height: 450px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

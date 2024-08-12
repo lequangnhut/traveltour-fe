@@ -1,66 +1,64 @@
 <!--====== Start Place Details Section ======-->
 <section class="place-details-section">
-    <!--=== Place Slider ===-->
-    <div class="place-slider-area overflow-hidden wow fadeInUp">
-        <div class="place-slider">
-            <div class="place-slider-item">
-                <div class="place-img">
-                    <img src="/assets/customers/images/place/single-place-1.jpg" alt="Place Image">
-                </div>
-            </div>
-            <div class="place-item">
-                <div class="place-img">
-                    <img src="/assets/customers/images/place/single-place-2.jpg" alt="Place Image">
-                </div>
-            </div>
-            <div class="place-slider-item">
-                <div class="place-img">
-                    <img src="/assets/customers/images/place/single-place-3.jpg" alt="Place Image">
-                </div>
-            </div>
-            <div class="place-slider-item">
-                <div class="place-img">
-                    <img src="/assets/customers/images/place/single-place-2.jpg" alt="Place Image">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
+    <div ng-include="'app/component/utils/loading-component.html'"></div>
+
+    <div class="container" ng-if="!isLoading">
         <!--=== Tour Details Wrapper ===-->
         <div class="tour-details-wrapper pt-80">
             <!--=== Tour Title Wrapper ===-->
-            <div class="tour-title-wrapper pb-30 wow fadeInUp">
+            <div class="tour-title-wrapper wow fadeInUp">
                 <div class="row">
+                    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
+                         aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item fw-medium"><a href="/home">Trang chủ</a></li>
+                            <li class="breadcrumb-item fw-medium"><a href="/tours">Đặt tour</a></li>
+                            <li class="breadcrumb-item active fw-medium" aria-current="page">Chi tiết đặt tour</li>
+                        </ol>
+                    </nav>
+
                     <div class="col-xl-6">
                         <div class="tour-title mb-20">
-                            <h3 class="title">Boat Traveling on Made River</h3>
-                            <p><i class="far fa-map-marker-alt"></i>Tambon Khlong Sok, Thailand</p>
+                            <h3 class="title">{{ tourDetail.toursByTourId.tourName }}</h3>
+                            <p>
+                                <span class="fas fa-map-marker-alt"></span>
+                                <span ng-repeat="province in provinceName">
+                                    {{ province }}
+                                    <span ng-if="!$last">- &nbsp;</span>
+                                </span>
+                                <span ng-if="provinceName.length === 0">
+                                    Hiện tại tour này không có điểm tham quan.
+                                </span>
+                            </p>
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="tour-widget-info">
                             <div class="info-box mb-20">
                                 <div class="icon">
-                                    <i class="fal fa-box-usd"></i>
+                                    <span class="fal fa-box-usd"></span>
                                 </div>
                                 <div class="info">
-                                    <h4><span>From</span>$96.54</h4>
+                                    <h4><span>Chỉ từ</span>{{ tourDetail.unitPrice | vnCurrency }}</h4>
                                 </div>
                             </div>
                             <div class="info-box mb-20">
                                 <div class="icon">
-                                    <i class="fal fa-clock"></i>
+                                    <span class="fal fa-clock"></span>
                                 </div>
                                 <div class="info">
-                                    <h4><span>Durations</span>7 Days</h4>
+                                    <h4>
+                                        <span>Trong vòng</span>
+                                        {{ tourDetail.departureDate | calculateDaysAndNights:tourDetail.arrivalDate }}
+                                    </h4>
                                 </div>
                             </div>
                             <div class="info-box mb-20">
                                 <div class="icon">
-                                    <i class="fal fa-planet-ringed"></i>
+                                    <span class="fal fa-user"></span>
                                 </div>
                                 <div class="info">
-                                    <h4><span>Tour Type</span>City Tour</h4>
+                                    <h4><span>Số lượng khách</span>{{ tourDetail.numberOfGuests }} Người</h4>
                                 </div>
                             </div>
                         </div>
@@ -72,764 +70,439 @@
                 <div class="row align-items-center">
                     <div class="col-md-4">
                         <div class="ratings-box">
-                            <ul class="ratings">
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><a href="#">(3k Riviews)</a></li>
-                            </ul>
+                            <div class="ratings-box">
+                                <ul class="ratings d-flex align-items-center color-ratings">
+                                    <div ng-repeat="star in stars track by $index">
+                                        <span class="fas fa-star"></span>
+                                    </div>
+                                    <div ng-if="showHalfStar">
+                                        <span class="fas fa-star-half-alt"></span>
+                                    </div>
+                                    <span class="reviews mx-1" ng-bind="+ ratingHotel.numberOfRatings + ' Đánh giá'"></span>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="share-nav">
-                            <a href="#">Share<i class="far fa-share"></i></a>
-                            <a href="#">Reviews<i class="far fa-share"></i></a>
-                            <a href="#">Whislist<i class="far fa-heart"></i></a>
+                            <a href="#" ng-click="redirectToChatTour('66')">Nhắn tin<i
+                                    class="fa-regular fa-comment"></i></a>
+                            <a href="#">Chia sẻ<span class="fas fa-share"></span></a>
+                            <a href="#" ng-click="likeTour(tourDetail.toursByTourId.id)">Yêu thích
+                                <i ng-if="isLikeTour">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                         style="width: 14px; fill: red; padding-bottom: 4px">
+                                        <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                        <path
+                                                d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/>
+                                    </svg>
+                                </i>
+                                <i ng-if="!isLikeTour">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                         style="width: 14px;  padding-bottom: 4px">
+                                        <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                        <path
+                                                d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8v-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5v3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20c0 0-.1-.1-.1-.1c0 0 0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5v3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2v-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"/>
+                                    </svg>
+                                </i>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-xl-8">
-                    <!--=== Place Content Wrap ===-->
-                    <div class="place-content-wrap pt-45 wow fadeInUp">
-                        <h3 class="title">Explore Tours</h3>
-                        <p>Sed ut perspiciatis unde omniste natus error sit voluptatem accusantium doloremque laudantium
-                            totam rem aperiam, eaque ip quae abillo inventore veritatis et quasi architecto beatae vitae
-                            dicta sunt explicabo. Nemo
-                            enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit sed quia consequuntur
-                            magni dolores
-                            eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia
-                            dolor si amet
-                            consectetur adipisci velit sed quian numquam eius modi tempora incidunt ut labore dolore
-                            magnam aliquam
-                            quaerat voluptatem. Ut enim ad minima veniam qunostrum exercitationem ullam corporis
-                            suscipit laboriosaey
-                            nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea
-                            voluptate velit
-                            esse quam nihil molestiae consequatur veillum qui dolorem voluptas nulla pariatur</p>
-                        <h4>Advance Facilities</h4>
-                        <p>Neque porro quisquam est dolorem ipsum quia dolor si amet consectetur adipisci velit sed
-                            quian numquam eius tempora incidunt labore dolore magnam aliquam quaerat voluptatem.</p>
-                        <div class="row align-items-lg-center">
-                            <div class="col-lg-5">
-                                <ul class="check-list">
-                                    <li><i class="fas fa-badge-check"></i>Parking in the Camp</li>
-                                    <li><i class="fas fa-badge-check"></i>Pick and Drop Services</li>
-                                    <li><i class="fas fa-badge-check"></i>Washing Machines</li>
-                                    <li><i class="fas fa-badge-check"></i>Cruise Dinner & Music Event</li>
-                                    <li><i class="fas fa-badge-check"></i>Visit 5 Best Places With Group</li>
-                                    <li><i class="fas fa-badge-check"></i>Motorhome service</li>
-                                    <li><i class="fas fa-badge-check"></i>1 Meal Per Day</li>
-                                </ul>
-                            </div>
-                            <div class="col-lg-7">
-                                <img src="/assets/customers/images/place/single-place-4.jpg" class="mb-20 w-100" alt="place image">
-                            </div>
+                    <nav class="pt-45">
+                        <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                            <button class="nav-link active fw-medium text-green" id="nav-home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                                    aria-selected="true">Thông tin tour
+                            </button>
+                            <button class="nav-link fw-medium text-green" id="tab-map" data-bs-toggle="tab"
+                                    data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
+                                    aria-selected="false" ng-click="changeTab('mapTab')">Lịch trình của tour
+                            </button>
                         </div>
-                        <h4>Tour Plan</h4>
-                        <p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae
-                            consequatur
-                            vel eillum qui dolorem eum fugiat quo voluptas nulla pariatur</p>
-                    </div>
-                    <!--=== Days Area ===-->
-                    <div class="days-area mb-55 wow fadeInUp">
-                        <ul class="nav nav-tabs mb-35">
-                            <li class="nav-item">
-                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#day1">Day 1st
-                                </button>
-                            </li>
-                            <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day2">Day 2nd</button>
-                            </li>
-                            <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day3">Day 3rd</button>
-                            </li>
-                            <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day4">Day 4th</button>
-                            </li>
-                            <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day5">Day 5th</button>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane fade show active" id="day1">
-                                <div class="content-box">
-                                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit sed
-                                        quia consequuntur magne doloreseos qui ratione voluptatem sequi nesciunt. Neque
-                                        porro quisquam est, qui dolorem ipsum quia dolor si amet consectetur adipisci
-                                        velit sed quian numquam eius modi tempora incidunt</p>
-                                    <ul class="check-list">
-                                        <li><i class="fas fa-badge-check"></i>Parking in the Camp</li>
-                                        <li><i class="fas fa-badge-check"></i>kayaking Sport</li>
-                                        <li><i class="fas fa-badge-check"></i>Mountain Hiking</li>
-                                    </ul>
-                                </div>
+                    </nav>
+
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade active show" id="nav-home" role="tabpanel"
+                             aria-labelledby="nav-home-tab">
+
+                            <div class="place-content-wrap mb-4 visit-parent-class"
+                                 ng-bind-html="tourDetailDescription"
+                                 style="text-align: justify; white-space: pre-line; font-family: 'Roboto',sans-serif;">
                             </div>
-                            <div class="tab-pane fade" id="day2">
-                                <div class="content-box">
-                                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit sed
-                                        quia consequuntur magne doloreseos qui ratione voluptatem sequi nesciunt. Neque
-                                        porro quisquam est, qui dolorem ipsum quia dolor si amet consectetur adipisci
-                                        velit sed quian numquam eius modi tempora incidunt</p>
-                                    <ul class="check-list">
-                                        <li><i class="fas fa-badge-check"></i>Parking in the Camp</li>
-                                        <li><i class="fas fa-badge-check"></i>kayaking Sport</li>
-                                        <li><i class="fas fa-badge-check"></i>Mountain Hiking</li>
-                                    </ul>
-                                </div>
+                            <div class="place-content-wrap mb-4"
+                                 ng-if="tourDetail.tourDetailDescription.length === 10">
+                                Không có nội dung ghi chú.
                             </div>
-                            <div class="tab-pane fade" id="day3">
-                                <div class="content-box">
-                                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit sed
-                                        quia consequuntur magne doloreseos qui ratione voluptatem sequi nesciunt. Neque
-                                        porro quisquam est, qui dolorem ipsum quia dolor si amet consectetur adipisci
-                                        velit sed quian numquam eius modi tempora incidunt</p>
-                                    <ul class="check-list">
-                                        <li><i class="fas fa-badge-check"></i>Parking in the Camp</li>
-                                        <li><i class="fas fa-badge-check"></i>kayaking Sport</li>
-                                        <li><i class="fas fa-badge-check"></i>Mountain Hiking</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="day4">
-                                <div class="content-box">
-                                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit sed
-                                        quia consequuntur magne doloreseos qui ratione voluptatem sequi nesciunt. Neque
-                                        porro quisquam est, qui dolorem ipsum quia dolor si amet consectetur adipisci
-                                        velit sed quian numquam eius modi tempora incidunt</p>
-                                    <ul class="check-list">
-                                        <li><i class="fas fa-badge-check"></i>Parking in the Camp</li>
-                                        <li><i class="fas fa-badge-check"></i>kayaking Sport</li>
-                                        <li><i class="fas fa-badge-check"></i>Mountain Hiking</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="day5">
-                                <div class="content-box">
-                                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit sed
-                                        quia consequuntur magne doloreseos qui ratione voluptatem sequi nesciunt. Neque
-                                        porro quisquam est, qui dolorem ipsum quia dolor si amet consectetur adipisci
-                                        velit sed quian numquam eius modi tempora incidunt</p>
-                                    <ul class="check-list">
-                                        <li><i class="fas fa-badge-check"></i>Parking in the Camp</li>
-                                        <li><i class="fas fa-badge-check"></i>kayaking Sport</li>
-                                        <li><i class="fas fa-badge-check"></i>Mountain Hiking</li>
-                                    </ul>
-                                </div>
-                            </div>
+
+                            <!--=== Map Box ===-->
+                            <div class="map-box mb-40">
+                                <div id="map-schedules" class="rounded-3" style="width: 100%; height: 500px;"></div>
+                            </div><!--=== Map Box ===-->
                         </div>
-                    </div>
-                    <!--=== Map Box ===-->
-                    <div class="map-box mb-60 wow fadeInUp">
-                        <iframe src="https://maps.google.com/maps?q=new%20york&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"></iframe>
-                    </div>
-                    <!--=== Calendar Box ===-->
-                    <div class="calendar-wrapper wow fadeInUp">
-                        <div class="calendar-container mb-45"></div>
-                    </div>
-                    <!--=== Releted Tour Place ===-->
-                    <div class="related-tour-place wow fadeInUp">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="section-title mb-35">
-                                    <h3>Related Tours</h3>
-                                </div>
+
+                        <div class="tab-pane face" id="nav-profile" role="tabpanel" aria-labelledby="tab-map">
+                            <div class="section-title mb-3">
+                                <h3>Lịch trình hoạt động - di chuyển của chuyến đi</h3>
                             </div>
-                            <div class="col-md-4">
-                                <div class="place-arrows mb-35"></div>
-                            </div>
-                        </div>
-                        <div class="recent-place-slider">
-                            <!--=== Single Place Item ===-->
-                            <div class="single-place-item mb-60">
-                                <div class="place-img">
-                                    <img src="/assets/customers/images/place/place-1.jpg" alt="Place Image">
+
+                            <!--=== Days Area ===-->
+                            <div class="days-area mb-55">
+                                <div class="tab-content">
+                                    <div class="tour-trips-list">
+                                        <div class="tour-trips-header p-2 bg-green rounded-top-3 d-flex">
+                                            <h5 class="text-white m-1 ms-4 fs-6" ng-repeat="day in dayInTrip">
+                                                <a href="javascript:void(0)" ng-if="dayInTrip.length !== 0"
+                                                   ng-click="changeLocationOnMap(day.dayTrip)"
+                                                   ng-style="{'color': day.dayTrip === selectedDayTrip ? '#2C7865' : 'white'}">
+                                                    <i class="fa-regular fa-calendar-days"></i>
+                                                    Ngày {{ day.dayTrip }}
+                                                </a>
+                                            </h5>
+                                            <h5 class="text-white m-1 ms-4 fs-6" ng-if="dayInTrip.length === 0">
+                                                Không có ngày dự kiến cho lịch trình
+                                            </h5>
+                                        </div>
+
+                                        <!--=== Map Box ===-->
+                                        <div class="map-box mb-40">
+                                            <div id="map-trips" class="rounded-bottom-3" resize-map
+                                                 style="width: 100%; height: 500px;"></div>
+                                        </div><!--=== Map Box ===-->
+
+                                        <!--content-->
+                                        <div class="tour-chips-item mb-5" ng-repeat="trip in tourTrips">
+                                            <div class="row" id="SCROLL_{{ trip.id }}">
+                                                <div class="col-sm-3 text-center ">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <a href="javascript:void(0)"
+                                                           ng-click="zoomLocation(trip.placeAddress)">
+                                                            <div class="border-solid-border">
+                                                                <img ng-src="{{ trip.placeImage }}"
+                                                                     class="img-fluid"
+                                                                     alt="Place Image">
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="time text-center mt-3">
+                                                        <h5 class="text-orange">{{ trip.timeGo }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <div class="tour-trips-item-content">
+                                                        <div class="h4 text-orange">{{ trip.placeName }}</div>
+                                                        <div class="fw-medium">
+                                                            <i class="fa-solid fa-location-dot"></i>
+                                                            {{ trip.placeAddress }}
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <p>
+                                                                {{ trip.activityInDay }}
+                                                            </p>
+                                                        </div>
+                                                        <div class="tour-trips-item-footer">
+                                                            <div class="row">
+                                                                <div class="fw-medium col-sm-4 text-center">
+                                                                    <i class="fa-solid fa-van-shuttle"></i>
+                                                                    <span>
+                                                                        Xe trên hợp đồng
+                                                                    </span>
+                                                                </div>
+                                                                <div class="fw-medium col-sm-4 text-center">
+                                                                    <i class="fa-solid fa-turn-down"></i>
+                                                                    <span>8,3 Km</span>
+                                                                </div>
+                                                                <div class="fw-medium col-sm-4 text-center">
+                                                                    <i class="fa-solid fa-tag"></i>
+                                                                    <span ng-if="trip.placeCost === 0">
+                                                                        Miễn phí
+                                                                    </span>
+                                                                    <span ng-if="trip.placeCost !== 0">
+                                                                        {{ trip.placeCost | vnCurrency }}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!--content-->
+                                    </div>
                                 </div>
-                                <div class="place-content">
-                                    <div class="info">
-                                        <ul class="ratings">
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><a href="#">(4.9)</a></li>
-                                        </ul>
-                                        <h4 class="title"><a href="tour-details.html">Man and Woman Walks on Dock</a>
-                                        </h4>
-                                        <p class="location"><i class="fas fa-map-marker-alt"></i>North Province,
-                                            Maldives</p>
-                                        <p class="price"><i class="fas fa-usd-circle"></i>Price<span
-                                                class="currency">$</span>93.65</p>
-                                        <div class="meta">
-                                            <span><i class="far fa-clock"></i>05 Days</span>
-                                            <span><i class="far fa-user"></i>25</span>
-                                            <span><a href="tour-details.html">Details<i
-                                                    class="far fa-long-arrow-right"></i></a></span>
+                            </div><!--=== Days Area ===-->
+
+                            <!--=== Releted Tour Place ===-->
+                            <div class="related-tour-place wow fadeInUp">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="section-title mb-35">
+                                            <h3>Hình ảnh về chuyến đi</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="place-arrows mb-35"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-6 col-12" ng-repeat="img in tourDetailImagesById">
+                                        <div class="recent-place-slider m-0">
+                                            <!--=== Single Place Item ===-->
+                                            <div class="single-place-item mb-60">
+                                                <div class="place-img-detail">
+                                                    <img src="{{ img.tourDetailImg }}" alt="Place Image">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!--=== Single Place Item ===-->
-                            <div class="single-place-item mb-60">
-                                <div class="place-img">
-                                    <img src="/assets/customers/images/place/place-2.jpg" alt="Place Image">
-                                </div>
-                                <div class="place-content">
-                                    <div class="info">
-                                        <ul class="ratings">
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><a href="#">(4.9)</a></li>
-                                        </ul>
-                                        <h4 class="title"><a href="tour-details.html">Trees Under White Clouds during
-                                            Daytime</a></h4>
-                                        <p class="location"><i class="fas fa-map-marker-alt"></i>North Province,
-                                            Maldives</p>
-                                        <p class="price"><i class="fas fa-usd-circle"></i>Price<span
-                                                class="currency">$</span>93.65</p>
-                                        <div class="meta">
-                                            <span><i class="far fa-clock"></i>05 Days</span>
-                                            <span><i class="far fa-user"></i>25</span>
-                                            <span><a href="tour-details.html">Details<i
-                                                    class="far fa-long-arrow-right"></i></a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--=== Single Place Item ===-->
-                            <div class="single-place-item mb-60">
-                                <div class="place-img">
-                                    <img src="/assets/customers/images/place/place-3.jpg" alt="Place Image">
-                                </div>
-                                <div class="place-content">
-                                    <div class="info">
-                                        <ul class="ratings">
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><a href="#">(4.9)</a></li>
-                                        </ul>
-                                        <h4 class="title"><a href="tour-details.html">Body of Water Near Mountain</a>
-                                        </h4>
-                                        <p class="location"><i class="fas fa-map-marker-alt"></i>North Province,
-                                            Maldives</p>
-                                        <p class="price"><i class="fas fa-usd-circle"></i>Price<span
-                                                class="currency">$</span>93.65</p>
-                                        <div class="meta">
-                                            <span><i class="far fa-clock"></i>05 Days</span>
-                                            <span><i class="far fa-user"></i>25</span>
-                                            <span><a href="tour-details.html">Details<i
-                                                    class="far fa-long-arrow-right"></i></a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </div><!--=== Releted Tour Place ===-->
                         </div>
                     </div>
-                    <!--=== Reviews Area ===-->
+
                     <div class="reviews-wrapper mb-60 wow fadeInUp">
                         <div class="reviews-inner-box">
                             <div class="rating-value">
-                                <h4>Clients Reviews</h4>
-                                <div class="rate-score">4.9</div>
-                                <ul class="ratings">
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><a href="#">(4.9)</a></li>
+                                <h5>Đánh giá của khách hàng</h5>
+                                <div class="rate-score" ng-bind="ratingHotel.roundedAverageRating"></div>
+                                <ul class="ratings d-flex justify-content-center align-items-center color-ratings">
+                                    <div ng-repeat="star in stars track by $index">
+                                        <span class="fas fa-star"></span>
+                                    </div>
+                                    <div ng-if="showHalfStar">
+                                        <span class="fas fa-star-half-alt"></span>
+                                    </div>
+                                    <li><a href="#" ng-bind="'(' + ratingHotel.roundedAverageRating + ')'"></a></li>
                                 </ul>
-                                <span class="reviews">3k Reviews</span>
+                                <span class="reviews" ng-bind="ratingHotel.numberOfRatings + ' Đánh giá'"></span>
                             </div>
-                            <div class="reviews-progress">
-                                <div class="single-progress-bar">
-                                    <div class="progress-title">
-                                        <h6>Quality <span class="rate">4.8</span></h6>
+                            <section class="row" style="max-width: 600px">
+                                <div class="swiper-container">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide slide-item d-flex justify-content-center align-items-center"
+                                             style="width: 500px"
+                                             ng-repeat="rating in ratingHotel.userComments.content">
+                                            <div class="text-center ">
+                                                <div class="text-center d-flex justify-content-center align-items-center">
+                                                    <img ng-src="{{ rating.usersByUserId.avatar }}" alt="image"
+                                                         style="width: 100px; height: 100px; border-radius: 100px"
+                                                         class="text-center">
+                                                </div>
+                                                <span class="h5">{{ rating.usersByUserId.fullName }}</span>
+                                                <ul class="ratings">
+                                                    <li ng-repeat="index in [].constructor(rating.star) track by $index"><span
+                                                            class="fas fa-star"></span></li>
+                                                </ul>
+                                                <p>{{ rating.content }}</p>
+                                                <span class="time" style="font-size: 12px">
+                                                    <span class="fas fa-clock text-green"></span>
+                                                    {{ rating.dateCreated | timeAgo }}
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="progress">
-                                        <div class="progress-bar wow slideInLeft" style="width: 85%"></div>
-                                    </div>
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                    <div class="swiper-pagination"></div>
                                 </div>
-                                <div class="single-progress-bar">
-                                    <div class="progress-title">
-                                        <h6>Team Member<span class="rate">4.6</span></h6>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar wow slideInLeft" style="width: 75%"></div>
-                                    </div>
-                                </div>
-                                <div class="single-progress-bar">
-                                    <div class="progress-title">
-                                        <h6>Locations<span class="rate">4.7</span></h6>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar wow slideInLeft" style="width: 90%"></div>
-                                    </div>
-                                </div>
-                                <div class="single-progress-bar">
-                                    <div class="progress-title">
-                                        <h6>Cost<span class="rate">4.9</span></h6>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar wow slideInLeft" style="width: 95%"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            </section>
                         </div>
                     </div>
                     <!--=== Comments Area ===-->
                     <div class="comments-area wow fadeInUp">
-                        <ul class="comment-list">
+                        <ul class="comment-list w-100" ng-repeat="rating in ratingHotel.userComments.content">
                             <li>
                                 <div class="comment">
                                     <div class="comment-avatar">
-                                        <img src="/assets/customers/images/place/comment-1.jpg" alt="comment author">
+                                        <img src="{{ rating.usersByUserId.avatar }}" style="border-radius: 50px; width: 100px; height: 100px"
+                                             alt="comment author">
                                     </div>
-                                    <div class="comment-wrap">
+                                    <div class="comment-wrap w-100">
                                         <div class="comment-author-content">
-                                            <span class="author-name">Glenn M. Whitaker<span class="time"><i
-                                                    class="far fa-clock"></i>5 Minute Ago</span></span>
-                                            <span class="position">CEO & Founder</span>
+                                            <span class="author-name">{{ rating.usersByUserId.fullName }}
+                                                <span class="time">
+                                                    <span class="fas fa-clock"></span>
+                                                    {{ rating.dateCreated | timeAgo }}
+                                                </span>
+                                            </span>
                                             <ul class="comment-rating-ul">
                                                 <li>
-                                                    <span class="title">Quality</span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Location</span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Services</span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Team</span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Price</span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
+                                                    <span ng-repeat="index in [].constructor(rating.star) track by $index">
+                                                        <span class="fas fa-star"></span>
+                                                    </span>
                                                 </li>
                                             </ul>
-                                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
-                                                praesentium voluptatum deleniti atque corrupti quos dolores et quas
-                                                molestias excepture</p>
-                                            <a href="#" class="btn-link">Reply<i class="far fa-angle-double-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <ul class="comment-reply">
-                                    <li>
-                                        <div class="comment">
-                                            <div class="comment-avatar">
-                                                <img src="/assets/customers/images/place/comment-2.jpg" alt="comment author">
-                                            </div>
-                                            <div class="comment-wrap">
-                                                <div class="comment-author-content">
-                                                    <span class="author-name">Glenn M. Whitaker<span class="time"><i
-                                                            class="far fa-clock"></i>5 Minute Ago</span></span>
-                                                    <span class="position">CEO & Founder</span>
-                                                    <ul class="comment-rating-ul">
-                                                        <li>
-                                                            <span class="title">Quality</span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                        </li>
-                                                        <li>
-                                                            <span class="title">Location</span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                        </li>
-                                                        <li>
-                                                            <span class="title">Services</span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                        </li>
-                                                        <li>
-                                                            <span class="title">Team</span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                        </li>
-                                                        <li>
-                                                            <span class="title">Price</span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                        </li>
-                                                    </ul>
-                                                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                                                        blanditiis praesentium voluptatum deleniti atque corrupti quos
-                                                        dolores et quas molestias excepture</p>
-                                                    <a href="#" class="btn-link">Reply<i
-                                                            class="far fa-angle-double-right"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <div class="comment">
-                                    <div class="comment-avatar">
-                                        <img src="/assets/customers/images/place/comment-3.jpg" alt="comment author">
-                                    </div>
-                                    <div class="comment-wrap">
-                                        <div class="comment-author-content">
-                                            <span class="author-name">Glenn M. Whitaker<span class="time"><i
-                                                    class="far fa-clock"></i>5 Minute Ago</span></span>
-                                            <span class="position">CEO & Founder</span>
-                                            <ul class="comment-rating-ul">
-                                                <li>
-                                                    <span class="title">Quality</span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Location</span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Services</span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Team</span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Price</span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                </li>
-                                            </ul>
-                                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
-                                                praesentium voluptatum deleniti atque corrupti quos dolores et quas
-                                                molestias excepture</p>
-                                            <a href="#" class="btn-link">Reply<i class="far fa-angle-double-right"></i></a>
+                                            <p>{{ rating.content }}</p>
                                         </div>
                                     </div>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <!--===  Comments Form  ===-->
-                    <div class="comments-respond mb-30 wow fadeInUp">
-                        <h3 class="comments-heading" style="margin-bottom: 15px;">Leave a Comments</h3>
-                        <ul class="comment-rating-ul mb-20">
-                            <li>
-                                <span class="title">Quality</span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                            </li>
-                            <li>
-                                <span class="title">Location</span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                            </li>
-                            <li>
-                                <span class="title">Services</span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                            </li>
-                            <li>
-                                <span class="title">Team</span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                            </li>
-                            <li>
-                                <span class="title">Price</span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                            </li>
-                        </ul>
-                        <form class="comment-form">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form_group">
-                                        <input type="email" class="form_control" placeholder="Email Address" name="name"
-                                               required>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form_group">
-                                        <input type="text" class="form_control" placeholder="Enter Name" name="email"
-                                               required>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form_group">
-                                        <textarea name="message" class="form_control" rows="4"
-                                                  placeholder="Write Comments"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form_group">
-                                        <button class="main-btn primary-btn">Send comments<i
-                                                class="fas fa-angle-double-right"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                    <div ng-if="ratingHotel.userComments.totalElements > ratingHotel.userComments.content.numberOfElements">
+                        <button class="btn text-green text-center"
+                                ng-click="findUserComments(roomTypes[0].hotelsByHotelId.id)">Hiển thị thêm
+                        </button>
                     </div>
                 </div>
                 <div class="col-xl-4">
                     <!--=== Sidebar Widget Area ===-->
-                    <div class="sidebar-widget-area pt-60 pl-lg-30">
+                    <div class="sidebar-widget-area pt-45 pl-lg-30">
+                        <div class="sidebar-widget category-widget booking-info-widget wow fadeInUp mb-40">
+                            <h4 class="widget-title">Thông tin chuyến đi</h4>
+                            <ul class="info-list">
+                                <li>
+                                    <span>
+                                        <span class="fas fa-user-circle"></span>
+                                        Lượt khách tối đa
+                                        <span>{{ tourDetail.numberOfGuests }} Người</span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>
+                                        <span class="fas fa-user-circle"></span>
+                                        Đã đặt
+                                        <span>
+                                            {{ tourDetail.bookedSeat }}/{{ tourDetail.numberOfGuests }}
+                                        </span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>
+                                        <span class="fas fa-map-marker-alt"></span>
+                                        Điểm xuất phát
+                                        <span>{{ tourDetail.fromLocation }}</span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>
+                                        <span class="fas fa-map-marker-alt"></span>
+                                        Điểm đến
+                                        <span ng-show="tourDetail.toLocation.length > 15">...</span>
+                                        <span ng-if="dataLoaded" custom-tooltip="{{ tourDetail.toLocation }}">
+                                            {{ tourDetail.toLocation | limitTo: 15 }}
+                                        </span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+
                         <!--=== Booking Widget ===-->
                         <div class="sidebar-widget booking-form-widget wow fadeInUp mb-40">
-                            <h4 class="widget-title">Booking Tour</h4>
-                            <form class="sidebar-booking-form">
+                            <h4 class="widget-title">Đặt vé ngay</h4>
+                            <form ng-submit="submitBooking()" class="sidebar-booking-form">
                                 <div class="booking-date-time mb-20">
                                     <div class="booking-item">
-                                        <label>Date</label>
-                                        <div class="bk-item booking-time">
-                                            <i class="far fa-calendar-alt"></i>
-                                            <input type="text" placeholder="Select Date" class="datepicker">
+                                        <label class="fw-normal">Ngày đi:</label>
+                                        <div class="bk-item booking-date fw-medium">
+                                            <span>{{ tourDetail.departureDate | formatDate }}</span>
                                         </div>
                                     </div>
                                     <div class="booking-item">
-                                        <label>Time</label>
-                                        <div class="bk-item booking-date">
-                                            <i class="far fa-calendar-alt"></i>
-                                            <select class="wide">
-                                                <option value="01">12.00 Am</option>
-                                                <option value="01">01.00 Am</option>
-                                                <option value="01">02.00 Am</option>
-                                                <option value="01">03.00 Am</option>
-                                                <option value="01">04.00 Am</option>
-                                                <option value="01">05.00 Am</option>
-                                                <option value="01">06.00 Am</option>
-                                                <option value="01">07.00 Am</option>
-                                                <option value="01">08.00 Am</option>
-                                                <option value="01">09.00 Am</option>
-                                                <option value="01">10.00 Am</option>
-                                                <option value="01">11.00 Am</option>
-                                                <option value="01">12.00 Pm</option>
-                                            </select>
+                                        <label class="fw-normal">Thời gian dự kiến:</label>
+                                        <div class="bk-item booking-date fw-medium">
+                                            <span>
+                                                <span>{{ tourDetail.departureDate | calculateDaysAndNights:tourDetail.arrivalDate }}</span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="booking-guest-box mb-20">
-                                    <h6 class="mb-20">Tickets</h6>
+                                    <h6 class="mb-20">Vé <span class="fs-6 fw-normal">(chỉ còn {{ remainingTickets }}
+                                        vé)</span></h6>
                                     <div class="booking-item">
-                                        <label>Adult (18+ years) $43</label>
+                                        <label>Người lớn (trên 1m3) <br> {{ tourDetail.unitPrice | vnCurrency }}</label>
                                         <div class="bk-item booking-user">
-                                            <i class="far fa-user"></i>
-                                            <select class="wide">
-                                                <option value="01">1</option>
-                                                <option value="02">2</option>
-                                                <option value="03">3</option>
-                                                <option value="04">4</option>
-                                                <option value="05">5</option>
-                                            </select>
+                                             <span class="d-flex align-items-center bd-highlight">
+                                                 <span class="ms-auto bd-highlight">
+                                                        <input style="width: 80px;  padding: .675rem .75rem;"
+                                                               type="number" class="form-control"
+                                                               ng-model="ticket.adults"
+                                                               ng-change="updateTotalPrice()"
+                                                               ng-blur="onQuantityBlurAdult(ticket)" min="1"
+                                                               max="{{adultsMax}}"
+                                                               oninput="validity.valid||(value=1);">
+                                                </span>
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="booking-item">
-                                        <label>Youth (13-17 years) $29</label>
+                                        <label>
+                                            Trẻ em (dưới 1m3) <br> {{ tourDetail.unitPrice * 0.3 | vnCurrency }}
+                                        </label>
                                         <div class="bk-item booking-user">
-                                            <i class="far fa-user"></i>
-                                            <select class="wide">
-                                                <option value="01">1</option>
-                                                <option value="02">2</option>
-                                                <option value="03">3</option>
-                                                <option value="04">4</option>
-                                                <option value="05">5</option>
-                                            </select>
+                                             <span class="d-flex align-items-center bd-highlight">
+                                                 <span class="ms-auto bd-highlight">
+                                                        <input style="width: 80px;  padding: .675rem .75rem;"
+                                                               type="number" class="form-control"
+                                                               ng-model="ticket.children"
+                                                               ng-change="updateTotalPrice()"
+                                                               ng-blur="onQuantityBlurChildren(ticket)" min="0"
+                                                               max="{{childrenMax}}"
+                                                               oninput="validity.valid||(value=0);">
+                                                </span>
+                                            </span>
                                         </div>
-                                    </div>
-                                    <div class="booking-item">
-                                        <label>Child (0-12 years) $0</label>
-                                        <div class="bk-item booking-user">
-                                            <i class="far fa-user"></i>
-                                            <select class="wide">
-                                                <option value="01">1</option>
-                                                <option value="02">2</option>
-                                                <option value="03">3</option>
-                                                <option value="04">4</option>
-                                                <option value="05">5</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="booking-extra mb-15 wow fadeInUp">
-                                    <h6 class="mb-10">Aditional Services</h6>
-                                    <div class="extra">
-                                        <i class="fas fa-check-circle"></i>Service Per Boooking <span><span
-                                            class="currency">$</span>50</span>
-                                    </div>
-                                    <div class="extra">
-                                        <i class="fas fa-check-circle"></i>Service Per Person <span><span
-                                            class="currency">$</span>20</span>
                                     </div>
                                 </div>
                                 <div class="booking-total mb-20">
                                     <div class="total">
-                                        <label>Total</label>
-                                        <span class="price"><span class="currency">$</span>70</span>
+                                        <label>Tạm tính ({{ totalTikets }}) vé</label>
+                                        <span class="price">
+                                            {{ totalPrice | vnCurrency }}
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="submit-button">
-                                    <button class="main-btn primary-btn">Booking Now<i class="far fa-paper-plane"></i>
+                                    <button type="submit"
+                                            class="main-btn primary-btn"
+                                            ng-if="tourDetail.bookedSeat !== tourDetail.numberOfGuests"
+                                    >
+                                        Đặt tour ngay
+                                        <svg class="svg-inline--fa fa-paper-plane" aria-hidden="true"
+                                             focusable="false"
+                                             data-prefix="fas" data-icon="paper-plane" role="img"
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 512"
+                                             data-fa-i2svg="">
+                                            <path fill="currentColor"
+                                                  d="M511.6 36.86l-64 415.1c-1.5 9.734-7.375 18.22-15.97 23.05c-4.844 2.719-10.27 4.097-15.68 4.097c-4.188 0-8.319-.8154-12.29-2.472l-122.6-51.1l-50.86 76.29C226.3 508.5 219.8 512 212.8 512C201.3 512 192 502.7 192 491.2v-96.18c0-7.115 2.372-14.03 6.742-19.64L416 96l-293.7 264.3L19.69 317.5C8.438 312.8 .8125 302.2 .0625 289.1s5.469-23.72 16.06-29.77l448-255.1c10.69-6.109 23.88-5.547 34 1.406S513.5 24.72 511.6 36.86z"></path>
+                                        </svg>
                                     </button>
+                                    <span class="d-flex justify-content-center text-danger fw-medium"
+                                          ng-if="tourDetail.bookedSeat === tourDetail.numberOfGuests">
+                                        Hiện tại tour đã hết vé !
+                                    </span>
                                 </div>
                             </form>
                         </div>
                         <!--=== Booking Info Widget ===-->
-                        <div class="sidebar-widget booking-info-widget wow fadeInUp mb-40">
-                            <h4 class="widget-title">Tour Information</h4>
-                            <ul class="info-list">
-                                <li><span><i class="far fa-user-circle"></i>Max Guests<span>35</span></span></li>
-                                <li><span><i class="far fa-user-circle"></i>Minimum Age<span>12+</span></span></li>
-                                <li><span><i class="far fa-map-marker-alt"></i>Tour Location<span>Thailand</span></span>
-                                </li>
-                                <li><span><i class="far fa-globe"></i>Language<span>English</span></span></li>
-                            </ul>
-                        </div>
+
                         <!--=== Recent Place Widget ===-->
                         <div class="sidebar-widget recent-place-widget mb-40 wow fadeInUp">
-                            <h4 class="widget-title">Last Minute Deals</h4>
+                            <h4 class="widget-title">Top 5 tour nổi bật</h4>
                             <ul class="recent-place-list">
-                                <li class="place-thumbnail-content">
-                                    <img src="/assets/customers/images/place/thumb-1.jpg" alt="post thumb">
+                                <li class="place-thumbnail-content" ng-repeat="trend in tourTrendData">
+                                    <img ng-src="{{ trend.tourImg }}" alt="post thumb" height="90" src="">
                                     <div class="place-content">
                                         <ul class="ratings">
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="far fa-star"></i></li>
+                                            <li><span class="fas fa-star"></span></li>
+                                            <li><span class="fas fa-star"></span></li>
+                                            <li><span class="fas fa-star"></span></li>
+                                            <li><span class="fas fa-star"></span></li>
+                                            <li><span class="fas fa-star"></span></li>
                                         </ul>
-                                        <h5><a href="tour-details.html">Infinity Pool Nears
-                                            Beach</a></h5>
-                                        <span class="price"><span class="text">From :</span><span
-                                                class="currency">$</span>45.23</span>
-                                    </div>
-                                </li>
-                                <li class="place-thumbnail-content">
-                                    <img src="/assets/customers/images/place/thumb-2.jpg" alt="post thumb">
-                                    <div class="place-content">
-                                        <ul class="ratings">
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star-half-alt"></i></li>
-                                        </ul>
-                                        <h5><a href="tour-details.html">Infinity Pool Nears
-                                            Beach</a></h5>
-                                        <span class="price"><span class="text">From :</span><span
-                                                class="currency">$</span>45.23</span>
-                                    </div>
-                                </li>
-                                <li class="place-thumbnail-content">
-                                    <img src="/assets/customers/images/place/thumb-3.jpg" alt="post thumb">
-                                    <div class="place-content">
-                                        <ul class="ratings">
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                        </ul>
-                                        <h5><a href="tour-details.html">Infinity Pool Nears
-                                            Beach</a></h5>
-                                        <span class="price"><span class="text">From :</span><span
-                                                class="currency">$</span>45.23</span>
+                                        <h5><a href="/home">{{ trend.tourName }}</a>
+                                        </h5>
+                                        <span class="price">
+                                            <span class="text m-0">Chỉ từ:</span>
+                                            <span class="currency">{{ trend.unitPrice | vnCurrency }}</span>
+                                        </span>
                                     </div>
                                 </li>
                             </ul>
-                        </div>
-                        <!--=== Banner Widget ===-->
-                        <div class="sidebar-widget sidebar-banner-widget wow fadeInUp mb-40">
-                            <div class="banner-widget-content">
-                                <div class="banner-img">
-                                    <img src="/assets/customers/images/blog/banner-1.jpg" alt="Post Banner">
-                                    <div class="hover-overlay">
-                                        <div class="hover-content">
-                                            <h4 class="title"><a href="#">Swimming Pool</a></h4>
-                                            <p><i class="fas fa-map-marker-alt"></i>Marrakesh, Morocco</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -837,64 +510,114 @@
         </div>
     </div>
 </section><!--====== End Place Details Section ======-->
-<!--====== Start Gallery Section ======-->
-<section class="gallery-section mbm-150">
-    <div class="container-fluid">
-        <div class="slider-active-5-item wow fadeInUp">
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-1.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-1.jpg" class="icon-btn img-popup"><i class="far fa-plus"></i></a>
-                    </div>
+
+<!--====== Start CTA Section ======-->
+<section class="cta-bg overlay bg_cover pt-150 pb-150"
+         style="background-image: url(/assets/customers/images/background-banner/car-1.png);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-xl-7 col-lg-8">
+                <!--=== CTA Content Box ===-->
+                <div class="cta-content-box text-white wow fadeInLeft">
+                    <h2 class="mb-35">Bạn đã sẵn sàng cho chuyến du lịch của mình chưa ?</h2>
+                    <a href="/drive-move" class="main-btn primary-btn">Đặt xe ngay
+                        <svg class="svg-inline--fa fa-paper-plane" aria-hidden="true" focusable="false"
+                             data-prefix="fas" data-icon="paper-plane" role="img"
+                             xmlns="http://www.w3.org/2000/svg" viewBox="-50 -23 680 520" data-fa-i2svg="">
+                            <path fill="currentColor"
+                                  d="M511.6 36.86l-64 415.1c-1.5 9.734-7.375 18.22-15.97 23.05c-4.844 2.719-10.27 4.097-15.68 4.097c-4.188 0-8.319-.8154-12.29-2.472l-122.6-51.1l-50.86 76.29C226.3 508.5 219.8 512 212.8 512C201.3 512 192 502.7 192 491.2v-96.18c0-7.115 2.372-14.03 6.742-19.64L416 96l-293.7 264.3L19.69 317.5C8.438 312.8 .8125 302.2 .0625 289.1s5.469-23.72 16.06-29.77l448-255.1c10.69-6.109 23.88-5.547 34 1.406S513.5 24.72 511.6 36.86z"></path>
+                        </svg>
+                    </a>
                 </div>
             </div>
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-2.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-2.jpg" class="icon-btn img-popup"><i class="far fa-plus"></i></a>
-                    </div>
-                </div>
-            </div>
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-3.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-3.jpg" class="icon-btn img-popup"><i class="far fa-plus"></i></a>
-                    </div>
-                </div>
-            </div>
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-4.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-4.jpg" class="icon-btn img-popup"><i class="far fa-plus"></i></a>
-                    </div>
-                </div>
-            </div>
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-5.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-5.jpg" class="icon-btn img-popup"><i class="far fa-plus"></i></a>
-                    </div>
-                </div>
-            </div>
-            <!--=== Single Gallery Item ===-->
-            <div class="single-gallery-item">
-                <div class="gallery-img">
-                    <img src="/assets/customers/images/gallery/gl-3.jpg" alt="Gallery Image">
-                    <div class="hover-overlay">
-                        <a href="/assets/customers/images/gallery/gl-3.jpg" class="icon-btn img-popup"><i class="far fa-plus"></i></a>
-                    </div>
+            <div class="col-xl-5 col-lg-4">
+                <div class="play-box text-lg-end text-center wow fadeInRight">
+                    <a href="https://www.youtube.com/watch?v=JMscAL7JxnQ&ab_channel=%E4%B8%AD%E5%B7%9D%E5%9C%AD%E4%BA%8C"
+                       class="video-popup" target="_blank">
+                        <span class="fas fa-play"></span>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-</section><!--====== End Gallery Section ======-->
+</section><!--====== End CTA Section ======-->
+
+<!--====== Start Modal Section ======-->
+<div id="formTourModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 40%; height: 80vh;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mapModalLabel">Bạn có đề xuất về Tour</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="btn-close" data-dismiss="modal"
+                            ng-click="closeFormModal()"></button>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <div id="i-want" class="mapBoxModel col-12"
+                     style="height: 100%; padding-left: 30px; padding-right: 30px; margin: 0;">
+                    <form name="tourDetailForm" style="height: 100%">
+                        <div class="col-12 mb-1">
+                            <h4 style="font-size: larger;font-weight: bold;color: darkgreen;">{{ tourDetail.toursByTourId.tourName }}</h4>
+                        </div>
+                        <div class="col-12 mb-1">
+                            <label for="departureDate" class="form-label">Ngày đi</label>
+                            <input class="form-control" type="date"
+                                   name="birth"
+                                   ng-model="customer.birth"
+                                   ng-class="{ 'is-invalid': isBirthInvalid(),
+                                            'is-valid': isBirthValid() }"
+                                   ng-change="checkBirth()"
+                                   required/>
+                            <small class="text-danger"
+                                   ng-show="customerForm.birth.$error.required">
+                                Vui lòng nhập ngày sinh!
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="isBirthInvalid()">
+                                Yêu cầu trên 16 tuổi!
+                            </small>
+                        </div>
+                        <div class="col-12 mb-1">
+                            <label for="arrivalDate" class="form-label">Ngày về</label>
+                            <input class="form-control" type="date"
+                                   name="birth"
+                                   ng-model="customer.birth"
+                                   ng-class="{ 'is-invalid': isBirthInvalid(),
+                                            'is-valid': isBirthValid() }"
+                                   ng-change="checkBirth()"
+                                   required/>
+                            <small class="text-danger"
+                                   ng-show="customerForm.birth.$error.required">
+                                Vui lòng nhập ngày sinh!
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="isBirthInvalid()">
+                                Yêu cầu trên 16 tuổi!
+                            </small>
+                        </div>
+                        <div class="col-12 mb-1">
+                            <label for="arrivalDate" class="form-label">Ghi chú</label>
+                            <textarea class="form-control" name="note" ng-model="customer.note" rows="4" maxlength="200"
+                                      required></textarea>
+                            <small class="text-danger"
+                                   ng-show="customerForm.birth.$error.required">
+                                Vui lòng nhập ngày sinh!
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="isBirthInvalid()">
+                                Yêu cầu trên 16 tuổi!
+                            </small>
+                        </div>
+                        <div class="mt-3 d-flex justify-content-center pb-0">
+                            <button type="button" class="btn btn-green" style="padding: 8px 50px; border-radius: 30px"
+                                    ng-click="closeFormModal()">Đóng
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

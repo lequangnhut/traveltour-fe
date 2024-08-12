@@ -1,0 +1,89 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<div class="container mt-3 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-bold">
+                        THÊM LOẠI PHƯƠNG TIỆN MỚI
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" ng-submit="createTransportUtility()" name="typeform">
+            <div class="col-md-6">
+                <label for="icon" class="form-label">ICON</label>
+                <input class="form-control"
+                       id="icon"
+                       type="file"
+                       placeholder="Nhập tên loại phương tiện"
+                       name="icon"
+                       ng-model="transportUtility.icon"
+                       ng-class="{ 'is-invalid': typeform.icon.$invalid && typeform.icon.$touched,
+                                    'is-valid': typeform.icon.$valid && typeform.icon.$touched }"
+                       accept="image/*"
+                       ngf-select="uploadIconUtility($file)"
+                       ngf-max-size="10MB"
+                       required
+                />
+                <small class="text-danger"
+                       ng-show="typeform.icon.$touched && typeform.icon.$error.required">
+                    Vui lòng chọn một icon cho tiện ích !
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label for="title" class="form-label">Tiêu đề</label>
+                <input class="form-control" id="title" type="text"
+                       placeholder="Nhập tiêu đề tiện ích"
+                       name="title"
+                       ng-model="transportUtility.title"
+                       ng-class="{ 'is-invalid': typeform.title.$invalid && typeform.title.$touched || nameError,
+                                    'is-valid': typeform.title.$valid && typeform.title.$touched }"
+                       ng-change="checkDuplicateTypeName()"
+                       required
+                />
+                <small class="text-danger"
+                       ng-show="typeform.title.$touched && typeform.title.$error.required">
+                    Vui lòng nhập tiện ích cho xe !
+                </small>
+                <small class="text-danger" ng-show="typeform.title.$touched && nameError">
+                    Tiện ích này đã tồn tại !
+                </small>
+            </div>
+
+            <div class="col-md-12">
+                <label for="description" class="form-label">Mô tả tiện ích</label>
+                <input class="form-control" id="description" type="text"
+                       placeholder="Nhập nội dung tiện ích"
+                       name="description"
+                       ng-model="transportUtility.description"
+                       ng-class="{ 'is-invalid': typeform.description.$invalid && typeform.description.$touched,
+                                    'is-valid': typeform.description.$valid && typeform.description.$touched }"
+                       required
+                />
+                <small class="text-danger"
+                       ng-show="typeform.description.$touched && typeform.description.$error.required">
+                    Vui lòng nhập mô tả tiện ích cho xe !
+                </small>
+            </div>
+
+            <div class="col-md-12 d-flex justify-content-end mt-5">
+                <button class="btn" style="margin-right: 20px" type="button">
+                    <a class="btn fw-bold" href="/admin/type/transport-utilities-list">
+                        Trở về
+                    </a>
+                </button>
+                <button type="submit" class="btn btn-submit fw-bold" ng-disabled="typeform.$invalid || nameError">
+                    Thêm mới
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

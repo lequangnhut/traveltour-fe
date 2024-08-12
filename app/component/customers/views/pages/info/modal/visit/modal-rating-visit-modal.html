@@ -1,0 +1,51 @@
+<section>
+    <div class="modal fade" id="ratingVisitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         ng-if="!showSuccessMessage" ng-click="resetSuccessMessage()">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">Đánh giá {{ratingService.visitLocationsByVisitLocationId.visitLocationName}}</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            ng-click="closeRatingHotelModal()"
+                            style="background-color:#63ab45;color:white">
+                        <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-0 m-4">
+                        <form id="reviewForm">
+                            <!-- Star rating input -->
+                            <div class="mb-3 text-center">
+                                Số sao bạn đánh giá
+                                <div id="starRatingHotel" class="star-rating" ng-mouseleave="resetStars()">
+                            <span ng-repeat="star in stars" style="border: none;"
+                                  class="star"
+                                  ng-class="{ 'active': star.active }"
+                                  ng-click="toggleStar($index)"
+                                  ng-mouseover="hoverStar($index)">
+                                    &#9733;
+                            </span>
+                                </div>
+                                <div ng-show="showRateStarMessage"> {{ showRateStarMessage }}</div>
+                            </div>
+                            <!-- Review content input -->
+                            <div class="mb-3">
+                                <label for="reviewContent" class="form-label">Nội dung:</label>
+                                <textarea class="form-control" id="reviewContent" ng-model="inputText"
+                                          ng-change="checkSensitive(inputText)" rows="3" required></textarea>
+                                <span class="text-danger" ng-show="errorRateComment"> {{ errorRateComment }}</span>
+                            </div>
+                            <button type="button" id="submitted-button" class="btn btn-green" ng-click="submitRating('insert')"
+                                    ng-disabled="isSubmitButtonDisabled">Đánh giá
+                            </button>
+                            <button type="button" class="btn" data-bs-dismiss="modal" ng-click="closeRatingHotelModal()">
+                                Đóng
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

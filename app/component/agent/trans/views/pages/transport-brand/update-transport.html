@@ -1,0 +1,317 @@
+<!--====== Start Preloader ======-->
+<div class="preloader" ng-show="isLoading">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+    <div class="bg"></div>
+</div><!--====== End Preloader ======-->
+
+<form ng-submit="updateTransport()" name="register_trans" method="post">
+    <section id="business-information" ng-show="currentStep === 1">
+        <div class="container-fluid">
+            <div class="logo text-center">
+                <div class="d-flex align-items-center justify-content-center">
+                    <img src="/assets/admin/assets/img/icons/logo.png" alt="logo" width="40"/>
+                    <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">TravelTour</p>
+                </div>
+                <div class="content-text mt-3">
+                    <div class="h4">Cập nhật thông tin nhà xe với TravelTour</div>
+                </div>
+            </div>
+            <div class="main d-flex justify-content-center theme-wizard">
+                <div class="form card">
+                    <div class="row g-3">
+                        <div class="h3 color-green fw-medium">CẬP NHẬT NHÀ XE</div>
+                        <div class="col-12">
+                            <label class="form-label">Tên thương hiệu</label>
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Công ty xe khách Phương Trang"
+                                   name="transportationBrandName"
+                                   ng-class="{ 'is-invalid': register_trans.transportationBrandName.$invalid && register_trans.transportationBrandName.$touched, 'is-valid': register_trans.transportationBrandName.$valid && register_trans.transportationBrandName.$touched }"
+                                   ng-model="transportBrand.transportationBrandName"
+                                   ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_trans.transportationBrandName.$touched && register_trans.transportationBrandName.$error.required">
+                                Vui lòng nhập tên thương hiệu !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="register_trans.transportationBrandName.$touched && register_trans.transportationBrandName.$error.pattern">
+                                Tên thương hiệu không đúng định dạng !
+                            </small>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Địa chỉ trên bản đồ</label>
+                            <div class="row">
+                                <div class="col-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="address"
+                                           ng-model="transportBrand.transportationBrandAddress"
+                                           ng-class="{ 'is-invalid': register_trans.transportationBrandAddress.$invalid && register_trans.transportationBrandAddress.$touched,
+                                                'is-valid': register_trans.transportationBrandAddress.$valid && register_trans.transportationBrandAddress.$touched }"
+                                           placeholder="Vui lòng nhập địa chỉ nhà xe"
+                                           required
+                                    >
+                                    <small class="text-danger"
+                                           ng-show="register_trans.transportationBrandAddress.$touched && register_trans.transportationBrandAddress.$error.required">
+                                        Vui lòng nhập địa chỉ nhà xe !
+                                    </small>
+                                </div>
+                                <div class="col-3 d-flex justify-content-end">
+                                    <button data-bs-toggle="modal"
+                                            data-bs-target="#modalMapTransport"
+                                            type="button"
+                                            class="btn btn-success"
+                                            ng-click="showModalMap()"
+                                    >
+                                        Mở bản đồ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Hình ảnh chứng minh</label>
+                            <input class="form-control"
+                                   type="file"
+                                   name="transportationBrandImg"
+                                   ng-model="transportBrand.transportationBrandImg"
+                                   ngf-max-size="10MB"
+                                   accept="image/*"
+                                   ng-class="{ 'is-invalid': register_trans.transportationBrandImg.$invalid && register_trans.transportationBrandImg.$touched, 'is-valid': register_trans.transportationBrandImg.$valid && register_trans.transportationBrandImg.$touched }"
+                                   ngf-select="uploadBusinessImage($file)"
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_trans.transportationBrandImg.$touched && register_trans.transportationBrandImg.$error.required">
+                                Vui lòng tải lên hình ảnh nhà xe!
+                            </small>
+                            <div class="mt-2">
+                                <label class="form-label">Ảnh hiện tại</label>
+                                <br>
+                                <img ng-src="{{ transportBrand.transportationBrandImg }}"
+                                     class="img-fluid rounded-1 cursor-pointer"
+                                     width="100"
+                                     alt="avatar ảnh"
+                                     ng-click="openImageModal(transportBrand.transportationBrandImg)"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">CHÍNH SÁCH</label>
+                            <div class="container-desciption mb-3" rich-text-editor>
+                                <div class="options">
+                                    <!-- Text Format -->
+                                    <button id="bold" type="button" class="option-button format">
+                                        <i class="fa-solid fa-bold"></i>
+                                    </button>
+                                    <button id="italic" type="button" class="option-button format">
+                                        <i class="fa-solid fa-italic"></i>
+                                    </button>
+                                    <button id="underline" type="button" class="option-button format">
+                                        <i class="fa-solid fa-underline"></i>
+                                    </button>
+                                    <button id="strikethrough" type="button" class="option-button format">
+                                        <i class="fa-solid fa-strikethrough"></i>
+                                    </button>
+                                    <button id="superscript" type="button" class="option-button script">
+                                        <i class="fa-solid fa-superscript"></i>
+                                    </button>
+                                    <button id="subscript" type="button" class="option-button script">
+                                        <i class="fa-solid fa-subscript"></i>
+                                    </button>
+                                    <!-- List -->
+                                    <button id="insertOrderedList" type="button" class="option-button">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                    </button>
+                                    <button id="insertUnorderedList" type="button" class="option-button">
+                                        <i class="fa-solid fa-list"></i>
+                                    </button>
+                                    <!-- Table -->
+                                    <button id="createTable" type="button">
+                                        <i class="fa-solid fa-table"></i>
+                                    </button>
+                                    <!-- Undo/Redo -->
+                                    <button id="undo" type="button" class="option-button">
+                                        <i class="fa-solid fa-rotate-left"></i>
+                                    </button>
+                                    <button id="redo" type="button" class="option-button">
+                                        <i class="fa-solid fa-rotate-right"></i>
+                                    </button>
+                                    <!-- Link -->
+                                    <button id="createLink" type="button" class="adv-option-button">
+                                        <i class="fa fa-link"></i>
+                                    </button>
+                                    <button id="unlink" type="button" class="option-button">
+                                        <i class="fa fa-unlink"></i>
+                                    </button>
+                                    <!-- Alignment -->
+                                    <button id="justifyLeft" type="button" class="option-button align">
+                                        <i class="fa-solid fa-align-left"></i>
+                                    </button>
+                                    <button id="justifyCenter" type="button" class="option-button align">
+                                        <i class="fa-solid fa-align-center"></i>
+                                    </button>
+                                    <button id="justifyRight" type="button" class="option-button align">
+                                        <i class="fa-solid fa-align-right"></i>
+                                    </button>
+                                    <button id="justifyFull" type="button" class="option-button align">
+                                        <i class="fa-solid fa-align-justify"></i>
+                                    </button>
+                                    <button id="indent" type="button" class="option-button spacing">
+                                        <i class="fa-solid fa-indent"></i>
+                                    </button>
+                                    <button id="outdent" type="button" class="option-button spacing">
+                                        <i class="fa-solid fa-outdent"></i>
+                                    </button>
+                                    <!-- Headings -->
+                                    <select id="formatBlock" type="section" class="adv-option-button">
+                                        <option value="H1">H1</option>
+                                        <option value="H2">H2</option>
+                                        <option value="H3">H3</option>
+                                        <option value="H4">H4</option>
+                                        <option value="H5">H5</option>
+                                        <option value="H6">H6</option>
+                                    </select>
+                                    <!-- Font -->
+                                    <select id="fontName" type="select" class="adv-option-button"></select>
+                                    <select id="fontSize" type="select" class="adv-option-button"></select>
+                                </div>
+                                <div class="form-control mb-1" contenteditable="true"
+                                     name="transportationBrandPolicy" id="text-input"
+                                     ng-model="transportBrand.transportationBrandPolicy">
+                                </div>
+                                <span class="text-danger" id="invalid-templateDescription"></span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-5">
+                            <a role="button"
+                               href="/business/transport/home"
+                               class="btn btn-submit-form btn-prev"
+                               style="background: #5c636a; margin-right: 20px"
+                            >
+                                <i class="fa-solid fa-arrow-left"></i> Trở về
+                            </a>
+                            <button type="button"
+                                    class="btn btn-delete-form"
+                                    ng-click="deleteTransport()"
+                                    style="margin-right: 20px"
+                            >
+                                Xóa
+                            </button>
+                            <button type="button" class="btn btn-submit-form"
+                                    ng-click="nextStep()"
+                                    ng-disabled="register_trans.$invalid || phoneError"
+                            >
+                                Tiếp tục
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="business-information" ng-show="currentStep === 2">
+        <div class="container-fluid">
+            <div class="logo text-center">
+                <div class="d-flex align-items-center justify-content-center">
+                    <img src="/assets/admin/assets/img/icons/logo.png" alt="logo" width="40"/>
+                    <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">TravelTour</p>
+                </div>
+                <div class="content-text mt-3">
+                    <div class="h4">Đăng kí thông tin đối tác với TravelTour</div>
+                </div>
+            </div>
+            <div class="main d-flex justify-content-center theme-wizard">
+                <div class="form card">
+                    <div class="h3 color-green fw-medium mb-3">XÁC NHẬN ĐĂNG KÝ PHƯƠNG TIỆN TRÊN TRAVEL TOUR</div>
+                    <div class="col-12">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" ng-model="checkboxChecked" name="" id="">
+                            Tôi cam kết cung cấp thông tin đầy đủ, chính xác và minh bạch khi đăng ký bán phòng trên
+                            trang
+                            web du lịch. Chúng tôi hiểu rằng sự minh bạch và tin cậy là yếu tố quan trọng để tạo ra một
+                            môi
+                            trường kinh doanh tích cực và lâu dài.
+                        </label>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-5">
+                        <a role="button" class="btn btn-submit-form mx-3" ng-click="prevStep()">
+                            Quay về
+                        </a>
+                        <button type="submit" class="btn btn-submit-form"
+                                ng-disabled="!checkboxChecked || phoneError">
+                            Xác nhận
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Ảnh xe</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="" id="modalImage" class="img-fluid" alt="Ảnh phương tiện">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Map -->
+<div class="modal fade" id="modalMapTransport" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="modalMapTourDetailLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabelMap">Bản đồ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-10 mb-3 position-relative">
+                        <input type="text"
+                               class="form-control"
+                               ng-model="searchLocation"
+                               placeholder="Nhập tên tỉnh thành cần tìm ở đây..."
+                               ng-keyup="searchLocationOnMap()"
+                        >
+                        <div style="position: relative;">
+                            <div class="autocomplete" ng-if="showSuggestions"
+                                 style="position: absolute; top: 10px; left: 10px; z-index: 100;">
+                                <ul class="list-group">
+                                    <li class="list-group-item cursor-pointer"
+                                        ng-repeat="location in suggestedLocations" ng-click="selectLocation(location)">
+                                        {{ location }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-success" ng-click="submitSearchOnMap()">Tìm kiếm</button>
+                    </div>
+                    <div id="map" class="col-12" style="height: 460px"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<div class="container mt-3 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-bold text-uppercase">Thêm tour cơ bản</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" ng-submit="createTourSubmit()" method="POST" role="form"
+              name="tourBasicForm">
+            <div class="col-12">
+                <label for="tourName" class="form-label">Tên tour</label>
+                <input type="text" class="form-control" id="tourName" placeholder="Nhập tên tour"
+                       name="tourName" ng-model="tourBasic.tourName"
+                       ng-class="{ 'is-invalid': tourBasicForm.tourName.$invalid && tourBasicForm.tourName.$touched,
+                                            'is-valid': tourBasicForm.tourName.$valid && tourBasicForm.tourName.$touched }"
+                       required/>
+                <small class="text-danger"
+                       ng-show="tourBasicForm.tourName.$touched && tourBasicForm.tourName.$error.required">
+                    Vui lòng nhập tên tour!</small>
+            </div>
+            <div class="col-12">
+                <label for="inputType" class="form-label">Loại tour</label>
+                <select id="inputType" class="form-select"
+                        name="tourType"
+                        ng-model="tourBasic.tourTypeId"
+                        ng-options="tourType.id as tourType.tourTypeName for tourType in tourTypeList"
+                        ng-class="{ 'is-invalid': tourBasicForm.tourType.$invalid && tourBasicForm.tourType.$touched,
+                                            'is-valid': tourBasicForm.tourType.$valid && tourBasicForm.tourType.$touched }"
+                        required>
+                    <option value="" selected disabled hidden>Chọn loại tour</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="tourBasicForm.tourType.$touched && tourBasicForm.tourType.$error.required">Vui
+                    lòng chọn loại tour!</small>
+            </div>
+            <div class="col-12">
+                <label for="inputState" class="form-label">Trạng thái</label>
+                <select id="inputState" class="form-select"
+                        name="isActive" ng-model="tourBasic.isActive"
+                        ng-class="{ 'is-invalid': tourBasicForm.isActive.$invalid && tourBasicForm.isActive.$touched,
+                                            'is-valid': tourBasicForm.isActive.$valid && tourBasicForm.isActive.$touched }"
+                        required>
+                    <option value="" selected disabled hidden>Chọn trang thái</option>
+                    <option value="true">Đang hoạt động</option>
+                    <option value="false">Ngưng hoạt động</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="tourBasicForm.isActive.$touched && tourBasicForm.isActive.$error.required">Vui
+                    lòng chọn trạng thái!</small>
+            </div>
+            <div class="mb-3">
+                <label for="tourImg" class="form-label">Hình ảnh</label>
+                <input class="form-control" type="file" id="tourImg" name="tourImg"
+                       ng-model="tourBasic.tourImg"
+                       ng-class="{ 'is-invalid': tourBasicForm.tourImg.$invalid && tourBasicForm.tourImg.$touched,
+                                'is-valid': tourBasicForm.tourImg.$valid && tourBasicForm.tourImg.$touched }"
+                       ngf-select="uploadTourImage($file)" required>
+                <small class="text-danger"
+                       ng-show="tourBasicForm.tourImg.$touched && tourBasicForm.tourImg.$error.required">Vui
+                    lòng tải lên ảnh tour!</small>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end mt-5">
+                <button class="btn" type="button" style="margin-right: 20px">
+                    <a class="btn" href="/admin/basic-tour-list">Trở về</a>
+                </button>
+                <button type="submit" class="btn btn-submit fw-bold" ng-disabled="tourBasicForm.$invalid">Thêm tour
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

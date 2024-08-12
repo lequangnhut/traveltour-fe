@@ -1,0 +1,190 @@
+<!--====== Giao dịch thành công ======-->
+<section class="mt-100 mb-50 d-flex justify-content-center">
+    <div class="container-fluid booking-form-success row m-auto" style="max-width: 85%;">
+        <div class="col-lg-12 col-12 col-md-12 mb-30">
+            <div class="img-success d-flex justify-content-center mb-4">
+                <img src="/assets/customers/images/booking/checked-success.png" width="100" class="img-fluid"
+                     alt="payment-logo" ng-if="orderStatus !== 2">
+                <img src="/assets/customers/images/booking/payment-failed.png" width="100" class="img-fluid"
+                     alt="payment-logo" ng-if="orderStatus === 2">
+            </div>
+            <div class="content-payment-done d-flex justify-content-center">
+                <div class="content text-center">
+                    <div class="mb-2 h1" ng-if="orderStatus !== 2">Cảm Ơn Bạn Đã Đặt Vé Của Chúng Tôi</div>
+                    <div class="mb-2 h1" ng-if="orderStatus === 2">Đặt tour không thành công</div>
+                    <p class="mb-2" ng-if="orderStatus !== 2">
+                        Đơn hàng của bạn đã được xác nhận, giờ bạn có thể kiếm tra đơn hàng của mình trong
+                        hóa đơn lịch sử giao dịch.
+                    </p>
+
+                    <div class="booking-id mt-2 mb-2">
+                        <button type="button" class="btn border-0 p-3" style="background: #D9D9D9">
+                            Mã đơn hàng của bạn là: {{ orderVisitLocation.id }}
+                        </button>
+                    </div>
+
+                    <p class="mb-2">Ngày / giờ thanh toán:
+                        <span class="fw-medium">{{ orderVisitLocation.dateCreated | vietnameseDateTime }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header fw-medium text-center fs-5" style="background: #E3E6ED">
+                        Thông tin cá nhân
+                    </div>
+                    <div class="card-body">
+                        <div class="item-content mb-3">
+                            <span class="fw-medium">Họ và tên:</span>
+                            <span class="float-end">{{ orderVisitLocation.customerName }}</span>
+                        </div>
+                        <div class="item-content mb-3">
+                            <span class="fw-medium">Số điện thoại:</span>
+                            <span class="float-end">{{ orderVisitLocation.customerPhone }}</span>
+                        </div>
+                        <div class="item-content mb-3">
+                            <span class="fw-medium">Email:</span>
+                            <span class="float-end">{{ orderVisitLocation.customerEmail }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header fw-medium text-center fs-5" style="background: #E3E6ED">
+                        Thông tin vé của bạn
+                    </div>
+                    <div class="card-body">
+
+                        <div class="sidebar-booking-form">
+                            <div class="booking-date-time mb-3">
+                                <div class="booking-item">
+                                    <label class="fw-normal">
+                                        <i class="fa-regular fa-calendar-minus"></i>
+                                        Ngày:
+                                    </label>
+                                    <span class="fw-medium float-end">{{ tickets.departureDate | formatDate }}</span>
+                                </div>
+                            </div>
+                            <div class="booking-item mb-3" ng-if="tickets.adultTickets > 0">
+                                <label>
+                                    <i class="fa fa-user-secret"></i>
+                                    Vé người lớn:
+                                </label>
+                                <span class="fw-medium float-end">
+                                            {{ tickets.adultPrice | vnCurrency }} x {{ tickets.adultTickets }}
+                                        </span>
+                            </div>
+                            <div class="booking-item mb-3" ng-if="tickets.childrenTickets > 0">
+                                <label>
+                                    <i class="fa fa-child"></i>
+                                    Vé trẻ em:
+                                </label>
+                                <span class="fw-medium float-end">
+                                            {{ tickets.childrenPrice | vnCurrency }} x {{ tickets.childrenTickets }}
+                                        </span>
+                            </div>
+                            <div class="booking-item mb-3">
+                                <label>
+                                    <i class="fa-solid fa-user-check"></i>
+                                    Tổng số lượng:
+                                </label>
+                                <span class="fw-medium float-end">
+                                            {{ tickets.totalTickets }} vé
+                                        </span>
+                            </div>
+                            <div class="booking-total mb-3">
+                                <label>Tổng tiền</label>
+                                <span class="price fw-medium text-green float-end">
+                                        {{ tickets.totalPrice | vnCurrency }}
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <div class="item-content mb-3 d-flex justify-content-center align-items-center"
+                                     ng-if="paymentMethodTour === 'VPO'">
+                            <span class="fw-medium">
+                                <img src="/assets/customers/images/payment/traveltour.jpg" width="40" class="img-fluid"
+                                     alt="">
+                            </span>
+                                    <span class="fw-medium">Thanh toán tại quầy</span>
+                                </div>
+                                <div class="item-content mb-3 d-flex justify-content-center align-items-center"
+                                     ng-if="paymentMethodTour === 'VNPAY'">
+                            <span class="fw-medium">
+                                <img src="/assets/customers/images/payment/vnpay.png" width="40" class="img-fluid"
+                                     alt="">
+                            </span>
+                                    <span class="fw-medium">Thanh toán bằng Ví VNPay</span>
+                                </div>
+                                <div class="item-content mb-3 d-flex justify-content-center align-items-center"
+                                     ng-if="paymentMethodTour === 'MOMO'">
+                            <span class="fw-medium">
+                                <img src="/assets/customers/images/payment/momo.webp" width="40" class="img-fluid"
+                                     alt="">
+                            </span>
+                                    <span class="fw-medium ms-2">Thanh toán bằng Ví Momo</span>
+                                </div>
+                                <div class="item-content mb-3 d-flex justify-content-center align-items-center"
+                                     ng-if="paymentMethodTour === 'ZALOPAY'">
+                            <span class="fw-medium">
+                                <img src="/assets/customers/images/payment/zalopay.jpg" width="40" class="img-fluid"
+                                     alt="">
+                            </span>
+                                    <span class="fw-medium ms-2">Thanh toán bằng Ví ZaloPay</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header fw-medium text-center fs-5" style="background: #E3E6ED">
+                        Thông tin địa điểm tham quan
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="item-content">
+                            <div class="img-content">
+                                <img ng-src="{{ locationDetail.visitLocationImage }}" class="img-fluid"
+                                     alt="avatar ảnh">
+                            </div>
+                        </div>
+
+                        <div class="p-4 pb-1">
+                            <ul class="ratings">
+                                <li><span class="fas fa-star fs-5"></span></li>
+                                <li><span class="fas fa-star fs-5"></span></li>
+                                <li><span class="fas fa-star fs-5"></span></li>
+                                <li><span class="fas fa-star fs-5"></span></li>
+                                <li><span class="fas fa-star fs-5"></span></li>
+                            </ul>
+
+                            <h4 class="text-center mb-3">{{ locationDetail.visitLocationName }} </h4>
+                            <div class="booking-item mb-2">
+                                <label class="fw-normal">
+                                    <i class="fa-solid fa-barcode"></i>
+                                    Mã:
+                                </label>
+                                <span class="bk-item booking-date fw-medium float-end">{{ locationDetail.id }}</span>
+                            </div>
+
+                            <div class="booking-location ">
+                                <i class="fa-solid fa-location-dot text-green"></i>
+                                <span>Địa chỉ:</span>
+                                <span class="fw-medium float-end mb-3">
+                                {{ locationDetail.ward }} - {{ locationDetail.district }}
+                                    - {{ locationDetail.province }}
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--====== Giao dịch thành công ======-->

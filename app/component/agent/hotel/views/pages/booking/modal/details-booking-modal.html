@@ -1,0 +1,158 @@
+<!--====== Start Preloader ======-->
+<div class="preloader" ng-show="isLoading">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+    <div class="bg"></div>
+</div><!--====== End Preloader ======-->
+
+<div class="modal fade" id="detailsOrderHotelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Chi tiết hóa đơn {{ orderHotel.id }}</h5>
+                <button type="button" class="close btn" data-dismiss="modal" aria-label="Close"
+                        ng-click="closeModalDetailsOrder()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-medium">Mã hóa đơn: </span> <span ng-bind="orderHotel.id"></span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-medium">Tên khách hàng: </span> <span
+                                ng-bind="orderHotel.customerName"></span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-medium">Số điện thoại: </span> <span
+                                ng-bind="orderHotel.customerPhone"></span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-medium">Emai của khách: </span> <span
+                                ng-bind="orderHotel.customerEmail"></span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-medium">Số lượng người lớn: </span> <span
+                                ng-bind="orderHotel.capacityAdult"></span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-medium">Số lượng trẻ em: </span> <span
+                                ng-bind="orderHotel.capacityKid"></span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-medium">Ngày nhận phòng: </span> <span
+                                ng-bind="orderHotel.checkIn | formatHoursRight"></span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-medium">Ngày trả phòng: </span> <span
+                                ng-bind="orderHotel.checkOut  | formatHoursRight"></span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-medium">Tổng tiền phòng: </span> <span class="fw-medium"
+                                ng-bind="(orderHotel.orderTotal  | removeCurrencySymbol) + ' VND'"></span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-medium">Phương thức thanh toán: </span> <span
+                                ng-bind="orderHotel.paymentMethod"></span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-medium">Ngày tạo đơn: </span> <span
+                                ng-bind="orderHotel.dateCreated | formatHoursRight"></span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-medium">Trạng thái đơn hàng: </span>
+                            <span>
+                                <span class="status-dot"
+                                      ng-class="{ 'text-warning': orderHotel.orderStatus === 0, 'text-success': orderHotel.orderStatus === 1, 'text-primary': orderHotel.orderStatus === 2, 'text-danger': orderHotel.orderStatus === 3, 'text-secondary': orderHotel.orderStatus === 4 }">
+                                <i class="fas fa-circle" style="font-size: 8px"></i>
+                                 </span>
+                            <span ng-if="orderHotel.orderStatus === 0">Chưa thanh toán</span>
+                            <span ng-if="orderHotel.orderStatus === 1">Đã thanh toán</span>
+                            <span ng-if="orderHotel.orderStatus === 2">Đã xác nhận</span>
+                            <span ng-if="orderHotel.orderStatus === 3">Hoàn tất</span>
+                            <span ng-if="orderHotel.orderStatus === 4">Đã hủy</span>
+                            <span ng-if="orderHotel.orderStatus === 5">Hủy bởi tôi</span>
+                            </span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between" >
+                            <span class="fw-medium">Lí do hủy đơn:</span>
+                            <span ng-bind="orderHotel.orderNote"></span>
+                        </div>
+
+                        <hr>
+                        <h4 class="mt-3">Danh sách phòng</h4>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="fw-medium">#</th>
+                                <th class="fw-medium">Loại phòng</th>
+                                <th class="fw-medium">Tên khách</th>
+                                <th class="fw-medium">Số lượng</th>
+                                <th class="fw-medium">Số đêm</th>
+                                <th class="fw-medium">Thành tiền</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="orderHotelDetails in orderHotel.orderHotelDetailsById">
+                                <th>{{ $index + 1 }}</th>
+                                <td ng-bind="getRoomTypeName(orderHotelDetails.roomTypeId)"></td>
+                                <td ng-if="orderHotelDetails.customerName !== null"
+                                    ng-bind="orderHotelDetails.customerName"></td>
+                                <td ng-if="orderHotelDetails.customerName === null"
+                                    ng-bind="orderHotel.customerName"></td>
+                                <td ng-bind="orderHotelDetails.amount"></td>
+                                <td ng-bind="daysBetween + ' đêm'"></td>
+                                <td ng-bind="(orderHotelDetails.unitPrice * daysBetween| removeCurrencySymbol) + ' VND'"></td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="fw-medium">Thuế (10%):</td>
+                                <td colspan="2" class="fw-medium" ng-bind="((orderHotel.orderTotal * 0.1) | number:0) + ' VND'"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="fw-medium">Chiết khấu (6%):</td>
+                                <td colspan="2" class="fw-medium" ng-bind="((orderHotel.orderTotal * 0.06) | number:0) + ' VND'"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="fw-medium">Số tiền sẽ nhận:</td>
+                                <td colspan="2" class="fw-medium" ng-bind="(orderHotel.orderTotal - (orderHotel.orderTotal * 0.1) - (orderHotel.orderTotal * 0.06) | number:0) + ' VND'"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button"  ng-if="orderHotel.orderStatus === 0" class="btn btn-green" data-dismiss="modal" ng-click="paymentInvoice(orderHotel.id)">
+                    Xác nhận đặt phòng
+                </button>
+                <button type="button"  ng-if="orderHotel.orderStatus === 1" class="btn btn-green" data-dismiss="modal" ng-click="confirmInvoice(orderHotel.id)">
+                    Xác nhận đặt phòng
+                </button>
+                <button type="button"  ng-if="orderHotel.orderStatus === 1" class="btn btn-danger" data-dismiss="modal" ng-click="cancelInvoice(orderHotel.id)">
+                    Hủy phòng
+                </button>
+                <button type="button" class="btn btn-light" data-dismiss="modal" ng-click="closeModalDetailsOrder()">
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

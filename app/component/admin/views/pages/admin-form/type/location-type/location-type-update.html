@@ -1,0 +1,46 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<div class="container mt-4 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <h3 class="color-green fw-bold">
+                    CẬP NHẬT LOẠI ĐỊA ĐIỂM
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" ng-submit="updateType()"
+              method="POST" role="form" name="typeform">
+            <div class="col-md-12">
+                <label for="visitLocationTypeName" class="form-label">Nhập tên loại địa điểm</label>
+                <input class="form-control" id="visitLocationTypeName" type="text"
+                       placeholder="Nhập tên loại địa điểm"
+                       name="visitLocationTypeName"
+                       ng-model="formType.visitLocationTypeName"
+                       ng-class="{ 'is-invalid': typeform.visitLocationTypeName.$invalid && typeform.visitLocationTypeName.$touched, 'is-valid': typeform.visitLocationTypeName.$valid && typeform.visitLocationTypeName.$touched }"
+                       ng-change="checkDuplicateTypeNameUpdate()"
+                       required/>
+                <small class="text-danger"
+                       ng-show="typeform.visitLocationTypeName.$touched && typeform.visitLocationTypeName.$error.required">
+                    Vui lòng nhập loại địa điểm !
+                </small>
+                <small class="text-danger" ng-show="typeform.visitLocationTypeName.$touched && nameError">
+                    Loại địa điểm đã tồn tại !
+                </small>
+            </div>
+            <div class="col-md-12 d-flex justify-content-end mt-5">
+                <button class="btn" style="margin-right: 20px" type="button">
+                    <a class="btn fw-bold" href="/admin/type/visit-location-type-list">Trở về</a>
+                </button>
+                <button type="submit" class="btn btn-submit fw-bold" ng-disabled="typeform.$invalid || nameError">
+                    Cập nhật
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

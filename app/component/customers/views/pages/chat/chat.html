@@ -1,0 +1,243 @@
+<section class="font-inter" style="height: 1000px">
+    <main style="margin-top: 100px; margin-bottom: 50px; height: 800px; line-height: 20px">
+        <div class="container p-0">
+            <div class="card">
+                <div class="row g-0">
+                    <div class="col-12 col-lg-5 col-xl-4 border-right overflow-y">
+                        <h1 class="h3 fw-bold" style="margin: 20px 0 0 30px">Nhắn tin</h1>
+                        <div class="px-4 d-none d-md-block mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-grow-1">
+                                    <input type="text" class="form-control my-3" placeholder="Tìm kiếm ...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center px-4 border-bottom" id="contactListTabContent"
+                             ng-repeat="userChat in userChatsList"
+                             style="height: 60px" ng-click="updateStatusMessenger(userChat)">
+                            <div class="d-flex align-items-start m-1">
+                                <div class="position-relative">
+                                    <img ng-src="{{ userChat.avatar || 'assets/customers/images/icon/user.png' }}"
+                                         onerror="this.src='assets/customers/images/icon/user.png'"
+                                         class="rounded-circle mr-1" alt="avatar" width="40" height="40"/>
+
+                                    <span ng-if="userChat.status === 'ONLINE'"
+                                          class="fas fa-circle chat-online position-absolute"
+                                          style="bottom: 0; right: 4px; width: 10px; height: 10px"></span>
+                                </div>
+                                <div class="full-name-wrapper mx-1 user-chat-new-message">
+                                    <span class="full-name d-flex justify-content-center align-items-center">
+                                        <span style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; font-size: 15px">
+                                            {{ userChat.fullName }}
+                                        </span>
+                                        <span class="full-name badge rounded-pill bg-primary" style="font-size: 8px; margin-left: 8px"
+                                              ng-if="
+                                            userChat.role === 'ROLE_AGENT_HOTEL'
+                                            || userChat.role === 'ROLE_AGENT_TRANSPORT'
+                                            || userChat.role === 'ROLE_AGENT_PLACE'">Đối tác</span>
+                                        <span class="badge rounded-pill text-bg-success" style="font-size: 8px; margin-left: 8px"
+                                              ng-if="
+                                            userChat.role === 'ROLE_STAFF'">Quản trị viên</span>
+                                    </span>
+                                    <p class="small"
+                                       style="max-width: 270px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3rem; font-size: 12px"
+                                       ng-style="{'font-weight': userChat.countMessageUnread > 0 ? '600' : 'normal'}">
+                                        <span ng-if="userChat.userId.toString() === userAgencyId.id.toString()">Bạn: </span>
+                                        <span ng-if="userChat.newMessage === null && true" >Không có tin nhắn</span>
+                                        <span ng-if="userChat.newMessage !== null " ng-bind-html="trustAsHtml(userChat.newMessage)"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="badge bg-green"
+                                 ng-show="userChat.countMessageUnread > 0"
+                                 ng-bind="userChat.countMessageUnread"></div>
+                        </div>
+                        <hr class="d-block d-lg-none mt-1 mb-0">
+                    </div>
+                    <div class="col-12 col-lg-7 col-xl-8">
+                        <div class="py-2 px-4 border-bottom d-none d-lg-block">
+                            <div class="d-flex align-items-center py-1">
+                                <div class="flex-grow-1 pl-3">
+                                    <div class="d-flex align-items-start m-1">
+                                        <div class="position-relative">
+                                            <img ng-src="{{ displayUserChat.avatar || 'assets/customers/images/icon/user.png' }}"
+                                                 onerror="this.src='assets/customers/images/icon/user.png'"
+                                                 class="rounded-circle mr-1" style="margin-right: 20px" alt="avatar"
+                                                 width="40" height="40"/>
+
+                                            <span ng-if="displayUserChat.status === 'ONLINE'"
+                                                  class="fas fa-circle chat-online position-absolute"
+                                                  style="bottom: 0; right: 4px; width: 10px; height: 10px"></span>
+                                        </div>
+                                        <div class="full-name-wrapper">
+                                            <span class="full-name " ng-bind="displayUserChat.fullName"></span>
+                                            <span class="full-name badge rounded-pill bg-primary"
+                                                  ng-if="displayUserChat.role === 'ROLE_AGENT_HOTEL'
+                                                  || displayUserChat.role === 'ROLE_AGENT_TRANSPORT'
+                                                  || displayUserChat.role === 'ROLE_AGENT_PLACE'"
+                                                  style="margin-left: 4px">Đối tác</span>
+                                            <span class="full-name badge rounded-pill text-bg-success"
+                                                  ng-if="displayUserChat.role === 'ROLE_STAFF'"
+                                                  style="margin-left: 4px">Quản trị viên</span>
+                                            <div class="text-muted small">
+                                                <em ng-if="displayUserChat.status === 'ONLINE'">Đang hoạt động</em>
+                                                <em ng-if="displayUserChat.status === 'OFFLINE'"
+                                                    ng-bind="displayUserChat.lastUpdated | statusOnlineUser"></em>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="position-relative">
+                            <div class="chat-messages p-4 overflow-y" id="chatMessages" style="height: 600px">
+                                <div class="d-flex justify-content-center align-items-center mb-3">
+                                    <div class="card content"
+                                         style="width: 80%; background: #fff7e0; padding: 10px 20px 10px 20px; font-size: 12px">
+                                        LƯU Ý: TravelTour KHÔNG cho phép các hành vi: Đặt cọc/Chuyển khoản riêng cho
+                                        người
+                                        bán/Giao dịch ngoài hệ thống TravelTour/Cung cấp thông tin liên hệ cho người
+                                        bán/Các
+                                        hoạt động tuyển CTV/Tặng quà miễn phí, ... Vui lòng chỉ mua-bán trực tiếp trên
+                                        ứng
+                                        dụng TravelTour để tránh nguy cơ bị lừa đảo bạn nhé!
+                                    </div>
+                                </div>
+                                <div class="" ng-repeat="(index, message) in displayMessages">
+                                    <div ng-if="message.senderId.toString() === userAgencyId.id.toString()">
+                                        <!-- Nếu là tin nhắn của bạn -->
+                                        <div class="pb-4">
+                                            <div class="chat-message-right " ng-class="{'mb-2': index === displayMessages.length - 1}">
+                                                <div>
+                                                    <img ng-src="{{ avatarUser.avatar || 'assets/customers/images/icon/user.png' }}"
+                                                         onerror="this.src='assets/customers/images/icon/user.png'"
+                                                         class="rounded-circle mr-1" alt="avatar" style="width: 40px; height: 40px; margin-left: 20px"/>
+                                                </div>
+                                                <div class="flex-shrink-1 rounded py-2 px-3 mr-3" style="background: #CCE2CB;">
+                                                    <div class="font-weight-bold mb-1" ng-bind="message.fullName">Bạn</div>
+                                                    <p ng-bind-html="trustAsHtml(message.content)" style="max-width: 600px"></p>
+                                                    <div class="text-muted small text-nowrap mt-2 text-white"
+                                                         ng-bind="message.timestamp | formatHoursRight"></div>
+                                                </div>
+                                            </div>
+                                            <span class="float-end badge rounded-pill bg-light text-dark mt-2"
+                                                  ng-if="index === displayMessages.length - 1"
+                                                  style="font-size: 12px; margin-right: 60px" ng-bind="statusSendMessage"></span>
+                                        </div>
+                                    </div>
+
+                                    <div ng-if="message.senderId.toString() !== userAgencyId.id.toString()">
+                                        <!-- Nếu là tin nhắn từ người khác -->
+                                        <div class="chat-message-left pb-4">
+                                            <div>
+                                                <img ng-src="{{ displayUserChat.avatar || 'assets/customers/images/icon/user.png' }}"
+                                                     onerror="this.src='assets/customers/images/icon/user.png'"
+                                                     class="rounded-circle mr-1" alt="avatar" width="40" height="40" style="margin-right: 20px"/>
+                                            </div>
+                                            <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+                                                <div class="font-weight-bold mb-1" ng-bind="message.fullName">Sharon Lessman</div>
+                                                <p class="mb-0 " ng-bind-html="trustAsHtml(message.content)" style="max-width: 600px"></p>
+                                                <div class="d-flex justify-content-end">
+                                                    <div class="text-muted small text-nowrap mt-2 float-right"
+                                                         ng-bind="message.timestamp | formatHoursLeft"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex-grow-0 py-3 px-4 border-top"
+                             ng-show="displayUserChat !== null && displayUserChat !== undefined && displayUserChat">
+                            <div class="container-chat mb-3" rich-text-editor>
+                                <div class="options" style="font-size: 16px">
+                                    <!-- Text Format -->
+                                    <button id="bold" type="button" class="option-button format">
+                                        <i class="fa-solid fa-bold"></i>
+                                    </button>
+                                    <button id="italic" type="button" class="option-button format">
+                                        <i class="fa-solid fa-italic"></i>
+                                    </button>
+                                    <button id="underline" type="button" class="option-button format">
+                                        <i class="fa-solid fa-underline"></i>
+                                    </button>
+                                    <button id="strikethrough" type="button" class="option-button format">
+                                        <i class="fa-solid fa-strikethrough"></i>
+                                    </button>
+                                    <button id="superscript" type="button" class="option-button script">
+                                        <i class="fa-solid fa-superscript"></i>
+                                    </button>
+                                    <button id="subscript" type="button" class="option-button script">
+                                        <i class="fa-solid fa-subscript"></i>
+                                    </button>
+                                    <!-- List -->
+                                    <button id="insertOrderedList" type="button" class="option-button">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                    </button>
+                                    <button id="insertUnorderedList" type="button" class="option-button">
+                                        <i class="fa-solid fa-list"></i>
+                                    </button>
+                                    <!-- Undo/Redo -->
+                                    <button id="undo" type="button" class="option-button">
+                                        <i class="fa-solid fa-rotate-left"></i>
+                                    </button>
+                                    <button id="redo" type="button" class="option-button">
+                                        <i class="fa-solid fa-rotate-right"></i>
+                                    </button>
+                                    <!-- Alignment -->
+                                    <button id="justifyLeft" type="button" class="option-button align">
+                                        <i class="fa-solid fa-align-left"></i>
+                                    </button>
+                                    <button id="justifyCenter" type="button" class="option-button align">
+                                        <i class="fa-solid fa-align-center"></i>
+                                    </button>
+                                    <button id="justifyRight" type="button" class="option-button align">
+                                        <i class="fa-solid fa-align-right"></i>
+                                    </button>
+                                    <button id="justifyFull" type="button" class="option-button align">
+                                        <i class="fa-solid fa-align-justify"></i>
+                                    </button>
+                                    <button id="indent" type="button" class="option-button spacing">
+                                        <i class="fa-solid fa-indent"></i>
+                                    </button>
+                                    <button id="outdent" type="button" class="option-button spacing">
+                                        <i class="fa-solid fa-outdent"></i>
+                                    </button>
+                                    <!-- Headings -->
+                                    <select id="formatBlock" type="section" class="adv-option-button">
+                                        <option value="H1">H1</option>
+                                        <option value="H2">H2</option>
+                                        <option value="H3">H3</option>
+                                        <option value="H4">H4</option>
+                                        <option value="H5">H5</option>
+                                        <option value="H6">H6</option>
+                                    </select>
+                                    <!-- Font -->
+                                    <select id="fontName" type="select" class="adv-option-button"></select>
+                                    <select id="fontSize" type="select" class="adv-option-button"></select>
+                                    <button type="button" class="option-button" ng-click="toggleHeight()">
+                                        <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                                    </button>
+                                </div>
+                                <div class="d-flex justify-content-center align-items-center" style="max-width: 1000px">
+                                    <div class="form-control mb-1" contenteditable="true" id="chat-input"
+                                         ng-model="messageContent" ng-blur="setTouched()"
+                                         ng-style="{'height': editorHeight}" ng-keypress="onKeyPress($event)">
+                                    </div>
+                                    <div class="mx-4">
+                                        <button type="button" style="height: 40px; width: 40px" class="btn btn-green" ng-click="sendMessage(displayUserChat.userId)">
+                                            <i class="fa-solid fa-paper-plane"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</section>

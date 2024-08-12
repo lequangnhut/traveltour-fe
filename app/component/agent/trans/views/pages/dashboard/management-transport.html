@@ -1,0 +1,91 @@
+<section id="dashboard-hotel">
+    <div class="container-fluid">
+        <header>
+            <div class="bg">
+                <div class="">
+                    <div class="h3 fw-bold text-uppercase mb-5 color-green">Danh sách nhà xe</div>
+                </div>
+
+                <div ng-include="'app/component/utils/loading-component.html'"></div>
+
+                <div class="list-hotel" ng-if="!isLoading">
+                    <div class="list-hotel-item">
+                        <div class="row">
+                            <div class="col-xl-4 mb-4" ng-repeat="trans in transportations">
+                                <div class="item">
+                                    <div class="card card-banner">
+                                        <div class="card-header">
+                                            <div class="img-card-dashboard">
+                                                <img ng-src="{{ trans.transportationBrandImg }}"
+                                                     class="img-fluid" alt="avatar-hotel"/>
+                                            </div>
+                                            <div class="item-title mt-3">
+                                                <div class="item-title mt-3">
+                                                    <div class="h4 fw-medium">{{ trans.transportationBrandName }}</div>
+                                                    <div class="">ID: <span>{{ trans.id }}</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex justify-content-between w-100">
+                                            <a class="btn"
+                                               href="/business/transport/home/update-transport/{{ trans.id }}">
+                                                Sửa thông tin nhà xe
+                                            </a>
+                                            <a class="btn btn-green"
+                                               href="/business/welcome-transport"
+                                               ng-click="showContentForRole('ROLE_AGENT_TRANSPORT', trans.id)"
+                                            >
+                                                Tiếp tục >
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 mb-4" ng-if="transportations.length === 0">
+                                Không có thông tin nhà xe
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section>
+            <div class="add-hotel-container">
+                <div class="add-hotel-item">
+                    <div class="row">
+                        <div class="col-xl-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="h4 fw-medium mb-3">Tôi đã có nhà xe của mình</div>
+                                    <div class="">Chào mừng bạn đã đến với trang quản lý nhà xe của chúng tôi. Hãy cập
+                                        nhật thông tin chi tiết của nhà xe, bổ sung các tiện ích mới và tận hưởng trải
+                                        nghiệm quản lý hiệu quả cùng TravelTour.
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-end">
+                                    <a href="/business/select-type" class="btn">Trở về</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="h4 fw-medium mb-3">Tôi muốn liệt kê nhà xe mới</div>
+                                    <div class="">Bắt đầu hành trình mới với việc thêm khách sạn của bạn vào hệ thống
+                                        của chúng tôi. Hãy điền
+                                        đầy đủ thông tin và làm cho Nhà xe của bạn trở nên nổi bật trên TravelTour.
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-end">
+                                    <a href="/business/transport/home/create-transport" class="btn btn-green">
+                                        Thêm nhà xe mới</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>

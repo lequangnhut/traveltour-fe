@@ -1,0 +1,48 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<div class="container mt-4 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-bold">
+                        CẬP NHẬT LOẠI TOUR
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" ng-submit="updateType()"
+              method="POST" role="form" name="typeform">
+            <div class="col-md-12">
+                <label for="tourTypeName" class="form-label">Nhập tên loại tour</label>
+                <input class="form-control" id="tourTypeName" type="text"
+                       placeholder="Nhập tên loại tour"
+                       name="tourTypeName"
+                       ng-model="formType.tourTypeName"
+                       ng-class="{ 'is-invalid': typeform.tourTypeName.$invalid && typeform.tourTypeName.$touched, 'is-valid': typeform.tourTypeName.$valid && typeform.tourTypeName.$touched }"
+                       ng-change="checkDuplicateTypeNameUpdate()"
+                       required/>
+                <small class="text-danger"
+                       ng-show="typeform.tourTypeName.$touched && typeform.tourTypeName.$error.required">
+                    Vui lòng nhập loại tour !
+                </small>
+                <small class="text-danger" ng-show="typeform.tourTypeName.$touched && nameError">
+                    Loại tour đã tồn tại !
+                </small>
+            </div>
+            <div class="col-md-12 d-flex justify-content-end mt-5">
+                <button class="btn" style="margin-right: 20px" type="button">
+                    <a class="btn fw-bold" href="/admin/type/tour-type-list">Trở về</a>
+                </button>
+                <button type="submit" class="btn btn-submit fw-bold" ng-disabled="typeform.$invalid || nameError">
+                    Cập nhật
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

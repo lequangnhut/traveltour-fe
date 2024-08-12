@@ -1,0 +1,19 @@
+.img-card-dashboard {
+    height: 300px;
+}
+
+.img-card-dashboard img {
+    height: 300px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.btn-green {
+    background-color: #63AB45;
+    color: white;
+}
+
+.btn-green:hover {
+    background-color: #498434;
+    color: white;
+}

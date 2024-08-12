@@ -1,0 +1,85 @@
+<section id="business-information">
+    <div class="container-fluid">
+        <div class="logo text-center">
+            <div class="d-flex align-items-center justify-content-center mb-4">
+                <img src="/assets/admin/assets/img/icons/logo.png" alt="logo" style="width: 60px"/>
+                <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder fs-4">TravelTour</p>
+            </div>
+            <div class="content-text text-center mt-3">
+                <div class="h4 mb-3">Chào mừng Quý khách hàng của Travel Tour!</div>
+                <div class="d-flex justify-content-center">
+                    <p style="width: 600px; text-align: center">Chúng tôi xin chân thành cảm ơn bạn đã lựa chọn Travel
+                        Tour làm đối tác du lịch của mình.
+                        Chúng tôi rất vui mừng được chào đón bạn vào gia đình của chúng tôi và hy vọng rằng mỗi
+                        chuyến hành trình của bạn sẽ là một trải nghiệm đáng nhớ.</p>
+                </div>
+                <div class="h3 fw-medium mt-4">Hãy chọn loại hình kinh doanh của bạn</div>
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center mt-3">
+                <div class="row">
+                    <div class="box col-xl-4 card" ng-if="hasRole('ROLE_AGENT_HOTEL')">
+                        <a href="/business/hotel/home" ng-if="hotels.isAccepted">
+                            <div class="box-icon mb-3">
+                                <i class="fa-solid fa-hotel color-green" style="font-size: 30px"></i>
+                            </div>
+                            <div class="box-content fw-medium text-dark">
+                                Khách sạn
+                            </div>
+                        </a>
+                        <a href="/business/register-hotel" ng-if="!hotels.isAccepted">
+                            <div class="box-icon mb-3">
+                                <i class="fa-solid fa-hotel color-green" style="font-size: 30px"></i>
+                            </div>
+                            <div class="box-content fw-medium text-dark">
+                                Khách sạn
+                                <br>
+                                <i class="fs--1">Chưa đăng ký thông tin</i>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="box col-xl-4 card" ng-if="hasRole('ROLE_AGENT_TRANSPORT')">
+                        <a href="/business/transport/home" ng-if="transport.isAccepted">
+                            <div class="box-icon mb-3">
+                                <i class="fa-solid fa-car color-green" style="font-size: 30px"></i>
+                            </div>
+                            <div class="box-content fw-medium text-dark">
+                                Phương tiện
+                            </div>
+                        </a>
+                        <a href="/business/register-transports" ng-if="!transport.isAccepted">
+                            <div class="box-icon mb-3">
+                                <i class="fa-solid fa-car color-green" style="font-size: 30px"></i>
+                            </div>
+                            <div class="box-content fw-medium text-dark">
+                                Phương tiện
+                                <br>
+                                <i class="fs--1">Chưa đăng ký thông tin</i>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="box col-xl-4 card" ng-if="hasRole('ROLE_AGENT_PLACE')">
+                        <a href="/business/visit/home" ng-if="visits.isAccepted">
+                            <div class="box-icon mb-3">
+                                <i class="fa-brands fa-pagelines color-green" style="font-size: 30px"></i>
+                            </div>
+                            <div class="box-content fw-medium text-dark">
+                                Tham quan
+                            </div>
+                        </a>
+                        <a href="/business/register-visit" ng-if="!visits.isAccepted">
+                            <div class="box-icon mb-3">
+                                <i class="fa-brands fa-pagelines color-green" style="font-size: 30px"></i>
+                            </div>
+                            <div class="box-content fw-medium text-dark">
+                                Tham quan
+                                <br>
+                                <i class="fs--1">Chưa đăng ký thông tin</i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

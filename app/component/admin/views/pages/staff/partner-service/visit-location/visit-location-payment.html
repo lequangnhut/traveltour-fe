@@ -1,0 +1,200 @@
+<div class="container">
+    <div class="header-control mb-3">
+        <div class="header-control-center">
+            <div class="d-flex justify-content-between align-items-center row ">
+                <div class="col mt-3">
+                    <h3 class="color-green fw-bold text-uppercase">Chi tiết thanh toán</h3>
+                    <nav aria-label="breadcrumb mb-3">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list">
+                                    Tour chi tiết
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list/{{ tourDetailId }}/service-list">
+                                    Chọn dịch vụ
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/visit-location-list">
+                                    Danh sách điểm tham quan
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" style="width: 200px">
+                                <p>
+                                    Chi tiết thanh toán
+                                </p>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 pe-2">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Chi tiết đơn hàng</h5>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="card mb-3">
+                                <img class="img-fluid" ng-src="{{ infoVisitLocation.visitLocationImage }}"/>
+                                <div class="card-body ">
+                                    <div class="bg-header-model">
+                                        <div class="h5 text-center fw-medium">{{ infoVisitLocation.visitLocationName + " (" + (infoVisitLocation.checkIn | date: 'dd-MM-yyyy') + ")" }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-repeat="st in selectedTickets">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="fw-bold mb-0 ps-3">{{ st.ticketTypeName }}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <p class="m-0">{{ st.unitPrice | vnCurrency }}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <p class="m-0">Số lượng: <span
+                                        class="fw-bold">{{ st.quantity }}</span>
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div>
+                        <div class="d-flex justify-content-between">
+                            <span class="font-bold text-lg">Tổng tiền tham quan:</span>
+                            <span class="font-bold text-lg"> {{ totalBeforeTax | vnCurrency }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Thuế GTGT: (vé đã bao gồm thuế GTGT)</span>
+                            <span> {{ VATAmount | vnCurrency }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Chiết khấu:</span>
+                            <span> {{ discountAmount | vnCurrency }}</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between font-bold text-xl mt-3 fw-bold">
+                            <span>Tổng tiền phải thanh toán:</span>
+                            <span> {{ total | vnCurrency }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 ps-2">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form method="post" role="form" name="locationForm">
+                        <h5 class="card-title">Thông tin của bạn để hoàn tất quá trình đặt vé</h5>
+                        <div class="col-12 mb-3">
+                            <label for="full_name" class="form-label">Họ và tên
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text"
+                                   id="full_name"
+                                   class="form-control"
+                                   name="fullName"
+                                   ng-model="tourGuide.fullName"
+                                   placeholder="VD: Nguyen Van A"
+                                   ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                   ng-class="{ 'is-invalid': locationForm.fullName.$invalid && locationForm.fullName.$touched, 'is-valid': locationForm.fullName.$valid && locationForm.fullName.$touched }"
+                                   ng-change="codeQrOnChange()"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="locationForm.fullName.$touched && locationForm.fullName.$error.required">
+                                Vui lòng nhập họ và tên !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="locationForm.fullName.$touched && locationForm.fullName.$error.pattern">
+                                Họ và tên không đúng định dạng !
+                            </small>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label for="phone" class="form-label">Điện thoại di động<span
+                                    class="text-danger">*</span></label>
+                            <input type="tel"
+                                   id="phone"
+                                   name="phone"
+                                   maxlength="10"
+                                   class="form-control"
+                                   ng-model="tourGuide.phone"
+                                   ng-class="{ 'is-invalid': locationForm.phone.$invalid && locationForm.phone.$touched, 'is-valid': locationForm.phone.$valid && locationForm.phone.$touched }"
+                                   ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                                   ng-change="codeQrOnChange()"
+                                   placeholder="VD: 0918298029"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="locationForm.phone.$touched && locationForm.phone.$error.required">
+                                Vui lòng nhập số điện thoại !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="locationForm.phone.$touched && locationForm.phone.$error.pattern">
+                                Số điện thoại không đúng định dạng !
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="email"
+                                   id="email"
+                                   class="form-control"
+                                   name="email"
+                                   ng-model="tourGuide.email"
+                                   ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                                   placeholder="VD: example@gmail.com"
+                                   ng-class="{ 'is-invalid': locationForm.email.$invalid && locationForm.email.$touched, 'is-valid': locationForm.email.$valid && locationForm.email.$touched }"
+                                   ng-change="codeQrOnChange()"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="locationForm.email.$touched && locationForm.email.$error.required">
+                                Vui lòng nhập địa chỉ email !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="locationForm.email.$touched && locationForm.email.$error.pattern">
+                                Địa chỉ email không đúng định dạng !
+                            </small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Delivery Time Section -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Thời gian đến của bạn</h5>
+                    <ul class="ps-0">
+                        <li class="d-flex align-items-start mb-2">
+                            <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                            <span>Vé của bạn sẽ sẵn sàng để nhận từ ngày
+                                <span class="fw-bold">{{ infoVisitLocation.checkIn | date: "dd-MM-yyyy" }}</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="float-end mb-2">
+                <button ng-click="confirmCompletionOfTicketPurchase()" ng-disabled="locationForm.$invalid"
+                        class="btn btn-success" type="submit">Hoàn tất
+                    đặt vé
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

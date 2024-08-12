@@ -1,0 +1,222 @@
+<div class="container">
+    <div class="header-control mb-3">
+        <div class="header-control-center">
+            <div class="d-flex justify-content-between align-items-center row ">
+                <div class="col mt-3">
+                    <h3 class="color-green fw-bold text-uppercase">Chi tiết thanh toán</h3>
+                    <nav aria-label="breadcrumb mb-3">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list">
+                                    Tour chi tiết
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list/{{ tourDetailIdRouter }}/service-list">
+                                    Chọn dịch vụ
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list/{{ tourDetailIdRouter }}/service-list/hotel-list">
+                                    Danh sách khách sạn
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item text-dark">
+                                <a href="/admin/detail-tour-list/{{tourDetailId}}/service-list/hotel-list/{{hotelId}}/room-type-list">
+                                    Danh sách phòng
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" style="width: 160px">
+                                <p>
+                                    Chi tiết thanh toán
+                                </p>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 pe-2">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Chi tiết đơn hàng</h5>
+                    <hr>
+                    <div class="row" ng-repeat="sr in selectedRooms">
+                        <div class="col-3 pe-0">
+                            <img class="rounded-1 w-100"
+                                 src="{{sr.roomTypeAvatar}}"
+                                 alt=""/>
+                        </div>
+                        <div class="col-9">
+                            <div class="row">
+                                <div class="col-9">
+                                    <p class="fw-bold mb-0">{{ infoHotel.hotelName }}</p>
+                                    <p class="mb-0">{{ infoHotel.address }}</p>
+                                    <p class="fw-bold mb-0">{{ sr.roomTypeName }}</p>
+                                </div>
+                                <div class="col-3 px-0 position-relative">
+                                    <p>{{ sr.price | vnCurrency }}</p>
+                                    <p class="position-absolute bottom-0 mb-0">Số lượng: <span
+                                            class="fw-bold">{{ sr.quantity }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="d-flex justify-content-between">
+                                <div class="">
+                                    <p class="mb-0 d-flex justify-content-center">Ngày nhận phòng</p>
+                                    <p class="fw-bold mb-0 d-flex justify-content-center"
+                                       style="font-size: 13px">{{ (infoHotel.departureDate | date: 'dd/MM/yyyy') + ' 12-14 giờ' }}</p>
+                                </div>
+                                <div class="col-2 d-flex justify-content-center align-items-center px-2">
+                                    <p class="fw-bold mb-0 text-center">{{ infoHotel.departureDate | calculateDaysAndNights:infoHotel.arrivalDate }}</p>
+                                </div>
+                                <div class="pe-3">
+                                    <p class="mb-0 d-flex justify-content-center">Ngày trả phòng</p>
+                                    <p class="fw-bold mb-0 d-flex justify-content-center"
+                                       style="font-size: 13px">{{ (infoHotel.arrivalDate | date: 'dd/MM/yyyy') + ' 12 giờ' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="mt-3">
+                    </div>
+
+                    <div>
+                        <div class="d-flex justify-content-between">
+                            <span class="font-bold text-lg">Tổng tiền khách sạn:</span>
+                            <span class="font-bold text-lg"> {{ totalBeforeTax | vnCurrency }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Thuế GTGT:</span>
+                            <span> {{ VATAmount | vnCurrency }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Chiết khấu:</span>
+                            <span> {{ discountAmount | vnCurrency }}</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between font-bold text-xl mt-3 fw-bold">
+                            <span>Tổng tiền phải thanh toán:</span>
+                            <span> {{ total | vnCurrency }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 ps-2">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form method="post" role="form" name="hotelForm">
+                        <h5 class="card-title">Thông tin của bạn để hoàn tất quá trình đặt phòng</h5>
+                        <div class="col-12 mb-3">
+                            <label for="full_name" class="form-label">Họ và tên
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text"
+                                   id="full_name"
+                                   class="form-control"
+                                   name="fullName"
+                                   ng-model="tourGuide.fullName"
+                                   placeholder="VD: Nguyen Van A"
+                                   ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                   ng-class="{ 'is-invalid': hotelForm.fullName.$invalid && hotelForm.fullName.$touched,
+                                                'is-valid': hotelForm.fullName.$valid && hotelForm.fullName.$touched }"
+                                   ng-change="codeQrOnChange()"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="hotelForm.fullName.$touched && hotelForm.fullName.$error.required">
+                                Vui lòng nhập họ và tên !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="hotelForm.fullName.$touched && hotelForm.fullName.$error.pattern">
+                                Họ và tên không đúng định dạng !
+                            </small>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label for="phone" class="form-label">Điện thoại di động<span
+                                    class="text-danger">*</span></label>
+                            <input type="tel"
+                                   id="phone"
+                                   name="phone"
+                                   maxlength="10"
+                                   class="form-control"
+                                   ng-model="tourGuide.phone"
+                                   ng-class="{ 'is-invalid': hotelForm.phone.$invalid && hotelForm.phone.$touched, 'is-valid': hotelForm.phone.$valid && hotelForm.phone.$touched }"
+                                   ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                                   ng-change="codeQrOnChange()"
+                                   placeholder="VD: 0918298029"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="hotelForm.phone.$touched && hotelForm.phone.$error.required">
+                                Vui lòng nhập số điện thoại !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="hotelForm.phone.$touched && hotelForm.phone.$error.pattern">
+                                Số điện thoại không đúng định dạng !
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="email"
+                                   id="email"
+                                   class="form-control"
+                                   name="email"
+                                   ng-model="tourGuide.email"
+                                   ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                                   placeholder="VD: example@gmail.com"
+                                   ng-class="{ 'is-invalid': hotelForm.email.$invalid && hotelForm.email.$touched, 'is-valid': hotelForm.email.$valid && hotelForm.email.$touched }"
+                                   ng-change="codeQrOnChange()"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="hotelForm.email.$touched && hotelForm.email.$error.required">
+                                Vui lòng nhập địa chỉ email !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="hotelForm.email.$touched && hotelForm.email.$error.pattern">
+                                Địa chỉ email không đúng định dạng !
+                            </small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Delivery Time Section -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Thời gian đến của bạn</h5>
+                    <ul class="ps-0">
+                        <li class="d-flex align-items-start mb-2">
+                            <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                            <span>Phòng của bạn sẽ sẵn sàng để nhận trong khoảng từ <span
+                                    class="fw-bold">{{ infoHotel.departureDate | date: 'dd/MM/yyyy' }} 12-14 giờ</span>  đến <span
+                                    class="fw-bold">{{ infoHotel.arrivalDate | date: 'dd/MM/yyyy' }}
+                                12- giờ</span>.</span>
+                        </li>
+                        <li class="d-flex align-items-start mb-2">
+                            <i class="fa-solid fa-check text-success me-2 mt-1"></i>
+                            <span>Lễ tân 24 giờ - Luôn có trực giúp mọi khi bạn cần!</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Submit Button -->
+            <div class="float-end mb-5">
+                <button ng-click="ConfirmationOfCompleteBooking()" ng-disabled="hotelForm.$invalid"
+                        class="btn btn-success" type="submit">Hoàn tất đặt
+                    phòng
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

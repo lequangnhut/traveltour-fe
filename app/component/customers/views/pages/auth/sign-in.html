@@ -7,12 +7,20 @@
 <!-- Theme css -->
 <link rel="stylesheet" type="text/css" href="/assets/customers/css/auth/login.css">
 
-<!-- 01 Preloader -->
-<!--<div class="loader-wrapper" id="loader-wrapper">-->
-<!--    <div class="loader"></div>-->
-<!--</div>-->
-<!-- Preloader end-->
-<!-- 02 Main pages -->
+<div class="preloader">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+</div>
+<div class="preloader" ng-show="isLoading">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+    <div class="bg"></div>
+</div>
+<!-- 01 Main pages -->
 <section class="page-section login-page">
     <div class="full-width-screen">
         <div class="container-fluid">
@@ -22,7 +30,7 @@
                         <!-- Login form -->
                         <form ng-submit="loginAccount()" class="signup-form" name="loginForm" method="POST" role="form">
                             <div class="imgcontainer">
-                                <a href="#" ng-click="goHome()">
+                                <a href="/home">
                                     <img src="/assets/customers/images/logo/logo-black.png" class="avatar" alt="logo">
                                 </a>
                             </div>
@@ -54,8 +62,8 @@
                                                class="password-field"
                                                required
                                         >
-                                        <span data-toggle=".password-field"
-                                              class="fa fa-fw fa-eye field-icon toggle-password">
+                                        <span ng-click="togglePassword()" class="field-icon toggle-password">
+                                            <i class="fa fa-fw fa-eye"></i>
                                         </span>
                                     <small class="text-danger"
                                            ng-show="loginForm.password.$touched && loginForm.password.$error.required">
@@ -67,9 +75,11 @@
                                     </small>
                                 </span>
 
-                                <label class="label-container">Nhớ mật khẩu
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
+                                <label class="label-container ps-0" style="font-size: 13px;">
+                                    <a href="/home" class="text-decoration-none fw-medium text-green"
+                                       style="color: #63AB45">
+                                        Quay về trang chủ
+                                    </a>
                                 </label>
 
                                 <span class="psw">
@@ -77,7 +87,7 @@
                                 </span>
 
                                 <div class="login-btns">
-                                    <button type="submit">Đăng nhập</button>
+                                    <button type="submit" ng-disabled="loginForm.$invalid">Đăng nhập</button>
                                 </div>
 
                                 <div class="division-lines">
@@ -85,18 +95,18 @@
                                 </div>
 
                                 <div class="login-with-btns">
-                                    <a href="/oauth2/authorization/google" type="button"
-                                       class="google text-decoration-none">
-                                        <i class="fab fa-google"></i>
+                                    <a href="javascript:void(0)" ng-click="loginGoogle()"
+                                       type="button" class="google text-decoration-none">
+                                        <span class="fab fa-google"></span>
                                     </a>
                                     <a href="javascript:void(0)" type="button" class="facebook text-decoration-none">
-                                        <i class="fab fa-facebook-f"></i>
+                                        <span class="fab fa-facebook-f"></span>
                                     </a>
                                     <a href="javascript:void(0)" type="button" class="twitter text-decoration-none">
-                                        <i class="fab fa-twitter"></i>
+                                        <span class="fab fa-twitter"></span>
                                     </a>
                                     <a href="javascript:void(0)" type="button" class="linkedin text-decoration-none">
-                                        <i class="fab fa-linkedin-in"></i>
+                                        <span class="fab fa-linkedin-in"></span>
                                     </a>
                                     <span class="already-acc">Không phải thành viên ?
                                         <a href="/sign-up" class="signup-btn">Đăng ký</a>
@@ -110,6 +120,3 @@
         </div>
     </div>
 </section>
-
-<!--====== Login js ======-->
-<script src="/assets/customers/js/auth/script.js"></script>

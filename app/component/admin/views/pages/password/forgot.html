@@ -1,0 +1,94 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<div class="preloader">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+    <div class="bg" style="opacity: unset"></div>
+</div>
+
+<div class="container" style="width: 35%;">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-12">
+                    <h3 class="color-green fw-bold text-uppercase text-center">quên mật khẩu</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="signup-form form-input-custom" method="post" ng-submit="submitFormForgotAdmin()"
+              name="formEmailForgot"
+              role="form">
+            <div class="col-12">
+                <div class="col-md-12">
+                    <label class="form-label mb-2">Nhập địa chỉ email</label>
+                    <input type="text"
+                           class="form-control"
+                           placeholder="exam@gmail.com"
+                           name="email"
+                           ng-model="users.email"
+                           ng-class="{ 'is-invalid': formEmailForgot.email.$invalid && formEmailForgot.email.$touched, 'is-valid': formEmailForgot.email.$valid && formEmailForgot.email.$touched && emailError }"
+                           ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                           ng-change="checkInputEmailAdmin()"
+                           required
+                    >
+                    <small class="text-danger"
+                           ng-show="formEmailForgot.email.$touched && formEmailForgot.email.$error.required">
+                        Vui lòng nhập địa chỉ email !
+                    </small>
+                    <small class="text-danger"
+                           ng-show="formEmailForgot.email.$touched && formEmailForgot.email.$error.pattern">
+                        Email sai định dạng !
+                    </small>
+                    <small class="text-danger" ng-show="formEmailForgot.email.$touched && !emailError">
+                        Email không tồn tại!
+                    </small>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <label class="form-label mb-2">Nhập mã captcha</label>
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Ghi đúng chữ hoa, thường" name="captcha"
+                           class="fomr-control"
+                           ng-model="users.captcha"
+                           ng-class="{ 'is-invalid': formEmailForgot.captcha.$invalid && formEmailForgot.captcha.$touched, 'is-valid': formEmailForgot.captcha.$valid && formEmailForgot.captcha.$touched && capCodeError }"
+                           ng-change="checkInputCaptcha()" required>
+                    <small class="text-danger"
+                           ng-show="formEmailForgot.captcha.$touched && formEmailForgot.captcha.$error.required">
+                        Vui lòng nhập mã Captcha !
+                    </small>
+                    <small class="text-danger" ng-show="formEmailForgot.captcha.$touched && !capCodeError">
+                        Mã Captcha không đúng!
+                    </small>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6 d-flex align-items-center mt-2">
+                        <img style="border-radius: 5px; border: 1px solid rgba(128, 128, 128, 0.67); width: 100%"
+                             ng-src="{{captchaImage}}" alt="Captcha Image" class="captcha-image">
+                    </div>
+                    <div class="col-6 d-flex align-items-center justify-content-left">
+                        <a ng-click="refreshCaptcha()" role="button">
+                            <i class="fa-solid fa-arrows-rotate fa-2xl" style="color: #44ca85;"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end mt-5">
+                    <button type="button" class="btn btn-submit fw-bold"
+                            style="margin-right: 20px; background-color: white; color:black">
+                        <a style="color: black; text-decoration: none" href="/login-admin">Đăng nhập</a>
+                    </button>
+                    <button type="submit" ng-disabled="formEmailForgot.$invalid || !emailError || !capCodeError"
+                            class="btn btn-submit fw-bold">Lấy lại mật khẩu
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+

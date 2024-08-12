@@ -15,55 +15,6 @@ h6 {
     font-family: "Montserrat", sans-serif;
 }
 
-.loader-wrapper {
-    height: 100vh;
-    width: 100vw;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    background-color: #ffffff;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    position: fixed;
-    z-index: 9;
-    top: 0;
-}
-
-.loader {
-    border: 16px solid #111;
-    border-radius: 50%;
-    border-top: 16px double #63AB45;
-    border-bottom: 16px double #63AB45;
-    width: 50px;
-    height: 50px;
-    -webkit-animation: spin 0.5s linear infinite; /* Safari */
-    animation: spin 0.5s linear infinite;
-}
-
-@-webkit-keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-    }
-}
-
-@keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-
 /*==============
   [01] Page css
 =================*/
@@ -589,18 +540,18 @@ h6 {
     transition: all 0.2s ease-in-out;
 }
 
-.login-page .login-form .input-control .login-with-btns .google i,
-.login-page .login-form .input-control .login-with-btns .facebook i,
-.login-page .login-form .input-control .login-with-btns .twitter i,
-.login-page .login-form .input-control .login-with-btns .linkedin i,
-.login-page .signup-form .input-control .login-with-btns .google i,
-.login-page .signup-form .input-control .login-with-btns .facebook i,
-.login-page .signup-form .input-control .login-with-btns .twitter i,
-.login-page .signup-form .input-control .login-with-btns .linkedin i,
-.login-page .forgot-form .input-control .login-with-btns .google i,
-.login-page .forgot-form .input-control .login-with-btns .facebook i,
-.login-page .forgot-form .input-control .login-with-btns .twitter i,
-.login-page .forgot-form .input-control .login-with-btns .linkedin i {
+.login-page .login-form .input-control .login-with-btns .google svg,
+.login-page .login-form .input-control .login-with-btns .facebook svg,
+.login-page .login-form .input-control .login-with-btns .twitter svg,
+.login-page .login-form .input-control .login-with-btns .linkedin svg,
+.login-page .signup-form .input-control .login-with-btns .google svg,
+.login-page .signup-form .input-control .login-with-btns .facebook svg,
+.login-page .signup-form .input-control .login-with-btns .twitter svg,
+.login-page .signup-form .input-control .login-with-btns .linkedin svg,
+.login-page .forgot-form .input-control .login-with-btns .google svg,
+.login-page .forgot-form .input-control .login-with-btns .facebook svg,
+.login-page .forgot-form .input-control .login-with-btns .twitter svg,
+.login-page .forgot-form .input-control .login-with-btns .linkedin svg {
     color: #c3c3c3;
     font-size: 14px;
     -webkit-transition: all 0.2s ease-in-out;
@@ -613,9 +564,9 @@ h6 {
     border: 2px solid #db4437;
 }
 
-.login-page .login-form .input-control .login-with-btns .google:hover i,
-.login-page .signup-form .input-control .login-with-btns .google:hover i,
-.login-page .forgot-form .input-control .login-with-btns .google:hover i {
+.login-page .login-form .input-control .login-with-btns .google:hover svg,
+.login-page .signup-form .input-control .login-with-btns .google:hover svg,
+.login-page .forgot-form .input-control .login-with-btns .google:hover svg {
     color: #db4437;
 }
 
@@ -625,9 +576,9 @@ h6 {
     border: 2px solid #3b5998;
 }
 
-.login-page .login-form .input-control .login-with-btns .facebook:hover i,
-.login-page .signup-form .input-control .login-with-btns .facebook:hover i,
-.login-page .forgot-form .input-control .login-with-btns .facebook:hover i {
+.login-page .login-form .input-control .login-with-btns .facebook:hover svg,
+.login-page .signup-form .input-control .login-with-btns .facebook:hover svg,
+.login-page .forgot-form .input-control .login-with-btns .facebook:hover svg {
     color: #3b5998;
 }
 
@@ -637,9 +588,9 @@ h6 {
     border: 2px solid #00acee;
 }
 
-.login-page .login-form .input-control .login-with-btns .twitter:hover i,
-.login-page .signup-form .input-control .login-with-btns .twitter:hover i,
-.login-page .forgot-form .input-control .login-with-btns .twitter:hover i {
+.login-page .login-form .input-control .login-with-btns .twitter:hover svg,
+.login-page .signup-form .input-control .login-with-btns .twitter:hover svg,
+.login-page .forgot-form .input-control .login-with-btns .twitter:hover svg {
     color: #00acee;
 }
 
@@ -649,9 +600,9 @@ h6 {
     border: 2px solid #0e76a8;
 }
 
-.login-page .login-form .input-control .login-with-btns .linkedin:hover i,
-.login-page .signup-form .input-control .login-with-btns .linkedin:hover i,
-.login-page .forgot-form .input-control .login-with-btns .linkedin:hover i {
+.login-page .login-form .input-control .login-with-btns .linkedin:hover svg,
+.login-page .signup-form .input-control .login-with-btns .linkedin:hover svg,
+.login-page .forgot-form .input-control .login-with-btns .linkedin:hover svg {
     color: #0e76a8;
 }
 

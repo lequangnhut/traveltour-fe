@@ -14,15 +14,22 @@ travel_app.controller('SignupController', function ($scope, $location, AuthServi
         agreeTerms: false
     }
 
+    function errorCallback() {
+        toastAlert('error', "Máy chủ không tồn tại !");
+    }
+
     /**
      * @message Register user
      */
     $scope.registerAccount = function () {
+        $scope.isLoading = true;
         let users = $scope.user;
 
         AuthService.registerAuth(users).then(function successCallback() {
-            $location.path("/login");
+            $location.path("/sign-in");
             centerAlert('Thành công !', 'Đăng ký tài khoản thành công. Vui lòng xác thực email để đăng nhập !', 'success');
+        }, errorCallback).finally(function () {
+            $scope.isLoading = false;
         });
     };
 
@@ -42,5 +49,20 @@ travel_app.controller('SignupController', function ($scope, $location, AuthServi
         AuthService.checkExistPhone($scope.user.phone).then(function successCallback(response) {
             $scope.phoneError = response.data.exists;
         });
+    };
+
+    $scope.togglePassword = function (fieldClass, iconClass) {
+        let passwordField = document.querySelector('.' + fieldClass);
+        let passwordIcon = document.querySelector('.' + iconClass);
+
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            passwordIcon.classList.remove('fa-eye');
+            passwordIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            passwordIcon.classList.remove('fa-eye-slash');
+            passwordIcon.classList.add('fa-eye');
+        }
     };
 });

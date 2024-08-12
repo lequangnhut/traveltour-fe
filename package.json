@@ -8,18 +8,39 @@
   },
   "scripts": {
     "start": "npx lite-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run clean && npm run copy",
+    "clean": "rimraf dist",
+    "copy": "mkdirp dist && cp -r app/* dist/",
+    "deploy": "gh-pages -d dist"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@stomp/stompjs": "^7.0.0",
+    "@turf/turf": "^6.5.0",
     "angular": "^1.8.3",
+    "angular-emoji-picker": "^0.2.0",
+    "angular-table-npm": "^1.0.8",
+    "angular-websocket": "^2.0.1",
     "angularjs": "^0.0.1",
+    "axios": "^1.6.5",
+    "crypto-js": "^4.2.0",
+    "froala-editor": "^4.1.4",
+    "jsbarcode": "^3.11.6",
+    "lz77": "^1.1.0",
+    "mapbox-gl": "^3.1.2",
+    "ng-emoji-picker": "^6.0.1",
+    "ng-file-upload": "^12.2.13",
+    "ng-swiper": "^1.0.9",
     "ngx-auth": "^6.0.0",
-    "slick-carousel": "^1.8.1"
-  },
-  "devDependencies": {
-    "lite-server": "^2.6.1"
+    "owl.carousel": "^2.3.4",
+    "sass": "^1.69.7",
+    "satellizer": "^0.15.5",
+    "slick-carousel": "^1.8.1",
+    "stompjs": "^2.3.3",
+    "lite-server": "^2.6.1",
+    "mkdirp": "^3.0.1",
+    "rimraf": "^6.0.1"
   },
   "server": {
     "baseDir": "./app"

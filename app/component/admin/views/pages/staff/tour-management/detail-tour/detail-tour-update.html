@@ -1,0 +1,391 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<div class="container mt-3 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-bold text-uppercase">Cập nhật tour chi tiết</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" name="tourDetailForm" ng-submit="updateTourDetail()"
+              novalidate>
+            <div class="col-md-6">
+                <label for="tourNameSelect" class="form-label">Tên tour</label>
+                <select id="tourNameSelect" class="form-select"
+                        name="tourNameSelect"
+                        ng-model="tourDetail.tourId"
+                        ng-options="tour.id as tour.tourName for tour in tourBasicList"
+                        ng-class="{ 'is-invalid': tourDetailForm.tourNameSelect.$error.required,
+                                            'is-valid': tourDetailForm.tourNameSelect.$valid}"
+                        required>
+                    <option value="" disabled selected>Chọn tour</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="tourDetailForm.tourNameSelect.$error.required">
+                    Vui lòng chọn tên tour!
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label for="tourGuideSelect" class="form-label">Hướng dẫn viên</label>
+                <select id="tourGuideSelect" class="form-select"
+                        name="tourGuideSelect"
+                        ng-model="tourDetail.guideId"
+                        ng-options="usersByRolesIsGuild.id as usersByRolesIsGuild.fullName for usersByRolesIsGuild in UsersByRolesIsGuildSelect"
+                        ng-class="{ 'is-invalid': tourDetailForm.tourGuideSelect.$error.required,
+                                            'is-valid': tourDetailForm.tourGuideSelect.$valid}"
+                        required>
+                    <option value="" disabled selected>Chọn hướng dẫn viên</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="tourDetailForm.tourGuideSelect.$error.required">
+                    Vui lòng chọn hướng dẫn viên!
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label for="numberOfGuests" class="form-label">Số khách</label>
+                <input type="number" class="form-control" id="numberOfGuests" placeholder="Nhập số khách"
+                       name="numberOfGuests"
+                       ng-model="tourDetail.numberOfGuests"
+                       ng-class="{ 'is-invalid': (!tourDetailForm.numberOfGuests.$valid || !isNumberOfGuestsValid()),
+                                            'is-valid': (tourDetailForm.numberOfGuests.$valid || isNumberOfGuestsValid())}"
+                       required>
+                <small class="text-danger"
+                       ng-show="tourDetailForm.numberOfGuests.$error.required">
+                    Số khách không được bỏ trống!
+                </small>
+                <small class="text-danger"
+                       ng-show="!isNumberOfGuestsValid()">
+                    Số lượng khách phải từ 16 dến 50!
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label for="minimumNumberOfGuests" class="form-label">Số khách tối thiểu</label>
+                <input type="number" class="form-control" id="minimumNumberOfGuests"
+                       placeholder="Nhập số khách tối thiểu"
+                       name="minimumNumberOfGuests"
+                       ng-model="tourDetail.minimumNumberOfGuests"
+                       ng-class="{ 'is-invalid': tourDetailForm.minimumNumberOfGuests.$touched && (!tourDetailForm.minimumNumberOfGuests.$valid || !MinimumNumberOfGuestsValid()),
+                                            'is-valid': tourDetailForm.minimumNumberOfGuests.$touched && (tourDetailForm.minimumNumberOfGuests.$valid || MinimumNumberOfGuestsValid())}"
+                       required>
+                <small class="text-danger"
+                       ng-show="tourDetailForm.minimumNumberOfGuests.$touched && tourDetailForm.minimumNumberOfGuests.$error.required">
+                    Số khách không được bỏ trống!
+                </small>
+                <small class="text-danger"
+                       ng-show="tourDetailForm.minimumNumberOfGuests.$touched && !MinimumNumberOfGuestsValid()">
+                    Số lượng khách phải từ 1 đến 16!
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Điểm đi</label>
+                <select class="form-select"
+                        name="fromLocation"
+                        ng-class="{ 'is-invalid': tourDetailForm.fromLocation.$invalid ,
+                                            'is-valid': tourDetailForm.fromLocation.$valid  }"
+                        ng-options="city.Name as city.Name for city in provinces"
+                        ng-change="onProvinceChange('fromLocation')"
+                        ng-model="tourDetail.fromLocation"
+                        required
+                >
+                    <option value="" disabled selected>Chọn Điểm đi</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="tourDetailForm.fromLocation.$error.required">
+                    Vui lòng chọn Điểm đi
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Điểm đến</label>
+                <div class="row">
+                    <div class="col-9">
+                        <input type="text" class="form-control" ng-model="tourDetail.toLocation">
+                        <small class="text-danger"
+                               ng-show="tourDetailForm.toLocation.$error.required">
+                            Vui lòng chọn Điểm đến
+                        </small>
+                    </div>
+                    <div class="col-3 p-0 ps-1">
+                        <button data-bs-toggle="modal"
+                                data-bs-target="#modalMapTourDetail"
+                                type="button"
+                                class="btn btn-success"
+                                ng-click="showModalMap()"
+                        >
+                            Mở bản đồ
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="departureDate" class="form-label">Ngày đi</label>
+                <input type="datetime-local" class="form-control" id="departureDate"
+                       name="departureDate"
+                       ng-model="tourDetail.departureDate"
+                       ng-class="{ 'is-invalid': (!tourDetailForm.departureDate.$valid || !isStartDateValid()),
+                                            'is-valid': (tourDetailForm.departureDate.$valid || isStartDateValid())}"
+                       required>
+                <small class="text-danger"
+                       ng-show="!tourDetailForm.departureDate.$valid">
+                    Vui lòng nhập ngày đi hợp lệ!
+                </small>
+                <small class="text-danger"
+                       ng-show="!isStartDateValid()">
+                    Ngày đi không thể sau ngày về!
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label for="arrivalDate" class="form-label">Ngày về</label>
+                <input type="datetime-local" class="form-control" id="arrivalDate"
+                       name="arrivalDate"
+                       ng-model="tourDetail.arrivalDate"
+                       ng-class="{ 'is-invalid': (!tourDetailForm.arrivalDate.$valid || !isEndDateValid()),
+                                            'is-valid': (tourDetailForm.arrivalDate.$valid || isEndDateValid()) }"
+                       required>
+                <small class="text-danger"
+                       ng-show="!tourDetailForm.arrivalDate.$valid">
+                    Vui lòng chọn ngày về!
+                </small>
+                <small class="text-danger"
+                       ng-show="!isEndDateValid()">
+                    Ngày về phải lớn hơn hoặc bằng ngày đi!
+                </small>
+            </div>
+
+            <div class="col-md-4">
+                <label for="unitPrice" class="form-label">Giá</label>
+                <input type="text"
+                       class="form-control"
+                       id="unitPrice"
+                       placeholder="1.000.000"
+                       name="unitPrice"
+                       ng-model="tourDetail.unitPrice"
+                       ng-class="{ 'is-invalid': (!tourDetailForm.unitPrice.$valid || !isPriceValid() || invalidPriceFormat),
+                                            'is-valid': (tourDetailForm.unitPrice.$valid || isPriceValid())}"
+                       vietnam-currency-input
+                       ng-keypress="onPriceKeyPress($event); checkPriceFormat()"
+                       required>
+                <small class="text-danger"
+                       ng-show="tourDetailForm.unitPrice.$error.required">
+                    Giá không được bỏ trống!
+                </small>
+                <small class="text-danger"
+                       ng-show="invalidPriceFormat">
+                    Giá không đúng định dạng số!
+                </small>
+                <small class="text-danger"
+                       ng-show="!isPriceValid()">
+                    Giá phải lớn hơn 0!
+                </small>
+            </div>
+
+            <div class="col-md-4">
+                <label for="tourDetailStatus" class="form-label">Trạng thái</label>
+                <select id="tourDetailStatus" class="form-select" ng-model="tourDetail.tourDetailStatus"
+                        name="tourDetailStatus"
+                        ng-class="{ 'is-invalid': tourDetailForm.tourDetailStatus.$error.required,
+                                            'is-valid': tourDetailForm.tourDetailStatus.$valid}"
+                        required>
+                    <option value="" selected disabled hidden>Chọn trang thái</option>
+                    <option ng-selected="tourDetail.tourDetailStatus === 1" value="1">Chờ vận hành</option>
+                    <option ng-selected="tourDetail.tourDetailStatus === 2" value="2">Đang vận hành</option>
+                    <option ng-selected="tourDetail.tourDetailStatus === 3" value="3">Đã hoàn thành</option>
+                    <option ng-selected="tourDetail.tourDetailStatus === 4" value="4">Ngưng vận hành</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="tourDetailForm.tourDetailStatus.$error.required">
+                    Vui lòng chọn trạng thái!
+                </small>
+            </div>
+
+            <div class="col-md-4"
+                 ng-if="tourDetail.tourDetailStatus === 1 || tourDetail.tourDetailStatus === undefined">
+                <label class="form-label">Ghi chú</label>
+                <input class="form-control"
+                       type="text"
+                       ng-model="tourDetail.tourDetailNotes"
+                       placeholder="....."
+                >
+            </div>
+
+            <div class="col-md-4" ng-if="tourDetail.tourDetailStatus !== 1">
+                <label class="form-label">Ghi chú</label>
+                <input class="form-control"
+                       type="text"
+                       disabled
+                       ng-value="tourDetail.tourDetailNotes"
+                       placeholder="....."
+                >
+            </div>
+
+            <div class="col-12">
+                <a href="#" class="color-green text-decoration-none" ng-click="showFormTourDetailAgent()">
+                    Xem thông tin hoạt động, hoặc các bài viết của tour
+                </a>
+                <i class="color-green" ng-bind-html="getChangeIconTourAgent()"></i>
+            </div>
+
+            <div class="show-hide-form" ng-show="showFormTourAgent">
+                <div class="container-desciption mb-3" rich-text-editor>
+                    <div class="">
+                        <label class="form-label">Hoạt động <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="options">
+                        <!-- Text Format -->
+                        <button id="bold" type="button" class="option-button format">
+                            <i class="fa-solid fa-bold"></i>
+                        </button>
+                        <button id="italic" type="button" class="option-button format">
+                            <i class="fa-solid fa-italic"></i>
+                        </button>
+                        <button id="underline" type="button" class="option-button format">
+                            <i class="fa-solid fa-underline"></i>
+                        </button>
+                        <button id="strikethrough" type="button" class="option-button format">
+                            <i class="fa-solid fa-strikethrough"></i>
+                        </button>
+                        <button id="superscript" type="button" class="option-button script">
+                            <i class="fa-solid fa-superscript"></i>
+                        </button>
+                        <button id="subscript" type="button" class="option-button script">
+                            <i class="fa-solid fa-subscript"></i>
+                        </button>
+                        <!-- List -->
+                        <button id="insertOrderedList" type="button" class="option-button">
+                            <i class="fa-solid fa-list-ol"></i>
+                        </button>
+                        <button id="insertUnorderedList" type="button" class="option-button">
+                            <i class="fa-solid fa-list"></i>
+                        </button>
+                        <!-- Table -->
+                        <button id="createTable" type="button">
+                            <i class="fa-solid fa-table"></i>
+                        </button>
+                        <!-- Undo/Redo -->
+                        <button id="undo" type="button" class="option-button">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                        <button id="redo" type="button" class="option-button">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                        <!-- Link -->
+                        <button id="createLink" type="button" class="adv-option-button">
+                            <i class="fa fa-link"></i>
+                        </button>
+                        <button id="unlink" type="button" class="option-button">
+                            <i class="fa fa-unlink"></i>
+                        </button>
+                        <!-- Alignment -->
+                        <button id="justifyLeft" type="button" class="option-button align">
+                            <i class="fa-solid fa-align-left"></i>
+                        </button>
+                        <button id="justifyCenter" type="button" class="option-button align">
+                            <i class="fa-solid fa-align-center"></i>
+                        </button>
+                        <button id="justifyRight" type="button" class="option-button align">
+                            <i class="fa-solid fa-align-right"></i>
+                        </button>
+                        <button id="justifyFull" type="button" class="option-button align">
+                            <i class="fa-solid fa-align-justify"></i>
+                        </button>
+                        <button id="indent" type="button" class="option-button spacing">
+                            <i class="fa-solid fa-indent"></i>
+                        </button>
+                        <button id="outdent" type="button" class="option-button spacing">
+                            <i class="fa-solid fa-outdent"></i>
+                        </button>
+                        <!-- Headings -->
+                        <select id="formatBlock" type="section" class="adv-option-button">
+                            <option value="H1">H1</option>
+                            <option value="H2">H2</option>
+                            <option value="H3">H3</option>
+                            <option value="H4">H4</option>
+                            <option value="H5">H5</option>
+                            <option value="H6">H6</option>
+                        </select>
+                        <!-- Font -->
+                        <select id="fontName" type="select" class="adv-option-button"></select>
+                        <select id="fontSize" type="select" class="adv-option-button"></select>
+                        <!-- Color -->
+                        <div class="input-wrapper">
+                            <input type="color" id="foreColor" class="adv-option-button"/>
+                            <label for="foreColor">Màu chữ</label>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="color" id="backColor" class="adv-option-button"/>
+                            <label for="backColor">Làm nổi bật</label>
+                        </div>
+                    </div>
+                    <div class="form-control mb-1" contenteditable="true" id="text-input" name="tourDetailDescription"
+                         ng-model="tourDetail.tourDetailDescription" ng-blur="setTouched()"></div>
+                    <span class="text-danger" id="invalid-templateDescription"></span>
+                    <span class="text-danger m-2" ng-show="isActive()">Vui lòng nhập hoạt động</span>
+                </div>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end mt-5">
+                <button class="btn" type="button" style="margin-right: 20px">
+                    <a class="btn" href="/admin/detail-tour-list">Trở về</a>
+                </button>
+                <button type="submit" class="btn btn-submit fw-bold"
+                        ng-disabled="tourDetailForm.$invalid || !isStartDateValid() || !isNumberOfGuestsValid()">
+                    Cập nhật
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalMapTourDetail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="modalMapTourDetailLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabelMap">Bản đồ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-10 mb-3 position-relative">
+                        <input type="text"
+                               class="form-control"
+                               ng-model="searchLocation"
+                               placeholder="Nhập tên tỉnh thành cần tìm ở đây..."
+                               ng-keyup="searchLocationOnMap()"
+                        >
+                        <div style="position: relative;">
+                            <div class="autocomplete" ng-if="showSuggestions"
+                                 style="position: absolute; top: 10px; left: 10px; z-index: 100;">
+                                <ul class="list-group">
+                                    <li class="list-group-item cursor-pointer"
+                                        ng-repeat="location in suggestedLocations" ng-click="selectLocation(location)">
+                                        {{ location }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-success" ng-click="submitSearchOnMap()">Tìm kiếm</button>
+                    </div>
+                    <div id="map" class="col-12" style="height: 500px"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>

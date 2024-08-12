@@ -7,12 +7,20 @@
 <!-- Theme css -->
 <link rel="stylesheet" type="text/css" href="/assets/customers/css/auth/login.css">
 
-<!-- 01 Preloader -->
-<!--<div class="loader-wrapper" id="loader-wrapper">-->
-<!--    <div class="loader"></div>-->
-<!--</div>-->
-<!-- Preloader end-->
-<!-- 02 Main pages -->
+<div class="preloader">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+</div>
+<div class="preloader" ng-show="isLoading">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+    <div class="bg"></div>
+</div>
+<!-- 01 Main pages -->
 <section class="page-section login-page">
     <div class="full-width-screen">
         <div class="container-fluid">
@@ -22,7 +30,7 @@
                         <!-- Signup form -->
                         <form class="signup-form" ng-submit="registerAccount()" name="registerForm" method="post">
                             <div class="imgcontainer">
-                                <a href="#" ng-click="goHome()">
+                                <a href="/home">
                                     <img src="/assets/customers/images/logo/logo-black.png" class="avatar" alt="logo">
                                 </a>
                             </div>
@@ -87,27 +95,33 @@
                                     Số điện thoại đã tồn tại ở một tài khoản khác !
                                 </small>
 
-                                <input type="password"
-                                       placeholder="Mật khẩu"
-                                       name="psw"
-                                       ng-model="user.password"
-                                       ng-class="{ 'is-invalid': registerForm.psw.$invalid && registerForm.psw.$touched, 'is-valid': registerForm.psw.$valid && registerForm.psw.$touched }"
-                                       ng-minlength="6"
-                                       class="input-checkmark"
-                                       required
-                                >
-                                <small class="text-danger"
-                                       ng-show="registerForm.psw.$touched && registerForm.psw.$error.required">
-                                    Vui lòng nhập mật khẩu !
-                                </small>
-                                <small class="text-danger"
-                                       ng-show="registerForm.psw.$error.minlength && registerForm.psw.$dirty">
-                                    Mật khẩu cần ít nhất 6 ký tự.
-                                </small>
+                                <span class="password-field-show">
+                                    <input type="password"
+                                           placeholder="Mật khẩu"
+                                           name="psw"
+                                           ng-model="user.password"
+                                           ng-class="{ 'is-invalid': registerForm.psw.$invalid && registerForm.psw.$touched, 'is-valid': registerForm.psw.$valid && registerForm.psw.$touched }"
+                                           ng-minlength="6"
+                                           class="password-field input-checkmark"
+                                           required
+                                    >
+                                   <span ng-click="togglePassword('password-field', 'toggle-password svg')"
+                                         class="field-icon toggle-password">
+                                        <i class="fa fa-fw fa-eye"></i>
+                                    </span>
+                                    <small class="text-danger"
+                                           ng-show="registerForm.psw.$touched && registerForm.psw.$error.required">
+                                        Vui lòng nhập mật khẩu !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="registerForm.psw.$error.minlength && registerForm.psw.$dirty">
+                                        Mật khẩu cần ít nhất 6 ký tự.
+                                    </small>
+                                </span>
 
                                 <span class="password-field-show">
                                     <input type="password"
-                                           class="password-field input-checkmark"
+                                           class="password-field-check input-checkmark"
                                            name="cpsw"
                                            ng-class="{ 'is-invalid': registerForm.cpsw.$invalid && registerForm.cpsw.$touched, 'is-valid': registerForm.cpsw.$valid && registerForm.cpsw.$touched }"
                                            ng-model="user.cpsw"
@@ -116,8 +130,10 @@
                                            placeholder="Nhập lại mật khẩu"
                                            required
                                     >
-                                    <span data-toggle=".password-field"
-                                          class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                   <span ng-click="togglePassword('password-field-check', 'toggle-password-check svg')"
+                                         class="field-icon toggle-password-check">
+                                        <i class="fa fa-fw fa-eye"></i>
+                                    </span>
                                     <small class="text-danger"
                                            ng-show="registerForm.cpsw.$touched && registerForm.cpsw.$error.required">
                                         Vui lòng xác thực mật khẩu !
@@ -151,18 +167,18 @@
                                 </div>
                                 <div class="division-lines"><p>hoặc đăng ký với</p></div>
                                 <div class="login-with-btns">
-                                    <a href="/oauth2/authorization/google" type="button"
-                                       class="google text-decoration-none">
-                                        <i class="fab fa-google"></i>
+                                    <a href="javascript:void(0)" ng-click="loginGoogle()"
+                                       type="button" class="google text-decoration-none">
+                                        <span class="fab fa-google"></span>
                                     </a>
                                     <a href="javascript:void(0)" type="button" class="facebook text-decoration-none">
-                                        <i class="fab fa-facebook-f"></i>
+                                        <span class="fab fa-facebook-f"></span>
                                     </a>
                                     <a href="javascript:void(0)" type="button" class="twitter text-decoration-none">
-                                        <i class="fab fa-twitter"></i>
+                                        <span class="fab fa-twitter"></span>
                                     </a>
                                     <a href="javascript:void(0)" type="button" class="linkedin text-decoration-none">
-                                        <i class="fab fa-linkedin-in"></i>
+                                        <span class="fab fa-linkedin-in"></span>
                                     </a>
                                     <span class="already-acc">Bạn đã có tài khoản?
                                         <a href="/sign-in" class="login-btn">Đăng nhập</a>
@@ -176,5 +192,3 @@
         </div>
     </div>
 </section>
-
-<script src="/assets/customers/js/auth/script.js"></script>

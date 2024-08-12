@@ -1,0 +1,96 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+<div class="container mt-3 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-medium text-uppercase">Thêm khách hàng mới</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" ng-submit="createSubmit()" name="customerForm"
+              role="form">
+
+            <div class="col-md-6">
+                <label class="form-label">HỌ VÀ TÊN</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="Nguyễn Văn A"
+                       name="customerName"
+                       ng-model="bookingTourCustomer.customerName"
+                       ng-class="{ 'is-invalid': customerForm.customerName.$invalid && customerForm.customerName.$touched, 'is-valid': customerForm.customerName.$valid && customerForm.customerName.$touched }"
+                       ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="customerForm.customerName.$touched && customerForm.customerName.$error.required">
+                    Vui lòng nhập họ và tên !
+                </small>
+                <small class="text-danger"
+                       ng-show="customerForm.customerName.$touched && customerForm.customerName.$error.pattern">
+                    Họ và tên không đúng định dạng !
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label for="customerBirth" class="form-label">Ngày sinh</label>
+                <input class="form-control" id="customerBirth" type="date"
+                       name="customerBirth"
+                       ng-model="bookingTourCustomer.customerBirth"
+                       ng-class="{ 'is-invalid': customerForm.customerBirth.$touched && isBirthInvalid(),
+                                            'is-valid': customerForm.customerBirth.$touched && isBirthValid() }"
+                       ng-change="checkBirth()"
+                       required/>
+                <small class="text-danger"
+                       ng-show="customerForm.customerBirth.$touched && customerForm.customerBirth.$error.required">
+                    Vui lòng nhập ngày sinh !
+                </small>
+                <small class="text-danger"
+                       ng-show="customerForm.customerBirth.$touched && isBirthInvalid()">
+                    Số tuổi có vẻ chưa đúng!
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">SỐ ĐIỆN THOẠI</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="0969653264"
+                       name="customerPhone"
+                       ng-model="bookingTourCustomer.customerPhone"
+                       ng-class="{ 'is-invalid': customerForm.customerPhone.$invalid && customerForm.customerPhone.$touched, 'is-valid': customerForm.customerPhone.$valid && customerForm.customerPhone.$touched && !phoneError }"
+                       ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                       ng-change="checkDuplicatePhone()"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="customerForm.customerPhone.$touched && customerForm.customerPhone.$error.required">
+                    Vui lòng nhập số điện thoại !
+                </small>
+                <small class="text-danger"
+                       ng-show="customerForm.customerPhone.$touched && customerForm.customerPhone.$error.pattern">
+                    Số điện thoại không đúng định dạng !
+                </small>
+                <small class="text-danger" ng-show="customerForm.customerPhone.$touched && phoneError">
+                    Số điện thoại đã tồn tại ở một tài khoản khác !
+                </small>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end mt-5">
+                <button type="button" class="btn" style="margin-right: 20px">
+                    <a class="btn" href="/admin/customer-go-on-list">Trở về</a>
+                </button>
+                <button type="submit"
+                        ng-disabled="customerForm.$invalid || phoneError"
+                        class="btn btn-submit fw-bold"
+                >
+                    Thêm mới
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

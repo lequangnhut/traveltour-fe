@@ -1,0 +1,102 @@
+@font-face {
+    font-family: interFont;
+    src: url(assets/customers/fonts/Inter-Medium.ttf);
+}
+
+.chat-online {
+    color: #34ce57
+}
+
+.chat-offline {
+    color: #e4606d
+}
+
+.chat-messages {
+    display: flex;
+    flex-direction: column;
+    max-height: 800px;
+    overflow-y: scroll
+}
+
+.chat-message-left,
+.chat-message-right {
+    display: flex;
+    flex-shrink: 0
+}
+
+.chat-message-left {
+    margin-right: auto
+}
+
+.chat-message-right {
+    flex-direction: row-reverse;
+    margin-left: auto
+}
+
+.py-3 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+.px-4 {
+    padding-right: 1.5rem !important;
+    padding-left: 1.5rem !important;
+}
+
+.flex-grow-0 {
+    flex-grow: 0 !important;
+}
+
+.border-top {
+    border-top: 1px solid #dee2e6 !important;
+}
+
+.border-right {
+    border-right: 1px solid #dee2e6 !important;
+}
+
+.mr-1 {
+    margin-right: .25rem !important;
+}
+
+.overflow-y {
+    overflow-y: scroll;
+    scrollbar-width: 8px;
+}
+
+.overflow-y::-webkit-scrollbar {
+    width: 8px;
+}
+
+.overflow-y::-webkit-scrollbar-thumb {
+    background-color: #c0e3d4;
+    border-radius: 4px;
+}
+
+.overflow-y::-webkit-scrollbar-track {
+    background-color: #ecf0f1;
+    border-radius: 8px;
+}
+
+.chat-user-header .dot-message {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    top: 30%;
+    right: -10px;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.full-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 300px;
+}
+
+.font-inter {
+    font-family: Montserrat, sans-serif;
+}
+

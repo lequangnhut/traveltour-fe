@@ -1,0 +1,301 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+<div class="container mt-3 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-bold">CẬP NHẬT BOOKING</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" ng-submit="updateOrderVisit()" name="order_visit" method="post">
+            <div class="col-12">
+                <label class="form-label">Địa điểm than quan</label>
+                <input class="form-control"
+                       ng-model="visitLocationSelect[0].visitLocationName"
+                       disabled
+                >
+                <small class="text-danger"
+                       ng-show="order_visit.visitLocationId.$touched && order_visit.visitLocationId.$error.required">
+                    Vui lòng chọn tên địa điểm !
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label for="inputNameLocation" class="form-label">TÊN KHÁCH HÀNG</label>
+                <input type="text"
+                       class="form-control"
+                       id="inputNameLocation"
+                       placeholder="Nguyễn Văn A"
+                       name="customerName"
+                       ng-model="orderVisit.customerName"
+                       ng-class="{ 'is-invalid': order_visit.customerName.$invalid && order_visit.customerName.$touched, 'is-valid': order_visit.customerName.$valid && order_visit.customerName.$touched }"
+                       ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="order_visit.customerName.$touched && order_visit.customerName.$error.required">
+                    Vui lòng nhập tên khách hàng !
+                </small>
+                <small class="text-danger"
+                       ng-show="order_visit.customerName.$touched && order_visit.customerName.$error.pattern">
+                    Tên khách hàng không đúng định dạng !
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label for="inputemail" class="form-label">Email</label>
+                <input type="text"
+                       class="form-control"
+                       id="inputemail"
+                       placeholder="example@gmail.com"
+                       name="customerEmail"
+                       ng-model="orderVisit.customerEmail"
+                       ng-class="{ 'is-invalid': order_visit.customerEmail.$invalid && order_visit.customerEmail.$touched, 'is-valid': order_visit.customerEmail.$valid && order_visit.customerEmail.$touched }"
+                       ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="order_visit.customerEmail.$touched && order_visit.customerEmail.$error.required">
+                    Vui lòng nhập số customerEmail !
+                </small>
+                <small class="text-danger"
+                       ng-show="order_visit.customerEmail.$touched && order_visit.customerEmail.$error.pattern">
+                    Email không đúng định dạng !
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label for="inputVisitPhone" class="form-label">SỐ ĐIỆN THOẠI</label>
+                <input type="text"
+                       class="form-control"
+                       id="inputVisitPhone"
+                       placeholder="0969653264"
+                       name="customerPhone"
+                       ng-model="orderVisit.customerPhone"
+                       ng-class="{ 'is-invalid': order_visit.customerPhone.$invalid && order_visit.customerPhone.$touched, 'is-valid': order_visit.customerPhone.$valid && order_visit.customerPhone.$touched }"
+                       ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="order_visit.customerPhone.$touched && order_visit.customerPhone.$error.required">
+                    Vui lòng nhập số điện thoại !
+                </small>
+                <small class="text-danger"
+                       ng-show="order_visit.customerPhone.$touched && order_visit.customerPhone.$error.pattern">
+                    Số điện thoại không đúng định dạng !
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">CMND / CCCD</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="096754322321"
+                       name="customerCitizenCard"
+                       ng-model="orderVisit.customerCitizenCard"
+                       ng-class="{ 'is-invalid': order_visit.customerCitizenCard.$invalid && order_visit.customerCitizenCard.$touched, 'is-valid': order_visit.customerCitizenCard.$valid && order_visit.customerCitizenCard.$touched }"
+                       ng-pattern="/^([0-9]{12})$/"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="order_visit.customerCitizenCard.$touched && order_visit.customerCitizenCard.$error.required">
+                    Vui lòng nhập CMND / CCCD !
+                </small>
+                <small class="text-danger"
+                       ng-show="order_visit.customerCitizenCard.$touched && order_visit.customerCitizenCard.$error.pattern">
+                    CMND / CCCD không đúng định dạng !
+                </small>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label">Ngày đến</label>
+                <input type="datetime-local"
+                       class="form-control"
+                       name="checkIn"
+                       ng-model="orderVisit.checkIn"
+                       ng-class="{ 'is-invalid': order_visit.checkIn.$invalid && order_visit.checkIn.$touched, 'is-valid': order_visit.checkIn.$valid && order_visit.checkIn.$touched }"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="order_visit.checkIn.$touched && order_visit.checkIn.$error.required">
+                    Vui lòng nhập ngày đến !
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">HÌNH THỨC THANH TOÁN</label>
+                <select class="form-select"
+                        name="paymentMethod"
+                        ng-class="{ 'is-invalid': order_visit.paymentMethod.$invalid && order_visit.paymentMethod.$touched, 'is-valid': order_visit.paymentMethod.$valid && order_visit.paymentMethod.$touched }"
+                        ng-model="orderVisit.paymentMethod"
+                        required
+                >
+                    <option value="" disabled selected>Chọn hình thức thanh toán</option>
+                    <option value="true" ng-selected="orderVisit.paymentMethod === true">Thanh toán tại quầy</option>
+                    <option value="false" ng-selected="orderVisit.paymentMethod === false">Thanh toán bằng ví điện tử</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="order_visit.paymentMethod.$touched && order_visit.paymentMethod.$error.required">
+                    Vui lòng chọn trạng thái !
+                </small>
+            </div>
+
+            <!-- vé -->
+            <div class="col-12 mb-3">
+                <div class="form-check">
+                    <input class="form-check-input"
+                           id="free_ticket"
+                           type="checkbox"
+                           ng-model="ticketTypes.free"
+                           ng-change="updateCheckboxStatus('free')"
+                    >
+                    <label class="form-label" for="free_ticket">Miễn phí vé</label>
+                </div>
+
+                <div class="col-6 mt-3" ng-show="ticketTypes.free">
+                    <label class="form-label">SỐ LƯỢNG</label>
+                    <input type="number"
+                           class="form-control"
+                           placeholder="Ví dụ: 1"
+                           name="capacityFree"
+                           ng-model="orderVisit.capacityFree"
+                           ng-class="{ 'is-invalid': order_visit.capacityFree.$invalid && order_visit.capacityFree.$touched, 'is-valid': order_visit.capacityFree.$valid && order_visit.capacityFree.$touched }"
+                    >
+                    <small class="text-danger"
+                           ng-show="order_visit.capacityFree.$touched && order_visit.capacityFree.$error.required">
+                        Vui lòng nhập số lượng !
+                    </small>
+                </div>
+            </div>
+
+            <div class="col-12 mb-3">
+                <div class="form-check">
+                    <input class="form-check-input"
+                           id="adult_ticket"
+                           type="checkbox"
+                           ng-model="ticketTypes.adult"
+                           ng-change="updateCheckboxStatus('adult')"
+                           ng-disabled="ticketTypes.free"
+                    >
+                    <label class="form-label" for="adult_ticket">Vé người lớn</label>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 mt-3" ng-show="ticketTypes.adult">
+                        <label class="form-label">SỐ LƯỢNG</label>
+                        <input type="number"
+                               class="form-control"
+                               placeholder="Ví dụ: 1"
+                               name="capacityAdult"
+                               ng-model="orderVisit.capacityAdult"
+                               ng-class="{ 'is-invalid': order_visit.capacityAdult.$invalid && order_visit.capacityAdult.$touched, 'is-valid': order_visit.capacityAdult.$valid && order_visit.capacityAdult.$touched }"
+                               ng-change="updateTotalAdult()"
+                               ng-disabled="ticketTypes.free"
+                        >
+                        <small class="text-danger"
+                               ng-show="order_visit.capacityAdult.$touched && order_visit.capacityAdult.$error.required">
+                            Vui lòng nhập số lượng !
+                        </small>
+                    </div>
+
+                    <div class="col-6 mt-3" ng-show="ticketTypes.adult">
+                        <label class="form-label">THÀNH TIỀN</label>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="300,000"
+                               name="adult"
+                               ng-model="unitPrice.adult"
+                               ng-class="{ 'is-invalid': order_visit.adult.$invalid && order_visit.adult.$touched, 'is-valid': order_visit.adult.$valid && order_visit.adult.$touched }"
+                               disabled
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="form-check">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           id="child_ticket"
+                           ng-model="ticketTypes.child"
+                           ng-change="updateCheckboxStatus('child')"
+                           ng-disabled="ticketTypes.free"
+                    >
+                    <label class="form-label" for="child_ticket">Vé trẻ em</label>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 mt-3" ng-show="ticketTypes.child">
+                        <label class="form-label">SỐ LƯỢNG</label>
+                        <input type="number"
+                               class="form-control"
+                               placeholder="Ví dụ: 1"
+                               name="capacityKid"
+                               ng-model="orderVisit.capacityKid"
+                               ng-class="{ 'is-invalid': order_visit.capacityKid.$invalid && order_visit.capacityKid.$touched, 'is-valid': order_visit.capacityKid.$valid && order_visit.capacityKid.$touched }"
+                               ng-change="updateTotalKid()"
+                               ng-disabled="ticketTypes.free"
+                        >
+                        <small class="text-danger"
+                               ng-show="order_visit.capacityKid.$touched && order_visit.capacityKid.$error.required">
+                            Vui lòng nhập số lượng !
+                        </small>
+                    </div>
+
+                    <div class="col-6 mt-3" ng-show="ticketTypes.child">
+                        <label class="form-label">THÀNH TIỀN</label>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="150,000"
+                               name="child"
+                               ng-model="unitPrice.child"
+                               ng-class="{ 'is-invalid': order_visit.child.$invalid && order_visit.child.$touched, 'is-valid': order_visit.child.$valid && order_visit.child.$touched }"
+                               disabled
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <label class="form-label">Tổng tiền</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="120.000"
+                       name="orderTotal"
+                       ng-model="orderVisit.orderTotal"
+                       ng-class="{ 'is-invalid': order_visit.orderTotal.$invalid && order_visit.orderTotal.$touched, 'is-valid': order_visit.orderTotal.$valid && order_visit.orderTotal.$touched }"
+                       disabled
+                >
+            </div>
+
+            <div class="col-md-12">
+                <label class="form-label">Ghi chú</label>
+                <div class="input-group">
+                        <textarea rows="3"
+                                  class="form-control"
+                                  name="orderNote"
+                                  ng-class="{ 'is-invalid': order_visit.orderNote.$invalid && order_visit.orderNote.$touched, 'is-valid': order_visit.orderNote.$valid && order_visit.orderNote.$touched }"
+                                  ng-model="orderVisit.orderNote"
+                                  placeholder="Nội dung ghi chú..."
+                        ></textarea>
+                </div>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end mt-5">
+                <button type="button" class="btn" style="margin-right: 20px">
+                    <a class="btn" href="/business/visit/order-visit-management">Trở về</a>
+                </button>
+                <button type="submit"
+                        class="btn btn-submit fw-bold"
+                        ng-disabled="order_visit.$invalid"
+                >
+                    Cập nhật
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

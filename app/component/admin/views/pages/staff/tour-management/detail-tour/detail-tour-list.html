@@ -1,0 +1,510 @@
+<div class="container">
+    <div class="header-control mb-4">
+        <div class="header-control-center">
+            <div class="d-flex justify-content-between align-items-center row">
+                <div class="col-xl-12 mt-3">
+                    <h3 class="color-green fw-bold text-uppercase">Danh sách tour chi tiết</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link cursor-pointer" id="pills-true-tab"
+               ng-class="{active: currentTab === 'waiting'}"
+               ng-click="changeTab('waiting', 1, 'dateCreated')">
+                Chờ vận hành
+            </a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link cursor-pointer" id="pills-false-tab"
+               ng-class="{active: currentTab === 'active'}"
+               ng-click="changeTab('active', 2, 'departureDate')">
+                Đang vận hành
+            </a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link cursor-pointer" id="pills-success-tab"
+               ng-class="{active: currentTab === 'success'}"
+               ng-click="changeTab('success', 3, 'arrivalDate')">
+                Đã hoàn thành
+            </a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link cursor-pointer" id="pills-cancelled-tab"
+               ng-class="{active: currentTab === 'cancelled'}"
+               ng-click="changeTab('cancelled', 4, 'dateDeleted')">
+                Tour ngưng vận hành
+            </a>
+        </li>
+    </ul>
+
+    <div class="">
+        <div class="card card-customer">
+            <div class="row" style="margin: 20px 16px 20px 16px">
+                <div class="col-xl-4">
+                    Bạn muốn tìm kiếm gì ?
+                    <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i
+                                    class="fa-solid fa-magnifying-glass bg-light"></i></span>
+                        <input type="text" class="form-control" placeholder="Tìm kiếm" ng-model="searchTerm"
+                               ng-change="searchTourDetail()"
+                               aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+
+                <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
+                     style="margin: 20px 0 0 0">
+                    <a href="/admin/detail-tour-list/detail-tour-create" class="btn btn-primary">
+                        <i class="fa-solid fa-plus" style="margin-right: 10px"></i> Tạo tour
+                        mới
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="table-components table-responsive mb-5">
+        <div class="card table-responsive table-customer">
+            <div class="card-header ">
+                <div class="row">
+                    <div class="h4 col-lg-5 d-flex align-items-center h-100">
+                        <div class="d-flex align-items-center">
+                            <span class="h4">Danh sách tour chi tiết</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end align-items-baseline col-lg-2">
+                        <select class="form-select" aria-label="Default select example"
+                                ng-model="pageSize"
+                                ng-init="pageSize='5'"
+                                ng-change="pageSizeChanged()">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                        </select>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
+                        <nav aria-label="Page navigation" ng-if="tourDetailList.length !== 0">
+                            <ul class="pagination justify-content-center align-items-center">
+                                <!-- Previous Page -->
+                                <li class="page-item cursor-pointer" ng-class="{disabled: currentPage === 0}">
+                                    <a class="page-link" ng-click="setPage(0)">
+                                        <i class="fa-solid fa-angles-left"></i>
+                                    </a>
+                                </li>
+
+                                <!-- Ellipsis at the beginning -->
+                                <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                    <span class="page-link">...</span>
+                                </li>
+
+                                <!-- Pagination Numbers -->
+                                <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
+                                    ng-class="{active: n === currentPage}">
+                                    <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                </li>
+
+                                <!-- Ellipsis at the end -->
+                                <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                    <span class="page-link">...</span>
+                                </li>
+
+                                <!-- Next Page -->
+                                <li class="page-item cursor-pointer"
+                                    ng-class="{disabled: currentPage === totalPages - 1}">
+                                    <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                        <i class="fa-solid fa-angles-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-responsive text-center table-striped">
+                <div ng-include="'app/component/utils/loading-table.html'"></div>
+                <thead>
+                <tr class="bg-light">
+                    <th>#</th>
+                    <th class="cursor-pointer" ng-click="sortData('id')">
+                        <div class="icon-left">ID
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="icon-left">Ảnh
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('tourId')">
+                        <div class="icon-left">Tên tour
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('tourId')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('numberOfGuests')">
+                        <div class="icon-left">Số khách
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('numberOfGuests')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('fromLocation')">
+                        <div class="icon-left">Điểm đi
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('fromLocation')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('toLocation')">
+                        <div class="icon-left">Điểm đến
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('toLocation')"></span>
+                        </div>
+                    </th>
+                    <th class="cursor-pointer" ng-click="sortData('unitPrice')">
+                        <div class="icon-left">Giá
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('unitPrice')"></span>
+                        </div>
+                    </th>
+                    <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="tourDetail in tourDetailList">
+                    <td>{{ getDisplayIndex($index) }}</td>
+                    <td>{{ tourDetail.id }}</td>
+                    <td class="cursor-default">
+                        <img ng-src="{{ tourDetail.toursByTourId.tourImg }}" loading="lazy"
+                             class="cursor-pointer rounded-2" alt="avatar" width="55" height="30" title="Xem ảnh xe"
+                             ng-click="openImageModal(tourDetail.toursByTourId.tourImg)"
+                             onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
+                    </td>
+                    <td width="200px">
+                        {{ tourDetail.toursByTourId.tourName }}
+                    </td>
+                    <td>{{ tourDetail.numberOfGuests }}</td>
+                    <td>{{ tourDetail.fromLocation }}</td>
+                    <td class="cursor-default">
+                        <span custom-tooltip="{{ tourDetail.toLocation }}">
+                            <span>{{ tourDetail.toLocation | limitTo: 15 }}</span>
+                            <span ng-show="tourDetail.toLocation.length > 15">...</span>
+                        </span>
+                    </td>
+                    <td>{{ tourDetail.unitPrice | vnCurrency }}</td>
+                    <td>
+                        <button class="fs-1 btn text-info px-1"
+                                ng-click="openModal(tourDetail.id)"
+                        >
+                            <span custom-tooltip="Xem chi tiết"><i class="fa-regular fa-eye"></i></span>
+                        </button>
+                        <a ng-click="redirectPage('/admin/detail-tour-list/trips-tour-list/', tourDetail.id)"
+                           role="button" class="fs-1 btn text-primary px-1 cursor-pointer">
+                            <span custom-tooltip="Lịch trình đi tour">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </span>
+                        </a>
+                        <a ng-click="redirectWithMultipleId('/admin/detail-tour-list/:tourDetailId/service-list', [tourDetail.id])"
+                           role="button" class="fs-1 btn text-warning px-1">
+                            <span custom-tooltip="Dịch vụ theo tour">
+                                <i class="fa-solid fa-gear"></i>
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-if="tourDetailList.length === 0">
+                    <td colspan="14">Trang này không có dữ liệu.</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="card-footer">
+                <div class="d-flex justify-content-end">
+                    {{ getDisplayRange() }} trong tổng số {{ totalElements }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal xem thông tin tour chi tiết-->
+<div class="modal fade" id="modal-tour-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Chi tiết Tour
+                    đi {{ tourDetail.fromLocation }} - {{ tourDetail.toLocation }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card mb-3">
+                                <img class="img-fluid" ng-src="{{ tourDetail.toursByTourId.tourImg }}"
+                                     style="height: 400px"/>
+                                <div class="card-body ">
+                                    <div class="bg-header-model">
+                                        <div class="h2 text-center fw-medium">{{ tourDetail.toursByTourId.tourName }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="card mb-3">
+                                <div class="card-header p-3 fw-bold">
+                                    Thông tin tour
+                                </div>
+                                <div class="card-body p-3">
+                                    <p class="m-2 fw-medium">Mã Tour: <span
+                                            class="fw-bold">{{ tourDetail.toursByTourId.id }}</span></p>
+                                    <p class="m-2 fw-medium">Loại Tour: <span
+                                            class="fw-bold">{{ tourDetail.tourTypes.tourTypeName }}</span></p>
+                                    <p class="m-2 fw-medium">Ngày tạo: <span
+                                            class="fw-normal">{{ tourDetail.toursByTourId.dateCreated | vietnameseDateTime }}</span>
+                                    </p>
+                                    <p class="m-2 fw-medium">
+                                        Trạng thái:
+                                        <span class="fw-bold color-green"
+                                              ng-if="tourDetail.toursByTourId.isActive === true">
+                                                Đang hoạt động
+                                        </span>
+                                        <span class="fw-bold color-green"
+                                              ng-if="tourDetail.toursByTourId.isActive === false">
+                                                Ngưng hoạt động
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="card-footer d-flex justify-content-center p-3"
+                                     data-bs-dismiss="modal">
+                                    <a ng-click="redirectPage('/admin/basic-tour-list/basic-tour-update/', tourDetail.toursByTourId.id, 'basic-tour-list')"
+                                       class="btn btn-green cursor-pointer">
+                                        Cập nhật thông tin tour
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="card" ng-if="tourDetail.tourDetailStatus == 1">
+                                <form ng-submit="createTourDestinationSubmit()" name="tourDestinationForm">
+                                    <div class="card-header p-3 fw-bold">
+                                        Lịch trình di chuyển (10 Km)
+                                    </div>
+                                    <div class="card-body p-3">
+                                        <div ng-include="'app/component/utils/loading-table.html'"></div>
+                                        <div class="mb-3 row g-0" ng-repeat="item in provinceDestination">
+                                            <div class="col-10">
+                                                <select class="form-control"
+                                                        ng-if="item.type === 'select'"
+                                                        name="province"
+                                                        ng-options="city.Name as city.Name for city in filteredProvinces"
+                                                        ng-change="getProvinceDestination()"
+                                                        ng-model="item.value"
+                                                        required
+                                                >
+                                                    <option value="" disabled selected>Chọn tỉnh / thành phố</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-2">
+                                                <button type="button"
+                                                        class="fs-1 btn text-info d-flex justify-content-center border-0"
+                                                        ng-click="addOrRemoveSelectItem($index)"
+                                                        ng-disabled="isButtonDisabled">
+                                                    <span ng-bind-html="item.hasData ? (item.last ? plusIconSVG : minusIconSVG) : plusIconSVG"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer d-flex justify-content-center p-3">
+                                        <button role="button"
+                                                type="submit"
+                                                ng-disabled="tourDestinationForm.$invalid"
+                                                class="btn btn-green"
+                                        >
+                                            Cập nhật
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7">
+                            <div class="card">
+                                <div class="card-header p-3 fw-bold">
+                                    Chi tiết tour
+                                </div>
+                                <div class="card-body p-3">
+                                    <p class="m-2 fw-medium">Mã Tour chi tiết: <span
+                                            class="fw-bold">{{ tourDetail.id }}</span></p>
+                                    <p class="m-2 fw-medium">Hướng dẫn viên: <span
+                                            class="fw-normal">{{ tourDetail.usersByGuideId.fullName }}</span></p>
+                                    <p class="m-2 fw-medium">Điểm đi: <span
+                                            class="fw-bold">{{ tourDetail.fromLocation }}</span></p>
+                                    <p class="m-2 fw-medium">Điểm đến: <span
+                                            class="fw-bold">{{ tourDetail.toLocation }}</span></p>
+                                    <p class="m-2 fw-medium">Dự kiến khoảng:
+                                        <span id="expectedKm" class="fw-bold"></span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Đã đặt:
+                                        <span class="fw-normal" ng-if="tourDetail.bookedSeat === 0">
+                                            Tour đang trống
+                                        </span>
+                                        <span class="fw-normal" ng-if="tourDetail.bookedSeat !== 0">
+                                            {{ tourDetail.bookedSeat }} Người
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Điểm dừng:
+                                        <span class="fw-bold" ng-repeat="province in provinceBreak">
+                                            {{ province.Name }}
+                                            <span ng-if="!$last">,</span>
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Ngày đi: <span
+                                            class="fw-normal">{{ tourDetail.departureDate | dateWithTimeFormat }}</span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Ngày về: <span
+                                            class="fw-normal">{{ tourDetail.arrivalDate | dateWithTimeFormat }}</span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Số lượng khách: <span
+                                            class="fw-normal">{{ tourDetail.numberOfGuests }} Khách</span></p>
+                                    <p class="m-2 fw-medium">Khách tối thiểu: <span
+                                            class="fw-normal">{{ tourDetail.minimumNumberOfGuests }} Khách</span></p>
+                                    <p class="m-2 fw-medium">Đơn giá: <span
+                                            class="fw-bold">{{ tourDetail.unitPrice | vnCurrency }}</span></p>
+                                    <p class="m-2 fw-medium">Trạng thái:
+                                        <span class="fw-medium color-warning" ng-if="tourDetail.tourDetailStatus == 1">
+                                            Chờ vận hành
+                                        </span>
+                                        <span class="fw-medium color-green" ng-if="tourDetail.tourDetailStatus == 2">
+                                            Đang vận hành
+                                        </span>
+                                        <span class="fw-medium color-green" ng-if="tourDetail.tourDetailStatus == 3">
+                                            Đã hoàn thành
+                                        </span>
+                                        <span class="fw-medium text-danger" ng-if="tourDetail.tourDetailStatus == 4">
+                                            Ngưng vận hành
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Ghi chú: <span
+                                            class="fw-normal">{{ tourDetail.tourDetailNotes }}</span></p>
+                                </div>
+                                <div class="card-footer d-flex justify-content-center p-3"
+                                     data-bs-dismiss="modal" ng-if="tourDetail.tourDetailStatus == 1">
+                                    <a role="button" class="btn btn-green"
+                                       ng-click="redirectPage('/admin/detail-tour-list/detail-tour-update/', tourDetail.id)"
+                                    >
+                                        Cập nhật tour chi tiết
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-5 mt-5 p-3">
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-xl-3 p-1" ng-repeat="img in tourDetailImage">
+                                            <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px"
+                                                 loading="lazy" ng-src="{{img.tourDetailImg}}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center"
+                                 data-bs-dismiss="modal" ng-if="tourDetail.tourDetailStatus == 1">
+                                <a role="button" class="btn btn-green"
+                                   ng-click="redirectPage('/admin/detail-tour-list/image-tour/', tourDetail.id)"
+                                >
+                                    Chỉnh sửa hình ảnh
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Thoát
+                </button>
+                <button type="button"
+                        class="btn btn-warning"
+                        ng-if="tourDetail.tourDetailStatus === 1"
+                        ng-click="openModalCanceledTour()"
+                >
+                    Ngưng vận hành tour
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal nhập thông tin tại sao ngưng hoạt động tour -->
+<div class="modal fade" id="cancelled_tour_noted" tabindex="-1" aria-labelledby="cancelled_tour_noted_label"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelled_tour_noted_label">
+                    Mô tả lí do
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" role="form" name="formCancelledTour">
+                    <div class="form-group">
+                        <label for="noted" class="form-label">
+                            VUI LÒNG NHẬP LÍ DO HỦY TOUR VỚI KHÁCH HÀNG<span class="text-danger">*</span>
+                        </label>
+                        <textarea class="form-control"
+                                  rows="4"
+                                  id="noted"
+                                  name="tourDetailNotes"
+                                  ng-model="tourDetail.tourDetailNotes"
+                                  ng-class="{ 'is-invalid': formCancelledTour.tourDetailNotes.$invalid && formCancelledTour.tourDetailNotes.$touched,
+                                               'is-valid': formCancelledTour.tourDetailNotes.$valid && formCancelledTour.tourDetailNotes.$touched }"
+                                  ng-pattern="/.{10,}/"
+                                  placeholder="Nhập lí do vì sao bạn muốn ngưng vận hành tour {{ tourDetail.toursByTourId.tourName }}"
+                                  required
+                        ></textarea>
+                        <small class="text-danger"
+                               ng-show="formCancelledTour.orderNoted.$touched && formCancelledTour.orderNoted.$error.required">
+                            Vui lòng nhập lí do vì sao ngưng hoạt động tour.
+                        </small>
+                        <small class="text-danger"
+                               ng-show="formCancelledTour.orderNoted.$error.pattern">
+                            Vui lòng nhập ít nhất 10 ký tự.
+                        </small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn"
+                        ng-click="hideModalCanceledTour()"
+                        data-bs-dismiss="modal"
+                >
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Quay về
+                </button>
+                <button type="button"
+                        ng-disabled="formCancelledTour.$invalid"
+                        ng-click="deleteTourDetail(tourDetail)"
+                        class="btn btn-success"
+                >
+                    Xác nhận hủy
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal xem hình ảnh xe -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Hình ảnh tour</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="" id="modalImage" class="img-fluid" alt="Ảnh phương tiện">
+            </div>
+        </div>
+    </div>
+</div>

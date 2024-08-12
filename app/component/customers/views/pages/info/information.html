@@ -1,0 +1,333 @@
+<style>
+    #change-profile .modal-dialog {
+        display: flex;
+    }
+
+    @media (max-width: 992px) {
+        #change-profile .modal-dialog {
+            max-height: 50%;
+            overflow-y: auto; /* Hiển thị thanh cuộn khi nội dung vượt quá chiều cao tối đa */
+
+        }
+    }
+
+    @media (max-width: 480px) {
+        #change-profile .modal-dialog {
+            max-height: 50%;
+            overflow-y: auto; /* Hiển thị thanh cuộn khi nội dung vượt quá chiều cao tối đa */
+            overflow-x: hidden; /* Ẩn thanh cuộn ngang */
+        }
+    }
+
+    /* Thêm các lớp để canh giữa nút đóng và tiêu đề */
+    #change-profile .modal-header {
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px; /* Thêm margin cho phần modal-header */
+    }
+
+    #change-profile .modal-title {
+        margin: 0; /* Gỡ bỏ margin của tiêu đề để giữ chính giữa */
+    }
+
+    #change-profile .btn-close {
+        margin-right: 15px; /* Tạo khoảng cách bên phải giữa nút đóng và tiêu đề */
+    }
+</style>
+
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+<section id="information-section">
+    <div class="container mt-5">
+        <div class="">
+            <div class="h2 mb-3">Thông tin tài khoản</div>
+            <div class="row">
+                <nav id="sidebar" class="col-md-3 col-lg-3 d-md-block sidebar">
+                    <div ng-include="'app/component/customers/views/components/information/sidebar.html'"></div>
+                </nav>
+                <!-- Main content -->
+                <main class="col-md-9 ms-sm-auto col-lg-9 px-md-4">
+                    <div class="info-content">
+                        <div class="h6">Hồ sơ</div>
+                        <div class="profile bg-light">
+                            <div class=" d-flex align-items-center justify-content-between">
+                                <div class="box-profile d-flex align-items-center">
+                                    <img id="" ng-src="{{ customer.avatar || 'https://i.imgur.com/xm5Ufr5.jpg'}}"
+                                         class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover;"
+                                         alt="example placeholder"/>
+                                    <div class="profile-info">
+                                        <div class="name h4"> {{ customer.fullName }}</div>
+                                        <div class="d-flex align-items-center">
+                                        <span class="label">Giới tính:
+                                            <span class="fw-medium" ng-if="(customer.gender) == null">
+                                               (Chưa Cập Nhật)
+                                            </span>
+                                             <span class="fw-medium" ng-if="(customer.gender) == 1">
+                                               Nữ
+                                            </span>
+                                             <span class="fw-medium" ng-if="(customer.gender) == 2">
+                                              Nam
+                                            </span>
+                                            <span class="fw-medium" ng-if="(customer.gender) == 3">
+                                              Khác
+                                            </span>
+                                        </span>
+                                            <span class="line"></span>
+                                            <span class="label">Ngày sinh: <span
+                                                    class="fw-medium"> {{ customer.birth | vietnameseDate }}</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="change-information ">
+                                    <button ng-click="showModalChangeProfile(customer.id)" class="btn">Thay đổi</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-content mt-5 mb-5">
+                        <div class="h6">Tài khoản và bảo mật</div>
+                        <div class="profile bg-light">
+                            <div class=" d-flex align-items-center justify-content-between">
+                                <div class="persional-acccount w-100">
+                                    <div class="item d-flex align-items-center justify-content-between">
+                                        <div class="box-profile d-flex align-items-center">
+                                            <span>ID: <span class="fw-medium"> {{ customer.id }}</span></span>
+                                        </div>
+                                        <div class="change">
+                                        </div>
+                                    </div>
+                                    <div class="item d-flex align-items-center justify-content-between">
+                                        <div class="box-profile d-flex align-items-center">
+                                            <span>Email: <span class="fw-medium">{{ customer.email }}</span></span>
+                                        </div>
+                                    </div>
+                                    <div class="item d-flex align-items-center justify-content-between">
+                                        <div class="box-profile d-flex align-items-center">
+                                            <span>Số Điện Thoại: <span
+                                                    class="fw-medium"> {{ customer.phone }}</span></span>
+                                        </div>
+                                        <div class="change">
+                                            <button ng-click="showModalChangePhoneNumber(customer.id)" class="btn">Thay
+                                                đổi
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="item d-flex align-items-center justify-content-between">
+                                        <div class="box-profile d-flex align-items-center">
+                                            <span>Mật khẩu: <span class="fw-medium">********</span></span>
+                                        </div>
+                                        <div class="change">
+                                            <a href="#"
+                                               ng-click="redirectPage('/change-password/', customer.id)"
+                                               class="text-dark btn"
+                                            >
+                                                Thay đổi
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            <div id="change-profile" class="modal fade" data-bs-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered" style="min-width: 50%;">
+                    <div class="modal-content">
+                        <div class="modal-header" style="border-bottom: 1px solid #c6c6c6;">
+                            <h3 class="modal-title justify-content-center fw-medium"
+                                style="font-size: 22px; color: black" id="scrollingLongModalLabel2">Hồ sơ cá nhân</h3>
+                            <button class="btn p-1" type="button" ng-click="getCustomer()" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                <span class="fas fa-times fs--1"></span>
+                            </button>
+                        </div>
+                        <form class="form-input-custom" ng-submit="updateCustomerSubmit()" name="customerForm"
+                              role="form">
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="d-flex justify-content-center">
+                                        <img id="selectedAvatar" ng-src="{{ getCurrentAvatarSource() }}"
+                                             class="rounded-circle"
+                                             style="width: 120px; height: 120px; object-fit: contain;"
+                                             alt="example placeholder"/>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="btn"
+                                             style="margin-top: 6px; border-radius: 5px; border: 1px solid rgba(128,128,128,0.57)">
+                                            <label class="form-label color-green m-1" for="avatar">Đổi ảnh</label>
+                                            <input class="form-control d-none" type="file" id="avatar"
+                                                   accept=".png, .jpg, .jpeg" ngf-select="uploadCustomerAvatar($file)"
+                                                   ng-model="customer.avatar"/>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center align-items-center"><span class="text-danger text-center" ng-bind="errorMessageImage"></span></div>
+                                    <div class="row">
+                                        <div class="col-6 mb-2">
+                                            <label class="form-label">Tên của bạn</label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   placeholder="Nguyễn Văn A"
+                                                   name="fullName"
+                                                   ng-model="customer.fullName"
+                                                   ng-class="{ 'is-invalid': customerForm.fullName.$invalid, 'is-valid': customerForm.fullName.$valid }"
+                                                   ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                                   required
+                                            >
+                                            <small class="text-danger"
+                                                   ng-show="customerForm.fullName.$error.required">
+                                                Vui lòng nhập họ và tên!
+                                            </small>
+                                            <small class="text-danger"
+                                                   ng-show="customerForm.fullName.$error.pattern">
+                                                Họ và tên không hợp lệ!
+                                            </small>
+                                        </div>
+                                        <div class="col-6 mb-2">
+                                            <label class="form-label">Giới tính</label>
+                                            <select class="form-select fw-medium" name="gender"
+                                                    aria-label="Default select example"
+                                                    ng-model="customer.gender"
+                                                    ng-class="{ 'is-invalid': customerForm.gender.$invalid, 'is-valid': customerForm.gender.$valid}"
+                                                    ng-options="option.value as option.label for option in genderOptions"
+                                                    ng-required="customer.gender !== ''" ng-change="showGender()">
+                                                <option value="" disabled selected>Chọn Giới Tính</option>
+                                            </select>
+                                            <small class="text-danger"
+                                                   ng-show="customerForm.gender.$error.required">
+                                                Vui lòng chọn giới tính!
+                                            </small>
+
+                                        </div>
+                                        <div class="col-6 mb-2">
+                                            <label class="form-label ">Ngày sinh</label>
+                                            <input class="form-control" type="date"
+                                                   name="birth"
+                                                   ng-model="customer.birth"
+                                                   ng-class="{ 'is-invalid': isBirthInvalid(),
+                                            'is-valid': isBirthValid() }"
+                                                   ng-change="checkBirth()"
+                                                   required/>
+                                            <small class="text-danger"
+                                                   ng-show="customerForm.birth.$error.required">
+                                                Vui lòng nhập ngày sinh!
+                                            </small>
+                                            <small class="text-danger"
+                                                   ng-show="isBirthInvalid()">
+                                                Yêu cầu trên 16 tuổi!
+                                            </small>
+                                        </div>
+                                        <div class="col-6 mb-2">
+                                            <label class="form-label ">CCCD</label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   placeholder="Nguyễn Văn A"
+                                                   name="citizenCard"
+                                                   ng-model="customer.citizenCard"
+                                                   ng-class="{ 'is-invalid': customerForm.citizenCard.$invalid,'is-valid': customerForm.citizenCard.$valid && !cardError }"
+                                                   ng-pattern="/^[0-9]{9,12}$/"
+                                                   ng-change="checkCardCustomer()"
+                                                   required
+                                            >
+                                            <small class="text-danger"
+                                                   ng-show="customerForm.citizenCard.$error.required">
+                                                Vui lòng nhập CMND / CCCD!
+                                            </small>
+                                            <small class="text-danger"
+                                                   ng-show="customerForm.citizenCard.$error.pattern">
+                                                CMND / CCCD không đúng định dạng!
+                                            </small>
+                                            <small class="text-danger" ng-show="cardError">
+                                                CMND / CCCD đã tồn tại ở tài khoản khác!
+                                            </small>
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <label class="form-label">Địa chỉ</label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   placeholder="1234 Main St"
+                                                   name="address"
+                                                   ng-model="customer.address"
+                                                   ng-class="{ 'is-invalid': customerForm.address.$invalid, 'is-valid': customerForm.address.$valid}"
+                                                   required
+                                            >
+                                            <small class="text-danger"
+                                                   ng-show="customerForm.address.$touched && customerForm.address.$error.required">
+                                                Vui lòng nhập địa chỉ!
+                                            </small>
+                                        </div>
+                                        <div class="mt-2 d-flex justify-content-center pb-2">
+                                            <button type="submit" class="btn btn-green"
+                                                    style="padding: 8px 50px; border-radius: 30px"
+                                                    ng-disabled="customerForm.$invalid || cardError || errorMessageImage !== ''"
+                                            >
+                                                Cập nhật
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="change-phoneNumber" data-bs-backdrop="static" class="modal fade">
+                <div class="modal-dialog modal-dialog-centered" style="min-width: 30%;">
+                    <div class="modal-content">
+                        <div class="modal-header" style="border-bottom: 1px solid #c6c6c6;">
+                            <h3 class="modal-title justify-content-center fw-medium"
+                                style="font-size: 22px; color: black" id="scrollingLongModalLabel1">Thông tin liên
+                                lạc</h3>
+                            <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                                <span class="fas fa-times fs--1"></span>
+                            </button>
+                        </div>
+                        <form class="form-input-custom" ng-submit="updatePhone()" name="phoneForm"
+                              role="form">
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-12 mb-0">
+                                            <label class="form-label">Số điện thoại</label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   placeholder="0969653264"
+                                                   name="phone"
+                                                   ng-model="customer.phone"
+                                                   ng-class="{ 'is-invalid': phoneForm.phone.$invalid, 'is-valid': phoneForm.phone.$valid && !phoneError }"
+                                                   ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                                                   ng-change="checkPhoneCustomer()"
+                                                   required
+                                            >
+                                            <small class="text-danger"
+                                                   ng-show="phoneForm.phone.$error.required">
+                                                Vui lòng nhập số điện thoại !
+                                            </small>
+                                            <small class="text-danger"
+                                                   ng-show="phoneForm.phone.$error.pattern">
+                                                Số điện thoại không đúng định dạng !
+                                            </small>
+                                            <small class="text-danger" ng-show="phoneError">
+                                                Số điện thoại đã tồn tại ở một tài khoản khác !
+                                            </small>
+                                        </div>
+                                        <div class="mt-2 d-flex justify-content-center pb-2">
+                                            <button type="submit" class="btn btn-green"
+                                                    style="padding: 8px 50px; border-radius: 30px"
+                                                    ng-disabled="phoneForm.$invalid || phoneError"
+                                            >Cập nhật
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Thay đổi thông tin, fullname, giới tính, ngày sinh-->

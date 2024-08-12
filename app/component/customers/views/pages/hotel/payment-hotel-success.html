@@ -1,0 +1,45 @@
+<!--====== Giao dịch thành công ======-->
+<section class="mt-100 mb-50 d-flex justify-content-center">
+    <div class="container-fluid booking-form-success row m-auto" style="max-width: 85%;">
+        <div class="col-lg-12 col-12 col-md-12 mb-30">
+            <div class="img-success d-flex justify-content-center mb-4">
+                <img src="/assets/customers/images/booking/checked-success.png" width="100" class="img-fluid"
+                     alt="payment-logo" ng-if="orderStatus === '1'">
+                <img src="/assets/customers/images/booking/payment-failed.png" width="100" class="img-fluid"
+                     alt="payment-logo" ng-if="orderStatus !== '1'">
+            </div>
+            <div class="content-payment-done d-flex justify-content-center">
+                <div class="content text-center">
+                    <div class="mb-2 h1" ng-if="orderStatus === '1'">Thanh toán khách sạn thành công</div>
+                    <div class="mb-2 h1" ng-if="orderStatus !== '1'">Thanh toán thất bại</div>
+                    <p class="mb-2" ng-if="orderStatus === '1'">
+                        Khách sạn của bạn đã được đặt hoàn tất, đối tác của chúng tôi sẽ liên hệ với bạn ngay sau khi
+                        xác nhận đơn hàng
+                    </p>
+                    <p class="mb-2" ng-if="orderStatus !== '1'">
+                        Quá trình thanh toán thất bại nhưng không sao, bạn có thể thanh toán lại hoặc thanh toán trực tiếp tại TravelTour
+                    </p>
+
+                    <div class="booking-id mt-3 mb-3">
+                        <div class="btn" style="padding: 14px 36px; background: #D9D9D9">
+                            Mã đơn hàng của bạn là: {{ orderHotel.id }}
+                        </div>
+                    </div>
+
+                    <p class="mb-2">Ngày / giờ thanh toán:
+                        <span class="fw-medium">{{ orderHotel.dateCreated | vietnameseDateTime }}</span>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-center mt-5">
+                <div>
+                    <a href="/hotel" class="btn btn-green " style="padding: 14px 36px">Tiếp tục đặt phòng</a>
+                </div>
+                <div class="mx-1"></div>
+                <div>
+                    <a class="btn" style="padding: 14px 36px; border: 1px solid #63AB45" ng-click="redirectPage('/history-order/', user.email)">Lịch sử giao dịch</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--====== Giao dịch thành công ======-->

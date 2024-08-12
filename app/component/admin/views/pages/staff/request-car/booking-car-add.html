@@ -1,0 +1,165 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<div class="container mt-3 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-bold text-uppercase">Tạo yêu cầu tìm xe</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" method="post" ng-submit="createRequestCar()" name="formBookingCar">
+            <div class="col-12">
+                <label class="form-label" for="tour-detail-id">Mã Chuyến Đi</label>
+                <select class="form-control"
+                        name="tourDetailId"
+                        ng-model="requestCar.tourDetailId"
+                        ng-class="{ 'is-invalid': formBookingCar.tourDetailId.$invalid && formBookingCar.tourDetailId.$touched,
+                                    'is-valid': formBookingCar.tourDetailId.$valid && formBookingCar.tourDetailId.$touched }"
+                        ng-options="tourDetail.id as tourDetail.id + ' - ' + tourDetail.toursByTourId.tourName for tourDetail in tourDetailSelect"
+                        ng-change="findTourDetailOnSelect()"
+                        id="tour-detail-id"
+                        required
+                >
+                    <option value="" selected disabled>Vui lòng chọn mã chuyến đi</option>
+                    <option>Vui lòng chọn mã chuyến đi</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="formBookingCar.tourDetailId.$touched && formBookingCar.tourDetailId.$error.required">
+                    Vui lòng chọn mã chuyến đi !
+                </small>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label" for="is-transport-bed">Loại chổ ngồi (Ghế/Giường)</label>
+                <select class="form-control"
+                        name="isTransportBed"
+                        ng-model="requestCar.isTransportBed"
+                        ng-class="{ 'is-invalid': formBookingCar.isTransportBed.$invalid && formBookingCar.isTransportBed.$touched,
+                                    'is-valid': formBookingCar.isTransportBed.$valid && formBookingCar.isTransportBed.$touched }"
+                        id="is-transport-bed"
+                        required
+                >
+                    <option value="" disabled selected>Chọn loại chổ ngồi</option>
+                    <option value="false">Xe ghế ngồi</option>
+                    <option value="true">Xe giường nằm</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="formBookingCar.isTransportBed.$touched && formBookingCar.isTransportBed.$error.required">
+                    Vui lòng chọn loại phương tiện !
+                </small>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label" for="amount-customer">Số lượng khách</label>
+                <input type="number"
+                       class="form-control"
+                       name="amountCustomer"
+                       ng-model="requestCar.amountCustomer"
+                       ng-class="{ 'is-invalid': formBookingCar.amountCustomer.$invalid && formBookingCar.amountCustomer.$touched,
+                                    'is-valid': formBookingCar.amountCustomer.$valid && formBookingCar.amountCustomer.$touched }"
+                       id="amount-customer"
+                       placeholder="Số lượng khách"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="formBookingCar.amountCustomer.$touched && formBookingCar.amountCustomer.$error.required">
+                    Vui lòng chọn số lượng khách !
+                </small>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label" for="fromLocation">Điểm đi</label>
+                <input type="text"
+                       class="form-control"
+                       name="fromLocation"
+                       ng-model="requestCar.fromLocation"
+                       ng-class="{ 'is-invalid': formBookingCar.fromLocation.$invalid && formBookingCar.fromLocation.$touched,
+                                    'is-valid': formBookingCar.fromLocation.$valid && formBookingCar.fromLocation.$touched }"
+                       id="fromLocation"
+                       placeholder="Điểm đi"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="formBookingCar.fromLocation.$touched && formBookingCar.fromLocation.$error.required">
+                    Vui lòng nhập điểm đi !
+                </small>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label" for="toLocation">Điểm đến</label>
+                <input type="text"
+                       class="form-control"
+                       name="toLocation"
+                       ng-model="requestCar.toLocation"
+                       ng-class="{ 'is-invalid': formBookingCar.toLocation.$invalid && formBookingCar.toLocation.$touched,
+                                    'is-valid': formBookingCar.toLocation.$valid && formBookingCar.toLocation.$touched }"
+                       id="toLocation"
+                       placeholder="Điểm đi"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="formBookingCar.toLocation.$touched && formBookingCar.toLocation.$error.required">
+                    Vui lòng nhập điểm đến !
+                </small>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label" for="departure-date">Ngày/giờ đi</label>
+                <input type="datetime-local"
+                       class="form-control"
+                       name="departureDate"
+                       ng-model="requestCar.departureDate"
+                       ng-class="{ 'is-invalid': formBookingCar.departureDate.$invalid && formBookingCar.departureDate.$touched,
+                                    'is-valid': formBookingCar.departureDate.$valid && formBookingCar.departureDate.$touched }"
+                       id="departure-date"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="formBookingCar.departureDate.$touched && formBookingCar.departureDate.$error.required">
+                    Vui lòng chọn ngày/giờ đi !
+                </small>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label" for="arrival-date">Ngày/giờ về</label>
+                <input type="datetime-local"
+                       class="form-control"
+                       name="arrivalDate"
+                       ng-model="requestCar.arrivalDate"
+                       ng-class="{ 'is-invalid': formBookingCar.arrivalDate.$invalid && formBookingCar.arrivalDate.$touched,
+                                    'is-valid': formBookingCar.arrivalDate.$valid && formBookingCar.arrivalDate.$touched }"
+                       id="arrival-date"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="formBookingCar.arrivalDate.$touched && formBookingCar.arrivalDate.$error.required">
+                    Vui lòng chọn ngày/giờ về !
+                </small>
+            </div>
+
+            <div class="col-12">
+                <label for="request-car-noted" class="form-label">Ghi chú cho nhà xe</label>
+                <textarea class="form-control"
+                          id="request-car-noted"
+                          rows="3"
+                          ng-model="requestCar.requestCarNoted"
+                          placeholder="Ghi chú cho nhà xe..."
+                ></textarea>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end mt-5">
+                <button class="btn" type="button" style="margin-right: 20px">
+                    <a class="btn" href="/admin/request-booking-car">Trở về</a>
+                </button>
+                <button type="submit" class="btn btn-submit fw-bold" ng-disabled="formBookingCar.$invalid">
+                    Tạo mới
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

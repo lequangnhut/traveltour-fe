@@ -103,12 +103,21 @@
         $(".nav-menu").removeClass("menu-on");
     });
 
-
-    //===== Preloader
-
-    $(window).on('load', function (event) {
-        $('.preloader').delay(500).fadeOut('500');
-    })
+    //===== Back to top
+    $(document).ready(function () {
+        $(window).scroll(function () {
+            if ($(this).scrollTop()) {
+                $('#back-top').fadeIn();
+            } else {
+                $('#back-top').fadeOut();
+            }
+        });
+        $("#back-top").click(function () {
+            $('html, body').animate({
+                scrollTop: 0
+            }, 0);
+        });
+    });
 
     //===== Sticky
 

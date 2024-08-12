@@ -1,0 +1,319 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+<div class="container mt-3 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-bold">TẠO VÉ XE</h3>
+                </div>
+            </div>
+            <div class="mt-3 fw-bold">Công ty:
+                <span>{{ transportBrand.transportationBrandName || 'Đang tải...' }}</span></div>
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" ng-submit="createOrderTransport()" name="form_booking" role="form">
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-lg-12 mb-3">
+                        <label class="form-label">MÃ CHUYẾN ĐI</label>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Nguyễn Văn A"
+                               name="fromLocation"
+                               ng-value="selectedSchedule.id + ' - ' +
+                                         selectedSchedule.transportations.licensePlate  + ' - ' +
+                                         selectedSchedule.fromLocation  + ' - ' +
+                                         selectedSchedule.toLocation"
+                               disabled
+                        >
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">TÊN KHÁCH HÀNG ĐẶT</label>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Nguyễn Văn A"
+                               name="customerName"
+                               ng-model="bookings.customerName"
+                               ng-class="{ 'is-invalid': form_booking.customerName.$invalid && form_booking.customerName.$touched, 'is-valid': form_booking.customerName.$valid && form_booking.customerName.$touched }"
+                               ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="form_booking.customerName.$touched && form_booking.customerName.$error.required">
+                            Vui lòng nhập tên khách hàng !
+                        </small>
+                        <small class="text-danger"
+                               ng-show="form_booking.customerName.$touched && form_booking.customerName.$error.pattern">
+                            Tên khách hàng không đúng định dạng !
+                        </small>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">CMND / CCCD</label>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="987654321012"
+                               name="customerCitizenCard"
+                               ng-model="bookings.customerCitizenCard"
+                               ng-class="{ 'is-invalid': form_booking.customerCitizenCard.$invalid && form_booking.customerCitizenCard.$touched, 'is-valid': form_booking.customerCitizenCard.$valid && form_booking.customerCitizenCard.$touched }"
+                               ng-pattern="/^[0-9]{9,12}$/"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="form_booking.customerCitizenCard.$touched && form_booking.customerCitizenCard.$error.required">
+                            Vui lòng nhập CMND / CCCD !
+                        </small>
+                        <small class="text-danger"
+                               ng-show="form_booking.customerCitizenCard.$touched && form_booking.customerCitizenCard.$error.pattern">
+                            CMND / CCCD không đúng định dạng !
+                        </small>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">EMAIL</label>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="exam@gmail.com"
+                               name="customerEmail"
+                               ng-model="bookings.customerEmail"
+                               ng-class="{ 'is-invalid': form_booking.customerEmail.$invalid && form_booking.customerEmail.$touched, 'is-valid': form_booking.customerEmail.$valid && form_booking.customerEmail.$touched }"
+                               ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="form_booking.customerEmail.$touched && form_booking.customerEmail.$error.required">
+                            Vui lòng nhập địa chỉ email !
+                        </small>
+                        <small class="text-danger"
+                               ng-show="form_booking.customerEmail.$touched && form_booking.customerEmail.$error.pattern">
+                            Địa chỉ email không đúng định dạng !
+                        </small>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">SỐ ĐIỆN THOẠI</label>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="0969653264"
+                               name="customerPhone"
+                               ng-model="bookings.customerPhone"
+                               ng-class="{ 'is-invalid': form_booking.customerPhone.$invalid && form_booking.customerPhone.$touched, 'is-valid': form_booking.customerPhone.$valid && form_booking.customerPhone.$touched }"
+                               ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="form_booking.customerPhone.$touched && form_booking.customerPhone.$error.required">
+                            Vui lòng nhập số điện thoại !
+                        </small>
+                        <small class="text-danger"
+                               ng-show="form_booking.customerPhone.$touched && form_booking.customerPhone.$error.pattern">
+                            Số điện thoại không đúng định dạng !
+                        </small>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">SỐ LƯỢNG VÉ</label>
+                        <input type="number"
+                               class="form-control"
+                               placeholder="Tối đa khách đặt 4 vé"
+                               name="amountTicket"
+                               ng-model="bookings.amountTicket"
+                               disabled
+                               required
+                        >
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">GHẾ</label>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Số ghế"
+                               name="seatName"
+                               ng-model="bookings.seatName"
+                               disabled
+                               required
+                        >
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">TỔNG TIỀN</label>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="100.000 ₫"
+                               format-price-input
+                               name="orderTotal"
+                               ng-model="bookings.orderTotal"
+                               ng-class="{ 'is-invalid': form_booking.orderTotal.$invalid && form_booking.orderTotal.$touched, 'is-valid': form_booking.orderTotal.$valid && form_booking.orderTotal.$touched }"
+                               disabled
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="form_booking.orderTotal.$touched && form_booking.orderTotal.$error.required">
+                            Vui lòng nhập tổng tiền !
+                        </small>
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">GHI CHÚ</label>
+                        <textarea class="form-control"
+                                  cols="30" rows="3"
+                                  placeholder="Nội dung..."
+                                  ng-model="bookings.orderNote"
+                        ></textarea>
+                        <div class="d-flex justify-content-end">
+                            <div class="mt-2 fw-bold fs--1">
+                                <span>Số ghế/giường đã được khách đặt: {{ bookedSeat || 0 }}</span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="mt-2 fw-bold fs--1">
+                                <span>Còn lại: {{ remainingSeats || 0 }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <label></label>
+                <div class="d-flex justify-content-center">
+                    <div class="theatre rounded-top-5 mx-3">
+                        <div class="steering-wheel">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.305 24h-.61c-.035-.004-.07-.01-.105-.012a11.783 11.783 0 0 1-2.117-.261 12.027 12.027 0 0 1-6.958-4.394A11.933 11.933 0 0 1 .027 12.78L0 12.411v-.822c.005-.042.013-.084.014-.127a11.845 11.845 0 0 1 1.102-4.508 12.007 12.007 0 0 1 2.847-3.852A11.935 11.935 0 0 1 11.728.003c.947-.022 1.883.07 2.81.27 1.22.265 2.369.71 3.447 1.335a11.991 11.991 0 0 1 3.579 3.164 11.876 11.876 0 0 1 2.073 4.317c.178.712.292 1.434.334 2.168.008.146.02.292.029.439v.609c-.004.03-.011.06-.012.089a11.81 11.81 0 0 1-1.05 4.521 12.02 12.02 0 0 1-1.92 2.979 12.046 12.046 0 0 1-6.395 3.812c-.616.139-1.24.23-1.872.265-.149.008-.297.02-.446.03zm8.799-13.416c-.527-3.976-4.078-7.808-9.1-7.811-5.02-.003-8.583 3.823-9.11 7.809h.09c.64-.035 1.278-.092 1.912-.195.815-.131 1.614-.326 2.378-.639.625-.255 1.239-.54 1.855-.816.82-.368 1.673-.593 2.575-.62a7.123 7.123 0 0 1 1.947.187c.585.146 1.136.382 1.68.634.57.264 1.14.526 1.733.736 1.2.424 2.442.62 3.706.7.11.006.222.01.334.015zm-10.95 10.471v-.094c0-1.437 0-2.873-.002-4.31 0-.141-.011-.284-.035-.423a2.787 2.787 0 0 0-.775-1.495c-.564-.582-1.244-.896-2.067-.892-1.414.007-2.827.002-4.24.002h-.09a9.153 9.153 0 0 0 3.125 5.256 9.15 9.15 0 0 0 4.083 1.956zm3.689.001c1.738-.36 3.25-1.137 4.528-2.355 1.4-1.334 2.287-2.956 2.685-4.855l-.077-.003h-4.362c-.237 0-.47.038-.695.112-.667.22-1.188.635-1.588 1.206a2.673 2.673 0 0 0-.494 1.59c.008 1.4.003 2.801.003 4.202v.103zM12.05 14.22c1.215-.035 2.204-1.083 2.165-2.275-.039-1.223-1.095-2.215-2.29-2.166-1.211.05-2.2 1.108-2.15 2.302.051 1.191 1.108 2.186 2.275 2.139z"
+                                      fill="#858585"></path>
+                            </svg>
+                        </div>
+                        <ol class="cabin ps-0">
+                            <li class="row row--1">
+                                <ol class="seats" type="A">
+                                    <li class="seat SeatThumbnail__SeatContainer-sc-1ooosi9-0 daMVvn seat-thumbnail">
+                                        <svg width="32" height="40" viewBox="0 0 28 40" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg"
+                                             style="width: 27px; height: 40px;">
+                                            <rect x="2.75" y="2.75" width="22.5" height="34.5"
+                                                  rx="2.25"
+                                                  fill="#FFF" stroke="#B8B8B8"
+                                                  stroke-width="1.5" stroke-linejoin="round"></rect>
+                                            <rect x="5.75" y="27.75" width="16.5" height="6.5"
+                                                  rx="2.25"
+                                                  fill="#FFF" stroke="#B8B8B8"
+                                                  stroke-width="1.5" stroke-linejoin="round"></rect>
+                                            <path class="icon-selected"
+                                                  d="M14 8.333A6.67 6.67 0 0 0 7.333 15 6.67 6.67 0 0 0 14 21.667 6.67 6.67 0 0 0 20.667 15 6.669 6.669 0 0 0 14 8.333zm-1.333 10L9.334 15l.94-.94 2.393 2.387 5.06-5.06.94.946-6 6z"
+                                                  fill="transparent"></path>
+                                            <path class="icon-disabled"
+                                                  d="M18.96 11.46l-1.42-1.42L14 13.59l-3.54-3.55-1.42 1.42L12.59 15l-3.55 3.54 1.42 1.42L14 16.41l3.54 3.55 1.42-1.42L15.41 15l3.55-3.54z"
+                                                  fill="transparent"></path>
+                                        </svg>
+                                    </li>
+                                </ol>
+                            </li>
+                        </ol>
+
+                        <ol class="cabin ps-0">
+                            <li class="row row--1" ng-repeat="row in transportSeat[0]">
+                                <ol class="seats" type="A">
+                                    <li class="seat" ng-class="{ 'daMVvn': seat.isBooked }" ng-repeat="seat in row">
+                                        <input type="checkbox" id="{{ 'seat-' + seat.seatNumber }}"/>
+                                        <label for="{{ 'seat-' + seat.seatNumber }}"
+                                               title="Số ghế: {{seat.seatNumber + ' - Giá: ' + formatPrice(selectedSchedule.unitPrice) }}"
+                                               ng-click="isActiveSeat(seat)"
+                                               ng-class="{'seatActive': seatSelections[selectedSchedule.id] && seatSelections[selectedSchedule.id][seat.seatNumber]}">
+                                            <a href="#">
+                                                <svg width="32" height="40" viewBox="0 0 28 40" fill="none"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     style="width: 27px; height: 40px;">
+                                                    <rect x="2.75" y="2.75" width="22.5" height="34.5"
+                                                          rx="2.25"
+                                                          fill="#FFF" stroke="#B8B8B8"
+                                                          stroke-width="1.5" stroke-linejoin="round"></rect>
+                                                    <rect x="5.75" y="27.75" width="16.5" height="6.5"
+                                                          rx="2.25"
+                                                          fill="#FFF" stroke="#B8B8B8"
+                                                          stroke-width="1.5" stroke-linejoin="round"></rect>
+                                                    <path class="icon-selected"
+                                                          d="M14 8.333A6.67 6.67 0 0 0 7.333 15 6.67 6.67 0 0 0 14 21.667 6.67 6.67 0 0 0 20.667 15 6.669 6.669 0 0 0 14 8.333zm-1.333 10L9.334 15l.94-.94 2.393 2.387 5.06-5.06.94.946-6 6z"
+                                                          fill="transparent"></path>
+                                                    <path class="icon-disabled"
+                                                          d="M18.96 11.46l-1.42-1.42L14 13.59l-3.54-3.55-1.42 1.42L12.59 15l-3.55 3.54 1.42 1.42L14 16.41l3.54 3.55 1.42-1.42L15.41 15l3.55-3.54z"
+                                                          fill="transparent"></path>
+                                                    <span ng-if="seat.isBooked"
+                                                          style="font-size: 14px ;position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">
+                                                        <p class="fw-medium text-danger">
+                                                            <i class="fa-solid fa-ban"></i>
+                                                        </p>
+                                                    </span>
+                                                </svg>
+                                            </a>
+                                        </label>
+                                    </li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="theatre rounded-top-5" ng-if="selectedSchedule.transportations.isTransportBed">
+                        <div class="steering-wheel" style="margin-bottom: 85px"></div>
+                        <ol class="cabin ps-0">
+                            <li class="row row--1" ng-repeat="row in transportSeat[1]">
+                                <ol class="seats" type="A">
+                                    <li class="seat" ng-class="{ 'daMVvn': seat.isBooked }" ng-repeat="seat in row">
+                                        <input type="checkbox" id="{{ 'seat-' + seat.seatNumber }}"/>
+                                        <label for="{{ 'seat-' + seat.seatNumber }}"
+                                               title="Số ghế: {{seat.seatNumber + ' - Giá: ' + formatPrice(selectedSchedule.unitPrice) }}"
+                                               ng-click="isActiveSeat(seat)"
+                                               ng-class="{'seatActive': seatSelections[selectedSchedule.id] && seatSelections[selectedSchedule.id][seat.seatNumber]}">
+                                            <a href="#">
+                                                <svg width="32" height="40" viewBox="0 0 28 40" fill="none"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     style="width: 27px; height: 40px;">
+                                                    <rect x="2.75" y="2.75" width="22.5" height="34.5"
+                                                          rx="2.25"
+                                                          fill="#FFF" stroke="#B8B8B8"
+                                                          stroke-width="1.5" stroke-linejoin="round"></rect>
+                                                    <rect x="5.75" y="27.75" width="16.5" height="6.5"
+                                                          rx="2.25"
+                                                          fill="#FFF" stroke="#B8B8B8"
+                                                          stroke-width="1.5" stroke-linejoin="round"></rect>
+                                                    <path class="icon-selected"
+                                                          d="M14 8.333A6.67 6.67 0 0 0 7.333 15 6.67 6.67 0 0 0 14 21.667 6.67 6.67 0 0 0 20.667 15 6.669 6.669 0 0 0 14 8.333zm-1.333 10L9.334 15l.94-.94 2.393 2.387 5.06-5.06.94.946-6 6z"
+                                                          fill="transparent"></path>
+                                                    <path class="icon-disabled"
+                                                          d="M18.96 11.46l-1.42-1.42L14 13.59l-3.54-3.55-1.42 1.42L12.59 15l-3.55 3.54 1.42 1.42L14 16.41l3.54 3.55 1.42-1.42L15.41 15l3.55-3.54z"
+                                                          fill="transparent"></path>
+                                                    <span ng-if="seat.isBooked"
+                                                          style="font-size: 14px ;position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">
+                                                        <p class="fw-medium text-danger">
+                                                            <i class="fa-solid fa-ban"></i>
+                                                        </p>
+                                                    </span>
+                                                </svg>
+                                            </a>
+                                        </label>
+                                    </li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12 d-flex justify-content-end mt-5">
+                <button type="button" class="btn" style="margin-right: 20px">
+                    <a class="btn"
+                       href="/business/transport/schedules-management/order-transport-management/{{ scheduleIdRedirect }}">
+                        Trở về
+                    </a>
+                </button>
+                <button type="submit" ng-disabled="form_booking.$invalid" class="btn btn-submit fw-bold">
+                    Thêm mới
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

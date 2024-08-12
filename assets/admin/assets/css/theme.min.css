@@ -11380,7 +11380,7 @@ textarea.form-control-lg {
 }
 
 .fs-1 {
-    font-size: 1.25rem !important
+    font-size: 1.1rem !important
 }
 
 .fs-2 {
@@ -23926,8 +23926,8 @@ input::-webkit-contacts-auto-fill-button {
 }
 
 .btn-warning {
-    --phoenix-btn-color: #fff;
-    --phoenix-btn-bg: #e5780b;
+    --phoenix-btn-color: black;
+    --phoenix-btn-bg: #FFD233;
     --phoenix-btn-border-color: transparent;
     --phoenix-btn-hover-color: #fff;
     --phoenix-btn-hover-bg: #d6700a;
@@ -32489,7 +32489,7 @@ html:not(.navbar-vertical-collapsed) .navbar-vertical.navbar-expand-xs .navbar-v
 
 @media (min-width: 768px) {
     .modal-md {
-        --phoenix-modal-width: 768px
+        --phoenix-modal-width: 500px
     }
 }
 
@@ -37825,3 +37825,13 @@ a[href].bg-200:hover, a[href].bg-200:focus {
     cursor: -webkit-grabbing;
     cursor: grabbing
 }
+
+.order-status {
+    display: flex;
+    align-items: center;
+}
+.status-dot {
+    margin-right: 8px;
+}
+
+

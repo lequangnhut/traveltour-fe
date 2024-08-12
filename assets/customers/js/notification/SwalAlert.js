@@ -23,3 +23,36 @@ function centerAlert(text, message, type) {
         type
     )
 }
+
+function confirmAlert(text, callback) {
+    Swal.fire({
+        title: "Xác nhận !",
+        text: text,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Đồng ý !",
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            callback();
+        }
+    });
+}
+
+function confirmAlertPost(text, callback) {
+    Swal.fire({
+        text: text,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Đồng ý!",
+        cancelButtonText: 'Từ bỏ'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            callback();
+        }
+    });
+}

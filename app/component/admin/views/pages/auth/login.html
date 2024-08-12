@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
       rel="stylesheet">
 <link href="/assets/admin/assets/vendors/simplebar/simplebar.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+<link rel="stylesheet" href="/assets/admin/lib/v4.0.8/css/line.css">
 <link href="/assets/admin/assets/css/theme-rtl.min.css" type="text/css" rel="stylesheet" id="style-rtl"
       disabled="disabled">
 <link href="/assets/admin/assets/css/theme.min.css" type="text/css" rel="stylesheet" id="style-default">
@@ -25,6 +25,21 @@
 <link href="/assets/admin/assets/css/user.min.css" type="text/css" rel="stylesheet" id="user-style-default">
 
 <main class="main" id="top">
+    <div class="preloader">
+        <div class="loader">
+            <div class="pre-shadow"></div>
+            <div class="pre-box"></div>
+        </div>
+    </div>
+
+    <!--====== Start Preloader ======-->
+    <div class="preloader" ng-show="isLoading">
+        <div class="loader">
+            <div class="pre-shadow"></div>
+            <div class="pre-box"></div>
+        </div>
+        <div class="bg"></div>
+    </div><!--====== End Preloader ======-->
     <div class="container-fluid bg-300 dark__bg-1200">
         <div class="bg-holder bg-auth-card-overlay"
              style="background-image:url(/assets/admin/assets/img/bg/37.png);"></div>
@@ -38,9 +53,10 @@
                                 <div class="bg-holder"
                                      style="background-image:url(/assets/admin/assets/img/bg/38.png);"></div>
                                 <!--/.bg-holder-->
-                                <div class="position-relative px-4 px-lg-7 pt-7 pb-7 pb-sm-5 text-center text-md-start pb-lg-7 pb-md-7">
+                                <div class="position-relative px-4 px-lg-7 pt-5 text-center text-md-start">
                                     <h3 class="mb-3 text-black fs-1">ĐỘI NGŨ NHÂN VIÊN TRAVEL TOUR</h3>
-                                    <p class="text-700">Travel Tour - Sứ mệnh của chúng tôi là biến mỗi chuyến đi thành
+                                    <p class="text-700" style="text-align: justify;">Travel Tour - Sứ mệnh của chúng tôi
+                                        là biến mỗi chuyến đi thành
                                         cuộc phiêu lưu đầy nhiệt huyết và trải nghiệm đáng nhớ. Trân trọng và lịch sự
                                         với mọi khách hàng!</p>
                                     <ul class="list-unstyled mb-0 w-max-content w-md-auto mx-auto">
@@ -55,7 +71,7 @@
                                                 class="text-700 fw-semi-bold">Tận tâm</span></li>
                                     </ul>
                                 </div>
-                                <div class="position-relative z-index--1 mb-6 d-none d-md-block text-center mt-md-15">
+                                <div class="position-relative z-index--1 mb-5 d-none d-md-block text-center mt-md-5">
                                     <img class="auth-title-box-img d-dark-none"
                                          src="/assets/admin/assets/img/spot-illustrations/auth.png" alt=""><img
                                         class="auth-title-box-img d-light-none"
@@ -63,13 +79,16 @@
                             </div>
                             <div class="col mx-auto">
                                 <div class="auth-form-box">
-                                    <div class="text-center mb-4"><a
-                                            class="d-flex flex-center text-decoration-none mb-4"
-                                            href="#" ng-click="goHome()">
-                                        <div class="d-flex align-items-center fw-bolder fs-5 d-inline-block"><img
-                                                src="/assets/admin/assets/img/icons/logo-black.png" alt="phoenix"
-                                                width="208"></div>
-                                    </a>
+                                    <div class="text-center mb-4">
+                                        <a class="d-flex flex-center text-decoration-none mb-4" href="/login-admin">
+                                            <div class="d-flex align-items-center fw-bolder fs-5 d-inline-block">
+                                                <img src="/assets/admin/assets/img/icons/logo.png" alt="logo"
+                                                     style="width: 50px"/>
+                                                <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">
+                                                    TravelTour
+                                                </p>
+                                            </div>
+                                        </a>
                                         <h3 class="text-1000">Đăng nhập</h3>
                                     </div>
                                     <form ng-submit="loginAccountAdmin()" method="POST" role="form" name="loginForm">
@@ -86,7 +105,7 @@
                                                        ng-class="{ 'is-invalid': loginForm.email.$invalid && loginForm.email.$touched, 'is-valid': loginForm.email.$valid && loginForm.email.$touched }"
                                                        ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
                                                        required
-                                                       placeholder="name@example.com"
+                                                       placeholder="Địa chỉ email"
                                                 >
                                                 <svg class="svg-inline--fa fa-user text-900 fs--1 form-icon"
                                                      aria-hidden="true" focusable="false" data-prefix="fas"
@@ -106,7 +125,7 @@
                                                 </small>
                                             </div>
                                         </div>
-                                        <div class="mb-3 text-start">
+                                        <div class="mb-2 text-start">
                                             <label class="form-label" for="password">Mật khẩu</label>
                                             <div class="form-icon-container">
                                                 <input class="form-control form-icon-input"
@@ -116,7 +135,7 @@
                                                        ng-model="user.password"
                                                        ng-class="{ 'is-invalid': loginForm.password.$invalid && loginForm.password.$touched, 'is-valid': loginForm.password.$valid && loginForm.password.$touched }"
                                                        ng-minlength="6"
-                                                       placeholder="password"
+                                                       placeholder="Nhập mật khẩu"
                                                        required
                                                 >
                                                 <svg class="svg-inline--fa fa-key text-900 fs--1 form-icon"
@@ -149,31 +168,26 @@
                                             </div>
                                             <div class="col-auto">
                                                 <div class="form-check mb-0">
-                                                    <a href="#" ng-click="goHome()" class="fs--1 text-dark">
-                                                        Quay về trang chủ
+                                                    <a href="/admin-forgot-password" class="fs--1 text-dark">
+                                                        Quên mật khẩu
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary w-100 mb-3">
+                                        <button type="submit" class="btn btn-primary w-100 mb-3" ng-disabled="loginForm.$invalid">
                                             Đăng nhập
                                         </button>
                                     </form>
-
-                                    <div class="position-relative">
-                                        <hr class="bg-200 mt-5 mb-4">
-                                        <div class="divider-content-center bg-white">Hoặc sử dụng tài khoản Google</div>
+                                    <div class="d-flex justify-content-center mb-3">
+                                        <div class="col-auto">
+                                            <div class="form-check mb-0">
+                                                <a href="/home" class="fs--1 text-info fw-medium">
+                                                    <i class="fa-solid fa-arrow-left mx-1"></i>
+                                                    Quay về trang chủ
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <a href="/oauth2/authorization/google" class="btn btn-phoenix-secondary w-100 mb-3"
-                                       role="button">
-                                        <svg class="svg-inline--fa fa-google text-danger me-2 fs--1" aria-hidden="true"
-                                             focusable="false" data-prefix="fab" data-icon="google" role="img"
-                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512" data-fa-i2svg="">
-                                            <path fill="currentColor"
-                                                  d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path>
-                                        </svg>
-                                        Đăng nhập bằng google
-                                    </a>
                                 </div>
                             </div>
                         </div>

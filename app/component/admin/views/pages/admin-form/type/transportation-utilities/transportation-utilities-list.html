@@ -1,0 +1,158 @@
+<div class="container">
+    <div class="header-control mb-4">
+        <div class="header-control-center">
+            <div class="d-flex justify-content-between align-items-center row ">
+                <div class="col-xl-6 mt-3">
+                    <h3 class="color-green fw-bold">DANH SÁCH LOẠI TIỆN ÍCH</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <div class="card card-customer">
+            <div class="row" style="margin: 20px 16px 20px 16px">
+                <div class="col-xl-4">
+                    Bạn muốn tìm kiếm gì ?
+                    <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <a href="#" class="bg-light text-dark">
+                                    <i class="fa-solid fa-magnifying-glass bg-light"></i>
+                                </a>
+                            </span>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Tìm kiếm theo tên tiện ích"
+                               ng-model="searchTerm"
+                               ng-change="searchTransUtility()"
+                        >
+                    </div>
+                </div>
+                <div class="col-xl-8 d-flex align-items-center justify-content-end mb-3 h-100"
+                     style="margin: 20px 0 0 0">
+                    <a href="/admin/type/transport-utilities-list/transport-utilities-create"
+                       class="btn btn-primary fw-bold">
+                        <i class="fa-solid fa-plus" style="margin-right: 10px"></i>
+                        Thêm thể loại
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="table-components table-responsive mb-5">
+        <div class="card table-responsive table-customer">
+            <div class="card-header ">
+                <div class="row">
+                    <div class="h4 col-lg-5 d-flex align-items-center h-100">
+                        <div class="d-flex align-items-center">
+                            <span class="h4">Danh sách loại phương tiện</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end align-items-baseline col-lg-2">
+                        <select class="form-select" aria-label="Default select example"
+                                ng-model="pageSize"
+                                ng-init="pageSize='5'"
+                                ng-change="pageSizeChanged()">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                        </select>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end h-100 col-lg-5">
+                        <nav aria-label="Page navigation example float-end">
+                            <ul class="pagination justify-content-center align-items-center">
+                                <!-- Previous Page -->
+                                <li class="page-item cursor-pointer" ng-class="{disabled: currentPage === 0}">
+                                    <a class="page-link" ng-click="setPage(0)">
+                                        <i class="fa-solid fa-angles-left"></i>
+                                    </a>
+                                </li>
+
+                                <!-- Ellipsis at the beginning -->
+                                <li class="page-item" ng-if="currentPage > 2 && totalPages > 5">
+                                    <span class="page-link">...</span>
+                                </li>
+
+                                <!-- Pagination Numbers -->
+                                <li class="page-item cursor-pointer" ng-repeat="n in getPaginationRange()"
+                                    ng-class="{active: n === currentPage}">
+                                    <a class="page-link" ng-click="setPage(n)">{{ n + 1 }}</a>
+                                </li>
+
+                                <!-- Ellipsis at the end -->
+                                <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                    <span class="page-link">...</span>
+                                </li>
+
+                                <!-- Next Page -->
+                                <li class="page-item cursor-pointer"
+                                    ng-class="{disabled: currentPage === totalPages - 1}">
+                                    <a class="page-link" ng-click="setPage(totalPages - 1)">
+                                        <i class="fa-solid fa-angles-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-responsive text-center table-striped">
+                <div ng-include="'app/component/utils/loading-table.html'"></div>
+                <thead>
+                <tr class="bg-light">
+                    <th scope="col"># <i class="fa-solid fa-sort"></i></th>
+                    <th>
+                        <div class="icon-left">ICON
+                            <span class="sorting-icon"></span>
+                        </div>
+                    </th>
+                    <th ng-click="sortData('title')">
+                        <div class="icon-left">Tên tiện ích
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('title')"></span>
+                        </div>
+                    </th>
+                    <th ng-click="sortData('description')">
+                        <div class="icon-left">Mô tả tiện ích
+                            <span class="sorting-icon" ng-bind-html="getSortIcon('description')"></span>
+                        </div>
+                    </th>
+                    <th scope="col">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="util in transportUtilityData">
+                    <td>{{ getDisplayIndex($index) }}</td>
+                    <td>
+                        <img ng-src="{{ util.icon }}" class="img-fluid" width="40" alt="icon demo" loading="lazy">
+                    </td>
+                    <td>{{ util.title }}</td>
+                    <td>{{ util.description }}</td>
+                    <td class="d-flex align-items-center justify-content-center">
+                        <a ng-click="redirectPage('/admin/type/transport-utilities-list/transport-utilities-update/', util.id)"
+                           role="button" class="fs-1 btn text-warning px-2 cursor-pointer">
+                            <span custom-tooltip="Cập nhật tiện ích">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </span>
+                        </a>
+                        <a ng-click="deleteTransportUtility(util.id)"
+                           role="button" class="fs-1 btn text-danger px-2 cursor-pointer">
+                            <span custom-tooltip="Xóa tiện ích">
+                                <i class="fa-solid fa-trash"></i>
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-if="transportUtilityData.length === 0">
+                    <td colspan="8">Trang này không có dữ liệu.</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="card-footer">
+                <div class="d-flex justify-content-end">
+                    {{ getDisplayRange() }} trong tổng số {{ totalElements }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

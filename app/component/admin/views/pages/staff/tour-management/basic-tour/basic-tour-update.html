@@ -1,0 +1,85 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<div class="container mt-3 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-bold text-uppercase">Cập nhật tour cơ bản</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" ng-submit="updateTourSubmit()" method="POST" role="form"
+              name="tourBasicForm">
+            <div class="col-12">
+                <label for="tourName" class="form-label">Tên tour</label>
+                <input type="text" class="form-control" id="tourName" placeholder="Nhập tên tour"
+                       name="tourName" ng-model="tourBasic.tourName"
+                       ng-class="{ 'is-invalid': tourBasicForm.tourName.$invalid,
+                                            'is-valid': tourBasicForm.tourName.$valid }"
+                       required/>
+                <small class="text-danger"
+                       ng-show="tourBasicForm.tourName.$error.required">
+                    Vui lòng nhập tên tour!</small>
+            </div>
+            <div class="col-12">
+                <label for="inputType" class="form-label">Loại tour</label>
+                <select id="inputType" class="form-select"
+                        name="tourType"
+                        ng-model="tourBasic.tourTypeId"
+                        ng-options="tourType.id as tourType.tourTypeName for tourType in tourTypeList"
+                        ng-class="{ 'is-invalid': tourBasicForm.tourType.$invalid,
+                                            'is-valid': tourBasicForm.tourType.$valid}"
+                        required>
+                    <option value="" selected disabled hidden>Chọn loại tour</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="tourBasicForm.tourType.$error.required">Vui
+                    lòng chọn loại tour!</small>
+            </div>
+            <div class="col-12">
+                <label for="inputState" class="form-label">Trạng thái</label>
+                <select id="inputState" class="form-select"
+                        name="isActive" ng-model="tourBasic.isActive"
+                        ng-class="{ 'is-invalid': tourBasicForm.isActive.$invalid,
+                                            'is-valid': tourBasicForm.isActive.$valid}"
+                        required>
+                    <option value="" selected disabled hidden>Chọn trang thái</option>
+                    <option ng-selected="tourBasic.isActive" value="true">Đang hoạt động</option>
+                    <option ng-selected="tourBasic.isActive === false" value="false">Ngưng hoạt động</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="tourBasicForm.isActive.$touched && tourBasicForm.isActive.$error.required">Vui
+                    lòng chọn trạng thái!</small>
+            </div>
+            <div class="mb-3">
+                <label for="tourImg" class="form-label">Hình ảnh</label>
+                <input class="form-control" type="file" id="tourImg" name="tourImg" accept=".png, .jpg, .jpeg"
+                       ng-class="{ 'is-invalid': tourBasicForm.tourImg.$invalid && tourBasicForm.tourImg.$touched,
+                        'is-valid': tourBasicForm.tourImg.$valid && tourBasicForm.tourImg.$touched }"
+                       ngf-select="uploadTourImage($file)">
+                <small class="text-danger"
+                       ng-show="tourBasicForm.tourImg.$touched && tourBasicForm.tourImg.$error.required">Vui
+                    lòng tải lên ảnh tour!</small>
+            </div>
+
+            <!-- Display the selected image -->
+            <div ng-if="tourBasic.tourImg !== null" class="m-0">
+                <label for="imagePreview" class="form-label">Ảnh hiện tại</label> <br>
+                <img id="imagePreview" loading="lazy" ng-src="{{ getCurrentImageSource() }}" alt="Current Image"
+                     style="max-width: 100px;">
+            </div>
+
+            <div class="col-12 d-flex justify-content-end mt-5">
+                <button class="btn" type="button" style="margin-right: 20px">
+                    <a class="btn" href="/admin/basic-tour-list">Trở về</a>
+                </button>
+                <button type="submit" class="btn btn-submit fw-bold" ng-disabled="tourBasicForm.$invalid">Cập nhật
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,246 @@
+    <section style="margin-top: 130px; margin-bottom: 130px">
+    <div class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12 d-flex justify-content-center mb-5">
+                    <div class="form-input fancy-icon-box-two mb-5" style="width: 600px">
+                        <div class="p-4">
+                            <div class="h2 text-center">Đăng ký trở thành đối tác</div>
+
+                            <form ng-submit="registerAgencies()" method="post" name="registerAgenciesForm">
+                                <h4 _ngcontent-loo-c234 class="mso-v3-small-title">
+                                    Thông tin tài khoản
+                                </h4>
+                                <p _ngcontent-loo-c234 class="sub-label">
+                                    Vui lòng điền đầy đủ thông tin để tạo tài khoản của bạn
+                                </p>
+
+                                <div class="form-group mb-3">
+                                    <label for="email" class="fw-medium">Địa chỉ email</label>
+                                    <input type="email"
+                                           id="email"
+                                           name="email"
+                                           class="form-control"
+                                           ng-model="agencies.email"
+                                           ng-class="{ 'is-invalid': registerAgenciesForm.email.$invalid && registerAgenciesForm.email.$touched,
+                                                        'is-valid': registerAgenciesForm.email.$valid && registerAgenciesForm.email.$touched }"
+                                           ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                                           ng-change="checkDuplicateEmail()"
+                                           placeholder="Địa chỉ email"
+                                           disabled
+                                           readonly
+                                    >
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="password" class="fw-medium">Mật khẩu</label>
+                                    <input type="password"
+                                           id="password"
+                                           name="password"
+                                           class="form-control"
+                                           ng-model="agencies.password"
+                                           ng-class="{ 'is-invalid': registerAgenciesForm.password.$invalid && registerAgenciesForm.password.$touched,
+                                                        'is-valid': registerAgenciesForm.password.$valid && registerAgenciesForm.password.$touched }"
+                                           ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{7,}$/"
+                                           placeholder="Mật khẩu doanh nghiệp"
+                                           required
+                                    >
+                                    <small class="text-danger"
+                                           ng-show="registerAgenciesForm.password.$touched && registerAgenciesForm.password.$error.required">
+                                        Vui lòng nhập mật khẩu !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="registerAgenciesForm.password.$touched && registerAgenciesForm.password.$error.pattern">
+                                        Mật khẩu phải có ít nhất một ký tự viết hoa, có ít nhât một số và không có ký tự đặc biệt !
+                                    </small>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="cpassword" class="fw-medium">Nhập lại mật khẩu</label>
+                                    <input type="password"
+                                           id="cpassword"
+                                           name="cpassword"
+                                           class="form-control"
+                                           ng-model="agencies.cpassword"
+                                           ng-class="{ 'is-invalid': registerAgenciesForm.cpassword.$invalid && registerAgenciesForm.cpassword.$touched,
+                                                        'is-valid': registerAgenciesForm.cpassword.$valid && registerAgenciesForm.cpassword.$touched }"
+                                           ng-pattern="agencies.password"
+                                           placeholder="Nhập lại mật khẩu doanh nghiệp"
+                                           required
+                                    >
+                                    <small class="text-danger"
+                                           ng-show="registerAgenciesForm.cpassword.$touched && registerAgenciesForm.cpassword.$error.required">
+                                        Vui lòng nhập mật khẩu !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="registerAgenciesForm.cpassword.$touched && registerAgenciesForm.cpassword.$error.pattern">
+                                        Xác nhận mật khẩu không khớp.
+                                    </small>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="full_name" class="fw-medium">Họ và tên</label>
+                                    <input type="text"
+                                           id="full_name"
+                                           name="fullName"
+                                           class="form-control"
+                                           ng-model="agencies.fullName"
+                                           ng-class="{ 'is-invalid': registerAgenciesForm.fullName.$invalid && registerAgenciesForm.fullName.$touched,
+                                                        'is-valid': registerAgenciesForm.fullName.$valid && registerAgenciesForm.fullName.$touched }"
+                                           ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                           placeholder="Họ và tên chủ tài khoản"
+                                           required
+                                    >
+                                    <small class="text-danger"
+                                           ng-show="registerAgenciesForm.fullName.$touched && registerAgenciesForm.fullName.$error.required">
+                                        Vui lòng họ và tên !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="registerAgenciesForm.fullName.$touched && registerAgenciesForm.fullName.$error.pattern">
+                                        Họ và tên không đúng định dạng !
+                                    </small>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="phone_number" class="fw-medium">Số điện thoại</label>
+                                    <input type="tel"
+                                           id="phone_number"
+                                           name="phone"
+                                           class="form-control"
+                                           ng-model="agencies.phone"
+                                           ng-class="{ 'is-invalid': registerAgenciesForm.phone.$invalid && registerAgenciesForm.phone.$touched,
+                                                        'is-valid': registerAgenciesForm.phone.$valid && registerAgenciesForm.phone.$touched && !phoneError }"
+                                           ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                                           ng-change="checkDuplicatePhone()"
+                                           placeholder="Số điện thoại chủ tài khoản"
+                                           maxlength="10"
+                                           required
+                                    >
+                                    <small class="text-danger"
+                                           ng-show="registerAgenciesForm.phone.$touched && registerAgenciesForm.phone.$error.required">
+                                        Vui lòng nhập số điện thoại !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="registerAgenciesForm.phone.$touched && registerAgenciesForm.phone.$error.pattern">
+                                        Số điện thoại không đúng định dạng !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="registerAgenciesForm.phone.$touched && phoneError">
+                                        Số điện thoại đã tồn tại ở một tài khoản khác !
+                                    </small>
+                                </div>
+
+                                <h4 _ngcontent-loo-c234 class="mso-v3-small-title">
+                                    Lĩnh vực kinh doanh
+                                </h4>
+                                <p _ngcontent-loo-c234 class="sub-label">
+                                    Chọn loại hình tương ứng với giấy tờ của bạn
+                                </p>
+
+                                <div _ngcontent-loo-c234 class="profile-type-new mb-3">
+                                    <div _ngcontent-loo-c234 class="one-third-row-container"
+                                         ng-class="{ 'active': isHotelChecked }">
+                                        <label _ngcontent-loo-c234 for="hotel" class="radio-label mt-2">
+                                            <div class="row">
+                                                <div class="col-1 d-flex align-content-center">
+                                                    <input _ngcontent-loo-c234
+                                                           id="hotel"
+                                                           type="checkbox"
+                                                           ng-click="toggleRole('ROLE_AGENT_HOTEL')"
+                                                           class="mr01000 mid-center ng-valid ng-dirty ng-touched">
+                                                </div>
+                                                <div class="col-9">
+                                                    <div _ngcontent-loo-c234 class="mid-radio">
+                                                        <span class="fw-medium">Khách sạn</span>
+                                                        <br>
+                                                        <span _ngcontent-loo-c234 class="mid-center fs-6">
+											                Chọn loại hình tương ứng với giấy tờ
+										                </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <img _ngcontent-loo-c234
+                                                         src="https://sbmc.zalopay.vn/assets/imgs/mso/doanh-nghiep.svg"
+                                                         width="100" alt="">
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <div _ngcontent-loo-c234 class="one-third-row-container"
+                                         ng-class="{ 'active': isTransportationChecked }">
+                                        <label _ngcontent-loo-c234 for="transportation" class="radio-label mt-2">
+                                            <div class="row">
+                                                <div class="col-1 d-flex align-content-center">
+                                                    <input _ngcontent-loo-c234
+                                                           type="checkbox"
+                                                           id="transportation"
+                                                           ng-click="toggleRole('ROLE_AGENT_TRANSPORT')"
+                                                           class="mr01000 mid-center ng-valid ng-dirty ng-touched">
+                                                </div>
+                                                <div class="col-9">
+                                                    <div _ngcontent-loo-c234 class="mid-radio">
+                                                        <span class="fw-medium">Xe khách</span>
+                                                        <br>
+                                                        <span _ngcontent-loo-c234 class="mid-center fs-6">
+											                Chọn loại hình tương ứng với giấy tờ
+										                </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <img _ngcontent-loo-c234
+                                                         src="/assets/customers/images/register-agency/transport.png"
+                                                         width="100" alt="">
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <div _ngcontent-loo-c234 class="one-third-row-container"
+                                         ng-class="{ 'active': isVisitLocationChecked }">
+                                        <label _ngcontent-loo-c234 for="visit_location" class="radio-label mt-2">
+                                            <div class="row">
+                                                <div class="col-1 d-flex align-content-center">
+                                                    <input _ngcontent-loo-c234
+                                                           type="checkbox"
+                                                           id="visit_location"
+                                                           ng-click="toggleRole('ROLE_AGENT_PLACE')"
+                                                           class="mr01000 mid-center ng-valid ng-dirty ng-touched">
+                                                </div>
+                                                <div class="col-9">
+                                                    <div _ngcontent-loo-c234 class="mid-radio">
+                                                        <span class="fw-medium">Điểm tham quan</span>
+                                                        <br>
+                                                        <span _ngcontent-loo-c234 class="mid-center fs-6">
+											                Chọn loại hình tương ứng với giấy tờ
+										                </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <img _ngcontent-loo-c234
+                                                         src="/assets/customers/images/register-agency/visit-location.png"
+                                                         width="100" alt="">
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="form-group mb-3">
+                                        <button type="submit"
+                                                class="btn btn-green w-100"
+                                                ng-disabled="registerAgenciesForm.$invalid || phoneError"
+                                        >
+                                            Tiếp tục
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

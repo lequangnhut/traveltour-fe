@@ -1,0 +1,879 @@
+<!--====== Start Blog Details Section ======-->
+<section class="blog-details-section pt-80 pb-70">
+    <div class="container">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
+             aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item fw-medium"><a href="/home">Trang chủ</a></li>
+                <li class="breadcrumb-item fw-medium"><a href="/drive-move">Đặt xe</a></li>
+                <li class="breadcrumb-item active fw-medium" aria-current="page">Chi tiết nhà xe</li>
+            </ol>
+        </nav>
+
+        <!--====== Products Filter ======-->
+        <div class="page-item-filter mb-40 wow fadeInUp">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6 d-flex align-items-center">
+                    <!--====== Show Text ======-->
+                    <div class="show-text">
+                        <h3>Đặt vé Xe Khách {{ transportBrand.transportationBrandName }} </h3>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!--====== Product Dropdown ======-->
+                    <div class="product-dropdown float-md-end d-flex justify-content-end align-items-center">
+                        <span class="m-3 fw-medium">Sắp xếp</span>
+                        <select class="wide ms-3" ng-model="filler.sort" ng-change="findAllRoomTypesByFillerClick()">
+                            <option value="">Mặc định</option>
+                            <option value="01">Giá tăng dần</option>
+                            <option value="02">Giá giảm dần</option>
+                            <option value="03">Đánh giá tốt nhất</option>
+                        </select>
+
+                        <div class="tour-area-nav border-0 ms-3">
+                            <div class="share-nav">
+                                <a href="#" ng-click="likeTransportationBrand(transportBrand.id)" class="mt-3 mb-3">
+                                    Yêu thích
+                                    <i ng-if="isLikeTransportationBrand">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             style="width: 14px; fill: red; padding-bottom: 4px">
+                                            <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                            <path
+                                                    d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/>
+                                        </svg>
+                                    </i>
+                                    <i ng-if="!isLikeTransportationBrand">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                             style="width: 14px; padding-bottom: 4px">
+                                            <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                            <path
+                                                    d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8v-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5v3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20c0 0-.1-.1-.1-.1c0 0 0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5v3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2v-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"/>
+                                        </svg>
+                                    </i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--====== Products Filter ======-->
+
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="mb-3 w-100">
+                    <div class="row single-event-item d-flex align-items-end">
+                        <div class="col-md-4">
+                            <label for="fromLocation" class="form-label">Điểm đi</label>
+                            <select class="form-control" id="fromLocation"
+                                    ng-model="filters.fromLocation" ng-change="validateDates()">
+                                <option selected value="">Chọn điểm đi</option>
+                                <option ng-repeat="fl in fromLocationList" value="{{ fl }}">{{ fl }}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="toLocation" class="form-label">Điểm dến</label>
+                            <select class="form-control" id="toLocation"
+                                    ng-model="filters.toLocation" ng-change="validateDates()">
+                                <option selected value="">Chọn điểm đến</option>
+                                <option ng-repeat="tl in toLocationList" value="{{tl}}">{{ tl }}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="checkInDateFiller" class="form-label">Ngày đi (dự kiến)</label>
+                            <input type="date" class="form-control" id="checkInDateFiller"
+                                   ng-model="filters.checkInDateFiller" ng-change="validateDates()">
+                        </div>
+                        <div class="d-flex justify-content-end mt-3 col-md-12">
+                            <button type="button" class="btn btn-green" ng-click="filterAllTransportCus()"><i
+                                    class="fa-solid fa-magnifying-glass"></i> Tìm chuyến xe
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-include="'app/component/utils/loading-component.html'"></div>
+                <div class="single-event-item transport-card-item mb-30 wow fadeInUp row"
+                     ng-repeat="schedule in transportSchedule track by $index"
+                     ng-if="!isLoading || transportSchedule.length > 0">
+                    <div class="notification-tag mb-3">
+                        <div class="tag" style="background: #63AB45; color: #63AB45;">
+                            <span>Thông báo</span>
+                        </div>
+                        <span class="content">
+                           <span class="text-decoration-underline text-green">Hướng đi: {{ schedule.scheduleNote }}</span>
+                        </span>
+                    </div>
+                    <div class="img-holder col-xl-3 col-lg-4 p-0">
+                        <img ng-src="{{ schedule.transportations.transportationImg }}"
+                             style="height: 160px"
+                             onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"/>
+                    </div>
+                    <div class=" col-xl-9 col-lg-8">
+                        <div class="meta row">
+                            <div class="col-lg-8 container-transport">
+                                <div>
+                                    <span>
+                                        <i class="fa-solid fa-bus"></i>
+                                        <a class="fw-medium" ng-if="schedule.transportations.isTransportBed">
+                                            {{ schedule.transportationTypes.transportationTypeName + ' (' + schedule.transportations.amountSeat + ' giường)' }}
+                                        </a>
+                                        <a class="fw-medium" ng-if="!schedule.transportations.isTransportBed">
+                                            {{ schedule.transportationTypes.transportationTypeName + ' (' + schedule.transportations.amountSeat + ' ghế)' }}
+                                        </a>
+                                    </span>
+                                    <div class="hour mx-1 fs-6">
+                                        Ngày đi: {{ schedule.departureTime | formatDate }}
+                                    </div>
+                                    <h3 class="fw-medium">
+                                        <a href="#">{{ schedule.transportationBrands.transportationBrandName }}</a>
+                                    </h3>
+                                    <div class="d-flex align-items-center mb-3"
+                                         style="border-bottom: 1px solid rgba(29, 35, 31, 0.1);">
+                                        <div class="location text-orange" style="font-size: 14px"></div>
+                                    </div>
+                                </div>
+
+                                <div class="transport-info-schedule mb-3"
+                                     style="padding-left: 10px ;border-left: 1px solid rgba(29, 35, 31, 0.1)">
+                                    <div style="font-size: 14px; line-height: 20px">
+                                        <div class="from-to d-flex">
+                                            <div class="">
+                                                <svg class="TicketPC__LocationRouteSVG-sc-1mxgwjh-4 eKNjJr"
+                                                     xmlns="http://www.w3.org/2000/svg" width="14" height="74"
+                                                     viewBox="0 0 14 74">
+                                                    <path fill="none" stroke="#787878" stroke-linecap="round"
+                                                          stroke-width="2" stroke-dasharray="0 7" d="M7 13.5v46"></path>
+                                                    <g fill="none" stroke="#484848" stroke-width="3">
+                                                        <circle cx="7" cy="7" r="7" stroke="none"></circle>
+                                                        <circle cx="7" cy="7" r="5.5"></circle>
+                                                    </g>
+                                                    <path d="M7 58a5.953 5.953 0 0 0-6 5.891 5.657 5.657 0 0 0 .525 2.4 37.124 37.124 0 0 0 5.222 7.591.338.338 0 0 0 .506 0 37.142 37.142 0 0 0 5.222-7.582A5.655 5.655 0 0 0 13 63.9 5.953 5.953 0 0 0 7 58zm0 8.95a3.092 3.092 0 0 1-3.117-3.06 3.117 3.117 0 0 1 6.234 0A3.092 3.092 0 0 1 7 66.95z"
+                                                          fill="#787878"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="from-to-content" style="padding: 0 0 0 8px">
+                                                <div class="from d-flex " style="padding: 0 0 8px 0 ">
+                                                    <div class="hour mx-1 fw-medium fs-5">
+                                                        {{ schedule.departureTime | formatTime }}
+                                                    </div>
+                                                    <div class="place fw-medium fs-5">•
+                                                        {{ schedule.fromLocation }}
+                                                    </div>
+                                                </div>
+                                                <div class="duration">
+                                                    {{ schedule.departureTime | averageTime: schedule.arrivalTime }}
+                                                </div>
+                                                <div class="content to d-flex">
+                                                    <div class="hour mx-1 fw-medium fs-5">
+                                                        {{ schedule.arrivalTime | formatTime }}
+                                                    </div>
+                                                    <div class="place fw-medium fs-5">•
+                                                        {{ schedule.toLocation }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <b class="text-uppercase text-green fw-medium mt-5">Không phải thanh toán trước</b>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="info-transport h-100 w-100 position-relative row">
+                                    <div class="rating col-xl-12 col-lg-12 col-sm-6 col-6">
+                                        <div class="float-end" style="font-size: 14px; line-height: 20px">
+                                            <div class="d-flex justify-content-end">
+                                                <div class="rating-content m-2">
+                                                    <span class="fw-medium fs-5">
+                                                        {{ schedule.unitPrice | vnCurrency }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="content-discount rounded-0">
+                                                <div class="text-center">
+                                                    Khách đã đặt {{ schedule.bookedSeat }} vé
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="price d-flex justify-content-end bottom-0 end-0 mb-3 me-3 col-xl-12 col-lg-12 col-sm-6 col-6">
+                                        <div class="box">
+                                            <p class="fw-medium text-danger"
+                                               ng-if="schedule.transportations.amountSeat - schedule.bookedSeat <= 5 && schedule.bookedSeat !== schedule.transportations.amountSeat"
+                                            >
+                                                Còn lại
+                                                {{ schedule.transportations.amountSeat - schedule.bookedSeat }}
+                                                chỗ trống
+                                            </p>
+                                            <p class="fw-medium text-danger"
+                                               ng-if="schedule.transportations.amountSeat === schedule.bookedSeat">
+                                                Xe đã hết chổ
+                                            </p>
+                                            <a href="#" class="btn btn-green w-100 text-white"
+                                               ng-click="toggleBooking($index, schedule)"
+                                               ng-hide="schedule.transportations.amountSeat === schedule.bookedSeat"
+                                            >
+                                                Đặt vé ngay
+                                            </a>
+                                            <div class="d-flex align-items-center justify-content-end mt-3 text-green">
+                                                <a href="#" class="mx-2" ng-click="toggleDetail($index)">
+                                                    Xem chi tiết
+                                                </a>
+                                                <i ng-bind-html="getChangeIcon($index)"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3" ng-if="activeTransportInfoTab === $index">
+                        <div class="transport-info-nav">
+                            <div class="nav nav-tabs mb-3" id="nav-tab-transport-{{$index}}" role="tablist">
+                                <button class="nav-link active text-green fw-medium" id="nav-image-tab-{{$index}}"
+                                        data-bs-toggle="tab" data-bs-target="#nav-image-{{$index}}" type="button"
+                                        role="tab"
+                                        aria-controls="nav-image" aria-selected="true">Hình ảnh
+                                </button>
+                                <button class="nav-link text-green fw-medium" id="nav-until-tab-{{$index}}"
+                                        data-bs-toggle="tab" data-bs-target="#nav-until-{{$index}}" type="button"
+                                        role="tab"
+                                        aria-controls="nav-until" aria-selected="true">Tiện ích
+                                </button>
+                                <button class="nav-link text-green fw-medium" id="nav-location-tab-{{$index}}"
+                                        data-bs-toggle="tab" data-bs-target="#nav-location-{{$index}}" type="button"
+                                        role="tab"
+                                        aria-controls="nav-location" aria-selected="false">Điểm đón, trả
+                                </button>
+                                <button class="nav-link text-green fw-medium" id="nav-policy-tab-{{$index}}"
+                                        data-bs-toggle="tab" data-bs-target="#nav-policy-{{$index}}" type="button"
+                                        role="tab"
+                                        aria-controls="nav-policy" aria-selected="false">Chính sách
+                                </button>
+                            </div>
+
+                            <div class="tab-content p-3 border bg-white border-0"
+                                 id="nav-tab-transport-content-{{$index}}">
+
+                                <div class="tab-pane fade active show" id="nav-image-{{$index}}" role="tabpanel"
+                                     aria-labelledby="nav-image-tab-{{$index}}">
+                                    <div ng-init="carouselId = 'carousel-' + $index">
+                                        <div id="carouselControl-{{$index}}" class="carousel slide mb-3"
+                                             data-bs-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item"
+                                                     ng-repeat="img in schedule.transportations.transportationImagesById"
+                                                     ng-class="{ 'active': $first }">
+                                                    <img ng-src="{{ img.imagePath }}" class="d-block w-100 rounded-2"
+                                                         height="480"
+                                                         onerror="this.src='/assets/admin/assets/img/bg/default-image-hotel.png'"
+                                                         alt="" src="">
+                                                </div>
+                                            </div>
+                                            <button class="carousel-control-prev" type="button"
+                                                    data-bs-target="#carouselControl-{{$index}}" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button"
+                                                    data-bs-target="#carouselControl-{{$index}}" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row p-2">
+                                        <div class="col-3 mb-3 p-1"
+                                             ng-repeat="img in schedule.transportations.transportationImagesById">
+                                            <div class="img-banner-carousel">
+                                                <img ng-src="{{ img.imagePath }}" width="100" src=""
+                                                     style="height: 130px; width: 100%"
+                                                     class="img-fluid rounded-2" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="nav-until-{{$index}}" role="tabpanel"
+                                     aria-labelledby="nav-until-tab-{{$index}}">
+                                    <div class="card border-0 bg-light rounded-0"
+                                         ng-repeat="util in transportUtilities[$index]">
+                                        <div class="p-3">
+                                            <div class="img-until d-flex align-content-center">
+                                                <img ng-src="{{ util.icon }}" class="img-fluid" width="44" alt="">
+                                                <p class="fs-6 fw-medium p-2">{{ util.title }}</p>
+                                            </div>
+                                            <p>{{ util.description }}</p>
+                                        </div>
+                                        <div style="height: 1px; background: rgb(192, 192, 192); width: 100%"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-center"
+                                         ng-if="!transportUtilities[$index] || transportUtilities[$index].length === 0">
+                                        Hiện tại chúng tôi chưa lấy được tiện ích của nhà xe này.
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="nav-location-{{$index}}" role="tabpanel"
+                                     aria-labelledby="nav-location-tab-{{$index}}">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-12 col-12 mb-40">
+                                            <strong class="fw-medium fs-5 text-warning">Lưu ý</strong>
+                                            <br>
+                                            <span class="fw-medium">
+                                                Các mốc thời gian đón, trả bên dưới là thời gian dự kiến.
+                                                Lịch này có thể thay đổi tùy tình hình thưc tế.
+                                            </span>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12 col-12 ms-3">
+                                            <span class="fw-medium fs-5">Điểm đón</span>
+                                            <div class="fw-medium">
+                                                {{ schedule.departureTime | formatTime }} •
+                                                Bến xe trung tâm {{ schedule.fromLocation }}
+                                                <br>
+                                            </div>
+                                            <div class="fw-normal" style="font-size: 14px">
+                                                Chi tiết: {{ schedule.fromAddress }}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5 col-md-12 col-12">
+                                            <span class="fw-medium fs-5">Điểm trả</span>
+                                            <div class="fw-medium">
+                                                {{ schedule.arrivalTime | formatTime }} •
+                                                Bến xe trung tâm {{ schedule.toLocation }}
+                                            </div>
+                                            <div class="fw-normal" style="font-size: 14px">
+                                                Chi tiết: {{ schedule.toAddress }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="nav-policy-{{$index}}" role="tabpanel"
+                                     aria-labelledby="nav-policy-tab-{{$index}}">
+                                    <div ng-bind-html="schedule.transportationBrands.transportationBrandPolicy | trustHtml"
+                                         style="text-align: justify; white-space: pre-line; font-family: 'Roboto',sans-serif;">
+                                    </div>
+                                    <div class="place-content-wrap mb-4 wow fadeInUp"
+                                         ng-if="schedule.transportationBrands.transportationBrandPolicy.length === 0 | trustHtml">
+                                        Hiện tại nhà xe chưa quy định chính sách.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3" id="progress-booking" ng-if="activeTransportBookingTab === $index">
+                        <hr>
+                        <!-- Tiến dộ -->
+                        <div class="progress-container">
+                            <div class="container">
+                                <div class="d-flex justify-content-center">
+                                    <div class="item">
+                                        <div class="item-1">
+                                            <div class="vector-wrapper">
+                                                <span class="num">1</span>
+                                            </div>
+                                            <div class="text-wrapper fw-medium">Chọn dịch vụ</div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="item-1">
+                                            <div class="vector-wrapper">
+                                                <span class="num">2</span>
+                                            </div>
+                                            <div class="text-wrapper">Nhập thông tin</div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="item-1">
+                                            <div class="vector-wrapper">
+                                                <span class="num">3</span>
+                                            </div>
+                                            <div class="text-wrapper">Thanh toán</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- Tiến dộ -->
+                        <hr>
+
+                        <div class="row">
+                            <div class="seat-groups col-6">
+                                <div class="OnlineAndRegister__Message-lc1nvp-6 isjdvH">
+                                    <div class="headline">Quy định cần lưu ý khi đi xe&nbsp;</div>
+                                    <button type="button" class="ant-btn url" data-bs-toggle="modal"
+                                            data-bs-target="#modal-noted">
+                                        <span>Xem chi tiết</span>
+                                    </button>
+                                </div>
+
+                                <div class="note fw-medium mb-3">Chú thích</div>
+
+                                <div class="row">
+                                    <div class="seat-info d-flex align-items-center mb-30 col-6">
+                                        <div class="SeatThumbnail__SeatContainer-sc-1ooosi9-0 seat-thumbnail">
+                                            <svg width="32" height="40" viewBox="0 0 28 40" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="2.75" y="2.75" width="22.5" height="34.5" rx="2.25"
+                                                      fill="#FFF" stroke="#B8B8B8" stroke-width="1.5"
+                                                      stroke-linejoin="round"></rect>
+                                                <rect x="5.75" y="27.75" width="16.5" height="6.5" rx="2.25"
+                                                      fill="#FFF" stroke="#B8B8B8" stroke-width="1.5"
+                                                      stroke-linejoin="round"></rect>
+                                            </svg>
+                                        </div>
+                                        <span class="seat-name ms-2">Còn trống</span>
+                                    </div>
+
+                                    <div class="seat-info d-flex align-items-center mb-30 col-6">
+                                        <div class="SeatThumbnail__SeatContainer-sc-1ooosi9-0 dLgsTe seat-thumbnail">
+                                            <svg width="32" height="40" viewBox="0 0 28 40" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="2.75" y="2.75" width="22.5" height="34.5" rx="2.25"
+                                                      fill="#FFF" stroke="#B8B8B8" stroke-width="1.5"
+                                                      stroke-linejoin="round"></rect>
+                                                <rect x="5.75" y="27.75" width="16.5" height="6.5" rx="2.25"
+                                                      fill="#FFF" stroke="#B8B8B8" stroke-width="1.5"
+                                                      stroke-linejoin="round"></rect>
+                                                <path class="icon-selected"
+                                                      d="M14 8.333A6.67 6.67 0 0 0 7.333 15 6.67 6.67 0 0 0 14 21.667 6.67 6.67 0 0 0 20.667 15 6.669 6.669 0 0 0 14 8.333zm-1.333 10L9.334 15l.94-.94 2.393 2.387 5.06-5.06.94.946-6 6z"
+                                                      fill="transparent"></path>
+                                                <path class="icon-disabled"
+                                                      d="M18.96 11.46l-1.42-1.42L14 13.59l-3.54-3.55-1.42 1.42L12.59 15l-3.55 3.54 1.42 1.42L14 16.41l3.54 3.55 1.42-1.42L15.41 15l3.55-3.54z"
+                                                      fill="transparent"></path>
+                                            </svg>
+                                        </div>
+                                        <span class="seat-name ms-2">Đang chọn</span>
+                                    </div>
+
+                                    <div class="seat-info d-flex align-items-center mb-30 col-12">
+                                        <div class="SeatThumbnail__SeatContainer-sc-1ooosi9-0 daMVvn seat-thumbnail"
+                                             disabled="">
+                                            <svg width="32" height="40" viewBox="0 0 28 40" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="2.75" y="2.75" width="22.5" height="34.5" rx="2.25"
+                                                      fill="#FFF" stroke="#B8B8B8" stroke-width="1.5"
+                                                      stroke-linejoin="round"></rect>
+                                                <rect x="5.75" y="27.75" width="16.5" height="6.5" rx="2.25"
+                                                      fill="#FFF" stroke="#B8B8B8" stroke-width="1.5"
+                                                      stroke-linejoin="round"></rect>
+                                                <path class="icon-selected"
+                                                      d="M14 8.333A6.67 6.67 0 0 0 7.333 15 6.67 6.67 0 0 0 14 21.667 6.67 6.67 0 0 0 20.667 15 6.669 6.669 0 0 0 14 8.333zm-1.333 10L9.334 15l.94-.94 2.393 2.387 5.06-5.06.94.946-6 6z"
+                                                      fill="transparent"></path>
+                                                <path class="icon-disabled"
+                                                      d="M18.96 11.46l-1.42-1.42L14 13.59l-3.54-3.55-1.42 1.42L12.59 15l-3.55 3.54 1.42 1.42L14 16.41l3.54 3.55 1.42-1.42L15.41 15l3.55-3.54z"
+                                                      fill="transparent"></path>
+                                            </svg>
+                                        </div>
+                                        <span class="seat-name ms-2">Ghế không bán</span>
+                                    </div>
+
+                                    <div class="seat-info d-flex align-items-center mb-30 col-12">
+                                        <div class="SeatThumbnail__SeatContainer-sc-1ooosi9-0 daMVvn seat-thumbnail"
+                                             disabled="">
+                                            <svg width="32" height="40" viewBox="0 0 28 40" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="2.75" y="2.75" width="22.5" height="34.5" rx="2.25"
+                                                      fill="#FFF" stroke="#B8B8B8" stroke-width="1.5"
+                                                      stroke-linejoin="round"></rect>
+                                                <rect x="5.75" y="27.75" width="16.5" height="6.5" rx="2.25"
+                                                      fill="#FFF" stroke="#B8B8B8" stroke-width="1.5"
+                                                      stroke-linejoin="round"></rect>
+                                                <path class="icon-disabled"
+                                                      d="M18.96 11.46l-1.42-1.42L14 13.59l-3.54-3.55-1.42 1.42L12.59 15l-3.55 3.54 1.42 1.42L14 16.41l3.54 3.55 1.42-1.42L15.41 15l3.55-3.54z"
+                                                      fill="transparent"></path>
+                                                <span style="position: absolute; transform: translate(-150%, 20%);">
+                                                    <p class="fw-medium text-danger">
+                                                        <i class="fa-solid fa-ban"></i>
+                                                    </p>
+                                                </span>
+                                            </svg>
+                                        </div>
+                                        <span class="seat-name ms-2">Ghế đã đặt</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 d-flex justify-content-end">
+                                <div class="cabin-transport">
+                                    <span class="d-flex justify-content-center"
+                                          ng-if="schedule.transportations.isTransportBed">
+                                        Tầng dưới
+                                    </span>
+                                    <!--cabin xe-->
+                                    <div class="theatre rounded-top-5 ms-3">
+                                        <div class="steering-wheel">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12.305 24h-.61c-.035-.004-.07-.01-.105-.012a11.783 11.783 0 0 1-2.117-.261 12.027 12.027 0 0 1-6.958-4.394A11.933 11.933 0 0 1 .027 12.78L0 12.411v-.822c.005-.042.013-.084.014-.127a11.845 11.845 0 0 1 1.102-4.508 12.007 12.007 0 0 1 2.847-3.852A11.935 11.935 0 0 1 11.728.003c.947-.022 1.883.07 2.81.27 1.22.265 2.369.71 3.447 1.335a11.991 11.991 0 0 1 3.579 3.164 11.876 11.876 0 0 1 2.073 4.317c.178.712.292 1.434.334 2.168.008.146.02.292.029.439v.609c-.004.03-.011.06-.012.089a11.81 11.81 0 0 1-1.05 4.521 12.02 12.02 0 0 1-1.92 2.979 12.046 12.046 0 0 1-6.395 3.812c-.616.139-1.24.23-1.872.265-.149.008-.297.02-.446.03zm8.799-13.416c-.527-3.976-4.078-7.808-9.1-7.811-5.02-.003-8.583 3.823-9.11 7.809h.09c.64-.035 1.278-.092 1.912-.195.815-.131 1.614-.326 2.378-.639.625-.255 1.239-.54 1.855-.816.82-.368 1.673-.593 2.575-.62a7.123 7.123 0 0 1 1.947.187c.585.146 1.136.382 1.68.634.57.264 1.14.526 1.733.736 1.2.424 2.442.62 3.706.7.11.006.222.01.334.015zm-10.95 10.471v-.094c0-1.437 0-2.873-.002-4.31 0-.141-.011-.284-.035-.423a2.787 2.787 0 0 0-.775-1.495c-.564-.582-1.244-.896-2.067-.892-1.414.007-2.827.002-4.24.002h-.09a9.153 9.153 0 0 0 3.125 5.256 9.15 9.15 0 0 0 4.083 1.956zm3.689.001c1.738-.36 3.25-1.137 4.528-2.355 1.4-1.334 2.287-2.956 2.685-4.855l-.077-.003h-4.362c-.237 0-.47.038-.695.112-.667.22-1.188.635-1.588 1.206a2.673 2.673 0 0 0-.494 1.59c.008 1.4.003 2.801.003 4.202v.103zM12.05 14.22c1.215-.035 2.204-1.083 2.165-2.275-.039-1.223-1.095-2.215-2.29-2.166-1.211.05-2.2 1.108-2.15 2.302.051 1.191 1.108 2.186 2.275 2.139z"
+                                                      fill="#858585"></path>
+                                            </svg>
+                                        </div>
+                                        <ol class="cabin">
+                                            <li class="row row--1">
+                                                <ol class="seats" type="A">
+                                                    <li class="seat SeatThumbnail__SeatContainer-sc-1ooosi9-0 daMVvn seat-thumbnail">
+                                                        <svg width="32" height="40" viewBox="0 0 28 40" fill="none"
+                                                             xmlns="http://www.w3.org/2000/svg"
+                                                             style="width: 27px; height: 40px;">
+                                                            <rect x="2.75" y="2.75" width="22.5" height="34.5"
+                                                                  rx="2.25"
+                                                                  fill="#FFF" stroke="#B8B8B8"
+                                                                  stroke-width="1.5" stroke-linejoin="round"></rect>
+                                                            <rect x="5.75" y="27.75" width="16.5" height="6.5"
+                                                                  rx="2.25"
+                                                                  fill="#FFF" stroke="#B8B8B8"
+                                                                  stroke-width="1.5" stroke-linejoin="round"></rect>
+                                                            <path class="icon-selected"
+                                                                  d="M14 8.333A6.67 6.67 0 0 0 7.333 15 6.67 6.67 0 0 0 14 21.667 6.67 6.67 0 0 0 20.667 15 6.669 6.669 0 0 0 14 8.333zm-1.333 10L9.334 15l.94-.94 2.393 2.387 5.06-5.06.94.946-6 6z"
+                                                                  fill="transparent"></path>
+                                                            <path class="icon-disabled"
+                                                                  d="M18.96 11.46l-1.42-1.42L14 13.59l-3.54-3.55-1.42 1.42L12.59 15l-3.55 3.54 1.42 1.42L14 16.41l3.54 3.55 1.42-1.42L15.41 15l3.55-3.54z"
+                                                                  fill="transparent"></path>
+                                                        </svg>
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                        </ol>
+
+                                        <ol class="cabin">
+                                            <li class="row row--1" ng-if="isGetSeatCalled"
+                                                ng-repeat="row in seatInTrans[0]">
+                                                <ol class="seats" type="A">
+                                                    <li class="seat" ng-class="{ 'daMVvn': seat.isBooked }"
+                                                        id="{{ 'booked-' + seat.seatNumber}}" ng-repeat="seat in row">
+                                                        <input type="checkbox" id="{{ 'seat-' + seat.seatNumber }}"/>
+                                                        <label for="{{ 'seat-' + seat.seatNumber }}"
+                                                               custom-tooltip="Số ghế: {{seat.seatNumber + ' - Giá: ' + formatPrice(schedule.unitPrice) }}"
+                                                               ng-click="isActiveSeat(schedule, seat)"
+                                                               ng-class="{'seatActive': seatSelections[schedule.id] && seatSelections[schedule.id][seat.seatNumber]}">
+                                                            <a href="#">
+                                                                <svg width="32" height="40" viewBox="0 0 28 40"
+                                                                     fill="none"
+                                                                     xmlns="http://www.w3.org/2000/svg"
+                                                                     style="width: 27px; height: 40px;">
+                                                                    <rect x="2.75" y="2.75" width="22.5" height="34.5"
+                                                                          rx="2.25"
+                                                                          fill="#FFF" stroke="#B8B8B8"
+                                                                          stroke-width="1.5"
+                                                                          stroke-linejoin="round"></rect>
+                                                                    <rect x="5.75" y="27.75" width="16.5" height="6.5"
+                                                                          rx="2.25"
+                                                                          fill="#FFF" stroke="#B8B8B8"
+                                                                          stroke-width="1.5"
+                                                                          stroke-linejoin="round"></rect>
+                                                                    <path class="icon-selected"
+                                                                          d="M14 8.333A6.67 6.67 0 0 0 7.333 15 6.67 6.67 0 0 0 14 21.667 6.67 6.67 0 0 0 20.667 15 6.669 6.669 0 0 0 14 8.333zm-1.333 10L9.334 15l.94-.94 2.393 2.387 5.06-5.06.94.946-6 6z"
+                                                                          fill="transparent"></path>
+                                                                    <path class="icon-disabled"
+                                                                          d="M18.96 11.46l-1.42-1.42L14 13.59l-3.54-3.55-1.42 1.42L12.59 15l-3.55 3.54 1.42 1.42L14 16.41l3.54 3.55 1.42-1.42L15.41 15l3.55-3.54z"
+                                                                          fill="transparent"></path>
+                                                                    <span ng-if="seat.isBooked"
+                                                                          style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                                                    <p class="fw-medium text-danger">
+                                                                        <i class="fa-solid fa-ban"></i>
+                                                                    </p>
+                                                                </span>
+                                                                </svg>
+                                                            </a>
+                                                        </label>
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div><!--cabin xe-->
+
+                                <!--cabin xe-->
+                                <div class="cabin-transport" ng-if="schedule.transportations.isTransportBed">
+                                    <span class="d-flex justify-content-center">
+                                        Tầng trên
+                                    </span>
+                                    <!--cabin xe-->
+                                    <div class="theatre rounded-top-5 ms-3">
+                                        <div class="steering-wheel mb-75"></div>
+                                        <ol class="cabin">
+                                            <li class="row row--1" ng-if="isGetSeatCalled"
+                                                ng-repeat="row in seatInTrans[1]">
+                                                <ol class="seats" type="A">
+                                                    <li class="seat" ng-class="{ 'daMVvn': seat.isBooked }"
+                                                        id="{{ 'booked-' + seat.seatNumber}}" ng-repeat="seat in row">
+                                                        <input type="checkbox" id="{{ 'seat-' + seat.seatNumber }}"/>
+                                                        <label for="{{ 'seat-' + seat.seatNumber }}"
+                                                               custom-tooltip="Số ghế: {{seat.seatNumber + ' - Giá: ' + formatPrice(schedule.unitPrice) }}"
+                                                               ng-click="isActiveSeat(schedule, seat)"
+                                                               ng-class="{'seatActive': seatSelections[schedule.id] && seatSelections[schedule.id][seat.seatNumber]}">
+                                                            <a href="#">
+                                                                <svg width="32" height="40" viewBox="0 0 28 40"
+                                                                     fill="none"
+                                                                     xmlns="http://www.w3.org/2000/svg"
+                                                                     style="width: 27px; height: 40px;">
+                                                                    <rect x="2.75" y="2.75" width="22.5" height="34.5"
+                                                                          rx="2.25"
+                                                                          fill="#FFF" stroke="#B8B8B8"
+                                                                          stroke-width="1.5"
+                                                                          stroke-linejoin="round"></rect>
+                                                                    <rect x="5.75" y="27.75" width="16.5" height="6.5"
+                                                                          rx="2.25"
+                                                                          fill="#FFF" stroke="#B8B8B8"
+                                                                          stroke-width="1.5"
+                                                                          stroke-linejoin="round"></rect>
+                                                                    <path class="icon-selected"
+                                                                          d="M14 8.333A6.67 6.67 0 0 0 7.333 15 6.67 6.67 0 0 0 14 21.667 6.67 6.67 0 0 0 20.667 15 6.669 6.669 0 0 0 14 8.333zm-1.333 10L9.334 15l.94-.94 2.393 2.387 5.06-5.06.94.946-6 6z"
+                                                                          fill="transparent"></path>
+                                                                    <path class="icon-disabled"
+                                                                          d="M18.96 11.46l-1.42-1.42L14 13.59l-3.54-3.55-1.42 1.42L12.59 15l-3.55 3.54 1.42 1.42L14 16.41l3.54 3.55 1.42-1.42L15.41 15l3.55-3.54z"
+                                                                          fill="transparent"></path>
+                                                                    <span ng-if="seat.isBooked"
+                                                                          style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                                                    <p class="fw-medium text-danger">
+                                                                        <i class="fa-solid fa-ban"></i>
+                                                                    </p>
+                                                                </span>
+                                                                </svg>
+                                                            </a>
+                                                        </label>
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div><!--cabin xe-->
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="total-order-seat d-flex justify-content-start align-items-center col-6">
+                                <div class="seat-number mx-3" ng-if="seatNumbers[$index].length > 0">Ghế:
+                                    <span class="fw-medium text-green" ng-repeat="seat in seatNumbers[$index]">
+                                        {{ seat }}<span ng-if="!$last">,&nbsp;</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="total-order-seat d-flex justify-content-end align-items-center col-6">
+                                <div class="totel-price mx-3">
+                                    Tổng cộng:
+                                    <span class="fw-medium text-green">{{ schedulePrices[$index] | vnCurrency }}</span>
+                                </div>
+                                <button type="button" class="btn btn-green rounded-0"
+                                        ng-click="redirectBooking(schedule)"
+                                >
+                                    Tiếp tục
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-50" ng-if="transportSchedule.length > 0">
+                    <div class="col-lg-12">
+                        <!--=== Gowilds Pagination ===-->
+                        <ul class="gowilds-pagination wow fadeInUp text-center d-flex align-items-center justify-content-center">
+                            <li class="m-1">
+                                <button class="bg-white" ng-click="setPage(0)" ng-disabled="currentPage === 0">
+                                    <a class="cursor-pointer">
+                                        <span class="fas fa-arrow-left"></span>
+                                    </a>
+                                </button>
+                            </li>
+
+                            <li class="m-1" ng-if="currentPage > 2 && totalPages > 5">
+                                <a>...</a>
+                            </li>
+
+                            <li class="m-1" ng-repeat="n in getPaginationRange()">
+                                <a href="#" ng-class="{active: n === currentPage}"
+                                   ng-click="setPage(n)">{{ n + 1 }}</a>
+                            </li>
+
+                            <!-- Ellipsis at the end -->
+                            <li class="m-1" ng-if="currentPage < totalPages - 3 && totalPages > 5">
+                                <a>...</a>
+                            </li>
+
+                            <li class="m-1">
+                                <button class="bg-white" ng-click="setPage(totalPages - 1)"
+                                        ng-disabled="currentPage === totalPages - 1">
+                                    <a class="cursor-pointer">
+                                        <span class="fas fa-arrow-right"></span>
+                                    </a>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="div mb-50" ng-if="transportSchedule.length === 0">
+                    <div class="d-flex justify-content-center align-items-center fs-5">
+                        Hiện tại nhà xe chưa có vé xe phù hợp ! Cảm ơn bạn.
+                    </div>
+                </div>
+
+                <div class="reviews-wrapper mb-60 wow fadeInUp">
+                    <div class="reviews-inner-box">
+                        <div class="rating-value">
+                            <h5>Đánh giá của khách hàng</h5>
+                            <div class="rate-score" ng-bind="ratingHotel.roundedAverageRating"></div>
+                            <ul class="ratings d-flex justify-content-center align-items-center color-ratings">
+                                <div ng-repeat="star in stars track by $index">
+                                    <span class="fas fa-star"></span>
+                                </div>
+                                <div ng-if="showHalfStar">
+                                    <span class="fas fa-star-half-alt"></span>
+                                </div>
+                                <li><a href="#" ng-bind="'(' + ratingHotel.roundedAverageRating + ')'"></a></li>
+                            </ul>
+                            <span class="reviews" ng-bind="ratingHotel.numberOfRatings + ' Đánh giá'"></span>
+                        </div>
+                        <section class="row" style="max-width: 600px">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide d-flex justify-content-center align-items-center"
+                                         style="width: 500px"
+                                         ng-repeat="rating in ratingHotel.userComments.content">
+                                        <div class="text-center">
+                                            <div class="text-center d-flex justify-content-center align-items-center">
+                                                <img ng-src="{{ rating.usersByUserId.avatar }}" alt="image"
+                                                     style="width: 100px; height: 100px; border-radius: 100px"
+                                                     class="text-center">
+                                            </div>
+                                            <span class="h5">{{ rating.usersByUserId.fullName }}</span>
+                                            <ul class="ratings">
+                                                <li ng-repeat="index in [].constructor(rating.star) track by $index"><span
+                                                        class="fas fa-star"></span></li>
+                                            </ul>
+                                            <p>{{ rating.content }}</p>
+                                            <span class="time" style="font-size: 12px">
+                                                    <span class="fas fa-clock text-green"></span>
+                                                {{ rating.dateCreated | timeAgo }}
+                                                </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <!--=== Comments Area ===-->
+                <div class="comments-area wow fadeInUp">
+                    <ul class="comment-list w-100" ng-repeat="rating in ratingHotel.userComments.content">
+                        <li>
+                            <div class="comment">
+                                <div class="comment-avatar">
+                                    <img src="{{ rating.usersByUserId.avatar }}" style="border-radius: 50px; width: 100px; height: 100px"
+                                         alt="comment author">
+                                </div>
+                                <div class="comment-wrap w-100">
+                                    <div class="comment-author-content">
+                                            <span class="author-name">{{ rating.usersByUserId.fullName }}
+                                                <span class="time">
+                                                    <span class="fas fa-clock"></span>
+                                                    {{ rating.dateCreated | timeAgo }}
+                                                </span>
+                                            </span>
+                                        <ul class="comment-rating-ul">
+                                            <li>
+                                                    <span ng-repeat="index in [].constructor(rating.star) track by $index">
+                                                        <span class="fas fa-star"></span>
+                                                    </span>
+                                            </li>
+                                        </ul>
+                                        <p>{{ rating.content }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div ng-if="ratingHotel.userComments.totalElements > ratingHotel.userComments.content.numberOfElements">
+                        <button class="btn text-green text-center"
+                                ng-click="findUserComments(roomTypes[0].hotelsByHotelId.id)">Hiển thị thêm
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4">
+                <div class="sidebar-widget-area">
+                    <!--=== Category Widget ===-->
+                    <div class="sidebar-widget category-widget mb-30 wow fadeInUp">
+                        <h4 class="widget-title">Thông tin đánh giá & góp ý</h4>
+                        <ul class="category-nav">
+                            <li><a href="#">Email: traveltourpass&#64;gmail.com</a></li>
+                            <li><a href="#">Hotline: 19008622</a></li>
+                            <li><a href="#">Trụ sở: 106 Đường Nguyễn An Ninh, Tân An, Ninh Kiều, Cần Thơ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--====== End Blog Details Section ======-->
+
+<!-- Modal lưu ý -->
+<div class="modal fade" id="modal-noted" tabindex="-1" aria-labelledby="modal-noted-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="modal-noted-label">Lưu ý thông tin đặt vé</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bEmALR">
+                <p class="content-note-transport">
+                    <strong>a)</strong> Quý khách kiểm tra cẩn thận các thông tin vé trước khi tiến hành xác nhận đặt vé
+                    và thanh toán.
+                    <br>
+                    <strong>b)</strong> Đối với những khách hàng có êu cầu trung chuyến, hãy liên hệ cho nhà xe
+                    trước khi kết thúc chuyến 30 phút.
+                    <br>
+                    <strong>c)</strong> Đặt chỗ chỉ được xác nhận sau khi việc thanh toán tiền vé đã hoàn tất.Quý khách
+                    sẽ nhận được thư xác nhận chi tiết vé đã đặt thông qua email đã cung cấp.
+                    <br>
+                    Lưu ý:
+                    <br>
+                    <strong>a)</strong> Chúng tôi không chịu trách nhiệm trong trường hợp Quý khách nhập sai địa chỉ
+                    email, số điện thoại và thông tin cá nhân.
+                    <br>
+                    <strong>b)</strong> Sơ đồ chỗ ngồi chỉ mang tính minh họa, sẽ có sai lệnh nhất định với thực tế, để
+                    rõ hơn hãy liên hệ với nhà xe.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning fw-medium rounded-1 w-100" style="height: 40px"
+                        data-bs-dismiss="modal">
+                    Tôi đã đọc và đồng ý
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Thẻ chờ thời gian thanh toán -->
+<!--<div class="toast-container position-fixed bottom-0 end-0 p-3">-->
+<!--    <div id="toast-delay-booking" class="toast bg-white" role="alert" aria-live="assertive" aria-atomic="true"-->
+<!--         data-bs-autohide="false">-->
+<!--        <div class="toast-header">-->
+<!--            <img src="https://229a2c9fe669f7b.cmccloud.com.vn/httpImage/bus_station.svg" class="rounded me-2" alt="...">-->
+<!--            <strong class="me-auto">Thanh toán vé xe</strong>-->
+<!--            <small class="fw-medium text-danger">Thời gian còn lại 04:00</small>-->
+<!--        </div>-->
+<!--        <div class="toast-body">-->
+<!--            <div class="ps-1 fw-medium">-->
+<!--                Vé xe: Cần Thơ - Sài Gòn-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    function showToast() {-->
+<!--        const toastLiveExample = document.getElementById('toast-delay-booking');-->
+<!--        const toast = new bootstrap.Toast(toastLiveExample);-->
+<!--        toast.show();-->
+<!--    }-->
+
+<!--    showToast();-->
+<!--</script>-->

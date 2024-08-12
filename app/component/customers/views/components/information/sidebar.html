@@ -1,0 +1,33 @@
+<!-- Sidebar -->
+<div class="position-sticky">
+    <ul class="nav flex-column" style="font-size: 16px">
+        <!-- Thông tin cá nhân -->
+        <li class="nav-item" ng-class="{ 'active bg-light fw-medium': isActiveInformation('/information/') }">
+            <a class="nav-link text-dark"
+               href="#"
+               ng-click="redirectPage('/information/', user.id)"
+            >
+                Thông tin tài khoản
+            </a>
+        </li>
+        <!-- Đổi mật khẩu -->
+        <li class="nav-item" ng-class="{ 'active bg-light fw-medium': isActiveInformation('/change-password/') }">
+            <a class="nav-link text-dark" href="#" ng-click="redirectPage('/change-password/', user.id)">
+                Đổi mật khẩu
+            </a>
+        </li>
+        <!--  Lịch sử đi tour -->
+        <li class="nav-item" ng-class="{ 'active bg-light fw-medium': isActiveInformation('/favourites/') }">
+            <a class="nav-link text-dark" href="#" ng-click="redirectPage('/favourites/', user.id)">
+
+                Danh sách yêu thích
+            </a>
+        </li>
+        <!--  Lịch sử đi tour -->
+        <li class="nav-item" ng-class="{ 'active bg-light fw-medium': isActiveInformation('/history-order/') }">
+            <a class="nav-link text-dark" href="#" ng-click="redirectPage('/history-order/', user.email)">
+                Lịch sử giao dịch
+            </a>
+        </li>
+    </ul>
+</div>

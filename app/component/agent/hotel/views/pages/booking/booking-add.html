@@ -1,0 +1,185 @@
+<section>
+    <div class="container">
+        <div class="container-fluid">
+            <div class="header-control mb-4">
+                <div class="">
+                    <div class="d-flex align-items-center row">
+                        <div class="col-lg-6">
+                            <h1 class="color-green fw-medium">Thêm booking</h1>
+                        </div>
+                    </div>
+                    <div class="mt-3">Tên khách sạn: <span>Khách sạn Traveltour</span></div>
+                </div>
+            </div>
+
+            <div class="card card-custom" >
+                <form class="row g-3 form-input-custom" name="register_booking">
+                    <!-- Tên loại phòng -->
+                    <div class="col-6">
+                        <label for="customerName" class="form-label">Tên khách hàng <span class="text-danger">(*)</span></label>
+                        <input type="text"
+                               class="form-control"
+                               id="customerName"
+                               placeholder="Nguyen Van A"
+                               name="customerName"
+                               ng-model="paymentHotelCustomer.customerName"
+                               ng-class="{ 'is-invalid': register_booking.customerName.$invalid && register_booking.customerName.$touched, 'is-valid': register_booking.customerName.$valid && register_booking.customerName.$touched }"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="register_booking.customerName.$touched && register_booking.customerName.$error.required">
+                            Vui lòng nhập tên khách hàng!
+                        </small>
+                    </div>
+
+                    <!-- Số điện thoại -->
+                    <div class="col-sm-6">
+                        <label for="phoneNumber" class="form-label">Số điện thoại <span class="text-danger">(*)</span></label>
+                        <input type="tel"
+                               class="form-control"
+                               id="phoneNumber"
+                               placeholder="0123456789"
+                               name="phoneNumber"
+                               ng-model="paymentHotelCustomer.phoneNumber"
+                               ng-class="{ 'is-invalid': register_booking.phoneNumber.$invalid && register_booking.phoneNumber.$touched, 'is-valid': register_booking.phoneNumber.$valid && register_booking.phoneNumber.$touched }"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="register_booking.phoneNumber.$touched && register_booking.phoneNumber.$error.required">
+                            Vui lòng nhập số điện thoại!
+                        </small>
+                    </div>
+
+                    <!-- cccd -->
+                    <div class="col-md-12">
+                        <label for="customerCitizenCard" class="form-label">Căn cước công dân</label>
+                        <input type="email"
+                               class="form-control"
+                               id="customerCitizenCard"
+                               placeholder="1234124489279"
+                               name="customerCitizenCard"
+                               ng-model="paymentHotelCustomer.customerCitizenCard"
+                        >
+                    </div>
+
+                    <!-- Số người lớn -->
+                    <div class="col-md-6">
+                        <label for="capacityAdultsFilter" class="form-label">Số người lớn</label>
+                        <input type="text"
+                               class="form-control"
+                               id="capacityAdultsFilter"
+                               placeholder="2"
+                               ng-model="filler.capacityAdultsFilter"
+                               ng-change="findAllRoomTypesByFillerClick()"
+                        >
+                    </div>
+
+                    <!-- Số trẻ em -->
+                    <div class="col-md-6">
+                        <label for="capacityKid" class="form-label">Số trẻ em</label>
+                        <input type="text"
+                               class="form-control"
+                               id="capacityKid"
+                               placeholder=""
+                               name="capacityKid"
+                               ng-model="filler.capacityChildrenFilter"
+                               ng-change="findAllRoomTypesByFillerClick()"
+                        >
+                    </div>
+
+                    <!-- Checkin -->
+                    <div class="col-md-5">
+                        <label for="checkInDateFiller" class="form-label">Ngày nhận phòng <span class="text-danger">(*)</span></label>
+                        <input type="date"
+                               class="form-control"
+                               id="checkInDateFiller"
+                               placeholder="14/01/2024"
+                               name="checkInDateFiller"
+                               ng-model="filler.checkInDateFiller"
+                               ng-change="findAllRoomTypesByFillerClick()"
+                               ng-class="{ 'is-invalid': register_booking.checkInDateFiller.$invalid && register_booking.checkInDateFiller.$touched, 'is-valid': register_booking.checkInDateFiller.$valid && register_booking.checkInDateFiller.$touched }"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="register_booking.checkin.$touched && register_booking.checkin.$error.required">
+                            Vui lòng nhập ngày nhận phòng!
+                        </small>
+                    </div>
+                    <div class="col-md-2 d-flex justify-content-center align-items-center">
+                        <p class="fw-medium mt-5 text-orange">{{daysBetween}} đêm</p>
+                    </div>
+
+                    <!-- checkOutDateFiller -->
+                    <div class="col-md-5">
+                        <label for="checkOutDateFiller" class="form-label">Ngày trả phòng <span class="text-danger">(*)</span></label>
+                        <input type="date"
+                               class="form-control"
+                               id="checkOutDateFiller"
+                               placeholder="15/01/2024"
+                               name="checkOutDateFiller"
+                               ng-model="filler.checkOutDateFiller"
+                               ng-change="findAllRoomTypesByFillerClick()"
+                               ng-class="{ 'is-invalid': register_booking.checkOutDateFiller.$invalid && register_booking.checkOutDateFiller.$touched, 'is-valid': register_booking.checkOutDateFiller.$valid && register_booking.checkOutDateFiller.$touched }"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="register_booking.checkOutDateFiller.$touched && register_booking.checkOutDateFiller.$error.required">
+                            Vui lòng nhập ngày checkOutDateFiller!
+                        </small>
+                    </div>
+                    <label for="checkOutDateFiller" class="form-label">Danh sách phòng <span class="text-danger">(*)</span></label>
+                    <table class="table table-responsive text-center">
+                        <thead style="font-size: 12px">
+                        <tr class="bg-light">
+                            <th class="cursor-pointer fw-medium" ># <i class="fa-solid fa-sort"></i></th>
+                            <th class="cursor-pointer fw-medium" ng-click="sortData('roomTypeName')">Loại phòng <i class="fa-solid fa-sort"></i></th>
+                            <th class="cursor-pointer fw-medium" ng-click="sortData('id')">Loại giường<i class="fa-solid fa-sort"></i></th>
+                            <th class="cursor-pointer fw-medium" ng-click="sortData('price')">Giá phòng <i class="fa-solid fa-sort"></i></th>
+                            <th class="cursor-pointer fw-medium" ng-click="sortData('amountRoom')">Số lượng <i class="fa-solid fa-sort"></i></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="roomType in roomTypes" ng-style="{'background-color': roomType.isActive === 0 ? '#f2f2f2' : ''}">
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ roomType.roomTypeName }}</td>
+                            <td>{{ getBedTypeName(roomType.roomBedsById[0].bedTypeId) }}</td>
+                            <td>{{ roomType.price * daysBetween | removeCurrencySymbol }} VND</td>
+                            <td><select class="form-select" aria-label="selectAmountRoom"
+                                        style="font-size: 13px; width: 65px"
+                                        ng-model="roomType.amountRoomSelected"
+                                        ng-change="selectedRoomType(roomType.amountRoomSelected, roomType)"
+                                        ng-options="room as room + '' + ' (' + (room * roomType.price * daysBetween | removeCurrencySymbol) + ' VND)' for room in generateRoomNumbers(roomType.amountRoom)">
+                                <option value="">0</option>
+                            </select></td>
+                        </tr>
+                        <tr ng-if="roomTypes.length === 0">
+                            <td colspan="14">Trang này không có dữ liệu.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Ghi chú -->
+                    <div class="col-12">
+                        <label for="orderNote" class="form-label">Ghi chú</label>
+                        <input type="text"
+                               class="form-control"
+                               id="orderNote"
+                               placeholder="Không có"
+                               name="orderNote"
+                               ng-model="paymentHotelCustomer.orderNote"
+                        >
+                    </div>
+
+                    <div class="col-12 d-flex justify-content-end mt-5">
+                        <button class="btn" style="margin-right: 20px"><a class="btn" href="/business/hotel/booking-list">Trở về</a></button>
+                        <button type="submit"
+                                class="btn btn-submit"
+                                ng-click="submitPayment()"
+                                ng-disabled="register_booking.$invalid || !roomTypeSelected.length">Thêm loại phòng
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

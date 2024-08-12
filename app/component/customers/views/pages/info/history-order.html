@@ -1,0 +1,2032 @@
+<style>
+    #information-section .active {
+        border-left: 2px solid #e6eaf2;
+    }
+
+    .btn-look {
+        color: white;
+        font-weight: 500;
+        background-color: #63ab45;
+        border-radius: 20px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .btn-back {
+        color: white;
+        font-weight: 500;
+        background-color: #ffc107;
+        border-radius: 20px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .btn-cancel {
+        color: white;
+        font-weight: 500;
+        background-color: #dc3545;
+        border-radius: 20px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .btn-look:hover {
+        color: #63ab45;
+        border: 1px solid #63ab45;
+        background-color: white;
+    }
+
+    .btn-green:hover {
+        color: #63ab45;
+        border: 1px solid #63ab45;
+        background-color: white;
+    }
+
+    .btn-back:hover {
+        color: #ffc107;
+        border: 1px solid #ffc107;
+        background-color: white;
+    }
+
+    .btn-cancel:hover {
+        color: #dc3545;
+        border: 1px solid #dc3545;
+        background-color: white;
+    }
+
+    .close:focus {
+
+        outline: 1px dotted #fff !important;
+    }
+
+    .modal-body {
+
+        padding: 0rem !important;
+    }
+
+    .modal-title {
+        color: #494949;
+    }
+
+    .modal-header {
+        background: #ffffff;
+        color: #000000 !important;
+    }
+
+    .fa-close {
+        color: #fff;
+    }
+
+    .heading {
+        font-weight: 500 !important;
+    }
+
+    .subheadings {
+        font-size: 15px;
+        color: #4b4b4b;
+    }
+
+    .dots {
+        height: 10px;
+        width: 10px;
+        background-color: #63ab45;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    .gallery img {
+
+        margin-right: 10px;
+    }
+
+    td {
+        font-size: 14px;
+    }
+
+    .status .p-3::-webkit-scrollbar {
+        display: none;
+    }
+
+    .detail-location-link:hover {
+        color: #dc3545;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    .active > .page-link, .page-link.active {
+        background-color: #63ab45;
+        border: none;
+    }
+
+    .disabled > .page-link, .page-link.disabled {
+        border: none;
+        color: rgba(128, 128, 128, 0.98);
+    }
+
+    .page-link {
+        cursor: pointer;
+        color: #63ab45;
+    }
+
+    .page-link:hover {
+        color: #63ab45;
+        background-color: white;
+        border: 1px solid #63ab45;
+    }
+
+</style>
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<section id="information-section" style="margin-top: 80px">
+    <div class="container mb-4">
+        <ul class="d-flex mb-3">
+            <li>
+                <a href="/information/{{ userIdEncrypt }}" class="fw-normal">Thông tin cá nhân</a>
+                <i class="fa-solid fa-chevron-right" style="font-size: 14px"></i>
+            </li>
+            &nbsp;
+            <li class="fw-medium">Lịch sử giao dịch</li>
+        </ul>
+        <div>
+            <h4 class="mb-4 fs-3 fw-bold">Lịch sử giao dịch người dùng</h4>
+            <main class="col-md-12 ms-sm-auto col-lg-12 mt-3">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <nav class="">
+                            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                                <button class="nav-link active fw-medium text-green" id="nav-tour-tab"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#nav-tour" type="button" role="tab" aria-controls="nav-tour"
+                                        aria-selected="true">Tour du lịch
+                                </button>
+                                <button class="nav-link fw-medium text-green" id="nav-hotel-map" data-bs-toggle="tab"
+                                        data-bs-target="#nav-hotel" type="button" role="tab" aria-controls="nav-hotel"
+                                        aria-selected="false">Khách sạn
+                                </button>
+                                <button class="nav-link fw-medium text-green" id="nav-vehicle-map" data-bs-toggle="tab"
+                                        data-bs-target="#nav-vehicle" type="button" role="tab"
+                                        aria-controls="nav-vehicle"
+                                        aria-selected="false">Phương tiện
+                                </button>
+                                <button class="nav-link fw-medium text-green" id="nav-visit-map" data-bs-toggle="tab"
+                                        data-bs-target="#nav-visit" type="button" role="tab" aria-controls="nav-visit"
+                                        aria-selected="false">Tham quan
+                                </button>
+                            </div>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade active show mb-4" id="nav-tour" role="tabpanel"
+                                 aria-labelledby="nav-tour-tab" style="border-left:none">
+                                <nav aria-label="Page navigation" style="float: right; margin-bottom: 20px;"
+                                     class="d-flex">
+                                    <div style="margin-right: 20px">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="height:44px;margin-right:20px;"
+                                                ng-model="orderStatus"
+                                                ng-init="orderStatus = null"
+                                                ng-change="getChangeStatus()">
+                                            <option value="">Tất cả</option>
+                                            <option value="0">Chờ thanh toán</option>
+                                            <option value="1">Đã thanh toán</option>
+                                            <option value="2">Đã hủy</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-right: 20px">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="height:44px;margin-right:20px;text-align:center"
+                                                ng-model="pageSize"
+                                                ng-init="pageSize='5'"
+                                                ng-change="pageSizeChanged()">
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                        </select>
+                                    </div>
+                                    <ul  ng-if="bookingTourList.length > 0" class="pagination justify-content-center align-items-center">
+                                        <!-- Previous Page -->
+                                        <li class="page-item" ng-class="{disabled: currentPage === 0}" style="border: none">
+                                            <a class="page-link me-2 fw-bold" ng-click="setPage(0)" style="width: 45px; border-radius: 50%; text-align:center">
+                                                <i class="fa-solid fa-angles-left text-"></i>
+                                            </a>
+                                        </li>
+
+                                        <!-- Ellipsis at the beginning -->
+                                        <li class="page-item" ng-if="currentPage > 2 && totalPages > 5" style="border: none">
+                                            <span class="page-link me-2 fw-bold">...</span>
+                                        </li>
+
+                                        <!-- Pagination Numbers -->
+                                        <li class="page-item" ng-repeat="n in getPaginationRange()" style="border: none"
+                                            ng-class="{active: n === currentPage}">
+                                            <a class="page-link me-2 fw-bold" ng-click="setPage(n)" style="width: 45px; border-radius: 50%; text-align:center">{{ n + 1 }}</a>
+                                        </li>
+
+                                        <!-- Ellipsis at the end -->
+                                        <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5" style="border: none">
+                                            <span class="page-link">...</span>
+                                        </li>
+
+                                        <!-- Next Page -->
+                                        <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}" style="border: none">
+                                            <a class="page-link fw-bold" ng-click="setPage(totalPages - 1)" style="width: 45px; border-radius: 50%;  text-align:center">
+                                                <i class="fa-solid fa-angles-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <div ng-include="'app/component/utils/loading-table.html'"></div>
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="font-weight: 500">#</th>
+                                        <th ng-click="sortData('id')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Mã đơn
+                                                <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                                            </div>
+                                        </th>
+                                        <th scope="col" style="font-weight: 500">Tên tour</th>
+                                        <th ng-click="sortData('dateCreated')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Ngày đặt tour
+                                                <span class="sorting-icon"
+                                                      ng-bind-html="getSortIcon('dateCreated')"></span>
+                                            </div>
+                                        </th>
+                                        <th scope="col" style="font-weight: 500">Trạng thái</th>
+                                        <th scope="col" style="font-weight: 500">Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="btl in bookingTourList">
+                                        <td>{{ getDisplayIndex($index) }}</td>
+                                        <td style="text-align: justify;">{{ btl.id }}</td>
+                                        <td style="text-align: justify;">{{ btl.toursByTourId.tourName }}</td>
+                                        <td>{{ (btl.dateCreated | vietnameseTimeNoSeconds) }}</td>
+                                        <td ng-if="btl.orderStatus == 0">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-warning"></span>
+                                                <span class="text-status-warning">Chờ thanh toán</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="btl.orderStatus == 1">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-success"></span>
+                                                <span class="text-status-success">Đã thanh toán</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="btl.orderStatus == 2">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-error"></span>
+                                                <span class="text-status-error">Hủy giao dịch</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-look" ng-click="openTourModal(btl)"><i
+                                                    class="fa-solid fa-magnifying-glass"></i> Xem chi tiết
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="bookingTourList.length === 0 && orderStatus == 0">
+                                        <td colspan="14">Hiện không có đơn chờ thanh toán.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourList.length === 0 && orderStatus == 1">
+                                        <td colspan="14">Hiện không có đơn nào hoàn thành.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourList.length === 0 && orderStatus == 2">
+                                        <td colspan="14">Hiện không có đơn nào được hủy.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourList.length === 0 && orderStatus == null">
+                                        <td colspan="14">Hiện không có đơn nào.</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="container mt-4 mb-4">
+                                    <div class="col-12">
+                                        <h4 class="fs-3 mb-3 fw-bold">
+                                            Chính sách hủy dịch vụ du lịch của Travel Tour
+                                        </h4>
+                                        <div class="mb-2" style="text-align: justify;">
+                                            <h5 class="mb-2" style="color: #504d4d"><i
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Điều kiện hủy
+                                                tour:</h5>
+                                            <p>- Hủy vé trong vòng 24 giờ hoặc ngay ngày khởi hành, phải trả 100% giá
+                                                trị đơn hàng.</p>
+                                            <p>- Hủy vé trước ngày khởi hành từ 2 - 7 ngày, phải trả 80% giá trị đơn
+                                                hàng.</p>
+                                            <p>- Hủy vé trước ngày khởi hành từ 8 - 14 ngày, phải trả 50% giá trị đơn
+                                                hàng.</p>
+                                            <p>- Hủy vé trước ngày khởi hành từ 15 - 25 ngày, phải trả 30% giá trị đơn
+                                                hàng.</p>
+                                            <p>- Hủy vé trước ngày khởi hành từ 26 - 29 ngày, phải trả 5% giá trị đơn
+                                                hàng.</p>
+                                            <p>- Hủy vé trước ngày khởi hành từ 30 ngày trở lên, phải trả phải trả 1%
+                                                giá trị đơn hàng.</p>
+                                        </div>
+                                        <div class="mb-2" style="text-align: justify;">
+                                            <h5 class="mb-2" style="color: #504d4d"><i
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Lưu ý:</h5>
+                                            <p>- Sau khi hủy tour, du khách vui lòng kiểm tra mail để xác nhận trong
+                                                vòng 15 ngày kể từ ngày kết thúc tour.
+                                                Chúng tôi chỉ thanh toán trong khoảng thời gian nói trên.</p>
+                                            <p>- Lệ phí hủy tour sẽ thay đổi tùy thuộc vào từng tour tuyến quý khách
+                                                đăng ký.</p>
+                                            <p>- Thời gian hủy tour được tính cho ngày làm việc, không tính ngày Thứ
+                                                Bảy, Chủ Nhật và các ngày nghỉ Lễ. </p>
+                                            <p>- Các tour trong ngày lễ, tết sẽ áp dụng điều kiện hủy riêng.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <section
+                                        ng-include="'app/component/customers/views/pages/info/modal/tour/modal-rating-tour-modal.html'"></section>
+                                <section
+                                        ng-include="'app/component/customers/views/pages/info/modal/tour/modal-update-tour-visit.html'"></section>
+                                <!-- Modal Booking Tour-->
+                                <div class="modal fade" id="tourModal" tabindex="-1"
+                                     aria-labelledby="exampleModalScrollableTitle"
+                                     style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog" style="min-height: 600px; min-width: 720px">
+                                        <div class="modal-content bg-white">
+                                            <div class="modal-header pb-2 pt-2 text-muted"
+                                                 style="border-bottom: 1px solid #d2d2d2;">
+                                                <p class="modal-title fw-bold text-uppercase"
+                                                   id="exampleModalScrollableTitle1"
+                                                   style="font-family: Montserrat, sans-serif;">
+                                                    Thông tin đơn hàng
+                                                </p>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"
+                                                        style="font-size: 10px; margin:0"
+                                                        ng-click="closeTourModal()"></button>
+                                            </div>
+                                            <div class="modal-body overflow-y-auto bg-white"
+                                                 style="border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;margin-bottom: 10px;
+                 margin-left: 8px;margin-right: 8px; max-height: 570px">
+                                                <div class="container-fluid" style="padding-left: 15px; padding-right: 15px">
+                                                    <div class="row mt-3 mb-3">
+                                                        <div class="col-4">
+                                                            <div class="card">
+                                                                <div class="card-body p-2"
+                                                                     ng-style="{'min-height': '170px', 'max-height': '170px',
+                                                                        'background-image': 'url(\'' + bookingTour.toursByTourId.tourImg + '\')',
+                                                                        'background-size': 'cover',
+                                                                        'border-radius': '5px'}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <div class="card">
+                                                                <div class="card-body p-2"
+                                                                     style="min-height: 170px; max-height: 170px">
+                                                                    <p class=" fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Thông tin tour</p>
+                                                                    <hr class="mb-2 mt-2">
+                                                                    <a class="text-uppercase fw-bold text-warning detail-location-link"
+                                                                       style="font-weight:bold; font-size: 14px;
+                                        font-family: Montserrat, sans-serif" data-bs-dismiss="modal"
+                                                                       ng-click="redirectPage('/tours/tour-detail/', bookingTour.tourDetailsByTourDetailId.id)">
+                                                                        {{ bookingTour.toursByTourId.tourName }}
+                                                                    </a>
+                                                                    <p class="fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Thời
+                                                                        gian: <span
+                                                                            class="fw-light">Từ {{ bookingTour.startDate | vietnameseTimeNoSeconds }}
+                                                                        - {{ bookingTour.endDate | vietnameseTimeNoSeconds }}</span>
+                                                                    </p>
+                                                                    <p class="fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Đơn
+                                                                        giá: <span
+                                                                            class="fw-light">{{ (bookingTour.tourDetailsByTourDetailId.unitPrice)  | vnCurrency }}</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-3 mb-3">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body p-2" style="min-height: 150px;">
+                                                                    <p class=" fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Thông tin
+                                                                        booking - ID: {{ bookingTour.id }}</p>
+                                                                    <hr class="mb-2 mt-2">
+                                                                    <div class="row">
+                                                                        <div class="col-7">
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Email nhận
+                                                                                đơn: <span
+                                                                                    class="fw-light">{{ bookingTour.customerEmail }}</span>
+                                                                            </p>
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Ngày đặt
+                                                                                tour: <span
+                                                                                    class="fw-light">{{ bookingTour.dateCreated | vietnameseTimeNoSeconds }}</span>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-5">
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Hình thức
+                                                                                thanh toán:
+                                                                                <span class="fw-light"
+                                                                                      ng-if="bookingTour.paymentMethod === 0">Tại quầy</span>
+                                                                                <span class="fw-light"
+                                                                                      ng-if="bookingTour.paymentMethod === 1">VNPay</span>
+                                                                                <span class="fw-light"
+                                                                                      ng-if="bookingTour.paymentMethod === 2">ZaloPay</span>
+                                                                                <span class="fw-light"
+                                                                                      ng-if="bookingTour.paymentMethod === 3">Momo</span>
+                                                                            </p>
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Trạng thái:
+                                                                                <span class="fw-light text-warning"
+                                                                                      ng-if="bookingTour.orderStatus === 0">Chờ thanh toán</span>
+                                                                                <span class="fw-light text-success"
+                                                                                      ng-if="bookingTour.orderStatus === 1">Đã thanh toán</span>
+                                                                                <span class="fw-light text-danger"
+                                                                                      ng-if="bookingTour.orderStatus === 2">Đã hủy</span>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-12"
+                                                                             ng-if="bookingTour.orderStatus === 2">
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Ngày hủy đơn:
+                                                                                <span
+                                                                                        class="fw-light">{{ (bookingTour.dateCancelled) | vietnameseTimeNoSeconds }}</span>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Ghi chú:
+                                                                                <span
+                                                                                        class="fw-light">{{ (bookingTour.orderNote) || 'Đang cập nhật' }}</span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-3 mb-3">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body p-2" style="min-height: 150px;">
+                                                                    <p class=" fw-bold"
+                                                                       style="font-family: Montserrat, sans-serif; font-size: 14px;">
+                                                                        Chi tiết booking</p>
+                                                                    <hr class="mb-2 mt-2">
+                                                                    <table class="table">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td style="width: 15%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                STT
+                                                                            </td>
+                                                                            <td style="width: 35%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                Loại vé
+                                                                            </td>
+                                                                            <td style="width: 20%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                Số lượng
+                                                                            </td>
+                                                                            <td style="width: 30%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                Thành tiền
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr ng-if="bookingTour.capacityAdult > 0">
+                                                                            <td style="width: 15%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                1
+                                                                            </td>
+                                                                            <td style="width: 35%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                Người lớn
+                                                                            </td>
+                                                                            <td style="width: 20%; font-family: Montserrat, sans-serif; text-align: center">{{ bookingTour.capacityAdult }}</td>
+                                                                            <td style="width: 30%; font-family: Montserrat, sans-serif; text-align: center">{{ (bookingTour.tourDetailsByTourDetailId.unitPrice) * (bookingTour.capacityAdult) | vnCurrency }}</td>
+                                                                        </tr>
+                                                                        <tr ng-if="bookingTour.capacityKid > 0">
+                                                                            <td style="width: 15%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                2
+                                                                            </td>
+                                                                            <td style="width: 35%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                Trẻ em (30%)
+                                                                            </td>
+                                                                            <td style="width: 20%; font-family: Montserrat, sans-serif; text-align: center">{{ bookingTour.capacityKid }}</td>
+                                                                            <td style="width: 30%; font-family: Montserrat, sans-serif; text-align: center">{{ (bookingTour.tourDetailsByTourDetailId.unitPrice) * (bookingTour.capacityKid) * 0.3 | vnCurrency }}</td>
+                                                                        </tr>
+                                                                        <tr ng-if="bookingTour.capacityBaby > 0">
+                                                                            <td style="width: 15%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                3
+                                                                            </td>
+                                                                            <td style="width: 35%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                Em bé
+                                                                            </td>
+                                                                            <td style="width: 20%; font-family: Montserrat, sans-serif; text-align: center">{{ bookingTour.capacityBaby }}</td>
+                                                                            <td style="width: 30%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                0 đ
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td colspan="4"
+                                                                                style="width: 15%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: right">
+                                                                                Tổng cộng: <span
+                                                                                    class="fw-light">{{ bookingTour.orderTotal | vnCurrency }}</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-3 mb-2">
+                                                        <div class="d-flex">
+                                                            <!--                                                                ng-click="cancelBooking(bookingTour)"-->
+                                                            <button class="btn btn-cancel"
+                                                                    ng-disabled="bookingTour.orderStatus === 2 || isDepartureDatePassed(bookingTour.startDate)"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#delete-tour-reason"
+                                                                    style="margin-right:20px">
+                                                                <i class="fa-solid fa-trash"></i> Hủy đơn
+                                                            </button>
+                                                            <div ng-if="bookingTour.orderStatus === 1">
+                                                                <button ng-show="!statusRating && !isBeforeSevenDays"
+                                                                        type="button" class="btn btn-green"
+                                                                        style="margin-right:20px;border-radius: 20px;"
+                                                                        ng-click="openRatingTourModal(bookingTour)">
+                                                                    <i class="fa-solid fa-trash"></i> Đánh giá
+                                                                </button>
+                                                                <button ng-show="statusRating && !isBeforeSevenDays"
+                                                                        type="button" class="btn btn-green"
+                                                                        style="margin-right:20px;border-radius: 20px;"
+                                                                        ng-click="openUpdateRatingTourModal(bookingTour)">
+                                                                    <i class="fa-solid fa-trash"></i> Sửa đánh giá
+                                                                </button>
+                                                            </div>
+                                                            <button class="btn btn-back" data-bs-dismiss="modal"
+                                                                    ng-click="closeTourModal()">
+                                                                <i class="fa-solid fa-circle-left"></i> Trở về
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal Reason Cancel Booking Tour-->
+                                <div class="modal fade" id="delete-tour-reason" tabindex="-1"
+                                     aria-labelledby="noted-agencies-label" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 550px">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="border-bottom: 1px solid lightgrey">
+                                                <h5 class="modal-title" id="delete-tour-reason-label">
+                                                    Mô tả lí do
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        style="margin:0"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body"
+                                                 style="border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;padding: 1.5rem !important;padding-top: 0;background-color: white">
+                                                <form method="post" role="form" name="formNoted">
+                                                    <div class="form-group">
+                                                        <label for="" class="form-label">
+                                                            VUI LÒNG NHẬP LÍ DO HỦY ĐẶT TOUR<span
+                                                                class="text-danger">*</span>
+                                                        </label>
+                                                        <textarea class="form-control"
+                                                                  rows="4"
+                                                                  id="reasonTour"
+                                                                  name="reason"
+                                                                  ng-model="cancel.reason"
+                                                                  ng-class="{ 'is-invalid': formNoted.reason.$invalid && formNoted.reason.$touched,
+                                               'is-valid': formNoted.reason.$valid && formNoted.reason.$touched }"
+                                                                  ng-pattern="/.{25,}/"
+                                                                  placeholder="Nhập lí do hủy đơn"
+                                                                  required
+                                                        ></textarea>
+                                                        <small class="text-danger"
+                                                               ng-show="formNoted.reason.$touched && formNoted.reason.$error.required">
+                                                            Vui lòng nhập lí do vì sao bạn muốn hủy đơn
+                                                        </small>
+                                                        <small class="text-danger"
+                                                               ng-show="formNoted.reason.$error.pattern">
+                                                            Vui lòng nhập ít nhất 25 ký tự.
+                                                        </small>
+                                                    </div>
+                                                    <div class="form-group mt-3" style="float: right">
+                                                        <button type="button"
+                                                                class="btn"
+                                                                ng-click="hideReasonModal()"
+                                                                data-bs-dismiss="modal"
+                                                        >
+                                                            <i class="fa-solid fa-arrow-left"></i>
+                                                            Quay về
+                                                        </button>
+                                                        <button type="button" ng-disabled="formNoted.$invalid"
+                                                                ng-click="cancelBooking(bookingTour)"
+                                                                class="btn btn-success">
+                                                            Xác nhận
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane face" id="nav-hotel" role="tabpanel" aria-labelledby="nav-hotel"
+                                 style="border-left:none" ng-controller="BookingHotelCustomerController">
+                                <nav aria-label="Page navigation" style="float: right; margin-bottom: 20px;"
+                                     class="d-flex">
+                                    <div style="margin-right: 20px">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="height:44px;margin-right:20px;"
+                                                ng-model="orderStatus"
+                                                ng-init="orderStatus = null"
+                                                ng-change="getChangeHotelStatus()">
+                                            <option value="">Tất cả</option>
+                                            <option value="0">Chờ thanh toán</option>
+                                            <option value="1">Đã thanh toán</option>
+                                            <option value="2">Đã duyệt</option>
+                                            <option value="3">Thành công</option>
+                                            <option value="4">Đã hủy</option>
+                                            <option value="5">Bị hủy bởi khách sạn</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-right: 20px">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="height:44px;margin-right:20px;text-align:center"
+                                                ng-model="pageSize"
+                                                ng-init="pageSize='5'"
+                                                ng-change="pageSizeChanged()">
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                        </select>
+                                    </div>
+                                    <ul  ng-if="bookingTourHotelList.length > 0" class="pagination justify-content-center align-items-center">
+                                        <!-- Previous Page -->
+                                        <li class="page-item" ng-class="{disabled: currentPage === 0}" style="border: none">
+                                            <a class="page-link me-2 fw-bold" ng-click="setPage(0)" style="width: 45px; border-radius: 50%; text-align:center">
+                                                <i class="fa-solid fa-angles-left text-"></i>
+                                            </a>
+                                        </li>
+
+                                        <!-- Ellipsis at the beginning -->
+                                        <li class="page-item" ng-if="currentPage > 2 && totalPages > 5" style="border: none">
+                                            <span class="page-link me-2 fw-bold">...</span>
+                                        </li>
+
+                                        <!-- Pagination Numbers -->
+                                        <li class="page-item" ng-repeat="n in getPaginationRange()" style="border: none"
+                                            ng-class="{active: n === currentPage}">
+                                            <a class="page-link me-2 fw-bold" ng-click="setPage(n)" style="width: 45px; border-radius: 50%; text-align:center">{{ n + 1 }}</a>
+                                        </li>
+
+                                        <!-- Ellipsis at the end -->
+                                        <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5" style="border: none">
+                                            <span class="page-link">...</span>
+                                        </li>
+
+                                        <!-- Next Page -->
+                                        <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}" style="border: none">
+                                            <a class="page-link fw-bold" ng-click="setPage(totalPages - 1)" style="width: 45px; border-radius: 50%;  text-align:center">
+                                                <i class="fa-solid fa-angles-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <div ng-include="'app/component/utils/loading-table.html'"></div>
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="font-weight: 500">#</th>
+                                        <th ng-click="sortData('id')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Mã đơn
+                                                <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                                            </div>
+                                        </th>
+                                        <th scope="col" style="font-weight: 500">Tên khách sạn</th>
+                                        <th ng-click="sortData('checkIn')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Ngày check-in
+                                                <span class="sorting-icon" ng-bind-html="getSortIcon('checkIn')"></span>
+                                            </div>
+                                        </th>
+                                        <th ng-click="sortData('checkOut')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Ngày check-out
+                                                <span class="sorting-icon"
+                                                      ng-bind-html="getSortIcon('checkOut')"></span>
+                                            </div>
+                                        </th>
+                                        <th scope="col" style="font-weight: 500">Trạng thái</th>
+                                        <th scope="col" style="font-weight: 500">Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="h in bookingTourHotelList">
+                                        <td>{{ getDisplayIndex($index) }}</td>
+                                        <td style="text-align: justify;">{{ h.id }}</td>
+                                        <td style="text-align: justify;">{{ h.hotel.hotelName }}</td>
+                                        <td>{{ h.checkIn | vietnameseTimeNoSeconds }}</td>
+                                        <td>{{ h.checkOut | vietnameseTimeNoSeconds }}</td>
+                                        <td ng-if="h.orderStatus == 0">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-warning"></span>
+                                                <span class="text-status-warning">Chờ thanh toán</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="h.orderStatus == 1">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-success"></span>
+                                                <span class="text-status-success">Đã thanh toán, chờ xét duyệt</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="h.orderStatus == 2">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-error"></span>
+                                                <span class="text-status-error">Xét duyệt thành công, bạn có thể nhận phòng</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="h.orderStatus == 3">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-error"></span>
+                                                <span class="text-status-error">Thành công</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="h.orderStatus == 4">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-error"></span>
+                                                <span class="text-status-error">Đã bị hủy</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="h.orderStatus == 5">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-error"></span>
+                                                <span class="text-status-error">Bị hủy bởi đối tác</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-look" ng-click="openHotelModal(h)"><i
+                                                    class="fa-solid fa-magnifying-glass"></i> Xem chi tiết
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="bookingTourHotelList.length === 0 && orderStatus == 0">
+                                        <td colspan="14">Hiện không có đơn chờ thanh toán.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourHotelList.length === 0 && orderStatus == 1">
+                                        <td colspan="14">Hiện không có đơn nào đã thanh toán.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourHotelList.length === 0 && orderStatus == 2">
+                                        <td colspan="14">Hiện không có đơn nào được duyệt.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourHotelList.length === 0 && orderStatus == 3">
+                                        <td colspan="14">Hiện không có đơn nào thành công.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourHotelList.length === 0 && orderStatus == 4">
+                                        <td colspan="14">Hiện không có đơn nào bị hủy.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourHotelList.length === 0 && orderStatus == 5">
+                                        <td colspan="14">Hiện không có đơn nào bị hủy.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourHotelList.length === 0 && orderStatus == null">
+                                        <td colspan="14">Hiện không có đơn nào.</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="container mt-4 mb-4">
+                                    <div class="col-12">
+                                        <div class="fs-3 mb-3 fw-bolder" style="color: #1e1e1e; font-weight: 500">Chính
+                                            sách hủy đặt phòng của Travel Tour
+                                        </div>
+                                        <div class="mb-2" style="text-align: justify;">
+                                            <h5 class="mb-2" style="color: #504d4d"><i
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Điều kiện hủy đặt
+                                                phòng:</h5>
+                                            <p>- Hủy đặt phòng trong vòng 24 giờ hoặc ngay ngày khởi hành, phải trả 80%
+                                                giá trị đơn hàng.</p>
+                                            <p>- Hủy đặt phòng trước thời gian check-in từ 2 - 4 ngày, phải trả 50% giá
+                                                trị đơn hàng.</p>
+                                            <p>- Hủy đặt phòng trước thời gian check-in từ 5 ngày trở lên, sẽ được hoàn
+                                                tiền 100%.</p>
+                                        </div>
+                                        <div class="mb-2" style="text-align: justify;">
+                                            <h5 class="mb-2" style="color: #504d4d"><i
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Lưu ý:</h5>
+                                            <p>- Chỉ được phép miễn phí hoàn tiền đối với các đặt phòng thuộc diện được
+                                                miễn phí hoàn tiền.</p>
+                                            <p>- Để biết thêm thông tin về chính sách hoàn tiền đặt phòng khách sạn quý
+                                                khách vui lòng xem
+                                                thông tin đặt chỗ/phiếu thanh toán khách sạn trên TravelTour.</p>
+                                            <p>- Tiến trình hoàn tiền cho đặt phòng khách sạn có thể mất 10 ngày tính từ
+                                                thời điểm TravelTour
+                                                nhận được của quý khách và chấp thuận yêu cầu hoàn tiền hoàn chỉnh dựa
+                                                trên các điều khoản và điều kiện áp dụng.</p>
+                                            <p>- Lệ phí hủy tour sẽ thay đổi tùy thuộc vào từng tour tuyến quý khách
+                                                đăng ký.</p>
+                                            <p>- Không chấp nhận yêu cầu hoàn tiền một phần đối với đặt phòng khách sạn;
+                                                Yêu cầu hoàn tiền sẽ
+                                                được áp dụng cho toàn bộ số đêm nghỉ của cùng một Mã đặt chỗ. </p>
+                                            <p>- Các đơn hàng trong ngày lễ, tết sẽ áp dụng điều kiện hủy riêng.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal rating hotel -->
+                                <section
+                                        ng-include="'app/component/customers/views/pages/info/modal/hotel/modal-rating-hotel.html'"></section>
+                                <section
+                                        ng-include="'app/component/customers/views/pages/info/modal/hotel/modal-update-rating-hotel.html'"></section>
+                                <!-- Modal Booking Hotel-->
+                                <div class="modal fade" id="hotelModal" tabindex="-1"
+                                     aria-labelledby="exampleModalScrollableTitle"
+                                     style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog" style="min-height: 600px; min-width: 700px">
+                                        <div class="modal-content bg-white">
+                                            <div class="modal-header pb-2 pt-2 text-muted"
+                                                 style="border-bottom: 1px solid #d2d2d2;">
+                                                <p class="modal-title fw-bold text-uppercase"
+                                                   id="exampleModalScrollableTitle2"
+                                                   style="font-family: Montserrat, sans-serif;">
+                                                    Thông tin đơn hàng
+                                                </p>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"
+                                                        style="font-size: 10px; margin:0"
+                                                        ng-click="closeHotelModal()"></button>
+                                            </div>
+                                            <div class="modal-body overflow-y-auto bg-white"
+                                                 style="border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;margin-bottom: 10px;
+                 margin-left: 8px;margin-right: 8px; max-height: 570px">
+                                                <div class="container-fluid" style="padding-left: 15px; padding-right: 15px">
+                                                    <div class="row mt-3 mb-3">
+                                                        <div class="col-4">
+                                                            <div class="card">
+                                                                <div class="card-body p-2"
+                                                                     ng-style="{'min-height': '170px', 'max-height': '170px',
+                                                                        'background-image': 'url(\'' + bookingHotel.hotel.hotelAvatar + '\')',
+                                                                        'background-size': 'cover',
+                                                                        'border-radius': '5px'}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <div class="card">
+                                                                <div class="card-body p-2"
+                                                                     style="min-height: 170px; max-height: 170px">
+                                                                    <p class=" fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Thông tin khách sạn</p>
+                                                                    <hr class="mb-2 mt-2">
+                                                                    <p class="text-uppercase fw-bold text-warning detail-location-link"
+                                                                       style="font-weight:bold; font-size: 14px;
+                                        font-family: Montserrat, sans-serif">
+                                                                        {{ bookingHotel.hotel.hotelName }}
+                                                                    </p>
+                                                                    <p class="fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Thời gian nhận phòng:
+                                                                        <span class="fw-light">{{ bookingHotel.checkIn | vietnameseTimeNoSeconds }}</span>
+                                                                    </p>
+                                                                    <p class="fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Thời gian trả phòng:
+                                                                        <span class="fw-light">{{ bookingHotel.checkOut | vietnameseTimeNoSeconds }}</span>
+                                                                    </p>
+                                                                    <p class="fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Số đêm:
+                                                                        <span class="fw-light">{{ numberOfNights }}</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-3 mb-3">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body p-2" style="min-height: 150px;">
+                                                                    <p class=" fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Thông tin
+                                                                        booking - ID: {{ bookingHotel.id }}</p>
+                                                                    <hr class="mb-2 mt-2">
+                                                                    <div class="row">
+                                                                        <div class="col-7">
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Email nhận
+                                                                                đơn: <span
+                                                                                    class="fw-light">{{ bookingHotel.customerEmail }}</span>
+                                                                            </p>
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Họ tên:
+                                                                                <span class="fw-light">{{ bookingHotel.customerName }}</span>
+                                                                            </p>
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Số điện thoại:
+                                                                                <span class="fw-light">{{ bookingHotel.customerPhone }}</span>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-5">
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Ngày đặt
+                                                                                phòng: <span
+                                                                                    class="fw-light">{{ bookingHotel.dateCreated | vietnameseTimeNoSeconds }}</span>
+                                                                            </p>
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Hình thức
+                                                                                thanh toán:
+                                                                                <span class="fw-light"
+                                                                                      ng-if="bookingHotel.paymentMethod === 'VPO'">Tại quầy</span>
+                                                                                <span class="fw-light"
+                                                                                      ng-if="bookingHotel.paymentMethod === 'VNPAY'">VNPay</span>
+                                                                                <span class="fw-light"
+                                                                                      ng-if="bookingHotel.paymentMethod === 'ZALOPAY'">ZaloPay</span>
+                                                                                <span class="fw-light"
+                                                                                      ng-if="bookingHotel.paymentMethod === 'MOMO'">Momo</span>
+                                                                            </p>
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Trạng thái:
+                                                                                <span class="fw-light text-warning"
+                                                                                      ng-if="bookingHotel.orderStatus === 0">Chờ thanh toán</span>
+                                                                                <span class="fw-light text-success"
+                                                                                      ng-if="bookingHotel.orderStatus === 1">Đã thanh toán</span>
+                                                                                <span class="fw-light text-success"
+                                                                                      ng-if="bookingHotel.orderStatus === 2">Đã duyệt</span>
+                                                                                <span class="fw-light text-success"
+                                                                                      ng-if="bookingHotel.orderStatus === 3">Thành công</span>
+                                                                                <span class="fw-light text-danger"
+                                                                                      ng-if="bookingHotel.orderStatus === 4">Đã hủy</span>
+                                                                                <span class="fw-light text-danger"
+                                                                                      ng-if="bookingHotel.orderStatus === 5">Khách sạn hủy</span>
+
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Ghi chú:
+                                                                                <span
+                                                                                        class="fw-light">{{ (bookingHotel.orderNote) || 'Đang cập nhật' }}</span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-3 mb-3">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body p-2" style="min-height: 150px;">
+                                                                    <p class=" fw-bold"
+                                                                       style="font-family: Montserrat, sans-serif; font-size: 14px;">
+                                                                        Chi tiết booking</p>
+                                                                    <hr class="mb-2 mt-2">
+                                                                    <table class="table">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td style="width: 5%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                STT
+                                                                            </td>
+                                                                            <td style="width: 45%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                Tên phòng
+                                                                            </td>
+                                                                            <td style="width: 20%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                Giá phòng
+                                                                            </td>
+                                                                            <td style="width: 10%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                SL
+                                                                            </td>
+                                                                            <td style="width: 20%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                Thành tiền
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr ng-repeat="rtt in roomTypeListCustomer">
+                                                                            <td style="width: 5%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                {{ $index + 1 }}
+                                                                            </td>
+                                                                            <td style="width: 45%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                {{ rtt.roomTypes.roomTypeName }}
+                                                                            </td>
+                                                                            <td style="width: 20%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                {{ rtt.roomTypes.price | vnCurrency }}
+                                                                            </td>
+                                                                            <td style="width: 10%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                {{ rtt.amount }}
+                                                                            </td>
+                                                                            <td style="width: 20%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                {{ (rtt.roomTypes.price * rtt.amount) | vnCurrency }}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td colspan="5"
+                                                                                style="width: 15%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: right">
+                                                                                Tổng cộng: <span
+                                                                                    class="fw-light">{{ bookingHotel.orderTotal | vnCurrency }}</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-3 mb-2">
+                                                        <div class="d-flex">
+                                                            <button class="btn btn-cancel"
+                                                                    ng-disabled="bookingHotel.orderStatus === 2 || bookingHotel.orderStatus === 3 || bookingHotel.orderStatus === 4 || bookingHotel.orderStatus === 5 || isCheckInPassed(bookingHotel.checkIn)"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#delete-hotel-reason"
+                                                                    style="margin-right:20px">
+                                                                <i class="fa-solid fa-trash"></i> Hủy đơn
+                                                            </button>
+                                                            <div ng-if="bookingHotel.orderStatus === 3">
+                                                                <button ng-show="!statusRating && !isBeforeSevenDays"
+                                                                        type="button" class="btn btn-green"
+                                                                        style="margin-right:20px;border-radius: 20px;"
+                                                                        ng-click="openRatingHotelModal(bookingHotel)">
+                                                                    <i class="fa-solid fa-trash"></i> Đánh giá
+                                                                </button>
+                                                                <button ng-show="statusRating && !isBeforeSevenDays"
+                                                                        type="button" class="btn btn-green"
+                                                                        style="margin-right:20px;border-radius: 20px;"
+                                                                        ng-click="openUpdateRatingHotelModal(bookingHotel)">
+                                                                    <i class="fa-solid fa-trash"></i> Sửa đánh giá
+                                                                </button>
+                                                            </div>
+                                                            <button class="btn btn-back" data-bs-dismiss="modal"
+                                                                    ng-click="closeHotelModal()">
+                                                                <i class="fa-solid fa-circle-left"></i> Trở về
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="delete-hotel-reason" tabindex="-1"
+                                     aria-labelledby="noted-agencies-label" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 550px">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="border-bottom: 1px solid lightgrey">
+                                                <h5 class="modal-title" id="delete-hotel-reason-label">
+                                                    Mô tả lí do
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        style="margin:0"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body"
+                                                 style="border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;padding: 1.5rem !important;padding-top: 0;background-color: white">
+                                                <form method="post" role="form" name="formNoted">
+                                                    <div class="form-group">
+                                                        <label class="form-label">
+                                                            VUI LÒNG NHẬP LÍ DO HỦY ĐẶT PHÒNG<span
+                                                                class="text-danger">*</span>
+                                                        </label>
+                                                        <textarea class="form-control"
+                                                                  rows="4"
+                                                                  id="reasonHotel"
+                                                                  name="reason"
+                                                                  ng-model="cancel.reason"
+                                                                  ng-class="{ 'is-invalid': formNoted.reason.$invalid && formNoted.reason.$touched,
+                                               'is-valid': formNoted.reason.$valid && formNoted.reason.$touched }"
+                                                                  ng-pattern="/.{25,}/"
+                                                                  placeholder="Nhập lí do hủy đơn"
+                                                                  required
+                                                        ></textarea>
+                                                        <small class="text-danger"
+                                                               ng-show="formNoted.reason.$touched && formNoted.reason.$error.required">
+                                                            Vui lòng nhập lí do vì sao bạn muốn hủy đơn
+                                                        </small>
+                                                        <small class="text-danger"
+                                                               ng-show="formNoted.reason.$error.pattern">
+                                                            Vui lòng nhập ít nhất 25 ký tự.
+                                                        </small>
+                                                    </div>
+                                                    <div class="form-group mt-3" style="float: right">
+                                                        <button type="button"
+                                                                class="btn"
+                                                                ng-click="hideReasonModal()"
+                                                                data-bs-dismiss="modal"
+                                                        >
+                                                            <i class="fa-solid fa-arrow-left"></i>
+                                                            Quay về
+                                                        </button>
+                                                        <button type="button" ng-disabled="formNoted.$invalid"
+                                                                ng-click="cancelBookingHotelOrder(bookingHotel)"
+                                                                class="btn btn-success">
+                                                            Xác nhận
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane face" id="nav-vehicle" role="tabpanel" aria-labelledby="nav-vehicle"
+                                 style="border-left:none" ng-controller="BookingTransCustomerController">
+                                <nav aria-label="Page navigation" style="float: right; margin-bottom: 20px;"
+                                     class="d-flex">
+                                    <div style="margin-right: 20px">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="height:44px;margin-right:20px;"
+                                                ng-model="orderStatus"
+                                                ng-init="orderStatus = null"
+                                                ng-change="getChangeTransStatus()">
+                                            <option value="">Tất cả</option>
+                                            <option value="0">Chờ thanh toán</option>
+                                            <option value="1">Đã thanh toán</option>
+                                            <option value="2">Đã hủy</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-right: 20px">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="height:44px;margin-right:20px;text-align:center"
+                                                ng-model="pageSize"
+                                                ng-init="pageSize='5'"
+                                                ng-change="pageSizeChanged()">
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                        </select>
+                                    </div>
+                                    <ul ng-if="bookingTourTransList.length > 0" class="pagination justify-content-center align-items-center">
+                                        <!-- Previous Page -->
+                                        <li class="page-item" ng-class="{disabled: currentPage === 0}" style="border: none">
+                                            <a class="page-link me-2 fw-bold" ng-click="setPage(0)" style="width: 45px; border-radius: 50%; text-align:center">
+                                                <i class="fa-solid fa-angles-left text-"></i>
+                                            </a>
+                                        </li>
+
+                                        <!-- Ellipsis at the beginning -->
+                                        <li class="page-item" ng-if="currentPage > 2 && totalPages > 5" style="border: none">
+                                            <span class="page-link me-2 fw-bold">...</span>
+                                        </li>
+
+                                        <!-- Pagination Numbers -->
+                                        <li class="page-item" ng-repeat="n in getPaginationRange()" style="border: none"
+                                            ng-class="{active: n === currentPage}">
+                                            <a class="page-link me-2 fw-bold" ng-click="setPage(n)" style="width: 45px; border-radius: 50%; text-align:center">{{ n + 1 }}</a>
+                                        </li>
+
+                                        <!-- Ellipsis at the end -->
+                                        <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5" style="border: none">
+                                            <span class="page-link">...</span>
+                                        </li>
+
+                                        <!-- Next Page -->
+                                        <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}" style="border: none">
+                                            <a class="page-link fw-bold" ng-click="setPage(totalPages - 1)" style="width: 45px; border-radius: 50%;  text-align:center">
+                                                <i class="fa-solid fa-angles-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <div ng-include="'app/component/utils/loading-table.html'"></div>
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="font-weight: 500">#</th>
+                                        <th ng-click="sortData('id')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Mã đơn
+                                                <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                                            </div>
+                                        </th>
+                                        <th scope="col" style="font-weight: 500">Chuyến xe</th>
+                                        <th scope="col" style="font-weight: 500">Bắt đầu</th>
+                                        <th scope="col" style="font-weight: 500">Kết thúc</th>
+                                        <th scope="col" style="font-weight: 500">Trạng thái</th>
+                                        <th scope="col" style="font-weight: 500">Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="t in bookingTourTransList">
+                                        <td>{{ getDisplayIndex($index) }}</td>
+                                        <td style="text-align: justify;">{{ t.id }}</td>
+                                        <td style="text-align: justify;">{{ (t.transportationSchedules.fromLocation) + ' - ' + (t.transportationSchedules.toLocation) }}</td>
+                                        <td>{{ t.transportationSchedules.departureTime | vietnameseTimeNoSeconds }}</td>
+                                        <td>{{ t.transportationSchedules.arrivalTime | vietnameseTimeNoSeconds }}</td>
+                                        <td ng-if="t.orderStatus == 0">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-warning"></span>
+                                                <span class="text-status-warning">Chờ thanh toán</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="t.orderStatus == 1">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-success"></span>
+                                                <span class="text-status-success">Đã thanh toán</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="t.orderStatus == 2">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-error"></span>
+                                                <span class="text-status-error">Hủy giao dịch</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-look" ng-click="openTransModal(t)"><i
+                                                    class="fa-solid fa-magnifying-glass"></i> Xem chi tiết
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="bookingTourTransList.length === 0 && orderStatus == 0">
+                                        <td colspan="14">Hiện không có đơn chờ thanh toán.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourTransList.length === 0 && orderStatus == 1">
+                                        <td colspan="14">Hiện không có đơn nào hoàn thành.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourTransList.length === 0 && orderStatus == 2">
+                                        <td colspan="14">Hiện không có đơn nào được hủy.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourTransList.length === 0 && orderStatus == null">
+                                        <td colspan="14">Hiện không có đơn nào.</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="container mt-4 mb-4">
+                                    <div class="col-12">
+                                        <div class="fs-3 mb-3 fw-bolder" style="color: #1e1e1e; font-weight: 500">Chính
+                                            sách hủy vé xe khách
+                                        </div>
+                                        <div class="mb-2" style="text-align: justify;">
+                                            <h5 class="mb-2" style="color: #504d4d"><i
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Điều kiện hủy vé
+                                                xe:</h5>
+                                            <p>- Hủy vé trong vòng 24 giờ hoặc ngay ngày khởi hành, phải trả 70%
+                                                giá trị đơn hàng.</p>
+                                            <p>- Hủy vé trước ngày khởi hành từ 2 - 3 ngày, phải trả 30% giá
+                                                trị đơn hàng.</p>
+                                            <p>- Hủy vé trước ngày khởi hành từ 4 ngày trở lên, sẽ được hoàn
+                                                tiền 100%.</p>
+                                        </div>
+                                        <div class="mb-2" style="text-align: justify;">
+                                            <h5 class="mb-2" style="color: #504d4d"><i
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Lưu ý:</h5>
+                                            <p>- Chỉ được phép miễn phí hoàn tiền đối với các loại vé thuộc diện được
+                                                miễn phí hoàn tiền.</p>
+                                            <p>- Tiến trình hoàn tiền cho hủy vé xe khách có thể mất 10 ngày tính từ
+                                                thời điểm TravelTour nhận được của quý khách và chấp thuận yêu cầu hoàn
+                                                tiền hoàn chỉnh dựa
+                                                trên các điều khoản và điều kiện áp dụng.</p>
+                                            <p>- Các đơn hàng trong ngày lễ, tết sẽ áp dụng điều kiện hủy riêng.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <section
+                                        ng-include="'app/component/customers/views/pages/info/modal/trans/modal-rating-trans-modal.html'"></section>
+                                <section
+                                        ng-include="'app/component/customers/views/pages/info/modal/trans/modal-update-rating-trans.html'"></section>
+                                <!-- Modal Booking Trans-->
+                                <div class="modal fade" id="transModal" tabindex="-1"
+                                     aria-labelledby="exampleModalScrollableTitle"
+                                     style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog" style="min-height: 600px; min-width: 700px">
+                                        <div class="modal-content bg-white">
+                                            <div class="modal-header pb-2 pt-2 text-muted"
+                                                 style="border-bottom: 1px solid #d2d2d2;">
+                                                <p class="modal-title fw-bold text-uppercase"
+                                                   id="exampleModalScrollableTitle3"
+                                                   style="font-family: Montserrat, sans-serif;">
+                                                    Thông tin đơn hàng
+                                                </p>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"
+                                                        style="font-size: 10px; margin:0"
+                                                        ng-click="closeTransModal()"></button>
+                                            </div>
+                                            <div class="modal-body overflow-y-auto bg-white"
+                                                 style="border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;margin-bottom: 10px;
+                 margin-left: 8px;margin-right: 8px; max-height: 570px">
+                                                <div class="container-fluid" style="padding-left: 15px; padding-right: 15px">
+                                                    <div class="row mt-3 mb-3">
+                                                        <div class="col-4">
+                                                            <div class="card">
+                                                                <div class="card-body p-2"
+                                                                     ng-style="{'min-height': '170px', 'max-height': '170px',
+                                                                        'background-image': 'url(\'' + bookingTrans.transportationBrands.transportationBrandImg + '\')',
+                                                                        'background-size': 'cover',
+                                                                        'border-radius': '5px'}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <div class="card">
+                                                                <div class="card-body p-2"
+                                                                     style="min-height: 170px; max-height: 170px">
+                                                                    <p class=" fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Thông tin chuyến xe</p>
+                                                                    <hr class="mb-2 mt-2">
+                                                                    <p class="text-uppercase fw-bold text-warning detail-location-link"
+                                                                       style="font-weight:bold; font-size: 14px;
+                                        font-family: Montserrat, sans-serif">
+                                                                        {{ (bookingTrans.transportationSchedules.fromLocation) + ' - ' + (bookingTrans.transportationSchedules.toLocation) }}
+                                                                    </p>
+                                                                    <p class="fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Nhà xe:
+                                                                        <span class="fw-light">{{ bookingTrans.transportationBrands.transportationBrandName }}</span>
+                                                                    </p>
+                                                                    <p class="fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Bắt đầu lúc:
+                                                                        <span class="fw-light">{{ bookingTrans.transportationSchedules.departureTime | vietnameseTimeNoSeconds }}</span>
+                                                                    </p>
+                                                                    <p class="fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Kết thúc lúc:
+                                                                        <span class="fw-light">{{ bookingTrans.transportationSchedules.arrivalTime | vietnameseTimeNoSeconds }}</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-3 mb-3">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body p-2" style="min-height: 150px;">
+                                                                    <p class=" fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Thông tin
+                                                                        booking - ID: {{ bookingTrans.id }}</p>
+                                                                    <hr class="mb-2 mt-2">
+                                                                    <div class="row">
+                                                                        <div class="col-7">
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Email nhận
+                                                                                đơn: <span
+                                                                                    class="fw-light">{{ bookingTrans.customerEmail }}</span>
+                                                                            </p>
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Họ tên:
+                                                                                <span class="fw-light">{{ bookingTrans.customerName }}</span>
+                                                                            </p>
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Số điện thoại:
+                                                                                <span class="fw-light">{{ bookingTrans.customerPhone }}</span>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-5">
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Ngày đặt vé: <span
+                                                                                    class="fw-light">{{ bookingTrans.dateCreated | vietnameseTimeNoSeconds }}</span>
+                                                                            </p>
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Hình thức
+                                                                                thanh toán:
+                                                                                <span class="fw-light"
+                                                                                      ng-if="bookingTrans.paymentMethod === 0">Tại quầy</span>
+                                                                                <span class="fw-light"
+                                                                                      ng-if="bookingTrans.paymentMethod === 1">VNPay</span>
+                                                                                <span class="fw-light"
+                                                                                      ng-if="bookingTrans.paymentMethod === 2">ZaloPay</span>
+                                                                                <span class="fw-light"
+                                                                                      ng-if="bookingTrans.paymentMethod === 3">Momo</span>
+                                                                            </p>
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Trạng thái:
+                                                                                <span class="fw-light text-warning"
+                                                                                      ng-if="bookingTrans.orderStatus === 0">Chờ thanh toán
+                                                                                </span>
+                                                                                <span class="fw-light text-success"
+                                                                                      ng-if="bookingTrans.orderStatus === 1">Đã thanh toán
+                                                                                </span>
+                                                                                <span class="fw-light text-danger"
+                                                                                      ng-if="bookingTrans.orderStatus === 2">Đã hủy
+                                                                                </span>
+
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Ghi chú:
+                                                                                <span
+                                                                                        class="fw-light">{{ (bookingTrans.orderNote) || 'Đang cập nhật' }}</span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-3 mb-3">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body p-2" style="min-height: 150px;">
+                                                                    <p class=" fw-bold"
+                                                                       style="font-family: Montserrat, sans-serif; font-size: 14px;">
+                                                                        Chi tiết booking</p>
+                                                                    <hr class="mb-2 mt-2">
+                                                                    <table class="table">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td style="width: 20%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                STT
+                                                                            </td>
+                                                                            <td style="width: 40%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                Vị trí
+                                                                            </td>
+                                                                            <td style="width: 40%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                Giá vé
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr ng-repeat="seat in ticketListCustomer">
+                                                                            <td style="width: 20%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                {{ $index + 1 }}
+                                                                            </td>
+                                                                            <td style="width: 40%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                Ghế {{ seat.transportationScheduleSeats.seatNumber }}
+                                                                            </td>
+                                                                            <td style="width: 40%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                {{ bookingTrans.transportationSchedules.unitPrice | vnCurrency }}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td colspan="5"
+                                                                                style="width: 15%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: right">
+                                                                                Tổng cộng: <span
+                                                                                    class="fw-light">{{ bookingTrans.orderTotal | vnCurrency }}</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-3 mb-2">
+                                                        <div class="d-flex">
+                                                            <button class="btn btn-cancel"
+                                                                    ng-disabled="bookingTrans.orderStatus === 2 || isStartPassed(bookingTrans.transportationSchedules.departureTime)"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#delete-vehicle-reason"
+                                                                    style="margin-right:20px">
+                                                                <i class="fa-solid fa-trash"></i> Hủy đơn
+                                                            </button>
+                                                            <div ng-show="bookingTrans.orderStatus === 1">
+                                                                <button ng-show="!statusRating && !isBeforeSevenDays"
+                                                                        type="button" class="btn btn-green"
+                                                                        style="margin-right:20px;border-radius: 20px;"
+                                                                        ng-click="openRatingTransModal(bookingTrans)">
+                                                                    <i class="fa-solid fa-trash"></i> Đánh giá
+                                                                </button>
+                                                                <button ng-show="statusRating && !isBeforeSevenDays"
+                                                                        type="button" class="btn btn-green"
+                                                                        style="margin-right:20px;border-radius: 20px;"
+                                                                        ng-click="openUpdateRatingTransModal(bookingTrans)">
+                                                                    <i class="fa-solid fa-trash"></i> Sửa đánh giá
+                                                                </button>
+                                                            </div>
+                                                            <button class="btn btn-back" data-bs-dismiss="modal"
+                                                                    ng-click="closeTransModal()">
+                                                                <i class="fa-solid fa-circle-left"></i> Trở về
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="delete-vehicle-reason" tabindex="-1"
+                                     aria-labelledby="noted-agencies-label" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 550px">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="border-bottom: 1px solid lightgrey">
+                                                <h5 class="modal-title" id="delete-vehicle-reason-label">
+                                                    Mô tả lí do
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        style="margin:0"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body"
+                                                 style="border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;padding: 1.5rem !important;padding-top: 0;background-color: white">
+                                                <form method="post" role="form" name="formNoted">
+                                                    <div class="form-group">
+                                                        <label class="form-label">
+                                                            VUI LÒNG NHẬP LÍ DO HỦY ĐẶT VÉ XE KHÁCH<span
+                                                                class="text-danger">*</span>
+                                                        </label>
+                                                        <textarea class="form-control"
+                                                                  rows="4"
+                                                                  id="reasonVehicle"
+                                                                  name="reason"
+                                                                  ng-model="cancel.reason"
+                                                                  ng-class="{ 'is-invalid': formNoted.reason.$invalid && formNoted.reason.$touched,
+                                               'is-valid': formNoted.reason.$valid && formNoted.reason.$touched }"
+                                                                  ng-pattern="/.{25,}/"
+                                                                  placeholder="Nhập lí do hủy đơn"
+                                                                  required
+                                                        ></textarea>
+                                                        <small class="text-danger"
+                                                               ng-show="formNoted.reason.$touched && formNoted.reason.$error.required">
+                                                            Vui lòng nhập lí do vì sao bạn muốn hủy đơn
+                                                        </small>
+                                                        <small class="text-danger"
+                                                               ng-show="formNoted.reason.$error.pattern">
+                                                            Vui lòng nhập ít nhất 25 ký tự.
+                                                        </small>
+                                                    </div>
+                                                    <div class="form-group mt-3" style="float: right">
+                                                        <button type="button"
+                                                                class="btn"
+                                                                ng-click="hideReasonModal()"
+                                                                data-bs-dismiss="modal"
+                                                        >
+                                                            <i class="fa-solid fa-arrow-left"></i>
+                                                            Quay về
+                                                        </button>
+                                                        <button type="button" ng-disabled="formNoted.$invalid"
+                                                                data-bs-dismiss="modal"
+                                                                ng-click="cancelBookingTransOrder(bookingTrans)"
+                                                                class="btn btn-success">
+                                                            Xác nhận
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane face" id="nav-visit" role="tabpanel" aria-labelledby="nav-visit"
+                                 style="border-left:none" ng-controller="BookingVisitCustomerController">
+                                <nav aria-label="Page navigation" style="float: right; margin-bottom: 20px;"
+                                     class="d-flex">
+                                    <div style="margin-right: 20px">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="height:44px;margin-right:20px;"
+                                                ng-model="orderStatus"
+                                                ng-init="orderStatus = null"
+                                                ng-change="getChangeVisitStatus()">
+                                            <option value="">Tất cả</option>
+                                            <option value="0">Chờ thanh toán</option>
+                                            <option value="1">Đã thanh toán</option>
+                                            <option value="2">Đã hủy</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-right: 20px">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="height:44px;margin-right:20px;text-align:center"
+                                                ng-model="pageSize"
+                                                ng-init="pageSize='5'"
+                                                ng-change="pageSizeChanged()">
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                        </select>
+                                    </div>
+                                    <ul ng-if="bookingTourVisitList.length > 0" class="pagination justify-content-center align-items-center">
+                                        <!-- Previous Page -->
+                                        <li class="page-item" ng-class="{disabled: currentPage === 0}" style="border: none">
+                                            <a class="page-link me-2 fw-bold" ng-click="setPage(0)" style="width: 45px; border-radius: 50%; text-align:center">
+                                                <i class="fa-solid fa-angles-left text-"></i>
+                                            </a>
+                                        </li>
+
+                                        <!-- Ellipsis at the beginning -->
+                                        <li class="page-item" ng-if="currentPage > 2 && totalPages > 5" style="border: none">
+                                            <span class="page-link me-2 fw-bold">...</span>
+                                        </li>
+
+                                        <!-- Pagination Numbers -->
+                                        <li class="page-item" ng-repeat="n in getPaginationRange()" style="border: none"
+                                            ng-class="{active: n === currentPage}">
+                                            <a class="page-link me-2 fw-bold" ng-click="setPage(n)" style="width: 45px; border-radius: 50%; text-align:center">{{ n + 1 }}</a>
+                                        </li>
+
+                                        <!-- Ellipsis at the end -->
+                                        <li class="page-item" ng-if="currentPage < totalPages - 3 && totalPages > 5" style="border: none">
+                                            <span class="page-link">...</span>
+                                        </li>
+
+                                        <!-- Next Page -->
+                                        <li class="page-item" ng-class="{disabled: currentPage === totalPages - 1}" style="border: none">
+                                            <a class="page-link fw-bold" ng-click="setPage(totalPages - 1)" style="width: 45px; border-radius: 50%;  text-align:center">
+                                                <i class="fa-solid fa-angles-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <div ng-include="'app/component/utils/loading-table.html'"></div>
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="font-weight: 500">#</th>
+                                        <th ng-click="sortData('id')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Mã đơn
+                                                <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                                            </div>
+                                        </th>
+                                        <th scope="col" style="font-weight: 500">Địa danh</th>
+                                        <th ng-click="sortData('dateCreated')" scope="col" style="font-weight: 500">
+                                            <div class="icon-left">Ngày tạo đơn
+                                                <span class="sorting-icon" ng-bind-html="getSortIcon('id')"></span>
+                                            </div>
+                                        </th>
+                                        <th scope="col" style="font-weight: 500">Trạng thái</th>
+                                        <th scope="col" style="font-weight: 500">Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="ov in bookingTourVisitList">
+                                        <td>{{ getDisplayIndex($index) }}</td>
+                                        <td style="text-align: justify;">{{ ov.id }}</td>
+                                        <td style="text-align: justify;">{{ ov.visitLocationsByVisitLocationId.visitLocationName }}</td>
+                                        <td>{{ ov.dateCreated | vietnameseTimeNoSeconds }}</td>
+                                        <td ng-if="ov.orderStatus == 0">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-warning"></span>
+                                                <span class="text-status-warning">Chờ thanh toán</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="ov.orderStatus == 1">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-success"></span>
+                                                <span class="text-status-success">Đã thanh toán</span>
+                                            </div>
+                                        </td>
+                                        <td ng-if="ov.orderStatus == 2">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <span class="status-error"></span>
+                                                <span class="text-status-error">Hủy giao dịch</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-look" ng-click="openVisitModal(ov)"><i
+                                                    class="fa-solid fa-magnifying-glass"></i> Xem chi tiết
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="bookingTourVisitList.length === 0 && orderStatus == 0">
+                                        <td colspan="14">Hiện không có đơn chờ thanh toán.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourVisitList.length === 0 && orderStatus == 1">
+                                        <td colspan="14">Hiện không có đơn nào hoàn thành.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourVisitList.length === 0 && orderStatus == 2">
+                                        <td colspan="14">Hiện không có đơn nào được hủy.</td>
+                                    </tr>
+                                    <tr ng-if="bookingTourVisitList.length === 0 && orderStatus == null">
+                                        <td colspan="14">Hiện không có đơn nào.</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="container mt-4 mb-4">
+                                    <div class="col-12">
+                                        <div class="fs-3 mb-3 fw-bolder" style="color: #1e1e1e; font-weight: 500">Chính
+                                            sách hủy vé các khu tham quan của Travel Tour
+                                        </div>
+                                        <div class="mb-2" style="text-align: justify;">
+                                            <h5 class="mb-2" style="color: #504d4d"><i
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Điều kiện hủy vé
+                                                tham quan giải trí:</h5>
+                                            <p>- Hủy vé trong vòng 24 giờ hoặc ngay ngày được in trên vé, phải trả 80%
+                                                giá trị đơn hàng.</p>
+                                            <p>- Hủy vé trước thời gian được in trên vé từ 2 - 3 ngày, phải trả 50% giá
+                                                trị đơn hàng.</p>
+                                            <p>- Hủy vé trước thời gian được in trên vé từ 4 ngày trở lên, sẽ được hoàn
+                                                tiền 100%.</p>
+                                        </div>
+                                        <div class="mb-2" style="text-align: justify;">
+                                            <h5 class="mb-2" style="color: #504d4d"><i
+                                                    class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Lưu ý:</h5>
+                                            <p>- Chỉ được phép miễn phí hoàn tiền đối với các loại vé thuộc diện được
+                                                miễn phí hoàn tiền.</p>
+                                            <p>- Tiến trình hoàn tiền cho huy vé các khu tham quan có thể mất 10 ngày
+                                                tính từ
+                                                thời điểm TravelTour nhận được của quý khách và chấp thuận yêu cầu hoàn
+                                                tiền hoàn chỉnh dựa
+                                                trên các điều khoản và điều kiện áp dụng.</p>
+                                            <p>- Các đơn hàng trong ngày lễ, tết sẽ áp dụng điều kiện hủy riêng.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <section
+                                        ng-include="'app/component/customers/views/pages/info/modal/visit/modal-rating-visit-modal.html'"></section>
+                                <section
+                                        ng-include="'app/component/customers/views/pages/info/modal/visit/modal-update-rating-visit.html'"></section>
+                                <!-- Modal Booking Visit-->
+                                <div class="modal fade" id="visitModal" tabindex="-1"
+                                     aria-labelledby="exampleModalScrollableTitle"
+                                     style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog" style="min-height: 600px; min-width: 700px">
+                                        <div class="modal-content bg-white">
+                                            <div class="modal-header pb-2 pt-2 text-muted"
+                                                 style="border-bottom: 1px solid #d2d2d2;">
+                                                <p class="modal-title fw-bold text-uppercase"
+                                                   id="exampleModalScrollableTitle4"
+                                                   style="font-family: Montserrat, sans-serif;">
+                                                    Thông tin đơn hàng
+                                                </p>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"
+                                                        style="font-size: 10px; margin:0"
+                                                        ng-click="closeVisitModal()"></button>
+                                            </div>
+                                            <div class="modal-body overflow-y-auto bg-white"
+                                                 style="border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;margin-bottom: 10px;
+                 margin-left: 8px;margin-right: 8px; max-height: 570px">
+                                                <div class="container-fluid" style="padding-left: 15px; padding-right: 15px">
+                                                    <div class="row mt-3 mb-3">
+                                                        <div class="col-4">
+                                                            <div class="card">
+                                                                <div class="card-body p-2"
+                                                                     ng-style="{'min-height': '170px', 'max-height': '170px',
+                                                                        'background-image': 'url(\'' + bookingVisit.visitLocationsByVisitLocationId.visitLocationImage + '\')',
+                                                                        'background-size': 'cover',
+                                                                        'border-radius': '5px'}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <div class="card">
+                                                                <div class="card-body p-2"
+                                                                     style="min-height: 170px; max-height: 170px">
+                                                                    <p class=" fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Thông tin khu tham quan</p>
+                                                                    <hr class="mb-2 mt-2">
+                                                                    <p class="text-uppercase fw-bold text-warning detail-location-link"
+                                                                       style="font-weight:bold; font-size: 14px;
+                                        font-family: Montserrat, sans-serif">
+                                                                        {{ bookingVisit.visitLocationsByVisitLocationId.visitLocationName }}
+                                                                    </p>
+                                                                    <p class="fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Địa điểm:
+                                                                        <span class="fw-light">{{ bookingVisit.visitLocationsByVisitLocationId.province }}</span>
+                                                                    </p>
+                                                                    <p class="fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Ngày tham quan:
+                                                                        <span class="fw-light">{{ bookingVisit.checkIn | vietnameseTimeNoSeconds }}</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-3 mb-3">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body p-2" style="min-height: 150px;">
+                                                                    <p class=" fw-bold"
+                                                                       style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                        Thông tin
+                                                                        booking - ID: {{ bookingVisit.id }}</p>
+                                                                    <hr class="mb-2 mt-2">
+                                                                    <div class="row">
+                                                                        <div class="col-7">
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Email nhận
+                                                                                đơn: <span
+                                                                                    class="fw-light">{{ bookingVisit.customerEmail }}</span>
+                                                                            </p>
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Họ tên:
+                                                                                <span class="fw-light">{{ bookingVisit.customerName }}</span>
+                                                                            </p>
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Số điện thoại:
+                                                                                <span class="fw-light">{{ bookingVisit.customerPhone }}</span>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-5">
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Ngày đặt vé: <span
+                                                                                    class="fw-light">{{ bookingVisit.dateCreated | vietnameseTimeNoSeconds }}</span>
+                                                                            </p>
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Hình thức
+                                                                                thanh toán:
+                                                                                <span class="fw-light"
+                                                                                      ng-if="bookingVisit.paymentMethod === 0">Tại quầy</span>
+                                                                                <span class="fw-light"
+                                                                                      ng-if="bookingVisit.paymentMethod === 1">VNPay</span>
+                                                                                <span class="fw-light"
+                                                                                      ng-if="bookingVisit.paymentMethod === 2">ZaloPay</span>
+                                                                                <span class="fw-light"
+                                                                                      ng-if="bookingVisit.paymentMethod === 3">Momo</span>
+                                                                            </p>
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Trạng thái:
+                                                                                <span class="fw-light text-warning"
+                                                                                      ng-if="bookingVisit.orderStatus === 0">Chờ thanh toán
+                                                                                </span>
+                                                                                <span class="fw-light text-success"
+                                                                                      ng-if="bookingVisit.orderStatus === 1">Đã thanh toán
+                                                                                </span>
+                                                                                <span class="fw-light text-danger"
+                                                                                      ng-if="bookingVisit.orderStatus === 2">Đã hủy
+                                                                                </span>
+
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <p class="fw-bold"
+                                                                               style="font-size: 14px;font-family: Montserrat, sans-serif">
+                                                                                Ghi chú:
+                                                                                <span
+                                                                                        class="fw-light">{{ (bookingVisit.orderNote) || 'Đang cập nhật' }}</span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-3 mb-3">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body p-2" style="min-height: 150px;">
+                                                                    <p class=" fw-bold"
+                                                                       style="font-family: Montserrat, sans-serif; font-size: 14px;">
+                                                                        Chi tiết booking</p>
+                                                                    <hr class="mb-2 mt-2">
+                                                                    <table class="table">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td style="width: 5%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                STT
+                                                                            </td>
+                                                                            <td style="width: 30%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                Loại vé
+                                                                            </td>
+                                                                            <td style="width: 25%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                Giá vé
+                                                                            </td>
+                                                                            <td style="width: 15%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                SL
+                                                                            </td>
+                                                                            <td style="width: 25%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: center">
+                                                                                Thành tiền
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr ng-repeat="ticket in ticketListCustomer">
+                                                                            <td style="width: 5%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                {{ $index + 1 }}
+                                                                            </td>
+                                                                            <td style="width: 30%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                {{ ticket.visitLocationTickets.ticketTypeName }}
+                                                                            </td>
+                                                                            <td style="width: 25%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                {{ ticket.visitLocationTickets.unitPrice | vnCurrency }}
+                                                                            </td>
+                                                                            <td style="width: 15%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                {{ ticket.amount }}
+                                                                            </td>
+                                                                            <td style="width: 25%; font-family: Montserrat, sans-serif; text-align: center">
+                                                                                {{ (ticket.visitLocationTickets.unitPrice * ticket.amount) | vnCurrency }}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td colspan="5"
+                                                                                style="width: 15%; font-family: Montserrat, sans-serif; font-weight: bold; text-align: right">
+                                                                                Tổng cộng: <span
+                                                                                    class="fw-light">{{ bookingVisit.orderTotal | vnCurrency }}</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-3 mb-2">
+                                                        <div class="d-flex">
+                                                            <button class="btn btn-cancel"
+                                                                    ng-disabled="bookingVisit.orderStatus === 2 || isCheckInVisitPassed(bookingVisit.checkIn)"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#delete-visit-reason"
+                                                                    style="margin-right:20px">
+                                                                <i class="fa-solid fa-trash"></i> Hủy đơn
+                                                            </button>
+                                                            <button ng-show="!statusRating && !isBeforeSevenDays"
+                                                                    type="button" class="btn btn-green"
+                                                                    style="margin-right:20px;border-radius: 20px;"
+                                                                    ng-click="openRatingVisitModal(bookingVisit)">
+                                                                <i class="fa-solid fa-trash"></i> Đánh giá
+                                                            </button>
+                                                            <button ng-show="statusRating && !isBeforeSevenDays"
+                                                                    type="button" class="btn btn-green"
+                                                                    style="margin-right:20px;border-radius: 20px;"
+                                                                    ng-click="openUpdateRatingVisitModal(bookingVisit)">
+                                                                <i class="fa-solid fa-trash"></i> Sửa đánh giá
+                                                            </button>
+                                                            <button class="btn btn-back" data-bs-dismiss="modal"
+                                                                    ng-click="closeVisitModal()">
+                                                                <i class="fa-solid fa-circle-left"></i> Trở về
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="delete-visit-reason" tabindex="-1"
+                                     aria-labelledby="noted-agencies-label" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 550px">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="border-bottom: 1px solid lightgrey">
+                                                <h5 class="modal-title" id="delete-visit-reason-label">
+                                                    Mô tả lí do
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        style="margin:0"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body"
+                                                 style="border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;padding: 1.5rem !important;padding-top: 0;background-color: white">
+                                                <form method="post" role="form" name="formNoted">
+                                                    <div class="form-group">
+                                                        <label for="noted" class="form-label">
+                                                            VUI LÒNG NHẬP LÍ DO HỦY ĐẶT VÉ THAM QUAN<span
+                                                                class="text-danger">*</span>
+                                                        </label>
+                                                        <textarea class="form-control"
+                                                                  rows="4"
+                                                                  id="reason"
+                                                                  name="reason"
+                                                                  ng-model="cancel.reason"
+                                                                  ng-class="{ 'is-invalid': formNoted.reason.$invalid && formNoted.reason.$touched,
+                                               'is-valid': formNoted.reason.$valid && formNoted.reason.$touched }"
+                                                                  ng-pattern="/.{25,}/"
+                                                                  placeholder="Nhập lí do hủy đơn"
+                                                                  required
+                                                        ></textarea>
+                                                        <small class="text-danger"
+                                                               ng-show="formNoted.reason.$touched && formNoted.reason.$error.required">
+                                                            Vui lòng nhập lí do vì sao bạn muốn hủy đơn
+                                                        </small>
+                                                        <small class="text-danger"
+                                                               ng-show="formNoted.reason.$error.pattern">
+                                                            Vui lòng nhập ít nhất 25 ký tự.
+                                                        </small>
+                                                    </div>
+                                                    <div class="form-group mt-3" style="float: right">
+                                                        <button type="button"
+                                                                class="btn"
+                                                                ng-click="hideReasonModal()"
+                                                                data-bs-dismiss="modal"
+                                                        >
+                                                            <i class="fa-solid fa-arrow-left"></i>
+                                                            Quay về
+                                                        </button>
+                                                        <button type="button" ng-disabled="formNoted.$invalid"
+                                                                data-bs-dismiss="modal"
+                                                                ng-click="cancelBookingVisitOrder(bookingVisit)"
+                                                                class="btn btn-success">
+                                                            Xác nhận
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+

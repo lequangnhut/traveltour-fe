@@ -1,0 +1,36 @@
+.card-payment {
+    border: none;
+    -webkit-box-shadow: 0 30px 70px 0 rgba(137, 139, 142, 0.15);
+    height: 150px;
+    border-radius: 20px;
+}
+
+.card-payment.selected {
+    opacity: 0.5;
+}
+
+.card-payment.selected::after {
+    content: '\2714';
+    color: green;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 90px;
+}
+
+.padding-payment {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.padding-payment.ng-hide {
+    opacity: 0;
+}
+
+.button-footer {
+    margin-top: 50px;
+}
+
+.input-payment {
+    height: 43px;
+}

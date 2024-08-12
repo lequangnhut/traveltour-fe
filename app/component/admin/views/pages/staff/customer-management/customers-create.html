@@ -1,0 +1,233 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<div class="container mt-3 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-bold text-uppercase">Thêm khách hàng mới</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" ng-submit="createCustomerSubmit()" name="customerForm"
+              role="form">
+            <div class="col-12">
+                <div class="form-floating">
+                    <div class="hoverbox" style="width: 150px; height: 150px">
+                        <div class="hoverbox-content bg-black rounded-circle d-flex flex-center z-index-1"
+                             style="--phoenix-bg-opacity: .56;">
+                            <span class="fa-solid fa-camera fs-7 text-300"></span>
+                        </div>
+                        <div class="position-relative bg-400 rounded-circle cursor-pointer d-flex flex-center mb-xxl-7">
+                            <div class="avatar avatar-5xl">
+                                <img class="rounded-circle"
+                                     ng-src="{{ getCurrentAvatarSource() }}"
+                                     alt=""/>
+                            </div>
+                            <label class="w-100 h-100 position-absolute z-index-1" for="upload-avatar"></label>
+                        </div>
+                    </div>
+                    <input class="d-none" id="upload-avatar" type="file" name="avatar"
+                           ng-model="customer.avatar"
+                           ng-class="{ 'is-invalid': customerForm.avatar.$invalid && customerForm.avatar.$touched,
+                                'is-valid': customerForm.avatar.$valid && customerForm.avatar.$touched }"
+                           ngf-select="uploadCustomerAvatar($file)" required>
+                    <small class="text-danger"
+                           ng-show="customerForm.avatar.$touched && customerForm.avatar.$error.required">Vui
+                        lòng tải lên ảnh tour!</small>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">ĐỊA CHỈ EMAIL</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="exam@gmail.com"
+                       name="email"
+                       ng-model="customer.email"
+                       ng-class="{ 'is-invalid': customerForm.email.$invalid && customerForm.email.$touched, 'is-valid': customerForm.email.$valid && customerForm.email.$touched && !emailError }"
+                       ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                       ng-change="checkDuplicateEmail()"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="customerForm.email.$touched && customerForm.email.$error.required">
+                    Vui lòng nhập địa chỉ email !
+                </small>
+                <small class="text-danger"
+                       ng-show="customerForm.email.$touched && customerForm.email.$error.pattern">
+                    Địa chỉ email không đúng định dạng !
+                </small>
+                <small class="text-danger" ng-show="customerForm.email.$touched && emailError">
+                    Email đã tồn tại ở một tài khoản khác!
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">HỌ VÀ TÊN</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="Nguyễn Văn A"
+                       name="fullName"
+                       ng-model="customer.fullName"
+                       ng-class="{ 'is-invalid': customerForm.fullName.$invalid && customerForm.fullName.$touched, 'is-valid': customerForm.fullName.$valid && customerForm.fullName.$touched }"
+                       ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="customerForm.fullName.$touched && customerForm.fullName.$error.required">
+                    Vui lòng nhập họ và tên !
+                </small>
+                <small class="text-danger"
+                       ng-show="customerForm.fullName.$touched && customerForm.fullName.$error.pattern">
+                    Họ và tên không đúng định dạng !
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">MẬT KHẨU</label>
+                <input type="password"
+                       class="form-control"
+                       placeholder="*********"
+                       name="password"
+                       ng-model="customer.password"
+                       ng-class="{ 'is-invalid': customerForm.password.$invalid && customerForm.password.$touched, 'is-valid': customerForm.password.$valid && customerForm.password.$touched }"
+                       ng-minlength="6"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="customerForm.password.$touched && customerForm.password.$error.required">
+                    Vui lòng nhập mật khẩu !
+                </small>
+                <small class="text-danger"
+                       ng-show="customerForm.password.$error.minlength && customerForm.password.$dirty">
+                    Mật khẩu cần ít nhất 6 ký tự.
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">NHẬP LẠI MẬT KHẨU</label>
+                <input type="password"
+                       class="form-control"
+                       placeholder="*********"
+                       name="cpsw"
+                       ng-model="customer.cpsw"
+                       ng-class="{ 'is-invalid': customerForm.cpsw.$invalid && customerForm.cpsw.$touched, 'is-valid': customerForm.cpsw.$valid && customerForm.cpsw.$touched }"
+                       ng-pattern="customer.password"
+                       ng-minlength="6"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="customerForm.cpsw.$touched && customerForm.cpsw.$error.required">
+                    Vui lòng nhập lại mật khẩu !
+                </small>
+                <small class="text-danger"
+                       ng-show="customerForm.cpsw.$error.minlength && customerForm.cpsw.$dirty">
+                    Mật khẩu cần ít nhất 6 ký tự.
+                </small>
+                <small class="text-danger"
+                       ng-show="customerForm.cpsw.$touched && customerForm.cpsw.$error.pattern">
+                    Xác nhận mật khẩu không khớp.
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label for="birth" class="form-label">Ngày sinh</label>
+                <input class="form-control" id="birth" type="date"
+                       name="birth"
+                       ng-model="customer.birth"
+                       ng-class="{ 'is-invalid': customerForm.birth.$touched && isBirthInvalid(),
+                                            'is-valid': customerForm.birth.$touched && isBirthValid() }"
+                       ng-change="checkBirth()"
+                       required/>
+                <small class="text-danger"
+                       ng-show="customerForm.birth.$touched && customerForm.birth.$error.required">
+                    Vui lòng nhập ngày sinh !
+                </small>
+                <small class="text-danger"
+                       ng-show="customerForm.customerBirth.$touched && isBirthInvalid()">
+                    Số tuổi có vẻ chưa đúng!
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">SỐ ĐIỆN THOẠI</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="0969653264"
+                       name="phone"
+                       ng-model="customer.phone"
+                       ng-class="{ 'is-invalid': customerForm.phone.$invalid && customerForm.phone.$touched, 'is-valid': customerForm.phone.$valid && customerForm.phone.$touched && !phoneError }"
+                       ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                       ng-change="checkDuplicatePhone()"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="customerForm.phone.$touched && customerForm.phone.$error.required">
+                    Vui lòng nhập số điện thoại !
+                </small>
+                <small class="text-danger"
+                       ng-show="customerForm.phone.$touched && customerForm.phone.$error.pattern">
+                    Số điện thoại không đúng định dạng !
+                </small>
+                <small class="text-danger" ng-show="customerForm.phone.$touched && phoneError">
+                    Số điện thoại đã tồn tại ở một tài khoản khác !
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">CMND / CCCD</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="089388928928"
+                       name="citizenCard"
+                       ng-model="customer.citizenCard"
+                       ng-class="{ 'is-invalid': customerForm.citizenCard.$invalid && customerForm.citizenCard.$touched, 'is-valid': customerForm.citizenCard.$valid && customerForm.citizenCard.$touched && !cardError }"
+                       ng-pattern="/^[0-9]{9,12}$/"
+                       ng-change="checkDuplicateCard()"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="customerForm.citizenCard.$touched && customerForm.citizenCard.$error.required">
+                    Vui lòng nhập CMND / CCCD !
+                </small>
+                <small class="text-danger"
+                       ng-show="customerForm.citizenCard.$touched && customerForm.citizenCard.$error.pattern">
+                    CMND / CCCD không đúng định dạng !
+                </small>
+                <small class="text-danger" ng-show="customerForm.citizenCard.$touched && cardError">
+                    CMND / CCCD đã tồn tại ở một tài khoản khác !
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">TRẠNG THÁI HOẠT ĐỘNG</label>
+                <select class="form-select"
+                        name="isActive"
+                        ng-class="{ 'is-invalid': customerForm.isActive.$invalid && customerForm.isActive.$touched, 'is-valid': customerForm.isActive.$valid && customerForm.isActive.$touched }"
+                        ng-model="customer.isActive"
+                        required
+                >
+                    <option value="" disabled selected>Chọn trạng thái</option>
+                    <option value="true">Hoạt động</option>
+                    <option value="false">Ngưng hoạt động</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="customerForm.isActive.$touched && customerForm.isActive.$error.required">
+                    Vui lòng chọn trạng thái !
+                </small>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end mt-5">
+                <button type="button" class="btn" style="margin-right: 20px">
+                    <a class="btn" href="/admin/customer-list">Trở về</a>
+                </button>
+                <button type="submit"
+                        ng-disabled="customerForm.$invalid || emailError || phoneError || cardError"
+                        class="btn btn-submit fw-bold"
+                >
+                    Thêm mới
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

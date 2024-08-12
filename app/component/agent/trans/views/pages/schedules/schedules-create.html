@@ -1,0 +1,298 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+<div class="container mt-3 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-bold">TẠO CHUYẾN ĐI MỚI</h3>
+                </div>
+            </div>
+            <div class="mt-3 fw-bold">Công ty:
+                <span>{{ transportBrand.transportationBrandName || 'Đang tải...' }}</span></div>
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" ng-submit="createSchedule()" name="form_trips">
+            <div class="col-6">
+                <label class="form-label">PHƯƠNG TIỆN</label>
+                <select class="form-select"
+                        name="transportationId"
+                        ng-class="{ 'is-invalid': form_trips.transportationId.$invalid && form_trips.transportationId.$touched, 'is-valid': form_trips.transportationId.$valid && form_trips.transportationId.$touched }"
+                        ng-options="transport.id as (transport.id + ' - ' + transport.licensePlate + ' - ' + transport.amountSeat + ' Chổ' + ' - ' + (transport.isTransportBed ? 'Xe giường nằm' : 'Xe ghế ngồi')) for transport in transportations"
+                        ng-change="onTransportationIdChange()"
+                        ng-model="schedules.transportationId"
+                        required
+                >
+                    <option value="" disabled selected>Chọn phương tiện</option>
+                    <option>Demo</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="form_trips.transportationId.$touched && form_trips.transportationId.$error.required">
+                    Vui lòng chọn phương tiện !
+                </small>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label">LOẠI DỊCH VỤ</label>
+                <select class="form-select"
+                        name="tripType"
+                        ng-class="{ 'is-invalid': form_trips.tripType.$invalid && form_trips.tripType.$touched, 'is-valid': form_trips.tripType.$valid && form_trips.tripType.$touched }"
+                        ng-model="schedules.tripType"
+                        required
+                >
+                    <option value="" disabled selected>Chọn loại vé</option>
+                    <option value="true">Tuyến hợp đồng</option>
+                    <option value="false">Tuyến cố định</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="form_trips.tripType.$touched && form_trips.tripType.$error.required">
+                    Vui lòng chọn loại vé !
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">NGÀY / GIỜ ĐI</label>
+                <input type="datetime-local"
+                       class="form-control"
+                       name="departureTime"
+                       ng-class="{ 'is-invalid': form_trips.departureTime.$invalid && form_trips.departureTime.$touched, 'is-valid': form_trips.departureTime.$valid && form_trips.departureTime.$touched }"
+                       ng-change="onDepartureTimeChange()"
+                       ng-model="schedules.departureTime"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="form_trips.departureTime.$touched && form_trips.departureTime.$error.required">
+                    Vui lòng chọn ngày / giờ đi !
+                </small>
+                <small class="text-danger"
+                       ng-show="!form_trips.departureTime.$error.required && form_trips.departureTime.$error.futureDate">
+                    Ngày / giờ đi phải là ngày / giờ tương lai!
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">NGÀY / GIỜ ĐẾN</label>
+                <input type="datetime-local"
+                       class="form-control"
+                       name="arrivalTime"
+                       ng-class="{ 'is-invalid': form_trips.arrivalTime.$invalid && form_trips.arrivalTime.$touched, 'is-valid': form_trips.arrivalTime.$valid && form_trips.arrivalTime.$touched && !dateError }"
+                       ng-change="onArrivalTimeChange()"
+                       ng-model="schedules.arrivalTime"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="form_trips.arrivalTime.$touched && form_trips.arrivalTime.$error.required">
+                    Vui lòng chọn ngày / giờ về !
+                </small>
+                <small class="text-danger"
+                       ng-show="!form_trips.arrivalTime.$error.required && form_trips.arrivalTime.$error.dateRange">
+                    Ngày / giờ về phải trước ngày / giờ đi !
+                </small>
+                <small class="text-danger"
+                       ng-show="form_trips.arrivalTime.$touched && dateError">
+                    Phương tiện sẽ hoạt động vào ngày {{ returnDate | vietnameseDateTime }}.
+                </small>
+            </div>
+
+            <!-- Sử dụng trong HTML -->
+            <div class="col-2">
+                <label class="form-label">Điểm Đi</label>
+                <select class="form-select"
+                        name="fromLocation"
+                        ng-class="{ 'is-invalid': form_trips.fromLocation.$invalid && form_trips.fromLocation.$touched, 'is-valid': form_trips.fromLocation.$valid && form_trips.fromLocation.$touched }"
+                        ng-options="city.Name as city.Name for city in provinces"
+                        ng-model="schedules.fromLocation"
+                        ng-change="updateToLocation()"
+                        required
+                >
+                    <option value="" disabled selected>Chọn điểm đi</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="form_trips.fromLocation.$touched && form_trips.fromLocation.$error.required">
+                    Vui lòng chọn điểm đi!
+                </small>
+            </div>
+
+            <div class="col-4">
+                <label class="form-label">Vị trí bến xe (Điểm đi)</label>
+                <div class="row">
+                    <div class="col-9 ps-2 px-0">
+                        <input type="text"
+                               title="{{ schedules.fromAddress }}"
+                               class="form-control"
+                               name="fromAddress"
+                               ng-model="schedules.fromAddress"
+                               ng-class="{ 'is-invalid': form_trips.fromAddress.$invalid && form_trips.fromAddress.$touched,
+                                                'is-valid': form_trips.fromAddress.$valid && form_trips.fromAddress.$touched }"
+                               placeholder="Vui lòng nhập địa chỉ bến xe"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="form_trips.fromAddress.$touched && form_trips.fromAddress.$error.required">
+                            Vui lòng nhập địa chỉ nhà xe !
+                        </small>
+                    </div>
+                    <div class="col-3 d-flex justify-content-end">
+                        <button data-bs-toggle="modal"
+                                data-bs-target="#modalMapTransport"
+                                type="button"
+                                class="btn btn-success"
+                                ng-click="showModalMap('fromAddress')"
+                        >
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <label class="form-label">Điểm Đến</label>
+                <select class="form-select"
+                        name="toLocation"
+                        ng-class="{ 'is-invalid': form_trips.toLocation.$invalid && form_trips.toLocation.$touched, 'is-valid': form_trips.toLocation.$valid && form_trips.toLocation.$touched }"
+                        ng-options="city.Name as city.Name for city in filteredProvinces"
+                        ng-model="schedules.toLocation"
+                        ng-change="updateToLocation()"
+                        required
+                >
+                    <option value="" disabled selected>Chọn điểm đến</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="form_trips.toLocation.$touched && form_trips.toLocation.$error.required && !toLocationError">
+                    Vui lòng chọn điểm đến!
+                </small>
+                <small class="text-danger" ng-show="toLocationError">
+                    Điểm đi và điểm đến không thể trùng nhau!
+                </small>
+            </div>
+
+            <div class="col-4">
+                <label class="form-label">VỊ TRÍ BẾN XE (ĐIỂM ĐẾN)</label>
+                <div class="row">
+                    <div class="col-9 ps-2 px-0">
+                        <input type="text"
+                               title="{{ schedules.fromAddress }}"
+                               class="form-control"
+                               name="toAddress"
+                               ng-model="schedules.toAddress"
+                               ng-class="{ 'is-invalid': form_trips.toAddress.$invalid && form_trips.toAddress.$touched,
+                                                'is-valid': form_trips.toAddress.$valid && form_trips.toAddress.$touched }"
+                               placeholder="Vui lòng nhập địa chỉ bến xe"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="form_trips.toAddress.$touched && form_trips.toAddress.$error.required">
+                            Vui lòng nhập địa chỉ nhà xe !
+                        </small>
+                    </div>
+                    <div class="col-3 d-flex justify-content-end">
+                        <button data-bs-toggle="modal"
+                                data-bs-target="#modalMapTransport"
+                                type="button"
+                                class="btn btn-success"
+                                ng-click="showModalMap('toAddress')"
+                        >
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Giá tiền / Đơn giá</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="100.000 đ"
+                       name="unitPrice"
+                       format-price-input
+                       ng-model="schedules.unitPrice"
+                       ng-class="{ 'is-invalid': form_trips.unitPrice.$invalid && form_trips.unitPrice.$touched, 'is-valid': form_trips.unitPrice.$valid && form_trips.unitPrice.$touched }"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="form_trips.unitPrice.$touched && form_trips.unitPrice.$error.required">
+                    Vui lòng nhập tổng tiền !
+                </small>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">SỐ CHỔ ĐÃ ĐẶT</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="Số chổ ngồi đã được mặc định"
+                       name="bookedSeat"
+                       ng-model="schedules.bookedSeat"
+                       ng-class="{ 'is-invalid': form_trips.bookedSeat.$invalid && form_trips.bookedSeat.$touched, 'is-valid': form_trips.bookedSeat.$valid && form_trips.bookedSeat.$touched }"
+                       ng-pattern="/^[0-9]*$/"
+                       disabled
+                >
+            </div>
+
+            <div class="col-md-12">
+                <label class="form-label">GHI CHÚ CHUYẾN ĐI</label>
+                <textarea class="form-control"
+                          cols="30" rows="3"
+                          placeholder="Nội dung..."
+                          ng-model="schedules.scheduleNote"
+                >
+                </textarea>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end mt-5">
+                <button type="button" class="btn" style="margin-right: 20px">
+                    <a class="btn" href="/business/transport/schedules-management">Trở về</a>
+                </button>
+                <button type="submit"
+                        class="btn btn-submit fw-bold"
+                        ng-disabled="form_trips.$invalid || dateError"
+                >
+                    Thêm mới
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalMapTransport" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="modalMapTourDetailLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabelMap">Bản đồ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-10 mb-3 position-relative">
+                        <input type="text"
+                               class="form-control"
+                               ng-model="searchLocation"
+                               placeholder="Nhập tên tỉnh thành cần tìm ở đây..."
+                               ng-keyup="searchLocationOnMap()"
+                        >
+                        <div style="position: relative;">
+                            <div class="autocomplete" ng-if="showSuggestions"
+                                 style="position: absolute; top: 10px; left: 10px; z-index: 100;">
+                                <ul class="list-group">
+                                    <li class="list-group-item cursor-pointer"
+                                        ng-repeat="location in suggestedLocations" ng-click="selectLocation(location)">
+                                        {{ location }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-success" ng-click="submitSearchOnMap()">Tìm kiếm</button>
+                    </div>
+                    <div id="map" class="col-12" style="height: 460px"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+<section>
+    <div class="container">
+        <div class="container-fluid">
+            <div class="header-control mb-4">
+                <div class="">
+                    <div class="d-flex align-items-center row">
+                        <div class="col-lg-6">
+                            <h3 class="color-green fw-bold">CHỈNH SỬA TIỆN ÍCH LOẠI PHÒNG</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-custom">
+                <form class="row g-3 form-input-custom" name="editInfoRoomForm">
+                    <!-- Tiện ích phòng khách sạn -->
+                    <div class="mb-3 mt-3">
+                        <label for="formFile" class="form-label mb-3">Tiện ích </label>
+                        <div class="row" ng-if="checkboxes && checkboxes.length > 0">
+                            <div class="col-sm-4 col-xl-4" ng-repeat="checkbox in checkboxes">
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           id="{{checkbox.id}}"
+                                           ng-model="checkbox.checked"
+                                           ng-change="handleCheckboxChange(checkbox)"
+                                    >
+                                    <label class="form-check-label" for="{{checkbox.id}}">
+                                        {{checkbox.label}}
+                                    </label>
+                                </div>
+                            </div>
+
+                            <small class="text-danger" ng-show="!isAnyCheckboxChecked() && showErrorListPlaceMessage !== null">
+                                Vui lòng chọn ít nhất một tiện ích!
+                            </small>
+                        </div>
+
+                        <div class="row" ng-if="showErrorListPlaceMessage !== null">
+                            <p ng-show="showErrorListPlaceMessage"></p>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-if="showErrorListPlaceMessage !== null">
+                            <p ng-show="showErrorListPlaceMessage"></p>
+                    </div>
+                    <div class="col-12 d-flex justify-content-end mt-5">
+                        <button class="btn" style="margin-right: 20px"><a class="btn" href="/business/hotel/room-type-list">Trở về</a></button>
+                        <button type="submit"
+                                class="btn btn-submit"
+                                ng-click="updateRoomUtilities()"
+                                ng-disabled="editInfoRoomForm.$invalid ||(!isAnyCheckboxChecked() && showErrorListPlaceMessage !== null)">Sửa loại phòng
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

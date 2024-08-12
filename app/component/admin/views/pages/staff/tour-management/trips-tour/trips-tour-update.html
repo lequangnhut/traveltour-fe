@@ -1,0 +1,244 @@
+<div ng-include="'app/component/utils/loading-html.html'"></div>
+
+<div class="container mt-3 mb-5">
+    <div class="header-control mb-4">
+        <div class="">
+            <div class="d-flex align-items-center row">
+                <div class="col-lg-6">
+                    <h3 class="color-green fw-bold text-uppercase">Cập nhật hoạt động</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-custom">
+        <form class="row g-3 form-input-custom" name="tourTripsForm" ng-submit="updateTourTripsSubmit()" novalidate>
+
+            <div class="col-6">
+                <label class="form-label">Tên địa điểm tham quan</label>
+                <input type="text"
+                       name="placeName"
+                       class="form-control" ng-model="tourTrips.placeName"
+                       ng-class="{ 'is-invalid': tourTripsForm.placeName.$touched && tourTripsForm.placeName.$error.required,
+                                    'is-valid': tourTripsForm.placeName.$touched && tourTripsForm.placeName.$valid}"
+                       placeholder="Vui lòng nhập tên địa điểm tham quan..."
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="tourTripsForm.placeName.$touched && tourTripsForm.placeName.$error.required">
+                    Vui lòng nhập dữ liệu cho trường này !
+                </small>
+            </div>
+
+            <div class="col-3">
+                <label class="form-label">Ngày đi</label>
+                <input type="text"
+                       class="form-control"
+                       name="dayInTrip"
+                       ng-model="tourTrips.dayInTrip"
+                       ng-class="{ 'is-invalid': tourTripsForm.dayInTrip.$touched && tourTripsForm.dayInTrip.$error.required,
+                                    'is-valid': tourTripsForm.dayInTrip.$touched && tourTripsForm.dayInTrip.$valid}"
+                       placeholder="VD: 1 | 2 | 3"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="tourTripsForm.dayInTrip.$touched && tourTripsForm.dayInTrip.$error.required">
+                    Vui lòng nhập dữ liệu cho trường này !
+                </small>
+            </div>
+
+            <div class="col-3">
+                <label class="form-label">Loại phương tiện</label>
+                <select class="form-select"
+                        name="transportationTypeId"
+                        ng-model="tourTrips.transportationTypeId"
+                        ng-options="transport.id as transport.transportationTypeName for transport in transportationType"
+                        ng-class="{ 'is-invalid': tourTripsForm.transportationTypeId.$touched && tourTripsForm.transportationTypeId.$error.required,
+                                    'is-valid': tourTripsForm.transportationTypeId.$touched && tourTripsForm.transportationTypeId.$valid}"
+                        required
+                >
+                    <option value="" selected disabled>Vui lòng chọn loại phương tiện</option>
+                </select>
+                <small class="text-danger"
+                       ng-show="tourTripsForm.transportationTypeId.$touched && tourTripsForm.transportationTypeId.$error.required">
+                    Vui lòng chọn dữ liệu cho trường này !
+                </small>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label">Giá tiền</label>
+                <input type="text"
+                       class="form-control"
+                       name="placeCost"
+                       vietnam-currency-input
+                       ng-model="tourTrips.placeCost"
+                       ng-class="{ 'is-invalid': tourTripsForm.placeCost.$touched && tourTripsForm.placeCost.$error.required,
+                                    'is-valid': tourTripsForm.placeCost.$touched && tourTripsForm.placeCost.$valid}"
+                       placeholder="VD: 100.000"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="tourTripsForm.placeCost.$touched && tourTripsForm.placeCost.$error.required">
+                    Vui lòng nhập dữ liệu cho trường này !
+                </small>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label">Địa chỉ</label>
+                <div class="row">
+                    <div class="col-9">
+                        <input type="text"
+                               name="placeAddress"
+                               class="form-control"
+                               ng-model="tourTrips.placeAddress"
+                               ng-class="{ 'is-invalid': tourTripsForm.placeAddress.$touched && tourTripsForm.placeAddress.$error.required,
+                                    'is-valid': tourTripsForm.placeAddress.$touched && tourTripsForm.placeAddress.$valid}"
+                               placeholder="Vui lòng nhập địa chỉ"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="tourTripsForm.placeAddress.$touched && tourTripsForm.placeAddress.$error.required">
+                            Vui lòng chọn dữ liệu cho trường này !
+                        </small>
+                    </div>
+                    <div class="col-3 p-0 ps-1">
+                        <button type="button"
+                                class="btn btn-success"
+                                ng-click="showModalMapTourTrips()"
+                        >
+                            Mở bản đồ
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label">Ảnh địa điểm tham quan</label>
+                <input type="file"
+                       accept="image/*"
+                       name="placeImage"
+                       class="form-control"
+                       ng-model="tourTrips.placeImage"
+                       ng-class="{ 'is-invalid': tourTripsForm.placeImage.$touched && tourTripsForm.placeImage.$error.required,
+                                    'is-valid': tourTripsForm.placeImage.$touched && tourTripsForm.placeImage.$valid}"
+                       ngf-max-size="10MB"
+                       ngf-select="updatePlaceImage($file)"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="tourTripsForm.placeImage.$touched && tourTripsForm.placeImage.$error.required">
+                    Vui lòng chọn dữ liệu cho trường này !
+                </small>
+                <div class="mt-2">
+                    <label class="form-label">Ảnh hiện tại</label>
+                    <br>
+                    <img ng-src="{{ tourTrips.placeImage }}"
+                         class="img-fluid rounded-1 cursor-pointer"
+                         width="100"
+                         alt="avatar ảnh"
+                         loading="lazy"
+                         ng-click="openImageModal(tourTrips.placeImage)"
+                    >
+                </div>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label">Thời gian đi</label>
+                <input type="time"
+                       name="timeGo"
+                       class="form-control"
+                       ng-model="tourTrips.timeGo"
+                       ng-class="{ 'is-invalid': tourTripsForm.timeGo.$touched && tourTripsForm.timeGo.$error.required,
+                                    'is-valid': tourTripsForm.timeGo.$touched && tourTripsForm.timeGo.$valid}"
+                       required
+                >
+                <small class="text-danger"
+                       ng-show="tourTripsForm.timeGo.$touched && tourTripsForm.timeGo.$error.required">
+                    Vui lòng chọn dữ liệu cho trường này !
+                </small>
+            </div>
+
+            <div class="col-12">
+                <label class="form-label">Ghi chú</label>
+                <textarea class="form-control" ng-model="tourTrips.activityInDay" rows="16"></textarea>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end mt-5">
+                <button class="btn" type="button" style="margin-right: 20px">
+                    <a class="btn cursor-pointer"
+                       ng-click="redirectPage('/admin/detail-tour-list/trips-tour-list/', tourTrips.tourDetailId)">
+                        Trở về
+                    </a>
+                </button>
+                <button type="submit" class="btn btn-submit fw-bold">
+                    Cập nhật
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Ảnh xe</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="" id="modalImage" class="img-fluid" alt="Ảnh phương tiện">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Click Map-->
+<div class="modal fade" id="modalMapTourTrip" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="modalLabelMap" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabelMap">Bản đồ</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-10 mb-3 position-relative">
+                        <input type="text"
+                               class="form-control"
+                               ng-model="searchLocation"
+                               placeholder="Nhập tên tỉnh thành cần tìm ở đây..."
+                               ng-keyup="searchLocationOnMapTourTrips()"
+                        >
+                        <div style="position: relative;">
+                            <div class="autocomplete" ng-if="showSuggestions"
+                                 style="position: absolute; top: 10px; left: 10px; z-index: 100;">
+                                <ul class="list-group">
+                                    <li class="list-group-item cursor-pointer"
+                                        ng-repeat="location in suggestedLocations"
+                                        ng-click="selectLocationTourTrips(location)">
+                                        {{ location }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary" ng-click="submitSearchOnMapTourTrips()">
+                            Tìm kiếm
+                        </button>
+                    </div>
+                    <div id="map" class="col-12" style="height: 500px"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>

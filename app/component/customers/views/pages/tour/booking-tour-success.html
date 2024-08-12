@@ -1,0 +1,235 @@
+<!--====== Giao dịch thành công ======-->
+<section class="mt-50 mb-50 d-flex justify-content-center">
+    <div class="container-fluid booking-form-success row m-auto" style="max-width: 55%;">
+        <div class="order-content">
+            <div class="booking-success">
+                <div class="row d-flex align-items-center pb-20">
+                    <div class="col-lg-6 col-md-6 col-6">
+                        <div class="logo">
+                            <img src="/assets/customers/images/logo/logo-black.png" alt="logo" class="img-responsive">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-6">
+                        <div class="float-end">
+                            <button type="button"
+                                    class="btn btn-green"
+                                    ng-if="orderStatus === 1"
+                                    ng-click="printContractTourCustomer()"
+                            >
+                                In hợp đồng
+                            </button>
+                            <button type="button"
+                                    class="btn btn-green"
+                                    ng-if="orderStatus === 1"
+                                    ng-click="printInvoiceTourCustomer()"
+                            >
+                                In hóa đơn
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <p class="mb-0">Thời gian đặt tour: {{ bookingTourDto.dateBookingTour | vietnameseDateTime }}</p>
+                <p>Cảm ơn quý khách đã đăng ký dịch vụ tại TravelTour. <br>
+                    <span style="color: red;">
+                        <i>
+                            <u>*Lưu ý:</u>
+                            Email gửi cho quý khách chỉ là thông báo các thông tin quý khách đã đăng ký tour, không phải là hoá đơn dịch vụ hoặc vé đã xuất.
+                        </i>
+                    </span>
+                    <br>Chúng tôi sẽ liên hệ lại với quý khách sớm nhất có thể.<br>
+                </p>
+                <div class="title-line">
+                    <span>Thông tin hành khách đại diện</span>
+                </div>
+                <ul class="row list-dot">
+                    <li class="col-lg-6 col-md-6 col-12">
+                        <span class="fw-medium">Họ tên: </span> {{ bookingTicket.customerName }}
+                    </li>
+                    <li class="col-lg-5 col-md-6 col-12">
+                        <span class="fw-medium">Số điện thoại: </span>
+                        {{ bookingTicket.customerPhone | phoneNumber }}
+                    </li>
+                    <li class="col-lg-6 col-md-6 col-12">
+                        <span class="fw-medium">Email: </span> {{ bookingTicket.customerEmail }}
+                    </li>
+                    <li class="col-lg-5 col-md-6 col-12">
+                        <span class="fw-medium">CMND/CCCD: </span> {{ bookingTicket.customerCitizenCard }}
+                    </li>
+                </ul>
+                <div class="title-line">
+                    <span>Thông tin tour</span>
+                </div>
+                <ul class="list-dot row">
+                    <li class="col-lg-12 col-md-6 col-12">
+                        <span class="fw-medium">Tên Tour: </span>
+                        <span class="text-danger fw-medium">{{ tourDetail.toursByTourId.tourName }}</span>
+                    </li>
+                    <li class="col-lg-6 col-md-6 col-12">
+                        <span class="fw-medium">Mã tour: </span> {{ tourDetail.id }}
+                    </li>
+                    <li class="col-lg-5 col-md-6 col-12">
+                        <span class="fw-medium">Ngày khởi hành: </span> {{ tourDetail.departureDate | formatDate }}
+                    </li>
+                    <li class="col-lg-6 col-md-6 col-12">
+                        <span class="fw-medium">Thời gian: </span>
+                        {{ tourDetail.departureDate | calculateDaysAndNights:tourDetail.arrivalDate }}
+                    </li>
+                    <li class="col-lg-6 col-md-6 col-12">
+                        <span class="fw-medium">Điểm khởi hành: </span>
+                        {{ tourDetail.fromLocation }}
+                    </li>
+                    <li>
+                        <span class="fw-medium">Lịch trình: </span>
+                        {{ tourDetail.toLocation }} -
+                        <span ng-repeat="province in provinceName">
+                                    {{ province }}
+                            <span ng-if="!$last">- &nbsp;</span>
+                        </span>
+                        {{ tourDetail.fromLocation }}
+                    </li>
+                </ul>
+                <div class="title-line">
+                    <span>Danh sách vé đã được đặt</span>
+                </div>
+                <div class="table-wrapper">
+                    <table class="table table-bordered table-striped customers-tour mb-1">
+                        <thead>
+                        <tr>
+                            <th class="fw-medium">STT</th>
+                            <th class="fw-medium">Loại vé</th>
+                            <th class="fw-medium">Số lượng</th>
+                            <th class="fw-medium">Đơn giá</th>
+                            <th class="fw-medium">Thành tiền</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-if="ticket.adults > 0">
+                            <td>1</td>
+                            <td>
+                                <ul class="text-dark">
+                                    Vé người lớn (trên 1m3)
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="text-dark">
+                                    {{ ticket.adults + ' vé' }}
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="text-dark">
+                                    {{ tourDetail.unitPrice | vnCurrency }}
+                                </ul>
+                            </td>
+                            <td>
+                                <span class="text-danger">
+                                    {{ ticket.adults * tourDetail.unitPrice | vnCurrency }}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr ng-if="ticket.children > 0">
+                            <td>2</td>
+                            <td>
+                                <ul class="text-dark">
+                                    Vé trẻ em (dưới 1m3)
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="text-dark">
+                                    {{ ticket.children + ' vé' }}
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="text-dark">
+                                    {{ tourDetail.unitPrice * 0.3 | vnCurrency }}
+                                </ul>
+                            </td>
+                            <td>
+                                <span class="text-danger">
+                                    {{ ticket.children * (tourDetail.unitPrice * 0.3) | vnCurrency }}
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="4">
+                                <li class="list-group-item d-flex justify-content-end align-items-center">
+                                    <div style="line-height: 20px">
+                                        <strong>Tổng tiền:</strong>
+                                        <strong>
+                                            <p class="mb-0" style="font-size: 13px">
+                                                (Đã bao gồm phí VAT)
+                                            </p>
+                                        </strong>
+                                    </div>
+                                </li>
+                            </td>
+                            <td>
+                                <span class="text-danger fw-medium">
+                                    {{ bookingTicket.orderTotal | vnCurrency }}
+                                </span>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                    <div class="notice text-black mb-2">
+                        <span class="text-black">*</span> Lưu ý: quý khách vui lòng kiểm tra lại thông tin, nếu có sai
+                        sót xin vui lòng báo ngay cho chúng tôi.
+                    </div>
+                </div>
+                <div class="title-line">
+                    <span>Thông tin thanh toán</span>
+                </div>
+                <ul class="list-dot row">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <li class="col-lg-12 col-md-12 col-12">
+                            <span class="fw-medium">Mã Booking: </span>
+                            <span class="fw-medium text-danger">{{ bookingTicket.id }}</span>
+                        </li>
+
+                        <li class="col-lg-12 col-md-12 col-12">
+                            <span class="fw-medium">Phương thức thanh toán: </span>
+                            <span ng-if="paymentMethodTour === 'VPO'">
+                                Thanh toán tại quầy
+                            </span>
+                            <span ng-if="paymentMethodTour === 'MOMO'">
+                                Thanh toán bằng Ví MOMO
+                            </span>
+                            <span ng-if="paymentMethodTour === 'VNPAY'">
+                                Thanh toán bằng Ví VNPay
+                            </span>
+                        </li>
+
+                        <li class="col-lg-12 col-md-12 col-12">
+                            <span class="fw-medium">Trạng thái: </span>
+                            <span class="text-warning fw-medium" ng-if="orderStatus === 0">Chờ thanh toán </span>
+                            <span class="text-success fw-medium" ng-if="orderStatus === 1">Đã thanh toán </span>
+                            <span class="text-danger fw-medium" ng-if="orderStatus === 2">Thanh toán thất bại </span>
+                        </li>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <li class="col-lg-12 col-md-12 col-12" ng-if="orderStatus === 1">
+                            <span class="fw-medium">Thời gian thanh toán: </span>
+                            <span class="fw-normal">{{ bookingTourDto.dateBookingTour | vietnameseDateTime }}</span>
+                        </li>
+
+                        <li class="col-lg-12 col-md-12 col-12">
+                            <span class="fw-medium">Số lượng khách: </span>
+                            {{ amountTicket }} khách
+                        </li>
+
+                        <li class="col-lg-12 col-md-12 col-12">
+                            <span class="fw-medium">Giá trị thanh toán: </span>
+                            <span class="text-danger fw-medium">{{ bookingTicket.orderTotal | vnCurrency }}</span>
+                        </li>
+                    </div>
+                </ul>
+                <div class="notice">
+                    <span class="text-red">*</span> Lưu ý (khách hàng thanh toán online): sau khi thanh toán
+                    thành công, người đại diện sẽ đến văn phòng để lấy mũ và vòng tay.
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--====== Giao dịch thành công ======-->

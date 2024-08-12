@@ -1,0 +1,251 @@
+<div class="container">
+    <div class="header-control mb-4">
+        <div class="header-control-center">
+            <div class="d-flex justify-content-between align-items-center row">
+                <div class="col-xl-12 mt-3">
+                    <h3 class="color-green fw-bold text-uppercase">
+                        Chọn dịch vụ cần cung cấp
+                    </h3>
+                </div>
+            </div>
+
+            <nav aria-label="breadcrumb mb-3">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item text-dark">
+                        <a href="/business/transport/notification-request-car">
+                            Các yêu cầu về chuyến xe
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" style="width: 150px"><p>Cung cấp dịch vụ</p></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div ng-include="'app/component/utils/loading-component.html'"></div>
+
+    <div class="mb-4" style="margin: 20px 0 20px 0">
+        <div class="row">
+            <div class="col-lg-4 mb-3" ng-repeat="transportSchedule in transportationScheduleList">
+                <div class="card-request-car">
+                    <div class="content-request-schedule p-3">
+                        <h3 class="title-request-schedule">
+                            <p class="text-dark fw-medium mb-2 text-decoration-none fs-1">
+                                {{ transportSchedule.transportations.id }}
+                                - {{ transportSchedule.transportations.licensePlate }}
+                                - {{ transportSchedule.transportations.amountSeat }} chổ
+                            </p>
+                            <p class="fw-medium mb-2 fs-1 text-info">
+                                Giá tiền: {{ transportSchedule.unitPrice | vnCurrency }}
+                            </p>
+                            <hr>
+                            <h5 class="mb-3">Yêu cầu về chuyến đi</h5>
+                            <p class="fw-normal mb-2 h5">
+                                Mã tour: <span class="fw-medium">{{ tourDetail.id }}</span>
+                            </p>
+                            <p class="fw-normal mb-2 h5">Loại xe:
+                                <span class="fw-medium"
+                                      ng-if="requestCar.isTransportBed === false">
+                                    Xe ghế ngồi - {{ requestCar.amountCustomer }} khách
+                                 </span>
+                                <span class="fw-medium"
+                                      ng-if="requestCar.isTransportBed === true">
+                                    Xe giường nằm - {{ requestCar.amountCustomer }} khách
+                                </span>
+                            </p>
+                            <p class="fw-normal h5 mb-2">Thời gian xuất phát:
+                                <span class="fw-medium">
+                                    {{ requestCar.departureDate | formatDate }}
+                                </span>
+                            </p>
+                            <p class="fw-normal mb-2 h5">Điểm đi:
+                                <span class="fw-medium text-warning">
+                                    {{ requestCar.fromLocation }}
+                                </span>
+                            </p>
+                            <p class="fw-normal h5">Điểm đến:
+                                <span class="fw-medium text-warning">
+                                    {{ requestCar.toLocation }}
+                                </span>
+                            </p>
+                        </h3>
+
+                        <a href="#" class="icon-btn"
+                           ng-click="openModal(transportSchedule.transportations.id, transportSchedule.id)">
+                            <span class="fas fa-arrow-right"></span>
+                        </a>
+                    </div>
+                    <div class="img-holder">
+                        <img ng-src="{{ transportSchedule.transportations.transportationImg }}" alt="Service Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="div" ng-if="transportationScheduleList.length <= 0">
+            <div class="d-flex justify-content-center align-items-center mt-3">
+                Hiện tại nhà xe của bạn chưa có lịch trình, vui lòng nhấn
+                <a href="/business/transport/schedules-management" class="fw-bold">&nbsp;vào đây&nbsp;</a>
+                để tạo lịch trình.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal xem thông tin chi tiết của xe -->
+<div class="modal fade" id="modal-transport-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-white">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Chi tiết phượng tiện - {{ transportation.licensePlate }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card mb-3">
+                                <img class="img-fluid rounded-2" ng-src="{{ transportation.transportationImg }}"
+                                     style="height: 500px"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header p-3 fw-bold">
+                                    Thông tin xe khách
+                                </div>
+                                <div class="card-body p-3">
+                                    <p class="m-2 fw-medium">Mã xe khách: <span
+                                            class="fw-medium">{{ transportation.id }}</span></p>
+                                    <p class="m-2 fw-medium">Biển số xe: <span
+                                            class="fw-medium">{{ transportation.licensePlate }}</span></p>
+                                    <p class="m-2 fw-medium">Số ghế ngồi: <span
+                                            class="fw-medium">{{ transportation.amountSeat }} Chổ</span></p>
+                                    <p class="m-2 fw-medium">Loại chổ ngồi:
+                                        <span class="fw-normal"
+                                              ng-if="transportation.isTransportBed === false">
+                                                Xe ghế ngồi
+                                        </span>
+                                        <span class="fw-normal"
+                                              ng-if="transportation.isTransportBed === true">
+                                                Xe giường nằm
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Loại xe: <span
+                                            class="fw-normal">{{ transportType.transportationTypeName }}</span></p>
+                                    <p class="m-2 fw-medium">
+                                        Trạng thái:
+                                        <span class="fw-medium color-green"
+                                              ng-if="transportation.isActive === true">
+                                                Đang hoạt động
+                                        </span>
+                                        <span class="fw-medium color-green"
+                                              ng-if="transportation.isActive === false">
+                                                Ngưng hoạt động
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header p-3 fw-bold">
+                                    Các tiện ích của xe
+                                </div>
+                                <div class="card-body p-3">
+                                    <div ng-repeat="util in transportUtilityModal">
+                                        <li class="m-2">{{ util.title }}</li>
+                                    </div>
+                                    <div class="d-flex justify-content-center"
+                                         ng-if="transportUtilityModal.length === 0">
+                                        Xe <span class="fw-medium">&nbsp;{{ transportation.licensePlate }}&nbsp;</span>
+                                        chưa có tiện ích.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header p-3 fw-bold">
+                                    Thông tin chuyến đi của bạn
+                                </div>
+                                <div class="card-body p-3">
+                                    <p class="m-2 fw-medium">Mã chuyến đi:
+                                        <span class="fw-medium">
+                                            {{ transportationSchedule.id }}
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Điểm đi:
+                                        <span class="fw-medium text-warning">
+                                            {{ transportationSchedule.fromAddress }}
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Điểm đến:
+                                        <span class="fw-medium text-warning">
+                                            {{ transportationSchedule.toAddress }}
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Loại xe:
+                                        <span class="fw-medium text-warning"
+                                              ng-if="requestCar.isTransportBed === false">
+                                                Xe ghế ngồi
+                                        </span>
+                                        <span class="fw-medium text-warning"
+                                              ng-if="requestCar.isTransportBed === true">
+                                                Xe giường nằm
+                                        </span>
+                                    </p>
+                                    <p class="m-2 fw-medium">Tổng tiền:
+                                        <span class="fw-medium text-success">
+                                            {{ transportationSchedule.unitPrice | vnCurrency }}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-5 mt-5 p-3">
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-xl-3 p-1" ng-repeat="img in transportationImages">
+                                            <img class="img-fluid" style="height: 100%; width: 100%; border-radius: 8px"
+                                                 ng-src="{{img.imagePath}}"/>
+                                        </div>
+                                        <div class="col-12" ng-if="transportationImages.length === 0">
+                                            Không có hình ảnh.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Thoát
+                </button>
+                <button type="button"
+                        class="btn btn-success"
+                        ng-click="submitRequestCarToStaff()"
+                        ng-if="!isSubmiited"
+                >
+                    Gửi yêu cầu
+                </button>
+                <button disabled
+                        type="button"
+                        class="btn btn-success"
+                        ng-if="isSubmiited"
+                >
+                    Xe của bạn đã được duyệt
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

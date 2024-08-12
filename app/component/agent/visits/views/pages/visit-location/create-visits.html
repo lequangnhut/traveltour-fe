@@ -1,0 +1,441 @@
+<!--====== Start Preloader ======-->
+<div class="preloader" ng-show="isLoading">
+    <div class="loader">
+        <div class="pre-shadow"></div>
+        <div class="pre-box"></div>
+    </div>
+    <div class="bg"></div>
+</div><!--====== End Preloader ======-->
+
+<form ng-submit="submitDataRegisterVisits()" name="register_visits" method="post">
+    <section id="business-information" ng-show="currentStep === 1">
+        <div class="container-fluid">
+            <div class="logo text-center">
+                <div class="d-flex align-items-center justify-content-center">
+                    <img src="/assets/admin/assets/img/icons/logo.png" alt="logo" width="40"/>
+                    <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">TravelTour</p>
+                </div>
+                <div class="content-text mt-3">
+                    <div class="h4">Đăng kí thông tin địa điểm tham quan TravelTour</div>
+                </div>
+            </div>
+            <div class="main d-flex justify-content-center theme-wizard">
+                <div class="form card">
+                    <div class="row g-3">
+                        <div class="h3 color-green fw-medium">THÊM THÔNG TIN ĐỊA ĐIỂM</div>
+                        <div class="col-12">
+                            <label class="form-label">Tên địa điểm</label>
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Làng du lịch Ông Đề"
+                                   name="visitLocationName"
+                                   ng-class="{ 'is-invalid': register_visits.visitLocationName.$invalid && register_visits.visitLocationName.$touched, 'is-valid': register_visits.visitLocationName.$valid && register_visits.visitLocationName.$touched }"
+                                   ng-model="visitLocation.visitLocationName"
+                                   ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_visits.visitLocationName.$touched && register_visits.visitLocationName.$error.required">
+                                Vui lòng nhập tên địa điểm!
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="register_visits.visitLocationName.$touched && register_visits.visitLocationName.$error.pattern">
+                                Tên địa điểm không đúng định dạng !
+                            </small>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="locationType" class="form-label">Loại địa điểm</label>
+                            <select id="locationType" class="form-select"
+                                    name="visitLocationTypeId"
+                                    ng-model="visitLocation.visitLocationTypeId"
+                                    ng-class="{ 'is-invalid': register_visits.visitLocationTypeId.$invalid && register_visits.visitLocationTypeId.$touched, 'is-valid': register_visits.visitLocationTypeId.$valid && register_visits.visitLocationTypeId.$touched }"
+                                    ng-options="visit.id as visit.visitLocationTypeName for visit in visitType"
+                                    required>
+                                <option value="" selected disabled>Chọn loại địa điểm</option>
+                            </select>
+                            <small class="text-danger"
+                                   ng-show="register_visits.visitLocationTypeId.$touched && register_visits.visitLocationTypeId.$error.required">
+                                Vui lòng chọn trạng thái !
+                            </small>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="website" class="form-label">Địa chỉ website</label>
+                            <input class="form-control" id="website"
+                                   type="text" placeholder="abc.vn"
+                                   name="urlWebsite"
+                                   ng-model="visitLocation.urlWebsite"
+                                   ng-class="{ 'is-invalid': register_visits.urlWebsite.$invalid && register_visits.urlWebsite.$touched, 'is-valid': register_visits.urlWebsite.$valid && register_visits.urlWebsite.$touched }"
+                                   required
+                            />
+                            <small class="text-danger"
+                                   ng-show="register_visits.urlWebsite.$touched && register_visits.urlWebsite.$error.required">
+                                Vui lòng nhập địa chỉ urlWebsite !
+                            </small>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="inputPassword4" class="form-label"> Số điện thoại</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="inputPassword4"
+                                   placeholder="0969653264"
+                                   name="phone"
+                                   ng-model="visitLocation.phone"
+                                   ng-class="{ 'is-invalid': register_visits.phone.$invalid && register_visits.phone.$touched, 'is-valid': register_visits.phone.$valid && register_visits.phone.$touched && !phoneError }"
+                                   ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_visits.phone.$touched && register_visits.phone.$error.required">
+                                Vui lòng nhập số điện thoại !
+                            </small>
+                            <small class="text-danger"
+                                   ng-show="register_visits.phone.$touched && register_visits.phone.$error.pattern">
+                                Số điện thoại không đúng định dạng !
+                            </small>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Tỉnh/Thành phố</label>
+                            <select class="form-select"
+                                    name="province"
+                                    ng-class="{ 'is-invalid': register_visits.province.$invalid && register_visits.province.$touched, 'is-valid': register_visits.province.$valid && register_visits.province.$touched }"
+                                    ng-options="city.Id as city.Name for city in provinces"
+                                    ng-change="onProvinceChangeCreate()"
+                                    ng-model="address.province"
+                                    required
+                            >
+                                <option value="" disabled selected>Chọn Tỉnh/Thành phố</option>
+                            </select>
+                            <small class="text-danger"
+                                   ng-show="register_visits.province.$touched && register_visits.province.$error.required">
+                                Vui lòng chọn tỉnh/thành phố.
+                            </small>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Quận/Huyện</label>
+                            <select class="form-select"
+                                    name="district"
+                                    ng-class="{ 'is-invalid': register_visits.district.$invalid && register_visits.district.$touched, 'is-valid': register_visits.district.$valid && register_visits.district.$touched }"
+                                    ng-options="district.Id as district.Name for district in districts"
+                                    ng-disabled="!address.province"
+                                    ng-change="onDistrictChangeCreate()"
+                                    ng-model="address.district"
+                                    required
+                            >
+                                <option value="" disabled selected>Chọn Quận/Huyện</option>
+                            </select>
+                            <small class="text-danger"
+                                   ng-show="register_visits.district.$touched && register_visits.district.$error.required">
+                                Vui lòng chọn quận/huyện.
+                            </small>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Phường/Xã</label>
+                            <select class="form-select"
+                                    name="ward"
+                                    ng-class="{ 'is-invalid': register_visits.ward.$invalid && register_visits.ward.$touched, 'is-valid': register_visits.ward.$valid && register_visits.ward.$touched }"
+                                    ng-options="ward.Id as ward.Name for ward in wards"
+                                    ng-disabled="!address.district"
+                                    ng-change="onWardChangeCreate()"
+                                    ng-model="address.ward"
+                                    required
+                            >
+                                <option value="" disabled selected>Chọn Phường/Xã</option>
+                            </select>
+                            <small class="text-danger"
+                                   ng-show="register_visits.ward.$touched && ward.wardVisit.$error.required">
+                                Vui lòng chọn phường/xã.
+                            </small>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Địa chỉ</label>
+                            <div class="row">
+                                <div class="col-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           placeholder="1234 Main St"
+                                           name="address"
+                                           ng-model="visitLocation.address"
+                                           ng-class="{ 'is-invalid': register_visits.address.$invalid && register_visits.address.$touched, 'is-valid': register_visits.address.$valid && register_visits.address.$touched }"
+                                           required
+                                    >
+                                    <small class="text-danger"
+                                           ng-show="register_visits.address.$touched && register_visits.address.$error.required">
+                                        Vui lòng nhập địa chỉ !
+                                    </small>
+                                </div>
+
+                                <div class="col-3 d-flex justify-content-end">
+                                    <button type="button"
+                                            class="btn btn-success"
+                                            ng-click="showModalMapVisit()"
+                                    >
+                                        Mở bản đồ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="time_open" class="form-label">Thời gian mở cửa</label>
+                            <input type="time"
+                                   class="form-control"
+                                   id="time_open"
+                                   name="openingTime"
+                                   ng-model="visitLocation.openingTime"
+                                   ng-class="{ 'is-invalid': register_visits.openingTime.$invalid && register_visits.openingTime.$touched, 'is-valid': register_visits.openingTime.$valid && register_visits.time_open.$touched }"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_visits.openingTime.$touched && register_visits.openingTime.$error.required">
+                                Vui lòng nhập thời gian!
+                            </small>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="time_close" class="form-label">Thời gian đóng cửa</label>
+                            <input type="time"
+                                   class="form-control"
+                                   id="time_close"
+                                   name="closingTime"
+                                   ng-model="visitLocation.closingTime"
+                                   ng-class="{ 'is-invalid': register_visits.closingTime.$invalid && register_visits.closingTime.$touched, 'is-valid': register_visits.closingTime.$valid && register_visits.time_open.$touched }"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_visits.closingTime.$touched && register_visits.closingTime.$error.required">
+                                Vui lòng nhập thời gian!
+                            </small>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Hình ảnh chứng minh</label>
+                            <input class="form-control"
+                                   type="file"
+                                   name="visitLocationImage"
+                                   ng-model="visitLocation.visitLocationImage"
+                                   ngf-max-size="10MB"
+                                   ng-class="{ 'is-invalid': register_visits.visitLocationImage.$invalid && register_visits.visitLocationImage.$touched, 'is-valid': register_visits.visitLocationImage.$valid && register_visits.visitLocationImage.$touched }"
+                                   ngf-select="uploadVisitLocationImage($file)"
+                                   required
+                            >
+                            <small class="text-danger"
+                                   ng-show="register_visits.visitLocationImage.$touched && register_visits.visitLocationImage.$error.required">
+                                Vui lòng tải lên hình ảnh của doanh nghiệp !
+                            </small>
+                        </div>
+
+                        <div class="container-desciption" rich-text-editor>
+                            <div class="">
+                                <label class="form-label">Mô tả <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="options">
+                                <!-- Text Format -->
+                                <button id="bold" type="button" class="option-button format">
+                                    <i class="fa-solid fa-bold"></i>
+                                </button>
+                                <button id="italic" type="button" class="option-button format">
+                                    <i class="fa-solid fa-italic"></i>
+                                </button>
+                                <button id="underline" type="button" class="option-button format">
+                                    <i class="fa-solid fa-underline"></i>
+                                </button>
+                                <button id="strikethrough" type="button" class="option-button format">
+                                    <i class="fa-solid fa-strikethrough"></i>
+                                </button>
+                                <button id="superscript" type="button" class="option-button script">
+                                    <i class="fa-solid fa-superscript"></i>
+                                </button>
+                                <button id="subscript" type="button" class="option-button script">
+                                    <i class="fa-solid fa-subscript"></i>
+                                </button>
+                                <!-- List -->
+                                <button id="insertOrderedList" type="button" class="option-button">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                </button>
+                                <button id="insertUnorderedList" type="button" class="option-button">
+                                    <i class="fa-solid fa-list"></i>
+                                </button>
+                                <!-- Table -->
+                                <button id="createTable" type="button">
+                                    <i class="fa-solid fa-table"></i>
+                                </button>
+                                <!-- Undo/Redo -->
+                                <button id="undo" type="button" class="option-button">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </button>
+                                <button id="redo" type="button" class="option-button">
+                                    <i class="fa-solid fa-rotate-right"></i>
+                                </button>
+                                <!-- Link -->
+                                <button id="createLink" type="button" class="adv-option-button">
+                                    <i class="fa fa-link"></i>
+                                </button>
+                                <button id="unlink" type="button" class="option-button">
+                                    <i class="fa fa-unlink"></i>
+                                </button>
+                                <!-- Alignment -->
+                                <button id="justifyLeft" type="button" class="option-button align">
+                                    <i class="fa-solid fa-align-left"></i>
+                                </button>
+                                <button id="justifyCenter" type="button" class="option-button align">
+                                    <i class="fa-solid fa-align-center"></i>
+                                </button>
+                                <button id="justifyRight" type="button" class="option-button align">
+                                    <i class="fa-solid fa-align-right"></i>
+                                </button>
+                                <button id="justifyFull" type="button" class="option-button align">
+                                    <i class="fa-solid fa-align-justify"></i>
+                                </button>
+                                <button id="indent" type="button" class="option-button spacing">
+                                    <i class="fa-solid fa-indent"></i>
+                                </button>
+                                <button id="outdent" type="button" class="option-button spacing">
+                                    <i class="fa-solid fa-outdent"></i>
+                                </button>
+                                <!-- Headings -->
+                                <select id="formatBlock" type="section" class="adv-option-button">
+                                    <option value="H1">H1</option>
+                                    <option value="H2">H2</option>
+                                    <option value="H3">H3</option>
+                                    <option value="H4">H4</option>
+                                    <option value="H5">H5</option>
+                                    <option value="H6">H6</option>
+                                </select>
+                                <!-- Font -->
+                                <select id="fontName" type="select" class="adv-option-button"></select>
+                                <select id="fontSize" type="select" class="adv-option-button"></select>
+                                <!-- Color -->
+                                <div class="input-wrapper">
+                                    <input type="color" id="foreColor" class="adv-option-button"/>
+                                    <label for="foreColor">Màu chữ</label>
+                                </div>
+                                <div class="input-wrapper">
+                                    <input type="color" id="backColor" class="adv-option-button"/>
+                                    <label for="backColor">Làm nổi bật</label>
+                                </div>
+                            </div>
+                            <div class="form-control mb-1" contenteditable="true" id="text-input"
+                                 name="detailDescription"
+                                 ng-model="visitLocation.detailDescription" ng-blur="setTouched()"></div>
+                            <span class="text-danger" id="invalid-templateDescription"></span>
+                            <span class="text-danger m-2" ng-show="isActive()">Vui lòng nhập mô tả</span>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-5">
+                            <a role="button"
+                               href="/business/visit/home"
+                               class="btn btn-submit-form btn-prev"
+                               style="background: #5c636a; margin-right: 20px"
+                            >
+                                <i class="fa-solid fa-arrow-left"></i> Trở về
+                            </a>
+                            <button type="button" class="btn btn-submit-form"
+                                    ng-click="nextStep()"
+                            >
+                                Tiếp tục
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="business-information" ng-show="currentStep === 2">
+        <div class="container-fluid">
+            <div class="logo text-center">
+                <div class="d-flex align-items-center justify-content-center">
+                    <img src="/assets/admin/assets/img/icons/logo.png" alt="logo" width="40"/>
+                    <p class="logo-text text-dark ms-1 d-none d-sm-block fw-bolder">TravelTour</p>
+                </div>
+                <div class="content-text mt-3">
+                    <div class="h4">Đăng kí thông tin địa điểm tham quan TravelTour</div>
+                </div>
+            </div>
+            <div class="main d-flex justify-content-center theme-wizard">
+                <div class="form card">
+                    <div class="h3 color-green fw-medium mb-3">XÁC NHẬN ĐĂNG KÝ PHƯƠNG TIỆN TRÊN TRAVEL TOUR</div>
+                    <div class="col-12">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" ng-model="checkboxChecked" name="" id="">
+                            Tôi cam kết cung cấp thông tin đầy đủ, chính xác và minh bạch khi đăng ký bán phòng trên
+                            trang
+                            web du lịch. Chúng tôi hiểu rằng sự minh bạch và tin cậy là yếu tố quan trọng để tạo ra một
+                            môi
+                            trường kinh doanh tích cực và lâu dài.
+                        </label>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-5">
+                        <a role="button" class="btn btn-submit-form mx-3" ng-click="prevStep()">
+                            Quay về
+                        </a>
+                        <button type="submit"
+                                class="btn btn-submit-form"
+                                ng-disabled="!checkboxChecked || phoneError"
+                        >
+                            Xác nhận
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+
+<!-- Modal Click Map-->
+<div class="modal fade" id="modalMapVisit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="modalLabelMap" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabelMap">Bản đồ</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-10 mb-3 position-relative">
+                        <input type="text"
+                               class="form-control"
+                               ng-model="searchLocation"
+                               placeholder="Nhập tên tỉnh thành cần tìm ở đây..."
+                               ng-keyup="searchLocationOnMapVisit()"
+                        >
+                        <div style="position: relative;">
+                            <div class="autocomplete" ng-if="showSuggestions"
+                                 style="position: absolute; top: 10px; left: 10px; z-index: 100;">
+                                <ul class="list-group">
+                                    <li class="list-group-item cursor-pointer"
+                                        ng-repeat="location in suggestedLocations"
+                                        ng-click="selectLocationVisit(location)">
+                                        {{ location }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary" ng-click="submitSearchOnMapVisit()">
+                            Tìm kiếm
+                        </button>
+                    </div>
+                    <div id="map" class="col-12" style="height: 460px"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>

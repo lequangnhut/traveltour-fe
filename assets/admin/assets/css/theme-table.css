@@ -1,0 +1,371 @@
+@font-face {
+    font-family: Montserrat;
+    src: url(../font/Montserrat-Medium.ttf);
+}
+
+.header-control .color-green {
+    color: #63ab45;
+    transition: 0.2s linear;
+}
+
+.header-control .btn-green:hover {
+    background: #4c872e;
+}
+
+.header-control .btn-green {
+    padding: 14px 30px;
+    border-radius: 40px;
+    background: #63ab45;
+    color: #fff;
+    font-size: 14px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    transition: 0.2s linear;
+}
+
+.header-control {
+    font-family: "Montserrat", sans-serif;
+}
+
+.header-control h1 {
+    font-family: "Montserrat", sans-serif;
+}
+
+.card-customer {
+    border-radius: 12px !important;
+    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+    margin-bottom: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+
+.card-customer::-webkit-scrollbar {
+    width: 0;
+}
+
+/*
+.card-customer::-webkit-scrollbar-track {
+    background: #e1e1e1;
+}
+.card-customer::-webkit-scrollbar-thumb {
+    background: #c9c9c9;
+}
+.card-customer::-webkit-scrollbar-thumb:hover {
+    background: #e3e3e3;
+}
+*/
+.table-components .card-header {
+    vertical-align: middle;
+}
+
+.table-components .card {
+    border-radius: 12px !important;
+}
+
+.table-components {
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.table-customer {
+    font-size: 14px;
+}
+
+.table-customer thead {
+    height: 50px;
+
+}
+
+.table-customer thead tr th {
+    font-weight: 600;
+}
+
+.table-customer .form-check-input {
+    margin-left: 12px;
+}
+
+.table-customer .form-check-input:checked {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: #ffffff;
+}
+
+.table-customer .checkbox-all {
+    margin-left: 0
+
+}
+
+.table-customer table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-customer td {
+    padding: 16px;
+}
+
+.table-customer tr {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-customer td:first-child {
+    padding: 16px;
+    margin-left: 29px;
+}
+
+.table-customer table .status-success {
+    background-color: #28a745;
+    padding: 4px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+
+.table-customer table .text-status-success {
+    color: #28a745;
+}
+
+.table-customer table .status-warning {
+    background-color: #ffc107;
+    padding: 4px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.table-customer table .text-status-warning {
+    color: #ffc107;
+}
+
+.table-customer table .status-error {
+    background-color: #dc3545;
+    padding: 4px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.table-customer table .text-status-error {
+    color: #dc3545;
+}
+
+.table-customer table .status-info {
+    background-color: #17a2b8;
+    padding: 4px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.table-customer table .text-status-info {
+    color: #17a2b8;
+}
+
+.table-customer table .status-normal {
+    background-color: #007bff;
+    padding: 4px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.table-customer .fa-sort {
+    font-size: 12px;
+}
+
+.table-customer table .text-status-normal {
+    color: #007bff
+}
+
+.table-customer table tr th {
+    cursor: pointer;
+}
+
+.form-input-custom {
+    font-family: "Montserrat", sans-serif;
+}
+
+.form-input-custom .btn-submit {
+    padding: 12px 30px;
+    border-radius: 40px;
+    background: #63ab45;
+    color: #fff;
+    font-size: 16px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    height: 50px;
+}
+
+.card-custom {
+    padding: 50px;
+    border-radius: 12px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+}
+
+@media only screen and (max-width: 1200px) {
+    .header-control {
+        text-align: center;
+    }
+
+    .header-control .header-control-center {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/*Loading table*/
+.background-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    top: 0;
+}
+
+.three-dots-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: #63ab45;
+    border-radius: 50%;
+    margin: 0 6px;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+.dot-2 {
+    animation-delay: 0.2s;
+}
+
+.dot-3 {
+    animation-delay: 0.4s;
+}
+
+/* loading component admin form */
+.lds-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-ellipsis div {
+    position: absolute;
+    top: 33px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #63ab45;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+    left: 8px;
+    animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+    left: 8px;
+    animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+    left: 32px;
+    animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+    left: 56px;
+    animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes lds-ellipsis3 {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+
+@keyframes lds-ellipsis2 {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(24px, 0);
+    }
+}
+
+/* CCS cho tile khi hover vào span ở template của admin */
+table .table-title td span[title] {
+    position: relative;
+    display: inline-block;
+}
+
+.hide-title[title] {
+    display: none;
+}
+
+table .table-title td span[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%; /* Hiển thị title bên trên */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.44);
+    color: #fff;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+table .table-title td span[title]:hover::before {
+    content: "";
+    position: absolute;
+    bottom: 53%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-style: solid;
+    border-width: 5px;
+    border-color: rgba(0, 0, 0, 0.44) transparent transparent transparent;
+}
+
+table .table-title td span[title]:hover::after,
+table .table-title td span[title]:hover::before {
+    opacity: 1;
+}
